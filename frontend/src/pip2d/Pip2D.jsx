@@ -6,7 +6,7 @@ import { ellipsePoints } from './fuzz'
 import { HalfPinArt, FixedStarArt } from './earned'
 import { ClubDefs, ClubAccessory, CLUB_ACCESSORIES } from './club'
 import { Hood, Jacket, VisorGlow, MiniSprout, Patches, Stickers } from './evolve'
-import { MainDefs, Backlight, WindTufts, Jawline, LowShades, SlowSparkle } from './main'
+import { MainDefs, Backlight, WindTufts, LowShades, SlowSparkle, HeroBack, HeroFront, HERO_LIFT, MainHead, OldHeadMask, mainHeadFirst, BrowShelf } from './main'
 import { ACCESSORIES_2D, Y2KDefs, Gel, Glint, Sparkles, StarClips, Charm, FrostVisor, Shades, HoloBandAid, RimLight, starPath } from './y2k'
 
 export const ACCESSORIES_ALL = [...ACCESSORIES_2D, ...CLUB_ACCESSORIES]
@@ -51,6 +51,7 @@ const POSE_END = { r: -8, x: -2, y: 0, sx: 1.02, sy: 1 }
 
 // Each evolution step is visibly bigger (v2 = +8%, v3 = +15% over v1) while staying inside the viewBox.
 const GROWTH = [0.9, 0.972, 1.035]
+const MAIN_SCALE = 0.93
 
 const MOOD_MOUTH = {
   deadpan: 'closed',
@@ -651,8 +652,8 @@ export function Pip2D({
           <path d={`M${R.cx - R.rx * 0.6},${R.cy - R.ry - 14} L${R.cx + R.rx * 0.8},${R.cy - R.ry - 8}`} />
         </g>
       )}
-      {main && <Jawline A={A} t={t} />}
       <g className={`pip2d-eyes${blink && plainEyes ? ' is-blinking' : ''}`}>{eyes}</g>
+      {main && plainEyes && <BrowShelf A={A} t={t} />}
       <Mouth shape={mouthShape} ink={t.ink} a={A.mouth} ugly={ugly} />
     </>
   )
@@ -722,13 +723,13 @@ export function Pip2D({
   )
   const label = title ?? `Pip the ${def.name} looks ${m}`
   // runway poses: strut (3-frame walk cycle), pose (confident end pose with a tilt), spin
-  const P = pose === 'idle' && main ? { r: -5, x: -2, y: 0, sx: 0.96, sy: 1.01 } : pose === 'strut' ? STRUT[frame ?? 1] : pose === 'pose' ? POSE_END : pose === 'spin' ? { r: 0, x: 0, y: -2, sx: frame == null ? 1 : [1, 0.35, -1][frame % 3], sy: 1 } : null
+  const P = pose === 'idle' && main ? { r: -2, x: 0, y: 0, sx: 1, sy: 1 } : pose === 'strut' ? STRUT[frame ?? 1] : pose === 'pose' ? POSE_END : pose === 'spin' ? { r: 0, x: 0, y: -2, sx: frame == null ? 1 : [1, 0.35, -1][frame % 3], sy: 1 } : null
   const animPose = animate && frame == null && (pose === 'strut' || pose === 'spin')
   const poseT = P && !animPose ? `translate(100 207) translate(${P.x} ${P.y}) rotate(${P.r}) scale(${P.sx} ${P.sy}) translate(-100 -207)` : undefined
   const poseClass = animPose ? `pip2d-${pose}` : undefined
   const wrap = (children, key, extra) => (
     <svg key={key} className={`pip2d ${className}`} width={size} height={size * 1.1} viewBox="0 0 200 220" role={key ? undefined : 'img'} aria-label={key ? undefined : label} aria-hidden={key ? true : undefined} {...extra}>
-      <g transform={`translate(100 207) scale(${GROWTH[ver - 1] * (mini ? 0.64 : 1)} ${GROWTH[ver - 1] * (mini ? 0.58 : 1)}) translate(-100 -207)`}>
+      <g transform={`translate(100 207) scale(${main ? MAIN_SCALE : GROWTH[ver - 1] * (mini ? 0.64 : 1)} ${main ? MAIN_SCALE : GROWTH[ver - 1] * (mini ? 0.58 : 1)}) translate(-100 -207)`}>
         <g transform={poseT} className={poseClass}>
           <g transform={grown && evo === 'ugly' ? `translate(100 207) rotate(${awakened ? -5 : -3}) scale(${awakened ? 1.07 : 1.04} ${awakened ? 0.95 : 0.97}) translate(-100 -207)` : undefined}>
           <g className={hop ? 'pip2d-hop' : undefined}>
@@ -739,6 +740,77 @@ export function Pip2D({
       </g>
     </svg>
   )
+
+  if (main) {
+    // Main Character: same face on a re-boned head (jaw, cheekbones, brow shelf) on a heroic V-shaped body
+    const lift = HERO_LIFT[def.name] ?? HERO_LIFT.default
+    const y0 = A.neck.y - lift
+    const clipY = A.neck.y + 6
+    const up = `translate(0 ${-lift})`
+    const headFirst = mainHeadFirst(def.name)
+    const mainDefs = (
+      <defs>
+        <clipPath id={`${id}headClip`}>
+          <rect x="-40" y="-60" width="280" height={clipY + 60} />
+        </clipPath>
+        <OldHeadMask creature={def.name} id={id} />
+      </defs>
+    )
+    const art = (
+      <g clipPath={`url(#${id}headClip)`}>
+        <g mask={`url(#${id}oldHead)`}>
+          <def.Art t={t} id={id} part="all" />
+        </g>
+      </g>
+    )
+    const headLayer = (
+      <g transform={up}>
+        <WindTufts A={A} t={t} />
+        {headFirst && <MainHead creature={def.name} t={t} id={id} />}
+        {art}
+        {!headFirst && <MainHead creature={def.name} t={t} id={id} />}
+      </g>
+    )
+    const backLayer = (
+      <>
+        <Backlight id={id} />
+        <HeroBack creature={def.name} t={t} id={id} y0={y0} />
+      </>
+    )
+    const faceLayer = <g transform={up}>{face}</g>
+    const frontLayer = (
+      <>
+        <HeroFront creature={def.name} t={t} id={id} y0={y0} />
+        <g transform={up}>
+          {sprout}
+          {front}
+        </g>
+      </>
+    )
+    if (!depth) {
+      return wrap(
+        <>
+          {defs}
+          {mainDefs}
+          {backLayer}
+          {headLayer}
+          {faceLayer}
+          {frontLayer}
+        </>,
+      )
+    }
+    const k2 = size / 200
+    return (
+      <DepthStage size={size} tilt={tilt} label={label}>
+        {[
+          [-16 * k2, wrap(<>{defs}{backLayer}</>, 'back')],
+          [0, wrap(<>{defs}{mainDefs}{headLayer}</>, 'body')],
+          [12 * k2, wrap(<>{defs}{faceLayer}</>, 'face')],
+          [24 * k2, wrap(<>{defs}{frontLayer}</>, 'front')],
+        ]}
+      </DepthStage>
+    )
+  }
 
   if (!depth) {
     return wrap(
