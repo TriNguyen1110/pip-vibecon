@@ -49,7 +49,9 @@ colors:
   note-ink-muted: { hex: "#4B5650", role: "NEW concept tag on note (6.9:1)" }
   ko-bg:          { hex: "#14161F", role: "NEW K.O. card matte near-black" }
   ko-meta:        { hex: "#9BA09C", role: "NEW K.O. card metadata (6.8:1 on ko-bg)" }
-  pip-default:    { hex: "#9D8CFF", role: "NEW mascot material default only; never UI chrome or text" }
+  pip-default:    { hex: "#B9A2FF", role: "NEW mascot default colorway (lilac, cream patch #E2D8FF); Y2K colorways bubblegum #FF8FC7, aqua #5FE3E8, lime #B8F04A, tangerine #FF9A3C are 3D materials only, never UI chrome or text" }
+  holo:           { value: "conic-gradient(from 210deg, #FF8FC7, #FFD27A, #B8F04A, #5FE3E8, #B9A2FF, #FF8FC7)", role: "NEW Play-only holo sticker and K.O. number sheen" }
+  chrome:         { value: "linear-gradient(180deg, #FFFFFF 0%, #D9DEE3 45%, #8E99A3 52%, #E9EEF2 100%)", role: "NEW Play-only chrome sticker, ice-ink text 6.3:1 at darkest stop" }
 
 typography:
   fonts:
@@ -138,7 +140,7 @@ Pip lives on willder's forest ground (`#001914`) under a faint ice ribbon with a
 
 **Studio** (landing, tutor, owner, gap report, pricing, parent preview) borrows Oura's editorial calm and Linear's precision: Fraunces titles at weight 500 with stone relief, Manrope body, Geist Mono for counts, dates and IDs, hairline rows instead of boxes, one shadow tier, one filled ice button per screen, no spring easing, no glows. Coral never appears; a misconception reads as a sunset pill and the boss is a neutral chip.
 
-**Play** (student home, mission, Pip's Brain, quiz, K.O.) keeps the palette and adds PlayStation and Spotify energy with Airbnb warmth: Fraunces at weight 700 with `SOFT 100` (rounded, friendly, still the brand face), pill buttons with a 4px pressed edge, 20 to 28px card radii, state glows (coral, mint, sun), a 1.04 hover-scale on anything collectible, and short game motion. The 3D Pip is the main color source on screen; the UI stays forest so the mascot and boss pop.
+**Play** (student home, mission, Pip's Brain, quiz, K.O.) keeps the palette and adds PlayStation and Spotify energy with Airbnb warmth: Fraunces at weight 700 with `SOFT 100` (rounded, friendly, still the brand face), pill buttons with a 4px pressed edge, 20 to 28px card radii, state glows (coral, mint, sun), a 1.04 hover-scale on anything collectible, and short game motion. The 3D Pip, boss and garden carry Y2K charm (glossy candy plastic, bubblegum/aqua/lime/lilac/tangerine colorways, a holo or chrome accent) and are the main color source on screen; the UI stays forest, with only small Y2K accents (gloss highlights, holo stickers, star-glints), so the mascot and boss pop.
 
 Volume map, loudest to quietest: boss hit (shake, flash, floating damage) > K.O. stamp > weapon unlock > Brain note flip > chat > mission card > Studio screens > the K.O. card, which is matte, silent and nearly empty.
 
@@ -154,7 +156,7 @@ Volume map, loudest to quietest: boss hit (shake, flash, floating damage) > K.O.
 - **Paper:** `--note` with `--note-ink`; on paper use `--coral-ink` and `--mint-ink` for labels, because coral and mint fail contrast on cream.
 - **Studio status pills:** Explained well `pill--ok` (success), Vague `pill--warn` (warning), Misconception `pill--gap` (sunset). Errors and destructive actions use `--danger`.
 - **K.O. card:** its own closed palette: `--ko-bg`, `--fg`, `--ko-meta`, plus the metallic hairline gradient `linear-gradient(90deg, transparent, #8F8A7A 12%, #EFE6C8 38%, #C9FCFC 55%, #F59B76 72%, #8F8A7A 88%, transparent)`.
-- **Mascot:** `--pip-default` is a 3D material only. Customized colors live in the canvas, never in UI chrome.
+- **Mascot:** `--pip-default` and the Y2K colorways are 3D materials only. Customized colors live in the canvas, never in UI chrome. In the UI, the Y2K palette appears only through `--holo` and `--chrome` on Play stickers and the K.O. number.
 - Color never carries meaning alone: every glow has a label ("Pip believes this 😵", "fixed after 1 re-teach"), every pill has a word.
 
 ## Typography Rules
@@ -215,13 +217,25 @@ Volume map, loudest to quietest: boss hit (shake, flash, floating damage) > K.O.
 
 **3D canvas placement.** The canvas is transparent (`alpha: true`) with no box: Pip stands on the page on drei `ContactShadows` (opacity .35, blur 2.5). Lighting: a soft key light from the upper left and a cool rim light (`#A7DFE6`) that separates Pip from the forest ground. DPR capped at 1.5, 30fps, paused offscreen and when the tab is hidden, a still pose under reduced motion, `.stage-fallback` emoji if WebGL fails, a circular `.skeleton` while loading. No text ever sits on the canvas. Touch: a poke reacts on `pointerdown` within 100ms with a squash and one of 4–6 reactions per zone (head, body), never the same one twice in a row, with no network call. Eyes follow the pointer within ±15deg.
 
-**Mascot art direction** (full spec in UX_TEARDOWN.md §6b). Pip is a designer vinyl toy, not a plush or a baby animal:
-- **Shape:** head to body about 1:1 to 1.2:1, stubby limbs, a low center of gravity, a slight 3/4 turn by default, and a silhouette readable as a solid shape at 48px.
-- **Eyes and expression:** pill-shaped matte black eyes with one specular dot, lids about 30% closed by default. Emotion comes from lid height and tilt, not eye size.
-- **Material:** `MeshPhysicalMaterial` with roughness .55–.7, metalness 0, clearcoat .2–.3. One accent per figure: an enamel badge or a brushed-metal antenna (metalness .8, roughness .35).
-- **Color:** 2–3 colors per figure, named like sneaker colorways ("Ink / Sunshine"). Monochrome is allowed; rainbow never.
+**Mascot, boss and garden art direction: Y2K charm.** This overrides the matte-vinyl direction in UX_TEARDOWN.md §6b; that section's proportions, deadpan rules and silhouette test still apply. The target is Talking Tom's glossy juiciness, Kick the Buddy's ragdoll boss and the Forest app's growing tree. It should read as a glossy collectible toy, never a plush or a baby animal.
+- **Shape:** head about the same size as the body (1:1 to 1.2:1, never the infant 2:1), stubby limbs, a low center of gravity, a slight 3/4 turn by default, and a silhouette readable as a solid shape at 48px.
+- **Material (Pip):** glossy candy plastic. `MeshPhysicalMaterial` with roughness .2–.35, metalness 0, clearcoat 1, clearcoatRoughness .08, `sheen` .3. One accent per figure: either iridescent (`iridescence` 1, `iridescenceIOR` 1.3, thickness range 100–400) or chrome (metalness 1, roughness .12) on the antenna, badge or one accessory.
+- **Colorways:** 2–3 colors per figure, named like sneaker colorways. Bases are bubblegum `#FF8FC7`, aqua `#5FE3E8`, lime `#B8F04A`, lilac `#B9A2FF` and tangerine `#FF9A3C`. Each has a lighter belly and face patch, the base mixed about 55% toward `#FFF6FB` (bubblegum patch `#FFD3E8`, aqua `#C4F6F8`, lime `#E4FAB8`, lilac `#E2D8FF`, tangerine `#FFD3AE`). The default is "Lilac / Cream". Never rainbow on one body. These hexes are 3D materials and never UI chrome.
+- **Eyes and expression:** glossy black capsule eyes with two specular dots (a large one upper-left and a small one lower-right) under heavy deadpan lids, closed about 30% by default. Emotion comes from lid height, tilt and a slow blink, not eye size. 💡 lifts the lids and rounds the eyes for 400ms.
+- **Sparkles:** sparing. Only on an unlock, a fix or a level-up, three star-glints at most, and never during idle.
+- **Boss:** a glossy ragdoll in slapstick (Kick the Buddy). Same candy-plastic material in the boss's own two emoji-derived colors, floppy spring-jointed limbs that flail on a hit and settle within about 600ms, squash on impact, and a bouncy over-animated tempo (Pip stays 20% slower: the straight man). On a K.O. it flops flat and slides out. Cartoon only: no blood, no gore, no real-world weapons.
+- **Garden (Grow play style):** a Forest-app tree growing on a small floating island inside a rounded aqua sky (`linear-gradient(180deg, #A8F4F6 0%, #5FC9E0 100%)`, radius 28px, the only light backdrop in Play). Glossy round leaves, slow rising bubbles (6–14px, white at .35 with a 1px highlight, 6–10s rise, at most 6 on screen), and growth in steps seed → sprout → sapling → blooming tree with a 600ms ease-pop grow. It never wilts or dies; a setback sprouts a weed that re-teaching pulls out. No text on the sky.
+- **Lighting:** a soft key light from the upper left, an aqua rim light (`#A7DFE6`), and a white hemisphere fill so the clearcoat catches one bright highlight. `ContactShadows` at opacity .35, blur 2.5.
 - **Accessories:** exactly `none | glasses | scarf | pencil | badge | backpack`. Nerdy and earned. No caps, headphones or sunglasses.
 - **Picker:** randomize does a 300ms spin-and-settle; the preview turntable auto-rotates at 0.4 rad/s and can be dragged to spin.
+
+**Y2K accents: Play register only.** Studio screens never get these. The K.O. card gets only the holo number.
+- **Gloss on pill buttons:** Play `.btn` adds a top highlight, `background-image: linear-gradient(180deg, rgba(255,255,255,.38) 0%, rgba(255,255,255,0) 52%)`, over the fill, plus a 1px inner white line `inset 0 1px 0 rgba(255,255,255,.65)`, layered with the pressed edge. On `.btn--primary` the result stays at least 16:1 (a lighter fill under dark ice-ink text). On secondary buttons use `.10` and `.18`. Weapon chips and the composer send button get the same highlight at half strength.
+- **Chrome/holo sticker** (`.sticker`, used for the Brain badge "Brain v2", `.brain-badge`, `.ko__version`). Pill shape, padding 4px 10px, Geist Mono 500 13px.
+  - Chrome: fill `linear-gradient(180deg, #FFFFFF 0%, #D9DEE3 45%, #8E99A3 52%, #E9EEF2 100%)`, `--ice-ink` text (6.3:1 at the darkest stop), `inset 0 1px 0 #fff, 0 2px 6px -2px rgba(0,0,0,.5)`, rotated −3deg.
+  - Holo (`.sticker--holo`): the same, with `conic-gradient(from 210deg, #FF8FC7, #FFD27A, #B8F04A, #5FE3E8, #B9A2FF, #FF8FC7)` at opacity .55 blended `overlay` on top. It sweeps once when it first appears (background-position over 1.2s); no loop.
+- **K.O. card number:** "No. 0147" may carry the holo gradient as text (`background: var(--holo); -webkit-background-clip: text; color: transparent`; every stop is at least 8.3:1 on `--ko-bg`). It is static except for the one 6s sweep it shares with the metallic hairline. Nothing else on the card changes: no confetti, no sparkles, no gloss.
+- **Star-glint sparkles** (`.glint`): a 4-point star, `clip-path: polygon(50% 0, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0 50%, 39% 39%)`, 8–12px, `#FFFFFF` or `--sun`. Each one scales 0 → 1 → 0 while rotating 45deg over 400ms ease-out, with 3 at most per event, staggered 60ms. They appear only on a weapon unlock, a fixed Brain note, a Brain version-up or garden growth. Never idle, never in Studio, removed under reduced motion.
 
 | Screen | 390px | 1024px+ |
 |---|---|---|
@@ -272,10 +286,11 @@ Rules: one glowing element per viewport, except wrong and fixed notes in the Bra
 - Bring boss humor, glows, spring easing or pill buttons into Studio; there the boss is a neutral chip.
 - Put XP, confetti, exclamation marks, ranks or the center's name on the K.O. card.
 - Use streaks, countdowns, guilt copy ("Pip misses you"), timers, nagging badges, need meters that drain while she is away, a purchasable currency, loot boxes, consumable weapons, locked items that advertise a purchase, or rewards for sharing (full list: UX_TEARDOWN.md §6d).
-- Make the mascot plush, baby-proportioned or glossy, or give it caps, headphones or sunglasses; the accessories are `none | glasses | scarf | pencil | badge | backpack`.
+- Make the mascot plush or baby-proportioned (head larger than 1.2× the body, big shiny irises, lashes), or give it caps, headphones or sunglasses; the accessories are `none | glasses | scarf | pencil | badge | backpack`.
 - Let a tap do damage; HP moves only on judged explanations.
 - Use alpha steps of ivory for text, or text below 14px except eyebrows and mono metadata.
-- Add another accent hue, a purple UI chrome, or a font outside Fraunces, Manrope and Geist Mono.
+- Add another accent hue to UI chrome (the Y2K colorways stay in the 3D scene, plus `--holo` on stickers), or a font outside Fraunces, Manrope and Geist Mono.
+- Put gloss, holo, chrome or glints on Studio screens, or sparkles anywhere on the K.O. card; never let sparkles idle or exceed 3 per event.
 - Animate on loop anything that carries text; run a hit shake longer than 280ms; shake the screen for anything but the K.O.; fire more than one taunt per 20s.
 
 ## Responsive Behavior
@@ -291,6 +306,49 @@ Rules: one glowing element per viewport, except wrong and fixed notes in the Bra
 
 Hover effects sit behind `@media (hover: hover) and (pointer: fine)` so phones never get sticky hover states. Use `100dvh` for full-height Play screens. Keyboard: every note, step, chip and card flip is a `<button>`; focus is a 2px `--focus` ring with a 2px offset; the HP bar is `role="meter"`; captions and "Pip is thinking" announce via `aria-live="polite"`.
 
+## Theming: build your own UI (S10)
+
+A student theme is a small DESIGN.md: a token set in the same front-matter shape as this file, plus a one-line **Visual Theme & Atmosphere** description. A theme can change the look; it can never change what the system means. It is visual only, with no uploads, and is stored as "My theme".
+
+```yaml
+theme:
+  name: "Y2K Aqua"
+  atmosphere: "Deep-sea night with aqua glass buttons and lime progress."
+  colors: { ground, surface, surface-2, fg, fg-muted, fg-subtle, action, action-ink, progress, win, boss }
+  display: soft            # editorial (SOFT 0, wght 500) | soft (SOFT 100, wght 700) | wonky (soft + WONK 1)
+  radius: normal           # tight 0.75x | normal 1x | round 1.25x, multiplies --r-* (pill stays pill)
+  bubble: round            # round 18px | square 8px | pill 999px; the tail corner stays 6px
+  pattern: grain           # none | grain | dots | grid | ruled | bubbles, CSS only, opacity <= .06
+  motion: normal           # low (no shake, half travel, no glints) | normal
+```
+
+**Presets** (original; never named after or imitating a real brand or product). Each is checked: every text role is at least 4.5:1 on ground, surface and surface-2; the worst case is listed.
+
+| Preset | ground / surface / surface-2 | fg / fg-muted / fg-subtle | action / action-ink | progress / win / boss | display, radius, bubble, pattern | worst text pair |
+|---|---|---|---|---|---|---|
+| **Night Forest** (default) | `#001914` `#0A2721` `#12372E` | `#EFEFE9` `#D4D4CD` `#A8B8AE` | `#C9FCFC` / `#001914` | `#8FE3B0` `#FFD27A` `#FF8A7A` | soft, normal, round, grain | fg-subtle 6.3:1 |
+| **Y2K Aqua** | `#031A2B` `#0A2A40` `#123A55` | `#EEF9FF` `#CFE6F2` `#9FC3D6` | `#5FE3E8` / `#031A2B` | `#B8F04A` `#FFD27A` `#FF8A7A` | soft, round, pill, bubbles | boss 5.2:1 |
+| **Bubblegum** | `#1E0A1C` `#2B1229` `#3A1A37` | `#FFF0F7` `#F2D3E3` `#C9A3B8` | `#FF9AD5` / `#1E0A1C` | `#8FE3B0` `#FFD27A` `#FF7A5C` | wonky, round, round, dots | boss 5.9:1 |
+| **Chrome** | `#111316` `#1A1D21` `#252A30` | `#F2F4F6` `#D3D8DD` `#A3ABB3` | `#DDE3E8` / `#111316` | `#8FE3B0` `#FFD27A` `#FF8A7A` | editorial, tight, square, grid | fg-subtle 6.2:1 |
+| **Notebook** (light) | `#F7F3E8` `#FFFDF6` `#EFE9D8` | `#1C241F` `#3D4A42` `#56635A` | `#245B64` / `#F7F3E8` | `#1A6E42` `#805300` `#B23A29` | editorial, normal, square, ruled | boss 4.9:1 |
+
+In Notebook, the sticky notes keep `--note` paper with a 1px `#D8CFB6` edge, and glows drop to 1.5px rings with no blur halo.
+
+**What a student may change:** the hex within each role, display mood, radius scale, bubble style, background pattern, and motion intensity (low or normal). Plus Pip's look, which lives in the 3D scene.
+
+**What is locked:**
+- **Role meanings.** Action (ice slot) is the only filled-button and link color. Boss (coral slot) is only boss HP and Pip's wrong beliefs; its hue must stay between 0 and 20deg and it never touches her bubble. Progress (mint slot) is her progress; hue 90–170deg. Win (sun slot) is her wins.
+- **Layout and access:** the type scale and font families, the 14px minimum, 44px tap targets, the spacing scale, focus ring width, and layout.
+- **Motion and voice:** `prefers-reduced-motion` always beats the theme's motion setting, and all copy is unchanged.
+
+**Validation on save,** run live in the picker and again on save:
+1. **Contrast:** every text role on ground, surface and surface-2 needs 4.5:1. `action-ink` on `action` needs 4.5:1; `action` against ground needs 3:1 (a UI boundary). Progress, win and boss on surface-2 need 3:1 as fills and 4.5:1 where they are text ("Pip got it", "+20 HP").
+2. **Auto-adjust:** if a pick fails, step its OKLCH lightness by 1% toward passing, keeping hue and chroma, and stop at the first passing value. Show it inline: "Adjusted your lime slightly so text stays readable (4.6:1)." Never refuse silently, and never adjust a color she didn't pick.
+3. **Coral and mint stay distinguishable:** a boss–progress hue gap of at least 60deg, and boss–action at least 30deg. They are never told apart by hue alone: "Pip believes this 😵", "fixed after N re-teach", 😵/🎉 faces and the HP label stay on in every theme.
+4. **Pattern:** the pattern's opacity is capped at .06, and contrast is re-checked against the pattern's brightest pixel.
+
+**Application:** theme tokens are CSS variables set inline on the `[data-register="play"]` root only. They map onto `--ink`, `--surface`, `--surface-2`, `--fg*`, `--ice`, `--ice-ink`, `--mint`, `--sun`, `--coral`, `--r-*`, plus `--bubble-r` and `--pattern`. Derived tints (`*-soft`, `*-line`, glows) are computed with `color-mix(in oklch, var(--x) 14%, transparent)`, so a theme never has to define them. Studio screens, tutor, owner and parent surfaces, and the K.O. card's core layout (matte `--ko-bg`, type, metadata) never take a student theme; the K.O. card may take her `action` hue only on the hairline sweep. Center themes (the owner's colors as the default student theme) use the same validator.
+
 ## Agent Prompt Guide
 
 Quick reference: ground `#001914`, glass card `#0A2721`, raised `#12372E`, text `#EFEFE9` / `#D4D4CD` / `#A8B8AE`, action ice `#C9FCFC` on `#001914`, Play states mint `#8FE3B0` (her progress), sun `#FFD27A` (her wins), coral `#FF8A7A` (boss and Pip's wrong rules only), paper `#FBF3D9` with `#1C241F`, K.O. card `#14161F`. Fonts: Fraunces (SOFT 0 at weight 500 for Studio; SOFT 100 at weight 700 for Play), Manrope, Geist Mono.
@@ -298,7 +356,7 @@ Quick reference: ground `#001914`, glass card `#0A2721`, raised `#12372E`, text 
 Ready prompts:
 - "Style the boss panel per DESIGN_SYSTEM.md: surface with a coral radial wash, 28px radius, 64px emoji with a 4px idle bob, Fraunces 700 SOFT 100 WONK 1 name at 24px, a 14px pill HP bar with a coral gradient fill and a white damage ghost, and shake-hit, shake-heal and shake-whiff keyframes (70ms hit-stop, 280ms ±8px shake, 240ms squash), an instant HP drop with a ghost that drains over 450ms after 150ms, and a coral mono damage floater; total ≤ 900ms."
 - "Restyle Pip's Brain as a 40px-radius thought cloud with three trailing puffs toward Pip; notes are cream paper with a tape strip and alternating tilt, quotes in Fraunces italic 17px; wrong notes get the coral glow and a #9E3427 'Pip believes this 😵' flag; fixed notes get the mint glow and a #1F6B45 flag, with a ±2deg reveal wobble on the wrong note and a 400ms rotateY flip from wrong to fixed."
-- "Build the K.O. card: 9:16, #14161F matte, 20px radius, 'No. 0147' in 12px Geist Mono #9BA09C, one 1px metallic hairline that sweeps once over 6s, the struck-through equation in Fraunces 32px, nickname and date at the bottom, tap to flip to boss name, her rule and Pip's line. No XP, no confetti, no exclamation marks."
+- "Build the K.O. card: 9:16, #14161F matte, 20px radius, 'No. 0147' in 12px Geist Mono with an optional holo text sheen, one 1px metallic hairline that sweeps once over 6s, the struck-through equation in Fraunces 32px, nickname and date at the bottom, tap to flip to boss name, her rule and Pip's line. No XP, no confetti, no exclamation marks."
 - "Apply the Play register under [data-register=play]: pill buttons 52px with a 4px #6FB7B9 pressed edge, 20/28px radii, Fraunces SOFT 100 headings, weapon chips 44px tall with a 1.04 hover-scale and a sun glow when equipped."
 - "Make the mission screen mobile-first: sticky 56px HUD under the top bar, 168px 3D stage that collapses to 96px on composer focus, the chat with Pip bubbles on the left (surface-2) and hers on the right (ice-soft), and a pill composer pinned to the bottom with a 44px ice send button and safe-area padding."
 - "Studio gap report: divided rows rather than cards, status pills (ok, warn, sunset), evidence quotes in Fraunces italic 17px with a 2px left rule, an ice-soft 'Start Tuesday's session here' box, the boss as a neutral chip. No coral, no glows."
