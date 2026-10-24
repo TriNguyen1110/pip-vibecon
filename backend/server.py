@@ -2,16 +2,18 @@
 
 import asyncio
 import logging
+import re
 import os
 from contextlib import asynccontextmanager
 from datetime import datetime, timedelta, timezone
+from pathlib import Path
 
 from dotenv import load_dotenv
 
-load_dotenv()  # before importing llm, which reads model env vars at import time
+load_dotenv(Path(__file__).parent / ".env")  # before importing llm, which reads model env vars at import time
 
 import httpx  # noqa: E402
-from fastapi import APIRouter, BackgroundTasks, Body, FastAPI, HTTPException  # noqa: E402
+from fastapi import APIRouter, BackgroundTasks, Body, FastAPI, HTTPException, Request  # noqa: E402
 from fastapi.middleware.cors import CORSMiddleware  # noqa: E402
 
 import llm  # noqa: E402
@@ -55,7 +57,9 @@ async def tutor_name(student: dict) -> str:
 
 @api.get("/health")
 async def health():
-    return {"ok": True, "mode": "live" if llm.available() else "offline", "model": llm.CHAT_MODEL}
+    return {"ok": True, "model": llm.CHAT_MODEL, "ai": "live" if llm.available() else "offline",
+            "store": "mongo" if type(store).__name__ == "MongoStore" else "memory",
+            **({"offline_demo": True} if llm.forced_offline() else {})}
 
 
 async def insight() -> dict:
@@ -90,12 +94,6 @@ async def center():
 async def roster(tutor_id: str):
     tutor = await need("tutors", tutor_id, "tutor")
     students = await store.all("students", tutor_id=tutor_id)
-    latest = {}
-    for s in sorted((s for s in await store.all("sessions") if not s.get("saved")),
-                    key=lambda s: s["created_at"]):
-        latest[s["student_id"]] = s["id"]
-    for st in students:
-        st["report_session_id"] = latest.get(st["id"])
     return {"tutor": tutor, "students": sorted(students, key=lambda s: s["id"])}
 
 
@@ -155,16 +153,17 @@ async def save_assignment(body: dict = Body(...)):
 
 # ------------------------------------------------------------------ sessions
 
-def opening(student: dict, a: dict, earlier: list[dict]) -> tuple[str, bool]:
-    """Instant templated opening (no AI call). Returns (text, misconception_stated)."""
+def openings(student: dict, a: dict, earlier: list[dict]) -> list[str]:
+    """Instant templated opening (no AI call). The LAST message is always the misconception claim."""
+    claim = (f"I'm learning {a['topic'].lower()}. I already know one rule: {a['misconception']}. "
+             "Easy.")
     if not student.get("interests"):
-        return ("Hi. I'm Pip. Before we start: what are you into? A game, a sport, music, food. "
-                "Anything."), False
+        return ["Hi. I'm Pip. Before we start: what are you into? A game, a sport, music, food. "
+                "Anything.", claim]
     old = [r for s in earlier for r in s["brain"]]
     if old:
-        return f'Last time you told me: "{old[0]["quote"]}". Still true?', False
-    return (f"Hi. I'm Pip. I'm learning {a['topic'].lower()}. I already know one rule: "
-            f"{a['misconception']}. Easy."), True
+        return [f'Hi. I\'m Pip. Last time you told me: "{old[0]["quote"]}". Still true?', claim]
+    return ["Hi. I'm Pip. " + claim]
 
 
 @api.post("/sessions")
@@ -173,10 +172,14 @@ async def create_session(body: dict = Body(...)):
     st = await need("students", body.get("student_id", ""), "student")
     earlier = sorted([s for s in await store.all("sessions", student_id=st["id"])
                       if not s.get("saved") and s["brain"]], key=lambda s: s["created_at"])
-    text, stated = opening(st, a, earlier[-1:])
     look = body.get("look") if body.get("look") in ("blob", "bot", "doodle") else "blob"
-    s = logic.new_session(a, st["id"], look, body.get("creature") or look, text, stated)
+    acc = body.get("accessory") if body.get("accessory") in (
+        "none", "cap", "glasses", "scarf", "headphones") else "none"
+    s = logic.new_session(a, st["id"], look, body.get("creature") or look, acc,
+                          openings(st, a, earlier[-1:]))
     await store.put("sessions", s)
+    st["last_session_id"] = s["id"]
+    await store.put("students", st)
     return s
 
 
@@ -185,8 +188,20 @@ async def get_session(sid: str):
     return await need("sessions", sid, "session")
 
 
+_locks: dict[str, asyncio.Lock] = {}
+
+
+def session_lock(sid: str) -> asyncio.Lock:
+    return _locks.setdefault(sid, asyncio.Lock())
+
+
 @api.post("/sessions/{sid}/turn")
 async def turn(sid: str, body: dict = Body(...)):
+    async with session_lock(sid):
+        return await _turn(sid, body)
+
+
+async def _turn(sid: str, body: dict):
     s = await need("sessions", sid, "session")
     text = (body.get("text") or "").strip()
     if not text:
@@ -218,66 +233,95 @@ async def equip(sid: str, body: dict = Body(...)):
     return s
 
 
-def resolve_quotes(raw_rules: list[dict], msgs: list[str], ids: set) -> dict[int, dict]:
-    """Raw rule index -> rule with a verbatim quote. A quote that is not in any student message is
-    replaced by the best-overlapping whole message, or the rule is dropped."""
+def snap(quote: str, text: str) -> str | None:
+    """Exact substring of text matching quote ignoring case, whitespace and punctuation."""
+    toks = re.findall(r"[\w'/]+", quote)
+    if not toks:
+        return None
+    m = re.search(r"[\W_]*".join(re.escape(t) for t in toks), text, re.IGNORECASE)
+    return m.group(0) if m else None
+
+
+def resolve_rules(raw_rules: list[dict], session: dict, ids: set, start: int) -> dict[int, dict]:
+    """Raw rule index -> Rule with a verbatim quote and the msg_index it came from."""
+    msgs = dict(pip_ai.student_msgs(session, start))
     out = {}
     for i, r in enumerate(raw_rules):
-        if r.get("concept_id") not in ids:
+        if r.get("concept_id") not in ids or not msgs:
             continue
         quote = (r.get("quote") or "").strip()
-        if not any(logic.is_substring(quote, m) for m in msgs):
-            qw = set(logic.norm(quote).split())
-            ratio, best = max(((len(qw & set(logic.norm(m).split())) / max(1, len(qw)), m)
-                               for m in msgs), default=(0, ""))
-            if ratio < 0.5:
-                continue
-            quote = best.strip()
-        out[i] = {"concept_id": r["concept_id"], "quote": quote, "correct": bool(r["correct"])}
+        mi = r.get("msg_index")
+        if mi not in msgs:  # unknown message: find the one containing the quote, else best overlap
+            mi = next((k for k, t in msgs.items() if snap(quote, t)), None)
+            if mi is None:
+                qw = set(logic.norm(quote).split())
+                ratio, mi = max(((len(qw & set(logic.norm(t).split())) / max(1, len(qw)), k)
+                                 for k, t in msgs.items()), default=(0, None))
+                if ratio < 0.5:
+                    continue
+        out[i] = {"concept_id": r["concept_id"], "msg_index": mi, "correct": bool(r["correct"]),
+                  "quote": snap(quote, msgs[mi]) or msgs[mi].strip()}
     return out
 
 
 @api.post("/sessions/{sid}/quiz")
 async def quiz(sid: str, tasks: BackgroundTasks):
+    async with session_lock(sid):
+        return await _quiz(sid, tasks)
+
+
+async def _quiz(sid: str, tasks: BackgroundTasks):
     s = await need("sessions", sid, "session")
     if s["status"] == "complete":
         return s
     a = await need("assignments", s["assignment_id"], "assignment")
-    qs = a.get("quiz") or pip_ai.quiz_for(a)
+    st = await need("students", s["student_id"], "student")
+    allq = a.get("quiz") or pip_ai.quiz_for(a)
+    only = s["reteach_concept"] if s["reteach_from"] is not None and s["brain"] else None
+    qs = [q for q in allq if only is None or q["concept_id"] == only]
+    start = s["reteach_from"] if only else 0
     try:
-        raw = await pip_ai.run_quiz(s, a)
+        raw = await pip_ai.run_quiz(s, a, qs, start)
     except Exception:
         log.exception("quiz failed; using offline")
-        raw = pip_ai.offline_quiz(s, a, qs)
-    valid = resolve_quotes(raw["rules"], logic.student_messages(s), set(logic.concept_ids(a)))
+        raw = pip_ai.offline_quiz(s, a, qs, start)
+    valid = resolve_rules(raw["rules"], s, set(logic.concept_ids(a)), start)
     latest = {r["concept_id"]: r for _, r in sorted(valid.items())}  # later rule wins per concept
     prev = {r["concept_id"]: r for r in s["brain"]}
     brain = []
     for cid in logic.concept_ids(a):
+        old = prev.get(cid)
         if cid not in latest:
+            if old and only is not None:
+                brain.append(old)  # re-teach mode keeps what it did not re-extract
             continue
-        rule, old = {"id": f"r_{cid}", **latest[cid]}, prev.get(cid)
+        rule = {"id": f"r_{cid}", **latest[cid]}
         if rule["correct"] and old and not old["correct"]:
             rule["fixed_after"] = s["reteach_count"]
         elif rule["correct"] and old and old.get("fixed_after"):
             rule["fixed_after"] = old["fixed_after"]
         brain.append(rule)
     by_concept = {r["concept_id"]: r for r in brain}
-    answers = {x["question_id"]: x for x in raw["answers"]}
-    items = []
-    for q in qs:
-        x = answers.get(q["id"])
+    answers = {x["question_index"]: x for x in raw["answers"]}
+    new_items = {}
+    for n, q in enumerate(qs):
+        x = answers.get(n)
         i = x.get("rule_index", -1) if x else -1
         rule = by_concept.get(valid[i]["concept_id"]) if i in valid else None
         base = {"id": q["id"], "concept_id": q["concept_id"], "question": q["question"]}
         if rule is None:  # no rule, or the cited rule was dropped: Pip was not taught this
-            items.append({**base, "rule_id": None, "pip_answer": "You didn't teach me that one.",
-                          "passed": False, "line": "You didn't teach me that one."})
+            new_items[q["id"]] = {**base, "rule_id": None, "passed": False,
+                                  "pip_answer": "You didn't teach me that one.",
+                                  "line": "You didn't teach me that one."}
         else:
-            items.append({**base, "rule_id": rule["id"], "pip_answer": x["pip_answer"],
-                          "passed": bool(x["passed"]) and rule["correct"], "line": x["line"]})
-    s["brain"], s["quiz"], s["reteach_concept"] = brain, items, None
-    if all(i["passed"] for i in items):
+            new_items[q["id"]] = {**base, "rule_id": rule["id"], "pip_answer": x["pip_answer"],
+                                  "passed": bool(x["passed"]) and rule["correct"], "line": x["line"]}
+    old_items = {i["id"]: i for i in s["quiz"]}
+    items = [new_items.get(q["id"]) or old_items.get(q["id"]) for q in allq]
+    items = [i for i in items if i]
+    s["brain"], s["quiz"] = brain, items
+    s["reteach_concept"], s["reteach_from"] = None, None
+    if len(items) == len(allq) and all(i["passed"] for i in items):
         s.update(ko=True, status="complete", mood="celebrating", boss_hp=0,
                  brain_version=min(3, s["brain_version"] + 1))
         for c in a["concepts"]:  # every passed concept counts as explained: unlock its weapon
@@ -285,16 +329,47 @@ async def quiz(sid: str, tasks: BackgroundTasks):
             if c.get("weapon") and c["weapon"] not in s["weapons"]:
                 s["weapons"].append(c["weapon"])
         s["equipped"] = s["equipped"] or (s["weapons"][0] if s["weapons"] else None)
-        s["transcript"].append({"from": "pip", "text": a.get("cliffhanger", ""), "ts": logic.now()})
-        tasks.add_task(make_report, s["id"])
+        s["transcript"].append({"from": "pip", "text": a.get("cliffhanger", ""), "ts": logic.now(),
+                                "event": {"kind": "none", "amount": 0, "caption": "", "unlocked": []}})
+        s["gap_report"] = pip_ai.report_det(s, a, st)
+        s["parent_message"] = pip_ai.parent_template(s, a, st, await tutor_name(st))
+        st["since_last_session"], st["last_session_id"] = s["gap_report"]["summary"], s["id"]
+        await store.put("students", st)
+        tasks.add_task(finish_ko, s["id"])
     else:
         s.update(status="quizzed", mood="stuck")
     await store.put("sessions", s)
     return s
 
 
+async def finish_ko(sid: str):
+    """Background: optional AI polish of summary/opener and a pre-generated parent message."""
+    try:
+        s = await need("sessions", sid, "session")
+        a = await need("assignments", s["assignment_id"], "assignment")
+        st = await need("students", s["student_id"], "student")
+        tn = await tutor_name(st)
+        better = await pip_ai.polish(s["gap_report"], a, st)
+        msg = await pip_ai.parent_message(s, a, st, tn)
+        async with session_lock(sid):
+            s = await need("sessions", sid, "session")
+            if better:
+                s["gap_report"].update(summary=better["summary"].strip(), opener=better["opener"].strip())
+                st["since_last_session"] = s["gap_report"]["summary"]
+                await store.put("students", st)
+            s["parent_message"] = msg
+            await store.put("sessions", s)
+    except Exception:
+        log.exception("post-K.O. background work failed")
+
+
 @api.post("/sessions/{sid}/reteach")
 async def reteach(sid: str, body: dict = Body(...)):
+    async with session_lock(sid):
+        return await _reteach(sid, body)
+
+
+async def _reteach(sid: str, body: dict):
     s = await need("sessions", sid, "session")
     a = await need("assignments", s["assignment_id"], "assignment")
     cid = body.get("concept_id")
@@ -306,7 +381,9 @@ async def reteach(sid: str, body: dict = Body(...)):
            "You didn't teach me that one. Can you teach it to me?")
     s.update(reteach_count=s["reteach_count"] + 1, reteach_concept=cid, status="teaching",
              mood="stuck")
-    s["transcript"].append({"from": "pip", "text": msg, "ts": logic.now()})
+    s["transcript"].append({"from": "pip", "text": msg, "ts": logic.now(),
+                            "event": {"kind": "none", "amount": 0, "caption": "", "unlocked": []}})
+    s["reteach_from"] = len(s["transcript"])
     await store.put("sessions", s)
     return s
 
@@ -329,27 +406,19 @@ async def finisher(sid: str, body: dict = Body(...)):
 
 # ------------------------------------------------------------------ report, parent, workshop, pilot
 
-_locks: dict[str, asyncio.Lock] = {}
-
-
 async def make_report(sid: str) -> dict:
-    async with _locks.setdefault(sid, asyncio.Lock()):
-        s = await need("sessions", sid, "session")
-        if s.get("gap_report"):
-            return s["gap_report"]
-        a = await need("assignments", s["assignment_id"], "assignment")
-        st = await need("students", s["student_id"], "student")
-        try:
-            rep = await pip_ai.report(s, a, st, await tutor_name(st))
-        except Exception:
-            log.exception("report failed")
-            raise HTTPException(502, "could not build the report; try again")
-        s["gap_report"] = rep
-        await store.put("sessions", s)
-        if not s.get("saved"):
-            st["since_last_session"] = rep["summary"]
-            await store.put("students", st)
-        return rep
+    """Deterministic and fast (no AI): safe to call repeatedly."""
+    s = await need("sessions", sid, "session")
+    if s.get("gap_report"):
+        return s["gap_report"]
+    a = await need("assignments", s["assignment_id"], "assignment")
+    st = await need("students", s["student_id"], "student")
+    s["gap_report"] = pip_ai.report_det(s, a, st)
+    await store.put("sessions", s)
+    if not s.get("saved"):
+        st["since_last_session"], st["last_session_id"] = s["gap_report"]["summary"], s["id"]
+        await store.put("students", st)
+    return s["gap_report"]
 
 
 @api.get("/sessions/{sid}/report")
@@ -363,7 +432,10 @@ async def parent_preview(sid: str):
     s = await need("sessions", sid, "session")
     a = await need("assignments", s["assignment_id"], "assignment")
     st = await need("students", s["student_id"], "student")
-    return {"message": await pip_ai.parent_message(s, a, st, await tutor_name(st))}
+    if not s.get("parent_message"):
+        s["parent_message"] = await pip_ai.parent_message(s, a, st, await tutor_name(st))
+        await store.put("sessions", s)
+    return {"message": s["parent_message"]}
 
 
 async def twilio_send(to: str, body: str) -> bool:
@@ -415,7 +487,8 @@ async def workshop(body: dict = Body(default={})):
 
 
 @api.post("/pilot/checkout")
-async def pilot_checkout():
+async def pilot_checkout(request: Request):
+    origin = (request.headers.get("origin") or FRONTEND_URL).rstrip("/")
     key = os.environ.get("STRIPE_SECRET_KEY", "")
     sim = {"url": "/pilot/success", "simulated": True}
     if not key:
@@ -423,8 +496,8 @@ async def pilot_checkout():
     if not key.startswith("sk_test_"):
         log.error("refusing non-test Stripe key; simulating checkout")
         return sim
-    form = {"mode": "payment", "success_url": f"{FRONTEND_URL}/pilot/success",
-            "cancel_url": f"{FRONTEND_URL}/owner/pricing",
+    form = {"mode": "payment", "success_url": f"{origin}/pilot/success",
+            "cancel_url": f"{origin}/owner/pricing",
             "line_items[0][quantity]": "1",
             "line_items[0][price_data][currency]": "usd",
             "line_items[0][price_data][unit_amount]": "9900",
@@ -446,6 +519,12 @@ async def pilot_confirm():
     p = {"id": "pilot", "status": "active", "ts": logic.now()}
     await store.put("pilot", p)
     return {"pilot": {"status": p["status"]}}
+
+
+@api.post("/demo/warm")
+async def demo_warm():
+    ok = await pip_ai.warm()
+    return {"ok": ok or not llm.available(), "ai": "live" if llm.available() else "offline"}
 
 
 @api.post("/demo/reset")

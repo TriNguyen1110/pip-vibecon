@@ -100,7 +100,7 @@ boss is yelling in fake Italian. I'm still taking notes."). The boss is never yo
 - Slightly warmer for grades 5-6.
 
 Scoring each student message (the app applies your numbers):
-- concept_progress: only concepts the student actually explained with reasoning; delta 0 to 50 (a vague \
+- concept_progress: concept_index is 0, 1 or 2 (the concept order listed below). Only concepts the student actually explained with reasoning; delta 0 to 50 (a vague \
 statement is 0 to 10, a clear explanation with a why is 25 to 50). Empty list if none.
 - misconception_event: "hit" when the student gives a real why that undermines the misconception \
 (hit_strength light/solid/critical by how strong); "heal" when the student teaches the misconception \
@@ -118,7 +118,7 @@ TURN_SCHEMA = obj({
     "reply": STR,
     "mood": enum("confused", "lightbulb", "stuck", "celebrating"),
     "filed_rule": STR,
-    "concept_progress": arr(obj({"concept_id": STR, "delta": INT})),
+    "concept_progress": arr(obj({"concept_index": INT, "delta": INT})),
     "misconception_event": enum("none", "hit", "heal"),
     "hit_strength": enum("light", "solid", "critical"),
     "caption": STR,
@@ -128,10 +128,10 @@ TURN_SCHEMA = obj({
 
 def persona_system(a: dict) -> str:
     """Byte-stable per assignment so the prompt prefix caches."""
-    concepts = "\n".join(f'- {c["id"]}: {c["text"]} (weapon: {c.get("weapon", "")})'
-                         for c in a["concepts"])
+    concepts = "\n".join(f'- {i}: {c["text"]} (weapon: {c.get("weapon", "")})'
+                         for i, c in enumerate(a["concepts"]))
     return (f"{PERSONA}\n\n## This mission\nTopic: {a['topic']}\nGrade: {a.get('grade', '')}\n"
-            f"Concepts the student must explain (use these ids in concept_progress):\n{concepts}\n"
+            f"Concepts the student must explain (use these indexes as concept_index):\n{concepts}\n"
             f"Your misconception (you believe this at the start): {a['misconception']}\n"
             f"The boss (the misconception personified): {a['boss']['name']} {a['boss']['emoji']}, "
             f"{a['boss']['backstory']}")
@@ -162,7 +162,8 @@ async def turn(session: dict, a: dict, student: dict, text: str) -> dict:
                      f"misconception_stated={session.get('misconception_stated', False)}</state>")
             hist.append({"role": "user", "content": f"{state}\n<student>{text}</student>"})
             r = await llm.structured(persona_system(a), _alternate(hist), TURN_SCHEMA,
-                                     model=llm.CHAT_MODEL, effort=llm.CHAT_EFFORT, max_tokens=900)
+                                     model=llm.CHAT_MODEL, effort=llm.CHAT_EFFORT, max_tokens=2000,
+                                     timeout=12)
             return clean_turn(r, session, a, text)
         except LlmError as e:
             log.warning("turn fell back to offline: %s", e)
@@ -171,8 +172,9 @@ async def turn(session: dict, a: dict, student: dict, text: str) -> dict:
 
 def clean_turn(r: dict, session: dict, a: dict, text: str) -> dict:
     ids = concept_ids(a)
-    prog = [{"concept_id": p["concept_id"], "delta": max(0, min(50, int(p["delta"])))}
-            for p in r.get("concept_progress", []) if p.get("concept_id") in ids]
+    prog = [{"concept_id": ids[p["concept_index"]], "delta": max(0, min(50, int(p["delta"])))}
+            for p in r.get("concept_progress", []) if p.get("concept_index") in (0, 1, 2)
+            and p["concept_index"] < len(ids)]
     rule = (r.get("filed_rule") or "").strip()
     if rule and not is_substring(rule, text):
         rule = ""
@@ -262,8 +264,8 @@ def _boss_caption(kind: str, session: dict, a: dict, strength: str = "solid") ->
 def offline_turn(session: dict, a: dict, student: dict, text: str) -> dict:
     t = norm(text)
     m = a["misconception"]
-    stated = session.get("misconception_stated", False)
-    intro = "" if stated else f"I already know one rule: {m}. Easy. "
+    stated = True  # the opening always ends with the misconception claim
+    intro = ""
     out = {"reply": "", "mood": "confused", "filed_rule": "", "concept_progress": [],
            "misconception_event": "none", "hit_strength": "solid", "caption": "", "interests": ""}
     interest = ""
@@ -273,7 +275,8 @@ def offline_turn(session: dict, a: dict, student: dict, text: str) -> dict:
     cid, correct, score = classify(text, a)
     concrete = ("Which is bigger, 1/2 of a pizza or 1/3 of a pizza?" if is_fractions(a)
                 else f"What is one small example of {a['topic'].lower()}?")
-    prev = [m_ for m_ in student_messages(session)[-2:]]
+    allprev = student_messages(session)
+    prev = allprev[-2:]
     two_vague = len(prev) == 2 and all(classify(p, a)[0] is None for p in prev)
 
     if REFUSE.search(t):
@@ -292,6 +295,8 @@ def offline_turn(session: dict, a: dict, student: dict, text: str) -> dict:
             out["reply"] = f"Noted. {intro}Why is that wrong?"
         elif IDK.search(t) or two_vague:
             out["reply"] = concrete
+        elif not allprev:
+            out["reply"] = "Why is that wrong?"
         else:
             out["reply"] = "Can you show me an example?"
     elif correct is False:
@@ -376,7 +381,8 @@ async def draft(topic: str, grade: int) -> dict:
             r = await llm.structured(
                 DRAFT_SYSTEM,
                 [{"role": "user", "content": f"Topic: {topic}\nGrade: {grade}"}],
-                DRAFT_SCHEMA, model=llm.WORK_MODEL, effort=llm.WORK_EFFORT, max_tokens=2500)
+                DRAFT_SCHEMA, model=llm.WORK_MODEL, effort=llm.WORK_EFFORT, max_tokens=2500,
+                timeout=45)
             cs = r["concepts"][:3]
             if len(cs) == 3 and len(r["quiz"]) >= 3:
                 return {
@@ -429,151 +435,140 @@ def quiz_for(a: dict) -> list[dict]:
 
 QUIZ_SYSTEM = """You are Pip's brain-extraction and quiz engine. Pip is a literal-minded AI classmate \
 that a student just taught.
-Step 1, rules: read the numbered student messages and list the rules the student taught, one per \
-concept at most. Each quote must be copied WORD FOR WORD from one student message (a whole message or \
-a contiguous part of it). If a rule for a concept was corrected later, keep only the latest version. \
-"correct" says whether the rule is mathematically/scientifically correct as stated. Do not repair or \
-improve the student's wording. Do not invent rules the student never stated.
-Step 2, answers: for each quiz question, Pip answers ONLY from the rules (set rule_index to the index in \
-your rules list, or -1 if no rule covers it). If the rule is wrong, follow it exactly and state the odd \
-result in one deadpan line, e.g. "Your rule: add the tops and the bottoms. 3/6 + 2/6 = 5/12. That's less \
-than the 3/6 I started with. I added and got less. Following your rule anyway. 😵". With no matching rule, \
-pip_answer and line are "You didn't teach me that one." and passed is false. passed is true only if the \
-rule exists, is correct, and gives the right answer. pip_answer is Pip's worked answer using the rule; \
-line is one short deadpan sentence about the result (for a pass, a quiet acknowledgement)."""
+Step 1, rules: read the student messages (each tagged [msg_index]) and list the rules the student taught, \
+at most one per concept. quote must be copied WORD FOR WORD from the message at msg_index (a whole \
+message or a contiguous part). If a rule for a concept was corrected later, keep only the latest. \
+"correct" says whether the rule is correct as stated. Do not repair the student's wording. Do not \
+invent rules the student never stated.
+Step 2, answers: for each quiz question, Pip answers ONLY from the rules (rule_index is the position in \
+your rules list, or -1 if no rule covers it). pip_answer is the short worked answer (e.g. "5/12"). line is \
+Pip's one deadpan sentence: for a wrong rule, follow it exactly and state the odd result, e.g. "Your \
+rule: add the tops and the bottoms. 3/6 + 2/6 = 5/12. That's less than the 3/6 I started with. I added \
+and got less. Following your rule anyway. 😵". With no matching rule, pip_answer and line are "You didn't \
+teach me that one." and passed is false. passed is true only if the rule exists, is correct, and gives \
+the right answer."""
 
 QUIZ_SCHEMA = obj({
-    "rules": arr(obj({"concept_id": STR, "quote": STR, "correct": BOOL})),
-    "answers": arr(obj({"question_id": STR, "rule_index": INT, "pip_answer": STR,
-                        "passed": BOOL, "line": STR})),
+    "rules": arr(obj({"concept_index": INT, "msg_index": INT, "quote": STR, "correct": BOOL})),
+    "answers": arr(obj({"question_index": INT, "rule_index": INT, "pip_answer": STR, "line": STR,
+                        "passed": BOOL})),
 })
 
 
-async def run_quiz(session: dict, a: dict) -> dict:
-    """Raw {rules, answers}; the server validates quotes against the transcript."""
-    qs = a.get("quiz") or quiz_for(a)
+def student_msgs(session: dict, start: int = 0) -> list[tuple[int, str]]:
+    return [(i, m["text"]) for i, m in enumerate(session["transcript"])
+            if m["from"] == "student" and i >= start]
+
+
+async def run_quiz(session: dict, a: dict, qs: list[dict], start: int = 0) -> dict:
+    """{rules: [{concept_id, msg_index, quote, correct}], answers: [{question_index, ...}]}.
+    qs is the subset of quiz questions to ask; start limits messages to transcript index >= start."""
     if live():
         try:
-            msgs = "\n".join(f"{i + 1}. {t}" for i, t in enumerate(student_messages(session)))
-            concepts = "\n".join(f'- {c["id"]}: {c["text"]}' for c in a["concepts"])
-            quiz = "\n".join(f'- {q["id"]} (concept {q["concept_id"]}): {q["question"]} '
-                             f'[correct: {q.get("answer", "")}]' for q in qs)
+            ids = concept_ids(a)
+            msgs = "\n".join(f"[{i}] {t}" for i, t in student_msgs(session, start))
+            concepts = "\n".join(f"{i}: {c['text']}" for i, c in enumerate(a["concepts"]))
+            quiz = "\n".join(f'{n}: (concept {ids.index(q["concept_id"])}) {q["question"]} '
+                             f'[correct: {q.get("answer", "")}]' for n, q in enumerate(qs))
             prompt = (f"Topic: {a['topic']}\nMisconception Pip started with: {a['misconception']}\n"
-                      f"Concepts:\n{concepts}\n\nQuiz questions:\n{quiz}\n\n"
+                      f"Concepts:\n{concepts}\n\nQuiz questions (question_index: ...):\n{quiz}\n\n"
                       f"Student messages:\n{msgs}")
-            return await llm.structured(QUIZ_SYSTEM, [{"role": "user", "content": prompt}],
-                                        QUIZ_SCHEMA, model=llm.WORK_MODEL, effort=llm.WORK_EFFORT,
-                                        max_tokens=3000)
-        except LlmError as e:
+            r = await llm.structured(QUIZ_SYSTEM, [{"role": "user", "content": prompt}], QUIZ_SCHEMA,
+                                     model=llm.WORK_MODEL, effort="low", max_tokens=2000, timeout=30)
+            return {"rules": [{"concept_id": ids[x["concept_index"]], "msg_index": x["msg_index"],
+                               "quote": x["quote"], "correct": x["correct"]}
+                              for x in r["rules"] if 0 <= x["concept_index"] < len(ids)],
+                    "answers": r["answers"]}
+        except (LlmError, KeyError, TypeError, IndexError) as e:
             log.warning("quiz fell back to offline: %s", e)
-    return offline_quiz(session, a, qs)
+    return offline_quiz(session, a, qs, start)
 
 
-def offline_quiz(session: dict, a: dict, qs: list[dict]) -> dict:
-    msgs = student_messages(session)
-    best: dict[str, tuple] = {}  # concept -> (key, quote, correct)
-    for i, text in enumerate(msgs):
+def offline_quiz(session: dict, a: dict, qs: list[dict], start: int = 0) -> dict:
+    best: dict[str, tuple] = {}  # concept -> (key, msg_index, quote, correct)
+    for i, text in student_msgs(session, start):
         cid, correct, score = classify(text, a)
         if cid is None:
             continue
         bonus = 1 if REASON.search(norm(text)) else 0
         key = (1, i) if correct is not None else (score + bonus, i)  # known rules: latest wins
         if cid not in best or key >= best[cid][0]:
-            best[cid] = (key, best_quote(text, a), True if correct is None else correct)
+            best[cid] = (key, i, best_quote(text, a), True if correct is None else correct)
     rules, index = [], {}
     for cid in concept_ids(a):
         if cid in best:
             index[cid] = len(rules)
-            rules.append({"concept_id": cid, "quote": best[cid][1], "correct": best[cid][2]})
+            rules.append({"concept_id": cid, "msg_index": best[cid][1], "quote": best[cid][2],
+                          "correct": best[cid][3]})
     answers = []
-    for q in qs:
+    for n, q in enumerate(qs):
         i = index.get(q["concept_id"], -1)
         if i < 0:
-            answers.append({"question_id": q["id"], "rule_index": -1, "passed": False,
+            answers.append({"question_index": n, "rule_index": -1, "passed": False,
                             "pip_answer": "You didn't teach me that one.",
                             "line": "You didn't teach me that one."})
             continue
         r = rules[i]
-        if is_fractions(a):
-            if not r["correct"]:
-                ans, line, ok = WRONG_LINE, WRONG_LINE, False
-            else:
-                ans = {"k1": 'No. I cannot add 1/2 and 1/3 as they are. The pieces are different sizes.',
-                       "k2": "6. 1/2 turns into 3/6 and 1/3 turns into 2/6.",
-                       "k3": "5/6. I add the tops and keep the bottom."}[q["concept_id"]]
-                ans = f'Your rule: "{r["quote"]}" {ans}'
-                line, ok = "That one worked.", True
+        if is_fractions(a) and not r["correct"]:
+            ans, line, ok = "5/12", WRONG_LINE, False
+        elif is_fractions(a):
+            ans = {"k1": "No. Different sizes.", "k2": "6: 1/2 = 3/6 and 1/3 = 2/6",
+                   "k3": "5/6"}[q["concept_id"]]
+            line, ok = f'Your rule: "{r["quote"]}" That gives {ans} 🙂'.replace("  ", " "), True
         else:
-            ans, line, ok = f'Your rule: "{r["quote"]}" I will do exactly that.', "That one worked.", True
-        answers.append({"question_id": q["id"], "rule_index": i, "pip_answer": ans,
-                        "passed": ok, "line": line})
+            ans, line, ok = "Followed your rule.", f'Your rule: "{r["quote"]}" I did exactly that.', True
+        answers.append({"question_index": n, "rule_index": i, "pip_answer": ans, "line": line,
+                        "passed": ok})
     return {"rules": rules, "answers": answers}
 
 
 # ---------------------------------------------------------------- gap report
 
-REPORT_SYSTEM = """You write the tutor's gap report after a student taught an AI classmate named Pip. \
-You are given Pip's Brain (the student's own words, verbatim), the quiz results, and the concepts. \
-Use only the Brain quotes as evidence; never invent or paraphrase student words. Output:
-- statuses: for each concept, "explained" (clear correct rule with reasoning), "vague" (thin or no rule), \
-or "misconception" (the rule is wrong).
-- opener: a specific 10-minute opener for the tutor's next session, for the weakest concept (concrete \
-steps and one starting problem).
-- root_cause: one line naming the earlier skill the weakest concept depends on.
-- summary: one line for the roster, what the student explained well and what they missed.
-- student_view: 2 to 4 short plain-words lines for the student's own screen ("Here's what the tutor sees"), \
-kind and specific, no red-pen tone.
-Calm, professional, plain language."""
-
-REPORT_SCHEMA = obj({
-    "statuses": arr(obj({"concept_id": STR, "status": enum("explained", "vague", "misconception")})),
-    "opener": STR, "root_cause": STR, "summary": STR, "student_view": arr(STR),
-})
-
-
-async def report(session: dict, a: dict, student: dict, tutor_name: str) -> dict:
+def report_det(session: dict, a: dict, student: dict) -> dict:
+    """Deterministic gap report (statuses, verbatim quotes, minutes, templated opener)."""
     rules = {r["concept_id"]: r for r in session["brain"]}
-    ai = None
-    if live():
-        try:
-            brain = "\n".join(f'- {r["concept_id"]} ({"correct" if r["correct"] else "WRONG"}'
-                              f'{", fixed after %d re-teach" % r["fixed_after"] if r.get("fixed_after") else ""}'
-                              f'): "{r["quote"]}"' for r in session["brain"]) or "(no rules)"
-            quiz = "\n".join(f'- {q["concept_id"]}: {"passed" if q["passed"] else "missed"}'
-                             for q in session["quiz"]) or "(no quiz yet)"
-            concepts = "\n".join(f'- {c["id"]}: {c["text"]}' for c in a["concepts"])
-            prompt = (f"Student: {student['name']} (grade {student['grade']}), tutor {tutor_name}\n"
-                      f"Topic: {a['topic']}\nRoot prerequisite hint: {a['root_prerequisite']}\n"
-                      f"Concepts:\n{concepts}\n\nPip's Brain:\n{brain}\n\nQuiz:\n{quiz}\n"
-                      f"Re-teaches: {session['reteach_count']}")
-            ai = await llm.structured(REPORT_SYSTEM, [{"role": "user", "content": prompt}],
-                                      REPORT_SCHEMA, model=llm.WORK_MODEL, effort=llm.WORK_EFFORT,
-                                      max_tokens=2000)
-        except LlmError as e:
-            log.warning("report fell back to offline: %s", e)
-    ai_status = {s["concept_id"]: s["status"] for s in (ai or {}).get("statuses", [])}
     concepts = []
     for c in a["concepts"]:
         r = rules.get(c["id"])
-        if r is None:
-            status = "vague"
-        elif not r["correct"]:
-            status = "misconception"
-        else:
-            status = "vague" if ai_status.get(c["id"]) == "vague" else "explained"
+        status = "vague" if r is None else ("explained" if r["correct"] else "misconception")
         concepts.append({"concept_id": c["id"], "concept_text": c["text"], "status": status,
                          "quote": r["quote"] if r else None,
                          "fixed_after": (r or {}).get("fixed_after")})
-    passed = sum(1 for q in session["quiz"] if q["passed"])
     base = offline_report_text(concepts, a, student)
     return {
         "concepts": concepts, "minutes": session.get("minutes") or minutes_spent(session),
-        "quiz_passed": passed,
+        "quiz_passed": sum(1 for q in session["quiz"] if q["passed"]),
         "quiz_total": len(session["quiz"]) or len(a["concepts"]),
-        "opener": (ai or base)["opener"], "root_cause": (ai or base)["root_cause"],
-        "cliffhanger": a.get("cliffhanger", ""), "summary": (ai or base)["summary"],
-        "student_view": (ai or base)["student_view"] or base["student_view"],
+        "opener": base["opener"], "root_cause": base["root_cause"],
+        "cliffhanger": a.get("cliffhanger", ""), "summary": base["summary"],
+        "student_view": base["student_view"],
     }
+
+
+POLISH_SYSTEM = """You polish a tutor's gap report after a student taught an AI classmate named Pip. \
+Given the facts, write: summary (one line for the roster: what they explained well and what they \
+missed or fixed) and opener (a specific 10-minute opener for the next session, for the weakest \
+concept: concrete steps and one starting problem). Use only the facts given; never invent student \
+words. Calm, professional, plain language."""
+POLISH_SCHEMA = obj({"summary": STR, "opener": STR})
+
+
+async def polish(report: dict, a: dict, student: dict) -> dict | None:
+    if not live():
+        return None
+    try:
+        facts = "\n".join(f'- {c["concept_text"]}: {c["status"]}'
+                          + (f', fixed after {c["fixed_after"]} re-teach' if c["fixed_after"] else "")
+                          + (f' (student said: "{c["quote"]}")' if c["quote"] else "")
+                          for c in report["concepts"])
+        r = await llm.structured(
+            POLISH_SYSTEM, [{"role": "user", "content": f"Student: {student['name']}\nTopic: {a['topic']}\n"
+                             f"Root prerequisite: {a['root_prerequisite']}\n{facts}"}],
+            POLISH_SCHEMA, model=llm.WORK_MODEL, effort=llm.WORK_EFFORT, max_tokens=800, timeout=30)
+        return r if r["summary"].strip() and r["opener"].strip() else None
+    except (LlmError, KeyError) as e:
+        log.warning("report polish skipped: %s", e)
+        return None
 
 
 def offline_report_text(concepts: list[dict], a: dict, student: dict) -> dict:
@@ -608,8 +603,8 @@ def offline_report_text(concepts: list[dict], a: dict, student: dict) -> dict:
             view.append(f"Pip followed your rule about {sn(c)} and got a strange answer. Worth another look.")
         else:
             view.append(f"{sn(c).capitalize()}: Pip needs a bit more from you here.")
-    return {"opener": opener, "root_cause": f"{short_name(a, weakest['concept_id']).capitalize()} builds on: "
-                          f"{a['root_prerequisite']}.",
+    return {"opener": opener, "root_cause": f"{short_name(a, weakest['concept_id']).capitalize()} "
+                                           f"builds on: {a['root_prerequisite']}.",
             "summary": "; ".join(parts) if parts else "No rules taught yet", "student_view": view}
 
 
@@ -621,22 +616,9 @@ is next. Plain language, 2 to 4 sentences, at most one emoji. No list of mistake
 students. Sign off as the tutor. Start with "Bright Path Tutoring:"."""
 
 
-async def parent_message(session: dict, a: dict, student: dict, tutor_name: str) -> str:
+def parent_template(session: dict, a: dict, student: dict, tutor_name: str) -> str:
     report_ = session.get("gap_report") or {}
-    good = [c["concept_text"] for c in report_.get("concepts", []) if c["status"] == "explained"]
     first = student["name"].split()[0]
-    if live():
-        try:
-            prompt = (f"Student first name: {first}\nTopic: {a['topic']}\nTutor: {tutor_name}\n"
-                      f"Things the student explained well: {good or 'worked hard on every idea'}\n"
-                      f"Next up: {a.get('cliffhanger', '')}\nPip brain level: v{session['brain_version']}")
-            r = await llm.structured(PARENT_SYSTEM, [{"role": "user", "content": prompt}],
-                                     obj({"message": STR}), model=llm.WORK_MODEL,
-                                     effort=llm.WORK_EFFORT, max_tokens=500)
-            if r["message"].strip():
-                return r["message"].strip()
-        except LlmError as e:
-            log.warning("parent message fell back to offline: %s", e)
     names = [short_name(a, c["concept_id"]) for c in report_.get("concepts", [])
              if c["status"] == "explained"]
     taught = (", ".join(names[:-1]) + " and " + names[-1] if len(names) > 1
@@ -645,3 +627,51 @@ async def parent_message(session: dict, a: dict, student: dict, tutor_name: str)
             f"explained {taught} in their own words. Pip's brain just levelled up to "
             f"v{session['brain_version']}. Next week {first} takes on a new challenge. "
             f"- {tutor_name}")
+
+
+async def parent_message(session: dict, a: dict, student: dict, tutor_name: str) -> str:
+    if live():
+        try:
+            report_ = session.get("gap_report") or {}
+            good = [c["concept_text"] for c in report_.get("concepts", []) if c["status"] == "explained"]
+            prompt = (f"Student first name: {student['name'].split()[0]}\nTopic: {a['topic']}\n"
+                      f"Tutor: {tutor_name}\nThings the student explained well: "
+                      f"{good or 'worked hard on every idea'}\nNext up: {a.get('cliffhanger', '')}\n"
+                      f"Pip brain level: v{session['brain_version']}")
+            r = await llm.structured(PARENT_SYSTEM, [{"role": "user", "content": prompt}],
+                                     obj({"message": STR}), model=llm.WORK_MODEL,
+                                     effort=llm.WORK_EFFORT, max_tokens=500, timeout=30)
+            if r["message"].strip():
+                return r["message"].strip()
+        except (LlmError, KeyError) as e:
+            log.warning("parent message fell back to template: %s", e)
+    return parent_template(session, a, student, tutor_name)
+
+
+# ---------------------------------------------------------------- warm-up
+
+async def warm() -> bool:
+    """One tiny call per schema so the first real request is not cold. True if all succeeded."""
+    if not live():
+        return False
+    a = {**FRAC, "id": "a_frac", "grade": 6}
+    session = {"transcript": [{"from": "pip", "text": "Hi.", "ts": ""},
+                              {"from": "student", "text": "the pieces have to be the same size", "ts": ""}],
+               "meters": {"k1": 0, "k2": 0, "k3": 0}, "boss_hp": 100, "equipped": None, "weapons": [],
+               "reteach_concept": None, "misconception_stated": True}
+    jobs = [
+        llm.structured(persona_system(a), _alternate([{"role": "user", "content": "<student>hi</student>"}]),
+                       TURN_SCHEMA, model=llm.CHAT_MODEL, effort=llm.CHAT_EFFORT, max_tokens=400, timeout=12),
+        llm.structured(QUIZ_SYSTEM, [{"role": "user", "content": "Student messages:\n[1] hi"}], QUIZ_SCHEMA,
+                       model=llm.WORK_MODEL, effort="low", max_tokens=400, timeout=30),
+        llm.structured(DRAFT_SYSTEM, [{"role": "user", "content": "Topic: fractions\nGrade: 6"}], DRAFT_SCHEMA,
+                       model=llm.WORK_MODEL, effort=llm.WORK_EFFORT, max_tokens=2500, timeout=45),
+        llm.structured(POLISH_SYSTEM, [{"role": "user", "content": "Student: A\n- x: explained"}], POLISH_SCHEMA,
+                       model=llm.WORK_MODEL, effort=llm.WORK_EFFORT, max_tokens=300, timeout=30),
+    ]
+    import asyncio
+    res = await asyncio.gather(*jobs, return_exceptions=True)
+    for r in res:
+        if isinstance(r, Exception):
+            log.warning("warm-up call failed: %s", r)
+    return all(not isinstance(r, Exception) for r in res)

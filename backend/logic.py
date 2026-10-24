@@ -48,17 +48,18 @@ def short_name(assignment: dict, concept_id: str) -> str:
     return " ".join(c["text"].lower().rstrip(".").split()[:6]) if c else concept_id
 
 
-def new_session(assignment: dict, student_id: str, look: str, creature: str, opening: str,
-                stated: bool) -> dict:
+def new_session(assignment: dict, student_id: str, look: str, creature: str, accessory: str,
+                openings: list[str]) -> dict:
     return {
         "id": new_id("sess"), "student_id": student_id, "assignment_id": assignment["id"],
         "status": "teaching", "look": look, "creature": creature,
-        "transcript": [{"from": "pip", "text": opening, "ts": now()}],
+        "accessory": accessory,
+        "transcript": [{"from": "pip", "text": t, "ts": now()} for t in openings],
         "meters": {c["id"]: 0 for c in assignment["concepts"]}, "boss_hp": 100,
         "weapons": [], "equipped": None, "mood": "confused", "brain": [], "quiz": [],
-        "reteach_count": 0, "reteach_concept": None, "brain_version": 1, "ko": False,
+        "reteach_count": 0, "reteach_concept": None, "reteach_from": None, "parent_message": None, "brain_version": 1, "ko": False,
         "finisher": None, "gap_report": None, "created_at": now(),
-        "misconception_stated": stated,
+        "misconception_stated": True,
     }
 
 

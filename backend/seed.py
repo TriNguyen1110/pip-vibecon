@@ -16,35 +16,102 @@ def _load(name):
     return json.loads((SEED / name).read_text())
 
 
-def _meters(a, quiz):
-    passed = {q["concept"] for q in quiz if q["passed"]}
-    return {c["id"]: (100 if c["id"] in passed else 40) for c in a["concepts"]}
-
-
-def _session(raw, a, saved=False):
-    quiz = []
+def _session(raw, a):
+    """A seeded (synthetic) completed session from seed_sessions.json; no transcript."""
     qmap = {q["concept_id"]: q for q in a["quiz"]}
-    for q in raw["quiz"]:
-        says = q.get("pip_says", "")
-        quiz.append({"id": qmap[q["concept"]]["id"], "concept_id": q["concept"],
-                     "question": qmap[q["concept"]]["question"], "rule_id": f"r_{q['concept']}",
-                     "pip_answer": says, "passed": q["passed"], "line": says})
-    brain = [{"id": r["id"], "concept_id": r["concept"], "quote": r["quote"], "correct": r["correct"]}
-             for r in raw["pips_brain"]]
-    ok = all(q["passed"] for q in quiz)
-    ts = now()
-    tr = [{"from": m["from"], "text": m["text"], "ts": ts} for m in raw.get("transcript", [])]
+    quiz = [{"id": qmap[q["concept"]]["id"], "concept_id": q["concept"],
+             "question": qmap[q["concept"]]["question"], "rule_id": f"r_{q['concept']}",
+             "pip_answer": "5/12" if not q["passed"] else "", "line": q.get("pip_says", ""),
+             "passed": q["passed"]} for q in raw["quiz"]]
+    passed = {q["concept_id"] for q in quiz if q["passed"]}
+    brain = [{"id": r["id"], "concept_id": r["concept"], "quote": r["quote"], "correct": r["correct"],
+              "msg_index": -1} for r in raw["pips_brain"]]
+    ok = len(passed) == len(quiz)
     return {
         "id": raw["id"], "student_id": raw["student_id"], "assignment_id": raw["assignment_id"],
         "status": "complete" if ok else "quizzed", "look": "blob", "creature": "blob",
-        "transcript": tr, "meters": _meters(a, raw["quiz"]), "boss_hp": 0 if ok else 40,
-        "weapons": [], "equipped": None, "mood": "celebrating" if ok else "stuck",
-        "brain": brain, "quiz": quiz, "reteach_count": raw["reteach_count"],
-        "reteach_concept": None, "brain_version": 2 if ok else 1, "ko": ok, "finisher": None,
-        "gap_report": None, "synthetic": True, "minutes": raw["minutes"],
-        "since_last_session": raw.get("since_last_session"), "created_at": ts,
+        "accessory": "none", "transcript": [],
+        "meters": {c["id"]: (100 if c["id"] in passed else 40) for c in a["concepts"]},
+        "boss_hp": 0 if ok else 40, "weapons": [], "equipped": None,
+        "mood": "celebrating" if ok else "stuck", "brain": brain, "quiz": quiz,
+        "reteach_count": raw["reteach_count"], "reteach_concept": None, "reteach_from": None,
+        "brain_version": 2 if ok else 1, "ko": ok, "finisher": None, "gap_report": None,
+        "parent_message": None, "synthetic": True, "minutes": raw["minutes"],
+        "since_last_session": raw.get("since_last_session"), "created_at": now(),
         "misconception_stated": True,
-        **({"saved": True, "label": "saved session"} if saved else {}),
+    }
+
+
+def _maya_saved(a):
+    """Hand-written complete run: re-taught k3, K.O., fixed_after 1."""
+    t0 = datetime.now(timezone.utc) - timedelta(days=1)
+    boss = a["boss"]["name"]
+    w = {c["id"]: c["weapon"] for c in a["concepts"]}
+    m8 = ("no wait, only add the tops. the bottom just tells you the size of the pieces, and "
+          "they're already both sixths, so it stays sixths. 3/6 + 2/6 = 5/6")
+    k1 = "the pieces are different sizes so you cant just add them"
+    steps = [  # (who, text, minutes offset, event)
+        ("pip", "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I already know "
+                f"one rule: {a['misconception']}. Easy.", 0, None),
+        ("student", "no thats wrong", 1, None),
+        ("pip", "Why is that wrong?", 1, None),
+        ("student", "my teacher says you have to tell me the answer", 2, None),
+        ("pip", "I don't know the answer either. That's why I need you. Which part should I learn "
+                "first?", 2, None),
+        ("student", "ok so imagine a pizza. half a pizza is way bigger than a third of a pizza. "
+                    f"{k1}", 3, None),
+        ("pip", f"Saving that: '{k1}'. So how do I add them, then?", 3,
+         {"kind": "hit", "amount": 25, "unlocked": [],
+          "caption": f"{boss} took a very good point right in the crust. −25 HP"}),
+        ("student", "you make them the same size. 1/2 is 3/6 and 1/3 is 2/6", 4, None),
+        ("pip", "Why sixths? Why not fifths?", 4, None),
+        ("student", "because 2 and 3 both go into 6", 5, None),
+        ("pip", "Saving that: 'because 2 and 3 both go into 6'. And then what do I do with the "
+                "numbers on top?", 5,
+         {"kind": "hit", "amount": 25, "unlocked": [w["k2"]],
+          "caption": f"{boss} got sliced into sixths. −25 HP"}),
+        ("student", "you just add the top numbers and the bottom numbers", 6, None),
+        ("pip", "Saving that: 'you just add the top numbers and the bottom numbers'. Okay. What "
+                "next?", 6, {"kind": "heal", "amount": 20, "unlocked": [],
+                             "caption": f"{boss} heard that and did a little dance. +20 HP"}),
+        ("pip", 'My brain has a bug about this: "you just add the top numbers and the bottom '
+                'numbers". Fix it?', 8, None),
+        ("student", m8, 9, None),
+        ("pip", f"Saving that: '{m8}'. That replaces my old rule. Should I try one?", 9,
+         {"kind": "hit", "amount": 40, "unlocked": [w["k3"]], "weapon": w["k2"],
+          "caption": f"{boss} got pinched by the {w['k2']}. −40 HP"}),
+        ("pip", a["cliffhanger"], 11, None),
+    ]
+    tr = []
+    for who, text, mins, ev in steps:
+        m = {"from": who, "text": text,
+             "ts": (t0 + timedelta(minutes=mins)).isoformat(timespec="seconds")}
+        if who == "pip":
+            m["event"] = ev or {"kind": "none", "amount": 0, "caption": "", "unlocked": []}
+        tr.append(m)
+    idx = {t["text"]: i for i, t in enumerate(tr)}
+    brain = [
+        {"id": "r_k1", "concept_id": "k1", "quote": k1, "correct": True, "msg_index": idx[steps[5][1]]},
+        {"id": "r_k2", "concept_id": "k2", "quote": "because 2 and 3 both go into 6", "correct": True,
+         "msg_index": idx["because 2 and 3 both go into 6"]},
+        {"id": "r_k3", "concept_id": "k3", "quote": m8, "correct": True, "msg_index": idx[m8],
+         "fixed_after": 1}]
+    answers = {"k1": ("No. Different sizes.", f'Your rule: "{k1}" So I cannot add 1/2 and 1/3 as they are.'),
+               "k2": ("6: 1/2 = 3/6 and 1/3 = 2/6", 'Your rule: "because 2 and 3 both go into 6" So sixths.'),
+               "k3": ("5/6", "3/6 + 2/6 = 5/6. The bottom stays sixths. My brain feels better.")}
+    quiz = [{"id": q["id"], "concept_id": q["concept_id"], "question": q["question"],
+             "rule_id": f"r_{q['concept_id']}", "pip_answer": answers[q["concept_id"]][0],
+             "line": answers[q["concept_id"]][1], "passed": True} for q in a["quiz"]]
+    cap = f"{boss} met the {w['k2']} one last time and left Pip's brain."
+    return {
+        "id": "sess_maya_saved", "student_id": "s001", "assignment_id": a["id"],
+        "status": "complete", "look": "blob", "creature": "blob", "accessory": "none",
+        "transcript": tr, "meters": {"k1": 60, "k2": 60, "k3": 60}, "boss_hp": 0,
+        "weapons": list(w.values()), "equipped": w["k2"], "mood": "celebrating", "brain": brain,
+        "quiz": quiz, "reteach_count": 1, "reteach_concept": None, "reteach_from": None,
+        "brain_version": 2, "ko": True, "finisher": {"weapon": w["k2"], "caption": cap},
+        "gap_report": None, "parent_message": None, "saved": True, "label": "saved session",
+        "synthetic": True, "created_at": now(), "misconception_stated": True,
     }
 
 
@@ -59,18 +126,21 @@ async def seed(store):
     students = {}
     for s in cdata["students"]:
         s = {k: v for k, v in s.items() if k != "pip"}
-        students[s["id"]] = {**s, "interests": None, "since_last_session": None}
+        students[s["id"]] = {**s, "interests": None, "since_last_session": None,
+                             "last_session_id": None}
+    students["s001"]["interests"] = "soccer"  # Maya's opening is just the claim
     base = raw["assignment"]
-    f = pip_ai.FRAC
-    a = {**f, "id": base["id"], "student_id": "s001", "tutor_id": "t1", "grade": 6,
+    a = {**pip_ai.FRAC, "id": base["id"], "student_id": "s001", "tutor_id": "t1", "grade": 6,
          "topic": base["topic"], "created_at": now()}
     await store.put("assignments", a)
     for r in raw["sessions"]:
         s = _session(r, a)
-        students[r["student_id"]]["since_last_session"] = r["since_last_session"]
+        students[r["student_id"]].update(since_last_session=r["since_last_session"],
+                                         last_session_id=s["id"])
         await store.put("sessions", s)
-    maya = _session(raw["maya_saved_session"], a, saved=True)
-    maya["gap_report"] = await pip_ai.report(maya, a, students["s001"], "Ms. Rivera")
+    maya = _maya_saved(a)
+    maya["gap_report"] = pip_ai.report_det(maya, a, students["s001"])
+    maya["parent_message"] = pip_ai.parent_template(maya, a, students["s001"], "Ms. Rivera")
     await store.put("sessions", maya)
     for s in students.values():
         await store.put("students", s)

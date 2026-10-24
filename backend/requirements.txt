@@ -1,9 +1,7 @@
-fastapi==0.115.6
-uvicorn==0.32.1
-motor==3.6.0
-pymongo==4.9.2
-anthropic==2.3.0
-python-dotenv==1.0.1
-httpx==0.28.1
-pydantic==2.14.1
-starlette==0.41.3
+fastapi>=0.115
+uvicorn>=0.32
+motor>=3.6
+pymongo>=4.9
+anthropic>=2.3
+python-dotenv>=1.0
+httpx>=0.28

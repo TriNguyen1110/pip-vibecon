@@ -53,3 +53,7 @@ sat	item	B3	review	backend	JOURNEY	session create templated opening; 6 DEMO_SCRI
 sat	item	B4	review	backend	JOURNEY	quiz offline: k3 miss with literal 5/12 line; reteach k3 msg; re-teach+quiz -> ko true, fixed_after 1, brain_version 2, cliffhanger appended, finisher set
 sat	item	B5	review	backend	DATA	report (quote verbatim, fixed after 1), parent preview/send -> sent-log (test-mode not delivered), workshop note lists 14 students, pilot checkout simulated + confirm active, demo reset restores saved session
 sat	item	B6	review	backend	JOURNEY	ANTHROPIC_API_KEY unset -> /api/health mode offline; bogus key -> 401 logged, every path (turn/quiz/report) falls back, no error to student
+sat	item	B3	review	backend	JOURNEY	CONTRACT v2 applied: opening ends with claim, Maya interests prefilled, per-session locks, static index schemas, chat 12s timeout; DEMO 6 turns re-verified offline
+sat	item	B4	review	backend	JOURNEY	v2 quiz: msg_index+snapped quotes, reteach_from re-asks only k3, K.O. builds gap report+parent_message sync/bg, brain_version 2 only at K.O.; re-verified offline
+sat	item	B5	review	backend	DATA	v2: Maya saved session is a hand-written complete run (fixed_after 1, report, parent msg), saved invisible to logic, insight 14, Origin-based Stripe URLs, /demo/warm, health ai/store
+sat	item	B6	review	backend	JOURNEY	v2: PIP_FORCE_OFFLINE=1 verified (health ai offline, offline_demo true); bogus key falls back on 401

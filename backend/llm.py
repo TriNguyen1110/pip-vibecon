@@ -21,14 +21,18 @@ class LlmError(Exception):
     pass
 
 
+def forced_offline() -> bool:
+    return os.environ.get("PIP_FORCE_OFFLINE") == "1"
+
+
 def available() -> bool:
-    return bool(os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("ANTHROPIC_AUTH_TOKEN"))
+    return not forced_offline() and bool(os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("ANTHROPIC_AUTH_TOKEN"))
 
 
 def _get_client() -> anthropic.AsyncAnthropic:
     global _client
     if _client is None:
-        _client = anthropic.AsyncAnthropic(timeout=60.0, max_retries=1)
+        _client = anthropic.AsyncAnthropic(timeout=30.0, max_retries=0)
     return _client
 
 
@@ -43,7 +47,8 @@ def obj(properties: dict, required: list[str] | None = None) -> dict:
 
 
 async def structured(system: str, messages: list[dict], schema: dict, *, model: str,
-                     effort: str, max_tokens: int = 6000) -> dict:
+                     effort: str, max_tokens: int = 2000, timeout: float = 30.0) -> dict:
+    """timeout is per call (chat 12s, quiz 30s, draft 45s); a timeout raises LlmError."""
     global _use_fallbacks
     if not available():
         raise LlmError("no Claude credentials configured")
@@ -55,20 +60,24 @@ async def structured(system: str, messages: list[dict], schema: dict, *, model: 
         "messages": messages,
         "output_config": {"effort": effort, "format": {"type": "json_schema", "schema": schema}},
     }
-    client = _get_client()
+    client = _get_client().with_options(timeout=timeout, max_retries=0)
     try:
         if _use_fallbacks:
             try:
                 response = await client.beta.messages.create(
                     betas=["server-side-fallback-2026-07-01"], fallbacks="default", **params)
-            except anthropic.BadRequestError:
-                # A proxy or model that rejects server-side fallbacks: stop asking for them.
+            except anthropic.BadRequestError as e:
+                # Only a 400 about fallbacks/beta means the proxy lacks them: stop asking.
+                if not any(w in str(e).lower() for w in ("fallback", "beta")):
+                    raise
                 _use_fallbacks = False
                 response = await client.messages.create(**params)
         else:
             response = await client.messages.create(**params)
     except anthropic.RateLimitError as e:
         raise LlmError("rate limited") from e
+    except anthropic.APITimeoutError as e:
+        raise LlmError("timeout") from e
     except anthropic.APIStatusError as e:
         raise LlmError(f"API error {e.status_code}") from e
     except anthropic.APIConnectionError as e:
