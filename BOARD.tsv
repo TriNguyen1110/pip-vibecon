@@ -193,3 +193,5 @@ sat	item	B13	review	backend	JOURNEY	v3.7: pip_name endpoint (moderated), student
 sat	item	G4	doing	design-lead	SCREEN	Runway & Club direction (all-ages): Club theme, runway day theme, spotlight battle stage, runway-walk evolution, lookbook covers, surreal props
 sat	item	P2D-10	backlog	3d	SCREEN	Runway poses, club accessories + lighting, Duke DJ variant, Cover2D magazine covers, less kid-cute defaults
 sat	item	F12	backlog	frontend	SCREEN	Apply G4 (after F10/F11 essentials)
+sat	item	B14	backlog	backend	DATA	Prompt-to-mod: /api/themes/generate (Claude structured Theme + server-side rule enforcement + offline keyword presets), /api/themes gallery, student active theme
+sat	item	F13	backlog	frontend	SCREEN	Mods sheet: prompt box ('describe your vibe'), live preview, apply/save, gallery of presets + center mods, shows 'adjusted for readability' notes

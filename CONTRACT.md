@@ -179,3 +179,18 @@ Behavior: (1) the next mission's opening quotes one rule the student taught befo
 'two triangles make a rectangle'"), in Pip's voice; (2) Pip's lines occasionally apply a taught rule to a new
 situation (callback), so the student sees their teaching alive; (3) evolution forms are visible everywhere the
 mascot appears (v2 / v3 looks), and earned items can be worn; (4) no decay, no streak guilt, nothing purchasable.
+
+## v3.8 (prompt-to-mod: students reskin the UI by describing it)
+| Method + path | Body | Returns |
+|---|---|---|
+| POST `/api/themes/generate` | `{prompt, base?: "day"\|"night"}` | `{theme: Theme, adjusted: string[], source: "ai"\|"preset"}` |
+| GET `/api/themes` | | `{presets: Theme[], mods: Theme[]}` (center gallery: seeded presets + saved student mods) |
+| POST `/api/students/{id}/theme` | `{theme_id}` or `{theme}` | `{ok}` (saves the student's active mod) |
+`Theme { id, name, vibe_line, tokens: {bg_from, bg_to, panel, panel_edge, ink, ink_muted, action, action_ink, progress,
+win, boss(locked hue 0–20°), bubble_pip, bubble_her}, display_mood: "editorial"|"soft"|"wonky", radius: "sharp"|"round"|
+"bubbly", pattern: "none"|"stars"|"checkers"|"lasers"|"grid"|"bubbles"|"chrome-blobs", motion: "low"|"normal" }`.
+Claude turns the prompt into a Theme via structured output; the server then **enforces the design-system rules**:
+AA contrast on every text pair (auto-adjusts lightness, lists changes in `adjusted`), boss/coral hue locked, action ≠ boss,
+progress vs boss ≥ 60° hue apart, pattern opacity capped. Name/vibe_line moderated (no profanity; ≤ 24 / 60 chars).
+Offline or on error: keyword → nearest preset ("rave/club/neon" → Club, "runway/fashion" → Runway, "vaporwave", "y2k",
+"notebook", "forest", …), `source: "preset"`. Themes apply only to Play screens; Studio never takes a student theme.
