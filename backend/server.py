@@ -3,6 +3,7 @@
 import asyncio
 import base64
 import hashlib
+import json
 import logging
 from collections import OrderedDict
 import re
@@ -260,6 +261,7 @@ async def create_session(body: dict = Body(...)):
     s = logic.new_session(a, st["id"], look, body.get("creature") or look, acc,
                           openings(st, a, earlier[-1:], past))
     s["opening_source"] = "past_self" if past else "claim"
+    s["pip_voice"] = (body.get("pip_voice") or "").strip() or None
     s["vibe"] = body.get("vibe") if body.get("vibe") in ("cute", "cool", "ugly") else "cute"
     await store.put("sessions", s)
     st["last_session_id"] = s["id"]
@@ -303,6 +305,15 @@ async def _turn(sid: str, body: dict):
     if r["interests"]:
         st["interests"] = r["interests"]
         await store.put("students", st)
+    await store.put("sessions", s)
+    return s
+
+
+@api.post("/sessions/{sid}/voice")
+async def set_voice(sid: str, body: dict = Body(...)):
+    s = await need("sessions", sid, "session")
+    v = body.get("pip_voice")
+    s["pip_voice"] = v.strip() if isinstance(v, str) and v.strip() else None
     await store.put("sessions", s)
     return s
 
@@ -628,13 +639,44 @@ def map_tts_response(j: dict) -> dict | None:
     return {"audio_b64": j["audio_base64"], "mime": "audio/mpeg", "alignment": {k: al[k] for k in keys}}
 
 
-async def _eleven(text: str, key: str, voice: str, model: str) -> httpx.Response:
+VOICES = json.loads((Path(__file__).parent / "voices.json").read_text())
+SPEAKERS = ("pip", "boss", "announcer", "narrator")
+
+
+def resolve_voice(body: dict, fallback_voice: str = "") -> dict:
+    """{voice_id, stability, style, speed, name} for a speaker (see voices.json)."""
+    speaker = body.get("speaker") if body.get("speaker") in SPEAKERS else "pip"
+    v = None
+    if speaker == "pip":
+        v = dict(VOICES["pip"].get(body.get("vibe")) or VOICES["pip"]["cute"])
+        if isinstance(body.get("pip_voice"), str) and body["pip_voice"].strip():
+            v.update(voice_id=body["pip_voice"].strip(), name="custom")
+    elif speaker == "boss":
+        ref = f"{body.get('boss_id') or ''} {body.get('boss_name') or ''}".lower()
+        kind = next((k for k, keys in VOICES["boss_keys"].items() if any(x in ref for x in keys)), "default")
+        v = dict(VOICES["boss"][kind])
+        try:
+            grade = int(body.get("grade") or 0)
+        except (TypeError, ValueError):
+            grade = 0
+        if v.get("min_grade") and grade < v["min_grade"]:
+            v = dict(v["younger"])
+    else:
+        v = dict(VOICES[speaker])
+    v.pop("younger", None)
+    if not v.get("voice_id"):
+        v["voice_id"] = fallback_voice
+    return v
+
+
+async def _eleven(text: str, key: str, voice: dict, model: str) -> httpx.Response:
     async with httpx.AsyncClient(timeout=8) as c:
         return await c.post(
-            f"https://api.elevenlabs.io/v1/text-to-speech/{voice}/with-timestamps",
+            f"https://api.elevenlabs.io/v1/text-to-speech/{voice['voice_id']}/with-timestamps",
             headers={"xi-api-key": key, "content-type": "application/json"},
             json={"text": text, "model_id": model,
-                  "voice_settings": {"stability": 0.5, "similarity_boost": 0.75}})
+                  "voice_settings": {"stability": voice.get("stability", 0.5), "similarity_boost": 0.75,
+                                     "style": voice.get("style", 0), "speed": voice.get("speed", 1)}})
 
 
 @api.post("/tts")
@@ -644,11 +686,11 @@ async def tts(body: dict = Body(default={})):
     try:
         text = (body.get("text") or "").strip()[:TTS_MAX_CHARS]
         key = os.environ.get("ELEVENLABS_API_KEY", "")
-        voice = os.environ.get("ELEVENLABS_VOICE_ID", "")
+        voice = resolve_voice(body, os.environ.get("ELEVENLABS_VOICE_ID", ""))
         model = os.environ.get("ELEVENLABS_MODEL") or TTS_DEFAULT_MODEL
-        if not (text and key and voice):
+        if not (text and key and voice["voice_id"]):
             return fb
-        ck = hashlib.sha256(f"{text}\x00{voice}\x00{model}".encode()).hexdigest()
+        ck = hashlib.sha256(json.dumps([text, voice, model], sort_keys=True).encode()).hexdigest()
         if ck in _tts_cache:
             _tts_cache.move_to_end(ck)
             return _tts_cache[ck]

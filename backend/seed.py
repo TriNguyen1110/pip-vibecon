@@ -39,7 +39,7 @@ def _session(raw, a):
         "brain_version": 2 if ok else 1, "ko": ok, "finisher": None, "gap_report": None,
         "parent_message": None, "synthetic": True, "minutes": raw["minutes"],
         "since_last_session": raw.get("since_last_session"), "created_at": now(),
-        "misconception_stated": True, "opening_source": "claim", "vibe": "cute", "ladder": new_ladder(a),
+        "misconception_stated": True, "opening_source": "claim", "vibe": "cute", "pip_voice": None, "ladder": new_ladder(a),
         "parked": [], "turn_log": [],
     }
 
@@ -118,7 +118,7 @@ def _maya_saved(a):
         "brain_version": 2, "ko": True, "finisher": {"weapon": w["k2"], "caption": cap},
         "gap_report": None, "parent_message": None, "saved": True, "label": "saved session",
         "synthetic": True, "created_at": now(), "misconception_stated": True,
-        "opening_source": "claim", "vibe": "cute", "ladder": new_ladder(a), "parked": [], "turn_log": [],
+        "opening_source": "claim", "vibe": "cute", "pip_voice": None, "ladder": new_ladder(a), "parked": [], "turn_log": [],
     }
 
 
