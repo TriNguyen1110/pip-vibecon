@@ -11,7 +11,7 @@ Ownership: backend owner edits `backend/` only; frontend owner edits `frontend/`
 
 ```
 Concept      { id, text, weapon }                       // weapon: "Common Denominator Cleaver 🔪🍕"
-Boss         { name, emoji, backstory }                 // emoji: two emoji, e.g. "🍕🦵"
+Boss         { name, emoji, backstory, lines?: {taunt[], heal[], hit[], ko} }   // lines = deadpan formal-villain voice
 Assignment   { id, student_id, tutor_id, grade, topic, why_it_matters, concepts: Concept[3],
                misconception, root_prerequisite, boss: Boss, cliffhanger,
                quiz: [{id, concept_id, question, answer}], created_at }
