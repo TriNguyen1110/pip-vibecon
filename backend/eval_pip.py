@@ -94,6 +94,10 @@ PERSONAS = {
         "because the rule says so",
         "two triangles make a rectangle so one is half",
         "6 times 4 is 24 for the rectangle and half is 12"]),
+    # "review": Maya wins a triangle K.O. (family dream -> egg), hatches the mini, then fixes its misapplied rule
+    "mini_review": ("review", "s001", "competent", [
+        "no a skinny triangle is still half of its rectangle",
+        "because two of them make the rectangle so one is half, 6×4÷2 = 12"]),
     "sat_linear_session": ("a_sat_linear", "s009", "competent", [
         "no when you change to the other side + becomes - and vice versa.",
         "yeah but imagine we're doing - 6 for both sides, +6 and - 6 adds up on the left side so the 6 disappears and the right side still has -6. That's how it works",
@@ -152,9 +156,20 @@ def spoilers_of(a: dict) -> list[str]:
 def run_persona(client, name: str, spec: tuple, judge=None) -> dict:
     aid, sid, kind, msgs = spec
     client.post("/api/demo/reset")
-    a = client.get(f"/api/students/{sid}").json()["assignments"]
-    a = next(x for x in a if x["id"] == aid)
-    s = client.post("/api/sessions", json={"assignment_id": aid, "student_id": sid}).json()
+    if aid == "review":
+        client.post(f"/api/students/{sid}/dream", json={"dream": "family"})
+        t = client.post("/api/sessions", json={"assignment_id": "a_tri", "student_id": sid}).json()
+        for m in ("a triangle is half of a rectangle", "because two of them make a rectangle so one is half",
+                  "a rectangle is base times height, like 6×4 = 24"):
+            client.post(f"/api/sessions/{t['id']}/turn", json={"text": m})
+        client.post(f"/api/sessions/{t['id']}/quiz")
+        assert client.post(f"/api/students/{sid}/hatch").status_code == 200, "egg did not appear"
+        s = client.post(f"/api/mini/{sid}/review").json()
+        a = client.get(f"/api/assignments/{s['assignment_id']}").json() if False else {"lesson": {"concepts": []}}
+    else:
+        a = client.get(f"/api/students/{sid}").json()["assignments"]
+        a = next(x for x in a if x["id"] == aid)
+        s = client.post("/api/sessions", json={"assignment_id": aid, "student_id": sid}).json()
     spoilers = [x.lower() for x in spoilers_of(a)]
     seen_q: set[str] = set()
     said: list[str] = []

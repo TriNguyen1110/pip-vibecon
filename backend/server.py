@@ -21,7 +21,9 @@ from fastapi import APIRouter, BackgroundTasks, Body, FastAPI, HTTPException, Re
 from fastapi.middleware.cors import CORSMiddleware  # noqa: E402
 
 import lesson as lessons  # noqa: E402
+import crew  # noqa: E402
 import pacing  # noqa: E402
+import themes  # noqa: E402
 import llm  # noqa: E402
 import logic  # noqa: E402
 import pip_ai  # noqa: E402
@@ -114,7 +116,7 @@ async def at_risk():
     assignments = {x["id"]: x for x in await store.all("assignments")}
     by_student: dict[str, list[dict]] = {}
     for s in await store.all("sessions"):
-        if not s.get("saved"):
+        if not s.get("saved") and s.get("kind") != "review":
             by_student.setdefault(s["student_id"], []).append(s)
     opens: dict[str, list[datetime]] = {}
     for e in await store.all("events", kind="open"):
@@ -181,6 +183,120 @@ async def set_pip_name(student_id: str, body: dict = Body(default={})):
     st["pip_name"] = name
     await store.put("students", st)
     return {"pip_name": name, "student": st}
+
+
+# ------------------------------------------------------------------ themes (v3.8)
+
+@api.post("/themes/generate")
+async def theme_generate(body: dict = Body(default={})):
+    base = body.get("base") if body.get("base") in ("day", "night") else None
+    return await themes.generate(str(body.get("prompt") or ""), base)
+
+
+@api.get("/themes")
+async def list_themes():
+    mods = sorted(await store.all("themes"), key=lambda t: t.get("saved_at", ""), reverse=True)
+    return {"presets": themes.PRESETS, "mods": mods}
+
+
+@api.post("/students/{student_id}/theme")
+async def set_student_theme(student_id: str, body: dict = Body(...)):
+    """Save the student's active theme: a preset/mod id, or a theme object (re-enforced; never trusted)."""
+    st = await need("students", student_id, "student")
+    if body.get("theme_id") is not None:
+        tid = str(body["theme_id"])
+        theme = themes.PRESET_BY_ID.get(tid) or await store.get("themes", tid)
+        if not theme:
+            raise HTTPException(404, "theme not found")
+    elif isinstance(body.get("theme"), dict):
+        raw = {k: v for k, v in body["theme"].items() if k != "id"}  # ids are content hashes, never client-chosen
+        theme, _ = themes.enforce(raw, raw.get("base"))
+        same = next((p for p in themes.PRESETS if p["tokens"] == theme["tokens"] and p["name"] == theme["name"]), None)
+        if same:
+            theme["id"] = same["id"]
+        else:
+            await store.put("themes", {**theme, "student_id": student_id, "saved_at": logic.now()})
+    else:
+        raise HTTPException(422, "theme_id or theme is required")
+    st["theme_id"], st["theme"] = theme["id"], theme
+    await store.put("students", st)
+    return {"ok": True, "theme_id": theme["id"]}
+
+
+@api.post("/students/{student_id}/dream")
+async def set_dream(student_id: str, body: dict = Body(default={})):
+    st = await need("students", student_id, "student")
+    if body.get("dream") not in crew.DREAMS:
+        raise HTTPException(422, f"dream must be one of {', '.join(crew.DREAMS)}")
+    st["pip_dream"] = body["dream"]
+    st["egg_ready"] = crew.egg_ready(st)
+    await store.put("students", st)
+    return {"ok": True, "pip_dream": st["pip_dream"], "egg_ready": st["egg_ready"]}
+
+
+@api.post("/students/{student_id}/duo")
+async def choose_duo(student_id: str, body: dict = Body(default={})):
+    """Pick the duo partner once."""
+    st = await need("students", student_id, "student")
+    if any(c.get("kind") == "duo" for c in st.get("crew", [])):
+        raise HTTPException(409, "duo already chosen")
+    if body.get("creature") not in crew.DUO_CREATURES:
+        raise HTTPException(422, f"creature must be one of {', '.join(crew.DUO_CREATURES)}")
+    member = {"kind": "duo", "id": f"duo_{body['creature']}", "name": body["creature"].capitalize(),
+              "creature": body["creature"], "joined_at": logic.now()}
+    st.setdefault("crew", []).append(member)
+    await store.put("students", st)
+    return {"ok": True, "duo": member}
+
+
+@api.post("/students/{student_id}/hatch")
+async def hatch(student_id: str):
+    st = await need("students", student_id, "student")
+    if any(c.get("kind") == "mini" for c in st.get("crew", [])):
+        raise HTTPException(409, "already hatched")
+    if not crew.egg_ready(st):
+        raise HTTPException(400, "no egg yet: reach brain v3, win 3 K.O.s (or 1 with the family dream)")
+    mini = {"kind": "mini", "id": f"mini_{student_id}", "name": f"Mini {st.get('pip_name') or 'Pip'}",
+            "joined_at": logic.now()}
+    st.setdefault("crew", []).append(mini)
+    st["egg_ready"] = False
+    await store.put("students", st)
+    return {"ok": True, "mini": mini}
+
+
+@api.post("/mini/{student_id}/review")
+async def mini_review(student_id: str):
+    """Spaced review: the mini was taught one of the student's old rules, misapplies it, the student fixes it."""
+    st = await need("students", student_id, "student")
+    mini = next((c for c in st.get("crew", []) if c.get("kind") == "mini"), None)
+    if not mini:
+        raise HTTPException(409, "hatch the egg first")
+    assignments = {x["id"]: x for x in await store.all("assignments")}
+    pick = crew.pick_review_rule(st, await store.all("sessions", student_id=student_id), assignments)
+    if not pick:
+        raise HTTPException(409, "nothing to review yet: teach Pip something first")
+    src, cid, rule = pick["assignment"], pick["concept_id"], pick["rule"]
+    les = lessons.lesson_of(src)
+    concept = next(c for c in src["concepts"] if c["id"] == cid)
+    wrong = crew.misapplication(src, les, cid)
+    pseudo = {**src, "id": logic.new_id("rv"), "student_id": f"rv:{student_id}", "review": True,
+              "concepts": [concept], "misconception": wrong, "quiz": [q for q in src.get("quiz", [])
+                                                                       if q.get("concept_id") == cid],
+              "lesson": ({**les, "concepts": [c for c in les["concepts"] if c["concept_id"] == cid]} if les else None),
+              "created_at": logic.now()}
+    if not pseudo["lesson"]:
+        pseudo.pop("lesson")
+    await store.put("assignments", pseudo)
+    pip = st.get("pip_name") or "Pip"
+    s = logic.new_session(pseudo, student_id, "blob", "blob", "none",
+                          [f"Hi. I'm {mini['name']}. {pip} taught me this: '{rule}'.", wrong])
+    s.update(kind="review", mini_name=mini["name"],
+             review={"assignment_id": src["id"], "concept_id": cid, "rule": rule})
+    p = pacing.ensure_pace(s, pseudo)
+    p["target"], p["last_q"] = cid, wrong
+    p["qlog"].append(pacing.qnorm(wrong))
+    await store.put("sessions", s)
+    return s
 
 
 @api.post("/students/{student_id}/open")
@@ -331,6 +447,14 @@ async def _turn(sid: str, body: dict):
     if r["interests"]:
         st["interests"] = r["interests"]
         await store.put("students", st)
+    if s.get("kind") == "review" and s.get("ready_for_quiz") and s["status"] != "complete":
+        s["transcript"][-1]["text"] = "ok, that makes sense now. thanks for fixing me. we good?"
+        s.update(status="complete", mood="celebrating")
+        meta = s["review"]
+        st.setdefault("review_log", []).append({**{k: meta[k] for k in ("assignment_id", "concept_id")},
+                                                "date": logic.now(), "session_id": s["id"]})
+        st["reviews"] = int(st.get("reviews", 0)) + 1
+        await store.put("students", st)
     await store.put("sessions", s)
     return s
 
@@ -471,6 +595,7 @@ async def _quiz(sid: str, tasks: BackgroundTasks):
         to_v = min(3, from_v + 1)
         s.update(ko=True, status="complete", mood="celebrating", boss_hp=0, brain_version=to_v)
         s["payoff"] = grant_payoff(st, s, a, from_v, to_v)
+        s["payoff"].update(crew.ko_rewards(st, a, logic.now()))
         for c in a["concepts"]:  # every passed concept counts as explained: unlock its weapon
             s["meters"][c["id"]] = max(s["meters"].get(c["id"], 0), logic.UNLOCK_AT)
             if c.get("weapon") and c["weapon"] not in s["weapons"]:

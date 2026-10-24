@@ -158,6 +158,11 @@ convention (a rule people agreed on): NEVER ask why; ask when it applies, or han
 sort. procedure: ask them to walk one example, or make a small wrong prediction and let them correct you \
 ("I'll guess 6 + 4 = 10, right?").
 
+Voice growth (state.brain_version): 1 = you are new at this, tentative. 2 = a bit sharper and more \
+confident: you finish the student's thought sometimes, still one step behind. 3 = confident and a little \
+cocky about what you already know, with one callback per session; you are still the one who needs the \
+student's help.
+
 Callback (once per session): state.callback_rule is a rule this student taught you in an earlier session, \
 verbatim. At most once, never in the first reply and only when it fits, apply it to a NEW situation inside \
 your one question ("by your two-copies thing, would this one be half too?") and set callback_used true. If \
@@ -227,6 +232,15 @@ def lesson_block(les: dict, a: dict) -> str:
     return "\n".join(out)
 
 
+def _review_note(a: dict) -> str:
+    if not a.get("review"):
+        return ""
+    return ("\n\nREVIEW MODE: you are Pip's little mini, not Pip. Pip taught you the rule in the first message and "
+            "you already misapplied it once (the claim in this mission). The student is correcting you. Stay "
+            "one step behind, restate their fix in your own few words, ask one question at a time, and when "
+            "they have fixed it say you get it now. The concept list has one concept.")
+
+
 def _boss_lines(a: dict) -> str:
     lines = a["boss"].get("lines") or {}
     if not lines:
@@ -246,7 +260,7 @@ def persona_system(a: dict) -> str:
             f"Concepts the student must explain (use these indexes as concept_index):\n{concepts}\n"
             f"Your misconception (you believe this at the start): {a['misconception']}\n"
             f"The boss (the misconception personified): {a['boss']['name']} {a['boss']['emoji']}, "
-            f"{a['boss']['backstory']}" + _boss_lines(a) + (lesson_block(les, a) if les else ""))
+            f"{a['boss']['backstory']}" + _boss_lines(a) + (lesson_block(les, a) if les else "") + _review_note(a))
 
 
 def _alternate(history: list[dict]) -> list[dict]:
@@ -276,7 +290,7 @@ def _history(session: dict) -> list[dict]:
             for m in session["transcript"] if m["from"] in ("student", "pip")]
 
 
-def pace_state(session: dict, a: dict, les: dict, nq, infer: bool) -> str:
+def pace_state(session: dict, a: dict, les: dict, nq, infer: bool, version: int = 1) -> str:
     p = PC.ensure_pace(session, a)
     ids = concept_ids(a)
     cov = "; ".join(f"{i} [{PC.kind_of(les, cid)}]: " + ",".join(k for k in ("idea", "reason", "example", "wrong") if p["cov"][cid][k])
@@ -287,7 +301,8 @@ def pace_state(session: dict, a: dict, les: dict, nq, infer: bool) -> str:
     return (f"coverage so far: {cov}\ntarget_concept={tgt} ready_for_quiz={session.get('ready_for_quiz', False)} "
             f"infer_this_turn={infer}\nrecent_pip_questions: {recent}\n"
             f"suggested_question: {nq[0] if nq else 'none: the app will offer the quiz'}\n"
-            f"callback_rule={session.get('callback_rule') or 'none'} "
+            f"brain_version={version} "
+            f"callback_rule={(session.get('callback_rule') if version >= 2 else None) or 'none'} "
             f"callback_used={bool(session.get('callback_used'))}")
 
 
@@ -303,7 +318,7 @@ async def turn(session: dict, a: dict, student: dict, text: str) -> dict:
                 p = PC.ensure_pace(session, a)
                 infer = (p["turns"] + 1) % 3 == 0
                 nq = PC.next_question(session, a, les, p["target"], infer)
-                state = f"<state>{_state_prefix(session, student, a)}\n{pace_state(session, a, les, nq, infer)}</state>"
+                state = f"<state>{_state_prefix(session, student, a)}\n{pace_state(session, a, les, nq, infer, int(student.get('brain_version') or 1))}</state>"
             else:
                 state = (f"<state>meters={session['meters']} boss_hp={session['boss_hp']} "
                          f"equipped={session['equipped']} unlocked={session['weapons']} "

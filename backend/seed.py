@@ -10,7 +10,7 @@ from logic import new_ladder, now
 
 SEED = Path(__file__).parent / "seed"
 COLLS = ["center", "tutors", "students", "assignments", "sessions", "events", "sent", "workshops",
-         "pilot"]
+         "pilot", "themes"]
 
 
 def _load(name):
@@ -236,7 +236,8 @@ async def seed(store):
         students[sid]["tutor_id"] = "t1"
     students["s001"]["interests"] = "soccer"  # Maya's opening is just the claim
     for st_ in students.values():  # persistent Pip state (v3.7)
-        st_.update(pip_name="Pip", brain_version=1, earned_items=[], album=[])
+        st_.update(pip_name="Pip", brain_version=1, earned_items=[], album=[], unlocks=[], crew=[], pip_dream=None,
+                   ko_count=0, reviews=0, review_log=[], egg_ready=False)
     base = raw["assignment"]
     frac_owner = "s002"  # fractions moved to a secondary mission for another student
     a = {**pip_ai.FRAC, "id": base["id"], "student_id": frac_owner,
@@ -282,7 +283,7 @@ async def seed(store):
     maya = _maya_saved_script(main) if main["id"] == "a_tri" else _maya_saved(main)
     maya["gap_report"] = pip_ai.report_det(maya, main, students["s001"])
     maya["parent_message"] = pip_ai.parent_template(maya, main, students["s001"], "Ms. Rivera")
-    maya["payoff"] = {"from_version": 1, "to_version": 2, "new_items": ["fixed_it_star", "half_pin"],
+    maya["payoff"] = {"from_version": 1, "to_version": 2, "new_items": ["fixed_it_star", "half_pin"], "new_crew": [], "unlocked": [], "dream_unlock": None,
                       "card": {"card_no": 1, "variant": "comeback", "boss_name": main["boss"]["name"],
                                "assignment_id": main["id"], "topic": main["topic"],
                                "strike": "A = b \u00d7 h" if main["id"] == "a_tri" else main["misconception"]}}
