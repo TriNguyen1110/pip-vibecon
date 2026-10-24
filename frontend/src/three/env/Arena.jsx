@@ -451,13 +451,26 @@ export function Arena({ bossEmoji = '👾', bossHp = 100, reduced, hero }) {
         <ringGeometry args={[2.26, 2.33, 64]} />
         <meshBasicMaterial color={A.rim} transparent opacity={0.8} toneMapped={false} />
       </mesh>
-      <Ring position={hero ? [0, 0.006, 0.35] : [-0.95, 0.006, 0.15]} color={A.ring} />
-      <Ring position={hero ? [0.8, 0.006, -1.45] : [1.0, 0.006, -0.1]} color={UI.sunset} r={hero ? 0.5 : 0.7} />
+      <Ring position={hero ? [-0.2, 0.006, 0.35] : [-0.95, 0.006, 0.15]} color={A.ring} />
+      {!hero && <Ring position={[1.0, 0.006, -0.1]} color={UI.sunset} r={0.7} />}
+      {hero && (
+        // hero: a pedestal lifts the boss up and to the right so it never hides behind Pip
+        <group position={[0.72, 0, -1.7]}>
+          <mesh position={[0, 0.17, 0]}>
+            <cylinderGeometry args={[0.36, 0.42, 0.34, 32]} />
+            <Mat color={A.plinth} rough={0.4} />
+          </mesh>
+          <mesh position={[0, 0.006, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+            <ringGeometry args={[0.5, 0.54, 40]} />
+            <meshBasicMaterial color={UI.sunset} toneMapped={false} />
+          </mesh>
+        </group>
+      )}
       <Orb position={hero ? [-1.25, 1.3, -1.9] : [-2.05, 1.3, -1.2]} color={A.orbs[0]} />
       {A.beams && <Beams />}
       <Orb position={hero ? [1.7, 1.3, -1.9] : [2.05, 1.3, -1.2]} color={A.orbs[1]} phase={1.7} />
       {/* hero: the boss stands smaller, behind Pip to the right */}
-      <group position={hero ? [0.8, 0, -1.45] : [1.0, 0, -0.1]} rotation={[0, hero ? -0.3 : -0.32, 0]} scale={hero ? 0.8 : 1}>
+      <group position={hero ? [0.72, 0.34, -1.7] : [1.0, 0, -0.1]} rotation={[0, hero ? -0.25 : -0.32, 0]} scale={hero ? 0.7 : 1}>
         <Boss emoji={bossEmoji} hp={hp} reduced={reduced} />
       </group>
     </group>

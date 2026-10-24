@@ -173,6 +173,9 @@ export function Room({ hero }) {
         <cylinderGeometry args={[R, R, 0.16, 64]} />
         <Mat color={T.floor} rough={0.5} coat={0.4} />
       </mesh>
+      {/* hero: no walls, so the page's own CSS scene shows behind Pip */}
+      {!hero && (
+        <>
       <mesh position={[0, WALL_H / 2 - 0.02, 0]}>
         <cylinderGeometry args={[R - 0.02, R - 0.02, WALL_H, 64, 1, true, Math.PI / 2 + 0.25, Math.PI - 0.5]} />
         <Mat color={T.wall} rough={0.6} coat={0.3} side={THREE.DoubleSide} />
@@ -186,11 +189,15 @@ export function Room({ hero }) {
         <torusGeometry args={[R - 0.02, 0.035, 8, 48, Math.PI - 0.5]} />
         <Mat color={T.cap} rough={0.25} emissive={T.cap} glow={T.glow} />
       </mesh>
+        </>
+      )}
       <mesh position={[0, 0, 0]} rotation={[Math.PI / 2, 0, 0]}>
         <torusGeometry args={[R, 0.04, 8, 64]} />
         <Mat color={T.floorRim} rough={0.3} />
       </mesh>
 
+      {!hero && (
+        <>
       {/* framed card */}
       <OnWall a={0.42} y={1.2}>
         <group rotation={[0, 0, -0.04]}>
@@ -218,6 +225,8 @@ export function Room({ hero }) {
         <Star position={[0, 0, 0]} size={0.7} color={T.stars[3]} rot={0.1} glow={T.glow} />
       </OnWall>
 
+        </>
+      )}
       <Rug />
       <Plant position={hero ? [-0.62, 0, -0.85] : [-0.95, 0, -0.75]} />
       <Lamp position={hero ? [0.62, 0, -0.82] : [0.95, 0, -0.7]} />

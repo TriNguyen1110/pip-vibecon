@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unknown-property, react-refresh/only-export-components */
-import { useEffect, useLayoutEffect, useMemo, useRef } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { Environment, Lightformer } from '@react-three/drei'
@@ -8,6 +8,7 @@ import { ENV_MAP } from './env'
 import { StyleCtx } from './parts/Mat'
 import { CREATURE_MAP } from './creatures'
 import { ThemeCtx } from './parts/theme'
+import { FurCtx } from './parts/Fur'
 import { THEMES } from './palette'
 
 function CameraRig({ frame, sway = true }) {
@@ -81,6 +82,36 @@ function FpsDriver({ fps = 30, active = true }) {
   return null
 }
 
+// Shell fur only where the device keeps up: needs a decent GPU (max texture size >= 4096, > 2 cores),
+// and switches off for good if frames average slower than ~45 ms (our cap is 30 fps) over one second.
+function useFurGovernor(gl) {
+  const [shells, setShells] = useState(() => {
+    const cores = typeof navigator !== 'undefined' ? navigator.hardwareConcurrency || 4 : 4
+    return (gl?.capabilities?.maxTextureSize ?? 0) >= 4096 && cores > 2
+  })
+  return [shells, setShells]
+}
+
+function FurGovernor({ on, off }) {
+  const acc = useRef({ t: 0, n: 0, skip: 10 })
+  useFrame((_, delta) => {
+    if (!on || delta > 0.5) return // ignore resumes after being paused offscreen
+    const a = acc.current
+    if (a.skip > 0) {
+      a.skip -= 1 // ignore warm-up frames (shader compile)
+      return
+    }
+    a.t += delta
+    a.n += 1
+    if (a.t >= 1) {
+      if (a.t / a.n > 0.045) off()
+      a.t = 0
+      a.n = 0
+    }
+  })
+  return null
+}
+
 // Talking-Tom "hero" composition: Pip large, centered, facing the camera, feet low in the frame.
 function heroFrame(top) {
   // feet ~1/4 up from the bottom; enough width to show the boss / room around Pip
@@ -90,6 +121,9 @@ function heroFrame(top) {
 function Scene(props) {
   const { creature, toon, mood, accessory, env, bossEmoji, bossHp, reaction, onTap, growth, weed, reduced, active, hero, mouthRef, theme } = props
   const T = THEMES[theme] ?? THEMES.day
+  const gl = useThree((st) => st.gl)
+  const [shells, setShells] = useFurGovernor(gl)
+  const fur = useMemo(() => ({ shells }), [shells])
   const E = ENV_MAP[env] ?? ENV_MAP.room
   const Env = E.Component
   const top = (CREATURE_MAP[creature] ?? CREATURE_MAP.blob).spec.top
@@ -97,7 +131,9 @@ function Scene(props) {
   const place = hero ? E.hero ?? { pos: [0, 0, 0.2], rotY: 0 } : E.mascot
   return (
     <ThemeCtx.Provider value={T}>
+    <FurCtx.Provider value={fur}>
     <StyleCtx.Provider value={{ toon }}>
+      <FurGovernor on={shells} off={() => setShells(false)} />
       <FpsDriver active={active} />
       <CameraRig frame={frame} sway={!reduced} />
       <Lights env={env} theme={T} />
@@ -116,6 +152,7 @@ function Scene(props) {
         />
       </group>
     </StyleCtx.Provider>
+    </FurCtx.Provider>
     </ThemeCtx.Provider>
   )
 }

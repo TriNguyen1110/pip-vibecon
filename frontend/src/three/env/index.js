@@ -16,7 +16,7 @@ export const ENV_MAP = {
     Component: Arena,
     frame: { target: [0.05, 0.88, 0], w: 1.95, h: 1.2, elev: 0.24 },
     mascot: { pos: [-0.9, 0, 0.2], rotY: 0.32 },
-    hero: { pos: [0, 0, 0.35], rotY: 0 },
+    hero: { pos: [-0.2, 0, 0.35], rotY: 0.05 },
   },
   garden: {
     Component: Garden,

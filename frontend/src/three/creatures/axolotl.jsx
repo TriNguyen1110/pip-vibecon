@@ -3,6 +3,7 @@ import { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { Ball, At } from '../parts/shapes'
 import { Mat } from '../parts/Mat'
+import { Fur } from '../parts/Fur'
 import { faceOnEllipsoid, onEllipsoid } from '../parts/geo'
 import { CREATURE_COLORS } from '../palette'
 
@@ -28,7 +29,7 @@ function Gills({ side, still }) {
           <group key={i} position={[dx * 0.04, (1 - i) * 0.09, 0]} rotation={[0, 0, Math.atan2(-dx, dy)]}>
             <mesh position={[0, len / 2 + 0.04, 0]}>
               <capsuleGeometry args={[0.05, len, 4, 10]} />
-              <Mat color={C.accent} />
+              <Fur color={C.accent} />
             </mesh>
             <Ball r={0.035} position={[0.045, len * 0.55, 0.02]} color={C.accent} seg={10} outline={false} />
           </group>
@@ -47,32 +48,32 @@ function Body({ still }) {
     <group>
       <mesh position={BODY.c} scale={[BODY.r[0] / BODY.r[1], 1, BODY.r[2] / BODY.r[1]]}>
         <sphereGeometry args={[BODY.r[1], 40, 28]} />
-        <Mat color={C.body} />
+        <Fur color={C.body} shells len={0.04} density={[7, 4]} bald={[[0, -0.1, 1, 0.86]]} />
       </mesh>
       <At a={belly}>
         <mesh scale={[1, 1.2, 0.28]}>
           <sphereGeometry args={[0.21, 24, 16]} />
-          <Mat color={C.patch} outline={false} />
+          <Fur color={C.patch} outline={false} />
         </mesh>
       </At>
       <group ref={tail} position={[0, 0.3, -0.3]}>
         <mesh position={[0, 0.04, -0.3]} scale={[0.22, 0.6, 1]}>
           <sphereGeometry args={[0.36, 24, 16]} />
-          <Mat color={C.body} />
+          <Fur color={C.body} />
         </mesh>
         <mesh position={[0, 0.2, -0.32]} scale={[0.08, 0.35, 0.9]}>
           <sphereGeometry args={[0.34, 20, 12]} />
-          <Mat color={C.patch} />
+          <Fur color={C.patch} />
         </mesh>
       </group>
       {[-1, 1].map((s) => (
-        <Ball key={s} r={0.1} s={[1.1, 0.6, 1.3]} position={[s * 0.17, 0.05, 0.24]} color={C.body} />
+        <Ball key={s} r={0.1} s={[1.1, 0.6, 1.3]} position={[s * 0.17, 0.05, 0.24]} color={C.body} fur />
       ))}
       {[-1, 1].map((s) => (
-        <Ball key={`b${s}`} r={0.09} s={[1.1, 0.6, 1.3]} position={[s * 0.26, 0.05, -0.2]} color={C.body} />
+        <Ball key={`b${s}`} r={0.09} s={[1.1, 0.6, 1.3]} position={[s * 0.26, 0.05, -0.2]} color={C.body} fur />
       ))}
       {[-1, 1].map((s) => (
-        <Ball key={`a${s}`} r={0.08} s={[0.8, 1.2, 0.9]} position={[s * 0.35, 0.42, 0.12]} rotation={[0, 0, s * 0.4]} color={C.body} />
+        <Ball key={`a${s}`} r={0.08} s={[0.8, 1.2, 0.9]} position={[s * 0.35, 0.42, 0.12]} rotation={[0, 0, s * 0.4]} color={C.body} fur />
       ))}
     </group>
   )
@@ -83,7 +84,7 @@ function Head({ still }) {
     <group>
       <mesh scale={[HR[0] / HR[1], 1, HR[2] / HR[1]]}>
         <sphereGeometry args={[HR[1], 44, 30]} />
-        <Mat color={C.body} />
+        <Fur color={C.body} shells len={0.04} density={[8, 4]} bald={[[0, -0.05, 1, 0.74]]} />
       </mesh>
       <Gills side={-1} still={still} />
       <Gills side={1} still={still} />

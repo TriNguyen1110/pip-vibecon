@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unknown-property, react-refresh/only-export-components */
 import { Ball, At } from '../parts/shapes'
 import { Mat } from '../parts/Mat'
+import { Fur } from '../parts/Fur'
 import { onEllipsoid } from '../parts/geo'
 import { CREATURE_COLORS } from '../palette'
 
@@ -9,7 +10,7 @@ const C = CREATURE_COLORS.frog
 const R = [0.62, 0.5, 0.54]
 const BUMP_R = 0.2
 const BUMPS = [-1, 1].map((s) => [s * 0.28, 0.42, 0.1])
-const belly = onEllipsoid([0, 0, 0], R, 0, -0.5, -0.01)
+const belly = onEllipsoid([0, 0, 0], R, 0, -0.66, -0.01)
 const spots = [
   onEllipsoid([0, 0, 0], R, 2.4, 0.5),
   onEllipsoid([0, 0, 0], R, -2.6, 0.35),
@@ -23,7 +24,7 @@ function Body() {
         <Ball key={s} r={0.12} s={[1.3, 0.45, 1.2]} position={[s * 0.27, 0.04, 0.38]} color={C.accent} />
       ))}
       {[-1, 1].map((s) => (
-        <Ball key={`b${s}`} r={0.2} s={[0.85, 0.7, 1.2]} position={[s * 0.52, 0.14, -0.1]} color={C.body} />
+        <Ball key={`b${s}`} r={0.2} s={[0.85, 0.7, 1.2]} position={[s * 0.52, 0.14, -0.1]} color={C.body} fur />
       ))}
     </group>
   )
@@ -34,15 +35,15 @@ function Head() {
     <group>
       <mesh scale={[R[0] / R[1], 1, R[2] / R[1]]}>
         <sphereGeometry args={[R[1], 48, 32]} />
-        <Mat color={C.body} />
+        <Fur color={C.body} shells len={0.045} density={[8, 4]} bald={[[0, 0, 1, 0.8], [0, -0.75, 1, 0.9]]} />
       </mesh>
       {BUMPS.map((p, i) => (
-        <Ball key={i} r={BUMP_R} position={p} color={C.body} seg={32} />
+        <Ball key={i} r={BUMP_R} position={p} color={C.body} fur seg={32} />
       ))}
       <At a={belly}>
-        <mesh scale={[1.3, 0.8, 0.3]}>
-          <sphereGeometry args={[0.3, 28, 18]} />
-          <Mat color={C.patch} outline={false} />
+        <mesh scale={[1.3, 0.75, 0.3]}>
+          <sphereGeometry args={[0.25, 28, 18]} />
+          <Fur color={C.patch} outline={false} />
         </mesh>
       </At>
       {spots.map((a, i) => (

@@ -1,7 +1,8 @@
 /* eslint-disable react/no-unknown-property, react-refresh/only-export-components */
 import { useMemo } from 'react'
-import { Ball, Tube, At } from '../parts/shapes'
+import { Ball, At } from '../parts/shapes'
 import { Mat } from '../parts/Mat'
+import { Fur } from '../parts/Fur'
 import { makeLathe, onLathe } from '../parts/geo'
 import { CREATURE_COLORS } from '../palette'
 
@@ -20,13 +21,18 @@ const lathe = makeLathe([
   [0, 1.15],
 ])
 const OFF = [0, -PIVOT, 0]
+// fur-free face mask + belly patch (object-space normal direction, cos of half-angle)
+const BLOB_BALD = [
+  [0, 0.25, 1, 0.82],
+  [0, -0.35, 1, 0.9],
+]
 const belly = onLathe(lathe, 0, 0.22, -0.012) // rendered inside the OFF group
 
 function Body() {
   return (
     <group>
       {[-1, 1].map((s) => (
-        <Ball key={`a${s}`} r={0.1} s={[0.7, 1, 0.9]} position={[s * 0.59, 0.34, 0.05]} rotation={[0, 0, s * 0.35]} color={C.body} />
+        <Ball key={`a${s}`} r={0.1} s={[0.7, 1, 0.9]} position={[s * 0.59, 0.34, 0.05]} rotation={[0, 0, s * 0.35]} color={C.body} fur />
       ))}
     </group>
   )
@@ -38,26 +44,23 @@ function Head() {
     <group position={OFF}>
       <mesh>
         <latheGeometry args={[pts, 48]} />
-        <Mat color={C.body} />
+        <Fur color={C.body} shells len={0.05} density={[7, 5]} bald={BLOB_BALD} />
       </mesh>
       <At a={belly}>
         <mesh scale={[1.3, 0.95, 0.3]}>
           <sphereGeometry args={[0.19, 28, 18]} />
-          <Mat color={C.patch} outline={false} />
+          <Fur color={C.patch} outline={false} />
         </mesh>
       </At>
-      <Tube
-        points={[
-          [0, 1.1, 0],
-          [0.0, 1.22, 0.03],
-          [0.06, 1.3, 0.02],
-          [0.13, 1.28, -0.03],
-          [0.12, 1.21, -0.05],
-        ]}
-        r={0.034}
-        endR={0.036}
-        color={C.body}
-      />
+      {/* fuzzy top tuft (replaces the cowlick) */}
+      <group position={[0, 1.07, 0]}>
+        {[-0.45, 0, 0.45].map((rz, i) => (
+          <mesh key={i} position={[Math.sin(rz) * 0.09, 0.11 - Math.abs(rz) * 0.05, i === 1 ? 0.01 : -0.01]} rotation={[0, 0, -rz]} scale={[0.55, 1.6, 0.55]}>
+            <sphereGeometry args={[0.085, 14, 10]} />
+            <Fur color={C.body} />
+          </mesh>
+        ))}
+      </group>
     </group>
   )
 }
@@ -89,6 +92,6 @@ export default {
     icon: [0.42, 0.98, 0.05],
     sweat: [0.48, 0.18, 0.32],
     shadow: 1.45,
-    top: 1.3,
+    top: 1.28,
   },
 }

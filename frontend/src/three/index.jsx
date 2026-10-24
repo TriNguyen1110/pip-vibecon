@@ -170,9 +170,10 @@ export function MascotStage({
         position: 'relative',
         width: '100%',
         height,
-        borderRadius: safeEnv === 'garden' ? 28 : undefined,
-        background: safeEnv === 'garden' ? GARDEN_SKY[safeTheme] : undefined,
-        overflow: safeEnv === 'garden' ? 'hidden' : undefined,
+        // hero framing stays transparent so the frontend's CSS scene shows through
+        borderRadius: safeEnv === 'garden' && !hero ? 28 : undefined,
+        background: safeEnv === 'garden' && !hero ? GARDEN_SKY[safeTheme] : undefined,
+        overflow: safeEnv === 'garden' && !hero ? 'hidden' : undefined,
       }}
     >
       {!ok || lost ? (

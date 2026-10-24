@@ -3,6 +3,7 @@ import { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { Ball, Rod, Tube, At } from '../parts/shapes'
 import { Mat } from '../parts/Mat'
+import { Fur } from '../parts/Fur'
 import { faceOnEllipsoid, onEllipsoid } from '../parts/geo'
 import { CREATURE_COLORS, INK } from '../palette'
 
@@ -41,22 +42,22 @@ function Body({ still }) {
     <group>
       <mesh position={BODY.c} scale={[BODY.r[0] / BODY.r[1], 1, BODY.r[2] / BODY.r[1]]}>
         <sphereGeometry args={[BODY.r[1], 40, 28]} />
-        <Mat color={C.body} />
+        <Fur color={C.body} shells len={0.04} density={[7, 4]} bald={[[0, -0.08, 1, 0.86]]} />
       </mesh>
       <At a={belly}>
         <mesh scale={[1, 1.25, 0.28]}>
           <sphereGeometry args={[0.24, 24, 16]} />
-          <Mat color={C.patch} outline={false} />
+          <Fur color={C.patch} outline={false} />
         </mesh>
       </At>
       {backSpikes.map((a, i) => (
         <Spike key={i} a={a} />
       ))}
       {[-1, 1].map((s) => (
-        <Ball key={s} r={0.12} s={[1.05, 0.6, 1.3]} position={[s * 0.17, 0.05, 0.25]} color={C.body} />
+        <Ball key={s} r={0.12} s={[1.05, 0.6, 1.3]} position={[s * 0.17, 0.05, 0.25]} color={C.body} fur />
       ))}
       {[-1, 1].map((s) => (
-        <Rod key={`a${s}`} a={[s * 0.32, 0.6, 0.12]} b={[s * 0.36, 0.38, 0.22]} r={0.072} color={C.body} />
+        <Rod key={`a${s}`} a={[s * 0.32, 0.6, 0.12]} b={[s * 0.36, 0.38, 0.22]} r={0.072} color={C.body} fur />
       ))}
       {[-1, 1].map((s, i) => (
         <group key={`w${s}`} ref={wings[i]} position={[s * 0.18, 0.66, -0.3]}>
@@ -67,7 +68,8 @@ function Body({ still }) {
         </group>
       ))}
       <Tube
-        points={[
+          fur
+         points={[
           [0, 0.2, -0.3],
           [0.2, 0.12, -0.5],
           [0.45, 0.16, -0.55],
@@ -90,11 +92,11 @@ function Head() {
     <group>
       <mesh scale={[HR[0] / HR[1], 1, HR[2] / HR[1]]}>
         <sphereGeometry args={[HR[1], 44, 30]} />
-        <Mat color={C.body} />
+        <Fur color={C.body} shells len={0.04} density={[7, 4]} bald={[[0, -0.05, 1, 0.8]]} />
       </mesh>
       <mesh position={SNOUT_C} scale={[SNOUT_R[0] / SNOUT_R[1], 1, SNOUT_R[2] / SNOUT_R[1]]}>
         <sphereGeometry args={[SNOUT_R[1], 28, 18]} />
-        <Mat color={C.patch} />
+        <Fur color={C.patch} />
       </mesh>
       {nostrils.map((a, i) => (
         <At key={i} a={a}>
@@ -115,9 +117,17 @@ function Head() {
       {[-1, 1].map((s) => (
         <mesh key={`e${s}`} position={[s * 0.44, 0.06, -0.04]} rotation={[0, 0, -s * (Math.PI / 2 - 0.35)]} scale={[1, 1, 0.45]}>
           <coneGeometry args={[0.08, 0.2, 14]} />
-          <Mat color={C.body} />
+          <Fur color={C.body} />
         </mesh>
       ))}
+      {[-1, 1].map((s) =>
+        [0, 1].map((j) => (
+          <mesh key={`t${s}${j}`} position={[s * (0.42 + j * 0.02), -0.12 - j * 0.07, 0.12]} rotation={[0, 0, s * (1.9 + j * 0.35)]} scale={[0.5, 1.4, 0.5]}>
+            <sphereGeometry args={[0.055, 12, 8]} />
+            <Fur color={C.body} />
+          </mesh>
+        )),
+      )}
       {headSpikes.map((a, i) => (
         <Spike key={i} a={a} h={0.11} r={0.05} />
       ))}
