@@ -117,3 +117,9 @@ the concept's `friend_nudge` (a hint framed as something a friend said, never th
 marks the concept `stuck` if still below level 2. Pip talks like a confused friend: paraphrases back ("So you're
 saying…"), never "Correct!", never teacher phrases. Seeded missions: `a_frac` (Maya, fractions) and `a_sat_commas`
 (a different student, SAT Writing: commas and run-ons), both hand-written and offline-capable.
+
+## v3.1 additions (talking, centered mascot; frontend + 3D only, no backend change)
+`MascotStage` gains two optional props: `mouth` (0–1, how open the mouth is right now; the frontend drives it
+while Pip speaks) and `framing: "default"|"hero"` (hero = Talking-Tom layout: Pip large and centered, facing the
+student; in the arena the boss stands smaller behind Pip to the right). Pip's voice is client-side only (browser
+speech synthesis); no audio is recorded, stored or sent. Captions always show; voice is never the only channel.
