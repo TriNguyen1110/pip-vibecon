@@ -5,6 +5,7 @@ import { Ball, Rod, Tube, At } from '../parts/shapes'
 import { Mat } from '../parts/Mat'
 import { Fur } from '../parts/Fur'
 import { faceOnEllipsoid, onEllipsoid } from '../parts/geo'
+import { useCreatureColors, useVibe } from '../parts/vibe'
 import { CREATURE_COLORS, INK } from '../palette'
 
 // "Lilac / Lime": stubby dragon; lime horns, wings and spikes are the one accent.
@@ -19,6 +20,7 @@ const headSpikes = [0.75, 0.35].map((p) => onEllipsoid([0, 0, 0], HR, Math.PI, p
 const backSpikes = [0.45, 0.1].map((p) => onEllipsoid(BODY.c, BODY.r, Math.PI, p))
 
 function Spike({ a, h = 0.12, r = 0.055 }) {
+  const C = useCreatureColors('dragon')
   return (
     <At a={a}>
       <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, 0, h * 0.35]}>
@@ -30,6 +32,7 @@ function Spike({ a, h = 0.12, r = 0.055 }) {
 }
 
 function Body({ still }) {
+  const C = useCreatureColors('dragon')
   const wings = [useRef(), useRef()]
   useFrame((s) => {
     if (still) return
@@ -42,7 +45,7 @@ function Body({ still }) {
     <group>
       <mesh position={BODY.c} scale={[BODY.r[0] / BODY.r[1], 1, BODY.r[2] / BODY.r[1]]}>
         <sphereGeometry args={[BODY.r[1], 40, 28]} />
-        <Fur color={C.body} shells len={0.04} density={[7, 4]} bald={[[0, -0.08, 1, 0.86]]} />
+        <Fur color={C.body} shells len={0.04} density={[4, 2]} bald={[[0, -0.08, 1, 0.86]]} />
       </mesh>
       <At a={belly}>
         <mesh scale={[1, 1.25, 0.28]}>
@@ -88,11 +91,13 @@ function Body({ still }) {
 }
 
 function Head() {
+  const C = useCreatureColors('dragon')
+  const ugly = useVibe() === 'ugly'
   return (
     <group>
       <mesh scale={[HR[0] / HR[1], 1, HR[2] / HR[1]]}>
         <sphereGeometry args={[HR[1], 44, 30]} />
-        <Fur color={C.body} shells len={0.04} density={[7, 4]} bald={[[0, -0.05, 1, 0.8]]} />
+        <Fur color={C.body} shells len={0.04} density={[4, 2]} bald={[[0, -0.05, 1, 0.8]]} />
       </mesh>
       <mesh position={SNOUT_C} scale={[SNOUT_R[0] / SNOUT_R[1], 1, SNOUT_R[2] / SNOUT_R[1]]}>
         <sphereGeometry args={[SNOUT_R[1], 28, 18]} />
@@ -107,7 +112,7 @@ function Head() {
         </At>
       ))}
       {[-1, 1].map((s) => (
-        <group key={s} position={[s * 0.19, 0.36, -0.06]} rotation={[-0.45, 0, -s * 0.3]}>
+        <group key={s} position={[s * 0.19, 0.36, -0.06]} rotation={ugly && s > 0 ? [-0.2, 0, -1.0] : [-0.45, 0, -s * 0.3]}>
           <mesh position={[0, 0.06, 0]}>
             <coneGeometry args={[0.065, 0.24, 16]} />
             <Mat color={C.accent} />

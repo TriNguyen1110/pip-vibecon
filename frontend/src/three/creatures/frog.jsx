@@ -3,6 +3,7 @@ import { Ball, At } from '../parts/shapes'
 import { Mat } from '../parts/Mat'
 import { Fur } from '../parts/Fur'
 import { onEllipsoid } from '../parts/geo'
+import { useCreatureColors } from '../parts/vibe'
 import { CREATURE_COLORS } from '../palette'
 
 // "Lime / Tangerine": one squat rounded body, eyes up on two bumps.
@@ -18,6 +19,7 @@ const spots = [
 ]
 
 function Body() {
+  const C = useCreatureColors('frog')
   return (
     <group>
       {[-1, 1].map((s) => (
@@ -31,11 +33,12 @@ function Body() {
 }
 
 function Head() {
+  const C = useCreatureColors('frog')
   return (
     <group>
       <mesh scale={[R[0] / R[1], 1, R[2] / R[1]]}>
         <sphereGeometry args={[R[1], 48, 32]} />
-        <Fur color={C.body} shells len={0.045} density={[8, 4]} bald={[[0, 0, 1, 0.8], [0, -0.75, 1, 0.9]]} />
+        <Fur color={C.body} shells len={0.045} density={[4, 2]} bald={[[0, 0.1, 1, 0.78], [0, 0.91, 0.41, 0.72]]} />
       </mesh>
       {BUMPS.map((p, i) => (
         <Ball key={i} r={BUMP_R} position={p} color={C.body} fur seg={32} />

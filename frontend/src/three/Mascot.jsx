@@ -4,7 +4,8 @@ import * as THREE from 'three'
 import { useFrame } from '@react-three/fiber'
 import { CREATURE_MAP } from './creatures'
 import { Face } from './parts/Face'
-import { HeadAccessory, BodyAccessory } from './parts/Accessory'
+import { HeadAccessory, BodyAccessory, StitchPatch } from './parts/Accessory'
+import { useVibe, useCreatureColors } from './parts/vibe'
 import { MoodIcon, SweatDrop, Sparkles } from './parts/MoodIcon'
 import { BlobShadow } from './parts/BlobShadow'
 import { damp, easeInOut } from './parts/geo'
@@ -43,6 +44,8 @@ export function Mascot({
 }) {
   const C = CREATURE_MAP[creature] ?? CREATURE_MAP.blob
   const spec = C.spec
+  const vibe = useVibe()
+  const pal = useCreatureColors(CREATURE_MAP[creature] ? creature : 'blob')
   const root = useRef()
   const squash = useRef()
   const head = useRef()
@@ -202,10 +205,12 @@ export function Mascot({
     const sy = (1 + 0.02 * breathe - W.stuck * 0.03) * (1 - 0.15 * land) * rsy * (hop > 0.02 ? 1.03 : 1) * (1 + 0.025 * talk)
     const sx = rsx / Math.sqrt(1 + 0.02 * breathe - W.stuck * 0.03) / Math.sqrt(1 - 0.15 * land)
 
+    // cool: a slight confident lean and an unimpressed sideways glance
+    const cool = vibe === 'cool' ? 1 : 0
     if (root.current) {
       root.current.position.y = hop
-      root.current.rotation.y = spin + peek
-      root.current.rotation.z = wiggle
+      root.current.rotation.y = spin + peek - cool * 0.12
+      root.current.rotation.z = wiggle + cool * (0.06 + 0.01 * Math.sin(t * 0.7))
       root.current.rotation.x = lean
     }
     if (squash.current) squash.current.scale.set(sx, sy, sx)
@@ -240,14 +245,18 @@ export function Mascot({
       <BlobShadow ref={shadow} size={spec.shadow} position={[0, shadowY, 0]} />
       <group ref={root}>
         <group ref={squash}>
+          {/* ugly: slightly asymmetric body */}
+          <group rotation={[0, 0, vibe === 'ugly' ? -0.035 : 0]} scale={vibe === 'ugly' ? [1.05, 0.97, 1] : 1}>
           <C.Body accessory={accessory} mood={mood} still={still} />
           <BodyAccessory type={accessory} spec={spec} />
+          {vibe === 'ugly' && spec.badge && <StitchPatch anchor={spec.badge} color={pal.accent} />}
           <group ref={head} position={spec.head}>
             <C.Head accessory={accessory} mood={mood} still={still} />
             <Face cfg={spec.face} mood={still ? 'idle' : mood} anim={anim} glow={spec.glow} />
             <HeadAccessory type={accessory} spec={spec} />
             {!still && <MoodIcon mood={mood} position={spec.icon} />}
             {!still && mood === 'stuck' && <SweatDrop position={spec.sweat} />}
+          </group>
           </group>
         </group>
         {!still && mood === 'celebrating' && <Sparkles spread={0.7} height={spec.top + 0.3} />}

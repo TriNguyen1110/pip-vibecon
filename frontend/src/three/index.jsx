@@ -5,6 +5,7 @@ import { Component, Suspense, lazy, memo, useCallback, useEffect, useRef, useSta
 export const CREATURES = ['blob', 'cat', 'dragon', 'axolotl', 'frog', 'bot']
 export const ACCESSORIES = ['none', 'glasses', 'scarf', 'pencil', 'badge', 'backpack']
 export const ENVIRONMENTS = ['room', 'arena', 'garden']
+export const VIBES = ['cute', 'cool', 'ugly']
 
 // three.js is code-split: the emoji fallback shows while it loads and on any WebGL error.
 const LazyStage = lazy(() => import('./Stage.jsx'))
@@ -138,6 +139,7 @@ export function MascotStage({
   mouth = 0,
   framing = 'default',
   theme = 'day',
+  vibe = 'cute',
 }) {
   // Legacy `look`: bot -> bot, blob -> blob, doodle -> ink-outline toon variant. Only used when creature is absent.
   const resolved = CREATURES.includes(creature) ? creature : look === 'bot' ? 'bot' : 'blob'
@@ -198,6 +200,7 @@ export function MascotStage({
               active={inView}
               hero={hero}
               theme={safeTheme}
+              vibe={VIBES.includes(vibe) ? vibe : 'cute'}
               mouthRef={mouthRef}
               onContextLost={onLost}
             />
@@ -209,7 +212,7 @@ export function MascotStage({
 }
 
 // Small static portrait for lists (~64px). Rendered once per combo on a shared offscreen canvas.
-export function MascotThumb({ creature, accessory = 'none', look, size = 64, mood = 'idle', style }) {
+export function MascotThumb({ creature, accessory = 'none', look, size = 64, mood = 'idle', vibe = 'cute', style }) {
   const [src, setSrc] = useState(null)
   const resolved = CREATURES.includes(creature) ? creature : look === 'bot' ? 'bot' : 'blob'
   const toon = !CREATURES.includes(creature) && look === 'doodle'
@@ -217,13 +220,13 @@ export function MascotThumb({ creature, accessory = 'none', look, size = 64, moo
     let alive = true
     if (!hasWebGL2()) return
     import('./thumb.jsx')
-      .then((m) => m.renderThumb({ creature: resolved, accessory, toon, mood }))
+      .then((m) => m.renderThumb({ creature: resolved, accessory, toon, mood, vibe }))
       .then((url) => alive && url && setSrc(url))
       .catch(() => {})
     return () => {
       alive = false
     }
-  }, [resolved, accessory, toon, mood])
+  }, [resolved, accessory, toon, mood, vibe])
   if (!src) {
     return (
       <span

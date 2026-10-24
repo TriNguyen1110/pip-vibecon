@@ -9,6 +9,7 @@ import { StyleCtx } from './parts/Mat'
 import { CREATURE_MAP } from './creatures'
 import { ThemeCtx } from './parts/theme'
 import { FurCtx } from './parts/Fur'
+import { VibeCtx } from './parts/vibe'
 import { THEMES } from './palette'
 
 function CameraRig({ frame, sway = true }) {
@@ -119,7 +120,7 @@ function heroFrame(top) {
 }
 
 function Scene(props) {
-  const { creature, toon, mood, accessory, env, bossEmoji, bossHp, reaction, onTap, growth, weed, reduced, active, hero, mouthRef, theme } = props
+  const { creature, toon, mood, accessory, env, bossEmoji, bossHp, reaction, onTap, growth, weed, reduced, active, hero, mouthRef, theme, vibe } = props
   const T = THEMES[theme] ?? THEMES.day
   const gl = useThree((st) => st.gl)
   const [shells, setShells] = useFurGovernor(gl)
@@ -131,6 +132,7 @@ function Scene(props) {
   const place = hero ? E.hero ?? { pos: [0, 0, 0.2], rotY: 0 } : E.mascot
   return (
     <ThemeCtx.Provider value={T}>
+    <VibeCtx.Provider value={vibe ?? 'cute'}>
     <FurCtx.Provider value={fur}>
     <StyleCtx.Provider value={{ toon }}>
       <FurGovernor on={shells} off={() => setShells(false)} />
@@ -153,6 +155,7 @@ function Scene(props) {
       </group>
     </StyleCtx.Provider>
     </FurCtx.Provider>
+    </VibeCtx.Provider>
     </ThemeCtx.Provider>
   )
 }

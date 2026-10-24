@@ -4,6 +4,7 @@ import { Ball, At } from '../parts/shapes'
 import { Mat } from '../parts/Mat'
 import { Fur } from '../parts/Fur'
 import { makeLathe, onLathe } from '../parts/geo'
+import { useCreatureColors, useVibe } from '../parts/vibe'
 import { CREATURE_COLORS } from '../palette'
 
 // "Aqua / Cream": Pip's default form. A soft teardrop with a single cowlick.
@@ -29,6 +30,7 @@ const BLOB_BALD = [
 const belly = onLathe(lathe, 0, 0.22, -0.012) // rendered inside the OFF group
 
 function Body() {
+  const C = useCreatureColors('blob')
   return (
     <group>
       {[-1, 1].map((s) => (
@@ -39,12 +41,14 @@ function Body() {
 }
 
 function Head() {
+  const C = useCreatureColors('blob')
+  const vibe = useVibe()
   const pts = useMemo(() => lathe.pts, [])
   return (
     <group position={OFF}>
       <mesh>
         <latheGeometry args={[pts, 48]} />
-        <Fur color={C.body} shells len={0.05} density={[7, 5]} bald={BLOB_BALD} />
+        <Fur color={C.body} shells len={0.05} density={[4, 2]} bald={BLOB_BALD} />
       </mesh>
       <At a={belly}>
         <mesh scale={[1.3, 0.95, 0.3]}>
@@ -53,11 +57,12 @@ function Head() {
         </mesh>
       </At>
       {/* fuzzy top tuft (replaces the cowlick) */}
-      <group position={[0, 1.07, 0]}>
+      {/* cool: slicked back; ugly: lopsided */}
+      <group position={[0, 1.07, 0]} rotation={vibe === 'cool' ? [-1.0, 0, 0] : vibe === 'ugly' ? [0, 0, -0.55] : [0, 0, 0]}>
         {[-0.45, 0, 0.45].map((rz, i) => (
           <mesh key={i} position={[Math.sin(rz) * 0.09, 0.11 - Math.abs(rz) * 0.05, i === 1 ? 0.01 : -0.01]} rotation={[0, 0, -rz]} scale={[0.55, 1.6, 0.55]}>
             <sphereGeometry args={[0.085, 14, 10]} />
-            <Fur color={C.body} />
+            <Fur color={vibe === 'cool' ? C.accent : C.body} />
           </mesh>
         ))}
       </group>

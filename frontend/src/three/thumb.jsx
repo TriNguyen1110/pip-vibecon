@@ -6,6 +6,7 @@ import { Mascot } from './Mascot'
 import { StudioEnv } from './Stage'
 import { StyleCtx } from './parts/Mat'
 import { CREATURE_MAP } from './creatures'
+import { VibeCtx } from './parts/vibe'
 
 // One shared offscreen canvas renders each thumbnail once; results are cached as data URLs.
 const SIZE = 160
@@ -27,7 +28,7 @@ function Capture({ done }) {
   return null
 }
 
-function ThumbScene({ creature, accessory, toon, mood, done }) {
+function ThumbScene({ creature, accessory, toon, mood, vibe, done }) {
   const camera = useThree((s) => s.camera)
   const top = (CREATURE_MAP[creature] ?? CREATURE_MAP.blob).spec.top
   const cy = top * 0.48
@@ -35,6 +36,7 @@ function ThumbScene({ creature, accessory, toon, mood, done }) {
   camera.position.set(0, cy + dist * 0.18, dist)
   camera.lookAt(0, cy, 0)
   return (
+    <VibeCtx.Provider value={vibe}>
     <StyleCtx.Provider value={{ toon }}>
       <hemisphereLight args={['#FFFFFF', '#5B4F63', 0.9]} />
       <directionalLight position={[-3, 5, 4]} intensity={1.9} />
@@ -45,11 +47,12 @@ function ThumbScene({ creature, accessory, toon, mood, done }) {
       </group>
       <Capture done={done} />
     </StyleCtx.Provider>
+    </VibeCtx.Provider>
   )
 }
 
-export function renderThumb({ creature = 'blob', accessory = 'none', toon = false, mood = 'idle' }) {
-  const key = `${creature}|${accessory}|${toon}|${mood}`
+export function renderThumb({ creature = 'blob', accessory = 'none', toon = false, mood = 'idle', vibe = 'cute' }) {
+  const key = `${creature}|${accessory}|${toon}|${mood}|${vibe}`
   if (cache.has(key)) return cache.get(key)
   const job = (chain = chain.then(
     () =>
@@ -78,6 +81,7 @@ export function renderThumb({ creature = 'blob', accessory = 'none', toon = fals
               accessory={accessory}
               toon={toon}
               mood={mood}
+              vibe={vibe}
               done={(url) => {
                 clearTimeout(timer)
                 resolve(url)

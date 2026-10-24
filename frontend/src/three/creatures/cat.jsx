@@ -5,6 +5,7 @@ import { Ball, Rod, Tube, At } from '../parts/shapes'
 import { Mat } from '../parts/Mat'
 import { Fur } from '../parts/Fur'
 import { faceOnEllipsoid, onEllipsoid } from '../parts/geo'
+import { useCreatureColors, useVibe } from '../parts/vibe'
 import { CREATURE_COLORS, INK } from '../palette'
 
 const C = CREATURE_COLORS.cat
@@ -17,6 +18,7 @@ const nose = onEllipsoid([0, 0, 0], HR, 0, -0.12, 0.012)
 const stripes = [-0.13, 0, 0.13].map((t) => onEllipsoid([0, 0, 0], HR, t, 0.62))
 
 function Body({ still }) {
+  const C = useCreatureColors('cat')
   const tail = useRef()
   useFrame((s) => {
     if (tail.current && !still) tail.current.rotation.y = Math.sin(s.clock.elapsedTime * 1.3) * 0.25
@@ -25,7 +27,7 @@ function Body({ still }) {
     <group>
       <mesh position={BODY.c} scale={[BODY.r[0] / BODY.r[1], 1, BODY.r[2] / BODY.r[1]]}>
         <sphereGeometry args={[BODY.r[1], 40, 28]} />
-        <Fur color={C.body} shells len={0.04} density={[7, 4]} bald={[[0, -0.1, 1, 0.86]]} />
+        <Fur color={C.body} shells len={0.04} density={[4, 2]} bald={[[0, -0.1, 1, 0.86]]} />
       </mesh>
       <At a={belly}>
         <mesh scale={[1, 1.2, 0.28]}>
@@ -59,14 +61,17 @@ function Body({ still }) {
 }
 
 function Head() {
+  const C = useCreatureColors('cat')
+  const vibe = useVibe()
+  const ugly = vibe === 'ugly'
   return (
     <group>
       <mesh scale={[HR[0] / HR[1], 1, HR[2] / HR[1]]}>
         <sphereGeometry args={[HR[1], 44, 30]} />
-        <Fur color={C.body} shells len={0.04} density={[7, 4]} bald={[[0, -0.08, 1, 0.8]]} />
+        <Fur color={C.body} shells len={0.04} density={[4, 2]} bald={[[0, -0.08, 1, 0.8]]} />
       </mesh>
       {[-1, 1].map((s) => (
-        <group key={s} position={[s * 0.27, 0.36, -0.02]} rotation={[-0.1, 0, -s * 0.42]}>
+        <group key={s} position={[s * 0.27, 0.36, -0.02]} rotation={ugly && s > 0 ? [0.35, 0, -1.25] : [-0.1, 0, -s * 0.42]}>
           <mesh>
             <coneGeometry args={[0.15, 0.3, 20]} />
             <Fur color={C.body} />
@@ -108,7 +113,7 @@ function Head() {
         <At key={i} a={a}>
           <mesh scale={[1, 1, 0.4]}>
             <capsuleGeometry args={[0.02, i === 1 ? 0.09 : 0.06, 4, 8]} />
-            <Mat color="#E8812A" outline={false} />
+            <Mat color={vibe === 'cool' ? C.accent : '#E8812A'} outline={false} />
           </mesh>
         </At>
       ))}

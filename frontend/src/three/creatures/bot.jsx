@@ -5,6 +5,7 @@ import { RoundedBox } from '@react-three/drei'
 import { Ball, Rod } from '../parts/shapes'
 import { Mat, CHROME } from '../parts/Mat'
 import { onPlane } from '../parts/geo'
+import { useCreatureColors, useVibe } from '../parts/vibe'
 import { CREATURE_COLORS } from '../palette'
 
 // "Pearl / Aqua": rectangular head + chrome antenna, glowing face on a dark screen.
@@ -12,6 +13,7 @@ const C = CREATURE_COLORS.bot
 const SCREEN_Z = 0.372
 
 function Body() {
+  const C = useCreatureColors('bot')
   return (
     <group>
       <RoundedBox args={[0.68, 0.6, 0.56]} radius={0.17} smoothness={4} position={[0, 0.36, 0]}>
@@ -42,6 +44,8 @@ function Body() {
 }
 
 function Head({ still, accessory }) {
+  const C = useCreatureColors('bot')
+  const ugly = useVibe() === 'ugly'
   const ball = useRef()
   useFrame((s) => {
     if (ball.current && !still) ball.current.position.x = Math.sin(s.clock.elapsedTime * 1.7) * 0.025
@@ -61,12 +65,14 @@ function Head({ still, accessory }) {
             <Mat color={C.accent} />
           </mesh>
         ))}
-      <mesh position={[0, 0.44, 0]}>
-        <cylinderGeometry args={[0.014, 0.018, 0.2, 10]} />
-        <Mat {...CHROME} />
-      </mesh>
-      <group ref={ball} position={[0, 0.56, 0]}>
-        <Ball r={0.055} color={C.accent} seg={18} />
+      <group position={[0, 0.34, 0]} rotation={[0, 0, ugly ? 0.6 : 0]}>
+        <mesh position={[0, 0.1, 0]}>
+          <cylinderGeometry args={[0.014, 0.018, 0.2, 10]} />
+          <Mat {...CHROME} />
+        </mesh>
+        <group ref={ball} position={[0, 0.22, 0]}>
+          <Ball r={0.055} color={C.accent} seg={18} />
+        </group>
       </group>
     </group>
   )

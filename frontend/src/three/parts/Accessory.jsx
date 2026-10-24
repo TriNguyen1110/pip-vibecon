@@ -185,6 +185,36 @@ export function Backpack({ pack }) {
   )
 }
 
+// ugly vibe: a stitched-on patch (body frame), mirrored from the badge anchor
+export function StitchPatch({ anchor, color }) {
+  const [x, y, z] = anchor.position
+  const [qx, qy, qz, qw] = anchor.quaternion
+  const stitches = [
+    [-0.075, 0, Math.PI / 2],
+    [0.075, 0, Math.PI / 2],
+    [0, 0.065, 0],
+    [0, -0.065, 0],
+  ]
+  return (
+    <group position={[-x, y, z]} quaternion={[qx, -qy, -qz, qw]}>
+      <group rotation={[0, 0, 0.25]}>
+        <mesh position={[0, 0, 0.004]}>
+          <boxGeometry args={[0.15, 0.13, 0.016]} />
+          <Mat color={color} rough={0.85} coat={0} />
+        </mesh>
+        {stitches.map(([sx, sy, r], i) =>
+          [-1, 0, 1].map((k) => (
+            <mesh key={`${i}${k}`} position={[sx + (r ? 0 : k * 0.045), sy + (r ? k * 0.04 : 0), 0.015]} rotation={[0, 0, r ? Math.PI / 2 : 0]}>
+              <capsuleGeometry args={[0.006, 0.026, 3, 6]} />
+              <meshStandardMaterial color={INK} roughness={0.6} />
+            </mesh>
+          )),
+        )}
+      </group>
+    </group>
+  )
+}
+
 export function HeadAccessory({ type, spec }) {
   if (type === 'glasses') return <Glasses face={spec.face} side={spec.glassesSide} lift={spec.glassesLift} />
   if (type === 'pencil' && spec.pencil) return <Pencil pencil={spec.pencil} />

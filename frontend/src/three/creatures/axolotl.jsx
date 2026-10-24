@@ -5,6 +5,7 @@ import { Ball, At } from '../parts/shapes'
 import { Mat } from '../parts/Mat'
 import { Fur } from '../parts/Fur'
 import { faceOnEllipsoid, onEllipsoid } from '../parts/geo'
+import { useCreatureColors, useVibe } from '../parts/vibe'
 import { CREATURE_COLORS } from '../palette'
 
 // "Bubblegum / Cream": wide flat head, berry gills, tail fin.
@@ -15,6 +16,7 @@ const belly = onEllipsoid(BODY.c, BODY.r, 0, -0.1, -0.01)
 const GILLS = [0.95, 0.4, -0.1] // angle from +x (radians) per gill
 
 function Gills({ side, still }) {
+  const C = useCreatureColors('axolotl')
   const g = useRef()
   useFrame((s) => {
     if (g.current && !still) g.current.rotation.z = Math.sin(s.clock.elapsedTime * 2.4 + side) * 0.06
@@ -40,6 +42,7 @@ function Gills({ side, still }) {
 }
 
 function Body({ still }) {
+  const C = useCreatureColors('axolotl')
   const tail = useRef()
   useFrame((s) => {
     if (tail.current && !still) tail.current.rotation.y = Math.sin(s.clock.elapsedTime * 1.6) * 0.3
@@ -48,7 +51,7 @@ function Body({ still }) {
     <group>
       <mesh position={BODY.c} scale={[BODY.r[0] / BODY.r[1], 1, BODY.r[2] / BODY.r[1]]}>
         <sphereGeometry args={[BODY.r[1], 40, 28]} />
-        <Fur color={C.body} shells len={0.04} density={[7, 4]} bald={[[0, -0.1, 1, 0.86]]} />
+        <Fur color={C.body} shells len={0.04} density={[4, 2]} bald={[[0, -0.1, 1, 0.86]]} />
       </mesh>
       <At a={belly}>
         <mesh scale={[1, 1.2, 0.28]}>
@@ -80,14 +83,18 @@ function Body({ still }) {
 }
 
 function Head({ still }) {
+  const C = useCreatureColors('axolotl')
+  const ugly = useVibe() === 'ugly'
   return (
     <group>
       <mesh scale={[HR[0] / HR[1], 1, HR[2] / HR[1]]}>
         <sphereGeometry args={[HR[1], 44, 30]} />
-        <Fur color={C.body} shells len={0.04} density={[8, 4]} bald={[[0, -0.05, 1, 0.74]]} />
+        <Fur color={C.body} shells len={0.04} density={[5, 2]} bald={[[0, -0.05, 1, 0.66]]} />
       </mesh>
       <Gills side={-1} still={still} />
-      <Gills side={1} still={still} />
+      <group rotation={[0, 0, ugly ? -0.45 : 0]} position={[ugly ? 0.06 : 0, ugly ? -0.08 : 0, 0]}>
+        <Gills side={1} still={still} />
+      </group>
     </group>
   )
 }

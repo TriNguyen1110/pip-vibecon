@@ -4,6 +4,7 @@ import * as THREE from 'three'
 import { useFrame } from '@react-three/fiber'
 import { INK } from '../palette'
 import { At } from './shapes'
+import { useVibe } from './vibe'
 
 // Upper-lid line per mood, in eye heights from the center: 1 = fully open, 0.4 = deadpan default (~30% closed).
 const LIDS = {
@@ -111,6 +112,29 @@ function Mouth({ mood, m, color, glow, tongue }) {
   )
 }
 
+// ugly vibe: crooked grin with a few uneven teeth (friendly, not gross)
+function CrookedGrin({ m, color, glow }) {
+  const teeth = [
+    [-0.13, 0.07, 0.055],
+    [0.02, 0.1, 0.06],
+    [0.13, 0.055, 0.045],
+  ]
+  return (
+    <group position={[0.04 * m, 0.02 * m, 0.12 * m]} rotation={[0, 0, 0.2]}>
+      <mesh scale={[1.3, 0.62, 0.35]}>
+        <sphereGeometry args={[0.24 * m, 20, 10, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2]} />
+        <EyeMat glow={glow} color={color} />
+      </mesh>
+      {teeth.map(([x, h, w], i) => (
+        <mesh key={i} position={[x * m, -h * 0.5 * m, 0.045 * m]} rotation={[0, 0, (i - 1) * 0.12]}>
+          <boxGeometry args={[w * m, h * m, 0.03 * m]} />
+          <meshStandardMaterial color={glow ? '#C9FCFC' : '#FFF8EC'} roughness={0.4} />
+        </mesh>
+      ))}
+    </group>
+  )
+}
+
 // Speaking mouth: an oval whose height follows `mouth` (scaled by the parent). Bot: its glowing screen bar grows.
 function TalkMouth({ m, color, glow, tongue }) {
   if (glow) {
@@ -148,10 +172,14 @@ export function Face({ cfg, mood = 'idle', anim, glow = false }) {
     const id = setTimeout(() => setAha(false), 400)
     return () => clearTimeout(id)
   }, [mood])
+  const vibe = useVibe()
   const lidKey = mood === 'lightbulb' && aha ? 'aha' : mood
-  const lids = LIDS[lidKey] ?? LIDS.idle
+  let lids = LIDS[lidKey] ?? LIDS.idle
+  // cool: half-lidded and unimpressed unless it's the aha moment or a celebration
+  if (vibe === 'cool' && lidKey !== 'aha' && mood !== 'celebrating') lids = lids.map((o) => Math.min(o, 0.12))
   const { w, h } = cfg
   const eyeScale = [ROUND[lidKey] ?? 1, 1, 1]
+  const mismatch = vibe === 'ugly' ? [1.28, 0.8] : [1, 1]
 
   const moodMouth = useRef()
   const talkMouth = useRef()
@@ -173,7 +201,20 @@ export function Face({ cfg, mood = 'idle', anim, glow = false }) {
     <group>
       {cfg.eyes.map((a, i) => (
         <At key={i} a={a}>
-          <group scale={eyeScale}>
+          {vibe === 'ugly' && (
+            // deadpan under-eye bags
+            <group position={[0, -h * mismatch[i] * 1.12, 0]}>
+              <mesh rotation={[0, 0, Math.PI]} position={[0, h * 0.25, w * 0.12]}>
+                <torusGeometry args={[w * 0.85 * mismatch[i], w * 0.07, 6, 16, Math.PI]} />
+                <meshBasicMaterial color={eyeColor} transparent opacity={0.45} depthWrite={false} />
+              </mesh>
+              <mesh scale={[w * 1.05 * mismatch[i], h * 0.32, w * 0.25]}>
+                <sphereGeometry args={[1, 14, 8]} />
+                <meshBasicMaterial color="#000000" transparent opacity={0.13} depthWrite={false} />
+              </mesh>
+            </group>
+          )}
+          <group scale={[eyeScale[0] * mismatch[i], mismatch[i], 1]}>
             <group ref={i ? R : L}>
               {mood === 'celebrating' ? (
                 <ArcEye w={w} color={eyeColor} glow={glow} />
@@ -186,7 +227,11 @@ export function Face({ cfg, mood = 'idle', anim, glow = false }) {
       ))}
       <At a={cfg.mouth}>
         <group ref={moodMouth}>
-          <Mouth mood={mood} m={cfg.mouthW} color={mouthColor} glow={glow} tongue={cfg.tongue ?? '#F59B76'} />
+          {vibe === 'ugly' && mood !== 'lightbulb' ? (
+            <CrookedGrin m={cfg.mouthW} color={mouthColor} glow={glow} />
+          ) : (
+            <Mouth mood={mood} m={cfg.mouthW} color={mouthColor} glow={glow} tongue={cfg.tongue ?? '#F59B76'} />
+          )}
         </group>
         <group ref={talkMouth} visible={false}>
           <group ref={talkInner}>
