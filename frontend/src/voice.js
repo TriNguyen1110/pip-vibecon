@@ -1,7 +1,9 @@
-// Pip's voice (CONTRACT v3.1): browser speech synthesis only. Nothing is recorded, stored or sent.
-// Captions always show; the voice is never the only channel. Mouth openness (0..1) is published
-// to subscribers while Pip speaks so the 3D stage can lip-flap without re-rendering the page.
+// Voices (CONTRACT v3.1, v3.4, v3.5): Pip, the boss and the announcer via POST /api/tts, falling back to
+// browser speech synthesis. Only Pip's lines are spoken; nothing is recorded or sent from the student.
+// Captions always show; the voice is never the only channel. Mouth openness and visemes are published
+// to subscribers while Pip speaks so only the stage re-renders.
 import { useEffect, useState } from 'react'
+import VOICES from '../../backend/voices.json'
 
 const KEY = 'pip.voice.muted'
 const supported = () =>
@@ -210,13 +212,15 @@ let token = 0
 let current = null // the line being spoken: { speaker, ... }
 let queue = []
 
-// Pip's voice choice in the Look sheet (CONTRACT v3.5). The backend takes `pip_voice` as an ElevenLabs
-// voice_id (backend/voices.json; ids aren't secrets). Default follows the vibe: cute Fena, ugly Michael, cool Tri.
+// Pip's voice choice in the Look sheet (CONTRACT v3.5): Bright, Chaotic, Chill, one per vibe. The backend
+// takes `pip_voice` as an ElevenLabs voice_id; the ids are read from backend/voices.json at build time
+// (they aren't secrets), so the backend can swap a voice without a frontend change.
+const PIP_CAST = VOICES?.pip ?? {}
 export const PIP_VOICES = [
-  { id: 'BlgEcC0TfWpBak7FmvHW', label: 'Bright', name: 'Fena', vibe: 'cute' },
-  { id: 'dfZGXKiIzjizWtJ0NgPy', label: 'Goofy', name: 'Michael', vibe: 'ugly' },
-  { id: 'rMwQM6pPoLHjNQDAGxOA', label: 'Chill', name: 'Tri', vibe: 'cool' },
-]
+  { vibe: 'cute', label: 'Bright' },
+  { vibe: 'ugly', label: 'Chaotic' },
+  { vibe: 'cool', label: 'Chill' },
+].map((v) => ({ ...v, id: PIP_CAST[v.vibe]?.voice_id ?? `pip_${v.vibe}` }))
 export const voiceForVibe = (vibe) => (PIP_VOICES.find((v) => v.vibe === vibe) ?? PIP_VOICES[0]).id
 
 // Who Pip is right now (set by the screen): vibe, grade, pip_voice. Boss lines carry their own boss.

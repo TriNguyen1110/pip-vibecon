@@ -9,6 +9,8 @@ export default defineConfig({
   plugins: [react()],
   // Emergent serves the app on its own hostname: allow any Host header (Vite >= 5.4.12 blocks unknown hosts).
   server: {
+    // voice.js reads Pip's voice ids from ../backend/voices.json (CONTRACT v3.5).
+    fs: { allow: ['..'] },
     host: true,
     allowedHosts: true,
     proxy: {
