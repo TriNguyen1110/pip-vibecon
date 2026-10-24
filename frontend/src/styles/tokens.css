@@ -44,6 +44,23 @@
   --sun-soft: rgba(255, 210, 122, 0.14);
   --note: #fbf3d9;
   --note-ink: #1c241f;
+  --note-ink-muted: #4b5650;
+  --coral-ink: #9e3427;
+  --mint-ink: #1f6b45;
+  --sun-line: rgba(255, 210, 122, 0.55);
+  --ice-edge: #6fb7b9;
+  --ko-bg: #14161f;
+  --ko-meta: #9ba09c;
+  --ko-sheen: linear-gradient(90deg, transparent, #8f8a7a 12%, #efe6c8 38%, #c9fcfc 55%, #f59b76 72%, #8f8a7a 88%, transparent);
+
+  /* Elevation (Play) */
+  --lift: 0 18px 40px -20px rgba(0, 0, 0, 0.7);
+  --shadow-note: 0 1px 0 rgba(0, 0, 0, 0.06), 0 12px 24px -14px rgba(0, 0, 0, 0.7);
+  --edge-ice: 0 4px 0 #6fb7b9, 0 10px 24px -12px rgba(201, 252, 252, 0.45);
+  --edge-dark: 0 4px 0 #061f19;
+  --glow-coral: 0 0 0 2px #ff8a7a, 0 0 32px -6px rgba(255, 138, 122, 0.65);
+  --glow-mint: 0 0 0 2px #8fe3b0, 0 0 28px -8px rgba(143, 227, 176, 0.55);
+  --glow-sun: 0 0 0 1.5px #ffd27a, 0 0 20px -6px rgba(255, 210, 122, 0.6);
 
   /* Fields */
   --field-bg: rgba(0, 25, 20, 0.6);
@@ -63,10 +80,20 @@
   --r-md: 12px;
   --r-lg: 16px;
   --r-xl: 22px;
+  --r-note: 6px;
+  --r-bubble: 18px;
+  --r-ko: 20px;
+  --r-cloud: 40px;
+  --r-pill: 999px;
   --tap: 44px;
   --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --instant: 100ms;
   --fast: 160ms;
   --med: 240ms;
+  --slow: 420ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-pop: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-shake: cubic-bezier(0.36, 0.07, 0.19, 0.97);
 
   --gutter: 16px;
   --content: 72rem;
@@ -76,4 +103,10 @@
   :root {
     --gutter: 24px;
   }
+}
+
+/* Play register: same palette, made tactile. Set by Shell game (data-register="play"). */
+[data-register='play'] {
+  --r-lg: 20px;
+  --r-xl: 28px;
 }
