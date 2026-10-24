@@ -376,6 +376,8 @@ export function Pip2D({
   form = 'base',
   size = 160,
   animate = true,
+  depth = false,
+  tilt,
   className = '',
   title,
 }) {
@@ -421,79 +423,219 @@ export function Pip2D({
   const hx0 = A.head.cx - A.head.w / 2 + 2
   const hx1 = A.head.cx + A.head.w / 2 - 2
 
-  return (
-    <svg className={`pip2d ${className}`} width={size} height={size * 1.1} viewBox="0 0 200 220" role="img" aria-label={title ?? `Pip the ${def.name} looks ${m}`}>
-      <defs>
-        <filter id={`${id}soft`} x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation="4" />
+  const defs = (
+    <defs>
+      <filter id={`${id}soft`} x="-50%" y="-50%" width="200%" height="200%">
+        <feGaussianBlur stdDeviation="4" />
+      </filter>
+      <pattern id={`${id}speck`} width="16" height="16" patternUnits="userSpaceOnUse">
+        <circle cx="3" cy="4" r="1.3" fill="#fff" opacity="0.35" />
+        <circle cx="11" cy="9" r="1" fill="#000" opacity="0.12" />
+        <circle cx="7" cy="14" r="0.9" fill="#fff" opacity="0.25" />
+      </pattern>
+      {cool && (
+        <filter id={`${id}neon`} x="-10%" y="-10%" width="120%" height="120%">
+          <feMorphology in="SourceAlpha" operator="dilate" radius="2.2" result="d" />
+          <feFlood floodColor={t.neon} />
+          <feComposite in2="d" operator="in" result="o" />
+          <feMerge>
+            <feMergeNode in="o" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
         </filter>
-        <pattern id={`${id}speck`} width="16" height="16" patternUnits="userSpaceOnUse">
-          <circle cx="3" cy="4" r="1.3" fill="#fff" opacity="0.35" />
-          <circle cx="11" cy="9" r="1" fill="#000" opacity="0.12" />
-          <circle cx="7" cy="14" r="0.9" fill="#fff" opacity="0.25" />
-        </pattern>
-        {cool && (
-          <filter id={`${id}neon`} x="-10%" y="-10%" width="120%" height="120%">
-            <feMorphology in="SourceAlpha" operator="dilate" radius="2.2" result="d" />
-            <feFlood floodColor={t.neon} />
-            <feComposite in2="d" operator="in" result="o" />
-            <feMerge>
-              <feMergeNode in="o" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-        )}
-      </defs>
-      <g className={hop ? 'pip2d-hop' : undefined}>
-        <g className={animate ? 'pip2d-breathe' : undefined}>
-          {awakened && (
-            <g className="pip2d-glow">
-              <ellipse cx="100" cy="128" rx="94" ry="98" fill="none" stroke="#FFE27A" strokeWidth="5" opacity="0.7" />
-              <ellipse cx="100" cy="128" rx="86" ry="90" fill="none" stroke="#C9FCFC" strokeWidth="2.5" opacity="0.8" />
-            </g>
-          )}
-          {accessory === 'backpack' && <BackpackBehind t={t} A={A} />}
-          <g filter={cool ? `url(#${id}neon)` : undefined}>
-            <def.Art t={t} id={id} />
-          </g>
-
-          <Sprout pose={awakened ? 'crown' : spec.sprout} anchor={A.sprout} t={t} flower={cute && !awakened} tint={m === 'possessed' ? BOSS_TINT : undefined} />
-
-          {cute && (
-            <g fill={BLUSH} opacity="0.55">
-              {A.blush.map(([x, y], i) => (
-                <ellipse key={i} cx={x} cy={y} rx="10.5" ry="6.5" />
-              ))}
-            </g>
-          )}
-          {cool && (
-            <g>
-              <path d={`M${hx0},${visorY} Q100,${visorY - 16} ${hx1},${visorY} L${hx1 - 2},${visorY + 11} Q100,${visorY - 5} ${hx0 + 2},${visorY + 11} Z`} fill={t.visor} stroke={t.ink} strokeWidth="3" strokeLinejoin="round" />
-              <path d={`M${hx0 + 4},${visorY + 9} Q100,${visorY - 6} ${hx1 - 4},${visorY + 9}`} fill="none" stroke={t.neon} strokeWidth="2.4" strokeLinecap="round" />
-            </g>
-          )}
-          {ugly && plainEyes && (
-            <g fill="none" stroke={t.ink} strokeWidth="2.6" strokeLinecap="round" opacity="0.55">
-              {A.eyes.map((e, i) => (
-                <path key={i} d={`M${e.cx - e.rx * 0.8},${e.cy + e.ry + 4} Q${e.cx},${e.cy + e.ry + 10} ${e.cx + e.rx * 0.8},${e.cy + e.ry + 4}`} />
-              ))}
-            </g>
-          )}
-          {spec.brows && (
-            <g stroke={t.ink} strokeWidth="3.6" strokeLinecap="round">
-              <path d={`M${L.cx - L.rx * 0.8},${L.cy - L.ry - 9} L${L.cx + L.rx * 0.6},${L.cy - L.ry - 15}`} />
-              <path d={`M${R.cx - R.rx * 0.6},${R.cy - R.ry - 14} L${R.cx + R.rx * 0.8},${R.cy - R.ry - 8}`} />
-            </g>
-          )}
-          <g className={`pip2d-eyes${blink && plainEyes ? ' is-blinking' : ''}`}>{eyes}</g>
-          <Mouth shape={mouthShape} ink={t.ink} a={A.mouth} ugly={ugly} />
-
-          {m === 'notes' && <Notebook t={t} A={A} />}
-          {m === 'overwhelmed' && <SweatDrop at={A.sweat} />}
-          <Accessory type={accessory} t={t} A={A} />
+      )}
+    </defs>
+  )
+  const split = depth && def.split
+  const back = (
+    <>
+      {awakened && (
+        <g className="pip2d-glow">
+          <ellipse cx="100" cy="128" rx="94" ry="98" fill="none" stroke="#FFE27A" strokeWidth="5" opacity="0.7" />
+          <ellipse cx="100" cy="128" rx="86" ry="90" fill="none" stroke="#C9FCFC" strokeWidth="2.5" opacity="0.8" />
         </g>
+      )}
+      {accessory === 'backpack' && <BackpackBehind t={t} A={A} />}
+      {split && (
+        <g filter={cool ? `url(#${id}neon)` : undefined}>
+          <def.Art t={t} id={`${id}k`} part="back" />
+        </g>
+      )}
+    </>
+  )
+  const body = (
+    <g filter={cool ? `url(#${id}neon)` : undefined}>
+      <def.Art t={t} id={id} part={split ? 'body' : 'all'} />
+    </g>
+  )
+  const face = (
+    <>
+      {cute && (
+        <g fill={BLUSH} opacity="0.55">
+          {A.blush.map(([x, y], i) => (
+            <ellipse key={i} cx={x} cy={y} rx="10.5" ry="6.5" />
+          ))}
+        </g>
+      )}
+      {cool && (
+        <g>
+          <path d={`M${hx0},${visorY} Q100,${visorY - 16} ${hx1},${visorY} L${hx1 - 2},${visorY + 11} Q100,${visorY - 5} ${hx0 + 2},${visorY + 11} Z`} fill={t.visor} stroke={t.ink} strokeWidth="3" strokeLinejoin="round" />
+          <path d={`M${hx0 + 4},${visorY + 9} Q100,${visorY - 6} ${hx1 - 4},${visorY + 9}`} fill="none" stroke={t.neon} strokeWidth="2.4" strokeLinecap="round" />
+        </g>
+      )}
+      {ugly && plainEyes && (
+        <g fill="none" stroke={t.ink} strokeWidth="2.6" strokeLinecap="round" opacity="0.55">
+          {A.eyes.map((e, i) => (
+            <path key={i} d={`M${e.cx - e.rx * 0.8},${e.cy + e.ry + 4} Q${e.cx},${e.cy + e.ry + 10} ${e.cx + e.rx * 0.8},${e.cy + e.ry + 4}`} />
+          ))}
+        </g>
+      )}
+      {spec.brows && (
+        <g stroke={t.ink} strokeWidth="3.6" strokeLinecap="round">
+          <path d={`M${L.cx - L.rx * 0.8},${L.cy - L.ry - 9} L${L.cx + L.rx * 0.6},${L.cy - L.ry - 15}`} />
+          <path d={`M${R.cx - R.rx * 0.6},${R.cy - R.ry - 14} L${R.cx + R.rx * 0.8},${R.cy - R.ry - 8}`} />
+        </g>
+      )}
+      <g className={`pip2d-eyes${blink && plainEyes ? ' is-blinking' : ''}`}>{eyes}</g>
+      <Mouth shape={mouthShape} ink={t.ink} a={A.mouth} ugly={ugly} />
+    </>
+  )
+  const sprout = <Sprout pose={awakened ? 'crown' : spec.sprout} anchor={A.sprout} t={t} flower={cute && !awakened} tint={m === 'possessed' ? BOSS_TINT : undefined} />
+  const front = (
+    <>
+      {m === 'notes' && <Notebook t={t} A={A} />}
+      {m === 'overwhelmed' && <SweatDrop at={A.sweat} />}
+      <Accessory type={accessory} t={t} A={A} />
+    </>
+  )
+  const label = title ?? `Pip the ${def.name} looks ${m}`
+  const wrap = (children, key, extra) => (
+    <svg key={key} className={`pip2d ${className}`} width={size} height={size * 1.1} viewBox="0 0 200 220" role={key ? undefined : 'img'} aria-label={key ? undefined : label} aria-hidden={key ? true : undefined} {...extra}>
+      <g className={hop ? 'pip2d-hop' : undefined}>
+        <g className={animate ? 'pip2d-breathe' : undefined}>{children}</g>
       </g>
     </svg>
+  )
+
+  if (!depth) {
+    return wrap(
+      <>
+        {defs}
+        {back}
+        {body}
+        {sprout}
+        {face}
+        {front}
+      </>,
+    )
+  }
+
+  // 2.5D: the same character split into parallax layers inside a CSS-perspective wrapper
+  const sheen = (
+    <>
+      <defs>
+        <filter id={`${id}white`}>
+          <feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1 0" />
+        </filter>
+        <linearGradient id={`${id}sheenG`} x1="0" x2="1" y1="0" y2="0.35">
+          <stop offset="0.3" stopColor="#fff" stopOpacity="0" />
+          <stop offset="0.5" stopColor="#fff" stopOpacity="0.32" />
+          <stop offset="0.7" stopColor="#fff" stopOpacity="0" />
+        </linearGradient>
+        <mask id={`${id}sheenM`} maskUnits="userSpaceOnUse" x="0" y="0" width="200" height="220">
+          <g filter={`url(#${id}white)`}>
+            <def.Art t={t} id={`${id}m`} part={split ? 'body' : 'all'} />
+          </g>
+        </mask>
+      </defs>
+      <g mask={`url(#${id}sheenM)`}>
+        <rect className="pip2d-sheen" x="-60" y="0" width="320" height="220" fill={`url(#${id}sheenG)`} />
+      </g>
+    </>
+  )
+  const k = size / 200
+  return (
+    <DepthStage size={size} tilt={tilt} label={label}>
+      {[
+        [-16 * k, wrap(<>{defs}{back}</>, 'back')],
+        [0, wrap(<>{defs}{body}{sheen}</>, 'body')],
+        [12 * k, wrap(face, 'face')],
+        [24 * k, wrap(<>{sprout}{front}</>, 'front')],
+      ]}
+    </DepthStage>
+  )
+}
+
+function prefersReduced() {
+  return typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+}
+
+// CSS-only 3D-toy feel: perspective + tilt (pointer / device tilt / slow idle sway), parallax layers,
+// a ground shadow that slides opposite the tilt, and a sheen that slides across the fur.
+function DepthStage({ size, tilt, label, children }) {
+  const ref = useRef(null)
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const set = (rx, ry) => {
+      el.style.setProperty('--rx', `${rx.toFixed(2)}deg`)
+      el.style.setProperty('--ry', `${ry.toFixed(2)}deg`)
+      el.style.setProperty('--tx', `${(-ry * 0.9).toFixed(1)}px`)
+      el.style.setProperty('--sheen', `${(ry * 6).toFixed(1)}px`)
+    }
+    if (tilt) {
+      set(tilt[0], tilt[1])
+      return
+    }
+    if (prefersReduced()) {
+      set(0, 6)
+      return
+    }
+    let raf
+    let last = -1e9
+    let target = [0, 0]
+    let cur = [0, 0]
+    const onMove = (e) => {
+      const r = el.getBoundingClientRect()
+      const nx = Math.max(-1, Math.min(1, (e.clientX - (r.left + r.width / 2)) / (r.width * 1.5)))
+      const ny = Math.max(-1, Math.min(1, (e.clientY - (r.top + r.height / 2)) / (r.height * 1.5)))
+      target = [-ny * 10, nx * 12]
+      last = performance.now()
+    }
+    const onTilt = (e) => {
+      if (e.gamma == null) return
+      target = [Math.max(-10, Math.min(10, (e.beta - 45) * 0.3)), Math.max(-12, Math.min(12, e.gamma * 0.4))]
+      last = performance.now()
+    }
+    const loop = (now) => {
+      raf = requestAnimationFrame(loop)
+      if (now - last > 1600) {
+        const s = now / 1000
+        target = [Math.sin(s * 0.5) * 3, Math.sin(s * 0.7) * 9]
+      }
+      cur = [cur[0] + (target[0] - cur[0]) * 0.12, cur[1] + (target[1] - cur[1]) * 0.12]
+      set(cur[0], cur[1])
+    }
+    window.addEventListener('pointermove', onMove)
+    window.addEventListener('deviceorientation', onTilt)
+    raf = requestAnimationFrame(loop)
+    return () => {
+      cancelAnimationFrame(raf)
+      window.removeEventListener('pointermove', onMove)
+      window.removeEventListener('deviceorientation', onTilt)
+    }
+  }, [tilt])
+  return (
+    <div ref={ref} className="pip2d-depth" role="img" aria-label={label} style={{ width: size, height: size * 1.1, '--size': `${size}px` }}>
+      <div className="pip2d-depth-shadow" />
+      <div className="pip2d-depth-tilt">
+        {children.map(([z, svg], i) => (
+          <div key={i} className="pip2d-depth-layer" style={{ transform: `translateZ(${z}px)` }}>
+            {svg}
+          </div>
+        ))}
+      </div>
+    </div>
   )
 }
 

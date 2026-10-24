@@ -38,10 +38,18 @@ const anchors = {
   sweat: [162, 96],
 }
 
-function Art({ t, id }) {
+function Art({ t, id, part = 'all' }) {
+  const back = part !== 'body'
+  const body = part !== 'back'
   return (
     <g>
+      {back && (
+        <>
       <InkStroke d={TAIL} color={t.body} ink={t.ink} w={11} fluffy />
+        </>
+      )}
+      {body && (
+        <>
       <Shape d={BODY} fur={{ key: 'cat-body', seed: 32, amp: 2.4, spacing: 8 }} fill={t.body} shade={t.shade} ink={t.ink} uid={`${id}b`} />
       <path d={BIB} fill={t.belly} />
       <Shape d={ell(80, 199, 14, 9)} fill={t.belly} ink={t.ink} uid={`${id}s1`} shadow={false} />
@@ -72,8 +80,10 @@ function Art({ t, id }) {
         <path d="M122,141 L142,144" />
       </g>
       <Plush id={id} cx={70} cy={78} rx={18} ry={8} />
+        </>
+      )}
     </g>
   )
 }
 
-export default { name: 'cat', tokens, anchors, Art }
+export default { name: 'cat', tokens, anchors, Art, split: true }

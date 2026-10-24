@@ -1,14 +1,16 @@
 /* Pip2D motion classes. All transforms use the element's own box. */
 .pip2d { display: inline-block; overflow: visible; }
-.pip2d-breathe, .pip2d-eyes, .pip2d-hop, .pip2d-sweat { transform-box: fill-box; }
+.pip2d-eyes, .pip2d-sweat { transform-box: fill-box; }
+/* breathe/hop pivot at the feet in viewBox units, so stacked 2.5D layers move together */
+.pip2d-breathe, .pip2d-hop { transform-box: view-box; }
 
-.pip2d-breathe { transform-origin: 50% 100%; animation: pip2d-breathe 2.4s ease-in-out infinite; }
+.pip2d-breathe { transform-origin: 100px 206px; animation: pip2d-breathe 2.4s ease-in-out infinite; }
 @keyframes pip2d-breathe { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(1.03); } }
 
 .pip2d-eyes { transform-origin: 50% 50%; transition: transform 45ms linear; }
 .pip2d-eyes.is-blinking { transform: scaleY(0.1); }
 
-.pip2d-hop { transform-origin: 50% 100%; animation: pip2d-hop 420ms cubic-bezier(0.34, 1.56, 0.64, 1); }
+.pip2d-hop { transform-origin: 100px 206px; animation: pip2d-hop 420ms cubic-bezier(0.34, 1.56, 0.64, 1); }
 @keyframes pip2d-hop {
   0% { transform: translateY(0) scale(1.06, 0.92); }
   40% { transform: translateY(-12px) scale(0.96, 1.05); }
@@ -26,6 +28,18 @@
 
 .pip2d-sweat { animation: pip2d-sweat 2.2s ease-in infinite; }
 @keyframes pip2d-sweat { 0% { transform: translateY(0); opacity: 1; } 80% { transform: translateY(10px); opacity: 1; } 100% { transform: translateY(12px); opacity: 0; } }
+
+/* 2.5D depth mode */
+.pip2d-depth { position: relative; display: inline-block; perspective: calc(var(--size, 200px) * 3.2); --rx: 0deg; --ry: 0deg; --tx: 0px; --sheen: 0px; }
+.pip2d-depth-tilt { position: absolute; inset: 0; transform-style: preserve-3d; transform: rotateX(var(--rx)) rotateY(var(--ry)); }
+.pip2d-depth-layer { position: absolute; inset: 0; transform-style: preserve-3d; pointer-events: none; }
+.pip2d-depth-layer > svg { position: absolute; left: 0; top: 0; }
+.pip2d-depth-shadow {
+  position: absolute; left: 18%; right: 18%; bottom: 1%; height: 9%; border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(0, 20, 30, 0.32), rgba(0, 20, 30, 0));
+  transform: translateX(var(--tx));
+}
+.pip2d-sheen { transform: translateX(var(--sheen)); }
 
 @media (prefers-reduced-motion: reduce) {
   .pip2d-breathe, .pip2d-hop, .pip2d-dot, .pip2d-glow, .pip2d-sweat { animation: none; }

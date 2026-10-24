@@ -40,13 +40,21 @@ const anchors = {
   sweat: [160, 84],
 }
 
-function Art({ t, id }) {
+function Art({ t, id, part = 'all' }) {
+  const back = part !== 'body'
+  const body = part !== 'back'
   return (
     <g>
+      {back && (
+        <>
       <Shape pts={ellipsePoints(58, 64, 12.5, 11.5)} fur={{ key: 'capy-ear-l', seed: 3, amp: 1.6, spacing: 6 }} fill={t.body} shade={t.shade} ink={t.ink} uid={`${id}ea`} />
       <Shape pts={ellipsePoints(142, 64, 12.5, 11.5)} fur={{ key: 'capy-ear-r', seed: 4, amp: 1.6, spacing: 6 }} fill={t.body} shade={t.shade} ink={t.ink} uid={`${id}eb`} />
       <path d={ell(58, 65, 5.5, 5)} fill={t.dark} opacity="0.5" />
       <path d={ell(142, 65, 5.5, 5)} fill={t.dark} opacity="0.5" />
+        </>
+      )}
+      {body && (
+        <>
       <Shape d={rrect(48, 186, 26, 22, 10)} fill={t.shade} ink={t.ink} uid={`${id}l1`} shadow={false} />
       <Shape d={rrect(126, 186, 26, 22, 10)} fill={t.shade} ink={t.ink} uid={`${id}l2`} shadow={false} />
       <Shape d={BODY} fur={FUR_BODY} fill={t.body} shade={t.shade} ink={t.ink} uid={`${id}b`} />
@@ -71,8 +79,10 @@ function Art({ t, id }) {
       <path d={ell(88, 118, 4.5, 3)} fill={t.dark} />
       <path d={ell(112, 118, 4.5, 3)} fill={t.dark} />
       <Plush id={id} cx={68} cy={76} rx={20} ry={9} />
+        </>
+      )}
     </g>
   )
 }
 
-export default { name: 'capybara', tokens, anchors, Art }
+export default { name: 'capybara', tokens, anchors, Art, split: true }

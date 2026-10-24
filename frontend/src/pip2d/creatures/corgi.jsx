@@ -42,9 +42,13 @@ const anchors = {
   sweat: [160, 100],
 }
 
-function Art({ t, id }) {
+function Art({ t, id, part = 'all' }) {
+  const back = part !== 'body'
+  const body = part !== 'back'
   return (
     <g>
+      {back && (
+        <>
       {/* fluffy tail tuft */}
       <Shape pts={ellipsePoints(166, 180, 15, 13)} fur={{ key: 'corgi-tail', seed: 22, amp: 3.4, spacing: 6, tuftChance: 0.4 }} fill={t.belly} shade={mix2(t)} ink={t.ink} uid={`${id}t`} />
       <Shape d={EAR_L} fur={{ key: 'corgi-ear-l', seed: 23, amp: 1.6, spacing: 8, zone: (x) => (x > 70 ? 0.3 : 1) }} fill={t.body} shade={t.shade} ink={t.ink} uid={`${id}el`} />
@@ -54,6 +58,10 @@ function Art({ t, id }) {
       {/* ear fluff */}
       <Hair x={58} y={74} rot={20} color={t.belly} />
       <Hair x={142} y={74} rot={-20} color={t.belly} />
+        </>
+      )}
+      {body && (
+        <>
       <Shape d={rrect(60, 188, 26, 20, 10)} fill={t.belly} ink={t.ink} uid={`${id}l1`} shadow={false} />
       <Shape d={rrect(114, 188, 26, 20, 10)} fill={t.belly} ink={t.ink} uid={`${id}l2`} shadow={false} />
       <Shape d={BODY} fur={{ key: 'corgi-body', seed: 25, amp: 2.8, spacing: 8 }} fill={t.body} shade={t.shade} ink={t.ink} uid={`${id}b`} />
@@ -66,10 +74,12 @@ function Art({ t, id }) {
       <Hair x={130} y={76} rot={20} s={0.85} color={t.shade} />
       <path d="M93,126 Q100,122 107,126 Q104,134 100,134 Q96,134 93,126 Z" fill={t.dark} stroke={t.ink} strokeWidth="2" strokeLinejoin="round" />
       <Plush id={id} cx={70} cy={80} rx={18} ry={8} />
+        </>
+      )}
     </g>
   )
 }
 
 const mix2 = (t) => t.inner
 
-export default { name: 'corgi', tokens, anchors, Art }
+export default { name: 'corgi', tokens, anchors, Art, split: true }
