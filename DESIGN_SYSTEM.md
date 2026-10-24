@@ -1510,3 +1510,19 @@ theme:
 - "Style the boss hit: 70ms hit-stop, 240ms squash, 280ms ±8px shake on the boss only, HP segments drop instantly with a white ghost that drains over 450ms after 150ms, a coral '−40' sticker rising 28px over 700ms, then a caption sticker for 2.8s; 900ms at most in total."
 - "Pip's Brain as one screen: a cloud panel with at most 3 paper notes per page (scroll-snap pages with dots), wrong note in coral glow with a 'Pip believes this 😵' sticker, fixed note in lime with a 'fixed after N re-teach' sticker, and the 'Quiz Pip ▶' primary gel."
 - "Keep the K.O. card quiet: 9:16, #14161F matte, Geist Mono 'No. 0147' (optionally holo), one metallic hairline sweeping once over 6s, Fraunces equation, tap to flip. No gel, outline, Fredoka, confetti or '!'."
+
+## Audiences (v3.14, coordinator) — every screen names its audience and follows its row
+| Audience | Where / device | Register | Y2K dose | Type + density | Words |
+|---|---|---|---|---|---|
+| Students 10–12 (gr 5–6) | phone, center iPad | **play**: big mascot, bouncy feedback, more color, 1 action per screen | high (chrome, gel, sparkles) | body 17px, one idea per card, icons + labels | short, concrete, zero sarcasm aimed at the kid |
+| Students 13–15 (gr 7–9) | own phone | **cool**: deadpan Pip, darker/club palettes, less hand-holding, "cooly ugly" allowed | high but styled (LCD, chrome type, glitch), never babyish | body 16px, denser chat | lowercase-friendly, dry humor, never "great job!" |
+| Students 15–17 (SAT) | phone + laptop | **focus**: same brand, calmer, score/goal-forward, mascot smaller | medium (accents, LCD status bar) | body 16px, laptop two-pane | direct, test-goal language |
+| Tutors (20s–50s) | center laptop / iPad between sessions | **Studio**: scannable, dense, keyboard + touch, nothing animated by default | low (one aqua-glass accent, pill switches) | 14–15px tables, 44px touch rows on iPad | plain, no game jargon in staff copy except the boss/quote evidence |
+| Owners (35–60) | laptop, sometimes phone | **Studio, numbers first**: big figures, every number explains itself on tap | low | 15px, figures 32–48px | dollars, students, hours; no jargon |
+| Parents / grandparents (30s–70s) | phone only, often busy or ESL | **Calm**: one thumb, one screen per idea, proud and specific | very low (Pip small, one accent) | body ≥ 17px, 48px targets, high contrast, works at 200% text zoom | in their language; no "K.O./brain v2/boss" — say "Maya taught Pip 3 ideas and fixed one mistake" |
+
+Rules
+- Student register defaults from grade (≤6 play, 7–9 cool, ≥10 focus); the student can switch it in settings; it changes palette intensity, mascot size, copy tone and density, not features.
+- Game words (K.O., boss, weapon, brain version) stay inside the student app; staff screens may show them as evidence with a plain label; parent screens translate them.
+- AA contrast everywhere; parent + owner screens target AAA for body text.
+- Reduced motion respected everywhere; staff/parent screens animate only on state change.

@@ -224,3 +224,67 @@ wording, no real-person likeness. `Student.forms_unlocked: string[]`; payoff add
 `Scene2D` backdrops: skatepark (a_tri boss stage; triangular ramp), boba (a_frac), studio (a_sat_commas), arcade
 (a_sat_linear), rooftop (Fame finale + landing hero), photobooth (lookbook cover shoot). Assignments gain optional
 `scene`; the frontend uses `sceneFor()` when absent. Unlocked places follow Pip's Dream and brain versions.
+
+## v3.13 (center operations: tutors × students × subjects, guardians, parent side)
+Additive; nothing above changes. `Student.tutor_id` stays as the primary tutor for back-compat.
+
+Shapes
+```
+Subject         { id: "math"|"writing"|"sat_math"|"sat_rw"|"science", name, has_missions: bool }
+Enrollment      { id, student_id, subject, tutor_id, slot: "Tue 4:30pm", goal: string|null, started: date }
+Guardian        { id, name, relation: "parent"|"grandparent"|"guardian", phone|null, email|null,
+                  prefers: "sms"|"email", language: "en"|"es"|"vi"|"zh", updates: "every_ko"|"weekly"|"off",
+                  quiet_hours: "21:00-07:00"|null, student_ids: string[] }
+                  // synthetic contacts only: 555-01xx numbers, @example.com
+Note            { id, student_id, tutor_id, subject, text, ts, share_with_parent: bool }
+ThreadMsg       { id, student_id, guardian_id, from: "tutor"|"guardian"|"center", author_id, text, ts,
+                  status: "delivered"|"test-mode (not delivered)"|"queued (quiet hours)"|"received" }
+SubjectProgress { subject, tutor: {id, name}, missions_done, ko_count, last_session_at|null, next_slot|null,
+                  mastery: [{concept_id, text, level: 0..3}], open_misconception: {quote, mission}|null,
+                  at_risk: AtRisk|null }
+Assignment      += subject (default inferred from the lesson: a_tri/a_frac math, a_sat_commas writing, a_sat_linear sat_math)
+Student         += enrollments: Enrollment[], guardian_ids: string[]
+```
+
+Endpoints (staff)
+| Method + path | Body | Returns |
+|---|---|---|
+| GET `/api/subjects` | | `{subjects: Subject[]}` |
+| GET `/api/tutors` | | `{tutors: [{id, name, subjects[], students: n, at_risk: n}]}` |
+| GET `/api/tutors/{id}/students?subject=&q=&filter=` | | `{tutor, rows: [{student, subjects: [{subject, last_active, ko_count, flag}], guardians: [{id, name, reachable}], flags: ("at_risk"|"needs_update"|"no_contact"|"new")[], next_slot}]}`; filter ∈ at_risk, needs_update, no_contact, new |
+| GET `/api/students/{id}/profile` | | `{student, enrollments, progress: SubjectProgress[], guardians: Guardian[], notes: Note[], timeline: [{ts, kind: "session"|"ko"|"update"|"message"|"note", subject, text, link|null}]}` |
+| POST `/api/students/{id}/notes` | `{tutor_id, subject, text, share_with_parent}` | `Note` |
+| POST `/api/students/{id}/enrollments` | `{subject, tutor_id, slot, goal}` | `Enrollment` |
+| POST `/api/assignments/bulk` | `{assignment (saved or draft), student_ids[]}` | `{assignments: Assignment[]}` (one copy per student, each with its own id) |
+| POST `/api/guardians` | Guardian without id | `Guardian` |
+| PATCH `/api/guardians/{gid}` | any of prefers, language, updates, quiet_hours, phone, email | `Guardian` |
+| GET `/api/threads?student_id=&guardian_id=` | | `{items: ThreadMsg[]}` oldest first |
+| POST `/api/threads` | `{student_id, guardian_id, from, author_id, text}` | `ThreadMsg` (tutor/center → test-mode send honoring prefers + quiet_hours) |
+| GET `/api/center/overview` | | `{by_subject: [{subject, students, tutors, kos_7d}], by_tutor: [{tutor, students, subjects, needs_update}], parents_reachable_pct, updates_sent_7d}` |
+
+Endpoints (parent side; demo identity, no login: `/parent?as=g001`, labeled "demo")
+| Method + path | Returns |
+|---|---|
+| GET `/api/parent/{gid}/home` | `{guardian, kids: [{student, pip: {name, creature, brain_version, form}, this_week: {minutes, missions, kos, taught_quote|null, fixed: {before, after}|null, shared_note|null}, subjects: [{subject, tutor, next_slot, ko_count}]}], unread: n}` |
+| GET `/api/parent/{gid}/kids/{sid}` | `{student, weeks: [{week_of, summary, quotes[], fixed[]}], shared_notes: Note[], next_sessions[], tutors: [{id, name, subject}]}` (403 if not their kid) |
+
+Rules
+- A parent sees only their linked kids. No full transcripts to parents: only verbatim quotes already in gap reports, and notes the tutor marked `share_with_parent`. Private tutor notes never leave staff endpoints.
+- Parent updates (existing preview/send) now address each guardian of the student with `updates != "off"`, in the guardian's `language` (AI when live; offline templates in en/es/vi/zh), via `prefers`. Inside `quiet_hours` the send is `queued (quiet hours)`. Every send is test-mode unless Twilio is configured.
+- Tone to parents: lead with what the kid taught and fixed; never "behind", "failing", or rankings vs. other kids.
+- Seed: every student gets 1–3 enrollments across subjects/tutors; ~1.3 guardians per student, some siblings sharing a guardian, ~8% with no reachable contact (flag `no_contact`). Maya s001: math with Ms. Rivera (Tue 4:30pm) + writing with Mr. Chen (Thu 5pm); guardians g001 Ana R. (parent, sms, es, every_ko; also guardian of her brother s014, grade 9, sat_math) and g002 Sam R. (parent, email, en, weekly). A short seeded thread between Ms. Rivera and g001.
+- Reset restores all of this.
+
+### v3.13b (the business side is the product; owner metrics + packages)
+Pip is sold to the center; the owner's numbers are the headline. Additive:
+```
+Package         { hours_total, hours_used, price_usd, renews_on: date, status: "active"|"low"|"expired" }
+Enrollment      += package: Package          // "low" when ≤ 2 hours left
+```
+`GET /api/center/overview` adds:
+`{renewals_due: [{student, guardian, subject, hours_left, renews_on, price_usd, signal: "engaged"|"quiet"}],
+  revenue_at_risk_usd, retention_30d_pct, parent_updates_7d, parent_replies_7d, tutor_hours_saved_week,
+  came_back_on_their_own_7d}`. All computed from seed + sessions, never hardcoded in the UI.
+- `revenue_at_risk_usd` = sum of package prices for students flagged at_risk or quiet with a package low/expiring in 14 days.
+- `tutor_hours_saved_week` = parent updates + gap reports auto-written × 10 min (state the assumption in the UI).
+- `signal: "engaged"` when the student came back on their own or K.O.'d this week. The renewal row offers "Send renewal note" → a parent thread message (preview first; a K.O. quote is the evidence).

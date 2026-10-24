@@ -1,0 +1,34 @@
+/* Scene2D: layered SVG backdrops. Animates transform/opacity only; at most 3 moving elements per scene. */
+.scn { position: relative; width: 100%; height: 100%; overflow: hidden; isolation: isolate; container-type: size; }
+.scn-art { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+/* The 390 x 560 core box, bottom-centred exactly like the SVG's xMidYMax meet. Put characters in here. */
+.scn-core {
+  position: absolute; left: 50%; bottom: 0; transform: translateX(-50%);
+  width: min(100cqw, calc(100cqh * 390 / 560)); aspect-ratio: 390 / 560; pointer-events: none;
+}
+.scn-core > * { pointer-events: auto; }
+
+.scn-drift, .scn-drift-slow, .scn-drift-back { animation: scn-drift 70s ease-in-out infinite alternate; will-change: transform; }
+.scn-drift-slow { animation-duration: 110s; }
+.scn-drift-back { animation-name: scn-drift-back; animation-duration: 90s; }
+@keyframes scn-drift { from { transform: translateX(-28px); } to { transform: translateX(34px); } }
+@keyframes scn-drift-back { from { transform: translateX(30px); } to { transform: translateX(-30px); } }
+
+.scn-pulse { animation: scn-pulse 3.6s ease-in-out infinite; }
+.scn-pulse-fast { animation: scn-pulse 1.8s ease-in-out infinite; }
+@keyframes scn-pulse { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
+
+/* neon tube flicker: two quick dips then steady (never a full-screen flash) */
+.scn-flicker { animation: scn-flicker 6s linear infinite; }
+@keyframes scn-flicker { 0%, 61%, 64%, 67%, 100% { opacity: 1; } 62%, 66% { opacity: 0.55; } }
+
+.scn-sway { transform-box: fill-box; transform-origin: 50% 0; animation: scn-sway 5s ease-in-out infinite alternate; }
+@keyframes scn-sway { from { transform: rotate(-3deg); } to { transform: rotate(3deg); } }
+
+.scn-blink { animation: scn-blink 2.4s steps(1, end) infinite; }
+@keyframes scn-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
+
+.scn--still .scn-art * { animation: none !important; }
+html.is-hidden .scn-art * { animation-play-state: paused !important; }
+@media (prefers-reduced-motion: reduce) { .scn-art * { animation: none !important; } }

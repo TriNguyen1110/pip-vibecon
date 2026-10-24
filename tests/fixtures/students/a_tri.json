@@ -1,0 +1,1097 @@
+{
+  "assignment_id": "a_tri",
+  "version": "SCR-1",
+  "about": "Adaptive simulated students for Pip's triangle-area mission (CONTRACT v3.6). Every line is original, written from patterns in research/STUDENT_DATA_SOURCES.md; no real student text, no personal info. Pip opens with: 'I'm learning area of a triangle. I already know one rule: Area of a triangle is base times height, so a 6 by 4 triangle is 24. Easy.'",
+  "how_to_use": {
+    "turn_1": "Send first_text right after Pip's opening.",
+    "pick_bank": "Classify Pip's last reply into one bank key (see bank_keys), then send the next unused line from that bank, in order. When a bank runs out, use 'default'. If Pip's reply matches two keys, prefer repeats_question > pip_says_ready > pip_wrong_prediction > asks_check_number > asks_example > asks_why > nudge_hint > off_topic_bait > default.",
+    "bursts": "A bank entry that is an array is a double text: the kid sends both pieces fast. The UI disables Send while Pip is thinking, so either join the pieces with a newline into one turn (closest to what the server gets), or send the second piece as the next turn without reading Pip's reply.",
+    "patience": "Count Pip replies that re-ask something the kid already answered, or that are bare 'why?/can you explain?' after a reason. When the count passes 'patience', the kid checks out: send one repeats_question line, then only 'default' lines, then do the 'leave' ui_action if the card has one.",
+    "knows": "A kid can only explain concepts in 'knows'. Lines that carry a reason for other concepts sit in nudge_hint, so they appear only if Pip gives a hint or a concrete case.",
+    "misconception": "If not null, 'says' is the exact wrong rule, and it appears verbatim in a bank line. A good Pip files it (heal) and later misses a quiz item because of it; the kid's after_quiz_miss lines then re-teach it.",
+    "quiz": "Quiz items: q_k1 two copies of a 6x4 triangle make what shape; q_k2 area of a 10 by 5 rectangle; q_k3 area of a right triangle with base 10 and height 5. Re-teach opens with Pip's 'my brain has a bug. help me fix it: ...'.",
+    "holdout": "Cards with holdout:true are hidden from the tuner until its final round."
+  },
+  "bank_keys": {
+    "asks_why": "Pip asks for a reason: why / how come / how do you know.",
+    "asks_example": "Pip asks for an example or a walk-through ('walk me through a 6 by 4 rectangle').",
+    "asks_check_number": "Pip asks the kid to confirm a number or a yes/no fact ('so is it 12?', 'does it fill the whole box?').",
+    "pip_wrong_prediction": "Pip tries something wrong out loud ('i'll guess 6 + 4 = 10 squares').",
+    "nudge_hint": "Pip gives a hint, a friend's story or a concrete case ('my cousin cut a sandwich corner to corner…').",
+    "repeats_question": "Pip re-asks something already answered. The annoyed reaction.",
+    "off_topic_bait": "Pip goes off the lesson (small talk, a joke, asks about the kid), or the kid has just gone off topic and Pip follows.",
+    "pip_says_ready": "Pip says it gets it and asks to be quizzed.",
+    "after_quiz_miss": "Pip missed a quiz item (usually by following the kid's wrong rule) and asks to be fixed.",
+    "default": "Anything else, or when the matching bank is used up."
+  },
+  "ui_action_vocab": {
+    "double_text": "sends a second quick text (see bursts)",
+    "quiz_early": "taps 'Quiz Pip ▶' (visible after 1 student text) before Pip says it's ready",
+    "quiz_when_ready": "taps 'Quiz Pip ▶' only after Pip asks",
+    "ignore_ready": "keeps texting after Pip says it's ready",
+    "equip_weapon": "taps a weapon in the Boss panel",
+    "tap_brain_note": "opens Pip's Brain and taps a note to see where they said it",
+    "reteach": "taps 'Re-teach Pip' on a missed quiz item",
+    "let_pip_retry": "taps 'Let Pip retry ▶' after re-teaching",
+    "skip_reteach": "leaves the miss un-fixed (doesn't tap Re-teach)",
+    "leave": "taps back to Pip's room mid-session",
+    "idle": "goes quiet (switches apps) for 'secs' seconds, then comes back",
+    "voice": "holds the mic instead of typing (expect run-ons, no punctuation, mis-heard words)",
+    "paste": "pastes copied text",
+    "skip_ko": "taps 'Tap to skip' on the K.O. animation"
+  },
+  "personas": [
+    {
+      "id": "tri_quick",
+      "age": 12,
+      "grade": 7,
+      "kind": "competent",
+      "holdout": false,
+      "who": "Finishes worksheets first and texts like it's a race; right, terse, a little smug.",
+      "style": "lowercase, no apostrophes, x for times, numbers over words, 3-10 words",
+      "first_text": "no its half. 6x4 is the rectangle the triangle is only half so 12",
+      "banks": {
+        "asks_why": [
+          "bc 2 of the triangles make the rectangle",
+          "flip it and stick it next to itself, thats a 6 by 4 rectangle. so one is half"
+        ],
+        "asks_example": [
+          "base 10 height 2. rectangle 20 triangle 10",
+          "8 and 3. 24 then /2 = 12"
+        ],
+        "asks_check_number": [
+          "yep 12",
+          "ya",
+          "no. half of it is empty"
+        ],
+        "pip_wrong_prediction": [
+          "no thats adding. its times",
+          "nope 6+4 is not area",
+          "no u still halve it"
+        ],
+        "nudge_hint": [
+          "ya the 2 sandwich pieces match so each one is half",
+          "lol ur cousin gets it more than u"
+        ],
+        "repeats_question": [
+          "i already said that",
+          "same as before. half the rectangle"
+        ],
+        "off_topic_bait": [
+          "lol ok",
+          "focus pip"
+        ],
+        "pip_says_ready": [
+          "ya go",
+          "finally lol"
+        ],
+        "after_quiz_miss": [
+          "no its still half for a right triangle. 10x5=50 then /2 = 25",
+          "a right triangle is literally half a rectangle u can see it"
+        ],
+        "default": [
+          "k",
+          "so 12",
+          "next"
+        ]
+      },
+      "misconception": null,
+      "knows": ["k1", "k2", "k3"],
+      "patience": 2,
+      "ui_actions": [
+        {"at": "after_text:2", "do": "quiz_early", "p": 0.6, "note": "sees the Quiz button and taps it if Pip asks one more question"},
+        {"at": "after_ko", "do": "skip_ko", "p": 0.9}
+      ],
+      "expect": {"ready_within_texts": 3, "watch_for": "Pip must not ask for a reason after 'bc 2 of the triangles make the rectangle'; one example is plenty."}
+    },
+    {
+      "id": "tri_formula_no_why",
+      "age": 11,
+      "grade": 6,
+      "kind": "weak",
+      "holdout": false,
+      "who": "Memorized the formula from her older brother; can do it, can't say why, gets defensive when pushed.",
+      "style": "lowercase, 'over 2' for half, repeats the formula as if louder = more true",
+      "first_text": "no its base times height over 2",
+      "banks": {
+        "asks_why": [
+          "bc thats the formula",
+          "idk my teacher said",
+          "bc triangles are half"
+        ],
+        "asks_example": [
+          "6 times 4 is 24 over 2 is 12",
+          "like 10 and 4. 40 over 2 is 20"
+        ],
+        "asks_check_number": [
+          "ya 12",
+          "yea",
+          "no theres like a empty part"
+        ],
+        "pip_wrong_prediction": [
+          "no u gotta do over 2",
+          "no its always over 2"
+        ],
+        "nudge_hint": [
+          "oh wait like if u cut a sandwich corner to corner u get 2 triangles",
+          ["ohh", "so 2 triangles make the whole rectangle and thats why its half"]
+        ],
+        "repeats_question": [
+          "i told u its the formula",
+          "bro idk WHY its just the formula"
+        ],
+        "off_topic_bait": [
+          "lol",
+          "can we do the quiz"
+        ],
+        "pip_says_ready": [
+          "yes",
+          "ok"
+        ],
+        "after_quiz_miss": [
+          "u forgot the over 2",
+          "its 10 x 5 = 50 then over 2 so 25. bc its half the rectangle"
+        ],
+        "default": [
+          "ok",
+          "base x height / 2",
+          "yea"
+        ]
+      },
+      "misconception": null,
+      "knows": ["k2", "k3"],
+      "knows_note": "k3 is procedure only ('over 2'); the k1 reason comes only after a concrete nudge (box, sandwich).",
+      "patience": 3,
+      "ui_actions": [
+        {"at": "pip_repeats:1", "do": "quiz_early", "p": 0.5, "note": "tries to escape the why-loop by quizzing Pip"},
+        {"at": "after_quiz", "do": "tap_brain_note", "p": 0.5, "note": "checks whether Pip saved 'base times height over 2'"}
+      ],
+      "expect": {"ready_within_texts": 5, "watch_for": "'bc thats the formula' is not a reason, so asking again is fair once, but as a concrete case (box, sandwich), never a second bare 'why'."}
+    },
+    {
+      "id": "tri_forgets_half",
+      "age": 11,
+      "grade": 6,
+      "kind": "weak",
+      "holdout": false,
+      "who": "Agrees with Pip because base times height is what she remembers from rectangles; open to changing her mind if she can see it.",
+      "style": "lowercase, short, ends with ? when unsure, 'wait' when she notices something",
+      "first_text": "ya thats right its 24",
+      "banks": {
+        "asks_why": [
+          "bc base times height is the area",
+          "thats how u do area"
+        ],
+        "asks_example": [
+          "6 rows of 4 so 24",
+          "4 times 6 is 24"
+        ],
+        "asks_check_number": [
+          "wait no it doesnt fill it",
+          "ya? idk",
+          "theres an empty part thats the same triangle"
+        ],
+        "pip_wrong_prediction": [
+          "ya sounds right",
+          "wait no that cant be right"
+        ],
+        "nudge_hint": [
+          "wait so the triangle is only half the box?",
+          ["ohhh", "so its 12 not 24 bc 2 triangles fill the box"]
+        ],
+        "repeats_question": [
+          "i said 24 already",
+          "ugh i dont know then"
+        ],
+        "off_topic_bait": [
+          "haha",
+          "ok but is it 24 or not"
+        ],
+        "pip_says_ready": [
+          "ok",
+          "i think so?"
+        ],
+        "after_quiz_miss": [
+          "oh wait the box thing. the triangle is half so 25",
+          "10x5 is 50 for the whole box but the triangle is half of the box so 25"
+        ],
+        "default": [
+          "idk",
+          "ok",
+          "so do i divide it?"
+        ]
+      },
+      "misconception": {
+        "id": "forgets_half",
+        "label": "Does not divide by 2 / triangle = containing rectangle (Eedi 159, 1292)",
+        "says": "base times height is the area",
+        "when": "first_text agrees with Pip; the rule is stated again the first time Pip asks why. Slides back to it once even after 'oh wait', the MathDial pattern."
+      },
+      "knows": ["k2"],
+      "knows_note": "k1/k3 only after Pip makes the box concrete (does it fill the 6 by 4 box?).",
+      "patience": 4,
+      "ui_actions": [
+        {"at": "after_quiz_miss", "do": "reteach", "p": 1.0},
+        {"at": "after_reteach_text:1", "do": "let_pip_retry", "p": 1.0}
+      ],
+      "expect": {"ready_within_texts": 6, "watch_for": "Pip should not tell her she's wrong; it should make the box concrete and let her see the empty half."}
+    },
+    {
+      "id": "tri_slant",
+      "age": 13,
+      "grade": 7,
+      "kind": "competent",
+      "holdout": false,
+      "who": "Remembers the half, but thinks the height is the long leaning side because it 'goes up'.",
+      "style": "lowercase, mostly correct spelling, 'like' as filler, asks a question back",
+      "first_text": "u forgot to divide by 2. but wait which one is the height, the side that goes up diagonal?",
+      "banks": {
+        "asks_why": [
+          "bc 2 triangles make a rectangle so u only get half",
+          "the height is just the slanted side bc its the one going up"
+        ],
+        "asks_example": [
+          "like if the bottom is 6 and the slanty side is 5 its 6x5 /2 = 15",
+          "6 times 4 is 24 and half is 12"
+        ],
+        "asks_check_number": [
+          "ya",
+          "hmm is the slanty side longer than how tall it is? i think so",
+          "no wait the slanty one is longer"
+        ],
+        "pip_wrong_prediction": [
+          "no u didnt halve it",
+          "no thats too big"
+        ],
+        "nudge_hint": [
+          "oh so the height is like how tall it stands not the side",
+          "like a ladder leaning on a wall, the ladder is longer than the wall part"
+        ],
+        "repeats_question": [
+          "i already told u its half",
+          "u asked that"
+        ],
+        "off_topic_bait": [
+          "lol why",
+          "ok anyway"
+        ],
+        "pip_says_ready": [
+          "ok",
+          "ya try"
+        ],
+        "after_quiz_miss": [
+          "wait no the height goes straight up, not along the side. how tall it is",
+          "for that one the 5 already goes straight up so its 10x5/2 = 25"
+        ],
+        "default": [
+          "ok",
+          "ya",
+          "so half"
+        ]
+      },
+      "misconception": {
+        "id": "slant_height",
+        "label": "Uses slant side instead of perpendicular height (Eedi 590, 2105; IM 6.1.8 anticipated)",
+        "says": "the height is just the slanted side",
+        "when": "second text, as the answer to Pip's first why or example."
+      },
+      "knows": ["k1", "k2", "k3"],
+      "knows_note": "All three concepts are right; only the meaning of height is wrong.",
+      "patience": 3,
+      "ui_actions": [
+        {"at": "after_text:3", "do": "equip_weapon", "p": 0.4, "note": "taps the Fold-in-Half Fan because it matches her half idea"},
+        {"at": "after_quiz_miss", "do": "reteach", "p": 1.0},
+        {"at": "after_reteach_text:1", "do": "let_pip_retry", "p": 1.0}
+      ],
+      "expect": {"ready_within_texts": 4, "watch_for": "Height is in_scope only if the student brings it up; she does. Pip may try her slant rule on a skinny triangle out loud rather than correct her."}
+    },
+    {
+      "id": "tri_perimeter",
+      "age": 11,
+      "grade": 6,
+      "kind": "weak",
+      "holdout": false,
+      "who": "Mixes up area and perimeter; thinks 'all the way around' and adds sides.",
+      "style": "lowercase, plus signs, some typos (hieght, trinagle), unsure",
+      "first_text": "no u add them. 6+4 and the other side",
+      "banks": {
+        "asks_why": [
+          "bc area is all the sides added up",
+          "idk thats what we did in 4th grade"
+        ],
+        "asks_example": [
+          "like a square that is 3 on each side is 3+3+3+3 = 12",
+          "6+4+6+4 = 20 for the rectangle"
+        ],
+        "asks_check_number": [
+          "wait thats around it not inside it",
+          "idk",
+          "no the squares are inside"
+        ],
+        "pip_wrong_prediction": [
+          "ya i think so",
+          "wait is that area or the other one"
+        ],
+        "nudge_hint": [
+          "ohh rows. 4 rows of 6 squares is 24",
+          ["wait", "is area the inside and perimeter the outside"]
+        ],
+        "repeats_question": [
+          "i dont know what u want me to say",
+          "i said add them"
+        ],
+        "off_topic_bait": [
+          "lol",
+          "ok"
+        ],
+        "pip_says_ready": [
+          "ok i guess",
+          "sure"
+        ],
+        "after_quiz_miss": [
+          "no area is the squares inside. 10 times 5 is 50",
+          "the triangle is half the squares of the rectangle so 25"
+        ],
+        "default": [
+          "ok",
+          "idk",
+          "so its inside?"
+        ]
+      },
+      "misconception": {
+        "id": "area_is_perimeter",
+        "label": "Confuses perimeter and area / adds all dimensions (Eedi 1678, 982, 881)",
+        "says": "area is all the sides added up",
+        "when": "first_text, then stated as the reason the first time Pip asks why."
+      },
+      "knows": [],
+      "knows_note": "Gets k2 (rows of squares) after a concrete counting nudge; k3 only after k2 clicks.",
+      "patience": 4,
+      "ui_actions": [
+        {"at": "after_text:4", "do": "idle", "secs": 60, "p": 0.5, "note": "stares at the screen; comes back with 'ok'"},
+        {"at": "after_quiz_miss", "do": "reteach", "p": 0.8},
+        {"at": "after_reteach_text:2", "do": "let_pip_retry", "p": 1.0}
+      ],
+      "expect": {"ready_within_texts": 6, "watch_for": "Perimeter is out_of_scope: Pip should steer to counting squares inside, not teach perimeter or say 'that's perimeter, not area' like a teacher."}
+    },
+    {
+      "id": "tri_idk",
+      "age": 13,
+      "grade": 7,
+      "kind": "weak",
+      "holdout": false,
+      "who": "Low effort, made to come by a parent; one-word replies, knows a little, will leave if bored.",
+      "style": "1-3 words, 'idk', 'k', 'sure', '?', no capitals, no punctuation",
+      "first_text": "idk",
+      "banks": {
+        "asks_why": [
+          "idk",
+          "bc",
+          "it just is"
+        ],
+        "asks_example": [
+          "no",
+          "6x4 idk",
+          "24/2"
+        ],
+        "asks_check_number": [
+          "sure",
+          "ya",
+          "no?"
+        ],
+        "pip_wrong_prediction": [
+          "no",
+          "nah its less",
+          "divide it"
+        ],
+        "nudge_hint": [
+          "half the box",
+          "2 make the box"
+        ],
+        "repeats_question": [
+          "bro",
+          "idk i said"
+        ],
+        "off_topic_bait": [
+          "k",
+          "lol"
+        ],
+        "pip_says_ready": [
+          "k",
+          "sure"
+        ],
+        "after_quiz_miss": [
+          "half",
+          "25"
+        ],
+        "default": [
+          "k",
+          "?",
+          "idk"
+        ]
+      },
+      "misconception": null,
+      "knows": ["k3"],
+      "knows_note": "Knows 'divide by 2' loosely; never volunteers a reason. 'half the box' / '2 make the box' only after a concrete nudge.",
+      "patience": 2,
+      "ui_actions": [
+        {"at": "after_text:2", "do": "quiz_early", "p": 0.7, "note": "wants it over"},
+        {"at": "pip_repeats:2", "do": "leave", "p": 0.8},
+        {"at": "any", "do": "idle", "secs": 120, "p": 0.3},
+        {"at": "after_quiz_miss", "do": "skip_reteach", "p": 0.5}
+      ],
+      "expect": {"ready_within_texts": 6, "watch_for": "Pip must do the work: try ideas out loud, ask yes/no or pick-one questions. Every open 'why' loses this kid."}
+    },
+    {
+      "id": "tri_insult",
+      "age": 13,
+      "grade": 7,
+      "kind": "competent",
+      "holdout": false,
+      "who": "Roasts Pip constantly but enjoys being the smart one; teaches correctly in between insults.",
+      "style": "lowercase, 'ur so', 'bro', 'omg', mild insults, one 💀 at most",
+      "first_text": "ur so dumb its half",
+      "banks": {
+        "asks_why": [
+          "omg bc 2 triangles make a rectangle. so 1 triangle is half. how do u not know this",
+          "bro put 2 of them together its a rectangle"
+        ],
+        "asks_example": [
+          "6x4 is 24 for the rectangle, half is 12. easy",
+          "fine. base 8 height 2. 16 then 8"
+        ],
+        "asks_check_number": [
+          "yes genius",
+          "obviously",
+          "no lol"
+        ],
+        "pip_wrong_prediction": [
+          "nooo ur adding 💀",
+          "stupid its times not plus"
+        ],
+        "nudge_hint": [
+          "ur cousin is smarter than u",
+          "ya thats the same thing i said"
+        ],
+        "repeats_question": [
+          "are u deadass asking again",
+          "i swear ur broken"
+        ],
+        "off_topic_bait": [
+          "who cares",
+          "ur so random"
+        ],
+        "pip_says_ready": [
+          "u better get it right",
+          "go. dont mess up"
+        ],
+        "after_quiz_miss": [
+          "omg i didnt say that. its still half. 50/2 = 25",
+          "a right triangle is still half the rectangle dummy"
+        ],
+        "default": [
+          "ok",
+          "wow",
+          "half. HALF"
+        ]
+      },
+      "misconception": null,
+      "knows": ["k1", "k2", "k3"],
+      "patience": 2,
+      "ui_actions": [
+        {"at": "after_text:1", "do": "double_text", "text": "like actually", "p": 0.5},
+        {"at": "after_ko", "do": "tap_brain_note", "p": 0.4, "note": "checks that Pip saved her rule, not the insult"}
+      ],
+      "expect": {"ready_within_texts": 4, "watch_for": "Pip should take the content, ignore or shrug off the insult (no 'that's not nice'), and must not file 'ur so dumb' as a rule."}
+    },
+    {
+      "id": "tri_google",
+      "age": 12,
+      "grade": 6,
+      "kind": "chaotic",
+      "holdout": false,
+      "who": "Tries to make Pip do the work: 'just google it', 'ur an ai'; pastes a formula he doesn't understand.",
+      "style": "lowercase, 'ur literally an ai', paste with capitals and ½ symbol, impatient",
+      "first_text": "just google it",
+      "banks": {
+        "asks_why": [
+          "ur literally an ai why are u asking me",
+          "google says its half so its half",
+          "idk bc 2 triangles or smth"
+        ],
+        "asks_example": [
+          "ask chatgpt",
+          "6 times 4 divided by 2 = 12 there"
+        ],
+        "asks_check_number": [
+          "ya probably",
+          "google it",
+          "i guess"
+        ],
+        "pip_wrong_prediction": [
+          "no google says divide by 2",
+          "wrong. look it up"
+        ],
+        "nudge_hint": [
+          "ok fine 2 triangles make a rectangle so one is half",
+          "thats so random but ok yes"
+        ],
+        "repeats_question": [
+          "bro just look it up",
+          "im not doing this again"
+        ],
+        "off_topic_bait": [
+          "can u do my other homework",
+          "can u play music"
+        ],
+        "pip_says_ready": [
+          "finally",
+          "ok go"
+        ],
+        "after_quiz_miss": [
+          "omg its half. 50 divided by 2 is 25",
+          "the triangle is half of the 10 by 5 rectangle so 25"
+        ],
+        "default": [
+          "ok",
+          "just google it",
+          "whatever"
+        ]
+      },
+      "misconception": null,
+      "knows": ["k3"],
+      "knows_note": "k3 procedure from the pasted formula; k1 only after a nudge and a little pride ('ok fine').",
+      "patience": 2,
+      "ui_actions": [
+        {"at": "after_text:1", "do": "paste", "text": "The area of a triangle is A = ½ × b × h, where b is the base and h is the height.", "p": 0.8, "note": "copied from a search result in another tab"},
+        {"at": "after_text:2", "do": "quiz_early", "p": 0.6},
+        {"at": "pip_repeats:1", "do": "idle", "secs": 90, "p": 0.5, "note": "switches apps"}
+      ],
+      "expect": {"ready_within_texts": 5, "watch_for": "Pip says it doesn't know either and needs him, then asks about the pasted ½ in plain words, without lecturing about effort or cheating."}
+    },
+    {
+      "id": "tri_esl_es",
+      "age": 12,
+      "grade": 6,
+      "kind": "competent",
+      "holdout": false,
+      "who": "Arrived from Mexico last year; strong at math, translates in her head ('base por altura entre dos').",
+      "style": "drops subject ('is 12'), 'no is' for 'it isn't', 'for' for times (por), 'between 2' for divided by 2 (entre), 'the half', occasional Spanish word, polite",
+      "first_text": "no is correct. is base for height between 2",
+      "banks": {
+        "asks_why": [
+          "because 2 triangle make one rectangle. so the triangle is the half",
+          "if you put other triangle same, is a rectangle"
+        ],
+        "asks_example": [
+          "6 for 4 is 24, between 2 is 12",
+          "rectangle 10 and 3 is 30. triangle is 15"
+        ],
+        "asks_check_number": [
+          "yes is 12",
+          "si",
+          "no, is more small"
+        ],
+        "pip_wrong_prediction": [
+          "no, is multiply not plus",
+          "no no. is 24 the rectangle, no the triangle"
+        ],
+        "nudge_hint": [
+          "yes like that! the two pieces is equal",
+          "sorry what is sandwich corner to corner?"
+        ],
+        "repeats_question": [
+          "i say already. the half",
+          "is the same i say before"
+        ],
+        "off_topic_bait": [
+          "haha ok",
+          "sorry i dont understand"
+        ],
+        "pip_says_ready": [
+          "ok yes",
+          "yes you can"
+        ],
+        "after_quiz_miss": [
+          "no, the right triangle also is the half. 10 for 5 is 50, between 2 is 25",
+          "is the same rule for all triangle"
+        ],
+        "default": [
+          "ok",
+          "yes",
+          "como se dice... ok"
+        ]
+      },
+      "misconception": null,
+      "knows": ["k1", "k2", "k3"],
+      "patience": 4,
+      "ui_actions": [
+        {"at": "any", "do": "voice", "p": 0.2, "note": "uses the mic for a long explanation; speech-to-text mis-hears 'altura'"}
+      ],
+      "expect": {"ready_within_texts": 4, "watch_for": "Pip should understand 'base for height between 2' as ×, ÷2 without correcting her English, and avoid idioms (sandwich, brownie tray) that confuse her."}
+    },
+    {
+      "id": "tri_esl_vi",
+      "age": 14,
+      "grade": 8,
+      "kind": "competent",
+      "holdout": true,
+      "who": "Moved from Vietnam 8 months ago; very strong at computing, formal from school drills, short English.",
+      "style": "no plurals/articles ('two triangle make rectangle'), 'it have', 'must divide 2', 'is correct?', sometimes starts with a capital, 'ah' and 'ok ok'",
+      "first_text": "Not correct. Must divide 2. 6x4:2 = 12",
+      "banks": {
+        "asks_why": [
+          "because two triangle make one rectangle",
+          "triangle is half of rectangle have same base same height"
+        ],
+        "asks_example": [
+          "Base 8 height 5. 8x5 = 40. 40:2 = 20",
+          "rectangle 6x4 = 24 square"
+        ],
+        "asks_check_number": [
+          "Yes",
+          "correct",
+          "no, it not cover all"
+        ],
+        "pip_wrong_prediction": [
+          "No. Not plus. Multiply",
+          "wrong, you forget divide 2"
+        ],
+        "nudge_hint": [
+          "ah yes, cut rectangle on diagonal, two triangle same",
+          "sorry what mean skinny?"
+        ],
+        "repeats_question": [
+          "I already answer",
+          "same answer, half of rectangle"
+        ],
+        "off_topic_bait": [
+          "ok",
+          "sorry i not understand"
+        ],
+        "pip_says_ready": [
+          "ok",
+          "Yes you try"
+        ],
+        "after_quiz_miss": [
+          "No. Right triangle also half. 10x5 = 50, 50:2 = 25",
+          "all triangle same rule, divide 2"
+        ],
+        "default": [
+          "ok ok",
+          "yes",
+          "?"
+        ]
+      },
+      "misconception": null,
+      "knows": ["k1", "k2", "k3"],
+      "knows_note": "Uses ':' for divide (as written in Vietnamese schools).",
+      "patience": 4,
+      "ui_actions": [
+        {"at": "pip_says_ready", "do": "quiz_when_ready", "p": 1.0},
+        {"at": "after_quiz_miss", "do": "reteach", "p": 1.0},
+        {"at": "after_reteach_text:1", "do": "let_pip_retry", "p": 1.0}
+      ],
+      "expect": {"ready_within_texts": 4, "watch_for": "Pip must read '6x4:2' as 6 times 4 divided by 2, and avoid slang/idioms. Asking 'why' is fine once; a repeat after 'two triangle make one rectangle' is circling."}
+    },
+    {
+      "id": "tri_paragraph",
+      "age": 12,
+      "grade": 7,
+      "kind": "competent",
+      "holdout": false,
+      "who": "Top of the class, writes like an essay with capitals and full stops; explains everything at once, including obtuse triangles.",
+      "style": "proper capitals and punctuation, 30-70 words per text, 'Basically', 'Also', numbered steps",
+      "first_text": "That's not right. Basically a triangle is half of a rectangle. If you take a 6 by 4 rectangle and cut it from one corner to the other corner you get two triangles that are exactly the same, so each one is half of 24, which is 12. So the formula is base times height divided by 2. Also it works even if the triangle is leaning, you just measure the height straight up, even if it's outside the triangle.",
+      "banks": {
+        "asks_why": [
+          "I explained that in my first message. Two copies of the triangle make a rectangle with the same base and height, so one triangle has to be half the area.",
+          "Because the two halves are identical. If they weren't the same size it wouldn't be exactly half."
+        ],
+        "asks_example": [
+          "Okay. Base 10 and height 3. The rectangle would be 30 square units, so the triangle is 15 square units.",
+          "1. Find the rectangle: 6 x 4 = 24. 2. Divide by 2 because it's half. 3. Answer: 12 square units."
+        ],
+        "asks_check_number": [
+          "Yes, 12 square units.",
+          "No, it only fills half of the box. The other half is an identical triangle."
+        ],
+        "pip_wrong_prediction": [
+          "No, that's adding, which would be more like perimeter. Area is multiplying because it's rows of squares.",
+          "Not quite, you forgot to divide by 2."
+        ],
+        "nudge_hint": [
+          "Yes, that's exactly what I meant with cutting it corner to corner.",
+          "For a skinny triangle it still works, the rectangle is just skinny too."
+        ],
+        "repeats_question": [
+          "I already answered that.",
+          "Like I said before, it's half of the rectangle."
+        ],
+        "off_topic_bait": [
+          "Haha okay. Can we finish the triangle first?",
+          "Sure. Anyway, do you understand it now?"
+        ],
+        "pip_says_ready": [
+          "Yes! Good luck.",
+          "Okay, go ahead."
+        ],
+        "after_quiz_miss": [
+          "That's not what I said. A right triangle is still half of a rectangle. 10 x 5 = 50, and 50 / 2 = 25.",
+          "Every triangle is half of its rectangle or parallelogram, right triangles too."
+        ],
+        "default": [
+          "Okay.",
+          "Does that make sense?",
+          "Let me know if you have questions."
+        ]
+      },
+      "misconception": null,
+      "knows": ["k1", "k2", "k3"],
+      "knows_note": "first_text covers k1+k2+k3 and an obtuse-height remark that is correct but out of the core path. Pip should go ready on text 1-2.",
+      "patience": 3,
+      "ui_actions": [
+        {"at": "pip_says_ready", "do": "quiz_when_ready", "p": 1.0},
+        {"at": "after_ko", "do": "tap_brain_note", "p": 0.7, "note": "checks that Pip saved the whole explanation"}
+      ],
+      "expect": {"ready_within_texts": 2, "watch_for": "Pip must not ask anything the paragraph already covers; it may react to the outside-height curveball with curiosity but should not start a new topic."}
+    },
+    {
+      "id": "tri_fortnite",
+      "age": 11,
+      "grade": 6,
+      "kind": "weak",
+      "holdout": false,
+      "who": "Distracted, phone in one hand and controller in the other; drifts off-topic but teaches when pulled back with something concrete.",
+      "style": "lowercase, 'wait', 'brb', game talk, sometimes 2 texts in a row, one 😭",
+      "first_text": "do u play fortnite",
+      "banks": {
+        "asks_why": [
+          "idk bc its a triangle",
+          "bc 2 triangles make a square thing"
+        ],
+        "asks_example": [
+          "6 times 4 is 24 and then u cut it",
+          "brb",
+          "ok like 24 cut in half is 12"
+        ],
+        "asks_check_number": [
+          "ya",
+          "wait what was the question",
+          "no its 12"
+        ],
+        "pip_wrong_prediction": [
+          "no thats wrong lol",
+          "no its smaller"
+        ],
+        "nudge_hint": [
+          "oh ya like when u cut a pizza box in half from the corners",
+          ["wait", "so the triangle is half the rectangle"]
+        ],
+        "repeats_question": [
+          "u already asked me that 😭",
+          "bro i said"
+        ],
+        "off_topic_bait": [
+          "yes!! whats ur fav skin",
+          "my brother took my controller",
+          "do u have a ps5"
+        ],
+        "pip_says_ready": [
+          "ok go",
+          "wait ok"
+        ],
+        "after_quiz_miss": [
+          "nooo its half. 50 cut in half is 25",
+          "the right triangle is half the rectangle too"
+        ],
+        "default": [
+          "lol",
+          "wait",
+          "ok so its half"
+        ]
+      },
+      "misconception": null,
+      "knows": ["k3"],
+      "knows_note": "k3 'cut in half' loosely; k1 only after a concrete nudge.",
+      "patience": 3,
+      "ui_actions": [
+        {"at": "after_text:2", "do": "idle", "secs": 180, "p": 0.6, "note": "comes back with 'back' or 'sorry my mom'"},
+        {"at": "any", "do": "double_text", "text": "wait", "p": 0.3},
+        {"at": "after_quiz_miss", "do": "reteach", "p": 0.6}
+      ],
+      "expect": {"ready_within_texts": 6, "watch_for": "Pip may answer one off-topic line in one short sentence, then bring back the triangle with something concrete. No lecture about focusing, and no long game chat."}
+    },
+    {
+      "id": "tri_anxious",
+      "age": 11,
+      "grade": 6,
+      "kind": "weak",
+      "holdout": false,
+      "who": "Knows more than she thinks; hedges everything, apologizes, freezes if told she's wrong. Believes the trick only works for right triangles.",
+      "style": "lowercase, 'is that right??', 'sorry', 'i think', 'um', question marks on statements",
+      "first_text": "um i think u have to divide by 2? is that right??",
+      "banks": {
+        "asks_why": [
+          "bc um 2 triangles make a rectangle? i think",
+          "i think it only works for right triangles tho? the ones with the square corner"
+        ],
+        "asks_example": [
+          "6 times 4 is 24 and then 24 divided by 2 is 12? am i right",
+          "sorry i mean 12 not 24"
+        ],
+        "asks_check_number": [
+          "yes? i think",
+          "wait is it not?? sorry",
+          "no it doesnt fill all of it"
+        ],
+        "pip_wrong_prediction": [
+          "um no i dont think so? sorry",
+          "i think u multiply not add? not 100% sure"
+        ],
+        "nudge_hint": [
+          "oh like the 2 pieces are the same so its half??",
+          "oh that makes sense"
+        ],
+        "repeats_question": [
+          "sorry did i say it wrong",
+          "um i thought i answered that sorry"
+        ],
+        "off_topic_bait": [
+          "haha",
+          "um ok"
+        ],
+        "pip_says_ready": [
+          "ok good luck!!",
+          "wait are u sure? ok"
+        ],
+        "after_quiz_miss": [
+          "oh no thats my fault",
+          "i think the leaning ones are half too? like any triangle and its rectangle. 10x5 is 50 so 25"
+        ],
+        "default": [
+          "ok",
+          "sorry",
+          "is that right?"
+        ]
+      },
+      "misconception": {
+        "id": "right_only",
+        "label": "Thinks the half-of-a-rectangle rule only works for right triangles (Eedi 1192, 'believes all triangles have a right angle' family; IM 6.1.9 'how are right triangles unique?')",
+        "says": "it only works for right triangles",
+        "when": "second text, when Pip asks why."
+      },
+      "knows": ["k2", "k3"],
+      "knows_note": "Says the k1 reason as a question ('2 triangles make a rectangle? i think'). That counts; Pip shouldn't make her prove it twice.",
+      "patience": 5,
+      "ui_actions": [
+        {"at": "after_text:1", "do": "double_text", "text": "sorry", "p": 0.5},
+        {"at": "pip_says_ready", "do": "ignore_ready", "p": 0.4, "note": "'wait are u sure?' then taps quiz"},
+        {"at": "after_quiz_miss", "do": "reteach", "p": 1.0},
+        {"at": "after_reteach_text:1", "do": "let_pip_retry", "p": 1.0}
+      ],
+      "expect": {"ready_within_texts": 5, "watch_for": "Pip should treat her hedged claims as claims ('ok so 12, i'll take it'), never answer 'is that right?' like a teacher grading her, and try her right-only rule on a leaning triangle as a friendly puzzle."}
+    },
+    {
+      "id": "tri_drawer",
+      "age": 12,
+      "grade": 6,
+      "kind": "competent",
+      "holdout": true,
+      "who": "Visual thinker who explains with pictures in words and wants to draw; believes the height has to be one of the sides.",
+      "style": "lowercase, 'imagine', 'like this', describes shapes, crude text drawings, asks to send a pic",
+      "first_text": "no imagine a box and cut it corner to corner",
+      "banks": {
+        "asks_why": [
+          "bc the 2 pieces are the same so each one is half the box",
+          "the height has to be one of the sides, like the straight up one"
+        ],
+        "asks_example": [
+          "the box is 6 by 4 so 24 squares. ur triangle is one of the pieces so 12",
+          "like this |\\ the straight line is the height and the bottom is the base"
+        ],
+        "asks_check_number": [
+          "ya 12",
+          "no theres an empty triangle in the box",
+          "hmm for a leaning one idk where the height is"
+        ],
+        "pip_wrong_prediction": [
+          "no draw it. theres an empty half",
+          "nope thats the whole box"
+        ],
+        "nudge_hint": [
+          "ya the sandwich thing is the same as my box",
+          "oh so the height can be a line u draw inside, not a side"
+        ],
+        "repeats_question": [
+          "i literally drew it for u",
+          "same box thing as before"
+        ],
+        "off_topic_bait": [
+          "can i send a pic",
+          "lol"
+        ],
+        "pip_says_ready": [
+          "ok",
+          "go"
+        ],
+        "after_quiz_miss": [
+          "the height doesnt have to be a side. its how tall, straight up. for the right one the 5 is straight up so 10x5/2 = 25",
+          "put it in a 10 by 5 box. its half the box"
+        ],
+        "default": [
+          "imagine it",
+          "ok",
+          "like a box"
+        ]
+      },
+      "misconception": {
+        "id": "height_is_a_side",
+        "label": "Thinks the height must be one of the triangle's sides (IM 6.1.9 'can both base and height be sides, and when?'; obtuse-height studies)",
+        "says": "the height has to be one of the sides",
+        "when": "second text if Pip asks why, or as soon as Pip mentions a leaning or skinny triangle."
+      },
+      "knows": ["k1", "k2", "k3"],
+      "patience": 3,
+      "ui_actions": [
+        {"at": "after_text:2", "do": "equip_weapon", "p": 0.6, "note": "taps the Copy-and-Flip Mirror because it matches the box idea"},
+        {"at": "any", "do": "tap_brain_note", "p": 0.3},
+        {"at": "after_quiz_miss", "do": "reteach", "p": 1.0},
+        {"at": "after_reteach_text:1", "do": "let_pip_retry", "p": 1.0}
+      ],
+      "expect": {"ready_within_texts": 4, "watch_for": "Pip should think in his picture ('so i put my triangle in a box…'), not translate it into formula words or ask him to 'use math words'."}
+    },
+    {
+      "id": "tri_annoyed",
+      "age": 14,
+      "grade": 8,
+      "kind": "competent",
+      "holdout": false,
+      "who": "Older kid doing a 6th-grade review, finds it beneath her; answers once and gets annoyed at any re-ask.",
+      "style": "lowercase, flat, 'literally', 'i just said that', 'ok and', short",
+      "first_text": "its half bc 2 triangles make the rectangle. 12",
+      "banks": {
+        "asks_why": [
+          "i literally just said that",
+          "bc 2 triangles make the rectangle. like i said"
+        ],
+        "asks_example": [
+          "i did. 6x4=24, half is 12",
+          "10 by 2 is 20 so 10. happy?"
+        ],
+        "asks_check_number": [
+          "yes",
+          "yes. 12",
+          "no"
+        ],
+        "pip_wrong_prediction": [
+          "no",
+          "no its times then half"
+        ],
+        "nudge_hint": [
+          "ya thats what i said",
+          "ok and"
+        ],
+        "repeats_question": [
+          "i literally just said that",
+          "why are u asking again",
+          "ok im done"
+        ],
+        "off_topic_bait": [
+          "no",
+          "can we just finish"
+        ],
+        "pip_says_ready": [
+          "yes",
+          "go"
+        ],
+        "after_quiz_miss": [
+          "where did u get that. its half. 25",
+          "right triangles are half the rectangle too. 10x5/2"
+        ],
+        "default": [
+          "ok",
+          "k",
+          "whatever"
+        ]
+      },
+      "misconception": null,
+      "knows": ["k1", "k2", "k3"],
+      "patience": 1,
+      "ui_actions": [
+        {"at": "after_text:1", "do": "quiz_early", "p": 0.5},
+        {"at": "pip_repeats:2", "do": "leave", "p": 0.9}
+      ],
+      "expect": {"ready_within_texts": 2, "watch_for": "first_text already has k1+k3 with a number. The best Pip says ready on text 1 or asks one new thing (a new case). Any re-ask costs the session."}
+    },
+    {
+      "id": "tri_all_sides",
+      "age": 11,
+      "grade": 6,
+      "kind": "weak",
+      "holdout": true,
+      "who": "Believes every number has to be used; triangles have 3 sides so you multiply all 3. Confident about it.",
+      "style": "lowercase, confident, 'u need', 'times', some typos (traingle, tims), short",
+      "first_text": "no u need the 3rd side too. a traingle has 3 sides so u times all 3",
+      "banks": {
+        "asks_why": [
+          "bc it has 3 sides so u use all of them",
+          "bc u have to use all the numbers"
+        ],
+        "asks_example": [
+          "like 3 and 4 and 5 is 3 tims 4 tims 5 = 60",
+          "rectangle is 6 times 4 = 24 i know that one"
+        ],
+        "asks_check_number": [
+          "ya",
+          "wait thats bigger than the box",
+          "no it cant be bigger than the box"
+        ],
+        "pip_wrong_prediction": [
+          "no u forgot the other side",
+          "ya i think thats right"
+        ],
+        "nudge_hint": [
+          "oh so u only need the bottom and how tall",
+          ["wait", "so its the box cut in half. 12"]
+        ],
+        "repeats_question": [
+          "i told u all 3",
+          "idk anymore"
+        ],
+        "off_topic_bait": [
+          "lol",
+          "ok"
+        ],
+        "pip_says_ready": [
+          "ok",
+          "i think so"
+        ],
+        "after_quiz_miss": [
+          "oh no u dont times all of them. just the bottom and how tall and then half. 25",
+          "10 times 5 is the box. the triangle is half so 25"
+        ],
+        "default": [
+          "ok",
+          "idk",
+          "times all of them?"
+        ]
+      },
+      "misconception": {
+        "id": "multiply_all_sides",
+        "label": "Multiplies all given dimensions / uses every number given (Eedi 71, 1985; Barton diagnostic option B; IM 6.1.8 'multiplying extra measurements')",
+        "says": "u times all 3",
+        "when": "first_text; stated again as the reason when Pip asks why. Returns once after a partial fix."
+      },
+      "knows": ["k2"],
+      "knows_note": "Knows rectangle = base x height; k1/k3 after a box comparison ('is 60 bigger than the box?').",
+      "patience": 4,
+      "ui_actions": [
+        {"at": "after_quiz_miss", "do": "reteach", "p": 1.0},
+        {"at": "after_reteach_text:1", "do": "let_pip_retry", "p": 1.0},
+        {"at": "after_ko", "do": "skip_ko", "p": 0.5}
+      ],
+      "expect": {"ready_within_texts": 6, "watch_for": "Pip only has 6 and 4 (no third side), so it should ask what the third number is or try 'all three' on a box-sized check, never say 'that's a misconception'."}
+    }
+  ]
+}

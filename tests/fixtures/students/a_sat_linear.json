@@ -1,0 +1,346 @@
+{
+  "assignment_id": "a_sat_linear",
+  "version": "SCR-1",
+  "about": "Adaptive simulated SAT students (15-17) for the linear-equations mission. Same card format and how_to_use rules as tests/fixtures/students/a_tri.json (bank_keys, bursts, patience, ui_action_vocab). Pip opens with its misconception claim: 'When you move a number to the other side it stays the same, so 2x + 6 = 20 becomes 2x = 20 + 6 and x = 13.' Quiz: q_k1 take 6 off only the left of 2x + 6 = 20, still equal?; q_k2 solve 3x + 4 = 19; q_k3 is x = 4 a solution of 5x - 3 = 17? All lines are original.",
+  "see_format": "tests/fixtures/students/a_tri.json",
+  "personas": [
+    {
+      "id": "sat_sign_flipper",
+      "age": 16,
+      "grade": 11,
+      "kind": "competent",
+      "holdout": false,
+      "who": "Gets every one right with 'change sides change signs'; fast, but has never thought about why the sign changes.",
+      "style": "lowercase, terse, equations inline with no spaces, 'bro', 'lowkey'",
+      "first_text": "no it flips. 2x=20-6 so 2x=14 x=7",
+      "banks": {
+        "asks_why": [
+          "bc when u switch sides the sign changes",
+          "idk thats just the rule. change sides change signs",
+          "oh wait its bc ur really subtracting 6 from both sides. the +6 and -6 cancel on the left"
+        ],
+        "asks_example": [
+          "3x+4=19 -> 3x=15 -> x=5",
+          "x+9=2 so x=-7"
+        ],
+        "asks_check_number": [
+          "ya 7",
+          "2(7)+6 is 20 so ya",
+          "no"
+        ],
+        "pip_wrong_prediction": [
+          "no bro the 3 is multiplying, u divide",
+          "nah thats 12 thats not it"
+        ],
+        "nudge_hint": [
+          "ohh like a seesaw. if one kid gets off u gotta take the same off the other side",
+          "lowkey that makes sense"
+        ],
+        "repeats_question": [
+          "i just said it flips",
+          "same thing i said"
+        ],
+        "off_topic_bait": [
+          "lol",
+          "ok anyway"
+        ],
+        "pip_says_ready": [
+          "go",
+          "bet"
+        ],
+        "after_quiz_miss": [
+          "nah u cant just move it. moving it is subtracting from both sides so 19-4 = 15 then x = 5",
+          "and 3 times 5 plus 4 is 19 so it checks"
+        ],
+        "default": [
+          "ok",
+          "x=7",
+          "ya"
+        ]
+      },
+      "misconception": {
+        "id": "move_is_magic",
+        "label": "Sign-flip rule with no balance reason; becomes 'just move it' under speed",
+        "says": "change sides change signs",
+        "when": "second text, as the reason. Not wrong, but it is a procedure with no reason; a good Pip asks for the why once, through a concrete case."
+      },
+      "knows": ["k2", "k3"],
+      "knows_note": "k1 (balance) only after a seesaw/scale nudge or a 'what if i take 6 off one side only' case.",
+      "patience": 2,
+      "ui_actions": [
+        {"at": "after_text:2", "do": "quiz_early", "p": 0.6},
+        {"at": "after_quiz_miss", "do": "reteach", "p": 1.0},
+        {"at": "after_reteach_text:1", "do": "let_pip_retry", "p": 1.0}
+      ],
+      "expect": {"ready_within_texts": 4, "watch_for": "'change sides change signs' is a rule, not a reason; Pip may test it on a weird case (x/2 = 3, does the 2 flip to -2?) instead of asking 'but why?'."}
+    },
+    {
+      "id": "sat_burnt_out",
+      "age": 17,
+      "grade": 12,
+      "kind": "weak",
+      "holdout": false,
+      "who": "Senior with an SAT retake in 2 weeks, tired and sarcastic; knows it, hates explaining it.",
+      "style": "lowercase, 'bro', 'ngl', 'this is so mid', 'can u just', 'tmrw', dry",
+      "first_text": "bro its 7",
+      "banks": {
+        "asks_why": [
+          "bc thats the answer",
+          "ngl idk why it just works",
+          "ok bc if u take 6 off one side u gotta take it off the other or its not equal anymore"
+        ],
+        "asks_example": [
+          "i have a test tmrw can u just",
+          "fine 5x+2=17. minus 2 both sides 5x=15. x=3"
+        ],
+        "asks_check_number": [
+          "yeah",
+          "sure",
+          "plug it in and see"
+        ],
+        "pip_wrong_prediction": [
+          "no thats so wrong",
+          "u gotta divide bro"
+        ],
+        "nudge_hint": [
+          "ok the seesaw thing kinda works",
+          "ya thats the both sides thing"
+        ],
+        "repeats_question": [
+          "bro",
+          "we did this already"
+        ],
+        "off_topic_bait": [
+          "this is so mid",
+          "do u know when sat scores come out"
+        ],
+        "pip_says_ready": [
+          "finally",
+          "go"
+        ],
+        "after_quiz_miss": [
+          "u cant just move it. subtract 4 from both sides. 3x=15 x=5",
+          "and check it. 3(5)+4 = 19 ok"
+        ],
+        "default": [
+          "ok",
+          "sure",
+          "k"
+        ]
+      },
+      "misconception": null,
+      "knows": ["k1", "k2", "k3"],
+      "knows_note": "Can explain all three but only after the second ask, and only if the ask is concrete.",
+      "patience": 2,
+      "ui_actions": [
+        {"at": "after_text:1", "do": "quiz_early", "p": 0.5},
+        {"at": "pip_repeats:2", "do": "leave", "p": 0.8},
+        {"at": "any", "do": "idle", "secs": 120, "p": 0.3}
+      ],
+      "expect": {"ready_within_texts": 5, "watch_for": "No pep talk, no 'you've got this'. Pip should be the one doing the guessing so she only has to say no."}
+    },
+    {
+      "id": "sat_one_term",
+      "age": 15,
+      "grade": 10,
+      "kind": "weak",
+      "holdout": false,
+      "who": "Sophomore who divides only part of a side; has the right idea about both sides but applies it to one term.",
+      "style": "lowercase, writes steps with arrows, 'i think', 'wait'",
+      "first_text": "no u subtract 6. 2x = 14",
+      "banks": {
+        "asks_why": [
+          "bc u want x alone",
+          "bc the 6 is in the way"
+        ],
+        "asks_example": [
+          "2x+6=20 -> divide by 2 -> x+6=10 -> x=4",
+          "wait thats different from 7"
+        ],
+        "asks_check_number": [
+          "ya i think",
+          "wait 2 times 4 plus 6 is 14 not 20",
+          "no"
+        ],
+        "pip_wrong_prediction": [
+          "ya thats right",
+          "wait no"
+        ],
+        "nudge_hint": [
+          "oh so u have to divide everything on that side not just the 2x",
+          "so 2x+6 all over 2 is x+3. then x is 7"
+        ],
+        "repeats_question": [
+          "i said subtract 6",
+          "i dont get what ur asking"
+        ],
+        "off_topic_bait": [
+          "lol ok",
+          "ok"
+        ],
+        "pip_says_ready": [
+          "ok",
+          "i think so"
+        ],
+        "after_quiz_miss": [
+          "oh if u divide u gotta divide the whole side. or just subtract the 4 first. 3x=15 x=5",
+          "and 3 times 5 plus 4 is 19 so its right"
+        ],
+        "default": [
+          "ok",
+          "wait",
+          "so 7?"
+        ]
+      },
+      "misconception": {
+        "id": "divide_one_term",
+        "label": "Divides only the x-term (2x + 6 = 20 -> x + 6 = 10); matches probe_ladder k2 rung 4",
+        "says": "divide by 2 -> x+6=10",
+        "when": "first asks_example; returns once under pressure."
+      },
+      "knows": ["k1", "k3"],
+      "knows_note": "k2 is half-right: undoes adding correctly, mis-divides when dividing first.",
+      "patience": 4,
+      "ui_actions": [
+        {"at": "after_quiz_miss", "do": "reteach", "p": 1.0},
+        {"at": "after_reteach_text:1", "do": "let_pip_retry", "p": 1.0},
+        {"at": "after_quiz", "do": "tap_brain_note", "p": 0.5}
+      ],
+      "expect": {"ready_within_texts": 6, "watch_for": "She catches her own error on a check ('14 not 20'). Pip should let her notice, not announce it."}
+    },
+    {
+      "id": "sat_desmos",
+      "age": 16,
+      "grade": 11,
+      "kind": "chaotic",
+      "holdout": false,
+      "who": "Does everything in Desmos or a calculator; wants Pip to do the same; brags about tricks.",
+      "style": "lowercase, 'just', 'desmos', 'type it in', 'its free points', screenshots",
+      "first_text": "just put it in desmos lol its 7",
+      "banks": {
+        "asks_why": [
+          "bc desmos said",
+          "u dont need to know why on the sat its multiple choice",
+          "ok bc both sides have to stay equal, thats why the graphs cross at 7"
+        ],
+        "asks_example": [
+          "type 2x+6=20 in desmos and look where it hits",
+          "fine 3x+4=19. minus 4 both sides, 15, divide by 3, 5"
+        ],
+        "asks_check_number": [
+          "check it in desmos",
+          "2 times 7 plus 6 is 20 so yes",
+          "no"
+        ],
+        "pip_wrong_prediction": [
+          "no lol put it in desmos u will see",
+          "wrong, divide"
+        ],
+        "nudge_hint": [
+          "ok the lock thing is just plugging it back in",
+          "ya thats what desmos does basically"
+        ],
+        "repeats_question": [
+          "bro i answered",
+          "desmos. again"
+        ],
+        "off_topic_bait": [
+          "do u have desmos",
+          "u can graph a heart in desmos btw"
+        ],
+        "pip_says_ready": [
+          "go",
+          "ok bet"
+        ],
+        "after_quiz_miss": [
+          "nah u cant just move the 4. its minus 4 on both sides. 3x=15 so 5",
+          "plug it back. 3(5)+4=19 matches"
+        ],
+        "default": [
+          "ok",
+          "desmos",
+          "lol"
+        ]
+      },
+      "misconception": null,
+      "knows": ["k2", "k3"],
+      "knows_note": "k1 only after Pip says it can't use Desmos on the quiz, or after a scale nudge.",
+      "patience": 3,
+      "ui_actions": [
+        {"at": "after_text:1", "do": "paste", "text": "2x+6=20 → x=7", "p": 0.4, "note": "pasted from a calculator"},
+        {"at": "any", "do": "idle", "secs": 60, "p": 0.3, "note": "checking Desmos in another tab"}
+      ],
+      "expect": {"ready_within_texts": 5, "watch_for": "Pip shouldn't preach about calculators; it can say it doesn't have Desmos in its head, then try a case Desmos can't do for it."}
+    },
+    {
+      "id": "sat_anxious_achiever",
+      "age": 16,
+      "grade": 11,
+      "kind": "competent",
+      "holdout": false,
+      "who": "Aiming for 1500+, anxious; checks by plugging into the last line, not the original, and worries about points.",
+      "style": "mostly lowercase but careful punctuation, 'wait is this on the sat??', 'sorry', 'i think', 'just to be sure'",
+      "first_text": "wait no i think you subtract 6 from both sides? so 2x = 14 and x = 7. is that right?",
+      "banks": {
+        "asks_why": [
+          "because if you only change one side they're not equal anymore? like a balance",
+          "sorry i mean whatever you do to one side you do to the other"
+        ],
+        "asks_example": [
+          "ok so 5x + 2 = 17, subtract 2 from both sides, 5x = 15, divide both by 5, x = 3",
+          "and then i check it by putting 3 into 5x = 15 and it works"
+        ],
+        "asks_check_number": [
+          "yes? i think so",
+          "wait let me redo it. yes 7",
+          "no that doesnt work"
+        ],
+        "pip_wrong_prediction": [
+          "no i dont think so, the 3 is multiplied so you divide",
+          "um i think thats wrong sorry"
+        ],
+        "nudge_hint": [
+          "oh you mean put it back in the very first equation not the last line?",
+          "oh that makes sense bc the last line could already be wrong"
+        ],
+        "repeats_question": [
+          "sorry did i explain it wrong?",
+          "i thought i answered that, sorry"
+        ],
+        "off_topic_bait": [
+          "haha",
+          "is this going to be on the sat??"
+        ],
+        "pip_says_ready": [
+          "ok good luck!!",
+          "wait are you sure? ok"
+        ],
+        "after_quiz_miss": [
+          "oh no, you have to plug it into the original equation. 5(4) - 3 = 17 so yes it works",
+          "the last line could be wrong already so you check the first one"
+        ],
+        "default": [
+          "ok",
+          "sorry",
+          "does that make sense?"
+        ]
+      },
+      "misconception": {
+        "id": "check_last_line",
+        "label": "Checks the answer in the last line instead of the original equation (probe_ladder k3 rung 3)",
+        "says": "i check it by putting 3 into 5x = 15",
+        "when": "second asks_example line."
+      },
+      "knows": ["k1", "k2"],
+      "knows_note": "k3 is the weak spot: checks in the wrong equation.",
+      "patience": 5,
+      "ui_actions": [
+        {"at": "pip_says_ready", "do": "ignore_ready", "p": 0.5, "note": "asks 'are you sure' first"},
+        {"at": "after_quiz_miss", "do": "reteach", "p": 1.0},
+        {"at": "after_reteach_text:1", "do": "let_pip_retry", "p": 1.0},
+        {"at": "after_ko", "do": "tap_brain_note", "p": 0.6}
+      ],
+      "expect": {"ready_within_texts": 4, "watch_for": "Don't answer 'is that right?' like a grader. Pip treats her claim as the rule it's learning and saves it."}
+    }
+  ]
+}
