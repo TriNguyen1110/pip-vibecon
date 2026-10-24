@@ -67,6 +67,14 @@
       "style": 0.55,
       "speed": 0.92,
       "provenance": "Rob, see walrus. Audited B11."
+    },
+    "triangle": {
+      "voice_id": "a5zfmqTslZJBP0jutmVY",
+      "name": "Jen Frankie",
+      "stability": 0.45,
+      "style": 0.6,
+      "speed": 1.0,
+      "provenance": "Jen Frankie (professional, by Miss Frankie): original character voice, same as the hamster boss. Mapped to Duke Doublecount (a_tri) by owner decision."
     }
   },
   "announcer": {
@@ -100,6 +108,12 @@
       "hamster",
       "hop-hop",
       "a_sat_linear"
+    ],
+    "triangle": [
+      "duke doublecount",
+      "doublecount",
+      "peacock",
+      "a_tri"
     ]
   },
   "pip_choices": {

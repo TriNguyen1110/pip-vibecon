@@ -272,7 +272,7 @@ def friend_voice(reply: str) -> str:
     for _ in range(2):
         r = _TEACHER.sub("", r)
     r = re.sub(r"\.{2,}(?!\.)", ".", r).strip()
-    return (r[:1].upper() + r[1:]) if r else r
+    return r
 
 
 _OOS_SPLIT = re.compile(r"\s*,\s*|/|\s+and\s+|\s+or\s+|\s+like\s+")

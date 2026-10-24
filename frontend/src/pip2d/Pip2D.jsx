@@ -37,6 +37,9 @@ const MOOD_SPEC = {
   possessed: { sprout: 'horn', lids: [0.5, 0.52], tint: BOSS_TINT },
 }
 
+// Each evolution step is visibly bigger (v2 = +8%, v3 = +15% over v1) while staying inside the viewBox.
+const GROWTH = [0.9, 0.972, 1.035]
+
 const MOOD_MOUTH = {
   deadpan: 'closed',
   confused: 'squiggle',
@@ -396,6 +399,61 @@ function useHop(mood, enabled) {
   return hop
 }
 
+// v2 signature wearable: a glossy holo neckerchief/bandana with a star print.
+function Bandana({ A, t, id }) {
+  const { y, x0, x1 } = A.neck
+  const l = x0 + 18
+  const r = x1 - 18
+  return (
+    <g>
+      <path d={`M${l},${y - 4} Q100,${y + 6} ${r},${y - 5}`} fill="none" stroke={t.ink} strokeWidth="10" strokeLinecap="round" />
+      <path d={`M${l},${y - 4} Q100,${y + 6} ${r},${y - 5}`} fill="none" stroke={`url(#${id}holo)`} strokeWidth="6" strokeLinecap="round" />
+      <path d={`M${100 - 22},${y + 1} L${100 + 22},${y + 1} L100,${y + 28} Z`} fill={`url(#${id}holo)`} stroke={t.ink} strokeWidth="3" strokeLinejoin="round" />
+      <path d={starPath(100, y + 10, 6)} fill="#fff" opacity="0.9" />
+      <path d={`M${100 - 14},${y + 4} L${100 - 4},${y + 4}`} stroke="#fff" strokeWidth="2.4" strokeLinecap="round" opacity="0.85" />
+    </g>
+  )
+}
+
+// v3: a fluffy mantle across the shoulders, clearly visible from the front, with a star clasp.
+function Mantle({ A, t, id, creature }) {
+  const { y, x0, x1 } = A.neck
+  return (
+    <g>
+      <Shape
+        pts={ellipsePoints(100, y + 8, (x1 - x0) / 2 - 8, 14)}
+        fur={{ key: `mantle2-${creature}`, seed: 61, amp: 3.2, spacing: 6.5, tuftChance: 0.4 }}
+        fill="#EADCFF"
+        shade="#C9B3F2"
+        ink={t.ink}
+        uid={`${id}mantle`}
+      />
+      <ellipse cx="100" cy={y + 9} rx={(x1 - x0) / 2 - 18} ry="7" fill={`url(#${id}holo)`} opacity="0.5" />
+      <path d={starPath(100, y + 8, 8)} fill="#FFD25A" stroke={t.ink} strokeWidth="2.2" strokeLinejoin="round" />
+      <Gel id={id} x={97} y={y + 4} r={2.4} />
+    </g>
+  )
+}
+
+// v3 "rare" colourway: a soft holo sheen over the whole body, masked to the silhouette.
+function RareTint({ id, Art, t, split }) {
+  return (
+    <>
+      <defs>
+        <filter id={`${id}rw`}>
+          <feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1 0" />
+        </filter>
+        <mask id={`${id}rareM`} maskUnits="userSpaceOnUse" x="-20" y="-40" width="240" height="280">
+          <g filter={`url(#${id}rw)`}>
+            <Art t={t} id={`${id}rt`} part={split ? 'body' : 'all'} />
+          </g>
+        </mask>
+      </defs>
+      <rect x="-20" y="-40" width="240" height="280" fill={`url(#${id}holo)`} mask={`url(#${id}rareM)`} opacity="0.2" />
+    </>
+  )
+}
+
 export function Pip2D({
   creature = 'capybara',
   vibe = 'cute',
@@ -436,7 +494,7 @@ export function Pip2D({
 
   // eyes: cool = permanent ~60% lid; ugly = tired (heavier lids + bags)
   const lids = (spec.lids ?? [0.35, 0.37]).map((l) => {
-    const v = (ugly ? Math.min(0.6, l + 0.15) : l) - (grown ? 0.05 : 0)
+    const v = (ugly ? Math.min(0.6, l + 0.15) : l) - (awakened ? 0.1 : grown ? 0.05 : 0)
     return Math.max(0, cool ? Math.max(v, 0.6) : v)
   })
   const sizes = spec.scale ?? [1, 1]
@@ -452,7 +510,7 @@ export function Pip2D({
     })
   else
     eyes = A.eyes.map((e, i) => (
-      <Eye key={i} e={e} lid={lids[i]} look={spec.look} scale={sizes[i]} ink={t.ink} tint={spec.tint} sparkle={cute} ring={e.ring} uid={`${id}e${i}`} />
+      <Eye key={i} e={e} lid={lids[i]} look={spec.look} scale={sizes[i]} ink={t.ink} tint={spec.tint} sparkle={cute || grown} ring={e.ring} uid={`${id}e${i}`} />
     ))
 
   const mouthShape = viseme ?? talkShape(mouth) ?? MOOD_MOUTH[m]
@@ -504,6 +562,22 @@ export function Pip2D({
           uid={`${id}cape`}
         />
       )}
+      {grown && (
+        // fluffier silhouette: extra fur tufts poking out at the cheeks
+        <g>
+          {[-1, 1].map((k, i) => (
+            <Shape
+              key={k}
+              pts={ellipsePoints(A.head.cx + k * (A.head.w / 2 - 4), A.blush[i][1] + 4, 13, 11)}
+              fur={{ key: `cheek-${def.name}-${k}`, seed: 90 + i, amp: 3, spacing: 6, tuftChance: 0.5 }}
+              fill={t.body}
+              shade={t.shade}
+              ink={t.ink}
+              uid={`${id}ck${i}`}
+            />
+          ))}
+        </g>
+      )}
       {acc === 'backpack' && <BackpackBehind t={t} A={A} />}
       {split && (
         <g>
@@ -517,6 +591,7 @@ export function Pip2D({
     <>
       <def.Art t={t} id={id} part={split ? 'body' : 'all'} />
       {rimKind && <RimLight id={id} kind={rimKind} Art={def.Art} t={t} split={split} />}
+      {awakened && <RareTint id={id} Art={def.Art} t={t} split={split} />}
     </>
   )
   const face = (
@@ -566,12 +641,17 @@ export function Pip2D({
     <>
       {m === 'notes' && <Notebook t={t} A={A} />}
       {m === 'overwhelmed' && <SweatDrop at={A.sweat} />}
-      {grown && acc !== 'scarf' && (
-        // level-up collar: a slim glossy holo band with a star tag
-        <g>
-          <path d={`M${A.neck.x0 + 14},${A.neck.y - 3} Q100,${A.neck.y + 7} ${A.neck.x1 - 14},${A.neck.y - 4}`} fill="none" stroke={t.ink} strokeWidth="9" strokeLinecap="round" />
-          <path d={`M${A.neck.x0 + 14},${A.neck.y - 3} Q100,${A.neck.y + 7} ${A.neck.x1 - 14},${A.neck.y - 4}`} fill="none" stroke={`url(#${id}holo)`} strokeWidth="5" strokeLinecap="round" />
-          <path d={starPath(100, A.neck.y + 10, 6.5)} fill="#FFD25A" stroke={t.ink} strokeWidth="2" strokeLinejoin="round" />
+      {grown && !awakened && acc !== 'scarf' && <Bandana A={A} t={t} id={id} />}
+      {awakened && acc !== 'scarf' && <Mantle A={A} t={t} id={id} creature={def.name} />}
+      {grown && (
+        // a tiny star on the cheek
+        <Glint x={A.blush[1][0] + 4} y={A.blush[1][1] - 12} r={awakened ? 5.5 : 4.5} fill="#FFE27A" />
+      )}
+      {awakened && (
+        // a small orbit of two stars around the crown
+        <g className="pip2d-orbit" style={{ '--ox': `${A.sprout.x}px`, '--oy': `${A.sprout.y + 2}px` }}>
+          <path d={starPath(A.sprout.x - 34, A.sprout.y + 6, 6)} fill="#FFE27A" stroke={t.ink} strokeWidth="1.8" strokeLinejoin="round" />
+          <path d={starPath(A.sprout.x + 32, A.sprout.y - 6, 5)} fill="#C9FCFC" stroke={t.ink} strokeWidth="1.8" strokeLinejoin="round" />
         </g>
       )}
       {awakened && (
@@ -594,8 +674,10 @@ export function Pip2D({
   const label = title ?? `Pip the ${def.name} looks ${m}`
   const wrap = (children, key, extra) => (
     <svg key={key} className={`pip2d ${className}`} width={size} height={size * 1.1} viewBox="0 0 200 220" role={key ? undefined : 'img'} aria-label={key ? undefined : label} aria-hidden={key ? true : undefined} {...extra}>
-      <g className={hop ? 'pip2d-hop' : undefined}>
-        <g className={animate ? 'pip2d-breathe' : undefined}>{children}</g>
+      <g transform={`translate(100 207) scale(${GROWTH[ver - 1]}) translate(-100 -207)`}>
+        <g className={hop ? 'pip2d-hop' : undefined}>
+          <g className={animate ? 'pip2d-breathe' : undefined}>{children}</g>
+        </g>
       </g>
     </svg>
   )

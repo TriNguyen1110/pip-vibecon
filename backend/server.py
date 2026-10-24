@@ -21,6 +21,7 @@ from fastapi import APIRouter, BackgroundTasks, Body, FastAPI, HTTPException, Re
 from fastapi.middleware.cors import CORSMiddleware  # noqa: E402
 
 import lesson as lessons  # noqa: E402
+import pacing  # noqa: E402
 import llm  # noqa: E402
 import logic  # noqa: E402
 import pip_ai  # noqa: E402
@@ -44,6 +45,8 @@ async def lifespan(_app):
 app = FastAPI(title="Pip", lifespan=lifespan)
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 api = APIRouter(prefix="/api")
+ACCESSORIES = ("none", "glasses", "scarf", "pencil", "badge", "backpack", "starclips", "charm", "visor",
+               "shades", "cap", "headphones")  # cap/headphones kept for older clients
 
 
 async def need(coll: str, doc_id: str, what: str) -> dict:
@@ -76,10 +79,10 @@ async def insight() -> dict:
         if any(not r["correct"] for r in s["brain"]):
             holders.setdefault(s["assignment_id"], set()).add(s["student_id"])
     if not holders:
-        return {"misconception": None, "count": 0, "boss_name": None, "student_ids": []}
+        return {"assignment_id": None, "misconception": None, "count": 0, "boss_name": None, "student_ids": []}
     aid = max(holders, key=lambda k: len(holders[k]))
     a = await store.get("assignments", aid)
-    return {"misconception": a["misconception"], "count": len(holders[aid]),
+    return {"assignment_id": aid, "misconception": a["misconception"], "count": len(holders[aid]),
             "boss_name": a["boss"]["name"], "student_ids": sorted(holders[aid])}
 
 
@@ -167,6 +170,19 @@ async def get_student(student_id: str):
                                key=lambda s: s["created_at"])}
 
 
+@api.post("/students/{student_id}/pip-name")
+async def set_pip_name(student_id: str, body: dict = Body(default={})):
+    """Name your Pip: 1-16 characters, trimmed; anything rude falls back to "Pip"."""
+    st = await need("students", student_id, "student")
+    raw = re.sub(r"[^\w \-'.]", "", str(body.get("name") or ""), flags=re.UNICODE)
+    name = " ".join(raw.split())[:16].strip()
+    if not name or pacing.PROFANE.search(name.lower()) or pacing.INSULT.search(name.lower()):
+        name = "Pip"
+    st["pip_name"] = name
+    await store.put("students", st)
+    return {"pip_name": name, "student": st}
+
+
 @api.post("/students/{student_id}/open")
 async def open_app(student_id: str):
     await need("students", student_id, "student")
@@ -230,20 +246,30 @@ def past_self_rule(a: dict, student_sessions: list[dict], assignments: dict) -> 
     return bad["quote"].strip().rstrip(".") if bad else None
 
 
-def openings(student: dict, a: dict, earlier: list[dict], past: str | None = None) -> list[str]:
+def callback_rule(a: dict, student_sessions: list[dict]) -> str | None:
+    """One CORRECT rule the student taught in an earlier session (verbatim from their old Brain), the most
+    relevant to the new mission if possible, else the newest."""
+    mine = sorted([x for x in student_sessions if not x.get("saved") and x.get("brain")],
+                  key=lambda x: x["created_at"], reverse=True)
+    cands = [r for x in mine for r in x["brain"] if r.get("correct") and (r.get("quote") or "").strip()]
+    if not cands:
+        return None
+    want = pacing.stems(a["topic"] + " " + " ".join(c["text"] for c in a["concepts"]))
+    best = max(enumerate(cands), key=lambda ir: (len(pacing.stems(ir[1]["quote"]) & want), -ir[0]))
+    return best[1]["quote"].strip()
+
+
+def openings(student: dict, a: dict, past: str | None = None, recall: str | None = None) -> list[str]:
     """Instant templated opening (no AI call). The LAST message is always the misconception claim."""
     if past:  # M1 past-self: the student's own old mistake, framed as hearsay, never as theirs
         claim = f"I'm learning {a['topic'].lower()}. Someone told me {past}. Seems easy."
     else:
         claim = (f"I'm learning {a['topic'].lower()}. I already know one rule: {a['misconception']}. "
                  "Easy.")
-    if not student.get("interests"):
-        return ["Hi. I'm Pip. Before we start: what are you into? A game, a sport, music, food. "
-                "Anything.", claim]
-    old = [r for s in earlier for r in s["brain"]]
-    if old and not past:
-        return [f'Hi. I\'m Pip. Last time you told me: "{old[0]["quote"]}". Still true?', claim]
-    return ["Hi. I'm Pip. " + claim]
+    name = student.get("pip_name") or "Pip"
+    if recall:  # v3.7: Pip carries the student's earlier teaching
+        return [f"Hi. I'm {name}. I still remember your thing: '{recall}'.", claim]
+    return [f"Hi. I'm {name}. " + claim]
 
 
 @api.post("/sessions")
@@ -251,16 +277,16 @@ async def create_session(body: dict = Body(...)):
     a = await need("assignments", body.get("assignment_id", ""), "assignment")
     st = await need("students", body.get("student_id", ""), "student")
     mine = await store.all("sessions", student_id=st["id"])
-    earlier = sorted([s for s in mine if not s.get("saved") and s["brain"]],
-                     key=lambda s: s["created_at"])
     assignments = {x["id"]: x for x in await store.all("assignments")}
     past = past_self_rule(a, mine, assignments)
+    recall = callback_rule(a, mine)
     look = body.get("look") if body.get("look") in ("blob", "bot", "doodle") else "blob"
     acc = body.get("accessory") if body.get("accessory") in (
-        "none", "cap", "glasses", "scarf", "headphones") else "none"
+        ACCESSORIES) else "none"
     s = logic.new_session(a, st["id"], look, body.get("creature") or look, acc,
-                          openings(st, a, earlier[-1:], past))
+                          openings(st, a, past, recall))
     s["opening_source"] = "past_self" if past else "claim"
+    s["callback_rule"], s["callback_used"] = recall, False
     s["pip_voice"] = (body.get("pip_voice") or "").strip() or None
     s["vibe"] = body.get("vibe") if body.get("vibe") in ("cute", "cool", "ugly") else "cute"
     await store.put("sessions", s)
@@ -359,6 +385,30 @@ def resolve_rules(raw_rules: list[dict], session: dict, ids: set, start: int) ->
     return out
 
 
+STRIKES = {"a_tri": "A = b \u00d7 h"}
+PINS = {"a_tri": "half_pin"}
+
+
+def grant_payoff(st: dict, s: dict, a: dict, from_v: int, to_v: int) -> dict:
+    """Persistent Pip state at K.O.: brain version, earned items, album card (v3.7). Earn-only."""
+    st["brain_version"] = to_v
+    earned = st.setdefault("earned_items", [])
+    new = []
+    wants = (["fixed_it_star"] if s.get("reteach_count", 0) >= 1 else []) + [
+        PINS.get(a["id"]) or f"{lessons.topic_family(a)}_pin"]
+    for item in wants:
+        if item not in earned:
+            earned.append(item)
+            new.append(item)
+    album = st.setdefault("album", [])
+    card = {"card_no": len(album) + 1, "variant": "comeback" if s.get("reteach_count", 0) >= 1 else "clean",
+            "boss_name": a["boss"]["name"], "assignment_id": a["id"], "topic": a["topic"],
+            "strike": a.get("strike") or STRIKES.get(a["id"]) or a["misconception"]}
+    album.append({"assignment_id": a["id"], "boss_name": a["boss"]["name"], "card_no": card["card_no"],
+                  "variant": card["variant"], "date": logic.now()})
+    return {"from_version": from_v, "to_version": to_v, "new_items": new, "card": card}
+
+
 @api.post("/sessions/{sid}/quiz")
 async def quiz(sid: str, tasks: BackgroundTasks):
     async with session_lock(sid):
@@ -417,8 +467,10 @@ async def _quiz(sid: str, tasks: BackgroundTasks):
     s["brain"], s["quiz"] = brain, items
     s["reteach_concept"], s["reteach_from"] = None, None
     if len(items) == len(allq) and all(i["passed"] for i in items):
-        s.update(ko=True, status="complete", mood="celebrating", boss_hp=0,
-                 brain_version=min(3, s["brain_version"] + 1))
+        from_v = int(st.get("brain_version") or 1)
+        to_v = min(3, from_v + 1)
+        s.update(ko=True, status="complete", mood="celebrating", boss_hp=0, brain_version=to_v)
+        s["payoff"] = grant_payoff(st, s, a, from_v, to_v)
         for c in a["concepts"]:  # every passed concept counts as explained: unlock its weapon
             s["meters"][c["id"]] = max(s["meters"].get(c["id"], 0), logic.UNLOCK_AT)
             if c.get("weapon") and c["weapon"] not in s["weapons"]:
@@ -478,6 +530,7 @@ async def _reteach(sid: str, body: dict):
              mood="stuck")
     lessons.ensure_ladder(s, a)
     lessons.reset_concept(s, cid)
+    pacing.reset_concept(s, a, cid)
     s["transcript"].append({"from": "pip", "text": msg, "ts": logic.now(),
                             "event": {"kind": "none", "amount": 0, "caption": "", "unlocked": []}})
     s["reteach_from"] = len(s["transcript"])
@@ -572,14 +625,22 @@ async def sent_log():
     return {"items": sorted(await store.all("sent"), key=lambda r: r["ts"], reverse=True)}
 
 
+WORKSHOP_PLANS = {
+    "a_frac": "Plan (30 min): 1) Draw 1/2 and 1/3 of the same pizza and ask which slice is bigger. "
+              "2) Cut both into sixths and add them. 3) Pairs explain why the bottom stays the same.",
+    "a_tri": "Plan (30 min): 1) Draw a 6 by 4 rectangle on graph paper, cut it corner to corner, and ask how "
+             "many squares each piece covers. 2) Pairs make a different triangle from a different rectangle. "
+             "3) Each student explains in one sentence why a triangle is half of base times height.",
+}
+
+
 @api.post("/workshops")
 async def workshop(body: dict = Body(default={})):
     ins = await insight()
     mis = (body.get("misconception") or ins["misconception"] or "").strip()
     names = [(await store.get("students", sid))["name"] for sid in ins["student_ids"]]
     note = (f"Workshop: {mis}\nStudents ({len(names)}): {', '.join(names)}\n"
-            "Plan (30 min): 1) Draw 1/2 and 1/3 of the same pizza and ask which slice is bigger. "
-            "2) Cut both into sixths and add them. 3) Pairs explain why the bottom stays the same.")
+            + WORKSHOP_PLANS.get(ins.get("assignment_id"), WORKSHOP_PLANS["a_frac"]))
     await store.put("workshops", {"id": logic.new_id("ws"), "misconception": mis,
                                   "student_ids": ins["student_ids"], "note": note, "ts": logic.now()})
     return {"note": note}
@@ -649,8 +710,14 @@ def resolve_voice(body: dict, fallback_voice: str = "") -> dict:
     v = None
     if speaker == "pip":
         v = dict(VOICES["pip"].get(body.get("vibe")) or VOICES["pip"]["cute"])
-        if isinstance(body.get("pip_voice"), str) and body["pip_voice"].strip():
-            v.update(voice_id=body["pip_voice"].strip(), name="custom")
+        pv = body.get("pip_voice")
+        if isinstance(pv, str) and pv.strip():
+            pv = pv.strip()
+            choice = (VOICES.get("pip_choices") or {}).get(pv.lower())
+            if choice:  # a named student choice: bright | chaotic | chill
+                v = dict(choice)
+            else:  # a raw ElevenLabs voice id overrides only the id
+                v.update(voice_id=pv, name="custom")
     elif speaker == "boss":
         ref = f"{body.get('boss_id') or ''} {body.get('boss_name') or ''}".lower()
         kind = next((k for k, keys in VOICES["boss_keys"].items() if any(x in ref for x in keys)), "default")

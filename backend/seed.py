@@ -17,19 +17,28 @@ def _load(name):
     return json.loads((SEED / name).read_text())
 
 
+TRI_QUOTES = {"k1": "two of the same triangle make a rectangle", "k2": "a rectangle is base times height",
+              "k3": "the area of a triangle is base times height"}
+TRI_SINCE = "Explains two triangles make a rectangle; still uses base times height"
+
+
 def _session(raw, a):
     """A seeded (synthetic) completed session from seed_sessions.json; no transcript."""
     qmap = {q["concept_id"]: q for q in a["quiz"]}
     quiz = [{"id": qmap[q["concept"]]["id"], "concept_id": q["concept"],
              "question": qmap[q["concept"]]["question"], "rule_id": f"r_{q['concept']}",
-             "pip_answer": "5/12" if not q["passed"] else "", "line": q.get("pip_says", ""),
+             "pip_answer": ("24" if a["id"] == "a_tri" else "5/12") if not q["passed"] else "",
+             "line": ("Your rule: the area of a triangle is base times height. 6 \u00d7 4 = 24, the whole "
+                      "box. Following your rule anyway. \U0001F635" if a["id"] == "a_tri" and not q["passed"]
+                      else q.get("pip_says", "")),
              "passed": q["passed"]} for q in raw["quiz"]]
     passed = {q["concept_id"] for q in quiz if q["passed"]}
-    brain = [{"id": r["id"], "concept_id": r["concept"], "quote": r["quote"], "correct": r["correct"],
+    brain = [{"id": r["id"], "concept_id": r["concept"],
+              "quote": TRI_QUOTES[r["concept"]] if a["id"] == "a_tri" else r["quote"], "correct": r["correct"],
               "msg_index": -1} for r in raw["pips_brain"]]
     ok = len(passed) == len(quiz)
     return {
-        "id": raw["id"], "student_id": raw["student_id"], "assignment_id": raw["assignment_id"],
+        "id": raw["id"], "student_id": raw["student_id"], "assignment_id": a["id"],
         "status": "complete" if ok else "quizzed", "look": "blob", "creature": "blob",
         "accessory": "none", "transcript": [],
         "meters": {c["id"]: (100 if c["id"] in passed else 40) for c in a["concepts"]},
@@ -40,12 +49,88 @@ def _session(raw, a):
         "parent_message": None, "synthetic": True, "minutes": raw["minutes"],
         "since_last_session": raw.get("since_last_session"), "created_at": now(),
         "misconception_stated": True, "opening_source": "claim", "vibe": "cute", "pip_voice": None, "ladder": new_ladder(a),
-        "parked": [], "turn_log": [],
+        "parked": [], "turn_log": [], "ready_for_quiz": False,
     }
 
 
 def _dt(ts: str):
     return datetime.fromisoformat(ts)
+
+
+def _maya_saved_script(a):
+    """Hand-built complete run from the lesson's offline_demo (misconception, re-teach, K.O.)."""
+    od = a["lesson"]["offline_demo"]
+    t0 = datetime.now(timezone.utc) - timedelta(days=1)
+    boss = a["boss"]["name"]
+    w = {c["id"]: c["weapon"] for c in a["concepts"]}
+    lines = a["boss"].get("lines") or {}
+    tr, rules, mins = [], {}, 0
+
+    def add(who, text, ev=None):
+        nonlocal mins
+        mins += 1
+        m = {"from": who, "text": text,
+             "ts": (t0 + timedelta(minutes=mins)).isoformat(timespec="seconds")}
+        if who == "pip":
+            m["event"] = ev or {"kind": "none", "amount": 0, "caption": "", "unlocked": []}
+        tr.append(m)
+        return len(tr) - 1
+
+    add("pip", f"Hi. I'm Pip. I'm learning {a['topic'].lower()}. I already know one rule: "
+               f"{a['misconception']}. Easy.")
+    hp, meters, reteach_from = 100, {c["id"]: 0 for c in a["concepts"]}, None
+    for t in od["turns"]:
+        if t.get("reteach_concept_id"):
+            bad = rules[t["reteach_concept_id"]]["quote"]
+            add("pip", f'My brain has a bug about this: "{bad}". Fix it?')
+            reteach_from = len(tr)
+        i = add("student", t["student"])
+        ev = {"kind": "none", "amount": 0, "caption": "", "unlocked": []}
+        lv = t.get("level", 0)
+        hits = [{"concept_id": t["concept_id"], "level": lv}] + t.get("also", []) if t.get("concept_id") else []
+        unlocked = []
+        for h in hits:
+            if h["level"] >= 2:
+                meters[h["concept_id"]] = 60
+                unlocked.append(w[h["concept_id"]])
+        if t["event"] == "hit":
+            amt = 40 if lv >= 3 else 25
+            hp -= amt
+            ev = {"kind": "hit", "amount": amt, "unlocked": unlocked,
+                  "caption": f"{boss}: \"{(lines.get('hit') or ['I accept this with dignity.'])[0]}\" \u2212{amt} HP"}
+        elif t["event"] == "heal":
+            hp += 20
+            ev = {"kind": "heal", "amount": 20, "unlocked": [],
+                  "caption": f"{boss}: \"{(lines.get('heal') or ['My error is restored.'])[0]}\" +20 HP"}
+        ev["level"] = lv
+        add("pip", t["pip"], ev)
+        for h in hits:
+            cid = h["concept_id"]
+            q = t.get("filed_rule") if h is hits[0] and t.get("filed_rule") else t["student"]
+            if h["level"] >= 2 or t["event"] == "heal":
+                fixed = {"fixed_after": 1} if (reteach_from is not None and t["event"] != "heal") else {}
+                rules[cid] = {"id": f"r_{cid}", "concept_id": cid, "quote": q,
+                              "correct": t["event"] != "heal", "msg_index": i, **fixed}
+    tr.append({"from": "pip", "text": a["cliffhanger"], "ts": now(),
+               "event": {"kind": "none", "amount": 0, "caption": "", "unlocked": []}})
+    brain = [rules[c["id"]] for c in a["concepts"] if c["id"] in rules]
+    ans = {q["concept_id"]: q for q in od["quiz"]}
+    ans.update({q["concept_id"]: q for q in od.get("retry", [])})
+    quiz = [{"id": q["id"], "concept_id": q["concept_id"], "question": q["question"],
+             "rule_id": f"r_{q['concept_id']}", "pip_answer": ans[q["concept_id"]]["pip_answer"],
+             "line": ans[q["concept_id"]]["line"], "passed": True} for q in a["quiz"]]
+    cap = f"{boss}: \"{lines.get('ko', 'I object.')}\""
+    return {
+        "id": "sess_maya_saved", "student_id": "s001", "assignment_id": a["id"],
+        "status": "complete", "look": "blob", "creature": "blob", "accessory": "none", "vibe": "cute",
+        "pip_voice": None, "transcript": tr, "meters": {k: 60 for k in meters}, "boss_hp": 0,
+        "weapons": list(w.values()), "equipped": list(w.values())[0], "mood": "celebrating",
+        "brain": brain, "quiz": quiz, "reteach_count": 1, "reteach_concept": None, "reteach_from": None,
+        "brain_version": 2, "ko": True, "finisher": {"weapon": list(w.values())[0], "caption": cap},
+        "gap_report": None, "parent_message": None, "saved": True, "label": "saved session",
+        "synthetic": True, "created_at": now(), "misconception_stated": True, "opening_source": "claim",
+        "ladder": new_ladder(a), "parked": [], "turn_log": [], "ready_for_quiz": True,
+    }
 
 
 def _maya_saved(a):
@@ -118,7 +203,7 @@ def _maya_saved(a):
         "brain_version": 2, "ko": True, "finisher": {"weapon": w["k2"], "caption": cap},
         "gap_report": None, "parent_message": None, "saved": True, "label": "saved session",
         "synthetic": True, "created_at": now(), "misconception_stated": True,
-        "opening_source": "claim", "vibe": "cute", "pip_voice": None, "ladder": new_ladder(a), "parked": [], "turn_log": [],
+        "opening_source": "claim", "vibe": "cute", "pip_voice": None, "ladder": new_ladder(a), "parked": [], "turn_log": [], "ready_for_quiz": False,
     }
 
 
@@ -150,13 +235,18 @@ async def seed(store):
     for sid in AT_RISK_TO_T1:
         students[sid]["tutor_id"] = "t1"
     students["s001"]["interests"] = "soccer"  # Maya's opening is just the claim
+    for st_ in students.values():  # persistent Pip state (v3.7)
+        st_.update(pip_name="Pip", brain_version=1, earned_items=[], album=[])
     base = raw["assignment"]
-    a = {**pip_ai.FRAC, "id": base["id"], "student_id": "s001", "tutor_id": "t1", "grade": 6,
+    frac_owner = "s002"  # fractions moved to a secondary mission for another student
+    a = {**pip_ai.FRAC, "id": base["id"], "student_id": frac_owner,
+         "tutor_id": students[frac_owner]["tutor_id"], "grade": 6,
          "topic": base["topic"], "created_at": now()}
     a["lesson"] = lessons.load_lesson(a["id"])
     if not a["lesson"]:
         del a["lesson"]
     await store.put("assignments", a)
+    main = a
     for x in lessons.load_extra_assignments():
         owner = EXTRA_OWNERS.get(x["id"], (x.get("student_id"), x.get("tutor_id"), x.get("grade")))
         sid, tid, grade = x.get("student_id") or owner[0], x.get("tutor_id") or owner[1], x.get("grade") or owner[2]
@@ -175,20 +265,29 @@ async def seed(store):
         if not ex.get("quiz"):
             ex["quiz"] = pip_ai.quiz_for(ex)
         await store.put("assignments", ex)
+        if ex["id"] == "a_tri" and ex.get("lesson", {}).get("offline_demo"):
+            main = ex  # the main demo mission (Maya): seeded sessions + insight are about it
     for i, r in enumerate(raw["sessions"]):
-        s = _session(r, a)
+        s = _session(r, main)
         s["created_at"] = (datetime.now(timezone.utc) - timedelta(days=4 + i % 9, hours=i)
                            ).isoformat(timespec="seconds")
         if r["student_id"] not in NO_UPDATE:
             s["parent_sent_at"] = (_dt(s["created_at"]) + timedelta(hours=20)).isoformat(timespec="seconds")
         if r["student_id"] in STUCK:
             s["ladder"][STUCK[r["student_id"]]].update(rung=4, nudged=True, stuck=True)
-        students[r["student_id"]].update(since_last_session=r["since_last_session"],
-                                         last_session_id=s["id"])
+        students[r["student_id"]].update(
+            since_last_session=TRI_SINCE if main["id"] == "a_tri" else r["since_last_session"],
+            last_session_id=s["id"])
         await store.put("sessions", s)
-    maya = _maya_saved(a)
-    maya["gap_report"] = pip_ai.report_det(maya, a, students["s001"])
-    maya["parent_message"] = pip_ai.parent_template(maya, a, students["s001"], "Ms. Rivera")
+    maya = _maya_saved_script(main) if main["id"] == "a_tri" else _maya_saved(main)
+    maya["gap_report"] = pip_ai.report_det(maya, main, students["s001"])
+    maya["parent_message"] = pip_ai.parent_template(maya, main, students["s001"], "Ms. Rivera")
+    maya["payoff"] = {"from_version": 1, "to_version": 2, "new_items": ["fixed_it_star", "half_pin"],
+                      "card": {"card_no": 1, "variant": "comeback", "boss_name": main["boss"]["name"],
+                               "assignment_id": main["id"], "topic": main["topic"],
+                               "strike": "A = b \u00d7 h" if main["id"] == "a_tri" else main["misconception"]}}
+    students["s001"]["album"] = [{"assignment_id": main["id"], "boss_name": main["boss"]["name"],
+                                  "card_no": 1, "variant": "comeback", "date": maya["created_at"]}]
     await store.put("sessions", maya)
     for s in students.values():
         await store.put("students", s)

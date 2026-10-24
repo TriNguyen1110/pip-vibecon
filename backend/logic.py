@@ -41,7 +41,9 @@ def concept_ids(assignment: dict) -> list[str]:
 def short_name(assignment: dict, concept_id: str) -> str:
     """A few words for a concept, used in summaries and plain-words lines."""
     names = {"a_frac": {"k1": "same-size pieces", "k2": "common denominators",
-                        "k3": "adding the numerators"}}
+                        "k3": "adding the numerators"},
+             "a_tri": {"k1": "two triangles make a rectangle", "k2": "rectangle area",
+                       "k3": "a triangle is half the rectangle"}}
     if concept_id in names.get(assignment.get("id"), {}):
         return names[assignment["id"]][concept_id]
     c = next((c for c in assignment["concepts"] if c["id"] == concept_id), None)
@@ -65,7 +67,7 @@ def new_session(assignment: dict, student_id: str, look: str, creature: str, acc
         "reteach_count": 0, "reteach_concept": None, "reteach_from": None, "parent_message": None, "brain_version": 1, "ko": False,
         "finisher": None, "gap_report": None, "created_at": now(),
         "misconception_stated": True, "opening_source": "claim", "vibe": "cute", "pip_voice": None, "ladder": new_ladder(assignment),
-        "parked": [], "turn_log": [],
+        "parked": [], "turn_log": [], "ready_for_quiz": False,
     }
 
 
@@ -75,7 +77,7 @@ def apply_turn(session: dict, assignment: dict, student_text: str, r: dict) -> d
     for p in r["concept_progress"]:
         if p["concept_id"] in ids:
             session["meters"][p["concept_id"]] = clamp(
-                session["meters"].get(p["concept_id"], 0) + clamp(p["delta"], 0, 50))
+                session["meters"].get(p["concept_id"], 0) + clamp(p["delta"], 0, 60))
     equipped_before = session["equipped"]
     amount, kind = 0, "none"
     hp = session["boss_hp"]
