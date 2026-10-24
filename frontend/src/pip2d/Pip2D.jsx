@@ -6,6 +6,7 @@ import { ellipsePoints } from './fuzz'
 import { HalfPinArt, FixedStarArt } from './earned'
 import { ClubDefs, ClubAccessory, CLUB_ACCESSORIES } from './club'
 import { Hood, Jacket, VisorGlow, MiniSprout, Patches, Stickers } from './evolve'
+import { MainDefs, Backlight, WindTufts, Jawline, LowShades, SlowSparkle } from './main'
 import { ACCESSORIES_2D, Y2KDefs, Gel, Glint, Sparkles, StarClips, Charm, FrostVisor, Shades, HoloBandAid, RimLight, starPath } from './y2k'
 
 export const ACCESSORIES_ALL = [...ACCESSORIES_2D, ...CLUB_ACCESSORIES]
@@ -502,9 +503,11 @@ export function Pip2D({
   const cool = vibe === 'cool'
   const ugly = vibe === 'ugly'
   // evolution: v1 base, v2 grown, v3 awakened (form="awakened" is v3)
-  const ver = form === 'awakened' ? 3 : Math.max(1, Math.min(3, Number(version) || 1))
-  const awakened = ver === 3
-  const grown = ver >= 2
+  // form="main": the secret "Main Character" final form (alternative to v3; same size as v3)
+  const main = form === 'main'
+  const ver = form === 'awakened' || main ? 3 : Math.max(1, Math.min(3, Number(version) || 1))
+  const awakened = ver === 3 && !main
+  const grown = ver >= 2 && !main
   // which glow-up path the evolution follows
   const evo = vibe === 'cool' ? 'cool' : vibe === 'ugly' ? 'ugly' : 'cute'
   // vibe defaults when no accessory is chosen: cute = star clips, cool = frosted visor
@@ -519,6 +522,7 @@ export function Pip2D({
   // eyes: cool = permanent ~60% lid; ugly = tired (heavier lids + bags)
   const lids = (spec.lids ?? [0.35, 0.37]).map((l) => {
     const v = (ugly ? Math.min(0.6, l + 0.15) : l) - (awakened ? 0.1 : grown ? 0.05 : 0)
+    if (main) return 0.42 // confident, half-lidded over the shades
     return Math.max(0, cool ? Math.max(v, 0.6) : v)
   })
   const sizes = (spec.scale ?? [1, 1]).map((k) => (mini ? k * 1.32 : k))
@@ -537,7 +541,7 @@ export function Pip2D({
       <Eye key={i} e={e} lid={lids[i]} look={spec.look} scale={sizes[i]} ink={t.ink} tint={spec.tint} sparkle={cute || grown} ring={e.ring} uid={`${id}e${i}`} />
     ))
 
-  const mouthShape = viseme ?? talkShape(mouth) ?? MOOD_MOUTH[m]
+  const mouthShape = viseme ?? talkShape(mouth) ?? (main && (m === 'deadpan' || m === 'notes') ? 'smirk' : MOOD_MOUTH[m])
   const visorY = A.visorY ?? Math.min(L.cy - L.ry, R.cy - R.ry) - 12
   const hx0 = A.head.cx - A.head.w / 2 + 2
   const hx1 = A.head.cx + A.head.w / 2 - 2
@@ -554,6 +558,7 @@ export function Pip2D({
       </pattern>
       <Y2KDefs id={id} />
       <ClubDefs id={id} />
+      {main && <MainDefs id={id} />}
       {cool && (
         <filter id={`${id}neon`} x="-10%" y="-10%" width="120%" height="120%">
           <feMorphology in="SourceAlpha" operator="dilate" radius="2.2" result="d" />
@@ -570,6 +575,8 @@ export function Pip2D({
   const split = depth && def.split
   const back = (
     <>
+      {main && <Backlight id={id} />}
+      {main && <WindTufts A={A} t={t} />}
       {awakened && (
         <g className="pip2d-glow">
           <ellipse cx="100" cy="128" rx="94" ry="98" fill="none" stroke={evo === 'cool' ? '#FF3FD8' : evo === 'ugly' ? '#B9A2FF' : '#FFE27A'} strokeWidth="5" opacity="0.7" strokeDasharray={evo === 'ugly' ? '14 9' : undefined} />
@@ -612,7 +619,7 @@ export function Pip2D({
       )}
     </>
   )
-  const rimKind = club ? 'club' : holo ? 'holo' : cool ? 'chrome' : null
+  const rimKind = main ? 'gold' : club ? 'club' : holo ? 'holo' : cool ? 'chrome' : null
   const body = (
     <>
       <def.Art t={t} id={id} part={split ? 'body' : 'all'} />
@@ -644,6 +651,7 @@ export function Pip2D({
           <path d={`M${R.cx - R.rx * 0.6},${R.cy - R.ry - 14} L${R.cx + R.rx * 0.8},${R.cy - R.ry - 8}`} />
         </g>
       )}
+      {main && <Jawline A={A} t={t} />}
       <g className={`pip2d-eyes${blink && plainEyes ? ' is-blinking' : ''}`}>{eyes}</g>
       <Mouth shape={mouthShape} ink={t.ink} a={A.mouth} ugly={ugly} />
     </>
@@ -660,7 +668,7 @@ export function Pip2D({
         </g>
       )}
       <g transform={awakened && evo === 'ugly' ? `rotate(16 ${A.sprout.x} ${A.sprout.y + 10})` : undefined}>
-        <Sprout pose={awakened ? 'crown' : spec.sprout} anchor={mini ? { ...A.sprout, scale: (A.sprout.scale ?? 1) * 0.62 } : A.sprout} t={t} flower={false} tint={m === 'possessed' ? BOSS_TINT : undefined} gid={id} grown={grown} chrome={evo === 'cool'} />
+        <Sprout pose={awakened || main ? 'crown' : spec.sprout} anchor={mini ? { ...A.sprout, scale: (A.sprout.scale ?? 1) * 0.62 } : A.sprout} t={t} flower={false} tint={m === 'possessed' ? BOSS_TINT : undefined} gid={id} grown={grown} chrome={evo === 'cool'} />
       </g>
       {(m === 'aha' || m === 'proud') && <Sparkles A={A} />}
     </>
@@ -668,6 +676,8 @@ export function Pip2D({
 
   const front = (
     <>
+      {main && plainEyes && <LowShades A={A} t={t} id={id} />}
+      {main && <SlowSparkle A={A} />}
       {m === 'notes' && <Notebook t={t} A={A} />}
       {m === 'overwhelmed' && <SweatDrop at={A.sweat} />}
       {grown && !awakened && evo === 'cute' && !has('scarf') && !has('puffer') && <Bandana A={A} t={t} id={id} />}
@@ -712,7 +722,7 @@ export function Pip2D({
   )
   const label = title ?? `Pip the ${def.name} looks ${m}`
   // runway poses: strut (3-frame walk cycle), pose (confident end pose with a tilt), spin
-  const P = pose === 'strut' ? STRUT[frame ?? 1] : pose === 'pose' ? POSE_END : pose === 'spin' ? { r: 0, x: 0, y: -2, sx: frame == null ? 1 : [1, 0.35, -1][frame % 3], sy: 1 } : null
+  const P = pose === 'idle' && main ? { r: -5, x: -2, y: 0, sx: 0.96, sy: 1.01 } : pose === 'strut' ? STRUT[frame ?? 1] : pose === 'pose' ? POSE_END : pose === 'spin' ? { r: 0, x: 0, y: -2, sx: frame == null ? 1 : [1, 0.35, -1][frame % 3], sy: 1 } : null
   const animPose = animate && frame == null && (pose === 'strut' || pose === 'spin')
   const poseT = P && !animPose ? `translate(100 207) translate(${P.x} ${P.y}) rotate(${P.r}) scale(${P.sx} ${P.sy}) translate(-100 -207)` : undefined
   const poseClass = animPose ? `pip2d-${pose}` : undefined

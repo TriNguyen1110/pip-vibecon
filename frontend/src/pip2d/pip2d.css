@@ -33,6 +33,7 @@
 .pip2d-twinkle { transform-box: fill-box; transform-origin: center; animation: pip2d-twinkle 1.4s ease-in-out infinite; }
 .pip2d-twinkle-1 { animation-delay: 0.45s; }
 .pip2d-twinkle-2 { animation-delay: 0.9s; }
+.pip2d-slow { animation-duration: 3.2s; }
 @keyframes pip2d-twinkle { 0%, 100% { transform: scale(0.35) rotate(0deg); opacity: 0.3; } 50% { transform: scale(1) rotate(45deg); opacity: 1; } }
 
 /* v3 orbiting stars */
