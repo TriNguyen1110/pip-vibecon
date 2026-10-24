@@ -1,0 +1,44 @@
+[
+  {
+    "creature": "blob",
+    "look": "blob",
+    "canvas": true,
+    "shaderOrGlMessages": 0,
+    "sample": []
+  },
+  {
+    "creature": "cat",
+    "look": "doodle",
+    "canvas": true,
+    "shaderOrGlMessages": 0,
+    "sample": []
+  },
+  {
+    "creature": "dragon",
+    "look": "doodle",
+    "canvas": true,
+    "shaderOrGlMessages": 0,
+    "sample": []
+  },
+  {
+    "creature": "axolotl",
+    "look": "doodle",
+    "canvas": true,
+    "shaderOrGlMessages": 0,
+    "sample": []
+  },
+  {
+    "creature": "frog",
+    "look": "doodle",
+    "canvas": true,
+    "shaderOrGlMessages": 0,
+    "sample": []
+  },
+  {
+    "creature": "bot",
+    "look": "bot",
+    "canvas": true,
+    "shaderOrGlMessages": 0,
+    "sample": []
+  }
+]
