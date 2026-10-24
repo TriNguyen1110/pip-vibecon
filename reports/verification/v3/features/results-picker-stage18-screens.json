@@ -1,0 +1,1562 @@
+{
+  "picker-390-day": {
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [],
+    "checks": [
+      {
+        "label": "cute: 6 animal thumbnails",
+        "pass": true,
+        "detail": {
+          "thumbs": [
+            "Pip the capybara looks deadpan",
+            "Pip the corgi looks deadpan",
+            "Pip the cat looks deadpan",
+            "Pip the raccoon looks deadpan",
+            "Pip the frog looks deadpan",
+            "Pip the axolotl looks deadpan"
+          ],
+          "stage": "Pip the capybara looks aha"
+        }
+      },
+      {
+        "label": "cute: no page scroll with picker open",
+        "pass": true,
+        "detail": {
+          "sh": 844,
+          "ih": 844
+        }
+      },
+      {
+        "label": "picker tap targets >= 44",
+        "pass": true,
+        "detail": []
+      },
+      {
+        "label": "cool: 6 animal thumbnails",
+        "pass": true,
+        "detail": {
+          "thumbs": [
+            "Pip the capybara looks deadpan",
+            "Pip the corgi looks deadpan",
+            "Pip the cat looks deadpan",
+            "Pip the raccoon looks deadpan",
+            "Pip the frog looks deadpan",
+            "Pip the axolotl looks deadpan"
+          ],
+          "stage": "Pip the capybara looks aha"
+        }
+      },
+      {
+        "label": "cool: no page scroll with picker open",
+        "pass": true,
+        "detail": {
+          "sh": 844,
+          "ih": 844
+        }
+      },
+      {
+        "label": "ugly: 6 animal thumbnails",
+        "pass": true,
+        "detail": {
+          "thumbs": [
+            "Pip the capybara looks deadpan",
+            "Pip the corgi looks deadpan",
+            "Pip the cat looks deadpan",
+            "Pip the raccoon looks deadpan",
+            "Pip the frog looks deadpan",
+            "Pip the axolotl looks deadpan"
+          ],
+          "stage": "Pip the capybara looks aha"
+        }
+      },
+      {
+        "label": "ugly: no page scroll with picker open",
+        "pass": true,
+        "detail": {
+          "sh": 844,
+          "ih": 844
+        }
+      }
+    ]
+  },
+  "picker-390-night": {
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [],
+    "checks": [
+      {
+        "label": "cute: 6 animal thumbnails",
+        "pass": true,
+        "detail": {
+          "thumbs": [
+            "Pip the capybara looks deadpan",
+            "Pip the corgi looks deadpan",
+            "Pip the cat looks deadpan",
+            "Pip the raccoon looks deadpan",
+            "Pip the frog looks deadpan",
+            "Pip the axolotl looks deadpan"
+          ],
+          "stage": "Pip the capybara looks aha"
+        }
+      },
+      {
+        "label": "cute: no page scroll with picker open",
+        "pass": true,
+        "detail": {
+          "sh": 844,
+          "ih": 844
+        }
+      },
+      {
+        "label": "picker tap targets >= 44",
+        "pass": true,
+        "detail": []
+      },
+      {
+        "label": "cool: 6 animal thumbnails",
+        "pass": true,
+        "detail": {
+          "thumbs": [
+            "Pip the capybara looks deadpan",
+            "Pip the corgi looks deadpan",
+            "Pip the cat looks deadpan",
+            "Pip the raccoon looks deadpan",
+            "Pip the frog looks deadpan",
+            "Pip the axolotl looks deadpan"
+          ],
+          "stage": "Pip the capybara looks aha"
+        }
+      },
+      {
+        "label": "cool: no page scroll with picker open",
+        "pass": true,
+        "detail": {
+          "sh": 844,
+          "ih": 844
+        }
+      },
+      {
+        "label": "ugly: 6 animal thumbnails",
+        "pass": true,
+        "detail": {
+          "thumbs": [
+            "Pip the capybara looks deadpan",
+            "Pip the corgi looks deadpan",
+            "Pip the cat looks deadpan",
+            "Pip the raccoon looks deadpan",
+            "Pip the frog looks deadpan",
+            "Pip the axolotl looks deadpan"
+          ],
+          "stage": "Pip the capybara looks aha"
+        }
+      },
+      {
+        "label": "ugly: no page scroll with picker open",
+        "pass": true,
+        "detail": {
+          "sh": 844,
+          "ih": 844
+        }
+      }
+    ]
+  },
+  "picker-375-day": {
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [],
+    "checks": [
+      {
+        "label": "cute: 6 animal thumbnails",
+        "pass": true,
+        "detail": {
+          "thumbs": [
+            "Pip the capybara looks deadpan",
+            "Pip the corgi looks deadpan",
+            "Pip the cat looks deadpan",
+            "Pip the raccoon looks deadpan",
+            "Pip the frog looks deadpan",
+            "Pip the axolotl looks deadpan"
+          ],
+          "stage": "Pip the capybara looks aha"
+        }
+      },
+      {
+        "label": "cute: no page scroll with picker open",
+        "pass": true,
+        "detail": {
+          "sh": 667,
+          "ih": 667
+        }
+      },
+      {
+        "label": "picker tap targets >= 44",
+        "pass": true,
+        "detail": []
+      },
+      {
+        "label": "cool: 6 animal thumbnails",
+        "pass": true,
+        "detail": {
+          "thumbs": [
+            "Pip the capybara looks deadpan",
+            "Pip the corgi looks deadpan",
+            "Pip the cat looks deadpan",
+            "Pip the raccoon looks deadpan",
+            "Pip the frog looks deadpan",
+            "Pip the axolotl looks deadpan"
+          ],
+          "stage": "Pip the capybara looks aha"
+        }
+      },
+      {
+        "label": "cool: no page scroll with picker open",
+        "pass": true,
+        "detail": {
+          "sh": 667,
+          "ih": 667
+        }
+      },
+      {
+        "label": "ugly: 6 animal thumbnails",
+        "pass": true,
+        "detail": {
+          "thumbs": [
+            "Pip the capybara looks deadpan",
+            "Pip the corgi looks deadpan",
+            "Pip the cat looks deadpan",
+            "Pip the raccoon looks deadpan",
+            "Pip the frog looks deadpan",
+            "Pip the axolotl looks deadpan"
+          ],
+          "stage": "Pip the capybara looks aha"
+        }
+      },
+      {
+        "label": "ugly: no page scroll with picker open",
+        "pass": true,
+        "detail": {
+          "sh": 667,
+          "ih": 667
+        }
+      }
+    ]
+  },
+  "stage18": {
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [
+      {
+        "status": 200,
+        "t": 1792881332081,
+        "fallback": false,
+        "audioB64": 284828,
+        "mime": "audio/mpeg",
+        "alignChars": 168,
+        "alignEnd": 13.36,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+      },
+      {
+        "status": 200,
+        "t": 1792881336663,
+        "fallback": false,
+        "audioB64": 284828,
+        "mime": "audio/mpeg",
+        "alignChars": 168,
+        "alignEnd": 13.36,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+      },
+      {
+        "status": 200,
+        "t": 1792881337246,
+        "fallback": false,
+        "audioB64": 284828,
+        "mime": "audio/mpeg",
+        "alignChars": 168,
+        "alignEnd": 13.36,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+      },
+      {
+        "status": 200,
+        "t": 1792881337862,
+        "fallback": false,
+        "audioB64": 284828,
+        "mime": "audio/mpeg",
+        "alignChars": 168,
+        "alignEnd": 13.36,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+      },
+      {
+        "status": 200,
+        "t": 1792881338468,
+        "fallback": false,
+        "audioB64": 284828,
+        "mime": "audio/mpeg",
+        "alignChars": 168,
+        "alignEnd": 13.36,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+      },
+      {
+        "status": 200,
+        "t": 1792881339117,
+        "fallback": false,
+        "audioB64": 284828,
+        "mime": "audio/mpeg",
+        "alignChars": 168,
+        "alignEnd": 13.36,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+      },
+      {
+        "status": 200,
+        "t": 1792881339708,
+        "fallback": false,
+        "audioB64": 284828,
+        "mime": "audio/mpeg",
+        "alignChars": 168,
+        "alignEnd": 13.36,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+      },
+      {
+        "status": 200,
+        "t": 1792881340800,
+        "fallback": false,
+        "audioB64": 284828,
+        "mime": "audio/mpeg",
+        "alignChars": 168,
+        "alignEnd": 13.36,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+      },
+      {
+        "status": 200,
+        "t": 1792881341397,
+        "fallback": false,
+        "audioB64": 284828,
+        "mime": "audio/mpeg",
+        "alignChars": 168,
+        "alignEnd": 13.36,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+      },
+      {
+        "status": 200,
+        "t": 1792881342001,
+        "fallback": false,
+        "audioB64": 284828,
+        "mime": "audio/mpeg",
+        "alignChars": 168,
+        "alignEnd": 13.36,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+      }
+    ],
+    "checks": [
+      {
+        "label": "18 sessions keep creature+vibe",
+        "pass": true,
+        "detail": [
+          "capybara/cute->capybara/cute",
+          "capybara/cool->capybara/cool",
+          "capybara/ugly->capybara/ugly",
+          "corgi/cute->corgi/cute",
+          "corgi/cool->corgi/cool",
+          "corgi/ugly->corgi/ugly",
+          "cat/cute->cat/cute",
+          "cat/cool->cat/cool",
+          "cat/ugly->cat/ugly",
+          "raccoon/cute->raccoon/cute",
+          "raccoon/cool->raccoon/cool",
+          "raccoon/ugly->raccoon/ugly",
+          "frog/cute->frog/cute",
+          "frog/cool->frog/cool",
+          "frog/ugly->frog/ugly",
+          "axolotl/cute->axolotl/cute",
+          "axolotl/cool->axolotl/cool",
+          "axolotl/ugly->axolotl/ugly"
+        ]
+      },
+      {
+        "label": "Pip2D renders each animal on the mission stage",
+        "pass": true,
+        "detail": [
+          "capybara/cute: Pip the capybara looks confused (147)",
+          "capybara/cool: Pip the capybara looks confused (145)",
+          "capybara/ugly: Pip the capybara looks confused (139)",
+          "corgi/cute: Pip the corgi looks confused (139)",
+          "corgi/cool: Pip the corgi looks confused (137)",
+          "corgi/ugly: Pip the corgi looks confused (131)",
+          "cat/cute: Pip the cat looks confused (137)",
+          "cat/cool: Pip the cat looks confused (135)",
+          "cat/ugly: Pip the cat looks confused (129)",
+          "raccoon/cute: Pip the raccoon looks confused (140)",
+          "raccoon/cool: Pip the raccoon looks confused (138)",
+          "raccoon/ugly: Pip the raccoon looks confused (132)",
+          "frog/cute: Pip the frog looks confused (139)",
+          "frog/cool: Pip the frog looks confused (137)",
+          "frog/ugly: Pip the frog looks confused (131)",
+          "axolotl/cute: Pip the axolotl looks confused (123)",
+          "axolotl/cool: Pip the axolotl looks confused (121)",
+          "axolotl/ugly: Pip the axolotl looks confused (115)"
+        ]
+      },
+      {
+        "label": "Boss2D renders on every stage",
+        "pass": true,
+        "detail": [
+          "Top-Top Bottom-Bottom, smug"
+        ]
+      },
+      {
+        "label": "no floating ? glyph, no WebGL canvas",
+        "pass": true,
+        "detail": []
+      }
+    ],
+    "rows": [
+      {
+        "c": "capybara",
+        "v": "cute",
+        "session": {
+          "creature": "capybara",
+          "vibe": "cute"
+        },
+        "pip": "Pip the capybara looks confused",
+        "nodes": 147,
+        "boss": "Top-Top Bottom-Bottom, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "capybara",
+        "v": "cool",
+        "session": {
+          "creature": "capybara",
+          "vibe": "cool"
+        },
+        "pip": "Pip the capybara looks confused",
+        "nodes": 145,
+        "boss": "Top-Top Bottom-Bottom, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "capybara",
+        "v": "ugly",
+        "session": {
+          "creature": "capybara",
+          "vibe": "ugly"
+        },
+        "pip": "Pip the capybara looks confused",
+        "nodes": 139,
+        "boss": "Top-Top Bottom-Bottom, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "corgi",
+        "v": "cute",
+        "session": {
+          "creature": "corgi",
+          "vibe": "cute"
+        },
+        "pip": "Pip the corgi looks confused",
+        "nodes": 139,
+        "boss": "Top-Top Bottom-Bottom, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "corgi",
+        "v": "cool",
+        "session": {
+          "creature": "corgi",
+          "vibe": "cool"
+        },
+        "pip": "Pip the corgi looks confused",
+        "nodes": 137,
+        "boss": "Top-Top Bottom-Bottom, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "corgi",
+        "v": "ugly",
+        "session": {
+          "creature": "corgi",
+          "vibe": "ugly"
+        },
+        "pip": "Pip the corgi looks confused",
+        "nodes": 131,
+        "boss": "Top-Top Bottom-Bottom, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "cat",
+        "v": "cute",
+        "session": {
+          "creature": "cat",
+          "vibe": "cute"
+        },
+        "pip": "Pip the cat looks confused",
+        "nodes": 137,
+        "boss": "Top-Top Bottom-Bottom, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "cat",
+        "v": "cool",
+        "session": {
+          "creature": "cat",
+          "vibe": "cool"
+        },
+        "pip": "Pip the cat looks confused",
+        "nodes": 135,
+        "boss": "Top-Top Bottom-Bottom, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "cat",
+        "v": "ugly",
+        "session": {
+          "creature": "cat",
+          "vibe": "ugly"
+        },
+        "pip": "Pip the cat looks confused",
+        "nodes": 129,
+        "boss": "Top-Top Bottom-Bottom, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "raccoon",
+        "v": "cute",
+        "session": {
+          "creature": "raccoon",
+          "vibe": "cute"
+        },
+        "pip": "Pip the raccoon looks confused",
+        "nodes": 140,
+        "boss": "Top-Top Bottom-Bottom, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "raccoon",
+        "v": "cool",
+        "session": {
+          "creature": "raccoon",
+          "vibe": "cool"
+        },
+        "pip": "Pip the raccoon looks confused",
+        "nodes": 138,
+        "boss": "Top-Top Bottom-Bottom, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "raccoon",
+        "v": "ugly",
+        "session": {
+          "creature": "raccoon",
+          "vibe": "ugly"
+        },
+        "pip": "Pip the raccoon looks confused",
+        "nodes": 132,
+        "boss": "Top-Top Bottom-Bottom, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "frog",
+        "v": "cute",
+        "session": {
+          "creature": "frog",
+          "vibe": "cute"
+        },
+        "pip": "Pip the frog looks confused",
+        "nodes": 139,
+        "boss": "Top-Top Bottom-Bottom, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "frog",
+        "v": "cool",
+        "session": {
+          "creature": "frog",
+          "vibe": "cool"
+        },
+        "pip": "Pip the frog looks confused",
+        "nodes": 137,
+        "boss": "Top-Top Bottom-Bottom, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "frog",
+        "v": "ugly",
+        "session": {
+          "creature": "frog",
+          "vibe": "ugly"
+        },
+        "pip": "Pip the frog looks confused",
+        "nodes": 131,
+        "boss": "Top-Top Bottom-Bottom, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "axolotl",
+        "v": "cute",
+        "session": {
+          "creature": "axolotl",
+          "vibe": "cute"
+        },
+        "pip": "Pip the axolotl looks confused",
+        "nodes": 123,
+        "boss": "Top-Top Bottom-Bottom, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "axolotl",
+        "v": "cool",
+        "session": {
+          "creature": "axolotl",
+          "vibe": "cool"
+        },
+        "pip": "Pip the axolotl looks confused",
+        "nodes": 121,
+        "boss": "Top-Top Bottom-Bottom, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "axolotl",
+        "v": "ugly",
+        "session": {
+          "creature": "axolotl",
+          "vibe": "ugly"
+        },
+        "pip": "Pip the axolotl looks confused",
+        "nodes": 115,
+        "boss": "Top-Top Bottom-Bottom, smug",
+        "qmarks": 0,
+        "canvas": false
+      }
+    ]
+  },
+  "screens-390x844-day": {
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [
+      {
+        "status": 200,
+        "t": 1792881347153,
+        "fallback": false,
+        "audioB64": 284828,
+        "mime": "audio/mpeg",
+        "alignChars": 168,
+        "alignEnd": 13.36,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+      },
+      {
+        "status": 200,
+        "t": 1792881348312,
+        "fallback": false,
+        "audioB64": 28480,
+        "mime": "audio/mpeg",
+        "alignChars": 18,
+        "alignEnd": 1.28,
+        "text": "Why is that wrong?"
+      },
+      {
+        "status": 200,
+        "t": 1792881348387,
+        "fallback": false,
+        "audioB64": 141608,
+        "mime": "audio/mpeg",
+        "alignChars": 100,
+        "alignEnd": 6.56,
+        "text": "Saving that: 'the pieces are different sizes so you cant just add them"
+      },
+      {
+        "status": 200,
+        "t": 1792881348471,
+        "fallback": false,
+        "audioB64": 139936,
+        "mime": "audio/mpeg",
+        "alignChars": 93,
+        "alignEnd": 6.48,
+        "text": "Saving that: 'because 2 and 3 both go into 6'. And then what do I do w"
+      },
+      {
+        "status": 200,
+        "t": 1792881349781,
+        "fallback": false,
+        "audioB64": 122660,
+        "mime": "audio/mpeg",
+        "alignChars": 84,
+        "alignEnd": 5.76,
+        "text": "Saving that: 'you just add the top numbers and the bottom numbers'. Ok"
+      },
+      {
+        "status": 200,
+        "t": 1792881352449,
+        "fallback": false,
+        "audioB64": 45756,
+        "mime": "audio/mpeg",
+        "alignChars": 20,
+        "alignEnd": 2.16,
+        "text": "No. Different sizes."
+      },
+      {
+        "status": 200,
+        "t": 1792881353872,
+        "fallback": false,
+        "audioB64": 144952,
+        "mime": "audio/mpeg",
+        "alignChars": 46,
+        "alignEnd": 6.8,
+        "text": "6: 1 over 2 = 3 over 6 and 1 over 3 = 2 over 6"
+      },
+      {
+        "status": 200,
+        "t": 1792881354061,
+        "fallback": false,
+        "audioB64": 293188,
+        "mime": "audio/mpeg",
+        "alignChars": 169,
+        "alignEnd": 13.76,
+        "text": "Your rule: add the tops and the bottoms. 3 over 6 + 2 over 6 = 5 over "
+      },
+      {
+        "status": 200,
+        "t": 1792881354305,
+        "fallback": false,
+        "audioB64": 332752,
+        "mime": "audio/mpeg",
+        "alignChars": 222,
+        "alignEnd": 15.6,
+        "text": "Saving that: 'no wait, only add the tops. the bottom just tells you th"
+      },
+      {
+        "status": 200,
+        "t": 1792881354802,
+        "fallback": false,
+        "audioB64": 122660,
+        "mime": "audio/mpeg",
+        "alignChars": 93,
+        "alignEnd": 5.76,
+        "text": "My brain has a bug about this: \"you just add the top numbers and the b"
+      },
+      {
+        "status": 200,
+        "t": 1792881358032,
+        "fallback": false,
+        "audioB64": 124332,
+        "mime": "audio/mpeg",
+        "alignChars": 84,
+        "alignEnd": 5.84,
+        "text": "I heard dividing by a fraction can make a number bigger. That can't be"
+      }
+    ],
+    "checks": [
+      {
+        "label": "no page scroll on any student screen",
+        "pass": true,
+        "detail": {
+          "home": "844/844",
+          "vault": "844/844",
+          "missions": "844/844",
+          "switch": "844/844",
+          "picker": "844/844",
+          "mission": "844/844",
+          "mission-fight": "844/844",
+          "notebook": "844/844",
+          "exam-brain": "844/844",
+          "exam-q1": "844/844",
+          "exam-q2": "844/844",
+          "exam-q3": "844/844",
+          "reteach": "844/844",
+          "ko-fight": "844/844",
+          "ko-stamp": "844/844",
+          "ko-card": "844/844",
+          "ko-cliff": "844/844",
+          "ko-rivera": "844/844"
+        }
+      },
+      {
+        "label": "no control clipped off-screen",
+        "pass": true,
+        "detail": {}
+      },
+      {
+        "label": "tap targets >= 44px",
+        "pass": true,
+        "detail": {}
+      }
+    ],
+    "facts": {
+      "home": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "vault": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "missions": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "switch": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "picker": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "mission": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "mission-fight": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "notebook": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "exam-brain": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "exam-q1": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "exam-q2": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "exam-q3": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "reteach": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "ko-fight": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "ko-stamp": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "ko-card": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "ko-cliff": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "ko-rivera": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      }
+    },
+    "moods": [
+      "home: confused",
+      "mission: thinking",
+      "mission: confused",
+      "mission: thinking",
+      "mission: aha",
+      "mission: thinking",
+      "mission: possessed",
+      "mission: thinking",
+      "mission: notes",
+      "mission: aha",
+      "mission: notes",
+      "mission: aha",
+      "mission: overwhelmed",
+      "mission: aha",
+      "mission: overwhelmed",
+      "mission: possessed",
+      "mission: thinking",
+      "mission: aha",
+      "mission: proud",
+      "mission: confused"
+    ]
+  },
+  "screens-375x667-day": {
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [
+      {
+        "status": 200,
+        "t": 1792881363703,
+        "fallback": false,
+        "audioB64": 284828,
+        "mime": "audio/mpeg",
+        "alignChars": 168,
+        "alignEnd": 13.36,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+      },
+      {
+        "status": 200,
+        "t": 1792881364321,
+        "fallback": false,
+        "audioB64": 28480,
+        "mime": "audio/mpeg",
+        "alignChars": 18,
+        "alignEnd": 1.28,
+        "text": "Why is that wrong?"
+      },
+      {
+        "status": 200,
+        "t": 1792881364406,
+        "fallback": false,
+        "audioB64": 141608,
+        "mime": "audio/mpeg",
+        "alignChars": 100,
+        "alignEnd": 6.56,
+        "text": "Saving that: 'the pieces are different sizes so you cant just add them"
+      },
+      {
+        "status": 200,
+        "t": 1792881364490,
+        "fallback": false,
+        "audioB64": 139936,
+        "mime": "audio/mpeg",
+        "alignChars": 93,
+        "alignEnd": 6.48,
+        "text": "Saving that: 'because 2 and 3 both go into 6'. And then what do I do w"
+      },
+      {
+        "status": 200,
+        "t": 1792881364554,
+        "fallback": false,
+        "audioB64": 122660,
+        "mime": "audio/mpeg",
+        "alignChars": 84,
+        "alignEnd": 5.76,
+        "text": "Saving that: 'you just add the top numbers and the bottom numbers'. Ok"
+      },
+      {
+        "status": 200,
+        "t": 1792881366340,
+        "fallback": false,
+        "audioB64": 293188,
+        "mime": "audio/mpeg",
+        "alignChars": 169,
+        "alignEnd": 13.76,
+        "text": "Your rule: add the tops and the bottoms. 3 over 6 + 2 over 6 = 5 over "
+      },
+      {
+        "status": 200,
+        "t": 1792881366966,
+        "fallback": false,
+        "audioB64": 45756,
+        "mime": "audio/mpeg",
+        "alignChars": 20,
+        "alignEnd": 2.16,
+        "text": "No. Different sizes."
+      },
+      {
+        "status": 200,
+        "t": 1792881367549,
+        "fallback": false,
+        "audioB64": 144952,
+        "mime": "audio/mpeg",
+        "alignChars": 46,
+        "alignEnd": 6.8,
+        "text": "6: 1 over 2 = 3 over 6 and 1 over 3 = 2 over 6"
+      },
+      {
+        "status": 200,
+        "t": 1792881368733,
+        "fallback": false,
+        "audioB64": 122660,
+        "mime": "audio/mpeg",
+        "alignChars": 93,
+        "alignEnd": 5.76,
+        "text": "My brain has a bug about this: \"you just add the top numbers and the b"
+      },
+      {
+        "status": 200,
+        "t": 1792881369355,
+        "fallback": false,
+        "audioB64": 332752,
+        "mime": "audio/mpeg",
+        "alignChars": 222,
+        "alignEnd": 15.6,
+        "text": "Saving that: 'no wait, only add the tops. the bottom just tells you th"
+      },
+      {
+        "status": 200,
+        "t": 1792881372982,
+        "fallback": false,
+        "audioB64": 124332,
+        "mime": "audio/mpeg",
+        "alignChars": 84,
+        "alignEnd": 5.84,
+        "text": "I heard dividing by a fraction can make a number bigger. That can't be"
+      }
+    ],
+    "checks": [
+      {
+        "label": "no page scroll on any student screen",
+        "pass": true,
+        "detail": {
+          "home": "667/667",
+          "vault": "667/667",
+          "missions": "667/667",
+          "switch": "667/667",
+          "picker": "667/667",
+          "mission": "667/667",
+          "mission-fight": "667/667",
+          "notebook": "667/667",
+          "exam-brain": "667/667",
+          "exam-q1": "667/667",
+          "exam-q2": "667/667",
+          "exam-q3": "667/667",
+          "reteach": "667/667",
+          "ko-fight": "667/667",
+          "ko-stamp": "667/667",
+          "ko-card": "667/667",
+          "ko-cliff": "667/667",
+          "ko-rivera": "667/667"
+        }
+      },
+      {
+        "label": "no control clipped off-screen",
+        "pass": true,
+        "detail": {}
+      },
+      {
+        "label": "tap targets >= 44px",
+        "pass": true,
+        "detail": {}
+      }
+    ],
+    "facts": {
+      "home": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "vault": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "missions": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "switch": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "picker": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "mission": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "mission-fight": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "notebook": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "exam-brain": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "exam-q1": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "exam-q2": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "exam-q3": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "reteach": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "ko-fight": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "ko-stamp": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "ko-card": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "ko-cliff": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "ko-rivera": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      }
+    },
+    "moods": [
+      "home: confused",
+      "mission: aha",
+      "mission: thinking",
+      "mission: aha",
+      "mission: possessed",
+      "mission: notes",
+      "mission: aha",
+      "mission: notes",
+      "mission: aha",
+      "mission: overwhelmed",
+      "mission: aha",
+      "mission: overwhelmed",
+      "mission: possessed",
+      "mission: aha",
+      "mission: thinking",
+      "mission: proud",
+      "mission: confused"
+    ]
+  },
+  "screens-375x667-night": {
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [
+      {
+        "status": 200,
+        "t": 1792881378581,
+        "fallback": false,
+        "audioB64": 284828,
+        "mime": "audio/mpeg",
+        "alignChars": 168,
+        "alignEnd": 13.36,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+      },
+      {
+        "status": 200,
+        "t": 1792881379211,
+        "fallback": false,
+        "audioB64": 28480,
+        "mime": "audio/mpeg",
+        "alignChars": 18,
+        "alignEnd": 1.28,
+        "text": "Why is that wrong?"
+      },
+      {
+        "status": 200,
+        "t": 1792881379312,
+        "fallback": false,
+        "audioB64": 141608,
+        "mime": "audio/mpeg",
+        "alignChars": 100,
+        "alignEnd": 6.56,
+        "text": "Saving that: 'the pieces are different sizes so you cant just add them"
+      },
+      {
+        "status": 200,
+        "t": 1792881379392,
+        "fallback": false,
+        "audioB64": 139936,
+        "mime": "audio/mpeg",
+        "alignChars": 93,
+        "alignEnd": 6.48,
+        "text": "Saving that: 'because 2 and 3 both go into 6'. And then what do I do w"
+      },
+      {
+        "status": 200,
+        "t": 1792881379458,
+        "fallback": false,
+        "audioB64": 122660,
+        "mime": "audio/mpeg",
+        "alignChars": 84,
+        "alignEnd": 5.76,
+        "text": "Saving that: 'you just add the top numbers and the bottom numbers'. Ok"
+      },
+      {
+        "status": 200,
+        "t": 1792881380975,
+        "fallback": false,
+        "audioB64": 293188,
+        "mime": "audio/mpeg",
+        "alignChars": 169,
+        "alignEnd": 13.76,
+        "text": "Your rule: add the tops and the bottoms. 3 over 6 + 2 over 6 = 5 over "
+      },
+      {
+        "status": 200,
+        "t": 1792881381586,
+        "fallback": false,
+        "audioB64": 45756,
+        "mime": "audio/mpeg",
+        "alignChars": 20,
+        "alignEnd": 2.16,
+        "text": "No. Different sizes."
+      },
+      {
+        "status": 200,
+        "t": 1792881382169,
+        "fallback": false,
+        "audioB64": 144952,
+        "mime": "audio/mpeg",
+        "alignChars": 46,
+        "alignEnd": 6.8,
+        "text": "6: 1 over 2 = 3 over 6 and 1 over 3 = 2 over 6"
+      },
+      {
+        "status": 200,
+        "t": 1792881383378,
+        "fallback": false,
+        "audioB64": 122660,
+        "mime": "audio/mpeg",
+        "alignChars": 93,
+        "alignEnd": 5.76,
+        "text": "My brain has a bug about this: \"you just add the top numbers and the b"
+      },
+      {
+        "status": 200,
+        "t": 1792881384012,
+        "fallback": false,
+        "audioB64": 332752,
+        "mime": "audio/mpeg",
+        "alignChars": 222,
+        "alignEnd": 15.6,
+        "text": "Saving that: 'no wait, only add the tops. the bottom just tells you th"
+      },
+      {
+        "status": 200,
+        "t": 1792881387387,
+        "fallback": false,
+        "audioB64": 124332,
+        "mime": "audio/mpeg",
+        "alignChars": 84,
+        "alignEnd": 5.84,
+        "text": "I heard dividing by a fraction can make a number bigger. That can't be"
+      }
+    ],
+    "checks": [
+      {
+        "label": "no page scroll on any student screen",
+        "pass": true,
+        "detail": {
+          "home": "667/667",
+          "vault": "667/667",
+          "missions": "667/667",
+          "switch": "667/667",
+          "picker": "667/667",
+          "mission": "667/667",
+          "mission-fight": "667/667",
+          "notebook": "667/667",
+          "exam-brain": "667/667",
+          "exam-q1": "667/667",
+          "exam-q2": "667/667",
+          "exam-q3": "667/667",
+          "reteach": "667/667",
+          "ko-fight": "667/667",
+          "ko-stamp": "667/667",
+          "ko-card": "667/667",
+          "ko-cliff": "667/667",
+          "ko-rivera": "667/667"
+        }
+      },
+      {
+        "label": "no control clipped off-screen",
+        "pass": true,
+        "detail": {}
+      },
+      {
+        "label": "tap targets >= 44px",
+        "pass": true,
+        "detail": {}
+      }
+    ],
+    "facts": {
+      "home": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "vault": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "missions": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "switch": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "picker": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "mission": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "mission-fight": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "notebook": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "exam-brain": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "exam-q1": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "exam-q2": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "exam-q3": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "reteach": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "ko-fight": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "ko-stamp": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "ko-card": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "ko-cliff": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "ko-rivera": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      }
+    },
+    "moods": [
+      "home: confused",
+      "mission: thinking",
+      "mission: aha",
+      "mission: thinking",
+      "mission: aha",
+      "mission: possessed",
+      "mission: notes",
+      "mission: aha",
+      "mission: notes",
+      "mission: aha",
+      "mission: overwhelmed",
+      "mission: possessed",
+      "mission: thinking",
+      "mission: aha",
+      "mission: proud",
+      "mission: confused"
+    ]
+  }
+}

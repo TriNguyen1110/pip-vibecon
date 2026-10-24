@@ -304,6 +304,7 @@ const scenarios = {
     check('no browser speech while ElevenLabs works', inst.synth.length === 0, inst.synth)
     await shot('speaking')
     // mute
+    R.muteAt = Date.now()
     await page.getByRole('button', { name: 'Mute Pip’s voice' }).click()
     await sleep(300)
     const before = { tts: R.tts.length, plays: inst.plays.length, synth: inst.synth.length }
@@ -311,7 +312,7 @@ const scenarios = {
     await sleep(2500)
     await page.locator('.stage2d__pip').click() // tap-to-talk also stays silent
     await sleep(1500)
-    const after = await page.evaluate(() => ({ plays: window.__pip.plays.length, synth: window.__pip.synth.length, muted: localStorage.getItem('pip.voice.muted') }))
+    const after = await page.evaluate(() => ({ plays: window.__pip.plays.length, synth: window.__pip.synth.length, muted: localStorage.getItem('pip.voice.muted'), playLog: window.__pip.plays.slice(-2) }))
     check('mute: no new /api/tts, no audio, no speech', R.tts.length === before.tts && after.plays === before.plays && after.synth === before.synth, { before, after, tts: R.tts.length })
     await shot('muted')
     R.ttsBefore = t0

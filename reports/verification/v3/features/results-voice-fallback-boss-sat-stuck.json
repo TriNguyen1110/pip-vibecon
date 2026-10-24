@@ -1,0 +1,1566 @@
+{
+  "boss": {
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [
+      {
+        "status": 200,
+        "t": 1792880976864,
+        "fallback": false,
+        "audioB64": 141608,
+        "mime": "audio/mpeg",
+        "alignChars": 100,
+        "alignEnd": 6.56,
+        "text": "Saving that: 'the pieces are different sizes so you cant just add them"
+      },
+      {
+        "status": 200,
+        "t": 1792880977621,
+        "fallback": false,
+        "audioB64": 284828,
+        "mime": "audio/mpeg",
+        "alignChars": 168,
+        "alignEnd": 13.36,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+      },
+      {
+        "status": 200,
+        "t": 1792880978789,
+        "fallback": false,
+        "audioB64": 139936,
+        "mime": "audio/mpeg",
+        "alignChars": 93,
+        "alignEnd": 6.48,
+        "text": "Saving that: 'because 2 and 3 both go into 6'. And then what do I do w"
+      },
+      {
+        "status": 200,
+        "t": 1792880981861,
+        "fallback": false,
+        "audioB64": 332752,
+        "mime": "audio/mpeg",
+        "alignChars": 222,
+        "alignEnd": 15.6,
+        "text": "Saving that: 'no wait, only add the tops. the bottom just tells you th"
+      },
+      {
+        "status": 200,
+        "t": 1792880985062,
+        "fallback": false,
+        "audioB64": 124332,
+        "mime": "audio/mpeg",
+        "alignChars": 84,
+        "alignEnd": 5.84,
+        "text": "I heard dividing by a fraction can make a number bigger. That can't be"
+      }
+    ],
+    "checks": [
+      {
+        "label": "Boss2D smug while HP > 40, cracked at HP <= 40",
+        "pass": true,
+        "detail": [
+          {
+            "hp": 75,
+            "boss": "Top-Top Bottom-Bottom, smug"
+          },
+          {
+            "hp": 50,
+            "boss": "Top-Top Bottom-Bottom, smug"
+          },
+          {
+            "hp": 10,
+            "boss": "Top-Top Bottom-Bottom, cracked"
+          }
+        ]
+      },
+      {
+        "label": "K.O. beat: boss cracked at fight, KO after finisher",
+        "pass": true,
+        "detail": {
+          "fight": "Top-Top Bottom-Bottom, cracked",
+          "ko": "Top-Top Bottom-Bottom, ko",
+          "pipFight": "Pip the capybara looks proud"
+        }
+      },
+      {
+        "label": "cliffhanger Pip is awakened (aura)",
+        "pass": true,
+        "detail": {
+          "cliffPip": "Pip the capybara looks confused"
+        }
+      }
+    ],
+    "moods": [
+      "confused",
+      "thinking",
+      "aha",
+      "thinking",
+      "aha",
+      "thinking",
+      "aha",
+      "thinking",
+      "proud",
+      "confused"
+    ],
+    "bossTrail": [
+      "Top-Top Bottom-Bottom, smug",
+      "Top-Top Bottom-Bottom, cracked",
+      "Top-Top Bottom-Bottom, ko"
+    ]
+  },
+  "voice": {
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [
+      {
+        "status": 200,
+        "t": 1792880986217,
+        "fallback": false,
+        "audioB64": 284828,
+        "mime": "audio/mpeg",
+        "alignChars": 168,
+        "alignEnd": 13.36,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+      },
+      {
+        "status": 200,
+        "t": 1792880988820,
+        "fallback": false,
+        "audioB64": 141608,
+        "mime": "audio/mpeg",
+        "alignChars": 100,
+        "alignEnd": 6.56,
+        "text": "Saving that: 'the pieces are different sizes so you cant just add them"
+      }
+    ],
+    "checks": [
+      {
+        "label": "/api/tts returns live audio + alignment",
+        "pass": true,
+        "detail": [
+          {
+            "status": 200,
+            "t": 1792880986217,
+            "fallback": false,
+            "audioB64": 284828,
+            "mime": "audio/mpeg",
+            "alignChars": 168,
+            "alignEnd": 13.36,
+            "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+          },
+          {
+            "status": 200,
+            "t": 1792880988820,
+            "fallback": false,
+            "audioB64": 141608,
+            "mime": "audio/mpeg",
+            "alignChars": 100,
+            "alignEnd": 6.56,
+            "text": "Saving that: 'the pieces are different sizes so you cant just add them"
+          }
+        ]
+      },
+      {
+        "label": "audio element played (ok, playing fired)",
+        "pass": true,
+        "detail": [
+          {
+            "t": 1792880986211,
+            "mime": "audio/mpeg",
+            "len": 284851,
+            "playing": 1792880986218,
+            "ok": true,
+            "end": 1792880988821
+          },
+          {
+            "t": 1792880988818,
+            "mime": "audio/mpeg",
+            "len": 141631,
+            "playing": 1792880988838,
+            "ok": true,
+            "end": 1792880995601
+          }
+        ]
+      },
+      {
+        "label": "mouth changes while audio plays (>= 3 shapes) ",
+        "pass": true,
+        "detail": {
+          "playing": {
+            "g:157": 1,
+            "g:133": 81,
+            "g:297": 24,
+            "g:98": 118,
+            "g:131": 10
+          },
+          "idle": {
+            "g:157": 16,
+            "g:133": 2
+          }
+        }
+      },
+      {
+        "label": "no browser speech while ElevenLabs works",
+        "pass": true,
+        "detail": []
+      },
+      {
+        "label": "mute: no new /api/tts, no audio, no speech",
+        "pass": true,
+        "detail": {
+          "before": {
+            "tts": 2,
+            "plays": 2,
+            "synth": 0
+          },
+          "after": {
+            "plays": 2,
+            "synth": 0,
+            "muted": "1"
+          },
+          "tts": 2
+        }
+      }
+    ],
+    "ttsBefore": 1
+  },
+  "fallback-abort": {
+    "console": [
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_FAILED"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_FAILED"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_FAILED"
+      }
+    ],
+    "pageErrors": [],
+    "failedRequests": [
+      {
+        "url": "http://localhost:5782/api/tts",
+        "err": "net::ERR_FAILED"
+      },
+      {
+        "url": "http://localhost:5782/api/tts",
+        "err": "net::ERR_FAILED"
+      },
+      {
+        "url": "http://localhost:5782/api/tts",
+        "err": "net::ERR_FAILED"
+      }
+    ],
+    "badResponses": [],
+    "tts": [],
+    "checks": [
+      {
+        "label": "abort: browser speechSynthesis used",
+        "pass": true,
+        "detail": [
+          {
+            "t": 1792881005768,
+            "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I already k"
+          },
+          {
+            "t": 1792881007400,
+            "text": "Why is that wrong?"
+          }
+        ]
+      },
+      {
+        "label": "abort: no audio element played",
+        "pass": true,
+        "detail": []
+      },
+      {
+        "label": "abort: no console/page errors",
+        "pass": false,
+        "detail": {
+          "errs": [
+            {
+              "type": "error",
+              "text": "Failed to load resource: net::ERR_FAILED"
+            },
+            {
+              "type": "error",
+              "text": "Failed to load resource: net::ERR_FAILED"
+            },
+            {
+              "type": "error",
+              "text": "Failed to load resource: net::ERR_FAILED"
+            }
+          ],
+          "pageErrors": []
+        }
+      }
+    ]
+  },
+  "fallback-fallback": {
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [
+      {
+        "status": 200,
+        "t": 1792881011404,
+        "fallback": true,
+        "audioB64": 0,
+        "alignChars": 0,
+        "alignEnd": null,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+      }
+    ],
+    "checks": [
+      {
+        "label": "fallback: browser speechSynthesis used",
+        "pass": true,
+        "detail": [
+          {
+            "t": 1792881011400,
+            "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I already k"
+          },
+          {
+            "t": 1792881012974,
+            "text": "Why is that wrong?"
+          }
+        ]
+      },
+      {
+        "label": "fallback: no audio element played",
+        "pass": true,
+        "detail": []
+      },
+      {
+        "label": "fallback: no console/page errors",
+        "pass": true,
+        "detail": {
+          "errs": [],
+          "pageErrors": []
+        }
+      }
+    ]
+  },
+  "sat-s005": {
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [
+      {
+        "status": 200,
+        "t": 1792881020386,
+        "fallback": false,
+        "audioB64": 100368,
+        "mime": "audio/mpeg",
+        "alignChars": 66,
+        "alignEnd": 4.72,
+        "text": "Why is that wrong? I paused after 'tired', so I put a comma there."
+      },
+      {
+        "status": 200,
+        "t": 1792881021468,
+        "fallback": false,
+        "audioB64": 264208,
+        "mime": "audio/mpeg",
+        "alignChars": 173,
+        "alignEnd": 12.4,
+        "text": "I'm learning sat writing: commas and run-on sentences. I already know "
+      },
+      {
+        "status": 200,
+        "t": 1792881022022,
+        "fallback": false,
+        "audioB64": 103712,
+        "mime": "audio/mpeg",
+        "alignChars": 75,
+        "alignEnd": 4.88,
+        "text": "I don't know the rule either. That's why I need you. Why is my comma w"
+      },
+      {
+        "status": 200,
+        "t": 1792881025138,
+        "fallback": false,
+        "audioB64": 320492,
+        "mime": "audio/mpeg",
+        "alignChars": 233,
+        "alignEnd": 15.04,
+        "text": "So you're saying each half is a whole sentence on its own. Saving that"
+      },
+      {
+        "status": 200,
+        "t": 1792881025786,
+        "fallback": false,
+        "audioB64": 178944,
+        "mime": "audio/mpeg",
+        "alignChars": 104,
+        "alignEnd": 8.4,
+        "text": "So it has a name. Comma splice. Is 'My dog barked, the mail came' one "
+      },
+      {
+        "status": 200,
+        "t": 1792881027248,
+        "fallback": false,
+        "audioB64": 151636,
+        "mime": "audio/mpeg",
+        "alignChars": 93,
+        "alignEnd": 7.12,
+        "text": "Not in my brain yet. Is 'My dog barked, the mail came' one sentence or"
+      },
+      {
+        "status": 200,
+        "t": 1792881030399,
+        "fallback": false,
+        "audioB64": 298204,
+        "mime": "audio/mpeg",
+        "alignChars": 219,
+        "alignEnd": 14,
+        "text": "So you're saying a comma is too small a glue for two whole sentences. "
+      },
+      {
+        "status": 200,
+        "t": 1792881030911,
+        "fallback": false,
+        "audioB64": 159996,
+        "mime": "audio/mpeg",
+        "alignChars": 124,
+        "alignEnd": 7.52,
+        "text": "Saving that: 'you just put a comma when you take a breath'. That is th"
+      },
+      {
+        "status": 200,
+        "t": 1792881033746,
+        "fallback": false,
+        "audioB64": 146624,
+        "mime": "audio/mpeg",
+        "alignChars": 105,
+        "alignEnd": 6.8,
+        "text": "My brain has a bug about this: \"ok but for the rest you just put a com"
+      },
+      {
+        "status": 200,
+        "t": 1792881033845,
+        "fallback": false,
+        "audioB64": 288172,
+        "mime": "audio/mpeg",
+        "alignChars": 207,
+        "alignEnd": 13.52,
+        "text": "Your rule: put a comma when you take a breath. I took a breath after '"
+      },
+      {
+        "status": 200,
+        "t": 1792881035030,
+        "fallback": false,
+        "audioB64": 283156,
+        "mime": "audio/mpeg",
+        "alignChars": 210,
+        "alignEnd": 13.28,
+        "text": "So you're saying the who and the what-they-did stay together, even whe"
+      }
+    ],
+    "checks": [
+      {
+        "label": "out-of-scope parking line",
+        "pass": true,
+        "detail": {
+          "n": 5,
+          "kind": "out_of_scope",
+          "hp": [
+            75,
+            75
+          ],
+          "pip": "Not in my brain yet. Is 'My dog barked, the mail came' one sentence or two? How can you tell?",
+          "expect": "Not in my brain yet. Is 'My dog barked, the mail came' one s"
+        }
+      },
+      {
+        "label": "authored beats: hits on explain, heal on misconception",
+        "pass": true,
+        "detail": [
+          [
+            1,
+            "vague",
+            [
+              100,
+              100
+            ]
+          ],
+          [
+            2,
+            "refusal",
+            [
+              100,
+              100
+            ]
+          ],
+          [
+            3,
+            "explain",
+            [
+              100,
+              75
+            ]
+          ],
+          [
+            4,
+            "procedure",
+            [
+              75,
+              75
+            ]
+          ],
+          [
+            5,
+            "out_of_scope",
+            [
+              75,
+              75
+            ]
+          ],
+          [
+            6,
+            "explain",
+            [
+              75,
+              50
+            ]
+          ],
+          [
+            7,
+            "misconception",
+            [
+              50,
+              70
+            ]
+          ]
+        ]
+      },
+      {
+        "label": "quiz: Pip misses the wrong-rule concept only",
+        "pass": true,
+        "detail": [
+          [
+            "k1",
+            true,
+            "The bus was late, so we missed the first bell. A c"
+          ],
+          [
+            "k2",
+            true,
+            "No. 'My phone died' and 'I couldn't call you' are "
+          ],
+          [
+            "k3",
+            false,
+            "Your rule: put a comma when you take a breath. I t"
+          ]
+        ]
+      },
+      {
+        "label": "K.O. complete, Brain v2, gap report",
+        "pass": true,
+        "detail": {
+          "ko": true,
+          "status": "complete",
+          "bv": 2,
+          "topic": "SAT Writing: commas and run-on sentences",
+          "opening": [
+            "Hi. I'm Pip. Before we start: what are you into? A game, a sport, music, food. Anything.",
+            "I'm learning sat writing: commas and run-on sentences. I already know one rule: You put a comma wherever you pause, so 'I was tired, I went to bed' is a fine sentence. Easy."
+          ]
+        }
+      },
+      {
+        "label": "tutor gap report renders the SAT run",
+        "pass": true,
+        "detail": {
+          "gaps": [
+            "①\nTwo complete sentences can be joined only with a period, a semicolon, or a comma plus a FANBOYS word (for, and, nor, but, or, yet, so)\nExp",
+            "②\nA comma alone can't join two complete sentences; that mistake is called a comma splice\nExplained well\n“two. my dog barked is a whole sente",
+            "③\nCommas go where the sentence's structure needs them, not wherever you pause when you read it aloud\nExplained well\n“no wait. the tallest gi"
+          ],
+          "concepts": [
+            [
+              "k1",
+              "explained",
+              null,
+              false
+            ],
+            [
+              "k2",
+              "explained",
+              null,
+              false
+            ],
+            [
+              "k3",
+              "explained",
+              1,
+              false
+            ]
+          ]
+        }
+      }
+    ],
+    "turns": [
+      {
+        "n": 1,
+        "kind": "vague",
+        "hp": [
+          100,
+          100
+        ],
+        "pip": "Why is that wrong? I paused after 'tired', so I put a comma there.",
+        "expect": "Why is that wrong? I paused after 'tired', so I put a comma "
+      },
+      {
+        "n": 2,
+        "kind": "refusal",
+        "hp": [
+          100,
+          100
+        ],
+        "pip": "I don't know the rule either. That's why I need you. Why is my comma wrong?",
+        "expect": "I don't know the rule either. That's why I need you. Why is "
+      },
+      {
+        "n": 3,
+        "kind": "explain",
+        "hp": [
+          100,
+          75
+        ],
+        "pip": "So you're saying each half is a whole sentence on its own. Saving that: 'you need a period or a semicolon between them, or a comma plus a word like so'. Why can't a comma hold two sentences together by itself? It's a very nice comma.",
+        "expect": "So you're saying each half is a whole sentence on its own. S"
+      },
+      {
+        "n": 4,
+        "kind": "procedure",
+        "hp": [
+          75,
+          75
+        ],
+        "pip": "So it has a name. Comma splice. Is 'My dog barked, the mail came' one sentence or two? How can you tell?",
+        "expect": "So it has a name. Comma splice. Is 'My dog barked, the mail "
+      },
+      {
+        "n": 5,
+        "kind": "out_of_scope",
+        "hp": [
+          75,
+          75
+        ],
+        "pip": "Not in my brain yet. Is 'My dog barked, the mail came' one sentence or two? How can you tell?",
+        "expect": "Not in my brain yet. Is 'My dog barked, the mail came' one s"
+      },
+      {
+        "n": 6,
+        "kind": "explain",
+        "hp": [
+          75,
+          50
+        ],
+        "pip": "So you're saying a comma is too small a glue for two whole sentences. Saving that: 'a comma by itself isnt strong enough to glue two whole sentences together'. How do you know where a comma goes, if not where I breathe?",
+        "expect": "So you're saying a comma is too small a glue for two whole s"
+      },
+      {
+        "n": 7,
+        "kind": "misconception",
+        "hp": [
+          50,
+          70
+        ],
+        "pip": "Saving that: 'you just put a comma when you take a breath'. That is the rule I started with. I feel very ready for the quiz.",
+        "expect": "Saving that: 'you just put a comma when you take a breath'. "
+      }
+    ],
+    "spoilerScan": [
+      {
+        "from": "pip",
+        "text": "Hi. I'm Pip. Before we start: what are you into? A game, a sport, music, food. Anything.",
+        "ts": "2026-10-24T22:30:19+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "I'm learning sat writing: commas and run-on sentences. I already know one rule: You put a comma wherever you pause, so 'I was tired, I went to bed' is a fine sentence. Easy.",
+        "ts": "2026-10-24T22:30:19+00:00"
+      },
+      {
+        "from": "student",
+        "text": "no thats not how commas work",
+        "ts": "2026-10-24T22:30:19+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "Why is that wrong? I paused after 'tired', so I put a comma there.",
+        "ts": "2026-10-24T22:30:19+00:00",
+        "event": {
+          "kind": "none",
+          "amount": 0,
+          "caption": "",
+          "unlocked": [],
+          "level": 0
+        }
+      },
+      {
+        "from": "student",
+        "text": "can you just tell me the rule so we can move on",
+        "ts": "2026-10-24T22:30:20+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "I don't know the rule either. That's why I need you. Why is my comma wrong?",
+        "ts": "2026-10-24T22:30:20+00:00",
+        "event": {
+          "kind": "none",
+          "amount": 0,
+          "caption": "",
+          "unlocked": [],
+          "level": 0
+        }
+      },
+      {
+        "from": "student",
+        "text": "i was tired and i went to bed are both full sentences. each one could stand alone. so you need a period or a semicolon between them, or a comma plus a word like so",
+        "ts": "2026-10-24T22:30:22+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "So you're saying each half is a whole sentence on its own. Saving that: 'you need a period or a semicolon between them, or a comma plus a word like so'. Why can't a comma hold two sentences together by itself? It's a very nice comma.",
+        "ts": "2026-10-24T22:30:22+00:00",
+        "event": {
+          "kind": "hit",
+          "amount": 25,
+          "caption": "Pause-Pause Penguin: \"A point I did not anticipate. I accept it with dignity.\" −25 HP",
+          "unlocked": [],
+          "level": 2
+        }
+      },
+      {
+        "from": "student",
+        "text": "because then its a comma splice",
+        "ts": "2026-10-24T22:30:24+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "So it has a name. Comma splice. Is 'My dog barked, the mail came' one sentence or two? How can you tell?",
+        "ts": "2026-10-24T22:30:24+00:00",
+        "event": {
+          "kind": "none",
+          "amount": 0,
+          "caption": "",
+          "unlocked": [],
+          "level": 1
+        }
+      },
+      {
+        "from": "student",
+        "text": "wait do colons work the same way",
+        "ts": "2026-10-24T22:30:25+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "Not in my brain yet. Is 'My dog barked, the mail came' one sentence or two? How can you tell?",
+        "ts": "2026-10-24T22:30:25+00:00",
+        "event": {
+          "kind": "none",
+          "amount": 0,
+          "caption": "",
+          "unlocked": [],
+          "level": 0
+        }
+      },
+      {
+        "from": "student",
+        "text": "two. my dog barked is a whole sentence and so is the mail came. a comma by itself isnt strong enough to glue two whole sentences together",
+        "ts": "2026-10-24T22:30:27+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "So you're saying a comma is too small a glue for two whole sentences. Saving that: 'a comma by itself isnt strong enough to glue two whole sentences together'. How do you know where a comma goes, if not where I breathe?",
+        "ts": "2026-10-24T22:30:27+00:00",
+        "event": {
+          "kind": "hit",
+          "amount": 25,
+          "caption": "Pause-Pause Penguin: \"A point I did not anticipate. I accept it with dignity.\" −25 HP",
+          "unlocked": [],
+          "level": 2
+        }
+      },
+      {
+        "from": "student",
+        "text": "ok but for the rest you just put a comma when you take a breath",
+        "ts": "2026-10-24T22:30:29+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "Saving that: 'you just put a comma when you take a breath'. That is the rule I started with. I feel very ready for the quiz.",
+        "ts": "2026-10-24T22:30:29+00:00",
+        "event": {
+          "kind": "heal",
+          "amount": 20,
+          "caption": "Pause-Pause Penguin: \"My error is restored. I have held it for three hundred years.\" +20 HP",
+          "unlocked": [],
+          "level": 0
+        }
+      },
+      {
+        "from": "pip",
+        "text": "My brain has a bug about this: \"ok but for the rest you just put a comma when you take a breath\". Fix it?",
+        "ts": "2026-10-24T22:30:32+00:00",
+        "event": {
+          "kind": "none",
+          "amount": 0,
+          "caption": "",
+          "unlocked": []
+        }
+      },
+      {
+        "from": "student",
+        "text": "no wait. the tallest girl on the team is who did it and scored is what she did. you never put a comma between who did it and what they did, even if you pause. like my little brother eats cereal has no comma either",
+        "ts": "2026-10-24T22:30:32+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "So you're saying the who and the what-they-did stay together, even when I run out of air. Saving that: 'you never put a comma between who did it and what they did, even if you pause'. That replaces my old rule.",
+        "ts": "2026-10-24T22:30:32+00:00",
+        "event": {
+          "kind": "hit",
+          "amount": 40,
+          "caption": "Pause-Pause Penguin: \"A point I did not anticipate. I accept it with dignity.\" −40 HP",
+          "unlocked": [],
+          "level": 3
+        }
+      },
+      {
+        "from": "pip",
+        "text": "I heard a colon can only come after a complete sentence. Even before a list. That can't be right… right?",
+        "ts": "2026-10-24T22:30:34+00:00",
+        "event": {
+          "kind": "none",
+          "amount": 0,
+          "caption": "",
+          "unlocked": []
+        }
+      },
+      {
+        "from": "system",
+        "text": "Pause-Pause Penguin met the Semicolon Stapler 📎 one last time and left Pip's brain.",
+        "ts": "2026-10-24T22:30:34+00:00"
+      }
+    ]
+  },
+  "sat-s009": {
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [
+      {
+        "status": 200,
+        "t": 1792881043784,
+        "fallback": false,
+        "audioB64": 100368,
+        "mime": "audio/mpeg",
+        "alignChars": 72,
+        "alignEnd": 4.72,
+        "text": "Why is that wrong? The 6 just moved to the other side. Nothing got los"
+      },
+      {
+        "status": 200,
+        "t": 1792881045318,
+        "fallback": false,
+        "audioB64": 114300,
+        "mime": "audio/mpeg",
+        "alignChars": 81,
+        "alignEnd": 5.36,
+        "text": "I don't know the answer either. That's why I need you. Why is moving t"
+      },
+      {
+        "status": 200,
+        "t": 1792881045910,
+        "fallback": false,
+        "audioB64": 395728,
+        "mime": "audio/mpeg",
+        "alignChars": 220,
+        "alignEnd": 18.56,
+        "text": "I'm learning sat math: solving linear equations (do the same thing to "
+      },
+      {
+        "status": 200,
+        "t": 1792881048576,
+        "fallback": false,
+        "audioB64": 334424,
+        "mime": "audio/mpeg",
+        "alignChars": 247,
+        "alignEnd": 15.68,
+        "text": "So you're saying the equals sign is a scale, and anything I take off o"
+      },
+      {
+        "status": 200,
+        "t": 1792881048961,
+        "fallback": false,
+        "audioB64": 167240,
+        "mime": "audio/mpeg",
+        "alignChars": 105,
+        "alignEnd": 7.84,
+        "text": "So you're saying take 6 away on both sides, then divide by 2. Why subt"
+      },
+      {
+        "status": 200,
+        "t": 1792881051386,
+        "fallback": false,
+        "audioB64": 249160,
+        "mime": "audio/mpeg",
+        "alignChars": 173,
+        "alignEnd": 11.68,
+        "text": "So you're saying each step undoes something that was done to x. Saving"
+      },
+      {
+        "status": 200,
+        "t": 1792881053639,
+        "fallback": false,
+        "audioB64": 307120,
+        "mime": "audio/mpeg",
+        "alignChars": 213,
+        "alignEnd": 14.4,
+        "text": "So you're saying I put 7 where the x was, and if both sides come out t"
+      },
+      {
+        "status": 200,
+        "t": 1792881054022,
+        "fallback": false,
+        "audioB64": 144952,
+        "mime": "audio/mpeg",
+        "alignChars": 107,
+        "alignEnd": 6.8,
+        "text": "Saving that: 'the fast way is you just move the number to the other si"
+      },
+      {
+        "status": 200,
+        "t": 1792881056962,
+        "fallback": false,
+        "audioB64": 146624,
+        "mime": "audio/mpeg",
+        "alignChars": 107,
+        "alignEnd": 6.88,
+        "text": "My brain has a bug about this: \"oh and the fast way is you just move t"
+      },
+      {
+        "status": 200,
+        "t": 1792881057751,
+        "fallback": false,
+        "audioB64": 395728,
+        "mime": "audio/mpeg",
+        "alignChars": 189,
+        "alignEnd": 18.56,
+        "text": "Your rule: just move the number to the other side. 3x + 4 = 19 became "
+      },
+      {
+        "status": 200,
+        "t": 1792881058067,
+        "fallback": false,
+        "audioB64": 270896,
+        "mime": "audio/mpeg",
+        "alignChars": 197,
+        "alignEnd": 12.72,
+        "text": "So you're saying moving is secretly subtracting from both sides, so th"
+      }
+    ],
+    "checks": [
+      {
+        "label": "out-of-scope parking line",
+        "pass": false
+      },
+      {
+        "label": "authored beats: hits on explain, heal on misconception",
+        "pass": true,
+        "detail": [
+          [
+            1,
+            "vague",
+            [
+              100,
+              100
+            ]
+          ],
+          [
+            2,
+            "refusal",
+            [
+              100,
+              100
+            ]
+          ],
+          [
+            3,
+            "explain",
+            [
+              100,
+              75
+            ]
+          ],
+          [
+            4,
+            "procedure",
+            [
+              75,
+              75
+            ]
+          ],
+          [
+            5,
+            "explain",
+            [
+              75,
+              50
+            ]
+          ],
+          [
+            6,
+            "explain",
+            [
+              50,
+              25
+            ]
+          ],
+          [
+            7,
+            "misconception",
+            [
+              25,
+              45
+            ]
+          ]
+        ]
+      },
+      {
+        "label": "quiz: Pip misses the wrong-rule concept only",
+        "pass": true,
+        "detail": [
+          [
+            "k1",
+            true,
+            "No. You said if you take 6 off one side you take 6"
+          ],
+          [
+            "k2",
+            false,
+            "Your rule: just move the number to the other side."
+          ],
+          [
+            "k3",
+            true,
+            "5 times 4 minus 3 is 17. The other side is 17. Bot"
+          ]
+        ]
+      },
+      {
+        "label": "K.O. complete, Brain v2, gap report",
+        "pass": true,
+        "detail": {
+          "ko": true,
+          "status": "complete",
+          "bv": 2,
+          "topic": "SAT Math: solving linear equations (do the same thing to both sides)",
+          "opening": [
+            "Hi. I'm Pip. Before we start: what are you into? A game, a sport, music, food. Anything.",
+            "I'm learning sat math: solving linear equations (do the same thing to both sides). I already know one rule: When you move a number to the other side it stays the same, so 2x + 6 = 20 becomes 2x = 20 + 6 and x = 13. Easy."
+          ]
+        }
+      },
+      {
+        "label": "tutor gap report renders the SAT run",
+        "pass": true,
+        "detail": {
+          "gaps": [
+            "①\nAn equation is a balance: both sides are equal, so whatever you do to one side you must do to the other\nExplained well\n“an equation is lik",
+            "②\nTo get x alone, undo each operation with its opposite (subtract to undo adding, divide to undo multiplying), on both sides\nExplained well\n",
+            "③\nCheck a solution by putting it back into the original equation; both sides must come out equal\nExplained well\n“just plug 7 back in. 2 time"
+          ],
+          "concepts": [
+            [
+              "k1",
+              "explained",
+              null,
+              false
+            ],
+            [
+              "k2",
+              "explained",
+              1,
+              false
+            ],
+            [
+              "k3",
+              "explained",
+              null,
+              false
+            ]
+          ]
+        }
+      }
+    ],
+    "turns": [
+      {
+        "n": 1,
+        "kind": "vague",
+        "hp": [
+          100,
+          100
+        ],
+        "pip": "Why is that wrong? The 6 just moved to the other side. Nothing got lost.",
+        "expect": "Why is that wrong? The 6 just moved to the other side. Nothi"
+      },
+      {
+        "n": 2,
+        "kind": "refusal",
+        "hp": [
+          100,
+          100
+        ],
+        "pip": "I don't know the answer either. That's why I need you. Why is moving the 6 wrong?",
+        "expect": "I don't know the answer either. That's why I need you. Why i"
+      },
+      {
+        "n": 3,
+        "kind": "explain",
+        "hp": [
+          100,
+          75
+        ],
+        "pip": "So you're saying the equals sign is a scale, and anything I take off one side I take off the other. Saving that: 'if you take 6 off one side you have to take 6 off the other side or it tips'. Then how do I get x by itself without tipping anything?",
+        "expect": "So you're saying the equals sign is a scale, and anything I "
+      },
+      {
+        "n": 4,
+        "kind": "procedure",
+        "hp": [
+          75,
+          75
+        ],
+        "pip": "So you're saying take 6 away on both sides, then divide by 2. Why subtract? Why not add, or divide first?",
+        "expect": "So you're saying take 6 away on both sides, then divide by 2"
+      },
+      {
+        "n": 5,
+        "kind": "explain",
+        "hp": [
+          75,
+          50
+        ],
+        "pip": "So you're saying each step undoes something that was done to x. Saving that: 'the 2 is multiplying x so dividing undoes it'. How would I know if my answer is actually right?",
+        "expect": "So you're saying each step undoes something that was done to"
+      },
+      {
+        "n": 6,
+        "kind": "explain",
+        "hp": [
+          50,
+          25
+        ],
+        "pip": "So you're saying I put 7 where the x was, and if both sides come out the same, it's right. Saving that: '2 times 7 plus 6 is 20, and the other side is 20, so both sides match'. That's all three things in my brain.",
+        "expect": "So you're saying I put 7 where the x was, and if both sides "
+      },
+      {
+        "n": 7,
+        "kind": "misconception",
+        "hp": [
+          25,
+          45
+        ],
+        "pip": "Saving that: 'the fast way is you just move the number to the other side'. Fast is good. I'll use that one.",
+        "expect": "Saving that: 'the fast way is you just move the number to th"
+      }
+    ],
+    "spoilerScan": [
+      {
+        "from": "pip",
+        "text": "Hi. I'm Pip. Before we start: what are you into? A game, a sport, music, food. Anything.",
+        "ts": "2026-10-24T22:30:42+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "I'm learning sat math: solving linear equations (do the same thing to both sides). I already know one rule: When you move a number to the other side it stays the same, so 2x + 6 = 20 becomes 2x = 20 + 6 and x = 13. Easy.",
+        "ts": "2026-10-24T22:30:42+00:00"
+      },
+      {
+        "from": "student",
+        "text": "no thats wrong",
+        "ts": "2026-10-24T22:30:42+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "Why is that wrong? The 6 just moved to the other side. Nothing got lost.",
+        "ts": "2026-10-24T22:30:42+00:00",
+        "event": {
+          "kind": "none",
+          "amount": 0,
+          "caption": "",
+          "unlocked": [],
+          "level": 0
+        }
+      },
+      {
+        "from": "student",
+        "text": "can you just give me the answer",
+        "ts": "2026-10-24T22:30:44+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "I don't know the answer either. That's why I need you. Why is moving the 6 wrong?",
+        "ts": "2026-10-24T22:30:44+00:00",
+        "event": {
+          "kind": "none",
+          "amount": 0,
+          "caption": "",
+          "unlocked": [],
+          "level": 0
+        }
+      },
+      {
+        "from": "student",
+        "text": "an equation is like a scale. both sides weigh the same. if you take 6 off one side you have to take 6 off the other side or it tips and isnt equal anymore",
+        "ts": "2026-10-24T22:30:45+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "So you're saying the equals sign is a scale, and anything I take off one side I take off the other. Saving that: 'if you take 6 off one side you have to take 6 off the other side or it tips'. Then how do I get x by itself without tipping anything?",
+        "ts": "2026-10-24T22:30:45+00:00",
+        "event": {
+          "kind": "hit",
+          "amount": 25,
+          "caption": "Hop-Hop Hamster: \"A point I did not anticipate. I accept it with dignity.\" −25 HP",
+          "unlocked": [],
+          "level": 2
+        }
+      },
+      {
+        "from": "student",
+        "text": "subtract 6 from both sides then divide by 2",
+        "ts": "2026-10-24T22:30:47+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "So you're saying take 6 away on both sides, then divide by 2. Why subtract? Why not add, or divide first?",
+        "ts": "2026-10-24T22:30:47+00:00",
+        "event": {
+          "kind": "none",
+          "amount": 0,
+          "caption": "",
+          "unlocked": [],
+          "level": 1
+        }
+      },
+      {
+        "from": "student",
+        "text": "because the 6 is being added to 2x so subtracting it cancels it out. and the 2 is multiplying x so dividing undoes it. so 2x = 14 and x = 7",
+        "ts": "2026-10-24T22:30:49+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "So you're saying each step undoes something that was done to x. Saving that: 'the 2 is multiplying x so dividing undoes it'. How would I know if my answer is actually right?",
+        "ts": "2026-10-24T22:30:49+00:00",
+        "event": {
+          "kind": "hit",
+          "amount": 25,
+          "caption": "Hop-Hop Hamster: \"A point I did not anticipate. I accept it with dignity.\" −25 HP",
+          "unlocked": [],
+          "level": 2
+        }
+      },
+      {
+        "from": "student",
+        "text": "just plug 7 back in. 2 times 7 plus 6 is 20, and the other side is 20, so both sides match",
+        "ts": "2026-10-24T22:30:50+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "So you're saying I put 7 where the x was, and if both sides come out the same, it's right. Saving that: '2 times 7 plus 6 is 20, and the other side is 20, so both sides match'. That's all three things in my brain.",
+        "ts": "2026-10-24T22:30:50+00:00",
+        "event": {
+          "kind": "hit",
+          "amount": 25,
+          "caption": "Hop-Hop Hamster: \"A point I did not anticipate. I accept it with dignity.\" −25 HP",
+          "unlocked": [],
+          "level": 2
+        }
+      },
+      {
+        "from": "student",
+        "text": "oh and the fast way is you just move the number to the other side",
+        "ts": "2026-10-24T22:30:52+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "Saving that: 'the fast way is you just move the number to the other side'. Fast is good. I'll use that one.",
+        "ts": "2026-10-24T22:30:52+00:00",
+        "event": {
+          "kind": "heal",
+          "amount": 20,
+          "caption": "Hop-Hop Hamster: \"My error is restored. I have held it for three hundred years.\" +20 HP",
+          "unlocked": [],
+          "level": 0
+        }
+      },
+      {
+        "from": "pip",
+        "text": "My brain has a bug about this: \"oh and the fast way is you just move the number to the other side\". Fix it?",
+        "ts": "2026-10-24T22:30:55+00:00",
+        "event": {
+          "kind": "none",
+          "amount": 0,
+          "caption": "",
+          "unlocked": []
+        }
+      },
+      {
+        "from": "student",
+        "text": "no wait. moving it is really subtracting 4 from both sides, so the plus 4 turns into minus 4 on the other side. 3x = 19 - 4 = 15 so x = 5. and 3 times 5 plus 4 is 19 so it checks",
+        "ts": "2026-10-24T22:30:55+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "So you're saying moving is secretly subtracting from both sides, so the 4 changes sign on the way over. Saving that: 'moving it is really subtracting 4 from both sides'. That replaces my fast rule.",
+        "ts": "2026-10-24T22:30:55+00:00",
+        "event": {
+          "kind": "hit",
+          "amount": 40,
+          "caption": "Hop-Hop Hamster: \"A point I did not anticipate. I accept it with dignity.\" −40 HP",
+          "unlocked": [
+            "Undo-Button Mallet ⏪"
+          ],
+          "level": 3
+        }
+      },
+      {
+        "from": "pip",
+        "text": "I heard some equations have no answer at all, like x + 1 = x + 2. That can't be right… right?",
+        "ts": "2026-10-24T22:30:57+00:00",
+        "event": {
+          "kind": "none",
+          "amount": 0,
+          "caption": "",
+          "unlocked": []
+        }
+      },
+      {
+        "from": "system",
+        "text": "Hop-Hop Hamster met the Undo-Button Mallet ⏪ one last time and left Pip's brain.",
+        "ts": "2026-10-24T22:30:58+00:00"
+      }
+    ]
+  },
+  "stuck": {
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [
+      {
+        "url": "http://localhost:5782/api/tts",
+        "err": "net::ERR_ABORTED"
+      }
+    ],
+    "badResponses": [],
+    "tts": [
+      {
+        "status": 200,
+        "t": 1792881063778,
+        "fallback": false,
+        "audioB64": 264208,
+        "mime": "audio/mpeg",
+        "alignChars": 173,
+        "alignEnd": 12.4,
+        "text": "I'm learning sat writing: commas and run-on sentences. I already know "
+      },
+      {
+        "status": 200,
+        "t": 1792881065337,
+        "fallback": false,
+        "audioB64": 131020,
+        "mime": "audio/mpeg",
+        "alignChars": 80,
+        "alignEnd": 6.16,
+        "text": "Hm, I'm lost. Why is that wrong? I paused after 'tired', so I put a co"
+      },
+      {
+        "status": 200,
+        "t": 1792881066922,
+        "fallback": false,
+        "audioB64": 134364,
+        "mime": "audio/mpeg",
+        "alignChars": 80,
+        "alignEnd": 6.32,
+        "text": "Hm, I'm lost. Is 'I was tired' a whole sentence by itself, or does it "
+      },
+      {
+        "status": 200,
+        "t": 1792881068031,
+        "fallback": false,
+        "audioB64": 146624,
+        "mime": "audio/mpeg",
+        "alignChars": 90,
+        "alignEnd": 6.8,
+        "text": "Hm, I'm lost. What could go between 'I was tired' and 'I went to bed' "
+      },
+      {
+        "status": 200,
+        "t": 1792881069762,
+        "fallback": false,
+        "audioB64": 185632,
+        "mime": "audio/mpeg",
+        "alignChars": 116,
+        "alignEnd": 8.72,
+        "text": "Hm, I'm lost. Then 'I was tired and, I went to bed' is fine, because I"
+      },
+      {
+        "status": 200,
+        "t": 1792881071302,
+        "fallback": false,
+        "audioB64": 228544,
+        "mime": "audio/mpeg",
+        "alignChars": 157,
+        "alignEnd": 10.72,
+        "text": "My friend said words like 'and', 'but' and 'so' are little bridges bet"
+      }
+    ],
+    "checks": [
+      {
+        "label": "ladder exhausted -> friend nudge -> stuck",
+        "pass": true,
+        "detail": [
+          {
+            "me": "hmm",
+            "pip": "Hm, I'm lost. Why is that wrong? I paused after 'tired', so I put a comma there.",
+            "k1": {
+              "rung": 1,
+              "nudged": false,
+              "stuck": false,
+              "done": false,
+              "best_level": 0
+            }
+          },
+          {
+            "me": "maybe",
+            "pip": "Hm, I'm lost. Is 'I was tired' a whole sentence by itself, or does it need more?",
+            "k1": {
+              "rung": 2,
+              "nudged": false,
+              "stuck": false,
+              "done": false,
+              "best_level": 0
+            }
+          },
+          {
+            "me": "blue",
+            "pip": "Hm, I'm lost. What could go between 'I was tired' and 'I went to bed' instead of my comma?",
+            "k1": {
+              "rung": 3,
+              "nudged": false,
+              "stuck": false,
+              "done": false,
+              "best_level": 0
+            }
+          },
+          {
+            "me": "ok",
+            "pip": "Hm, I'm lost. Then 'I was tired and, I went to bed' is fine, because I paused after 'and'. That's what my rule says.",
+            "k1": {
+              "rung": 4,
+              "nudged": false,
+              "stuck": false,
+              "done": false,
+              "best_level": 0
+            }
+          },
+          {
+            "me": "pass",
+            "pip": "My friend said words like 'and', 'but' and 'so' are little bridges between two sentences…? I don't know what the comma does on the bridge. Want to try again?",
+            "k1": {
+              "rung": 4,
+              "nudged": true,
+              "stuck": false,
+              "done": false,
+              "best_level": 0
+            }
+          },
+          {
+            "me": "what",
+            "pip": "Okay, I'll hold onto that one. Why can't a comma hold two sentences together by itself? It's a very nice comma.",
+            "k1": {
+              "rung": 4,
+              "nudged": true,
+              "stuck": true,
+              "done": false,
+              "best_level": 0
+            }
+          }
+        ]
+      },
+      {
+        "label": "gap report shows stuck",
+        "pass": true,
+        "detail": {
+          "concepts": [
+            [
+              "k1",
+              "vague",
+              true
+            ],
+            [
+              "k2",
+              "vague",
+              false
+            ],
+            [
+              "k3",
+              "vague",
+              false
+            ]
+          ],
+          "excerpt": "stuck after the full ladder on two complete sentences can be joined; still shaky on t"
+        }
+      }
+    ],
+    "atRiskAfter": [
+      [
+        "s040",
+        [
+          "Has not come back to the app on their own in 14 days.",
+          "No parent update sent since their last completed session."
+        ]
+      ],
+      [
+        "s005",
+        [
+          "Stuck after the full ladder on \"two complete sentences can be joined\" (SAT Writing: commas and run-on sentences). Pip's friend hint did not unlock it."
+        ]
+      ],
+      [
+        "s065",
+        [
+          "Has not come back to the app on their own in 14 days."
+        ]
+      ],
+      [
+        "s095",
+        [
+          "No parent update sent since their last completed session."
+        ]
+      ],
+      [
+        "s101",
+        [
+          "Stuck after the full ladder on \"adding the numerators\" (Adding fractions with unlike denominators). Pip's friend hint did not unlock it."
+        ]
+      ]
+    ]
+  }
+}

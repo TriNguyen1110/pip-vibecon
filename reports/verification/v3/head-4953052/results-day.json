@@ -1,0 +1,2685 @@
+[
+  {
+    "width": 390,
+    "steps": [
+      {
+        "name": "reset via /admin/reset",
+        "pass": true,
+        "ms": 1441,
+        "detail": {
+          "meta": "ai offline · store memory · claude-opus-5-5",
+          "mayaSinceBefore": null
+        }
+      },
+      {
+        "name": "landing",
+        "pass": true,
+        "ms": 6795,
+        "detail": {
+          "hero": "Pip"
+        }
+      },
+      {
+        "name": "Try as Maya -> student home + mascot",
+        "pass": true,
+        "ms": 22560,
+        "detail": {
+          "pass": true,
+          "tiles": [
+            "Adding fractions with unlike denominators"
+          ],
+          "canvas": false,
+          "stageMs": 20778,
+          "drawnMs": null
+        }
+      },
+      {
+        "name": "start pinned fractions mission + pick a look",
+        "pass": true,
+        "ms": 26818,
+        "detail": {
+          "pass": true,
+          "topic": "Adding fractions with unlike denominators",
+          "sid": "sess_98b931ac"
+        }
+      },
+      {
+        "name": "Pip's opening is the misconception claim",
+        "pass": true,
+        "ms": 1732,
+        "detail": {
+          "pass": true,
+          "openingCount": 1,
+          "last": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I already know one rule: You add the tops and the bottoms, so 1/2 + 1/3 = 2/5. Easy.",
+          "creature": "cat",
+          "accessory": "glasses"
+        }
+      },
+      {
+        "name": "tap targets >= 44px on mission screen",
+        "pass": true,
+        "ms": 2,
+        "detail": {
+          "pass": true,
+          "small": []
+        }
+      },
+      {
+        "name": "message 1",
+        "pass": true,
+        "ms": 1401,
+        "detail": {
+          "pass": true,
+          "i": 1,
+          "turnMs": 228,
+          "renderMs": 500,
+          "optimistic": true,
+          "hp": [
+            100,
+            100
+          ],
+          "meters": {
+            "k1": 0,
+            "k2": 0,
+            "k3": 0
+          },
+          "weapons": [],
+          "equipped": null,
+          "events": [
+            {
+              "kind": "none",
+              "amount": 0,
+              "caption": "",
+              "unlocked": []
+            }
+          ],
+          "pip": "Why is that wrong?",
+          "saving": false,
+          "toast": [],
+          "meColors": [
+            "rgb(220, 232, 244) / rgb(16, 33, 63)",
+            "rgb(234, 243, 251) / rgb(16, 33, 63)"
+          ]
+        }
+      },
+      {
+        "name": "message 2",
+        "pass": true,
+        "ms": 1782,
+        "detail": {
+          "pass": true,
+          "i": 2,
+          "turnMs": 43,
+          "renderMs": 1117,
+          "optimistic": true,
+          "hp": [
+            100,
+            100
+          ],
+          "meters": {
+            "k1": 0,
+            "k2": 0,
+            "k3": 0
+          },
+          "weapons": [],
+          "equipped": null,
+          "events": [
+            {
+              "kind": "none",
+              "amount": 0,
+              "caption": "",
+              "unlocked": []
+            }
+          ],
+          "pip": "I don't know the answer either. That's why I need you. Which part should I learn first?",
+          "saving": false,
+          "toast": [],
+          "meColors": [
+            "rgb(220, 232, 244) / rgb(16, 33, 63)",
+            "rgb(234, 243, 251) / rgb(16, 33, 63)"
+          ]
+        }
+      },
+      {
+        "name": "message 3",
+        "pass": true,
+        "ms": 4147,
+        "detail": {
+          "pass": true,
+          "i": 3,
+          "turnMs": 51,
+          "renderMs": 1213,
+          "optimistic": true,
+          "hp": [
+            100,
+            75
+          ],
+          "meters": {
+            "k1": 35,
+            "k2": 0,
+            "k3": 0
+          },
+          "weapons": [],
+          "equipped": null,
+          "events": [
+            {
+              "kind": "hit",
+              "amount": 25,
+              "caption": "Top-Top Bottom-Bottom: \"A point I did not anticipate. I accept it with dignity.\" −25 HP",
+              "unlocked": []
+            }
+          ],
+          "pip": "Saving that: 'the pieces are different sizes so you cant just add them'. So how do I add them, then?",
+          "saving": true,
+          "toast": [],
+          "fightVisible": {
+            "hpVisible": 1,
+            "arenaVisible": 1,
+            "arenaCanvas": false
+          },
+          "meColors": [
+            "rgb(220, 232, 244) / rgb(16, 33, 63)",
+            "rgb(234, 243, 251) / rgb(16, 33, 63)"
+          ]
+        }
+      },
+      {
+        "name": "message 4",
+        "pass": true,
+        "ms": 1509,
+        "detail": {
+          "pass": true,
+          "i": 4,
+          "turnMs": 49,
+          "renderMs": 747,
+          "optimistic": true,
+          "hp": [
+            75,
+            75
+          ],
+          "meters": {
+            "k1": 35,
+            "k2": 25,
+            "k3": 0
+          },
+          "weapons": [],
+          "equipped": null,
+          "events": [
+            {
+              "kind": "none",
+              "amount": 0,
+              "caption": "",
+              "unlocked": []
+            }
+          ],
+          "pip": "Why sixths? Why not fifths?",
+          "saving": false,
+          "toast": [],
+          "meColors": [
+            "rgb(220, 232, 244) / rgb(16, 33, 63)",
+            "rgb(234, 243, 251) / rgb(16, 33, 63)"
+          ]
+        }
+      },
+      {
+        "name": "message 5",
+        "pass": true,
+        "ms": 4024,
+        "detail": {
+          "pass": true,
+          "i": 5,
+          "turnMs": 219,
+          "renderMs": 1210,
+          "optimistic": true,
+          "hp": [
+            75,
+            50
+          ],
+          "meters": {
+            "k1": 35,
+            "k2": 60,
+            "k3": 0
+          },
+          "weapons": [
+            "Common Denominator Cleaver 🪓"
+          ],
+          "equipped": "Common Denominator Cleaver 🪓",
+          "events": [
+            {
+              "kind": "hit",
+              "amount": 25,
+              "caption": "Top-Top Bottom-Bottom: \"A point I did not anticipate. I accept it with dignity.\" −25 HP",
+              "unlocked": [
+                "Common Denominator Cleaver 🪓"
+              ]
+            }
+          ],
+          "pip": "Saving that: 'because 2 and 3 both go into 6'. And then what do I do with the numbers on top?",
+          "saving": true,
+          "toast": [
+            "Weapon unlocked: Common Denominator Cleaver 🪓"
+          ],
+          "fightVisible": {
+            "hpVisible": 1,
+            "arenaVisible": 1,
+            "arenaCanvas": false
+          },
+          "meColors": [
+            "rgb(220, 232, 244) / rgb(16, 33, 63)",
+            "rgb(234, 243, 251) / rgb(16, 33, 63)"
+          ]
+        }
+      },
+      {
+        "name": "message 6",
+        "pass": true,
+        "ms": 2702,
+        "detail": {
+          "pass": true,
+          "i": 6,
+          "turnMs": 154,
+          "renderMs": 1189,
+          "optimistic": true,
+          "hp": [
+            50,
+            70
+          ],
+          "meters": {
+            "k1": 35,
+            "k2": 60,
+            "k3": 0
+          },
+          "weapons": [
+            "Common Denominator Cleaver 🪓"
+          ],
+          "equipped": "Common Denominator Cleaver 🪓",
+          "events": [
+            {
+              "kind": "heal",
+              "amount": 20,
+              "caption": "Top-Top Bottom-Bottom: \"My error is restored. I have held it for three hundred years.\" +20 HP",
+              "unlocked": []
+            }
+          ],
+          "pip": "Saving that: 'you just add the top numbers and the bottom numbers'. Okay. What next?",
+          "saving": true,
+          "toast": [],
+          "meColors": [
+            "rgb(220, 232, 244) / rgb(16, 33, 63)",
+            "rgb(234, 243, 251) / rgb(16, 33, 63)"
+          ]
+        }
+      },
+      {
+        "name": "weapon unlocked (UI chip + toast/caption)",
+        "pass": true,
+        "ms": 11,
+        "detail": {
+          "pass": true,
+          "weapons": [
+            "Common Denominator Cleaver 🪓"
+          ],
+          "equipped": "Common Denominator Cleaver 🪓",
+          "chips": [
+            "⚔Common Denominator Cleaver 🪓"
+          ],
+          "captions": [
+            "🔓 Unlocked: Common Denominator Cleaver 🪓"
+          ],
+          "toasts": [
+            "Weapon unlocked: Common Denominator Cleaver 🪓"
+          ]
+        }
+      },
+      {
+        "name": "caption visibility (hit/heal captions in chat)",
+        "pass": true,
+        "ms": 34,
+        "detail": {
+          "pass": true,
+          "hits": [
+            "💥  Top-Top Bottom-Bottom: \"A point I did not anticipate. I accept it with dignity.\" −25 HP",
+            "💥  Top-Top Bottom-Bottom: \"A point I did not anticipate. I accept it with dignity.\" −25 HP"
+          ],
+          "heals": [
+            "🩹 Top-Top Bottom-Bottom: \"My error is restored. I have held it for three hundred years.\" +20 HP"
+          ],
+          "saving": [
+            "Saving that: you just add the top numbers and the bottom numbers. Okay. What next?",
+            "Saving that: the pieces are different sizes so you cant just add them. So how do I add them, then?",
+            "Saving that: because 2 and 3 both go into 6. And then what do I do with the numbers on top?",
+            "Saving that: you just add the top numbers and the bottom numbers. Okay. What next?"
+          ],
+          "herWords": [
+            "you just add the top numbers and the bottom numbers",
+            "the pieces are different sizes so you cant just add them",
+            "because 2 and 3 both go into 6",
+            "you just add the top numbers and the bottom numbers"
+          ]
+        }
+      },
+      {
+        "name": "mission screen overflow after fight",
+        "pass": true,
+        "ms": 3,
+        "detail": {
+          "pass": true,
+          "scrollWidth": 390,
+          "clientWidth": 390,
+          "overflows": false,
+          "wide": []
+        }
+      },
+      {
+        "name": "quiz Pip: brain + k3 miss with 5/12",
+        "pass": true,
+        "ms": 4463,
+        "detail": {
+          "pass": true,
+          "notes": 3,
+          "wrongText": "③ Once denominators match, add the numerators and keep the denominator“you just add the top numbers and the bottom numbers”Pip believes this 😵",
+          "wrongShadow": "rgb(255, 116, 102) 0px 0px 0px 2.70724px, rgba(255, 138, 122, 0.86) 0px 0px 32.6841px -4px, rgba(0, 0, 0, 0.06) 0px 1px 0px 0px, rgba(0, 0, 0, 0.7) 0px 12px 24px -14px",
+          "k3": {
+            "id": "q_k3",
+            "concept_id": "k3",
+            "question": "What is 3/6 + 2/6?",
+            "rule_id": "r_k3",
+            "pip_answer": "5/12",
+            "passed": false,
+            "line": "Your rule: add the tops and the bottoms. 3/6 + 2/6 = 5/12. That's less than the 3/6 I started with. I added and got less. Following your rule anyway. 😵"
+          },
+          "literalLineExact": false,
+          "missText": "③ What is 3/6 + 2/6?5/12Your rule: add the tops and the bottoms.3/6 + 2/6 = 5/12.That's less than the 3/6 I started with.I added and got less.Following your rule anyway. 😵My brain has a bug 😵Used rule ③Re-teach Pip ③",
+          "redXOnPage": false,
+          "brainVersion": 1,
+          "quizMs": 146
+        }
+      },
+      {
+        "name": "tap a Brain note scrolls to its message",
+        "pass": true,
+        "ms": 3970,
+        "detail": {
+          "pass": true,
+          "id": "msg-11",
+          "text": "you just add the top numbers and the bottom numbers",
+          "inView": true,
+          "top": 642,
+          "msg_index": 11
+        }
+      },
+      {
+        "name": "Re-teach k3 -> message 8 -> Let Pip retry",
+        "pass": true,
+        "ms": 4799,
+        "detail": {
+          "pass": true,
+          "pipAsk": "My brain has a bug about this: \"you just add the top numbers and the bottom numbers\". Fix it?",
+          "reply": "Saving that: 'no wait, only add the tops. the bottom just tells you the size of the pieces, and they’re already both sixths, so it stays sixths. 3/6 + 2/6 = 5/6'. That replaces my old rule. Should I try one?",
+          "retryBeforeMsg8": 0,
+          "ko": true,
+          "brain_version": 2,
+          "k3rule": {
+            "id": "r_k3",
+            "concept_id": "k3",
+            "msg_index": 14,
+            "correct": true,
+            "quote": "no wait, only add the tops. the bottom just tells you the size of the pieces, and they’re already both sixths, so it stays sixths. 3/6 + 2/6 = 5/6",
+            "fixed_after": 1
+          },
+          "quiz": [
+            [
+              "k1",
+              true
+            ],
+            [
+              "k2",
+              true
+            ],
+            [
+              "k3",
+              true
+            ]
+          ]
+        }
+      },
+      {
+        "name": "finisher -> K.O. card front/back + cliffhanger + Rivera",
+        "pass": true,
+        "ms": 8602,
+        "detail": {
+          "pass": true,
+          "finisherWeapon": "Common Denominator Cleaver 🪓",
+          "finisher": {
+            "weapon": "Common Denominator Cleaver 🪓",
+            "caption": "Top-Top Bottom-Bottom met the Common Denominator Cleaver 🪓 one last time and left Pip's brain."
+          },
+          "front": "No. 2892\n🦭🪧\n½ + ⅓ = ⅖\nMaya\nOct 24, 2026",
+          "back": "Top-Top Bottom-Bottom\nYOUR RULE\n“no wait, only add the tops. the bottom just tells you the size of the pieces, and they’re already both sixths, so it stays sixths. 3/6 + 2/6 = 5/6”\nPIP SAID\nYour rule: add the tops and the bottoms. 3/6 + 2/6 = 5/12. That's less than the 3/6 I started with. I added and got less. Following your rule anyway. 😵",
+          "cliff": "Pip has a question for next time\n\nI heard dividing by a fraction can make a number bigger. That can't be right… right?",
+          "rivera": "What Ms. Rivera sees\n\nThe same thing you see. Nothing else.\n\nYou explained same-size pieces in your own words.\nYou explained common denominators in your own words.\nYou explained adding the numerators in your own words and fixed it after 1 re-teach.",
+          "version": "Brain v1\n→\nBrain v2",
+          "exclamationsOnKO": 0
+        }
+      },
+      {
+        "name": "Play screens fit one viewport (no page scroll at 390x844)",
+        "pass": true,
+        "ms": 1,
+        "detail": {
+          "pass": true,
+          "fit": {
+            "studentHome": {
+              "scrollHeight": 844,
+              "innerHeight": 844
+            },
+            "missionOpening": {
+              "scrollHeight": 844,
+              "innerHeight": 844
+            },
+            "missionAfterFight": {
+              "scrollHeight": 844,
+              "innerHeight": 844
+            },
+            "quiz": {
+              "scrollHeight": 844,
+              "innerHeight": 844
+            },
+            "reteach": {
+              "scrollHeight": 844,
+              "innerHeight": 844
+            },
+            "koCard": {
+              "scrollHeight": 844,
+              "innerHeight": 844
+            }
+          },
+          "bad": []
+        }
+      },
+      {
+        "name": "tutor roster: Maya since-last-session updated",
+        "pass": true,
+        "ms": 1255,
+        "detail": {
+          "pass": true,
+          "sinceBefore": null,
+          "since": "Explains same-size pieces and common denominators; adding the numerators fixed after 1 re-teach",
+          "href": "/tutor/report/sess_98b931ac"
+        }
+      },
+      {
+        "name": "gap report: same quote + fixed after 1 re-teach",
+        "pass": true,
+        "ms": 2224,
+        "detail": {
+          "pass": true,
+          "k3quote": "no wait, only add the tops. the bottom just tells you the size of the pieces, and they’re already both sixths, so it stays sixths. 3/6 + 2/6 = 5/6",
+          "g3": "③\nOnce denominators match, add the numerators and keep the denominator\nExplained well\n“no wait, only add the tops. the bottom just tells you the size of the pieces, and they’re already both sixths, so it stays sixths. 3/6 + 2/6 = 5/6” — Maya, taught to Pip\nfixed after 1 re-teach",
+          "tuesday": "START TUESDAY’S SESSION HERE\n\nDraw 1/2 + 1/3 as pizza slices with Maya. Ask Maya to cut both into sixths, add 3/6 + 2/6, and say out loud why the bottom stays sixths. Finish with 2/3 + 1/4 with no help (10 minutes).\n\nRoot cause\nAdding the numerators builds on: Equivalent fractions.\nPip’s cliffhanger\n“I heard dividing by a fraction can make a number bigger. That can't be right… right?”",
+          "allQuotes": [
+            "①\nFractions can only be added when the pieces are the same size\nExplained well\n“the pieces are different sizes so you cant just add them” — Maya, taught to Pip",
+            "②\nFind a common denominator by making equivalent fractions\nExplained well\n“because 2 and 3 both go into 6” — Maya, taught to Pip",
+            "③\nOnce denominators match, add the numerators and keep the denominator\nExplained well\n“no wait, only add the tops. the bottom just tells you the size of the pie"
+          ]
+        }
+      },
+      {
+        "name": "parent preview -> send -> sent log",
+        "pass": true,
+        "ms": 1467,
+        "detail": {
+          "pass": true,
+          "preview": "Bright Path Tutoring: Maya taught Pip adding fractions with unlike denominators this week and explained same-size pieces, common denominators and adding the numerators in their own words. Pip's brain just levelled up to v2. Next week Maya takes on a new challenge. - Ms. Rivera",
+          "status": "test-mode (not delivered) to test parent (synthetic)",
+          "log": [
+            "Oct 24, 3:41 PM · test parent (synthetic)\ntest-mode (not delivered)\n\nBright Path Tutoring: Maya taught Pip adding fractions with unlike denominators this week and explained same-size pieces, common denominators and adding the numerators in their own words. Pip's brain just levelled up to v2. Next week Maya takes on a new challenge. - Ms. Rivera"
+          ]
+        }
+      },
+      {
+        "name": "owner insight 14 + boss chip + Plan a workshop",
+        "pass": true,
+        "ms": 1647,
+        "detail": {
+          "pass": true,
+          "count": "14",
+          "chip": "students call it Top-Top Bottom-Bottom",
+          "mis": "You add the tops and the bottoms, so 1/2 + 1/3 = 2/5",
+          "note": "WORKSHOP NOTE SAVED\n\nWorkshop: You add the tops and the bottoms, so 1/2 + 1/3 = 2/5\nStudents (14): Diego C., Ana L., Yara W., Ravi A., Kira T., Ezra L., Gus H., Ben V., Wren L., Gus Y., Tara W., Owen T., Omar D., Mila B.\nPlan (30 min): 1) Draw 1/2 and 1/3 of the same pizza and ask which slice is big"
+        }
+      },
+      {
+        "name": "pricing -> Start pilot -> success",
+        "pass": true,
+        "ms": 1300,
+        "detail": {
+          "pass": true,
+          "url": "http://localhost:5781/pilot/success",
+          "eyebrow": "Pilot · active",
+          "pilot": {
+            "status": "active"
+          }
+        }
+      },
+      {
+        "name": "tutor New Pip mission draft + save (different student)",
+        "pass": true,
+        "ms": 3832,
+        "detail": {
+          "pass": true,
+          "studentId": "s005",
+          "studentName": "Yara K.",
+          "draftMs": 823,
+          "concepts": [
+            "What Expanding (a + b)² means, in plain words",
+            "Why Expanding (a + b)² works, shown with an example",
+            "How to use Expanding (a + b)² on a brand-new problem"
+          ],
+          "boss": "Skip-Skip Stoat",
+          "mis": "Expanding (a + b)² is just memorizing the steps; you don't need to know why",
+          "savedId": "a_e48f4cfa"
+        }
+      }
+    ],
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "overflow": {
+      "landing": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "studentHome": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": [
+          "article.mission-tile.home-current right=438",
+          "h3.ribbon.home-current__topic right=415"
+        ]
+      },
+      "picker": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": [
+          "article.mission-tile.home-current right=438",
+          "h3.ribbon.home-current__topic right=415"
+        ]
+      },
+      "missionOpening": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "missionAfterFight": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "quiz": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "ko": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "tutor": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "gapReport": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "owner": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "pricing": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "newMission": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      }
+    },
+    "smallTargets": [],
+    "timings": {
+      "landingVisibleMs": 46,
+      "studentHomeFirstPaintOfStageMs": 773,
+      "studentHomeStageMs": 20778,
+      "studentHomeStageDrawnMs": null,
+      "missionStageMs": 20397,
+      "quizMs": 146
+    },
+    "mascot": {
+      "studentHome": [
+        {
+          "canvas": false,
+          "fallback": false,
+          "h": 517
+        }
+      ],
+      "missionOpen": [
+        {
+          "canvas": false,
+          "fallback": false,
+          "h": 566
+        }
+      ]
+    },
+    "notes": {
+      "mayaBefore": {
+        "since": null,
+        "last": null
+      }
+    },
+    "tts": [
+      {
+        "status": 200,
+        "t": 1792881609208,
+        "fallback": false,
+        "audioB64": 30708,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.44,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792881613680,
+        "fallback": false,
+        "audioB64": 334424,
+        "mime": "audio/mpeg",
+        "alignChars": 168,
+        "alignEnd": 15.68,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I already k"
+      },
+      {
+        "status": 200,
+        "t": 1792881631289,
+        "fallback": false,
+        "audioB64": 34052,
+        "mime": "audio/mpeg",
+        "alignChars": 18,
+        "alignEnd": 1.6,
+        "text": "Why is that wrong?"
+      },
+      {
+        "status": 200,
+        "t": 1792881633059,
+        "fallback": false,
+        "audioB64": 126004,
+        "mime": "audio/mpeg",
+        "alignChars": 87,
+        "alignEnd": 5.92,
+        "text": "I don't know the answer either. That's why I need you. Which part should I learn"
+      },
+      {
+        "status": 200,
+        "t": 1792881635529,
+        "fallback": false,
+        "audioB64": 163340,
+        "mime": "audio/mpeg",
+        "alignChars": 100,
+        "alignEnd": 7.68,
+        "text": "Saving that: 'the pieces are different sizes so you cant just add them'. So how "
+      },
+      {
+        "status": 200,
+        "t": 1792881638626,
+        "fallback": false,
+        "audioB64": 63032,
+        "mime": "audio/mpeg",
+        "alignChars": 27,
+        "alignEnd": 2.96,
+        "text": "Why sixths? Why not fifths?"
+      },
+      {
+        "status": 200,
+        "t": 1792881641638,
+        "fallback": false,
+        "audioB64": 167240,
+        "mime": "audio/mpeg",
+        "alignChars": 93,
+        "alignEnd": 7.84,
+        "text": "Saving that: 'because 2 and 3 both go into 6'. And then what do I do with the nu"
+      },
+      {
+        "status": 200,
+        "t": 1792881644989,
+        "fallback": false,
+        "audioB64": 143280,
+        "mime": "audio/mpeg",
+        "alignChars": 84,
+        "alignEnd": 6.72,
+        "text": "Saving that: 'you just add the top numbers and the bottom numbers'. Okay. What n"
+      },
+      {
+        "status": 200,
+        "t": 1792881648752,
+        "fallback": false,
+        "audioB64": 331080,
+        "mime": "audio/mpeg",
+        "alignChars": 169,
+        "alignEnd": 15.52,
+        "text": "Your rule: add the tops and the bottoms. 3 over 6 + 2 over 6 = 5 over 12. That's"
+      },
+      {
+        "status": 200,
+        "t": 1792881656031,
+        "fallback": false,
+        "audioB64": 143280,
+        "mime": "audio/mpeg",
+        "alignChars": 93,
+        "alignEnd": 6.72,
+        "text": "My brain has a bug about this: \"you just add the top numbers and the bottom numb"
+      },
+      {
+        "status": 200,
+        "t": 1792881656834,
+        "fallback": false,
+        "audioB64": 85320,
+        "mime": "audio/mpeg",
+        "alignChars": 57,
+        "alignEnd": 4,
+        "text": "Top-Top Bottom-Bottom adds the bottoms just to annoy you."
+      },
+      {
+        "status": 200,
+        "t": 1792881659634,
+        "fallback": false,
+        "audioB64": 381796,
+        "mime": "audio/mpeg",
+        "alignChars": 222,
+        "alignEnd": 17.92,
+        "text": "Saving that: 'no wait, only add the tops. the bottom just tells you the size of "
+      },
+      {
+        "status": 200,
+        "t": 1792881660991,
+        "fallback": false,
+        "audioB64": 32380,
+        "mime": "audio/mpeg",
+        "alignChars": 4,
+        "alignEnd": 1.28,
+        "text": "K.O."
+      },
+      {
+        "status": 200,
+        "t": 1792881664324,
+        "fallback": false,
+        "audioB64": 39068,
+        "mime": "audio/mpeg",
+        "alignChars": 14,
+        "alignEnd": 1.84,
+        "text": "BRAIN UPGRADED"
+      }
+    ],
+    "fit": {
+      "studentHome": {
+        "scrollHeight": 844,
+        "innerHeight": 844
+      },
+      "missionOpening": {
+        "scrollHeight": 844,
+        "innerHeight": 844
+      },
+      "missionAfterFight": {
+        "scrollHeight": 844,
+        "innerHeight": 844
+      },
+      "quiz": {
+        "scrollHeight": 844,
+        "innerHeight": 844
+      },
+      "reteach": {
+        "scrollHeight": 844,
+        "innerHeight": 844
+      },
+      "koCard": {
+        "scrollHeight": 844,
+        "innerHeight": 844
+      }
+    },
+    "instrument": {
+      "student /student/mission/sess_98b931ac": {
+        "moods": [
+          {
+            "t": 1792881572684,
+            "l": "Pip the capybara looks confused",
+            "path": "/"
+          },
+          {
+            "t": 1792881608769,
+            "l": "Pip the cat looks confused",
+            "path": "/student/mission/sess_98b931ac"
+          },
+          {
+            "t": 1792881630810,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_98b931ac"
+          },
+          {
+            "t": 1792881631295,
+            "l": "Pip the cat looks confused",
+            "path": "/student/mission/sess_98b931ac"
+          },
+          {
+            "t": 1792881631970,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_98b931ac"
+          },
+          {
+            "t": 1792881633089,
+            "l": "Pip the cat looks confused",
+            "path": "/student/mission/sess_98b931ac"
+          },
+          {
+            "t": 1792881633747,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_98b931ac"
+          },
+          {
+            "t": 1792881634970,
+            "l": "Pip the cat looks aha",
+            "path": "/student/mission/sess_98b931ac"
+          },
+          {
+            "t": 1792881637891,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_98b931ac"
+          },
+          {
+            "t": 1792881638650,
+            "l": "Pip the cat looks confused",
+            "path": "/student/mission/sess_98b931ac"
+          },
+          {
+            "t": 1792881639569,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_98b931ac"
+          },
+          {
+            "t": 1792881640770,
+            "l": "Pip the cat looks aha",
+            "path": "/student/mission/sess_98b931ac"
+          },
+          {
+            "t": 1792881643521,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_98b931ac"
+          },
+          {
+            "t": 1792881644730,
+            "l": "Pip the cat looks possessed",
+            "path": "/student/mission/sess_98b931ac"
+          },
+          {
+            "t": 1792881646250,
+            "l": "Pip the cat looks notes",
+            "path": "/student/mission/sess_98b931ac"
+          },
+          {
+            "t": 1792881650009,
+            "l": "Pip the cat looks overwhelmed",
+            "path": "/student/mission/sess_98b931ac"
+          },
+          {
+            "t": 1792881650850,
+            "l": "Pip the cat looks notes",
+            "path": "/student/mission/sess_98b931ac"
+          },
+          {
+            "t": 1792881654609,
+            "l": "Pip the cat looks overwhelmed",
+            "path": "/student/mission/sess_98b931ac"
+          },
+          {
+            "t": 1792881654650,
+            "l": "Pip the cat looks possessed",
+            "path": "/student/mission/sess_98b931ac"
+          },
+          {
+            "t": 1792881656261,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_98b931ac"
+          },
+          {
+            "t": 1792881657489,
+            "l": "Pip the cat looks aha",
+            "path": "/student/mission/sess_98b931ac"
+          },
+          {
+            "t": 1792881657875,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_98b931ac"
+          },
+          {
+            "t": 1792881657889,
+            "l": "Pip the cat looks proud",
+            "path": "/student/mission/sess_98b931ac"
+          },
+          {
+            "t": 1792881661526,
+            "l": "Pip the cat looks confused",
+            "path": "/student/mission/sess_98b931ac"
+          }
+        ],
+        "boss": [
+          {
+            "t": 1792881608769,
+            "l": "Top-Top Bottom-Bottom, smug",
+            "hp": "Top-Top Bottom-Bottom, 100 HP"
+          },
+          {
+            "t": 1792881657489,
+            "l": "Top-Top Bottom-Bottom, cracked",
+            "hp": "Top-Top Bottom-Bottom, 30 HP"
+          },
+          {
+            "t": 1792881659689,
+            "l": "Top-Top Bottom-Bottom, ko",
+            "hp": "Top-Top Bottom-Bottom, knocked out"
+          }
+        ],
+        "plays": [
+          {
+            "t": 1792881609209,
+            "mime": "audio/mpeg",
+            "len": 30731,
+            "playing": 1792881609542,
+            "ok": true,
+            "end": 1792881610992
+          },
+          {
+            "t": 1792881613679,
+            "mime": "audio/mpeg",
+            "len": 334447,
+            "playing": 1792881613684,
+            "ok": true,
+            "end": 1792881623796
+          },
+          {
+            "t": 1792881631289,
+            "mime": "audio/mpeg",
+            "len": 34075,
+            "playing": 1792881631297,
+            "ok": true,
+            "end": 1792881633038
+          },
+          {
+            "t": 1792881633059,
+            "mime": "audio/mpeg",
+            "len": 126027,
+            "playing": 1792881633067,
+            "ok": true,
+            "end": 1792881634954
+          },
+          {
+            "t": 1792881635529,
+            "mime": "audio/mpeg",
+            "len": 163363,
+            "playing": 1792881635532,
+            "ok": true,
+            "end": 1792881638627
+          },
+          {
+            "t": 1792881638626,
+            "mime": "audio/mpeg",
+            "len": 63055,
+            "playing": 1792881638630,
+            "ok": true,
+            "end": 1792881640765
+          },
+          {
+            "t": 1792881641637,
+            "mime": "audio/mpeg",
+            "len": 167263,
+            "playing": 1792881641641,
+            "ok": true,
+            "end": 1792881644723
+          },
+          {
+            "t": 1792881644987,
+            "mime": "audio/mpeg",
+            "len": 143303,
+            "playing": 1792881644991,
+            "ok": true,
+            "end": 1792881646231
+          },
+          {
+            "t": 1792881648753,
+            "mime": "audio/mpeg",
+            "len": 331103,
+            "playing": 1792881648760,
+            "ok": true,
+            "end": 1792881649973
+          },
+          {
+            "t": 1792881649973,
+            "mime": "audio/mpeg",
+            "len": 331103,
+            "playing": 1792881649976,
+            "ok": true,
+            "end": 1792881654606
+          },
+          {
+            "t": 1792881654606,
+            "mime": "audio/mpeg",
+            "len": 331103,
+            "end": 1792881654634,
+            "err": "AbortError: The play() request was interrupted by a call to pause(). https://goo.gl/LdLk22"
+          },
+          {
+            "t": 1792881656833,
+            "mime": "audio/mpeg",
+            "len": 85343,
+            "playing": 1792881656836,
+            "ok": true,
+            "end": 1792881657465
+          },
+          {
+            "t": 1792881660987,
+            "mime": "audio/mpeg",
+            "len": 32403,
+            "playing": 1792881660991,
+            "ok": true,
+            "end": 1792881662515
+          },
+          {
+            "t": 1792881664323,
+            "mime": "audio/mpeg",
+            "len": 39091,
+            "playing": 1792881664326,
+            "ok": true,
+            "end": 1792881666141
+          }
+        ],
+        "synth": [],
+        "mouthPlaying": {
+          "g:153": 109,
+          "g:118": 345,
+          "g:257": 85,
+          "g:98": 258,
+          "g:133": 36,
+          "g:124": 1,
+          "g:101": 16,
+          "g:256": 8
+        },
+        "mouthIdle": {
+          "g:157": 902,
+          "g:153": 177,
+          "g:133": 37,
+          "g:118": 167,
+          "g:98": 89,
+          "g:257": 6,
+          "g:101": 17,
+          "g:124": 46,
+          "g:256": 78
+        },
+        "qmarks": 0
+      }
+    },
+    "fightVis": {
+      "2": {
+        "hpVisible": 1,
+        "arenaVisible": 1,
+        "arenaCanvas": false
+      },
+      "4": {
+        "hpVisible": 1,
+        "arenaVisible": 1,
+        "arenaCanvas": false
+      }
+    },
+    "turns": [
+      {
+        "i": 1,
+        "turnMs": 228,
+        "renderMs": 500,
+        "optimistic": true,
+        "hp": [
+          100,
+          100
+        ],
+        "meters": {
+          "k1": 0,
+          "k2": 0,
+          "k3": 0
+        },
+        "weapons": [],
+        "equipped": null,
+        "events": [
+          {
+            "kind": "none",
+            "amount": 0,
+            "caption": "",
+            "unlocked": []
+          }
+        ],
+        "pip": "Why is that wrong?",
+        "saving": false,
+        "toast": [],
+        "meColors": [
+          "rgb(220, 232, 244) / rgb(16, 33, 63)",
+          "rgb(234, 243, 251) / rgb(16, 33, 63)"
+        ]
+      },
+      {
+        "i": 2,
+        "turnMs": 43,
+        "renderMs": 1117,
+        "optimistic": true,
+        "hp": [
+          100,
+          100
+        ],
+        "meters": {
+          "k1": 0,
+          "k2": 0,
+          "k3": 0
+        },
+        "weapons": [],
+        "equipped": null,
+        "events": [
+          {
+            "kind": "none",
+            "amount": 0,
+            "caption": "",
+            "unlocked": []
+          }
+        ],
+        "pip": "I don't know the answer either. That's why I need you. Which part should I learn first?",
+        "saving": false,
+        "toast": [],
+        "meColors": [
+          "rgb(220, 232, 244) / rgb(16, 33, 63)",
+          "rgb(234, 243, 251) / rgb(16, 33, 63)"
+        ]
+      },
+      {
+        "i": 3,
+        "turnMs": 51,
+        "renderMs": 1213,
+        "optimistic": true,
+        "hp": [
+          100,
+          75
+        ],
+        "meters": {
+          "k1": 35,
+          "k2": 0,
+          "k3": 0
+        },
+        "weapons": [],
+        "equipped": null,
+        "events": [
+          {
+            "kind": "hit",
+            "amount": 25,
+            "caption": "Top-Top Bottom-Bottom: \"A point I did not anticipate. I accept it with dignity.\" −25 HP",
+            "unlocked": []
+          }
+        ],
+        "pip": "Saving that: 'the pieces are different sizes so you cant just add them'. So how do I add them, then?",
+        "saving": true,
+        "toast": [],
+        "fightVisible": {
+          "hpVisible": 1,
+          "arenaVisible": 1,
+          "arenaCanvas": false
+        },
+        "meColors": [
+          "rgb(220, 232, 244) / rgb(16, 33, 63)",
+          "rgb(234, 243, 251) / rgb(16, 33, 63)"
+        ]
+      },
+      {
+        "i": 4,
+        "turnMs": 49,
+        "renderMs": 747,
+        "optimistic": true,
+        "hp": [
+          75,
+          75
+        ],
+        "meters": {
+          "k1": 35,
+          "k2": 25,
+          "k3": 0
+        },
+        "weapons": [],
+        "equipped": null,
+        "events": [
+          {
+            "kind": "none",
+            "amount": 0,
+            "caption": "",
+            "unlocked": []
+          }
+        ],
+        "pip": "Why sixths? Why not fifths?",
+        "saving": false,
+        "toast": [],
+        "meColors": [
+          "rgb(220, 232, 244) / rgb(16, 33, 63)",
+          "rgb(234, 243, 251) / rgb(16, 33, 63)"
+        ]
+      },
+      {
+        "i": 5,
+        "turnMs": 219,
+        "renderMs": 1210,
+        "optimistic": true,
+        "hp": [
+          75,
+          50
+        ],
+        "meters": {
+          "k1": 35,
+          "k2": 60,
+          "k3": 0
+        },
+        "weapons": [
+          "Common Denominator Cleaver 🪓"
+        ],
+        "equipped": "Common Denominator Cleaver 🪓",
+        "events": [
+          {
+            "kind": "hit",
+            "amount": 25,
+            "caption": "Top-Top Bottom-Bottom: \"A point I did not anticipate. I accept it with dignity.\" −25 HP",
+            "unlocked": [
+              "Common Denominator Cleaver 🪓"
+            ]
+          }
+        ],
+        "pip": "Saving that: 'because 2 and 3 both go into 6'. And then what do I do with the numbers on top?",
+        "saving": true,
+        "toast": [
+          "Weapon unlocked: Common Denominator Cleaver 🪓"
+        ],
+        "fightVisible": {
+          "hpVisible": 1,
+          "arenaVisible": 1,
+          "arenaCanvas": false
+        },
+        "meColors": [
+          "rgb(220, 232, 244) / rgb(16, 33, 63)",
+          "rgb(234, 243, 251) / rgb(16, 33, 63)"
+        ]
+      },
+      {
+        "i": 6,
+        "turnMs": 154,
+        "renderMs": 1189,
+        "optimistic": true,
+        "hp": [
+          50,
+          70
+        ],
+        "meters": {
+          "k1": 35,
+          "k2": 60,
+          "k3": 0
+        },
+        "weapons": [
+          "Common Denominator Cleaver 🪓"
+        ],
+        "equipped": "Common Denominator Cleaver 🪓",
+        "events": [
+          {
+            "kind": "heal",
+            "amount": 20,
+            "caption": "Top-Top Bottom-Bottom: \"My error is restored. I have held it for three hundred years.\" +20 HP",
+            "unlocked": []
+          }
+        ],
+        "pip": "Saving that: 'you just add the top numbers and the bottom numbers'. Okay. What next?",
+        "saving": true,
+        "toast": [],
+        "meColors": [
+          "rgb(220, 232, 244) / rgb(16, 33, 63)",
+          "rgb(234, 243, 251) / rgb(16, 33, 63)"
+        ]
+      }
+    ]
+  },
+  {
+    "width": 1280,
+    "steps": [
+      {
+        "name": "reset via /admin/reset",
+        "pass": true,
+        "ms": 1458,
+        "detail": {
+          "meta": "ai offline · store memory · claude-opus-5-5",
+          "mayaSinceBefore": null
+        }
+      },
+      {
+        "name": "landing",
+        "pass": true,
+        "ms": 10030,
+        "detail": {
+          "hero": "Every AI tutor plays the teacher. Pip plays the student."
+        }
+      },
+      {
+        "name": "Try as Maya -> student home + mascot",
+        "pass": true,
+        "ms": 21826,
+        "detail": {
+          "pass": true,
+          "tiles": [
+            "Adding fractions with unlike denominators"
+          ],
+          "canvas": false,
+          "stageMs": 20437,
+          "drawnMs": null
+        }
+      },
+      {
+        "name": "start pinned fractions mission + pick a look",
+        "pass": true,
+        "ms": 25747,
+        "detail": {
+          "pass": true,
+          "topic": "Adding fractions with unlike denominators",
+          "sid": "sess_1a4f9582"
+        }
+      },
+      {
+        "name": "Pip's opening is the misconception claim",
+        "pass": true,
+        "ms": 1225,
+        "detail": {
+          "pass": true,
+          "openingCount": 1,
+          "last": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I already know one rule: You add the tops and the bottoms, so 1/2 + 1/3 = 2/5. Easy.",
+          "creature": "cat",
+          "accessory": "glasses"
+        }
+      },
+      {
+        "name": "tap targets >= 44px on mission screen",
+        "pass": true,
+        "ms": 4,
+        "detail": {
+          "pass": true,
+          "small": []
+        }
+      },
+      {
+        "name": "message 1",
+        "pass": true,
+        "ms": 885,
+        "detail": {
+          "pass": true,
+          "i": 1,
+          "turnMs": 177,
+          "renderMs": 30,
+          "optimistic": false,
+          "hp": [
+            100,
+            100
+          ],
+          "meters": {
+            "k1": 0,
+            "k2": 0,
+            "k3": 0
+          },
+          "weapons": [],
+          "equipped": null,
+          "events": [
+            {
+              "kind": "none",
+              "amount": 0,
+              "caption": "",
+              "unlocked": []
+            }
+          ],
+          "pip": "Why is that wrong?",
+          "saving": false,
+          "toast": [],
+          "meColors": [
+            "rgb(220, 232, 244) / rgb(16, 33, 63)",
+            "rgb(234, 243, 251) / rgb(16, 33, 63)"
+          ]
+        }
+      },
+      {
+        "name": "message 2",
+        "pass": true,
+        "ms": 947,
+        "detail": {
+          "pass": true,
+          "i": 2,
+          "turnMs": 269,
+          "renderMs": 27,
+          "optimistic": false,
+          "hp": [
+            100,
+            100
+          ],
+          "meters": {
+            "k1": 0,
+            "k2": 0,
+            "k3": 0
+          },
+          "weapons": [],
+          "equipped": null,
+          "events": [
+            {
+              "kind": "none",
+              "amount": 0,
+              "caption": "",
+              "unlocked": []
+            }
+          ],
+          "pip": "I don't know the answer either. That's why I need you. Which part should I learn first?",
+          "saving": false,
+          "toast": [],
+          "meColors": [
+            "rgb(220, 232, 244) / rgb(16, 33, 63)",
+            "rgb(234, 243, 251) / rgb(16, 33, 63)"
+          ]
+        }
+      },
+      {
+        "name": "message 3",
+        "pass": true,
+        "ms": 4183,
+        "detail": {
+          "pass": true,
+          "i": 3,
+          "turnMs": 227,
+          "renderMs": 21,
+          "optimistic": false,
+          "hp": [
+            100,
+            75
+          ],
+          "meters": {
+            "k1": 35,
+            "k2": 0,
+            "k3": 0
+          },
+          "weapons": [],
+          "equipped": null,
+          "events": [
+            {
+              "kind": "hit",
+              "amount": 25,
+              "caption": "Top-Top Bottom-Bottom: \"A point I did not anticipate. I accept it with dignity.\" −25 HP",
+              "unlocked": []
+            }
+          ],
+          "pip": "Saving that: 'the pieces are different sizes so you cant just add them'. So how do I add them, then?",
+          "saving": true,
+          "toast": [],
+          "fightVisible": {
+            "hpVisible": 1,
+            "arenaVisible": 1,
+            "arenaCanvas": false
+          },
+          "meColors": [
+            "rgb(220, 232, 244) / rgb(16, 33, 63)",
+            "rgb(234, 243, 251) / rgb(16, 33, 63)"
+          ]
+        }
+      },
+      {
+        "name": "message 4",
+        "pass": true,
+        "ms": 837,
+        "detail": {
+          "pass": true,
+          "i": 4,
+          "turnMs": 195,
+          "renderMs": 13,
+          "optimistic": false,
+          "hp": [
+            75,
+            75
+          ],
+          "meters": {
+            "k1": 35,
+            "k2": 25,
+            "k3": 0
+          },
+          "weapons": [],
+          "equipped": null,
+          "events": [
+            {
+              "kind": "none",
+              "amount": 0,
+              "caption": "",
+              "unlocked": []
+            }
+          ],
+          "pip": "Why sixths? Why not fifths?",
+          "saving": false,
+          "toast": [],
+          "meColors": [
+            "rgb(220, 232, 244) / rgb(16, 33, 63)",
+            "rgb(234, 243, 251) / rgb(16, 33, 63)"
+          ]
+        }
+      },
+      {
+        "name": "message 5",
+        "pass": true,
+        "ms": 2098,
+        "detail": {
+          "pass": true,
+          "i": 5,
+          "turnMs": 228,
+          "renderMs": 45,
+          "optimistic": false,
+          "hp": [
+            75,
+            50
+          ],
+          "meters": {
+            "k1": 35,
+            "k2": 60,
+            "k3": 0
+          },
+          "weapons": [
+            "Common Denominator Cleaver 🪓"
+          ],
+          "equipped": "Common Denominator Cleaver 🪓",
+          "events": [
+            {
+              "kind": "hit",
+              "amount": 25,
+              "caption": "Top-Top Bottom-Bottom: \"A point I did not anticipate. I accept it with dignity.\" −25 HP",
+              "unlocked": [
+                "Common Denominator Cleaver 🪓"
+              ]
+            }
+          ],
+          "pip": "Saving that: 'because 2 and 3 both go into 6'. And then what do I do with the numbers on top?",
+          "saving": true,
+          "toast": [
+            "Weapon unlocked: Common Denominator Cleaver 🪓"
+          ],
+          "fightVisible": {
+            "hpVisible": 1,
+            "arenaVisible": 1,
+            "arenaCanvas": false
+          },
+          "meColors": [
+            "rgb(220, 232, 244) / rgb(16, 33, 63)",
+            "rgb(234, 243, 251) / rgb(16, 33, 63)"
+          ]
+        }
+      },
+      {
+        "name": "message 6",
+        "pass": true,
+        "ms": 1004,
+        "detail": {
+          "pass": true,
+          "i": 6,
+          "turnMs": 233,
+          "renderMs": 68,
+          "optimistic": false,
+          "hp": [
+            50,
+            70
+          ],
+          "meters": {
+            "k1": 35,
+            "k2": 60,
+            "k3": 0
+          },
+          "weapons": [
+            "Common Denominator Cleaver 🪓"
+          ],
+          "equipped": "Common Denominator Cleaver 🪓",
+          "events": [
+            {
+              "kind": "heal",
+              "amount": 20,
+              "caption": "Top-Top Bottom-Bottom: \"My error is restored. I have held it for three hundred years.\" +20 HP",
+              "unlocked": []
+            }
+          ],
+          "pip": "Saving that: 'you just add the top numbers and the bottom numbers'. Okay. What next?",
+          "saving": true,
+          "toast": [
+            "Weapon unlocked: Common Denominator Cleaver 🪓"
+          ],
+          "meColors": [
+            "rgb(220, 232, 244) / rgb(16, 33, 63)",
+            "rgb(234, 243, 251) / rgb(16, 33, 63)"
+          ]
+        }
+      },
+      {
+        "name": "weapon unlocked (UI chip + toast/caption)",
+        "pass": true,
+        "ms": 22,
+        "detail": {
+          "pass": true,
+          "weapons": [
+            "Common Denominator Cleaver 🪓"
+          ],
+          "equipped": "Common Denominator Cleaver 🪓",
+          "chips": [
+            "⚔Common Denominator Cleaver 🪓"
+          ],
+          "captions": [
+            "🔓 Unlocked: Common Denominator Cleaver 🪓"
+          ],
+          "toasts": [
+            "Weapon unlocked: Common Denominator Cleaver 🪓",
+            "Weapon unlocked: Common Denominator Cleaver 🪓"
+          ]
+        }
+      },
+      {
+        "name": "caption visibility (hit/heal captions in chat)",
+        "pass": true,
+        "ms": 13,
+        "detail": {
+          "pass": true,
+          "hits": [
+            "💥  Top-Top Bottom-Bottom: \"A point I did not anticipate. I accept it with dignity.\" −25 HP",
+            "💥  Top-Top Bottom-Bottom: \"A point I did not anticipate. I accept it with dignity.\" −25 HP"
+          ],
+          "heals": [
+            "🩹 Top-Top Bottom-Bottom: \"My error is restored. I have held it for three hundred years.\" +20 HP"
+          ],
+          "saving": [
+            "Saving that: you just add the top numbers and the bottom numbers. Okay. What next?",
+            "Saving that: the pieces are different sizes so you cant just add them. So how do I add them, then?",
+            "Saving that: because 2 and 3 both go into 6. And then what do I do with the numbers on top?",
+            "Saving that: you just add the top numbers and the bottom numbers. Okay. What next?"
+          ],
+          "herWords": [
+            "you just add the top numbers and the bottom numbers",
+            "the pieces are different sizes so you cant just add them",
+            "because 2 and 3 both go into 6",
+            "you just add the top numbers and the bottom numbers"
+          ]
+        }
+      },
+      {
+        "name": "mission screen overflow after fight",
+        "pass": true,
+        "ms": 2,
+        "detail": {
+          "pass": true,
+          "scrollWidth": 390,
+          "clientWidth": 390,
+          "overflows": false,
+          "wide": []
+        }
+      },
+      {
+        "name": "quiz Pip: brain + k3 miss with 5/12",
+        "pass": true,
+        "ms": 3769,
+        "detail": {
+          "pass": true,
+          "notes": 3,
+          "wrongText": "③ Once denominators match, add the numerators and keep the denominator“you just add the top numbers and the bottom numbers”Pip believes this 😵",
+          "wrongShadow": "rgb(255, 117, 103) 0px 0px 0px 2.67458px, rgba(255, 138, 122, 0.85) 0px 0px 33.2067px -4px, rgba(0, 0, 0, 0.06) 0px 1px 0px 0px, rgba(0, 0, 0, 0.7) 0px 12px 24px -14px",
+          "k3": {
+            "id": "q_k3",
+            "concept_id": "k3",
+            "question": "What is 3/6 + 2/6?",
+            "rule_id": "r_k3",
+            "pip_answer": "5/12",
+            "passed": false,
+            "line": "Your rule: add the tops and the bottoms. 3/6 + 2/6 = 5/12. That's less than the 3/6 I started with. I added and got less. Following your rule anyway. 😵"
+          },
+          "literalLineExact": false,
+          "missText": "③ What is 3/6 + 2/6?5/12Your rule: add the tops and the bottoms.3/6 + 2/6 = 5/12.That's less than the 3/6 I started with.I added and got less.Following your rule anyway. 😵My brain has a bug 😵Used rule ③Re-teach Pip ③",
+          "redXOnPage": false,
+          "brainVersion": 1,
+          "quizMs": 130
+        }
+      },
+      {
+        "name": "tap a Brain note scrolls to its message",
+        "pass": true,
+        "ms": 3100,
+        "detail": {
+          "pass": true,
+          "id": "msg-11",
+          "text": "you just add the top numbers and the bottom numbers",
+          "inView": true,
+          "top": 483,
+          "msg_index": 11
+        }
+      },
+      {
+        "name": "Re-teach k3 -> message 8 -> Let Pip retry",
+        "pass": true,
+        "ms": 2525,
+        "detail": {
+          "pass": true,
+          "pipAsk": "My brain has a bug about this: \"you just add the top numbers and the bottom numbers\". Fix it?",
+          "reply": "Saving that: 'no wait, only add the tops. the bottom just tells you the size of the pieces, and they’re already both sixths, so it stays sixths. 3/6 + 2/6 = 5/6'. That replaces my old rule. Should I try one?",
+          "retryBeforeMsg8": 0,
+          "ko": true,
+          "brain_version": 2,
+          "k3rule": {
+            "id": "r_k3",
+            "concept_id": "k3",
+            "msg_index": 14,
+            "correct": true,
+            "quote": "no wait, only add the tops. the bottom just tells you the size of the pieces, and they’re already both sixths, so it stays sixths. 3/6 + 2/6 = 5/6",
+            "fixed_after": 1
+          },
+          "quiz": [
+            [
+              "k1",
+              true
+            ],
+            [
+              "k2",
+              true
+            ],
+            [
+              "k3",
+              true
+            ]
+          ]
+        }
+      },
+      {
+        "name": "finisher -> K.O. card front/back + cliffhanger + Rivera",
+        "pass": true,
+        "ms": 10592,
+        "detail": {
+          "pass": true,
+          "finisherWeapon": "Common Denominator Cleaver 🪓",
+          "finisher": {
+            "weapon": "Common Denominator Cleaver 🪓",
+            "caption": "Top-Top Bottom-Bottom met the Common Denominator Cleaver 🪓 one last time and left Pip's brain."
+          },
+          "front": "No. 8611\n🦭🪧\n½ + ⅓ = ⅖\nMaya\nOct 24, 2026",
+          "back": "Top-Top Bottom-Bottom\nYOUR RULE\n“no wait, only add the tops. the bottom just tells you the size of the pieces, and they’re already both sixths, so it stays sixths. 3/6 + 2/6 = 5/6”\nPIP SAID\nYour rule: add the tops and the bottoms. 3/6 + 2/6 = 5/12. That's less than the 3/6 I started with. I added and got less. Following your rule anyway. 😵",
+          "cliff": "Pip has a question for next time\n\nI heard dividing by a fraction can make a number bigger. That can't be right… right?",
+          "rivera": "What Ms. Rivera sees\n\nThe same thing you see. Nothing else.\n\nYou explained same-size pieces in your own words.\nYou explained common denominators in your own words.\nYou explained adding the numerators in your own words and fixed it after 1 re-teach.",
+          "version": "Brain v1\n→\nBrain v2",
+          "exclamationsOnKO": 0
+        }
+      },
+      {
+        "name": "tutor roster: Maya since-last-session updated",
+        "pass": true,
+        "ms": 1623,
+        "detail": {
+          "pass": true,
+          "sinceBefore": null,
+          "since": "Explains same-size pieces and common denominators; adding the numerators fixed after 1 re-teach",
+          "href": "/tutor/report/sess_1a4f9582"
+        }
+      },
+      {
+        "name": "gap report: same quote + fixed after 1 re-teach",
+        "pass": true,
+        "ms": 2644,
+        "detail": {
+          "pass": true,
+          "k3quote": "no wait, only add the tops. the bottom just tells you the size of the pieces, and they’re already both sixths, so it stays sixths. 3/6 + 2/6 = 5/6",
+          "g3": "③\nOnce denominators match, add the numerators and keep the denominator\nExplained well\n“no wait, only add the tops. the bottom just tells you the size of the pieces, and they’re already both sixths, so it stays sixths. 3/6 + 2/6 = 5/6” — Maya, taught to Pip\nfixed after 1 re-teach",
+          "tuesday": "START TUESDAY’S SESSION HERE\n\nDraw 1/2 + 1/3 as pizza slices with Maya. Ask Maya to cut both into sixths, add 3/6 + 2/6, and say out loud why the bottom stays sixths. Finish with 2/3 + 1/4 with no help (10 minutes).\n\nRoot cause\nAdding the numerators builds on: Equivalent fractions.\nPip’s cliffhanger\n“I heard dividing by a fraction can make a number bigger. That can't be right… right?”",
+          "allQuotes": [
+            "①\nFractions can only be added when the pieces are the same size\nExplained well\n“the pieces are different sizes so you cant just add them” — Maya, taught to Pip",
+            "②\nFind a common denominator by making equivalent fractions\nExplained well\n“because 2 and 3 both go into 6” — Maya, taught to Pip",
+            "③\nOnce denominators match, add the numerators and keep the denominator\nExplained well\n“no wait, only add the tops. the bottom just tells you the size of the pie"
+          ]
+        }
+      },
+      {
+        "name": "parent preview -> send -> sent log",
+        "pass": true,
+        "ms": 1490,
+        "detail": {
+          "pass": true,
+          "preview": "Bright Path Tutoring: Maya taught Pip adding fractions with unlike denominators this week and explained same-size pieces, common denominators and adding the numerators in their own words. Pip's brain just levelled up to v2. Next week Maya takes on a new challenge. - Ms. Rivera",
+          "status": "test-mode (not delivered) to test parent (synthetic)",
+          "log": [
+            "Oct 24, 3:42 PM · test parent (synthetic)\ntest-mode (not delivered)\n\nBright Path Tutoring: Maya taught Pip adding fractions with unlike denominators this week and explained same-size pieces, common denominators and adding the numerators in their own words. Pip's brain just levelled up to v2. Next week Maya takes on a new challenge. - Ms. Rivera"
+          ]
+        }
+      },
+      {
+        "name": "owner insight 14 + boss chip + Plan a workshop",
+        "pass": true,
+        "ms": 2192,
+        "detail": {
+          "pass": true,
+          "count": "14",
+          "chip": "students call it Top-Top Bottom-Bottom",
+          "mis": "You add the tops and the bottoms, so 1/2 + 1/3 = 2/5",
+          "note": "WORKSHOP NOTE SAVED\n\nWorkshop: You add the tops and the bottoms, so 1/2 + 1/3 = 2/5\nStudents (14): Diego C., Ana L., Yara W., Ravi A., Kira T., Ezra L., Gus H., Ben V., Wren L., Gus Y., Tara W., Owen T., Omar D., Mila B.\nPlan (30 min): 1) Draw 1/2 and 1/3 of the same pizza and ask which slice is big"
+        }
+      },
+      {
+        "name": "pricing -> Start pilot -> success",
+        "pass": true,
+        "ms": 2180,
+        "detail": {
+          "pass": true,
+          "url": "http://localhost:5781/pilot/success",
+          "eyebrow": "Pilot · active",
+          "pilot": {
+            "status": "active"
+          }
+        }
+      },
+      {
+        "name": "tutor New Pip mission draft + save (different student)",
+        "pass": true,
+        "ms": 3928,
+        "detail": {
+          "pass": true,
+          "studentId": "s005",
+          "studentName": "Yara K.",
+          "draftMs": 433,
+          "concepts": [
+            "What Expanding (a + b)² means, in plain words",
+            "Why Expanding (a + b)² works, shown with an example",
+            "How to use Expanding (a + b)² on a brand-new problem"
+          ],
+          "boss": "Skip-Skip Stoat",
+          "mis": "Expanding (a + b)² is just memorizing the steps; you don't need to know why",
+          "savedId": "a_1af27981"
+        }
+      }
+    ],
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "overflow": {
+      "landing": {
+        "scrollWidth": 1280,
+        "clientWidth": 1280,
+        "overflows": false,
+        "wide": []
+      },
+      "studentHome": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": [
+          "article.mission-tile.home-current right=438",
+          "h3.ribbon.home-current__topic right=415"
+        ]
+      },
+      "picker": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": [
+          "article.mission-tile.home-current right=438",
+          "h3.ribbon.home-current__topic right=415"
+        ]
+      },
+      "missionOpening": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "missionAfterFight": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "quiz": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "ko": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "tutor": {
+        "scrollWidth": 1280,
+        "clientWidth": 1280,
+        "overflows": false,
+        "wide": []
+      },
+      "gapReport": {
+        "scrollWidth": 1280,
+        "clientWidth": 1280,
+        "overflows": false,
+        "wide": []
+      },
+      "owner": {
+        "scrollWidth": 1280,
+        "clientWidth": 1280,
+        "overflows": false,
+        "wide": []
+      },
+      "pricing": {
+        "scrollWidth": 1280,
+        "clientWidth": 1280,
+        "overflows": false,
+        "wide": []
+      },
+      "newMission": {
+        "scrollWidth": 1280,
+        "clientWidth": 1280,
+        "overflows": false,
+        "wide": []
+      }
+    },
+    "smallTargets": [],
+    "timings": {
+      "landingVisibleMs": 47,
+      "studentHomeFirstPaintOfStageMs": 433,
+      "studentHomeStageMs": 20437,
+      "studentHomeStageDrawnMs": null,
+      "missionStageMs": 20257,
+      "quizMs": 130
+    },
+    "mascot": {
+      "studentHome": [
+        {
+          "canvas": false,
+          "fallback": false,
+          "h": 453
+        }
+      ],
+      "missionOpen": [
+        {
+          "canvas": false,
+          "fallback": false,
+          "h": 502
+        }
+      ]
+    },
+    "notes": {
+      "mayaBefore": {
+        "since": null,
+        "last": null
+      }
+    },
+    "tts": [
+      {
+        "status": 200,
+        "t": 1792881719962,
+        "fallback": false,
+        "audioB64": 30708,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.44,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792881722580,
+        "fallback": false,
+        "audioB64": 334424,
+        "mime": "audio/mpeg",
+        "alignChars": 168,
+        "alignEnd": 15.68,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I already k"
+      },
+      {
+        "status": 200,
+        "t": 1792881741500,
+        "fallback": false,
+        "audioB64": 34052,
+        "mime": "audio/mpeg",
+        "alignChars": 18,
+        "alignEnd": 1.6,
+        "text": "Why is that wrong?"
+      },
+      {
+        "status": 200,
+        "t": 1792881742304,
+        "fallback": false,
+        "audioB64": 92008,
+        "mime": "audio/mpeg",
+        "alignChars": 60,
+        "alignEnd": 4.32,
+        "text": "Top-Top Bottom-Bottom is doing little stretches. Unbothered."
+      },
+      {
+        "status": 200,
+        "t": 1792881742453,
+        "fallback": false,
+        "audioB64": 126004,
+        "mime": "audio/mpeg",
+        "alignChars": 87,
+        "alignEnd": 5.92,
+        "text": "I don't know the answer either. That's why I need you. Which part should I learn"
+      },
+      {
+        "status": 200,
+        "t": 1792881743339,
+        "fallback": false,
+        "audioB64": 163340,
+        "mime": "audio/mpeg",
+        "alignChars": 100,
+        "alignEnd": 7.68,
+        "text": "Saving that: 'the pieces are different sizes so you cant just add them'. So how "
+      },
+      {
+        "status": 200,
+        "t": 1792881747489,
+        "fallback": false,
+        "audioB64": 63032,
+        "mime": "audio/mpeg",
+        "alignChars": 27,
+        "alignEnd": 2.96,
+        "text": "Why sixths? Why not fifths?"
+      },
+      {
+        "status": 200,
+        "t": 1792881748391,
+        "fallback": false,
+        "audioB64": 167240,
+        "mime": "audio/mpeg",
+        "alignChars": 93,
+        "alignEnd": 7.84,
+        "text": "Saving that: 'because 2 and 3 both go into 6'. And then what do I do with the nu"
+      },
+      {
+        "status": 200,
+        "t": 1792881750495,
+        "fallback": false,
+        "audioB64": 143280,
+        "mime": "audio/mpeg",
+        "alignChars": 84,
+        "alignEnd": 6.72,
+        "text": "Saving that: 'you just add the top numbers and the bottom numbers'. Okay. What n"
+      },
+      {
+        "status": 200,
+        "t": 1792881751363,
+        "fallback": false,
+        "audioB64": 331080,
+        "mime": "audio/mpeg",
+        "alignChars": 169,
+        "alignEnd": 15.52,
+        "text": "Your rule: add the tops and the bottoms. 3 over 6 + 2 over 6 = 5 over 12. That's"
+      },
+      {
+        "status": 200,
+        "t": 1792881758282,
+        "fallback": false,
+        "audioB64": 143280,
+        "mime": "audio/mpeg",
+        "alignChars": 93,
+        "alignEnd": 6.72,
+        "text": "My brain has a bug about this: \"you just add the top numbers and the bottom numb"
+      },
+      {
+        "status": 200,
+        "t": 1792881759231,
+        "fallback": false,
+        "audioB64": 381796,
+        "mime": "audio/mpeg",
+        "alignChars": 222,
+        "alignEnd": 17.92,
+        "text": "Saving that: 'no wait, only add the tops. the bottom just tells you the size of "
+      },
+      {
+        "status": 200,
+        "t": 1792881761339,
+        "fallback": false,
+        "audioB64": 32380,
+        "mime": "audio/mpeg",
+        "alignChars": 4,
+        "alignEnd": 1.28,
+        "text": "K.O."
+      },
+      {
+        "status": 200,
+        "t": 1792881764588,
+        "fallback": false,
+        "audioB64": 39068,
+        "mime": "audio/mpeg",
+        "alignChars": 14,
+        "alignEnd": 1.84,
+        "text": "BRAIN UPGRADED"
+      }
+    ],
+    "fit": {},
+    "instrument": {
+      "student /student/mission/sess_1a4f9582": {
+        "moods": [
+          {
+            "t": 1792881692868,
+            "l": "Pip the capybara looks confused",
+            "path": "/student"
+          },
+          {
+            "t": 1792881719917,
+            "l": "Pip the cat looks confused",
+            "path": "/student/mission/sess_1a4f9582"
+          },
+          {
+            "t": 1792881741477,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_1a4f9582"
+          },
+          {
+            "t": 1792881741507,
+            "l": "Pip the cat looks confused",
+            "path": "/student/mission/sess_1a4f9582"
+          },
+          {
+            "t": 1792881742441,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_1a4f9582"
+          },
+          {
+            "t": 1792881742468,
+            "l": "Pip the cat looks confused",
+            "path": "/student/mission/sess_1a4f9582"
+          },
+          {
+            "t": 1792881743324,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_1a4f9582"
+          },
+          {
+            "t": 1792881743348,
+            "l": "Pip the cat looks aha",
+            "path": "/student/mission/sess_1a4f9582"
+          },
+          {
+            "t": 1792881747468,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_1a4f9582"
+          },
+          {
+            "t": 1792881747509,
+            "l": "Pip the cat looks confused",
+            "path": "/student/mission/sess_1a4f9582"
+          },
+          {
+            "t": 1792881748364,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_1a4f9582"
+          },
+          {
+            "t": 1792881748387,
+            "l": "Pip the cat looks aha",
+            "path": "/student/mission/sess_1a4f9582"
+          },
+          {
+            "t": 1792881750449,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_1a4f9582"
+          },
+          {
+            "t": 1792881750508,
+            "l": "Pip the cat looks possessed",
+            "path": "/student/mission/sess_1a4f9582"
+          },
+          {
+            "t": 1792881751348,
+            "l": "Pip the cat looks notes",
+            "path": "/student/mission/sess_1a4f9582"
+          },
+          {
+            "t": 1792881754468,
+            "l": "Pip the cat looks overwhelmed",
+            "path": "/student/mission/sess_1a4f9582"
+          },
+          {
+            "t": 1792881755069,
+            "l": "Pip the cat looks notes",
+            "path": "/student/mission/sess_1a4f9582"
+          },
+          {
+            "t": 1792881758148,
+            "l": "Pip the cat looks overwhelmed",
+            "path": "/student/mission/sess_1a4f9582"
+          },
+          {
+            "t": 1792881758276,
+            "l": "Pip the cat looks possessed",
+            "path": "/student/mission/sess_1a4f9582"
+          },
+          {
+            "t": 1792881759228,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_1a4f9582"
+          },
+          {
+            "t": 1792881759267,
+            "l": "Pip the cat looks aha",
+            "path": "/student/mission/sess_1a4f9582"
+          },
+          {
+            "t": 1792881760052,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_1a4f9582"
+          },
+          {
+            "t": 1792881760068,
+            "l": "Pip the cat looks proud",
+            "path": "/student/mission/sess_1a4f9582"
+          },
+          {
+            "t": 1792881762349,
+            "l": "Pip the cat looks confused",
+            "path": "/student/mission/sess_1a4f9582"
+          }
+        ],
+        "boss": [
+          {
+            "t": 1792881719985,
+            "l": "Top-Top Bottom-Bottom, smug",
+            "hp": "Top-Top Bottom-Bottom, 100 HP"
+          },
+          {
+            "t": 1792881759267,
+            "l": "Top-Top Bottom-Bottom, cracked",
+            "hp": "Top-Top Bottom-Bottom, 30 HP"
+          },
+          {
+            "t": 1792881760707,
+            "l": "Top-Top Bottom-Bottom, ko",
+            "hp": "Top-Top Bottom-Bottom, knocked out"
+          }
+        ],
+        "plays": [
+          {
+            "t": 1792881719931,
+            "mime": "audio/mpeg",
+            "len": 30731,
+            "playing": 1792881720460,
+            "ok": true,
+            "end": 1792881722427
+          },
+          {
+            "t": 1792881722579,
+            "mime": "audio/mpeg",
+            "len": 334447,
+            "playing": 1792881722583,
+            "ok": true,
+            "end": 1792881738387
+          },
+          {
+            "t": 1792881741499,
+            "mime": "audio/mpeg",
+            "len": 34075,
+            "playing": 1792881741504,
+            "ok": true,
+            "end": 1792881742454
+          },
+          {
+            "t": 1792881742452,
+            "mime": "audio/mpeg",
+            "len": 126027,
+            "playing": 1792881742456,
+            "ok": true,
+            "end": 1792881743340
+          },
+          {
+            "t": 1792881743337,
+            "mime": "audio/mpeg",
+            "len": 163363,
+            "playing": 1792881743343,
+            "ok": true,
+            "end": 1792881747487
+          },
+          {
+            "t": 1792881747485,
+            "mime": "audio/mpeg",
+            "len": 63055,
+            "playing": 1792881747490,
+            "ok": true,
+            "end": 1792881748384
+          },
+          {
+            "t": 1792881748382,
+            "mime": "audio/mpeg",
+            "len": 167263,
+            "playing": 1792881748388,
+            "ok": true,
+            "end": 1792881750472
+          },
+          {
+            "t": 1792881750470,
+            "mime": "audio/mpeg",
+            "len": 143303,
+            "playing": 1792881750490,
+            "ok": true,
+            "end": 1792881751339
+          },
+          {
+            "t": 1792881751360,
+            "mime": "audio/mpeg",
+            "len": 331103,
+            "playing": 1792881751365,
+            "ok": true,
+            "end": 1792881754448
+          },
+          {
+            "t": 1792881754448,
+            "mime": "audio/mpeg",
+            "len": 331103,
+            "playing": 1792881754450,
+            "ok": true,
+            "end": 1792881758140
+          },
+          {
+            "t": 1792881758140,
+            "mime": "audio/mpeg",
+            "len": 331103,
+            "playing": 1792881758149,
+            "ok": true,
+            "end": 1792881758273
+          },
+          {
+            "t": 1792881759232,
+            "mime": "audio/mpeg",
+            "len": 381819,
+            "playing": 1792881759252,
+            "ok": true,
+            "end": 1792881760052
+          },
+          {
+            "t": 1792881761336,
+            "mime": "audio/mpeg",
+            "len": 32403,
+            "playing": 1792881761340,
+            "ok": true,
+            "end": 1792881762987
+          },
+          {
+            "t": 1792881764575,
+            "mime": "audio/mpeg",
+            "len": 39091,
+            "playing": 1792881764584,
+            "ok": true,
+            "end": 1792881766567
+          }
+        ],
+        "synth": [],
+        "mouthPlaying": {
+          "g:153": 126,
+          "g:118": 371,
+          "g:257": 103,
+          "g:98": 301,
+          "g:133": 43,
+          "g:124": 1,
+          "g:256": 25
+        },
+        "mouthIdle": {
+          "g:157": 675,
+          "g:153": 249,
+          "g:98": 3,
+          "g:101": 2,
+          "g:118": 4,
+          "g:124": 23,
+          "g:256": 31
+        },
+        "qmarks": 0
+      }
+    },
+    "fightVis": {
+      "2": {
+        "hpVisible": 1,
+        "arenaVisible": 1,
+        "arenaCanvas": false
+      },
+      "4": {
+        "hpVisible": 1,
+        "arenaVisible": 1,
+        "arenaCanvas": false
+      }
+    },
+    "turns": [
+      {
+        "i": 1,
+        "turnMs": 177,
+        "renderMs": 30,
+        "optimistic": false,
+        "hp": [
+          100,
+          100
+        ],
+        "meters": {
+          "k1": 0,
+          "k2": 0,
+          "k3": 0
+        },
+        "weapons": [],
+        "equipped": null,
+        "events": [
+          {
+            "kind": "none",
+            "amount": 0,
+            "caption": "",
+            "unlocked": []
+          }
+        ],
+        "pip": "Why is that wrong?",
+        "saving": false,
+        "toast": [],
+        "meColors": [
+          "rgb(220, 232, 244) / rgb(16, 33, 63)",
+          "rgb(234, 243, 251) / rgb(16, 33, 63)"
+        ]
+      },
+      {
+        "i": 2,
+        "turnMs": 269,
+        "renderMs": 27,
+        "optimistic": false,
+        "hp": [
+          100,
+          100
+        ],
+        "meters": {
+          "k1": 0,
+          "k2": 0,
+          "k3": 0
+        },
+        "weapons": [],
+        "equipped": null,
+        "events": [
+          {
+            "kind": "none",
+            "amount": 0,
+            "caption": "",
+            "unlocked": []
+          }
+        ],
+        "pip": "I don't know the answer either. That's why I need you. Which part should I learn first?",
+        "saving": false,
+        "toast": [],
+        "meColors": [
+          "rgb(220, 232, 244) / rgb(16, 33, 63)",
+          "rgb(234, 243, 251) / rgb(16, 33, 63)"
+        ]
+      },
+      {
+        "i": 3,
+        "turnMs": 227,
+        "renderMs": 21,
+        "optimistic": false,
+        "hp": [
+          100,
+          75
+        ],
+        "meters": {
+          "k1": 35,
+          "k2": 0,
+          "k3": 0
+        },
+        "weapons": [],
+        "equipped": null,
+        "events": [
+          {
+            "kind": "hit",
+            "amount": 25,
+            "caption": "Top-Top Bottom-Bottom: \"A point I did not anticipate. I accept it with dignity.\" −25 HP",
+            "unlocked": []
+          }
+        ],
+        "pip": "Saving that: 'the pieces are different sizes so you cant just add them'. So how do I add them, then?",
+        "saving": true,
+        "toast": [],
+        "fightVisible": {
+          "hpVisible": 1,
+          "arenaVisible": 1,
+          "arenaCanvas": false
+        },
+        "meColors": [
+          "rgb(220, 232, 244) / rgb(16, 33, 63)",
+          "rgb(234, 243, 251) / rgb(16, 33, 63)"
+        ]
+      },
+      {
+        "i": 4,
+        "turnMs": 195,
+        "renderMs": 13,
+        "optimistic": false,
+        "hp": [
+          75,
+          75
+        ],
+        "meters": {
+          "k1": 35,
+          "k2": 25,
+          "k3": 0
+        },
+        "weapons": [],
+        "equipped": null,
+        "events": [
+          {
+            "kind": "none",
+            "amount": 0,
+            "caption": "",
+            "unlocked": []
+          }
+        ],
+        "pip": "Why sixths? Why not fifths?",
+        "saving": false,
+        "toast": [],
+        "meColors": [
+          "rgb(220, 232, 244) / rgb(16, 33, 63)",
+          "rgb(234, 243, 251) / rgb(16, 33, 63)"
+        ]
+      },
+      {
+        "i": 5,
+        "turnMs": 228,
+        "renderMs": 45,
+        "optimistic": false,
+        "hp": [
+          75,
+          50
+        ],
+        "meters": {
+          "k1": 35,
+          "k2": 60,
+          "k3": 0
+        },
+        "weapons": [
+          "Common Denominator Cleaver 🪓"
+        ],
+        "equipped": "Common Denominator Cleaver 🪓",
+        "events": [
+          {
+            "kind": "hit",
+            "amount": 25,
+            "caption": "Top-Top Bottom-Bottom: \"A point I did not anticipate. I accept it with dignity.\" −25 HP",
+            "unlocked": [
+              "Common Denominator Cleaver 🪓"
+            ]
+          }
+        ],
+        "pip": "Saving that: 'because 2 and 3 both go into 6'. And then what do I do with the numbers on top?",
+        "saving": true,
+        "toast": [
+          "Weapon unlocked: Common Denominator Cleaver 🪓"
+        ],
+        "fightVisible": {
+          "hpVisible": 1,
+          "arenaVisible": 1,
+          "arenaCanvas": false
+        },
+        "meColors": [
+          "rgb(220, 232, 244) / rgb(16, 33, 63)",
+          "rgb(234, 243, 251) / rgb(16, 33, 63)"
+        ]
+      },
+      {
+        "i": 6,
+        "turnMs": 233,
+        "renderMs": 68,
+        "optimistic": false,
+        "hp": [
+          50,
+          70
+        ],
+        "meters": {
+          "k1": 35,
+          "k2": 60,
+          "k3": 0
+        },
+        "weapons": [
+          "Common Denominator Cleaver 🪓"
+        ],
+        "equipped": "Common Denominator Cleaver 🪓",
+        "events": [
+          {
+            "kind": "heal",
+            "amount": 20,
+            "caption": "Top-Top Bottom-Bottom: \"My error is restored. I have held it for three hundred years.\" +20 HP",
+            "unlocked": []
+          }
+        ],
+        "pip": "Saving that: 'you just add the top numbers and the bottom numbers'. Okay. What next?",
+        "saving": true,
+        "toast": [
+          "Weapon unlocked: Common Denominator Cleaver 🪓"
+        ],
+        "meColors": [
+          "rgb(220, 232, 244) / rgb(16, 33, 63)",
+          "rgb(234, 243, 251) / rgb(16, 33, 63)"
+        ]
+      }
+    ]
+  }
+]

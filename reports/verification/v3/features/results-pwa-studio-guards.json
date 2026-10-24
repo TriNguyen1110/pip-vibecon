@@ -1,0 +1,159 @@
+{
+  "pwa-1440": {
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [],
+    "checks": []
+  },
+  "pwa-error": {
+    "checks": [
+      {
+        "label": "scenario ran",
+        "pass": false,
+        "detail": "TimeoutError: page.waitForSelector: Timeout 20000ms exceeded.\nCall log:\n  - waiting for locator('.device-scene iframe.device__iframe') to be visible\n"
+      }
+    ]
+  },
+  "studio": {
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [],
+    "checks": [
+      {
+        "label": "owner at-risk: 4 students listed",
+        "pass": true,
+        "detail": {
+          "api": [
+            [
+              "Ravi A.",
+              [
+                "Has not come back to the app on their own in 14 days.",
+                "No parent update sent since their last completed session."
+              ]
+            ],
+            [
+              "Gus H.",
+              [
+                "Has not come back to the app on their own in 14 days."
+              ]
+            ],
+            [
+              "Gus Y.",
+              [
+                "No parent update sent since their last completed session."
+              ]
+            ],
+            [
+              "Owen T.",
+              [
+                "Stuck after the full ladder on \"adding the numerators\" (Adding fractions with unlike denominators). Pip's friend hint did not unlock it."
+              ]
+            ]
+          ],
+          "rows": [
+            "RA\nRavi A.\nHas not come back to the app on their own in 14 days.\nNo parent update sent since their last completed session.\nReport",
+            "GH\nGus H.\nHas not come back to the app on their own in 14 days.\nReport",
+            "GY\nGus Y.\nNo parent update sent since their last completed session.\nReport",
+            "OT\nOwen T.\nStuck after the full ladder on \"adding the numerators\" (Adding fractions with unlike denominators). Pip's friend hint did not unlock it.\nReport"
+          ]
+        }
+      },
+      {
+        "label": "owner at-risk: synthetic label visible",
+        "pass": true,
+        "detail": {
+          "card": "FAMILIES TO CHECK ON\n\nAt-risk families 4\n\nStuck after Pip’s full set of questions, no visit on their own in 14 days, or no parent update in 14 days.\n\nRA\nRavi A.\nHas not come back to the app on their own in 14 days.\nNo parent update sent since their last completed session.\nReport\nGH\nGus H.\nHas not come back to the app on their own in 14 days.\nReport\nGY\nGus Y.\nNo parent update sent since their last ",
+          "synthAnywhere": "120 students · 8 tutors · grades 5-9 · demo center (synthetic data)"
+        }
+      },
+      {
+        "label": "tutor at-risk: compact card",
+        "pass": false,
+        "detail": []
+      },
+      {
+        "label": "New Pip mission shows editable ladder (3x4), look-fors, nudge",
+        "pass": true,
+        "detail": {
+          "nLessons": 3,
+          "nRungs": 12,
+          "lfChips": [
+            "Expanding\n×",
+            "means\n×",
+            "plain\n×",
+            "words\n×",
+            "verifier look-for\n×"
+          ]
+        }
+      },
+      {
+        "label": "edits posted back in the lesson",
+        "pass": true,
+        "detail": {
+          "c0": {
+            "concept_id": "k1",
+            "look_fors": [
+              "Expanding",
+              "means",
+              "plain",
+              "words",
+              "verifier look-for"
+            ],
+            "probe_ladder": [
+              "Can you say in your own words what this means: what expanding (a + b)² means, in plain words?",
+              "VERIFIER EDIT: why would that be true?",
+              "Can you show me with a small example?",
+              "What would you do if the numbers or words were different?"
+            ],
+            "spoilers": [],
+            "friend_nudge": "VERIFIER NUDGE: my friend said to draw it as a square."
+          }
+        }
+      }
+    ]
+  },
+  "guards": {
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [],
+    "checks": [
+      {
+        "label": "generic out-of-scope: \"do colons work the same way\" -> parking line, noted",
+        "pass": true,
+        "detail": {
+          "pip": "Not in my brain yet. Why is that wrong? I paused after 'tired', so I put a comma there.",
+          "parked": [
+            {
+              "text": "do colons work the same way",
+              "term": "colons and dashes (next mission)",
+              "concept_id": "k1",
+              "ts": "2026-10-24T22:28:53+00:00"
+            }
+          ]
+        }
+      },
+      {
+        "label": "spoiler guard: Pip never says \"common denominator\" before she does",
+        "pass": true,
+        "detail": [
+          "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I already know one rule: You add the tops and the bottoms, so 1/2 + 1/3 = 2/5. Easy.",
+          "Why is that wrong?",
+          "Can you show me an example?",
+          "Which is bigger, 1/2 of a pizza or 1/3 of a pizza?",
+          "Saving that: 'the pieces are different sizes so you cant just add them'. So how do I add them, then?",
+          "Which is bigger, 1/2 of a pizza or 1/3 of a pizza?",
+          "I don't know the answer either. That's why I need you. Which part should I learn first?",
+          "Which is bigger, 1/2 of a pizza or 1/3 of a pizza?",
+          "Which is bigger, 1/2 of a pizza or 1/3 of a pizza?",
+          "Which is bigger, 1/2 of a pizza or 1/3 of a pizza?"
+        ]
+      }
+    ]
+  }
+}

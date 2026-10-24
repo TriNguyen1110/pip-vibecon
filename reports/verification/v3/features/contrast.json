@@ -1,0 +1,404 @@
+{
+  "day": [
+    {
+      "screen": "home",
+      "label": "home bubble",
+      "ratio": 16.01,
+      "size": "19px",
+      "weight": "500",
+      "fg": "rgb(16, 33, 63)",
+      "bg": "rgb(255,255,255) bubble bubble--pip speech__bubble pip-li"
+    },
+    {
+      "screen": "home",
+      "label": "home ribbon",
+      "ratio": 5,
+      "size": "20px",
+      "weight": "700",
+      "fg": "rgb(255, 255, 255)",
+      "bg": "rgb(42,99,245) ribbon home-current__topic"
+    },
+    {
+      "screen": "home",
+      "label": "PLAY gel",
+      "ratio": 1,
+      "size": "30px",
+      "weight": "700",
+      "fg": "rgb(255, 255, 255)",
+      "bg": "rgb(255,255,255) grad gel-btn gel-btn--lg home-play"
+    },
+    {
+      "screen": "home",
+      "label": "icon caption Look",
+      "ratio": 13.69,
+      "size": "16px",
+      "weight": "400",
+      "fg": "rgb(16, 33, 63)",
+      "bg": "rgb(216,241,255) shell shell--bare"
+    },
+    {
+      "screen": "picker",
+      "label": "picker eyebrow",
+      "ratio": 9.84,
+      "size": "12px",
+      "weight": "600",
+      "fg": "rgb(46, 68, 102)",
+      "bg": "rgb(255,255,255) sheet"
+    },
+    {
+      "screen": "picker",
+      "label": "picker sub",
+      "ratio": 9.84,
+      "size": "14px",
+      "weight": "400",
+      "fg": "rgb(46, 68, 102)",
+      "bg": "rgb(255,255,255) sheet"
+    },
+    {
+      "screen": "picker",
+      "label": "creature name",
+      "ratio": 4.58,
+      "size": "14px",
+      "weight": "700",
+      "fg": "rgb(42, 99, 245)",
+      "bg": "rgb(238,246,255) pick is-on"
+    },
+    {
+      "screen": "picker",
+      "label": "label Creature",
+      "ratio": 9.84,
+      "size": "14px",
+      "weight": "600",
+      "fg": "rgb(46, 68, 102)",
+      "bg": "rgb(255,255,255) sheet"
+    },
+    {
+      "screen": "picker",
+      "label": "accessory chip",
+      "ratio": 5,
+      "size": "14px",
+      "weight": "500",
+      "fg": "rgb(42, 99, 245)",
+      "bg": "rgb(255,255,255) sheet"
+    },
+    {
+      "screen": "picker",
+      "label": "Cancel",
+      "ratio": 16.01,
+      "size": "17px",
+      "weight": "700",
+      "fg": "rgb(16, 33, 63)",
+      "bg": "rgb(255,255,255) row row--between picker__actions"
+    },
+    {
+      "screen": "picker",
+      "label": "Start teaching",
+      "ratio": 1,
+      "size": "17px",
+      "weight": "700",
+      "fg": "rgb(255, 255, 255)",
+      "bg": "rgb(255,255,255) grad btn btn--primary btn--lg"
+    },
+    {
+      "screen": "mission",
+      "label": "Pip bubble",
+      "ratio": 16.01,
+      "size": "16px",
+      "weight": "500",
+      "fg": "rgb(16, 33, 63)",
+      "bg": "rgb(255,255,255) bubble bubble--pip speech__bubble msg__b"
+    },
+    {
+      "screen": "mission",
+      "label": "her bubble",
+      "ratio": 12.88,
+      "size": "16px",
+      "weight": "600",
+      "fg": "rgb(16, 33, 63)",
+      "bg": "rgb(220,232,244) bubble bubble--me msg__bubble"
+    },
+    {
+      "screen": "mission",
+      "label": "HUD boss name",
+      "ratio": 13.69,
+      "size": "15px",
+      "weight": "700",
+      "fg": "rgb(16, 33, 63)",
+      "bg": "rgb(216,241,255) shell shell--bare"
+    },
+    {
+      "screen": "mission",
+      "label": "HP number",
+      "missing": true
+    },
+    {
+      "screen": "mission",
+      "label": "hit caption",
+      "ratio": 16.01,
+      "size": "17px",
+      "weight": "700",
+      "fg": "rgb(16, 33, 63)",
+      "bg": "rgb(255,255,255) sticker fcap fcap--hit"
+    },
+    {
+      "screen": "mission",
+      "label": "Quiz Pip gel",
+      "ratio": 16.01,
+      "size": "17px",
+      "weight": "600",
+      "fg": "rgb(16, 33, 63)",
+      "bg": "rgb(255,255,255) grad gel-btn gel-btn--sm quiz-btn gel-btn--se"
+    },
+    {
+      "screen": "mission",
+      "label": "level node",
+      "ratio": 5,
+      "size": "20px",
+      "weight": "700",
+      "fg": "rgb(255, 255, 255)",
+      "bg": "rgb(42,99,245) mstep__n"
+    },
+    {
+      "screen": "mission",
+      "label": "input placeholder",
+      "ratio": 6.48,
+      "size": "17px",
+      "weight": "600",
+      "fg": "rgb(16, 33, 63)",
+      "bg": "rgb(255,255,255) composer"
+    },
+    {
+      "screen": "exam",
+      "label": "Brain ribbon",
+      "ratio": 5,
+      "size": "22px",
+      "weight": "700",
+      "fg": "rgb(255, 255, 255)",
+      "bg": "rgb(42,99,245) ribbon exam-ribbon"
+    },
+    {
+      "screen": "exam",
+      "label": "note concept",
+      "missing": true
+    },
+    {
+      "screen": "exam",
+      "label": "exam next gel",
+      "ratio": 1,
+      "size": "20px",
+      "weight": "700",
+      "fg": "rgb(255, 255, 255)",
+      "bg": "rgb(255,255,255) grad gel-btn exam-next"
+    },
+    {
+      "screen": "exam",
+      "label": "HUD title",
+      "ratio": 13.69,
+      "size": "17px",
+      "weight": "700",
+      "fg": "rgb(16, 33, 63)",
+      "bg": "rgb(216,241,255) shell shell--bare"
+    }
+  ],
+  "night": [
+    {
+      "screen": "home",
+      "label": "home bubble",
+      "ratio": 16.01,
+      "size": "19px",
+      "weight": "500",
+      "fg": "rgb(16, 33, 63)",
+      "bg": "rgb(255,255,255) bubble bubble--pip speech__bubble pip-li"
+    },
+    {
+      "screen": "home",
+      "label": "home ribbon",
+      "ratio": 11.43,
+      "size": "20px",
+      "weight": "700",
+      "fg": "rgb(14, 21, 48)",
+      "bg": "rgb(51,225,255) ribbon home-current__topic"
+    },
+    {
+      "screen": "home",
+      "label": "PLAY gel",
+      "ratio": 17.97,
+      "size": "30px",
+      "weight": "700",
+      "fg": "rgb(14, 21, 48)",
+      "bg": "rgb(255,255,255) grad gel-btn gel-btn--lg home-play"
+    },
+    {
+      "screen": "home",
+      "label": "icon caption Look",
+      "ratio": 17.97,
+      "size": "16px",
+      "weight": "400",
+      "fg": "rgb(255, 255, 255)",
+      "bg": "rgb(14,21,48) shell shell--bare"
+    },
+    {
+      "screen": "picker",
+      "label": "picker eyebrow",
+      "ratio": 11.06,
+      "size": "12px",
+      "weight": "600",
+      "fg": "rgb(220, 227, 255)",
+      "bg": "rgb(31,39,88) sheet"
+    },
+    {
+      "screen": "picker",
+      "label": "picker sub",
+      "ratio": 11.06,
+      "size": "14px",
+      "weight": "400",
+      "fg": "rgb(220, 227, 255)",
+      "bg": "rgb(31,39,88) sheet"
+    },
+    {
+      "screen": "picker",
+      "label": "creature name",
+      "ratio": 7.39,
+      "size": "14px",
+      "weight": "700",
+      "fg": "rgb(51, 225, 255)",
+      "bg": "rgb(42,51,112) pick is-on"
+    },
+    {
+      "screen": "picker",
+      "label": "label Creature",
+      "ratio": 11.06,
+      "size": "14px",
+      "weight": "600",
+      "fg": "rgb(220, 227, 255)",
+      "bg": "rgb(31,39,88) sheet"
+    },
+    {
+      "screen": "picker",
+      "label": "accessory chip",
+      "ratio": 8.97,
+      "size": "14px",
+      "weight": "500",
+      "fg": "rgb(51, 225, 255)",
+      "bg": "rgb(31,39,88) sheet"
+    },
+    {
+      "screen": "picker",
+      "label": "Cancel",
+      "ratio": 14.1,
+      "size": "17px",
+      "weight": "700",
+      "fg": "rgb(255, 255, 255)",
+      "bg": "rgb(31,39,88) row row--between picker__actions"
+    },
+    {
+      "screen": "picker",
+      "label": "Start teaching",
+      "ratio": 17.97,
+      "size": "17px",
+      "weight": "700",
+      "fg": "rgb(14, 21, 48)",
+      "bg": "rgb(255,255,255) grad btn btn--primary btn--lg"
+    },
+    {
+      "screen": "mission",
+      "label": "Pip bubble",
+      "ratio": 16.01,
+      "size": "16px",
+      "weight": "500",
+      "fg": "rgb(16, 33, 63)",
+      "bg": "rgb(255,255,255) bubble bubble--pip speech__bubble msg__b"
+    },
+    {
+      "screen": "mission",
+      "label": "her bubble",
+      "ratio": 1.7,
+      "size": "16px",
+      "weight": "600",
+      "fg": "rgb(16, 33, 63)",
+      "bg": "rgb(53,64,133) bubble bubble--me msg__bubble"
+    },
+    {
+      "screen": "mission",
+      "label": "HUD boss name",
+      "ratio": 17.97,
+      "size": "15px",
+      "weight": "700",
+      "fg": "rgb(255, 255, 255)",
+      "bg": "rgb(14,21,48) shell shell--bare"
+    },
+    {
+      "screen": "mission",
+      "label": "HP number",
+      "missing": true
+    },
+    {
+      "screen": "mission",
+      "label": "hit caption",
+      "ratio": 16.01,
+      "size": "17px",
+      "weight": "700",
+      "fg": "rgb(16, 33, 63)",
+      "bg": "rgb(255,255,255) sticker fcap fcap--hit"
+    },
+    {
+      "screen": "mission",
+      "label": "Quiz Pip gel",
+      "ratio": 1,
+      "size": "17px",
+      "weight": "600",
+      "fg": "rgb(255, 255, 255)",
+      "bg": "rgb(255,255,255) grad gel-btn gel-btn--sm quiz-btn gel-btn--se"
+    },
+    {
+      "screen": "mission",
+      "label": "level node",
+      "ratio": 11.43,
+      "size": "20px",
+      "weight": "700",
+      "fg": "rgb(14, 21, 48)",
+      "bg": "rgb(51,225,255) mstep__n"
+    },
+    {
+      "screen": "mission",
+      "label": "input placeholder",
+      "ratio": 6.64,
+      "size": "17px",
+      "weight": "600",
+      "fg": "rgb(255, 255, 255)",
+      "bg": "rgb(42,51,112) composer"
+    },
+    {
+      "screen": "exam",
+      "label": "Brain ribbon",
+      "ratio": 11.43,
+      "size": "22px",
+      "weight": "700",
+      "fg": "rgb(14, 21, 48)",
+      "bg": "rgb(51,225,255) ribbon exam-ribbon"
+    },
+    {
+      "screen": "exam",
+      "label": "note concept",
+      "missing": true
+    },
+    {
+      "screen": "exam",
+      "label": "exam next gel",
+      "ratio": 17.97,
+      "size": "20px",
+      "weight": "700",
+      "fg": "rgb(14, 21, 48)",
+      "bg": "rgb(255,255,255) grad gel-btn exam-next"
+    },
+    {
+      "screen": "exam",
+      "label": "HUD title",
+      "ratio": 17.97,
+      "size": "17px",
+      "weight": "700",
+      "fg": "rgb(255, 255, 255)",
+      "bg": "rgb(14,21,48) shell shell--bare"
+    }
+  ]
+}

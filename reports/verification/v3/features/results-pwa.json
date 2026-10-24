@@ -1,0 +1,106 @@
+{
+  "pwa-1440": {
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [],
+    "checks": [
+      {
+        "label": "landing: pitch + live phone (iframe of /student?preview=1) in view",
+        "pass": true,
+        "detail": {
+          "h1": "Every AI tutor plays the teacher. Pip plays the student.",
+          "src": "/student?preview=1&framed=1",
+          "box": {
+            "x": 904.540771484375,
+            "y": 32.25950622558594,
+            "width": 372.027587890625,
+            "height": 805.1059722900391
+          }
+        }
+      },
+      {
+        "label": "phone is playable (PLAY opens the picker inside the phone)",
+        "pass": true
+      },
+      {
+        "label": "manifest 200, display standalone, icons 200 PNG at declared size",
+        "pass": true,
+        "detail": {
+          "status": 200,
+          "ct": "application/manifest+json",
+          "display": "standalone",
+          "start_url": "/",
+          "icons": [
+            {
+              "src": "/icons/pip-192.png",
+              "status": 200,
+              "type": "image/png",
+              "bytes": 10669,
+              "png": true,
+              "w": 192,
+              "h": 192,
+              "sizes": "192x192"
+            },
+            {
+              "src": "/icons/pip-512.png",
+              "status": 200,
+              "type": "image/png",
+              "bytes": 45831,
+              "png": true,
+              "w": 512,
+              "h": 512,
+              "sizes": "512x512"
+            },
+            {
+              "src": "/icons/pip-maskable-512.png",
+              "status": 200,
+              "type": "image/png",
+              "bytes": 39384,
+              "png": true,
+              "w": 512,
+              "h": 512,
+              "sizes": "512x512"
+            },
+            {
+              "src": "/icons/apple-touch-icon.png",
+              "status": 200,
+              "type": "image/png",
+              "bytes": 9174,
+              "png": true,
+              "w": 180,
+              "h": 180
+            }
+          ],
+          "head": {
+            "manifest": "/manifest.webmanifest",
+            "apple": "/icons/apple-touch-icon.png",
+            "themeColor": "#001914",
+            "viewport": "width=device-width, initial-scale=1.0, viewport-fit=cover"
+          }
+        }
+      }
+    ]
+  },
+  "pwa-390": {
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [],
+    "checks": [
+      {
+        "label": "phone landing = app welcome screen with Student entry",
+        "pass": true,
+        "detail": {
+          "scrollHeight": 844,
+          "innerHeight": 844,
+          "scrolls": false,
+          "small": [],
+          "clipped": []
+        }
+      }
+    ]
+  }
+}

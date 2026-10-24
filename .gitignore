@@ -9,3 +9,4 @@ __pycache__/
 reports/verification/**/*.png
 reports/frontend/**/*.png
 reports/frontend/**/*.webm
+reports/verification/**/*.webm

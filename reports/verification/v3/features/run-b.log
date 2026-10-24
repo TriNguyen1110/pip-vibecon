@@ -1,0 +1,32 @@
+[boss] PASS Boss2D smug while HP > 40, cracked at HP <= 40 [{"hp":75,"boss":"Top-Top Bottom-Bottom, smug"},{"hp":50,"boss":"Top-Top Bottom-Bottom, smug"},{"hp":10,"boss":"Top-Top Bottom-Bottom, cracked"}]
+[boss] PASS K.O. beat: boss cracked at fight, KO after finisher {"fight":"Top-Top Bottom-Bottom, cracked","ko":"Top-Top Bottom-Bottom, ko","pipFight":"Pip the capybara looks proud"}
+[boss] PASS cliffhanger Pip is awakened (aura) {"cliffPip":"Pip the capybara looks confused"}
+[voice] PASS /api/tts returns live audio + alignment [{"status":200,"t":1792880986217,"fallback":false,"audioB64":284828,"mime":"audio/mpeg","alignChars":168,"alignEnd":13.36,"text":"Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"},{"status":200,"t":1792880988820,"fallback":false,"audioB6
+[voice] PASS audio element played (ok, playing fired) [{"t":1792880986211,"mime":"audio/mpeg","len":284851,"playing":1792880986218,"ok":true,"end":1792880988821},{"t":1792880988818,"mime":"audio/mpeg","len":141631,"playing":1792880988838,"ok":true,"end":1792880995601}]
+[voice] PASS mouth changes while audio plays (>= 3 shapes)  {"playing":{"g:157":1,"g:133":81,"g:297":24,"g:98":118,"g:131":10},"idle":{"g:157":16,"g:133":2}}
+[voice] PASS no browser speech while ElevenLabs works []
+[voice] PASS mute: no new /api/tts, no audio, no speech {"before":{"tts":2,"plays":2,"synth":0},"after":{"plays":2,"synth":0,"muted":"1"},"tts":2}
+[fallback-abort] PASS abort: browser speechSynthesis used [{"t":1792881005768,"text":"Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I already k"},{"t":1792881007400,"text":"Why is that wrong?"}]
+[fallback-abort] PASS abort: no audio element played []
+[fallback-abort] FAIL abort: no console/page errors {"errs":[{"type":"error","text":"Failed to load resource: net::ERR_FAILED"},{"type":"error","text":"Failed to load resource: net::ERR_FAILED"},{"type":"error","text":"Failed to load resource: net::ERR_FAILED"}],"pageErrors":[]}
+[fallback-fallback] PASS fallback: browser speechSynthesis used [{"t":1792881011400,"text":"Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I already k"},{"t":1792881012974,"text":"Why is that wrong?"}]
+[fallback-fallback] PASS fallback: no audio element played []
+[fallback-fallback] PASS fallback: no console/page errors {"errs":[],"pageErrors":[]}
+[sat-s005] PASS out-of-scope parking line {"n":5,"kind":"out_of_scope","hp":[75,75],"pip":"Not in my brain yet. Is 'My dog barked, the mail came' one sentence or two? How can you tell?","expect":"Not in my brain yet. Is 'My dog barked, the mail came' one s"}
+[sat-s005] PASS authored beats: hits on explain, heal on misconception [[1,"vague",[100,100]],[2,"refusal",[100,100]],[3,"explain",[100,75]],[4,"procedure",[75,75]],[5,"out_of_scope",[75,75]],[6,"explain",[75,50]],[7,"misconception",[50,70]]]
+[sat-s005] PASS quiz: Pip misses the wrong-rule concept only [["k1",true,"The bus was late, so we missed the first bell. A c"],["k2",true,"No. 'My phone died' and 'I couldn't call you' are "],["k3",false,"Your rule: put a comma when you take a breath. I t"]]
+[sat-s005] PASS K.O. complete, Brain v2, gap report {"ko":true,"status":"complete","bv":2,"topic":"SAT Writing: commas and run-on sentences","opening":["Hi. I'm Pip. Before we start: what are you into? A game, a sport, music, food. Anything.","I'm learning sat writing: commas and run-on sentences. I already kno
+[sat-s005] PASS tutor gap report renders the SAT run {"gaps":["①\nTwo complete sentences can be joined only with a period, a semicolon, or a comma plus a FANBOYS word (for, and, nor, but, or, yet, so)\nExp","②\nA comma alone can't join two complete sentences; that mistake is called a comma splice\nExplained well
+[sat-s009] FAIL out-of-scope parking line ""
+[sat-s009] PASS authored beats: hits on explain, heal on misconception [[1,"vague",[100,100]],[2,"refusal",[100,100]],[3,"explain",[100,75]],[4,"procedure",[75,75]],[5,"explain",[75,50]],[6,"explain",[50,25]],[7,"misconception",[25,45]]]
+[sat-s009] PASS quiz: Pip misses the wrong-rule concept only [["k1",true,"No. You said if you take 6 off one side you take 6"],["k2",false,"Your rule: just move the number to the other side."],["k3",true,"5 times 4 minus 3 is 17. The other side is 17. Bot"]]
+[sat-s009] PASS K.O. complete, Brain v2, gap report {"ko":true,"status":"complete","bv":2,"topic":"SAT Math: solving linear equations (do the same thing to both sides)","opening":["Hi. I'm Pip. Before we start: what are you into? A game, a sport, music, food. Anything.","I'm learning sat math: solving linear eq
+[sat-s009] PASS tutor gap report renders the SAT run {"gaps":["①\nAn equation is a balance: both sides are equal, so whatever you do to one side you must do to the other\nExplained well\n“an equation is lik","②\nTo get x alone, undo each operation with its opposite (subtract to undo adding, divide to undo multip
+[stuck] PASS ladder exhausted -> friend nudge -> stuck [{"me":"hmm","pip":"Hm, I'm lost. Why is that wrong? I paused after 'tired', so I put a comma there.","k1":{"rung":1,"nudged":false,"stuck":false,"done":false,"best_level":0}},{"me":"maybe","pip":"Hm, I'm lost. Is 'I was tired' a whole sentence by itself, or d
+[stuck] PASS gap report shows stuck {"concepts":[["k1","vague",true],["k2","vague",false],["k3","vague",false]],"excerpt":"stuck after the full ladder on two complete sentences can be joined; still shaky on t"}
+
+console errors / page errors / bad responses per scenario: [["boss",0,0,0],["voice",0,0,0],["fallback-abort",3,0,0],["fallback-fallback",0,0,0],["sat-s005",0,0,0],["sat-s009",0,0,0],["stuck",0,0,0]]
+Done. 2 failing check(s). [
+  'fallback-abort: abort: no console/page errors',
+  'sat-s009: out-of-scope parking line'
+]

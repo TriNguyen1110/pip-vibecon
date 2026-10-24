@@ -1,0 +1,37 @@
+[picker-390-day] PASS cute: 6 animal thumbnails {"thumbs":["Pip the capybara looks deadpan","Pip the corgi looks deadpan","Pip the cat looks deadpan","Pip the raccoon looks deadpan","Pip the frog looks deadpan","Pip the axolotl looks deadpan"],"stage":"Pip the capybara looks aha"}
+[picker-390-day] PASS cute: no page scroll with picker open {"sh":844,"ih":844}
+[picker-390-day] PASS picker tap targets >= 44 []
+[picker-390-day] PASS cool: 6 animal thumbnails {"thumbs":["Pip the capybara looks deadpan","Pip the corgi looks deadpan","Pip the cat looks deadpan","Pip the raccoon looks deadpan","Pip the frog looks deadpan","Pip the axolotl looks deadpan"],"stage":"Pip the capybara looks aha"}
+[picker-390-day] PASS cool: no page scroll with picker open {"sh":844,"ih":844}
+[picker-390-day] PASS ugly: 6 animal thumbnails {"thumbs":["Pip the capybara looks deadpan","Pip the corgi looks deadpan","Pip the cat looks deadpan","Pip the raccoon looks deadpan","Pip the frog looks deadpan","Pip the axolotl looks deadpan"],"stage":"Pip the capybara looks aha"}
+[picker-390-day] PASS ugly: no page scroll with picker open {"sh":844,"ih":844}
+[picker-390-night] PASS cute: 6 animal thumbnails {"thumbs":["Pip the capybara looks deadpan","Pip the corgi looks deadpan","Pip the cat looks deadpan","Pip the raccoon looks deadpan","Pip the frog looks deadpan","Pip the axolotl looks deadpan"],"stage":"Pip the capybara looks aha"}
+[picker-390-night] PASS cute: no page scroll with picker open {"sh":844,"ih":844}
+[picker-390-night] PASS picker tap targets >= 44 []
+[picker-390-night] PASS cool: 6 animal thumbnails {"thumbs":["Pip the capybara looks deadpan","Pip the corgi looks deadpan","Pip the cat looks deadpan","Pip the raccoon looks deadpan","Pip the frog looks deadpan","Pip the axolotl looks deadpan"],"stage":"Pip the capybara looks aha"}
+[picker-390-night] PASS cool: no page scroll with picker open {"sh":844,"ih":844}
+[picker-390-night] PASS ugly: 6 animal thumbnails {"thumbs":["Pip the capybara looks deadpan","Pip the corgi looks deadpan","Pip the cat looks deadpan","Pip the raccoon looks deadpan","Pip the frog looks deadpan","Pip the axolotl looks deadpan"],"stage":"Pip the capybara looks aha"}
+[picker-390-night] PASS ugly: no page scroll with picker open {"sh":844,"ih":844}
+[picker-375-day] PASS cute: 6 animal thumbnails {"thumbs":["Pip the capybara looks deadpan","Pip the corgi looks deadpan","Pip the cat looks deadpan","Pip the raccoon looks deadpan","Pip the frog looks deadpan","Pip the axolotl looks deadpan"],"stage":"Pip the capybara looks aha"}
+[picker-375-day] PASS cute: no page scroll with picker open {"sh":667,"ih":667}
+[picker-375-day] PASS picker tap targets >= 44 []
+[picker-375-day] PASS cool: 6 animal thumbnails {"thumbs":["Pip the capybara looks deadpan","Pip the corgi looks deadpan","Pip the cat looks deadpan","Pip the raccoon looks deadpan","Pip the frog looks deadpan","Pip the axolotl looks deadpan"],"stage":"Pip the capybara looks aha"}
+[picker-375-day] PASS cool: no page scroll with picker open {"sh":667,"ih":667}
+[picker-375-day] PASS ugly: 6 animal thumbnails {"thumbs":["Pip the capybara looks deadpan","Pip the corgi looks deadpan","Pip the cat looks deadpan","Pip the raccoon looks deadpan","Pip the frog looks deadpan","Pip the axolotl looks deadpan"],"stage":"Pip the capybara looks aha"}
+[picker-375-day] PASS ugly: no page scroll with picker open {"sh":667,"ih":667}
+[stage18] PASS 18 sessions keep creature+vibe ["capybara/cute->capybara/cute","capybara/cool->capybara/cool","capybara/ugly->capybara/ugly","corgi/cute->corgi/cute","corgi/cool->corgi/cool","corgi/ugly->corgi/ugly","cat/cute->cat/cute","cat/cool->cat/cool","cat/ugly->cat/ugly","raccoon/cute->raccoon/cute"
+[stage18] PASS Pip2D renders each animal on the mission stage ["capybara/cute: Pip the capybara looks confused (147)","capybara/cool: Pip the capybara looks confused (145)","capybara/ugly: Pip the capybara looks confused (139)","corgi/cute: Pip the corgi looks confused (139)","corgi/cool: Pip the corgi looks confused (13
+[stage18] PASS Boss2D renders on every stage ["Top-Top Bottom-Bottom, smug"]
+[stage18] PASS no floating ? glyph, no WebGL canvas []
+[screens-390x844-day] PASS no page scroll on any student screen {"home":"844/844","vault":"844/844","missions":"844/844","switch":"844/844","picker":"844/844","mission":"844/844","mission-fight":"844/844","notebook":"844/844","exam-brain":"844/844","exam-q1":"844/844","exam-q2":"844/844","exam-q3":"844/844","reteach":"844/
+[screens-390x844-day] PASS no control clipped off-screen {}
+[screens-390x844-day] PASS tap targets >= 44px {}
+[screens-375x667-day] PASS no page scroll on any student screen {"home":"667/667","vault":"667/667","missions":"667/667","switch":"667/667","picker":"667/667","mission":"667/667","mission-fight":"667/667","notebook":"667/667","exam-brain":"667/667","exam-q1":"667/667","exam-q2":"667/667","exam-q3":"667/667","reteach":"667/
+[screens-375x667-day] PASS no control clipped off-screen {}
+[screens-375x667-day] PASS tap targets >= 44px {}
+[screens-375x667-night] PASS no page scroll on any student screen {"home":"667/667","vault":"667/667","missions":"667/667","switch":"667/667","picker":"667/667","mission":"667/667","mission-fight":"667/667","notebook":"667/667","exam-brain":"667/667","exam-q1":"667/667","exam-q2":"667/667","exam-q3":"667/667","reteach":"667/
+[screens-375x667-night] PASS no control clipped off-screen {}
+[screens-375x667-night] PASS tap targets >= 44px {}
+
+console errors / page errors / bad responses per scenario: [["picker-390-day",0,0,0],["picker-390-night",0,0,0],["picker-375-day",0,0,0],["stage18",0,0,0],["screens-390x844-day",0,0,0],["screens-375x667-day",0,0,0],["screens-375x667-night",0,0,0]]
+Done. 0 failing check(s). []

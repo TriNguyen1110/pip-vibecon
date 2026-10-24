@@ -1,0 +1,59 @@
+PASS leak before the student says it is replaced 
+PASS case/spacing variant caught 
+PASS allowed after the student said it 
+PASS a_frac k1 rung 1 spoiler-free 
+PASS a_frac k1 rung 2 spoiler-free 
+PASS a_frac k1 rung 3 spoiler-free 
+PASS a_frac k1 rung 4 spoiler-free 
+PASS a_frac k1 nudge spoiler-free 
+PASS a_frac k1 has 4 rungs 
+PASS a_frac k2 rung 1 spoiler-free 
+PASS a_frac k2 rung 2 spoiler-free 
+PASS a_frac k2 rung 3 spoiler-free 
+PASS a_frac k2 rung 4 spoiler-free 
+PASS a_frac k2 nudge spoiler-free 
+PASS a_frac k2 has 4 rungs 
+PASS a_frac k3 rung 1 spoiler-free 
+PASS a_frac k3 rung 2 spoiler-free 
+PASS a_frac k3 rung 3 spoiler-free 
+PASS a_frac k3 rung 4 spoiler-free 
+PASS a_frac k3 nudge spoiler-free 
+PASS a_frac k3 has 4 rungs 
+PASS a_sat_commas k1 rung 1 spoiler-free 
+PASS a_sat_commas k1 rung 2 spoiler-free 
+PASS a_sat_commas k1 rung 3 spoiler-free 
+PASS a_sat_commas k1 rung 4 spoiler-free 
+PASS a_sat_commas k1 nudge spoiler-free 
+PASS a_sat_commas k1 has 4 rungs 
+PASS a_sat_commas k2 rung 1 spoiler-free 
+PASS a_sat_commas k2 rung 2 spoiler-free 
+PASS a_sat_commas k2 rung 3 spoiler-free 
+PASS a_sat_commas k2 rung 4 spoiler-free 
+PASS a_sat_commas k2 nudge spoiler-free 
+PASS a_sat_commas k2 has 4 rungs 
+PASS a_sat_commas k3 rung 1 spoiler-free 
+PASS a_sat_commas k3 rung 2 spoiler-free 
+PASS a_sat_commas k3 rung 3 spoiler-free 
+PASS a_sat_commas k3 rung 4 spoiler-free 
+PASS a_sat_commas k3 nudge spoiler-free 
+PASS a_sat_commas k3 has 4 rungs 
+PASS a_sat_linear k1 rung 1 spoiler-free 
+PASS a_sat_linear k1 rung 2 spoiler-free 
+PASS a_sat_linear k1 rung 3 spoiler-free 
+PASS a_sat_linear k1 rung 4 spoiler-free 
+PASS a_sat_linear k1 nudge spoiler-free 
+PASS a_sat_linear k1 has 4 rungs 
+PASS a_sat_linear k2 rung 1 spoiler-free 
+PASS a_sat_linear k2 rung 2 spoiler-free 
+PASS a_sat_linear k2 rung 3 spoiler-free 
+PASS a_sat_linear k2 rung 4 spoiler-free 
+PASS a_sat_linear k2 nudge spoiler-free 
+PASS a_sat_linear k2 has 4 rungs 
+PASS a_sat_linear k3 rung 1 spoiler-free 
+PASS a_sat_linear k3 rung 2 spoiler-free 
+PASS a_sat_linear k3 rung 3 spoiler-free 
+PASS a_sat_linear k3 rung 4 spoiler-free 
+PASS a_sat_linear k3 nudge spoiler-free 
+PASS a_sat_linear k3 has 4 rungs 
+
+0 failing

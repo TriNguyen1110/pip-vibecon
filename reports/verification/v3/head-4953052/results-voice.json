@@ -1,0 +1,188 @@
+{
+  "voice": {
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [
+      {
+        "status": 200,
+        "t": 1792881968056,
+        "fallback": false,
+        "audioB64": 30708,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.44,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792881970082,
+        "fallback": false,
+        "audioB64": 334424,
+        "mime": "audio/mpeg",
+        "alignChars": 168,
+        "alignEnd": 15.68,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+      },
+      {
+        "status": 200,
+        "t": 1792881970662,
+        "fallback": false,
+        "audioB64": 163340,
+        "mime": "audio/mpeg",
+        "alignChars": 100,
+        "alignEnd": 7.68,
+        "text": "Saving that: 'the pieces are different sizes so you cant just add them"
+      },
+      {
+        "status": 200,
+        "t": 1792881978688,
+        "fallback": false,
+        "audioB64": 98696,
+        "mime": "audio/mpeg",
+        "alignChars": 55,
+        "alignEnd": 4.64,
+        "text": "A point I did not anticipate. I accept it with dignity."
+      }
+    ],
+    "checks": [
+      {
+        "label": "/api/tts returns live audio + alignment",
+        "pass": true,
+        "detail": [
+          {
+            "status": 200,
+            "t": 1792881968056,
+            "fallback": false,
+            "audioB64": 30708,
+            "mime": "audio/mpeg",
+            "alignChars": 10,
+            "alignEnd": 1.44,
+            "text": "BOSS FIGHT"
+          },
+          {
+            "status": 200,
+            "t": 1792881970082,
+            "fallback": false,
+            "audioB64": 334424,
+            "mime": "audio/mpeg",
+            "alignChars": 168,
+            "alignEnd": 15.68,
+            "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+          },
+          {
+            "status": 200,
+            "t": 1792881970662,
+            "fallback": false,
+            "audioB64": 163340,
+            "mime": "audio/mpeg",
+            "alignChars": 100,
+            "alignEnd": 7.68,
+            "text": "Saving that: 'the pieces are different sizes so you cant just add them"
+          },
+          {
+            "status": 200,
+            "t": 1792881978688,
+            "fallback": false,
+            "audioB64": 98696,
+            "mime": "audio/mpeg",
+            "alignChars": 55,
+            "alignEnd": 4.64,
+            "text": "A point I did not anticipate. I accept it with dignity."
+          }
+        ]
+      },
+      {
+        "label": "audio element played (ok, playing fired)",
+        "pass": true,
+        "detail": [
+          {
+            "t": 1792881968045,
+            "mime": "audio/mpeg",
+            "len": 30731,
+            "playing": 1792881968333,
+            "ok": true,
+            "end": 1792881969931
+          },
+          {
+            "t": 1792881970082,
+            "mime": "audio/mpeg",
+            "len": 334447,
+            "playing": 1792881970090,
+            "ok": true,
+            "end": 1792881970666
+          },
+          {
+            "t": 1792881970663,
+            "mime": "audio/mpeg",
+            "len": 163363,
+            "playing": 1792881970688,
+            "ok": true,
+            "end": 1792881978472
+          }
+        ]
+      },
+      {
+        "label": "mouth changes while audio plays (>= 3 shapes) ",
+        "pass": true,
+        "detail": {
+          "playing": {
+            "g:157": 40,
+            "g:133": 79,
+            "g:297": 31,
+            "g:98": 88,
+            "g:131": 10
+          },
+          "idle": {
+            "g:157": 28,
+            "g:133": 2,
+            "g:98": 1
+          }
+        }
+      },
+      {
+        "label": "no browser speech while ElevenLabs works",
+        "pass": true,
+        "detail": []
+      },
+      {
+        "label": "mute: no new /api/tts, no audio, no speech",
+        "pass": false,
+        "detail": {
+          "before": {
+            "tts": 4,
+            "plays": 3,
+            "synth": 0
+          },
+          "after": {
+            "plays": 4,
+            "synth": 0,
+            "muted": "1",
+            "playLog": [
+              {
+                "t": 1792881970663,
+                "mime": "audio/mpeg",
+                "len": 163363,
+                "playing": 1792881970688,
+                "ok": true,
+                "end": 1792881978472
+              },
+              {
+                "t": 1792881978687,
+                "mime": "audio/mpeg",
+                "len": 98719,
+                "playing": 1792881978690,
+                "ok": true,
+                "end": 1792881978736
+              }
+            ]
+          },
+          "tts": 4
+        }
+      }
+    ],
+    "muteAt": 1792881978691,
+    "ttsBefore": 2
+  }
+}

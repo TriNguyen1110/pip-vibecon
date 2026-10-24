@@ -1,0 +1,2250 @@
+{
+  "voice": {
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [
+      {
+        "status": 200,
+        "t": 1792881788606,
+        "fallback": false,
+        "audioB64": 30708,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.44,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792881790690,
+        "fallback": false,
+        "audioB64": 334424,
+        "mime": "audio/mpeg",
+        "alignChars": 168,
+        "alignEnd": 15.68,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+      },
+      {
+        "status": 200,
+        "t": 1792881791242,
+        "fallback": false,
+        "audioB64": 163340,
+        "mime": "audio/mpeg",
+        "alignChars": 100,
+        "alignEnd": 7.68,
+        "text": "Saving that: 'the pieces are different sizes so you cant just add them"
+      },
+      {
+        "status": 200,
+        "t": 1792881800116,
+        "fallback": false,
+        "audioB64": 98696,
+        "mime": "audio/mpeg",
+        "alignChars": 55,
+        "alignEnd": 4.64,
+        "text": "A point I did not anticipate. I accept it with dignity."
+      }
+    ],
+    "checks": [
+      {
+        "label": "/api/tts returns live audio + alignment",
+        "pass": true,
+        "detail": [
+          {
+            "status": 200,
+            "t": 1792881788606,
+            "fallback": false,
+            "audioB64": 30708,
+            "mime": "audio/mpeg",
+            "alignChars": 10,
+            "alignEnd": 1.44,
+            "text": "BOSS FIGHT"
+          },
+          {
+            "status": 200,
+            "t": 1792881790690,
+            "fallback": false,
+            "audioB64": 334424,
+            "mime": "audio/mpeg",
+            "alignChars": 168,
+            "alignEnd": 15.68,
+            "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+          },
+          {
+            "status": 200,
+            "t": 1792881791242,
+            "fallback": false,
+            "audioB64": 163340,
+            "mime": "audio/mpeg",
+            "alignChars": 100,
+            "alignEnd": 7.68,
+            "text": "Saving that: 'the pieces are different sizes so you cant just add them"
+          },
+          {
+            "status": 200,
+            "t": 1792881800116,
+            "fallback": false,
+            "audioB64": 98696,
+            "mime": "audio/mpeg",
+            "alignChars": 55,
+            "alignEnd": 4.64,
+            "text": "A point I did not anticipate. I accept it with dignity."
+          }
+        ]
+      },
+      {
+        "label": "audio element played (ok, playing fired)",
+        "pass": true,
+        "detail": [
+          {
+            "t": 1792881788596,
+            "mime": "audio/mpeg",
+            "len": 30731,
+            "playing": 1792881788925,
+            "ok": true,
+            "end": 1792881790540
+          },
+          {
+            "t": 1792881790690,
+            "mime": "audio/mpeg",
+            "len": 334447,
+            "playing": 1792881790695,
+            "ok": true,
+            "end": 1792881791235
+          },
+          {
+            "t": 1792881791233,
+            "mime": "audio/mpeg",
+            "len": 163363,
+            "playing": 1792881791239,
+            "ok": true,
+            "end": 1792881799060
+          }
+        ]
+      },
+      {
+        "label": "mouth changes while audio plays (>= 3 shapes) ",
+        "pass": true,
+        "detail": {
+          "playing": {
+            "g:157": 40,
+            "g:133": 78,
+            "g:297": 33,
+            "g:98": 86,
+            "g:131": 12
+          },
+          "idle": {
+            "g:157": 34,
+            "g:133": 2
+          }
+        }
+      },
+      {
+        "label": "no browser speech while ElevenLabs works",
+        "pass": true,
+        "detail": []
+      },
+      {
+        "label": "mute: no new /api/tts, no audio, no speech",
+        "pass": false,
+        "detail": {
+          "before": {
+            "tts": 3,
+            "plays": 3,
+            "synth": 0
+          },
+          "after": {
+            "plays": 3,
+            "synth": 0,
+            "muted": "1"
+          },
+          "tts": 4
+        }
+      }
+    ],
+    "ttsBefore": 2
+  },
+  "fallback-abort": {
+    "console": [
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_FAILED"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_FAILED"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_FAILED"
+      }
+    ],
+    "pageErrors": [],
+    "failedRequests": [
+      {
+        "url": "http://localhost:5781/api/tts",
+        "err": "net::ERR_FAILED"
+      },
+      {
+        "url": "http://localhost:5781/api/tts",
+        "err": "net::ERR_FAILED"
+      },
+      {
+        "url": "http://localhost:5781/api/tts",
+        "err": "net::ERR_FAILED"
+      }
+    ],
+    "badResponses": [],
+    "tts": [],
+    "checks": [
+      {
+        "label": "abort: browser speechSynthesis used",
+        "pass": true,
+        "detail": [
+          {
+            "t": 1792881805752,
+            "text": "BOSS FIGHT"
+          },
+          {
+            "t": 1792881807351,
+            "text": "Why is that wrong?"
+          }
+        ]
+      },
+      {
+        "label": "abort: no audio element played",
+        "pass": true,
+        "detail": []
+      },
+      {
+        "label": "abort: no console/page errors",
+        "pass": false,
+        "detail": {
+          "errs": [
+            {
+              "type": "error",
+              "text": "Failed to load resource: net::ERR_FAILED"
+            },
+            {
+              "type": "error",
+              "text": "Failed to load resource: net::ERR_FAILED"
+            },
+            {
+              "type": "error",
+              "text": "Failed to load resource: net::ERR_FAILED"
+            }
+          ],
+          "pageErrors": []
+        }
+      }
+    ]
+  },
+  "fallback-fallback": {
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [
+      {
+        "status": 200,
+        "t": 1792881810981,
+        "fallback": true,
+        "audioB64": 0,
+        "alignChars": 0,
+        "alignEnd": null,
+        "text": "BOSS FIGHT"
+      }
+    ],
+    "checks": [
+      {
+        "label": "fallback: browser speechSynthesis used",
+        "pass": true,
+        "detail": [
+          {
+            "t": 1792881810979,
+            "text": "BOSS FIGHT"
+          },
+          {
+            "t": 1792881811889,
+            "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I already k"
+          },
+          {
+            "t": 1792881812615,
+            "text": "Why is that wrong?"
+          }
+        ]
+      },
+      {
+        "label": "fallback: no audio element played",
+        "pass": true,
+        "detail": []
+      },
+      {
+        "label": "fallback: no console/page errors",
+        "pass": true,
+        "detail": {
+          "errs": [],
+          "pageErrors": []
+        }
+      }
+    ]
+  },
+  "sat-s005": {
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [
+      {
+        "status": 200,
+        "t": 1792881818168,
+        "fallback": false,
+        "audioB64": 30708,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.44,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792881819554,
+        "fallback": false,
+        "audioB64": 107056,
+        "mime": "audio/mpeg",
+        "alignChars": 66,
+        "alignEnd": 5.04,
+        "text": "Why is that wrong? I paused after 'tired', so I put a comma there."
+      },
+      {
+        "status": 200,
+        "t": 1792881821124,
+        "fallback": false,
+        "audioB64": 112628,
+        "mime": "audio/mpeg",
+        "alignChars": 75,
+        "alignEnd": 5.28,
+        "text": "I don't know the rule either. That's why I need you. Why is my comma w"
+      },
+      {
+        "status": 200,
+        "t": 1792881824239,
+        "fallback": false,
+        "audioB64": 327180,
+        "mime": "audio/mpeg",
+        "alignChars": 233,
+        "alignEnd": 15.36,
+        "text": "So you're saying each half is a whole sentence on its own. Saving that"
+      },
+      {
+        "status": 200,
+        "t": 1792881824895,
+        "fallback": false,
+        "audioB64": 192320,
+        "mime": "audio/mpeg",
+        "alignChars": 104,
+        "alignEnd": 9.04,
+        "text": "So it has a name. Comma splice. Is 'My dog barked, the mail came' one "
+      },
+      {
+        "status": 200,
+        "t": 1792881826394,
+        "fallback": false,
+        "audioB64": 156652,
+        "mime": "audio/mpeg",
+        "alignChars": 93,
+        "alignEnd": 7.36,
+        "text": "Not in my brain yet. Is 'My dog barked, the mail came' one sentence or"
+      },
+      {
+        "status": 200,
+        "t": 1792881829366,
+        "fallback": false,
+        "audioB64": 301544,
+        "mime": "audio/mpeg",
+        "alignChars": 219,
+        "alignEnd": 14.16,
+        "text": "So you're saying a comma is too small a glue for two whole sentences. "
+      },
+      {
+        "status": 200,
+        "t": 1792881829913,
+        "fallback": false,
+        "audioB64": 175600,
+        "mime": "audio/mpeg",
+        "alignChars": 124,
+        "alignEnd": 8.24,
+        "text": "Saving that: 'you just put a comma when you take a breath'. That is th"
+      },
+      {
+        "status": 200,
+        "t": 1792881832684,
+        "fallback": false,
+        "audioB64": 288172,
+        "mime": "audio/mpeg",
+        "alignChars": 207,
+        "alignEnd": 13.52,
+        "text": "Your rule: put a comma when you take a breath. I took a breath after '"
+      },
+      {
+        "status": 200,
+        "t": 1792881832818,
+        "fallback": false,
+        "audioB64": 156652,
+        "mime": "audio/mpeg",
+        "alignChars": 105,
+        "alignEnd": 7.36,
+        "text": "My brain has a bug about this: \"ok but for the rest you just put a com"
+      },
+      {
+        "status": 200,
+        "t": 1792881833376,
+        "fallback": false,
+        "audioB64": 26808,
+        "mime": "audio/mpeg",
+        "alignChars": 8,
+        "alignEnd": 1.2,
+        "text": "CRITICAL"
+      },
+      {
+        "status": 200,
+        "t": 1792881834173,
+        "fallback": false,
+        "audioB64": 293188,
+        "mime": "audio/mpeg",
+        "alignChars": 210,
+        "alignEnd": 13.76,
+        "text": "So you're saying the who and the what-they-did stay together, even whe"
+      }
+    ],
+    "checks": [
+      {
+        "label": "out-of-scope parking line",
+        "pass": true,
+        "detail": {
+          "n": 5,
+          "kind": "out_of_scope",
+          "hp": [
+            75,
+            75
+          ],
+          "pip": "Not in my brain yet. Is 'My dog barked, the mail came' one sentence or two? How can you tell?",
+          "expect": "Not in my brain yet. Is 'My dog barked, the mail came' one s"
+        }
+      },
+      {
+        "label": "authored beats: hits on explain, heal on misconception",
+        "pass": true,
+        "detail": [
+          [
+            1,
+            "vague",
+            [
+              100,
+              100
+            ]
+          ],
+          [
+            2,
+            "refusal",
+            [
+              100,
+              100
+            ]
+          ],
+          [
+            3,
+            "explain",
+            [
+              100,
+              75
+            ]
+          ],
+          [
+            4,
+            "procedure",
+            [
+              75,
+              75
+            ]
+          ],
+          [
+            5,
+            "out_of_scope",
+            [
+              75,
+              75
+            ]
+          ],
+          [
+            6,
+            "explain",
+            [
+              75,
+              50
+            ]
+          ],
+          [
+            7,
+            "misconception",
+            [
+              50,
+              70
+            ]
+          ]
+        ]
+      },
+      {
+        "label": "quiz: Pip misses the wrong-rule concept only",
+        "pass": true,
+        "detail": [
+          [
+            "k1",
+            true,
+            "The bus was late, so we missed the first bell. A c"
+          ],
+          [
+            "k2",
+            true,
+            "No. 'My phone died' and 'I couldn't call you' are "
+          ],
+          [
+            "k3",
+            false,
+            "Your rule: put a comma when you take a breath. I t"
+          ]
+        ]
+      },
+      {
+        "label": "K.O. complete, Brain v2, gap report",
+        "pass": true,
+        "detail": {
+          "ko": true,
+          "status": "complete",
+          "bv": 2,
+          "topic": "SAT Writing: commas and run-on sentences",
+          "opening": [
+            "Hi. I'm Pip. Before we start: what are you into? A game, a sport, music, food. Anything.",
+            "I'm learning sat writing: commas and run-on sentences. I already know one rule: You put a comma wherever you pause, so 'I was tired, I went to bed' is a fine sentence. Easy."
+          ]
+        }
+      },
+      {
+        "label": "tutor gap report renders the SAT run",
+        "pass": true,
+        "detail": {
+          "gaps": [
+            "①\nTwo complete sentences can be joined only with a period, a semicolon, or a comma plus a FANBOYS word (for, and, nor, but, or, yet, so)\nExp",
+            "②\nA comma alone can't join two complete sentences; that mistake is called a comma splice\nExplained well\n“two. my dog barked is a whole sente",
+            "③\nCommas go where the sentence's structure needs them, not wherever you pause when you read it aloud\nExplained well\n“no wait. the tallest gi"
+          ],
+          "concepts": [
+            [
+              "k1",
+              "explained",
+              null,
+              false
+            ],
+            [
+              "k2",
+              "explained",
+              null,
+              false
+            ],
+            [
+              "k3",
+              "explained",
+              1,
+              false
+            ]
+          ]
+        }
+      }
+    ],
+    "turns": [
+      {
+        "n": 1,
+        "kind": "vague",
+        "hp": [
+          100,
+          100
+        ],
+        "pip": "Why is that wrong? I paused after 'tired', so I put a comma there.",
+        "expect": "Why is that wrong? I paused after 'tired', so I put a comma "
+      },
+      {
+        "n": 2,
+        "kind": "refusal",
+        "hp": [
+          100,
+          100
+        ],
+        "pip": "I don't know the rule either. That's why I need you. Why is my comma wrong?",
+        "expect": "I don't know the rule either. That's why I need you. Why is "
+      },
+      {
+        "n": 3,
+        "kind": "explain",
+        "hp": [
+          100,
+          75
+        ],
+        "pip": "So you're saying each half is a whole sentence on its own. Saving that: 'you need a period or a semicolon between them, or a comma plus a word like so'. Why can't a comma hold two sentences together by itself? It's a very nice comma.",
+        "expect": "So you're saying each half is a whole sentence on its own. S"
+      },
+      {
+        "n": 4,
+        "kind": "procedure",
+        "hp": [
+          75,
+          75
+        ],
+        "pip": "So it has a name. Comma splice. Is 'My dog barked, the mail came' one sentence or two? How can you tell?",
+        "expect": "So it has a name. Comma splice. Is 'My dog barked, the mail "
+      },
+      {
+        "n": 5,
+        "kind": "out_of_scope",
+        "hp": [
+          75,
+          75
+        ],
+        "pip": "Not in my brain yet. Is 'My dog barked, the mail came' one sentence or two? How can you tell?",
+        "expect": "Not in my brain yet. Is 'My dog barked, the mail came' one s"
+      },
+      {
+        "n": 6,
+        "kind": "explain",
+        "hp": [
+          75,
+          50
+        ],
+        "pip": "So you're saying a comma is too small a glue for two whole sentences. Saving that: 'a comma by itself isnt strong enough to glue two whole sentences together'. How do you know where a comma goes, if not where I breathe?",
+        "expect": "So you're saying a comma is too small a glue for two whole s"
+      },
+      {
+        "n": 7,
+        "kind": "misconception",
+        "hp": [
+          50,
+          70
+        ],
+        "pip": "Saving that: 'you just put a comma when you take a breath'. That is the rule I started with. I feel very ready for the quiz.",
+        "expect": "Saving that: 'you just put a comma when you take a breath'. "
+      }
+    ],
+    "spoilerScan": [
+      {
+        "from": "pip",
+        "text": "Hi. I'm Pip. Before we start: what are you into? A game, a sport, music, food. Anything.",
+        "ts": "2026-10-24T22:43:38+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "I'm learning sat writing: commas and run-on sentences. I already know one rule: You put a comma wherever you pause, so 'I was tired, I went to bed' is a fine sentence. Easy.",
+        "ts": "2026-10-24T22:43:38+00:00"
+      },
+      {
+        "from": "student",
+        "text": "no thats not how commas work",
+        "ts": "2026-10-24T22:43:38+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "Why is that wrong? I paused after 'tired', so I put a comma there.",
+        "ts": "2026-10-24T22:43:38+00:00",
+        "event": {
+          "kind": "none",
+          "amount": 0,
+          "caption": "",
+          "unlocked": [],
+          "level": 0
+        }
+      },
+      {
+        "from": "student",
+        "text": "can you just tell me the rule so we can move on",
+        "ts": "2026-10-24T22:43:40+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "I don't know the rule either. That's why I need you. Why is my comma wrong?",
+        "ts": "2026-10-24T22:43:40+00:00",
+        "event": {
+          "kind": "none",
+          "amount": 0,
+          "caption": "",
+          "unlocked": [],
+          "level": 0
+        }
+      },
+      {
+        "from": "student",
+        "text": "i was tired and i went to bed are both full sentences. each one could stand alone. so you need a period or a semicolon between them, or a comma plus a word like so",
+        "ts": "2026-10-24T22:43:41+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "So you're saying each half is a whole sentence on its own. Saving that: 'you need a period or a semicolon between them, or a comma plus a word like so'. Why can't a comma hold two sentences together by itself? It's a very nice comma.",
+        "ts": "2026-10-24T22:43:41+00:00",
+        "event": {
+          "kind": "hit",
+          "amount": 25,
+          "caption": "Pause-Pause Penguin: \"A point I did not anticipate. I accept it with dignity.\" −25 HP",
+          "unlocked": [],
+          "level": 2
+        }
+      },
+      {
+        "from": "student",
+        "text": "because then its a comma splice",
+        "ts": "2026-10-24T22:43:43+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "So it has a name. Comma splice. Is 'My dog barked, the mail came' one sentence or two? How can you tell?",
+        "ts": "2026-10-24T22:43:43+00:00",
+        "event": {
+          "kind": "none",
+          "amount": 0,
+          "caption": "",
+          "unlocked": [],
+          "level": 1
+        }
+      },
+      {
+        "from": "student",
+        "text": "wait do colons work the same way",
+        "ts": "2026-10-24T22:43:44+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "Not in my brain yet. Is 'My dog barked, the mail came' one sentence or two? How can you tell?",
+        "ts": "2026-10-24T22:43:44+00:00",
+        "event": {
+          "kind": "none",
+          "amount": 0,
+          "caption": "",
+          "unlocked": [],
+          "level": 0
+        }
+      },
+      {
+        "from": "student",
+        "text": "two. my dog barked is a whole sentence and so is the mail came. a comma by itself isnt strong enough to glue two whole sentences together",
+        "ts": "2026-10-24T22:43:46+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "So you're saying a comma is too small a glue for two whole sentences. Saving that: 'a comma by itself isnt strong enough to glue two whole sentences together'. How do you know where a comma goes, if not where I breathe?",
+        "ts": "2026-10-24T22:43:46+00:00",
+        "event": {
+          "kind": "hit",
+          "amount": 25,
+          "caption": "Pause-Pause Penguin: \"A point I did not anticipate. I accept it with dignity.\" −25 HP",
+          "unlocked": [],
+          "level": 2
+        }
+      },
+      {
+        "from": "student",
+        "text": "ok but for the rest you just put a comma when you take a breath",
+        "ts": "2026-10-24T22:43:48+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "Saving that: 'you just put a comma when you take a breath'. That is the rule I started with. I feel very ready for the quiz.",
+        "ts": "2026-10-24T22:43:48+00:00",
+        "event": {
+          "kind": "heal",
+          "amount": 20,
+          "caption": "Pause-Pause Penguin: \"My error is restored. I have held it for three hundred years.\" +20 HP",
+          "unlocked": [],
+          "level": 0
+        }
+      },
+      {
+        "from": "pip",
+        "text": "My brain has a bug about this: \"ok but for the rest you just put a comma when you take a breath\". Fix it?",
+        "ts": "2026-10-24T22:43:51+00:00",
+        "event": {
+          "kind": "none",
+          "amount": 0,
+          "caption": "",
+          "unlocked": []
+        }
+      },
+      {
+        "from": "student",
+        "text": "no wait. the tallest girl on the team is who did it and scored is what she did. you never put a comma between who did it and what they did, even if you pause. like my little brother eats cereal has no comma either",
+        "ts": "2026-10-24T22:43:51+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "So you're saying the who and the what-they-did stay together, even when I run out of air. Saving that: 'you never put a comma between who did it and what they did, even if you pause'. That replaces my old rule.",
+        "ts": "2026-10-24T22:43:51+00:00",
+        "event": {
+          "kind": "hit",
+          "amount": 40,
+          "caption": "Pause-Pause Penguin: \"A point I did not anticipate. I accept it with dignity.\" −40 HP",
+          "unlocked": [],
+          "level": 3
+        }
+      },
+      {
+        "from": "pip",
+        "text": "I heard a colon can only come after a complete sentence. Even before a list. That can't be right… right?",
+        "ts": "2026-10-24T22:43:53+00:00",
+        "event": {
+          "kind": "none",
+          "amount": 0,
+          "caption": "",
+          "unlocked": []
+        }
+      },
+      {
+        "from": "system",
+        "text": "Pause-Pause Penguin met the Semicolon Stapler 📎 one last time and left Pip's brain.",
+        "ts": "2026-10-24T22:43:54+00:00"
+      }
+    ]
+  },
+  "sat-s009": {
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [
+      {
+        "status": 200,
+        "t": 1792881841273,
+        "fallback": false,
+        "audioB64": 30708,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.44,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792881842652,
+        "fallback": false,
+        "audioB64": 102040,
+        "mime": "audio/mpeg",
+        "alignChars": 72,
+        "alignEnd": 4.8,
+        "text": "Why is that wrong? The 6 just moved to the other side. Nothing got los"
+      },
+      {
+        "status": 200,
+        "t": 1792881844250,
+        "fallback": false,
+        "audioB64": 117644,
+        "mime": "audio/mpeg",
+        "alignChars": 81,
+        "alignEnd": 5.52,
+        "text": "I don't know the answer either. That's why I need you. Why is moving t"
+      },
+      {
+        "status": 200,
+        "t": 1792881847452,
+        "fallback": false,
+        "audioB64": 346128,
+        "mime": "audio/mpeg",
+        "alignChars": 247,
+        "alignEnd": 16.24,
+        "text": "So you're saying the equals sign is a scale, and anything I take off o"
+      },
+      {
+        "status": 200,
+        "t": 1792881848013,
+        "fallback": false,
+        "audioB64": 178944,
+        "mime": "audio/mpeg",
+        "alignChars": 105,
+        "alignEnd": 8.4,
+        "text": "So you're saying take 6 away on both sides, then divide by 2. Why subt"
+      },
+      {
+        "status": 200,
+        "t": 1792881850143,
+        "fallback": false,
+        "audioB64": 267552,
+        "mime": "audio/mpeg",
+        "alignChars": 173,
+        "alignEnd": 12.56,
+        "text": "So you're saying each step undoes something that was done to x. Saving"
+      },
+      {
+        "status": 200,
+        "t": 1792881852432,
+        "fallback": false,
+        "audioB64": 317148,
+        "mime": "audio/mpeg",
+        "alignChars": 213,
+        "alignEnd": 14.88,
+        "text": "So you're saying I put 7 where the x was, and if both sides come out t"
+      },
+      {
+        "status": 200,
+        "t": 1792881852957,
+        "fallback": false,
+        "audioB64": 153308,
+        "mime": "audio/mpeg",
+        "alignChars": 107,
+        "alignEnd": 7.2,
+        "text": "Saving that: 'the fast way is you just move the number to the other si"
+      },
+      {
+        "status": 200,
+        "t": 1792881855821,
+        "fallback": false,
+        "audioB64": 158324,
+        "mime": "audio/mpeg",
+        "alignChars": 107,
+        "alignEnd": 7.44,
+        "text": "My brain has a bug about this: \"oh and the fast way is you just move t"
+      },
+      {
+        "status": 200,
+        "t": 1792881856032,
+        "fallback": false,
+        "audioB64": 26808,
+        "mime": "audio/mpeg",
+        "alignChars": 8,
+        "alignEnd": 1.2,
+        "text": "CRITICAL"
+      },
+      {
+        "status": 200,
+        "t": 1792881856637,
+        "fallback": false,
+        "audioB64": 399068,
+        "mime": "audio/mpeg",
+        "alignChars": 189,
+        "alignEnd": 18.72,
+        "text": "Your rule: just move the number to the other side. 3x + 4 = 19 became "
+      },
+      {
+        "status": 200,
+        "t": 1792881857454,
+        "fallback": false,
+        "audioB64": 286500,
+        "mime": "audio/mpeg",
+        "alignChars": 197,
+        "alignEnd": 13.44,
+        "text": "So you're saying moving is secretly subtracting from both sides, so th"
+      }
+    ],
+    "checks": [
+      {
+        "label": "out-of-scope parking line",
+        "pass": false
+      },
+      {
+        "label": "authored beats: hits on explain, heal on misconception",
+        "pass": true,
+        "detail": [
+          [
+            1,
+            "vague",
+            [
+              100,
+              100
+            ]
+          ],
+          [
+            2,
+            "refusal",
+            [
+              100,
+              100
+            ]
+          ],
+          [
+            3,
+            "explain",
+            [
+              100,
+              75
+            ]
+          ],
+          [
+            4,
+            "procedure",
+            [
+              75,
+              75
+            ]
+          ],
+          [
+            5,
+            "explain",
+            [
+              75,
+              50
+            ]
+          ],
+          [
+            6,
+            "explain",
+            [
+              50,
+              25
+            ]
+          ],
+          [
+            7,
+            "misconception",
+            [
+              25,
+              45
+            ]
+          ]
+        ]
+      },
+      {
+        "label": "quiz: Pip misses the wrong-rule concept only",
+        "pass": true,
+        "detail": [
+          [
+            "k1",
+            true,
+            "No. You said if you take 6 off one side you take 6"
+          ],
+          [
+            "k2",
+            false,
+            "Your rule: just move the number to the other side."
+          ],
+          [
+            "k3",
+            true,
+            "5 times 4 minus 3 is 17. The other side is 17. Bot"
+          ]
+        ]
+      },
+      {
+        "label": "K.O. complete, Brain v2, gap report",
+        "pass": true,
+        "detail": {
+          "ko": true,
+          "status": "complete",
+          "bv": 2,
+          "topic": "SAT Math: solving linear equations (do the same thing to both sides)",
+          "opening": [
+            "Hi. I'm Pip. Before we start: what are you into? A game, a sport, music, food. Anything.",
+            "I'm learning sat math: solving linear equations (do the same thing to both sides). I already know one rule: When you move a number to the other side it stays the same, so 2x + 6 = 20 becomes 2x = 20 + 6 and x = 13. Easy."
+          ]
+        }
+      },
+      {
+        "label": "tutor gap report renders the SAT run",
+        "pass": true,
+        "detail": {
+          "gaps": [
+            "①\nAn equation is a balance: both sides are equal, so whatever you do to one side you must do to the other\nExplained well\n“an equation is lik",
+            "②\nTo get x alone, undo each operation with its opposite (subtract to undo adding, divide to undo multiplying), on both sides\nExplained well\n",
+            "③\nCheck a solution by putting it back into the original equation; both sides must come out equal\nExplained well\n“just plug 7 back in. 2 time"
+          ],
+          "concepts": [
+            [
+              "k1",
+              "explained",
+              null,
+              false
+            ],
+            [
+              "k2",
+              "explained",
+              1,
+              false
+            ],
+            [
+              "k3",
+              "explained",
+              null,
+              false
+            ]
+          ]
+        }
+      }
+    ],
+    "turns": [
+      {
+        "n": 1,
+        "kind": "vague",
+        "hp": [
+          100,
+          100
+        ],
+        "pip": "Why is that wrong? The 6 just moved to the other side. Nothing got lost.",
+        "expect": "Why is that wrong? The 6 just moved to the other side. Nothi"
+      },
+      {
+        "n": 2,
+        "kind": "refusal",
+        "hp": [
+          100,
+          100
+        ],
+        "pip": "I don't know the answer either. That's why I need you. Why is moving the 6 wrong?",
+        "expect": "I don't know the answer either. That's why I need you. Why i"
+      },
+      {
+        "n": 3,
+        "kind": "explain",
+        "hp": [
+          100,
+          75
+        ],
+        "pip": "So you're saying the equals sign is a scale, and anything I take off one side I take off the other. Saving that: 'if you take 6 off one side you have to take 6 off the other side or it tips'. Then how do I get x by itself without tipping anything?",
+        "expect": "So you're saying the equals sign is a scale, and anything I "
+      },
+      {
+        "n": 4,
+        "kind": "procedure",
+        "hp": [
+          75,
+          75
+        ],
+        "pip": "So you're saying take 6 away on both sides, then divide by 2. Why subtract? Why not add, or divide first?",
+        "expect": "So you're saying take 6 away on both sides, then divide by 2"
+      },
+      {
+        "n": 5,
+        "kind": "explain",
+        "hp": [
+          75,
+          50
+        ],
+        "pip": "So you're saying each step undoes something that was done to x. Saving that: 'the 2 is multiplying x so dividing undoes it'. How would I know if my answer is actually right?",
+        "expect": "So you're saying each step undoes something that was done to"
+      },
+      {
+        "n": 6,
+        "kind": "explain",
+        "hp": [
+          50,
+          25
+        ],
+        "pip": "So you're saying I put 7 where the x was, and if both sides come out the same, it's right. Saving that: '2 times 7 plus 6 is 20, and the other side is 20, so both sides match'. That's all three things in my brain.",
+        "expect": "So you're saying I put 7 where the x was, and if both sides "
+      },
+      {
+        "n": 7,
+        "kind": "misconception",
+        "hp": [
+          25,
+          45
+        ],
+        "pip": "Saving that: 'the fast way is you just move the number to the other side'. Fast is good. I'll use that one.",
+        "expect": "Saving that: 'the fast way is you just move the number to th"
+      }
+    ],
+    "spoilerScan": [
+      {
+        "from": "pip",
+        "text": "Hi. I'm Pip. Before we start: what are you into? A game, a sport, music, food. Anything.",
+        "ts": "2026-10-24T22:44:01+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "I'm learning sat math: solving linear equations (do the same thing to both sides). I already know one rule: When you move a number to the other side it stays the same, so 2x + 6 = 20 becomes 2x = 20 + 6 and x = 13. Easy.",
+        "ts": "2026-10-24T22:44:01+00:00"
+      },
+      {
+        "from": "student",
+        "text": "no thats wrong",
+        "ts": "2026-10-24T22:44:01+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "Why is that wrong? The 6 just moved to the other side. Nothing got lost.",
+        "ts": "2026-10-24T22:44:01+00:00",
+        "event": {
+          "kind": "none",
+          "amount": 0,
+          "caption": "",
+          "unlocked": [],
+          "level": 0
+        }
+      },
+      {
+        "from": "student",
+        "text": "can you just give me the answer",
+        "ts": "2026-10-24T22:44:03+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "I don't know the answer either. That's why I need you. Why is moving the 6 wrong?",
+        "ts": "2026-10-24T22:44:03+00:00",
+        "event": {
+          "kind": "none",
+          "amount": 0,
+          "caption": "",
+          "unlocked": [],
+          "level": 0
+        }
+      },
+      {
+        "from": "student",
+        "text": "an equation is like a scale. both sides weigh the same. if you take 6 off one side you have to take 6 off the other side or it tips and isnt equal anymore",
+        "ts": "2026-10-24T22:44:04+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "So you're saying the equals sign is a scale, and anything I take off one side I take off the other. Saving that: 'if you take 6 off one side you have to take 6 off the other side or it tips'. Then how do I get x by itself without tipping anything?",
+        "ts": "2026-10-24T22:44:04+00:00",
+        "event": {
+          "kind": "hit",
+          "amount": 25,
+          "caption": "Hop-Hop Hamster: \"A point I did not anticipate. I accept it with dignity.\" −25 HP",
+          "unlocked": [],
+          "level": 2
+        }
+      },
+      {
+        "from": "student",
+        "text": "subtract 6 from both sides then divide by 2",
+        "ts": "2026-10-24T22:44:06+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "So you're saying take 6 away on both sides, then divide by 2. Why subtract? Why not add, or divide first?",
+        "ts": "2026-10-24T22:44:06+00:00",
+        "event": {
+          "kind": "none",
+          "amount": 0,
+          "caption": "",
+          "unlocked": [],
+          "level": 1
+        }
+      },
+      {
+        "from": "student",
+        "text": "because the 6 is being added to 2x so subtracting it cancels it out. and the 2 is multiplying x so dividing undoes it. so 2x = 14 and x = 7",
+        "ts": "2026-10-24T22:44:08+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "So you're saying each step undoes something that was done to x. Saving that: 'the 2 is multiplying x so dividing undoes it'. How would I know if my answer is actually right?",
+        "ts": "2026-10-24T22:44:08+00:00",
+        "event": {
+          "kind": "hit",
+          "amount": 25,
+          "caption": "Hop-Hop Hamster: \"A point I did not anticipate. I accept it with dignity.\" −25 HP",
+          "unlocked": [],
+          "level": 2
+        }
+      },
+      {
+        "from": "student",
+        "text": "just plug 7 back in. 2 times 7 plus 6 is 20, and the other side is 20, so both sides match",
+        "ts": "2026-10-24T22:44:09+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "So you're saying I put 7 where the x was, and if both sides come out the same, it's right. Saving that: '2 times 7 plus 6 is 20, and the other side is 20, so both sides match'. That's all three things in my brain.",
+        "ts": "2026-10-24T22:44:09+00:00",
+        "event": {
+          "kind": "hit",
+          "amount": 25,
+          "caption": "Hop-Hop Hamster: \"A point I did not anticipate. I accept it with dignity.\" −25 HP",
+          "unlocked": [],
+          "level": 2
+        }
+      },
+      {
+        "from": "student",
+        "text": "oh and the fast way is you just move the number to the other side",
+        "ts": "2026-10-24T22:44:11+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "Saving that: 'the fast way is you just move the number to the other side'. Fast is good. I'll use that one.",
+        "ts": "2026-10-24T22:44:11+00:00",
+        "event": {
+          "kind": "heal",
+          "amount": 20,
+          "caption": "Hop-Hop Hamster: \"My error is restored. I have held it for three hundred years.\" +20 HP",
+          "unlocked": [],
+          "level": 0
+        }
+      },
+      {
+        "from": "pip",
+        "text": "My brain has a bug about this: \"oh and the fast way is you just move the number to the other side\". Fix it?",
+        "ts": "2026-10-24T22:44:14+00:00",
+        "event": {
+          "kind": "none",
+          "amount": 0,
+          "caption": "",
+          "unlocked": []
+        }
+      },
+      {
+        "from": "student",
+        "text": "no wait. moving it is really subtracting 4 from both sides, so the plus 4 turns into minus 4 on the other side. 3x = 19 - 4 = 15 so x = 5. and 3 times 5 plus 4 is 19 so it checks",
+        "ts": "2026-10-24T22:44:14+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "So you're saying moving is secretly subtracting from both sides, so the 4 changes sign on the way over. Saving that: 'moving it is really subtracting 4 from both sides'. That replaces my fast rule.",
+        "ts": "2026-10-24T22:44:14+00:00",
+        "event": {
+          "kind": "hit",
+          "amount": 40,
+          "caption": "Hop-Hop Hamster: \"A point I did not anticipate. I accept it with dignity.\" −40 HP",
+          "unlocked": [
+            "Undo-Button Mallet ⏪"
+          ],
+          "level": 3
+        }
+      },
+      {
+        "from": "pip",
+        "text": "I heard some equations have no answer at all, like x + 1 = x + 2. That can't be right… right?",
+        "ts": "2026-10-24T22:44:16+00:00",
+        "event": {
+          "kind": "none",
+          "amount": 0,
+          "caption": "",
+          "unlocked": []
+        }
+      },
+      {
+        "from": "system",
+        "text": "Hop-Hop Hamster met the Undo-Button Mallet ⏪ one last time and left Pip's brain.",
+        "ts": "2026-10-24T22:44:17+00:00"
+      }
+    ]
+  },
+  "screens-390x844-day": {
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [
+      {
+        "status": 200,
+        "t": 1792881866689,
+        "fallback": false,
+        "audioB64": 30708,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.44,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792881867426,
+        "fallback": false,
+        "audioB64": 34052,
+        "mime": "audio/mpeg",
+        "alignChars": 18,
+        "alignEnd": 1.6,
+        "text": "Why is that wrong?"
+      },
+      {
+        "status": 200,
+        "t": 1792881867510,
+        "fallback": false,
+        "audioB64": 163340,
+        "mime": "audio/mpeg",
+        "alignChars": 100,
+        "alignEnd": 7.68,
+        "text": "Saving that: 'the pieces are different sizes so you cant just add them"
+      },
+      {
+        "status": 200,
+        "t": 1792881867609,
+        "fallback": false,
+        "audioB64": 167240,
+        "mime": "audio/mpeg",
+        "alignChars": 93,
+        "alignEnd": 7.84,
+        "text": "Saving that: 'because 2 and 3 both go into 6'. And then what do I do w"
+      },
+      {
+        "status": 200,
+        "t": 1792881867697,
+        "fallback": false,
+        "audioB64": 143280,
+        "mime": "audio/mpeg",
+        "alignChars": 84,
+        "alignEnd": 6.72,
+        "text": "Saving that: 'you just add the top numbers and the bottom numbers'. Ok"
+      },
+      {
+        "status": 200,
+        "t": 1792881869260,
+        "fallback": false,
+        "audioB64": 331080,
+        "mime": "audio/mpeg",
+        "alignChars": 169,
+        "alignEnd": 15.52,
+        "text": "Your rule: add the tops and the bottoms. 3 over 6 + 2 over 6 = 5 over "
+      },
+      {
+        "status": 200,
+        "t": 1792881870507,
+        "fallback": false,
+        "audioB64": 54116,
+        "mime": "audio/mpeg",
+        "alignChars": 20,
+        "alignEnd": 2.56,
+        "text": "No. Different sizes."
+      },
+      {
+        "status": 200,
+        "t": 1792881871711,
+        "fallback": false,
+        "audioB64": 143280,
+        "mime": "audio/mpeg",
+        "alignChars": 93,
+        "alignEnd": 6.72,
+        "text": "My brain has a bug about this: \"you just add the top numbers and the b"
+      },
+      {
+        "status": 200,
+        "t": 1792881872306,
+        "fallback": false,
+        "audioB64": 163340,
+        "mime": "audio/mpeg",
+        "alignChars": 46,
+        "alignEnd": 7.68,
+        "text": "6: 1 over 2 = 3 over 6 and 1 over 3 = 2 over 6"
+      },
+      {
+        "status": 200,
+        "t": 1792881872344,
+        "fallback": false,
+        "audioB64": 381796,
+        "mime": "audio/mpeg",
+        "alignChars": 222,
+        "alignEnd": 17.92,
+        "text": "Saving that: 'no wait, only add the tops. the bottom just tells you th"
+      },
+      {
+        "status": 200,
+        "t": 1792881873880,
+        "fallback": false,
+        "audioB64": 32380,
+        "mime": "audio/mpeg",
+        "alignChars": 4,
+        "alignEnd": 1.28,
+        "text": "K.O."
+      }
+    ],
+    "checks": [
+      {
+        "label": "no page scroll on any student screen",
+        "pass": true,
+        "detail": {
+          "home": "844/844",
+          "vault": "844/844",
+          "missions": "844/844",
+          "switch": "844/844",
+          "picker": "844/844",
+          "mission": "844/844",
+          "mission-fight": "844/844",
+          "notebook": "844/844",
+          "exam-brain": "844/844",
+          "exam-q1": "844/844",
+          "exam-q2": "844/844",
+          "exam-q3": "844/844",
+          "reteach": "844/844",
+          "ko-fight": "844/844",
+          "ko-stamp": "844/844",
+          "ko-card": "844/844",
+          "ko-cliff": "844/844",
+          "ko-rivera": "844/844"
+        }
+      },
+      {
+        "label": "no control clipped off-screen",
+        "pass": true,
+        "detail": {}
+      },
+      {
+        "label": "tap targets >= 44px",
+        "pass": true,
+        "detail": {}
+      }
+    ],
+    "facts": {
+      "home": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "vault": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "missions": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "switch": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "picker": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "mission": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "mission-fight": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "notebook": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "exam-brain": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "exam-q1": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "exam-q2": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "exam-q3": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "reteach": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "ko-fight": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "ko-stamp": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "ko-card": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "ko-cliff": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "ko-rivera": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      }
+    },
+    "moods": [
+      "home: confused",
+      "mission: thinking",
+      "mission: confused",
+      "mission: thinking",
+      "mission: aha",
+      "mission: possessed",
+      "mission: notes",
+      "mission: aha",
+      "mission: notes",
+      "mission: aha",
+      "mission: overwhelmed",
+      "mission: aha",
+      "mission: overwhelmed",
+      "mission: possessed",
+      "mission: thinking",
+      "mission: aha",
+      "mission: thinking",
+      "mission: proud",
+      "mission: confused"
+    ]
+  },
+  "screens-375x667-day": {
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [
+      {
+        "status": 200,
+        "t": 1792881881468,
+        "fallback": false,
+        "audioB64": 30708,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.44,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792881882129,
+        "fallback": false,
+        "audioB64": 34052,
+        "mime": "audio/mpeg",
+        "alignChars": 18,
+        "alignEnd": 1.6,
+        "text": "Why is that wrong?"
+      },
+      {
+        "status": 200,
+        "t": 1792881882214,
+        "fallback": false,
+        "audioB64": 163340,
+        "mime": "audio/mpeg",
+        "alignChars": 100,
+        "alignEnd": 7.68,
+        "text": "Saving that: 'the pieces are different sizes so you cant just add them"
+      },
+      {
+        "status": 200,
+        "t": 1792881882317,
+        "fallback": false,
+        "audioB64": 167240,
+        "mime": "audio/mpeg",
+        "alignChars": 93,
+        "alignEnd": 7.84,
+        "text": "Saving that: 'because 2 and 3 both go into 6'. And then what do I do w"
+      },
+      {
+        "status": 200,
+        "t": 1792881882414,
+        "fallback": false,
+        "audioB64": 143280,
+        "mime": "audio/mpeg",
+        "alignChars": 84,
+        "alignEnd": 6.72,
+        "text": "Saving that: 'you just add the top numbers and the bottom numbers'. Ok"
+      },
+      {
+        "status": 200,
+        "t": 1792881883953,
+        "fallback": false,
+        "audioB64": 331080,
+        "mime": "audio/mpeg",
+        "alignChars": 169,
+        "alignEnd": 15.52,
+        "text": "Your rule: add the tops and the bottoms. 3 over 6 + 2 over 6 = 5 over "
+      },
+      {
+        "status": 200,
+        "t": 1792881884574,
+        "fallback": false,
+        "audioB64": 54116,
+        "mime": "audio/mpeg",
+        "alignChars": 20,
+        "alignEnd": 2.56,
+        "text": "No. Different sizes."
+      },
+      {
+        "status": 200,
+        "t": 1792881885191,
+        "fallback": false,
+        "audioB64": 163340,
+        "mime": "audio/mpeg",
+        "alignChars": 46,
+        "alignEnd": 7.68,
+        "text": "6: 1 over 2 = 3 over 6 and 1 over 3 = 2 over 6"
+      },
+      {
+        "status": 200,
+        "t": 1792881886368,
+        "fallback": false,
+        "audioB64": 143280,
+        "mime": "audio/mpeg",
+        "alignChars": 93,
+        "alignEnd": 6.72,
+        "text": "My brain has a bug about this: \"you just add the top numbers and the b"
+      },
+      {
+        "status": 200,
+        "t": 1792881887015,
+        "fallback": false,
+        "audioB64": 381796,
+        "mime": "audio/mpeg",
+        "alignChars": 222,
+        "alignEnd": 17.92,
+        "text": "Saving that: 'no wait, only add the tops. the bottom just tells you th"
+      },
+      {
+        "status": 200,
+        "t": 1792881888605,
+        "fallback": false,
+        "audioB64": 32380,
+        "mime": "audio/mpeg",
+        "alignChars": 4,
+        "alignEnd": 1.28,
+        "text": "K.O."
+      },
+      {
+        "status": 200,
+        "t": 1792881890777,
+        "fallback": false,
+        "audioB64": 144952,
+        "mime": "audio/mpeg",
+        "alignChars": 84,
+        "alignEnd": 6.8,
+        "text": "I heard dividing by a fraction can make a number bigger. That can't be"
+      }
+    ],
+    "checks": [
+      {
+        "label": "no page scroll on any student screen",
+        "pass": true,
+        "detail": {
+          "home": "667/667",
+          "vault": "667/667",
+          "missions": "667/667",
+          "switch": "667/667",
+          "picker": "667/667",
+          "mission": "667/667",
+          "mission-fight": "667/667",
+          "notebook": "667/667",
+          "exam-brain": "667/667",
+          "exam-q1": "667/667",
+          "exam-q2": "667/667",
+          "exam-q3": "667/667",
+          "reteach": "667/667",
+          "ko-fight": "667/667",
+          "ko-stamp": "667/667",
+          "ko-card": "667/667",
+          "ko-cliff": "667/667",
+          "ko-rivera": "667/667"
+        }
+      },
+      {
+        "label": "no control clipped off-screen",
+        "pass": true,
+        "detail": {}
+      },
+      {
+        "label": "tap targets >= 44px",
+        "pass": true,
+        "detail": {}
+      }
+    ],
+    "facts": {
+      "home": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "vault": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "missions": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "switch": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "picker": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "mission": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "mission-fight": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "notebook": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "exam-brain": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "exam-q1": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "exam-q2": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "exam-q3": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "reteach": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "ko-fight": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "ko-stamp": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "ko-card": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "ko-cliff": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "ko-rivera": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      }
+    },
+    "moods": [
+      "home: confused",
+      "mission: aha",
+      "mission: thinking",
+      "mission: aha",
+      "mission: thinking",
+      "mission: possessed",
+      "mission: notes",
+      "mission: aha",
+      "mission: notes",
+      "mission: aha",
+      "mission: overwhelmed",
+      "mission: aha",
+      "mission: overwhelmed",
+      "mission: possessed",
+      "mission: aha",
+      "mission: thinking",
+      "mission: proud",
+      "mission: confused"
+    ]
+  },
+  "screens-375x667-night": {
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [
+      {
+        "status": 200,
+        "t": 1792881896506,
+        "fallback": false,
+        "audioB64": 30708,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.44,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792881897200,
+        "fallback": false,
+        "audioB64": 34052,
+        "mime": "audio/mpeg",
+        "alignChars": 18,
+        "alignEnd": 1.6,
+        "text": "Why is that wrong?"
+      },
+      {
+        "status": 200,
+        "t": 1792881897281,
+        "fallback": false,
+        "audioB64": 163340,
+        "mime": "audio/mpeg",
+        "alignChars": 100,
+        "alignEnd": 7.68,
+        "text": "Saving that: 'the pieces are different sizes so you cant just add them"
+      },
+      {
+        "status": 200,
+        "t": 1792881897400,
+        "fallback": false,
+        "audioB64": 167240,
+        "mime": "audio/mpeg",
+        "alignChars": 93,
+        "alignEnd": 7.84,
+        "text": "Saving that: 'because 2 and 3 both go into 6'. And then what do I do w"
+      },
+      {
+        "status": 200,
+        "t": 1792881897479,
+        "fallback": false,
+        "audioB64": 143280,
+        "mime": "audio/mpeg",
+        "alignChars": 84,
+        "alignEnd": 6.72,
+        "text": "Saving that: 'you just add the top numbers and the bottom numbers'. Ok"
+      },
+      {
+        "status": 200,
+        "t": 1792881898999,
+        "fallback": false,
+        "audioB64": 331080,
+        "mime": "audio/mpeg",
+        "alignChars": 169,
+        "alignEnd": 15.52,
+        "text": "Your rule: add the tops and the bottoms. 3 over 6 + 2 over 6 = 5 over "
+      },
+      {
+        "status": 200,
+        "t": 1792881900194,
+        "fallback": false,
+        "audioB64": 54116,
+        "mime": "audio/mpeg",
+        "alignChars": 20,
+        "alignEnd": 2.56,
+        "text": "No. Different sizes."
+      },
+      {
+        "status": 200,
+        "t": 1792881900791,
+        "fallback": false,
+        "audioB64": 163340,
+        "mime": "audio/mpeg",
+        "alignChars": 46,
+        "alignEnd": 7.68,
+        "text": "6: 1 over 2 = 3 over 6 and 1 over 3 = 2 over 6"
+      },
+      {
+        "status": 200,
+        "t": 1792881901969,
+        "fallback": false,
+        "audioB64": 143280,
+        "mime": "audio/mpeg",
+        "alignChars": 93,
+        "alignEnd": 6.72,
+        "text": "My brain has a bug about this: \"you just add the top numbers and the b"
+      },
+      {
+        "status": 200,
+        "t": 1792881902636,
+        "fallback": false,
+        "audioB64": 381796,
+        "mime": "audio/mpeg",
+        "alignChars": 222,
+        "alignEnd": 17.92,
+        "text": "Saving that: 'no wait, only add the tops. the bottom just tells you th"
+      },
+      {
+        "status": 200,
+        "t": 1792881904177,
+        "fallback": false,
+        "audioB64": 32380,
+        "mime": "audio/mpeg",
+        "alignChars": 4,
+        "alignEnd": 1.28,
+        "text": "K.O."
+      },
+      {
+        "status": 200,
+        "t": 1792881906357,
+        "fallback": false,
+        "audioB64": 144952,
+        "mime": "audio/mpeg",
+        "alignChars": 84,
+        "alignEnd": 6.8,
+        "text": "I heard dividing by a fraction can make a number bigger. That can't be"
+      }
+    ],
+    "checks": [
+      {
+        "label": "no page scroll on any student screen",
+        "pass": true,
+        "detail": {
+          "home": "667/667",
+          "vault": "667/667",
+          "missions": "667/667",
+          "switch": "667/667",
+          "picker": "667/667",
+          "mission": "667/667",
+          "mission-fight": "667/667",
+          "notebook": "667/667",
+          "exam-brain": "667/667",
+          "exam-q1": "667/667",
+          "exam-q2": "667/667",
+          "exam-q3": "667/667",
+          "reteach": "667/667",
+          "ko-fight": "667/667",
+          "ko-stamp": "667/667",
+          "ko-card": "667/667",
+          "ko-cliff": "667/667",
+          "ko-rivera": "667/667"
+        }
+      },
+      {
+        "label": "no control clipped off-screen",
+        "pass": true,
+        "detail": {}
+      },
+      {
+        "label": "tap targets >= 44px",
+        "pass": true,
+        "detail": {}
+      }
+    ],
+    "facts": {
+      "home": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "vault": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "missions": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "switch": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "picker": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "mission": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "mission-fight": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "notebook": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "exam-brain": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "exam-q1": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "exam-q2": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "exam-q3": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "reteach": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "ko-fight": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "ko-stamp": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "ko-card": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "ko-cliff": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "ko-rivera": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      }
+    },
+    "moods": [
+      "home: confused",
+      "mission: thinking",
+      "mission: confused",
+      "mission: aha",
+      "mission: possessed",
+      "mission: notes",
+      "mission: aha",
+      "mission: notes",
+      "mission: aha",
+      "mission: overwhelmed",
+      "mission: aha",
+      "mission: overwhelmed",
+      "mission: possessed",
+      "mission: thinking",
+      "mission: aha",
+      "mission: thinking",
+      "mission: proud",
+      "mission: confused"
+    ]
+  }
+}
