@@ -19,7 +19,8 @@ import {
   usePager,
 } from '../components/game.jsx'
 import { CIRCLED, findQuoteSource, isCrit, isProcedureOnly } from '../lib'
-import { prefetchTTS, speak, tapLine } from '../voice'
+import { enqueueLine, prefetchTTS, sayLines, setVoiceContext, speak, stingLine, tapLine, voiceForVibe } from '../voice'
+import { bossKindFor } from '../components/Mascot.jsx'
 
 // Boss taunts while she types (frontend templates using boss.name). No "!" on student screens.
 const TAUNTS = [
@@ -29,6 +30,14 @@ const TAUNTS = [
   (n) => `${n} is pretending not to listen.`,
 ]
 const FRACTION_TAUNTS = [(n) => `${n} adds the bottoms just to annoy you.`, (n) => `“Bottoms are numbers too.” — ${n}`]
+// Boss lines are spoken short: the caption without its "— Name" attribution or quote marks.
+const bossLine = (t = '') =>
+  String(t)
+    .replace(/\s+—\s+[^—]*$/, '')
+    .replace(/^[^:]{1,40}:\s*(?=["“])/, '')
+    .replace(/[“”"]/g, '')
+    .replace(/\s*[−-]\d+\s*HP\.?$/i, '')
+    .trim()
 const tauntsFor = (topic = '') => (/fraction|denominator/i.test(topic) ? [...TAUNTS, ...FRACTION_TAUNTS] : TAUNTS)
 
 export default function Mission() {
@@ -138,9 +147,23 @@ function MissionView({ initial }) {
     return () => Object.values(t).forEach(clearTimeout)
   }, [])
 
-  // Pip says its newest line out loud once she has tapped (browsers need a gesture first).
+  // CONTRACT v3.5: Pip's voice follows the session (vibe, grade, the Look sheet's pip_voice).
   useEffect(() => {
-    if (status === 'teaching' && lastPip?.text) speak(lastPip.text)
+    setVoiceContext({
+      vibe: session.vibe ?? 'cute',
+      grade: student?.grade ?? null,
+      pip_voice: session.pip_voice ?? voiceForVibe(session.vibe),
+    })
+  }, [session.vibe, session.pip_voice, student?.grade])
+  const bossVoice = useMemo(
+    () => ({ speaker: 'boss', boss: boss.name, boss_id: bossKindFor(boss.name, boss.emoji) }),
+    [boss.name, boss.emoji],
+  )
+
+  // Pip says its newest line out loud once she has tapped (browsers need a gesture first).
+  // A fresh mission opens with the announcer's "BOSS FIGHT".
+  useEffect(() => {
+    if (status === 'teaching' && lastPip?.text) sayLines([studentMsgs === 0 && stingLine('BOSS FIGHT'), lastPip.text])
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -189,10 +212,19 @@ function MissionView({ initial }) {
         toast(`${unlocked.length > 1 ? 'Weapons' : 'Weapon'} unlocked: ${unlocked.join(', ')}`)
       }
       if (next.mood !== prev.mood) setReaction((r) => r + 1)
+      // Voices in turn, never overlapping: CRITICAL sting, Pip's line, then the boss's caption.
       const said = fresh.filter((m) => m.from === 'pip').map((m) => m.text)
-      if (said.length) speak(said.join(' '))
+      const bossEv = dealt.find((e) => (e.kind === 'hit' || e.kind === 'heal') && e.caption)
+      const crit = evs.some(isCrit)
+      if (said.length || bossEv || crit) {
+        sayLines([
+          crit && stingLine('CRITICAL'),
+          said.length && said.join(' '),
+          bossEv && { ...bossVoice, text: bossLine(bossEv.caption) },
+        ])
+      }
     },
-    [flash, toast],
+    [flash, toast, bossVoice],
   )
 
   const scrollEnd = useCallback(() => {
@@ -258,7 +290,9 @@ function MissionView({ initial }) {
       lastTaunt.current = Date.now()
       const list = tauntsFor(assignment?.topic)
       const pick = list[Math.floor(Math.random() * list.length)]
-      flash('taunt', setTaunt, pick(boss.name), 2400)
+      const line = pick(boss.name)
+      flash('taunt', setTaunt, line, 2400)
+      enqueueLine({ ...bossVoice, text: bossLine(line) })
     }
   }
 
@@ -629,7 +663,21 @@ function nextReady(session, concepts) {
   return concepts.length > 0 && concepts.every((c) => (m[c.id] ?? 0) >= 50)
 }
 
-function Stage({ session, boss, accessory, reaction, onTap, bubble, listening, fcap, taunt, her, sending, onGiveUp, fx }) {
+function Stage({
+  session,
+  boss,
+  accessory,
+  reaction,
+  onTap,
+  bubble,
+  listening,
+  fcap,
+  taunt,
+  her,
+  sending,
+  onGiveUp,
+  fx,
+}) {
   const [box, h] = useBoxHeight(140)
   const [slow, setSlow] = useState(false)
   useEffect(() => {

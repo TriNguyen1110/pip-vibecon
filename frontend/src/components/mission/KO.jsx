@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { MuteButton, PagerControls, TalkingMascot, useBoxHeight, usePager } from '../game.jsx'
-import { speak } from '../../voice'
+import { enqueueLine, sayLines, speak, stingLine } from '../../voice'
 import { Glints, InlineError } from '../ui.jsx'
 import { CIRCLED } from '../../lib'
 
@@ -131,6 +131,16 @@ export default function KO({
     const t = timers.current
     return () => t.forEach(clearTimeout)
   }, [])
+  // Announcer stings: "K.O." on the stamp, "BRAIN UPGRADED" once the card shows (3 s apart).
+  useEffect(() => {
+    if (phase === 'stamp') sayLines([stingLine('K.O.')])
+    if (phase !== 'card') return
+    const t = setTimeout(() => {
+      const s = stingLine('BRAIN UPGRADED')
+      if (s) enqueueLine(s)
+    }, 2200)
+    return () => clearTimeout(t)
+  }, [phase])
   useEffect(() => {
     if (phase === 'stamp' && session.finisher) {
       timers.current.push(setTimeout(() => setPhase('card'), 1000))

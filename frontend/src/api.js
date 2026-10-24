@@ -54,6 +54,7 @@ export const api = {
   session: (id) => get(`/sessions/${id}`),
   turn: (id, text, signal) => post(`/sessions/${id}/turn`, { text }, signal),
   equip: (id, weapon) => post(`/sessions/${id}/equip`, { weapon }),
+  setVoice: (id, pip_voice) => post(`/sessions/${id}/voice`, { pip_voice }),
   quiz: (id) => post(`/sessions/${id}/quiz`),
   reteach: (id, concept_id) => post(`/sessions/${id}/reteach`, { concept_id }),
   finisher: (id, weapon) => post(`/sessions/${id}/finisher`, { weapon }),

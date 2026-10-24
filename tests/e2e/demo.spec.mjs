@@ -11,6 +11,8 @@ const { chromium } = await import(process.env.PLAYWRIGHT_MODULE || 'playwright')
 const BASE = process.env.BASE_URL || 'http://localhost:5741'
 const OUT = process.env.OUT_DIR || 'reports/verification/v1'
 const ONLY = process.env.ONLY_WIDTH ? Number(process.env.ONLY_WIDTH) : null
+// THEME=night runs the Play screens in Night Arcade (first visit follows prefers-color-scheme).
+const THEME = process.env.THEME === 'night' ? 'night' : 'day'
 fs.mkdirSync(OUT, { recursive: true })
 
 const MSGS = [
@@ -24,10 +26,54 @@ const MSGS = [
 const MSG8 =
   'no wait, only add the tops. the bottom just tells you the size of the pieces, and they’re already both sixths, so it stays sixths. 3/6 + 2/6 = 5/6'
 
-const VIEWPORTS = [
-  { w: 390, h: 844, mobile: true },
-  { w: 1280, h: 800, mobile: false },
-].filter((v) => !ONLY || v.w === ONLY)
+// VIEWPORTS=375x667 (comma list) overrides the default pair; widths < 900 run as a phone.
+const VIEWPORTS = (process.env.VIEWPORTS
+  ? process.env.VIEWPORTS.split(',').map((x) => {
+      const [w, h] = x.split('x').map(Number)
+      return { w, h, mobile: w < 900 }
+    })
+  : [
+      { w: 390, h: 844, mobile: true },
+      { w: 1280, h: 800, mobile: false },
+    ]
+).filter((v) => !ONLY || v.w === ONLY)
+
+// V3 instrumentation (every frame, incl. the desktop phone-frame iframe): Pip2D mood labels, Boss2D
+// state, mouth shape samples while ElevenLabs audio plays vs. silent, audio plays, speechSynthesis calls.
+const INSTRUMENT = () => {
+  const P = (window.__pip = { moods: [], boss: [], plays: [], synth: [], mouthPlaying: {}, mouthIdle: {}, qmarks: 0 })
+  let cur = 0
+  const op = HTMLMediaElement.prototype.play
+  HTMLMediaElement.prototype.play = function (...a) {
+    const rec = { t: Date.now(), mime: String(this.src || '').slice(5, 15), len: String(this.src || '').length }
+    P.plays.push(rec)
+    this.addEventListener('playing', () => { rec.playing = Date.now(); cur++ }, { once: true })
+    const end = () => { if (!rec.end) { rec.end = Date.now(); cur = Math.max(0, cur - 1) } }
+    this.addEventListener('ended', end, { once: true })
+    this.addEventListener('pause', end, { once: true })
+    return op.apply(this, a).then((r) => { rec.ok = true; return r }, (e) => { rec.err = String(e).slice(0, 120); throw e })
+  }
+  try {
+    const sp = window.speechSynthesis.speak.bind(window.speechSynthesis)
+    window.speechSynthesis.speak = (u) => { P.synth.push({ t: Date.now(), text: String(u.text).slice(0, 80) }); return sp(u) }
+  } catch { /* no synth */ }
+  setInterval(() => {
+    const svg = document.querySelector('.stage2d__pip svg.pip2d, .stage2d__pip .pip2d-depth')
+    const lab = svg?.getAttribute('aria-label')
+    if (lab && P.moods.at(-1)?.l !== lab) P.moods.push({ t: Date.now(), l: lab, path: location.pathname })
+    const b = document.querySelector('.stage2d__boss svg')
+    const bl = b ? b.getAttribute('aria-label') : null
+    if (bl && P.boss.at(-1)?.l !== bl) P.boss.push({ t: Date.now(), l: bl, hp: document.querySelector('.stage2d__boss')?.getAttribute('aria-label') })
+    const m = svg?.querySelector('.pip2d-eyes')?.nextElementSibling
+    if (m) {
+      const k = m.tagName + ':' + (m.getAttribute('d') || m.getAttribute('rx') || m.innerHTML.length)
+      const bag = cur > 0 ? P.mouthPlaying : P.mouthIdle
+      bag[k] = (bag[k] || 0) + 1
+    }
+    const q = [...document.querySelectorAll('.stage2d *, .home-stage *, .arena *')].filter((e) => e.children.length === 0 && /^[?？❓]$/.test((e.textContent || '').trim()) && e.getBoundingClientRect().width > 0).length
+    P.qmarks = Math.max(P.qmarks, q)
+  }, 40)
+}
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 
@@ -41,7 +87,7 @@ async function api(p, method = 'GET', body) {
 }
 
 async function run(vp) {
-  const tag = String(vp.w)
+  const tag = `${vp.w}-${THEME}`
   const browser = await chromium.launch({
     executablePath: process.env.CHROME_PATH || undefined,
     args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'],
@@ -51,7 +97,9 @@ async function run(vp) {
     deviceScaleFactor: vp.mobile ? 2 : 1,
     isMobile: vp.mobile,
     hasTouch: vp.mobile,
+    colorScheme: THEME === 'night' ? 'dark' : 'light',
   })
+  await ctx.addInitScript(INSTRUMENT)
   const page = await ctx.newPage()
   // F6: on desktop (>= 900px) the student app runs inside a phone frame (an iframe of the same app).
   // P is the document the current screen lives in: the page, or that iframe.
@@ -68,8 +116,24 @@ async function run(vp) {
   })
   page.on('pageerror', (e) => R.pageErrors.push({ text: String(e).slice(0, 400), url: page.url() }))
   page.on('requestfailed', (r) => R.failedRequests.push({ url: r.url(), err: r.failure()?.errorText, page: page.url() }))
-  page.on('response', (r) => {
+  R.tts = []
+  page.on('response', async (r) => {
     if (r.status() >= 400) R.badResponses.push({ url: r.url(), status: r.status(), page: page.url() })
+    if (r.url().endsWith('/api/tts')) {
+      const rec = { status: r.status(), t: Date.now() }
+      R.tts.push(rec)
+      try {
+        const j = await r.json()
+        rec.fallback = !!j.fallback
+        rec.audioB64 = j.audio_b64 ? j.audio_b64.length : 0
+        rec.mime = j.mime
+        rec.alignChars = j.alignment?.characters?.length ?? 0
+        rec.alignEnd = j.alignment?.character_end_times_seconds?.at(-1) ?? null
+        rec.text = JSON.parse(r.request().postData() || '{}').text?.slice(0, 80)
+      } catch (e) {
+        rec.err = String(e).slice(0, 100)
+      }
+    }
   })
 
   const shot = async (name, opts = {}) => {
@@ -91,7 +155,7 @@ async function run(vp) {
   // Play screens fit one viewport at 390x844 (coordinator rule, F3): no page scroll.
   R.fit = {}
   const fit = async (name) => {
-    if (vp.w !== 390) return
+    if (!vp.mobile) return
     R.fit[name] = await P.evaluate(() => ({ scrollHeight: document.scrollingElement.scrollHeight, innerHeight: window.innerHeight }))
   }
   const step = async (name, fn) => {
@@ -120,6 +184,16 @@ async function run(vp) {
     })
     R.mascot[label] = s
     return s
+  }
+
+  R.instrument = {}
+  const collect = async (label) => {
+    for (const f of page.frames()) {
+      try {
+        const d = await f.evaluate(() => window.__pip)
+        if (d && (d.moods.length || d.plays.length || d.synth.length)) R.instrument[`${label} ${f.url().replace(BASE, '')}`] = d
+      } catch { /* detached */ }
+    }
   }
 
   let sid = null
@@ -262,8 +336,16 @@ async function run(vp) {
         .first()
         .isVisible()
         .catch(() => false)
-      await respP
+      const resp = await respP
       const turnMs = Date.now() - t0
+      // The reply renders after the voice prefetch (<= 1.2 s): wait for Pip's newest line on the stage.
+      try {
+        const js = await resp.json()
+        const lastPip = (js.transcript ?? []).filter((m) => m.from === 'pip').at(-1)?.text ?? ''
+        const tail = lastPip.replace(/[‘’'“”"]/g, '').trim().slice(-14)
+        await P.waitForFunction((t) => (document.querySelector('.speech .bubble__text')?.textContent ?? '').replace(/[‘’'“”"]/g, '').includes(t), tail, { timeout: 5000 })
+      } catch { /* checked by the step below */ }
+      const renderMs = Date.now() - t0 - turnMs
       if (i === 2 || i === 4) {
         await sleep(160)
         // Fight visibility: HP bar (HUD or boss panel), the 3D arena and Pip must be on screen during a hit.
@@ -291,6 +373,7 @@ async function run(vp) {
       const t = {
         i: i + 1,
         turnMs,
+        renderMs,
         optimistic,
         hp: [before.boss_hp, after.boss_hp],
         meters: after.meters,
@@ -498,13 +581,14 @@ async function run(vp) {
     }
   })
 
-  if (vp.w === 390) {
-    await step('Play screens fit one viewport (no page scroll at 390x844)', async () => {
+  if (vp.mobile) {
+    await step(`Play screens fit one viewport (no page scroll at ${vp.w}x${vp.h})`, async () => {
       const bad = Object.entries(R.fit).filter(([, v]) => v.scrollHeight > v.innerHeight + 1)
       return { pass: Object.keys(R.fit).length >= 6 && bad.length === 0, fit: R.fit, bad: bad.map(([k]) => k) }
     })
   }
 
+  await collect('student')
   await step('tutor roster: Maya since-last-session updated', async () => {
     P = page
     await page.goto(`${BASE}/tutor`)
@@ -611,13 +695,14 @@ async function run(vp) {
     return { pass: studentId !== 's001' && concepts.length === 3 && !!boss && !!saved?.id, studentId, studentName, draftMs, concepts, boss, mis, savedId: saved?.id }
   })
 
+  await collect('end')
   await browser.close()
   return R
 }
 
 const all = []
 for (const vp of VIEWPORTS) all.push(await run(vp))
-fs.writeFileSync(path.join(OUT, `results${ONLY ? '-' + ONLY : ''}.json`), JSON.stringify(all, null, 2))
+fs.writeFileSync(path.join(OUT, `results-${THEME}${ONLY ? '-' + ONLY : ''}.json`), JSON.stringify(all, null, 2))
 const fails = all.flatMap((r) => r.steps.filter((s) => !s.pass).map((s) => `${r.width}: ${s.name}`))
 console.log(`\nDone. ${fails.length} failing step(s).`, fails)
 process.exitCode = fails.length ? 1 : 0

@@ -5,7 +5,7 @@ import { readLocal, useLoad, writeLocal } from '../hooks'
 import { ErrorState, InlineError, Shell, Sheet } from '../components/ui.jsx'
 import { DEFAULT_CREATURE, lookForCreature } from '../components/Mascot.jsx'
 import { Drawer, IconButton, MuteButton, TalkingMascot, ThemeButton, useBoxHeight } from '../components/game.jsx'
-import { speak, tapLine } from '../voice'
+import { setVoiceContext, speak, tapLine, voiceForVibe } from '../voice'
 import MascotPicker from '../components/MascotPicker.jsx'
 
 // `?as=s005` switches the demo student (Maya stays the default). Keyed so nothing from the
@@ -51,7 +51,9 @@ function StudentHomeView({ sid, onSwitch, recordOpen }) {
   const data = useLoad(() => api.student(sid), [sid])
   const opened = useRef(false)
   const navigate = useNavigate()
-  const [look, setLook] = useState(() => readLocal('pip.look', { creature: DEFAULT_CREATURE, accessory: 'none', vibe: 'cute' }))
+  const [look, setLook] = useState(() =>
+    readLocal('pip.look', { creature: DEFAULT_CREATURE, accessory: 'none', vibe: 'cute' }),
+  )
   const [picker, setPicker] = useState(null) // { assignment } | { editOnly: true }
   const [busy, setBusy] = useState(false)
   const [err, setErr] = useState(null)
@@ -91,10 +93,23 @@ function StudentHomeView({ sid, onSwitch, recordOpen }) {
   const vault = sessions.filter((s) => !s.saved && (s.ko || s.status === 'complete'))
   const bossFor = (s) => assignments.find((a) => a.id === s.assignment_id)?.boss
   const latest = sessions.filter((s) => !s.saved).at(-1)
-  const cliff = vault.length ? (vault.at(-1).gap_report?.cliffhanger ?? assignments.find((a) => a.id === vault.at(-1).assignment_id)?.cliffhanger) : null
+  const cliff = vault.length
+    ? (vault.at(-1).gap_report?.cliffhanger ??
+      assignments.find((a) => a.id === vault.at(-1).assignment_id)?.cliffhanger)
+    : null
   const brainV = Math.max(1, ...sessions.filter((s) => !s.saved).map((s) => s.brain_version ?? 1))
-  const greeting = cliff ? `I’ve been thinking about something. “${cliff}”` : 'I don’t know much yet. That’s why I need you.'
-    useEffect(() => () => clearTimeout(sayTimer.current), [])
+  const greeting = cliff
+    ? `I’ve been thinking about something. “${cliff}”`
+    : 'I don’t know much yet. That’s why I need you.'
+  useEffect(() => () => clearTimeout(sayTimer.current), [])
+
+  useEffect(() => {
+    setVoiceContext({
+      vibe: look.vibe ?? 'cute',
+      pip_voice: look.pip_voice ?? voiceForVibe(look.vibe),
+      grade: student?.grade ?? null,
+    })
+  }, [look.vibe, look.pip_voice, student?.grade])
 
   // First tap on Pip: the greeting, out loud. After that: a short deadpan line.
   function tapPip() {
@@ -111,11 +126,15 @@ function StudentHomeView({ sid, onSwitch, recordOpen }) {
     speak(line)
   }
 
-  async function start({ creature, accessory, vibe = 'cute' }) {
-    const next = { creature, accessory, vibe }
+  async function start({ creature, accessory, vibe = 'cute', pip_voice = null }) {
+    const next = { creature, accessory, vibe, pip_voice }
     setLook(next)
     writeLocal('pip.look', next)
     if (picker?.editOnly) {
+      // Keep missions in progress in step with the new voice (CONTRACT v3.5).
+      sessions
+        .filter((s) => !s.saved && s.status !== 'complete')
+        .forEach((s) => api.setVoice(s.id, pip_voice ?? voiceForVibe(vibe)).catch(() => {}))
       setPicker(null)
       setReact((r) => r + 1)
       return
@@ -130,6 +149,7 @@ function StudentHomeView({ sid, onSwitch, recordOpen }) {
         creature,
         accessory,
         vibe,
+        pip_voice: pip_voice ?? voiceForVibe(vibe),
       })
       navigate(`/student/mission/${s.id}`)
     } catch (e) {
@@ -149,7 +169,11 @@ function StudentHomeView({ sid, onSwitch, recordOpen }) {
             Brain v{brainV}
           </span>
           <div className="hud__right">
-            <IconButton label="Try another student" onClick={() => setSheet('switch')} aria-expanded={sheet === 'switch'}>
+            <IconButton
+              label="Try another student"
+              onClick={() => setSheet('switch')}
+              aria-expanded={sheet === 'switch'}
+            >
               👥
             </IconButton>
             <ThemeButton />
@@ -192,7 +216,10 @@ function StudentHomeView({ sid, onSwitch, recordOpen }) {
           ) : current ? (
             <article className={`mission-tile home-current${current.active ? ' is-active' : ''}`}>
               <h3 className="ribbon home-current__topic">{current.a.topic}</h3>
-              <span className="sticker sticker--boss home-current__vs" aria-label={`Boss: ${current.a.boss?.name ?? ''}`}>
+              <span
+                className="sticker sticker--boss home-current__vs"
+                aria-label={`Boss: ${current.a.boss?.name ?? ''}`}
+              >
                 vs {current.a.boss?.emoji ?? '👾'}
               </span>
               {current.active ? (
@@ -200,7 +227,10 @@ function StudentHomeView({ sid, onSwitch, recordOpen }) {
                   Play
                 </Link>
               ) : current.done ? (
-                <Link className="gel-btn gel-btn--lg gel-btn--secondary home-play" to={`/student/mission/${current.done.id}`}>
+                <Link
+                  className="gel-btn gel-btn--lg gel-btn--secondary home-play"
+                  to={`/student/mission/${current.done.id}`}
+                >
                   K.O.
                 </Link>
               ) : (
@@ -220,10 +250,20 @@ function StudentHomeView({ sid, onSwitch, recordOpen }) {
           <IconButton label="Change Pip’s look" caption="Look" onClick={() => setPicker({ editOnly: true })}>
             🎨
           </IconButton>
-          <IconButton label="The vault" caption="Vault" onClick={() => setSheet('vault')} aria-expanded={sheet === 'vault'}>
+          <IconButton
+            label="The vault"
+            caption="Vault"
+            onClick={() => setSheet('vault')}
+            aria-expanded={sheet === 'vault'}
+          >
             🏆
           </IconButton>
-          <IconButton label="Missions" caption="Missions" onClick={() => setSheet('missions')} aria-expanded={sheet === 'missions'}>
+          <IconButton
+            label="Missions"
+            caption="Missions"
+            onClick={() => setSheet('missions')}
+            aria-expanded={sheet === 'missions'}
+          >
             🗺️
           </IconButton>
         </footer>
@@ -287,7 +327,9 @@ function StudentHomeView({ sid, onSwitch, recordOpen }) {
               </span>
               <span className="mission-row__copy">
                 <span className="mission-row__state">{s.label ?? 'saved session'}</span>
-                <span className="mission-row__topic">{assignments.find((a) => a.id === s.assignment_id)?.topic ?? 'Pip session'}</span>
+                <span className="mission-row__topic">
+                  {assignments.find((a) => a.id === s.assignment_id)?.topic ?? 'Pip session'}
+                </span>
               </span>
               <Link className="gel-btn gel-btn--sm gel-btn--secondary" to={`/student/mission/${s.id}`}>
                 Open

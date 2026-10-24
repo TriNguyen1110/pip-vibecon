@@ -4,7 +4,8 @@
 import { useEffect, useState } from 'react'
 
 const KEY = 'pip.voice.muted'
-const supported = () => typeof window !== 'undefined' && 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window
+const supported = () =>
+  typeof window !== 'undefined' && 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window
 
 function readMuted() {
   try {
@@ -55,8 +56,21 @@ function pickVoice() {
   try {
     const all = window.speechSynthesis.getVoices() || []
     const en = all.filter((v) => /^en(-|_|$)/i.test(v.lang))
-    const prefer = ['Samantha', 'Google US English', 'Microsoft Aria', 'Microsoft Jenny', 'Karen', 'Moira', 'Tessa', 'Daniel']
-    voice = prefer.map((n) => en.find((v) => v.name.includes(n))).find(Boolean) ?? en.find((v) => /en-US/i.test(v.lang)) ?? en[0] ?? null
+    const prefer = [
+      'Samantha',
+      'Google US English',
+      'Microsoft Aria',
+      'Microsoft Jenny',
+      'Karen',
+      'Moira',
+      'Tessa',
+      'Daniel',
+    ]
+    voice =
+      prefer.map((n) => en.find((v) => v.name.includes(n))).find(Boolean) ??
+      en.find((v) => /en-US/i.test(v.lang)) ??
+      en[0] ??
+      null
   } catch {
     voice = null
   }
@@ -133,6 +147,13 @@ function audioViseme() {
 // A word boundary pulses the mouth 0 -> 1 -> 0 over ~120ms, on top of a gentle oscillation.
 function tick(now) {
   raf = 0
+  if (current && (current.speaker ?? 'pip') !== 'pip') {
+    // The boss or the announcer is talking: Pip keeps its mouth shut.
+    setMouth(0)
+    setViseme(null)
+    if (speaking) raf = requestAnimationFrame(tick)
+    return
+  }
   if (audio) {
     if (!speaking) {
       setMouth(0)
@@ -178,47 +199,90 @@ function forSpeech(text = '') {
     .trim()
 }
 
-// Pip's voice (CONTRACT v3.4): POST /api/tts first (ElevenLabs audio + character alignment), else the
-// browser's speechSynthesis. Prefetch as soon as a reply arrives so the bubble and the voice start together.
+// Voices (CONTRACT v3.4 + v3.5): POST /api/tts first (ElevenLabs audio + character alignment), else the
+// browser's speechSynthesis. A small queue keeps lines from overlapping: announcer sting, then Pip's line,
+// then the boss's caption. Only Pip's lines move Pip's mouth. Prefetch as soon as a reply arrives.
 const TTS_TIMEOUT = 8000
 const ttsCache = new Map()
-let ttsOff = false // the server said fallback: stop asking for this visit
+let ttsOff = false // the server said fallback (no ElevenLabs): stop asking for this visit
 let audio = null // { el, alignment, k }
 let token = 0
+let current = null // the line being spoken: { speaker, ... }
+let queue = []
 
-export function prefetchTTS(text) {
+// Pip's voice choice in the Look sheet (CONTRACT v3.5). The backend takes `pip_voice` as an ElevenLabs
+// voice_id (backend/voices.json; ids aren't secrets). Default follows the vibe: cute Fena, ugly Michael, cool Tri.
+export const PIP_VOICES = [
+  { id: 'BlgEcC0TfWpBak7FmvHW', label: 'Bright', name: 'Fena', vibe: 'cute' },
+  { id: 'dfZGXKiIzjizWtJ0NgPy', label: 'Goofy', name: 'Michael', vibe: 'ugly' },
+  { id: 'rMwQM6pPoLHjNQDAGxOA', label: 'Chill', name: 'Tri', vibe: 'cool' },
+]
+export const voiceForVibe = (vibe) => (PIP_VOICES.find((v) => v.vibe === vibe) ?? PIP_VOICES[0]).id
+
+// Who Pip is right now (set by the screen): vibe, grade, pip_voice. Boss lines carry their own boss.
+let pipCtx = { vibe: 'cute', grade: null, pip_voice: null }
+export function setVoiceContext(c) {
+  pipCtx = { ...pipCtx, ...c }
+}
+
+// Browser fallback: a different register per role.
+const SYNTH = {
+  pip: { pitch: 1.15, rate: 1 },
+  boss: { pitch: 0.7, rate: 1.05 },
+  announcer: { pitch: 0.55, rate: 0.85 },
+}
+
+function ttsBody(say, line) {
+  const speaker = line.speaker ?? 'pip'
+  const body = { text: say, speaker }
+  if (speaker === 'pip') {
+    body.vibe = line.vibe ?? pipCtx.vibe
+    body.pip_voice = line.pip_voice ?? pipCtx.pip_voice ?? voiceForVibe(body.vibe)
+  }
+  if (speaker === 'boss') {
+    if (line.boss_id) body.boss_id = line.boss_id
+    if (line.boss) body.boss_name = line.boss
+  }
+  const grade = line.grade ?? pipCtx.grade
+  if (grade != null) body.grade = grade
+  return body
+}
+
+export function prefetchTTS(text, line = {}) {
   const say = forSpeech(text)
   if (!say || ttsOff || muted) return Promise.resolve(null)
-  if (ttsCache.has(say)) return ttsCache.get(say)
+  const body = ttsBody(say, line)
+  const key = JSON.stringify(body)
+  if (ttsCache.has(key)) return ttsCache.get(key)
   const ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null
   const timer = setTimeout(() => ctrl?.abort(), TTS_TIMEOUT)
   const base = `${import.meta.env.VITE_BACKEND_URL ?? ''}/api`
   const p = fetch(`${base}/tts`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ text: say }),
+    body: JSON.stringify(body),
     signal: ctrl?.signal,
   })
     .then((r) => (r.ok ? r.json() : null))
     .then((j) => {
       if (!j || j.fallback || !j.audio_b64) {
         if (j?.fallback) ttsOff = true
-        ttsCache.delete(say)
+        ttsCache.delete(key)
         return null
       }
       return j
     })
     .catch(() => {
-      ttsCache.delete(say)
+      ttsCache.delete(key)
       return null
     })
     .finally(() => clearTimeout(timer))
-  ttsCache.set(say, p)
-  if (ttsCache.size > 40) ttsCache.delete(ttsCache.keys().next().value)
+  ttsCache.set(key, p)
+  if (ttsCache.size > 60) ttsCache.delete(ttsCache.keys().next().value)
   return p
 }
 
-function playAudio(j, my) {
+function playAudio(j, my, onDone) {
   try {
     const el = new Audio(`data:${j.mime || 'audio/mpeg'};base64,${j.audio_b64}`)
     audio = { el, alignment: j.alignment ?? null, k: 0 }
@@ -227,6 +291,7 @@ function playAudio(j, my) {
       speaking = false
       emitState()
       loop()
+      onDone()
     }
     el.onplaying = () => {
       if (my !== token) return el.pause()
@@ -250,22 +315,70 @@ function playAudio(j, my) {
   }
 }
 
-export function speak(text) {
-  if (muted || !hasGesture()) return false
-  const say = forSpeech(text)
-  if (!say) return false
+function playNext() {
+  if (current || muted) return
+  const item = queue.shift()
+  if (!item) return
+  current = item
   const my = ++token
-  stopNow()
-  prefetchTTS(text).then(async (j) => {
+  let finished = false
+  const onDone = () => {
+    if (finished || my !== token) return
+    finished = true
+    current = null
+    setTimeout(playNext, 140)
+  }
+  prefetchTTS(item.text, item).then(async (j) => {
     if (my !== token || muted) return
-    if (j && (await playAudio(j, my))) return
-    if (my === token) speakSynth(say)
+    if (j && (await playAudio(j, my, onDone))) return
+    if (my !== token) return
+    if (!speakSynth(forSpeech(item.text), item.speaker ?? 'pip', onDone)) onDone()
   })
+}
+
+const asItem = (x) => (typeof x === 'string' ? { text: x, speaker: 'pip' } : { speaker: 'pip', ...x })
+
+// Replace whatever is queued with these lines, in order (strings are Pip's lines).
+export function sayLines(items) {
+  if (muted || !hasGesture()) return false
+  const list = items
+    .filter(Boolean)
+    .map(asItem)
+    .filter((i) => forSpeech(i.text))
+  if (!list.length) return false
+  stopNow()
+  token++
+  current = null
+  queue = list
+  playNext()
   return true
 }
 
-function speakSynth(say) {
-  if (!supported()) return false
+// Add a line after the current ones (a boss taunt while Pip talks waits its turn).
+export function enqueueLine(item) {
+  if (muted || !hasGesture()) return false
+  const it = asItem(item)
+  if (!forSpeech(it.text)) return false
+  queue.push(it)
+  playNext()
+  return true
+}
+
+export function speak(text, line = {}) {
+  return sayLines([{ ...line, text }])
+}
+
+// One-word announcer stings ("BOSS FIGHT", "CRITICAL", "K.O.", "BRAIN UPGRADED"), at most one per 3 s.
+let lastSting = -Infinity
+export function stingLine(word) {
+  const now = typeof performance !== 'undefined' ? performance.now() : Date.now()
+  if (now - lastSting < 3000) return null
+  lastSting = now
+  return { text: word, speaker: 'announcer' }
+}
+
+function speakSynth(say, speaker, onDone) {
+  if (!supported() || !say) return false
   try {
     const synth = window.speechSynthesis
     synth.cancel()
@@ -274,8 +387,9 @@ function speakSynth(say) {
     const v = pickVoice()
     if (v) u.voice = v
     u.lang = v?.lang || 'en-US'
-    u.pitch = 1.15
-    u.rate = 1.0
+    const reg = SYNTH[speaker] ?? SYNTH.pip
+    u.pitch = reg.pitch
+    u.rate = reg.rate
     sayText = say
     wordAt = -1
     u.onstart = () => {
@@ -289,7 +403,7 @@ function speakSynth(say) {
         pulseAt = performance.now()
         wordAt = pulseAt
         wordStart = e.charIndex ?? 0
-        const len = e.charLength || (say.slice(wordStart).search(/\s|$/) || 1)
+        const len = e.charLength || say.slice(wordStart).search(/\s|$/) || 1
         wordEnd = wordStart + len
         loop()
       }
@@ -298,6 +412,7 @@ function speakSynth(say) {
       speaking = false
       emitState()
       loop()
+      onDone?.()
     }
     u.onend = done
     u.onerror = done
@@ -327,6 +442,8 @@ function stopNow() {
 
 export function stopSpeaking() {
   token++
+  queue = []
+  current = null
   stopNow()
   emitState()
   loop()
