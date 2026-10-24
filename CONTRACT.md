@@ -288,3 +288,15 @@ Enrollment      += package: Package          // "low" when ≤ 2 hours left
 - `revenue_at_risk_usd` = sum of package prices for students flagged at_risk or quiet with a package low/expiring in 14 days.
 - `tutor_hours_saved_week` = parent updates + gap reports auto-written × 10 min (state the assumption in the UI).
 - `signal: "engaged"` when the student came back on their own or K.O.'d this week. The renewal row offers "Send renewal note" → a parent thread message (preview first; a K.O. quote is the evidence).
+
+## v3.14 (style is chosen, never inferred)
+Taste ranges from soft/sparkly to tough/chrome and everything between; we never ask or infer gender. First run (and
+Settings) shows a **"pick your vibe"** grid of 9 look tiles (Pinterest-style, pick 2–3); the picks set the student's
+theme preset + mascot vibe + register intensity. Defaults stay neutral until the kid picks.
+Presets (in `themes.py`, same enforcement as v3.8): `soft_pop` (pastels, sparkles; pink allowed as accent/background),
+`kawaii_gel` (bubbly aqua/lilac gel), `chrome_mech` (gunmetal, lime LEDs, hard edges), `street` (skate, bold
+black/yellow, sticker tags), `cybercore` (blue duotone, scanlines), `grunge_ugly` (thrifted, off colors, "cooly ugly"),
+`clean` (minimal ink + one accent), `club` and `y2k_aqua` (existing). Semantic slots stay locked (boss coral, no pink in
+action/progress/win) so meaning never changes with taste.
+`POST /api/students/{id}/style {tiles: string[]}` → `{theme, vibe, register_intensity: "low"|"mid"|"high"}`;
+`Student.style` stores the picks. Tiles carry no gender labels and no "for boys/for girls" copy.

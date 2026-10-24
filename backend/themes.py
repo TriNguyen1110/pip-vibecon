@@ -368,6 +368,106 @@ for _p in _RAW_PRESETS:
 PRESET_BY_ID = {p["id"]: p for p in PRESETS}
 
 
+# ---------------------------------------------------------------- v3.14 style presets + "pick your vibe" tiles
+# Same enforcement as every theme. Pink/lilac is allowed in backgrounds, bubbles and edges (soft_pop, kawaii_gel)
+# but never in action/progress/win; boss stays coral. Taste is chosen by the kid, never inferred.
+
+_RAW_STYLES = [
+    _t("preset_soft_pop", "Soft Pop", "Pastel candy sky, tiny sparkles everywhere.",
+       ["#ffe3f1", "#f3e8ff", "#ffffff", "#8a3d6b", "#2a1636", "#5a3d66", "#2f5bd8", "#ffffff", "#1a7030",
+        "#8f5200", "#b52e1b", "#ffffff", "#ffe9f4"], "soft", "bubbly", "stars", 0.05),
+    _t("preset_kawaii_gel", "Kawaii Gel", "Squishy aqua and lilac gel, like a jelly sticker.",
+       ["#c8f3f0", "#f5dcff", "#fbfaff", "#4b3f8f", "#1d2245", "#434a72", "#0a6f94", "#ffffff", "#1a7030",
+        "#8a5a00", "#b52e1b", "#ffffff", "#f7e6ff"], "soft", "bubbly", "bubbles", 0.05),
+    _t("preset_chrome_mech", "Chrome Mech", "Gunmetal plates, lime LEDs, hard edges.",
+       ["#15181c", "#23282e", "#2c3239", "#9aa5b1", "#f2f5f7", "#c3ccd4", "#b6ff3b", "#12160c", "#7cff6b",
+        "#ffd23f", "#ff8a7a", "#343b43", "#3d454e"], "editorial", "sharp", "grid", 0.04),
+    _t("preset_street", "Street", "Skatepark yellow, black tape, sticker tags.",
+       ["#ffd60a", "#fff3b0", "#ffffff", "#111111", "#111111", "#3a3a3a", "#111111", "#ffd60a", "#1a7030",
+        "#7a5a00", "#b52e1b", "#ffffff", "#fff8d6"], "wonky", "sharp", "checkers", 0.05),
+    _t("preset_cybercore", "Cybercore", "Blue duotone screens and thin scanlines.",
+       ["#050a2e", "#0b1f5c", "#0f2470", "#4fc3ff", "#e8f4ff", "#b7d3ff", "#00d4ff", "#041033", "#5cffb0",
+        "#ffe66b", "#ff8a7a", "#142c80", "#1a3590"], "editorial", "sharp", "lasers", 0.04),
+    _t("preset_grunge_ugly", "Grunge Ugly", "Thrift-store colors, patched and proudly weird.",
+       ["#c9c19a", "#b9c4a8", "#efe8d2", "#4a4532", "#231f14", "#4a4433", "#3d5a80", "#ffffff", "#3d6b2a",
+        "#7a5200", "#a8321f", "#f6f0dd", "#e6e0c4"], "wonky", "round", "checkers", 0.05),
+    _t("preset_clean", "Clean", "Plain paper, sharp ink, one blue accent.",
+       ["#fafafa", "#ffffff", "#ffffff", "#5c5c5c", "#111111", "#4a4a4a", "#2251d1", "#ffffff", "#1a7030",
+        "#7a5a00", "#b23a29", "#f3f3f3", "#eef3ff"], "editorial", "sharp", "none", 0.0, "low"),
+]
+
+
+def _settle(raw: dict) -> dict:
+    """Enforce until a second pass changes nothing (presets must be stable)."""
+    t, _ = enforce(raw, raw["base"])
+    for _ in range(3):
+        again, adj = enforce(t, t["base"])
+        if not adj:
+            break
+        t = again
+    t["id"] = raw["id"]
+    return t
+
+
+STYLE_PRESETS = [_settle(_p) for _p in _RAW_STYLES]
+PRESET_BY_ID.update({p["id"]: p for p in STYLE_PRESETS})
+
+# style name -> (preset id, mascot vibe, register intensity); club + y2k_aqua reuse the existing presets
+STYLES = {
+    "soft_pop": ("preset_soft_pop", "cute", "high"), "kawaii_gel": ("preset_kawaii_gel", "cute", "mid"),
+    "y2k_aqua": ("preset_y2k", "cute", "mid"), "clean": ("preset_clean", "cool", "low"),
+    "chrome_mech": ("preset_chrome_mech", "cool", "mid"), "street": ("preset_street", "cool", "high"),
+    "cybercore": ("preset_cybercore", "cool", "high"), "club": ("preset_club", "cool", "high"),
+    "grunge_ugly": ("preset_grunge_ugly", "ugly", "mid"),
+}
+BLEND_STYLE = "grunge_ugly"   # a soft + tough mix lands on "cooly ugly" (and the ugly-cute mascot vibe)
+# Nine look tiles: plain descriptions of a look, no gender labels. axis: -1 soft, 0 neither, +1 tough.
+STYLE_TILES = [
+    {"id": "sparkle_pastel", "label": "Pastel sparkles", "style": "soft_pop", "axis": -1},
+    {"id": "jelly_gel", "label": "Jelly gel stickers", "style": "kawaii_gel", "axis": -1},
+    {"id": "aqua_bubbles", "label": "Glossy aqua bubbles", "style": "y2k_aqua", "axis": -1},
+    {"id": "plain_ink", "label": "Clean paper and ink", "style": "clean", "axis": 0},
+    {"id": "thrift_patch", "label": "Thrifted patches", "style": "grunge_ugly", "axis": 0},
+    {"id": "chrome_bot", "label": "Chrome robot parts", "style": "chrome_mech", "axis": 1},
+    {"id": "skate_tags", "label": "Skatepark tags", "style": "street", "axis": 1},
+    {"id": "neon_scan", "label": "Blue screens, scanlines", "style": "cybercore", "axis": 1},
+    {"id": "club_lights", "label": "Club lights", "style": "club", "axis": 1},
+]
+TILE_BY_ID = {t["id"]: t for t in STYLE_TILES}
+PICK_WEIGHTS = (3, 2, 1)       # the first pick weighs most
+INTENSITY = ("low", "mid", "high")
+
+
+def style_from_tiles(tiles: list) -> dict:
+    """1-3 picks (tile ids or style names) -> {style, theme, vibe, register_intensity}. Raises ValueError."""
+    if not isinstance(tiles, list) or not 1 <= len(tiles) <= 3:
+        raise ValueError("pick 1 to 3 tiles")
+    picks = []
+    for x in tiles:
+        x = str(x)
+        tile = TILE_BY_ID.get(x) or next((t for t in STYLE_TILES if t["style"] == x), None)
+        if not tile:
+            raise ValueError(f"unknown tile: {x}")
+        picks.append(tile)
+    weights = PICK_WEIGHTS[:len(picks)]
+    score: dict[str, int] = {}
+    for tile, w in zip(picks, weights):
+        score[tile["style"]] = score.get(tile["style"], 0) + w
+    soft = sum(w for t, w in zip(picks, weights) if t["axis"] < 0)
+    tough = sum(w for t, w in zip(picks, weights) if t["axis"] > 0)
+    blended = soft > 0 and tough > 0 and min(soft, tough) / max(soft, tough) >= 0.5
+    if blended:
+        style = BLEND_STYLE
+    else:  # highest weighted style; ties go to the earlier pick
+        order = [t["style"] for t in picks]
+        style = max(score, key=lambda k: (score[k], -order.index(k)))
+    pid, vibe, _ = STYLES[style]
+    lv = sum(INTENSITY.index(STYLES[t["style"]][2]) * w for t, w in zip(picks, weights)) / sum(weights)
+    intensity = "mid" if blended else INTENSITY[min(2, max(0, round(lv)))]
+    return {"style": style, "theme": dict(PRESET_BY_ID[pid]), "vibe": vibe, "register_intensity": intensity,
+            "blended": blended}
+
+
 def preset_for(prompt: str, base: str | None = None) -> dict:
     t = (prompt or "").lower()
     for pid, words in KEYWORDS:

@@ -27,6 +27,7 @@ import themes  # noqa: E402
 import llm  # noqa: E402
 import logic  # noqa: E402
 import pip_ai  # noqa: E402
+import center as center_ops  # noqa: E402  (v3.13 center ops router; `center` is a route below)
 from seed import seed  # noqa: E402
 from store import make_store  # noqa: E402
 
@@ -196,7 +197,7 @@ async def theme_generate(body: dict = Body(default={})):
 @api.get("/themes")
 async def list_themes():
     mods = sorted(await store.all("themes"), key=lambda t: t.get("saved_at", ""), reverse=True)
-    return {"presets": themes.PRESETS, "mods": mods}
+    return {"presets": themes.PRESETS, "mods": mods, "styles": themes.STYLE_PRESETS}  # styles: v3.14
 
 
 @api.post("/students/{student_id}/theme")
@@ -221,6 +222,28 @@ async def set_student_theme(student_id: str, body: dict = Body(...)):
     st["theme_id"], st["theme"] = theme["id"], theme
     await store.put("students", st)
     return {"ok": True, "theme_id": theme["id"]}
+
+
+@api.get("/style/tiles")
+async def style_tiles():
+    """v3.14 "pick your vibe" grid: 9 look tiles (no gender labels)."""
+    return {"tiles": [{k: t[k] for k in ("id", "label", "style")} for t in themes.STYLE_TILES]}
+
+
+@api.post("/students/{student_id}/style")
+async def set_style(student_id: str, body: dict = Body(default={})):
+    """v3.14: the kid's picks -> theme preset + mascot vibe + register intensity. Chosen, never inferred."""
+    st = await need("students", student_id, "student")
+    try:
+        r = themes.style_from_tiles(body.get("tiles"))
+    except ValueError as e:
+        raise HTTPException(422, str(e))
+    st["style"] = {"tiles": [str(x) for x in body["tiles"]], "style": r["style"], "theme_id": r["theme"]["id"],
+                   "vibe": r["vibe"], "register_intensity": r["register_intensity"], "chosen_at": logic.now()}
+    st["theme_id"], st["theme"] = r["theme"]["id"], r["theme"]
+    await store.put("students", st)
+    return {"theme": r["theme"], "vibe": r["vibe"], "register_intensity": r["register_intensity"],
+            "style": r["style"]}
 
 
 @api.post("/students/{student_id}/dream")
@@ -321,7 +344,8 @@ async def draft(body: dict = Body(...)):
     grade = int(body.get("grade") or st["grade"])
     d = await pip_ai.draft(topic, grade)
     return {"id": None, "student_id": st["id"], "tutor_id": st["tutor_id"], "grade": grade,
-            **d, "created_at": logic.now()}
+            **d, "subject": center_ops.infer_subject({"topic": topic, "subject": body.get("subject")}),
+            "created_at": logic.now()}
 
 
 @api.post("/assignments")
@@ -338,6 +362,7 @@ async def save_assignment(body: dict = Body(...)):
     a.setdefault("boss", {"name": "Guess-Guess Goose", "emoji": "🪿🎲", "backstory": "A goose rolling dice instead of checking its work."})
     for k in ("cliffhanger", "root_prerequisite", "why_it_matters"):
         a.setdefault(k, "")
+    a["subject"] = center_ops.infer_subject(a)
     if a.get("lesson"):
         a["lesson"] = lessons.normalize_lesson(a["lesson"]) or lessons.offline_lesson(
             a["concepts"], a["topic"])
@@ -710,7 +735,9 @@ async def parent_preview(sid: str):
     if not s.get("parent_message"):
         s["parent_message"] = await pip_ai.parent_message(s, a, st, await tutor_name(st))
         await store.put("sessions", s)
-    return {"message": s["parent_message"]}
+    # v3.13: one localized message per guardian with updates != off (by_guardian), plus who is skipped
+    return {"message": s["parent_message"],
+            **await center_ops.preview_update(s, a, st, await tutor_name(st), s["parent_message"])}
 
 
 async def twilio_send(to: str, body: str) -> bool:
@@ -734,15 +761,14 @@ async def parent_send(sid: str, body: dict = Body(...)):
     msg = (body.get("message") or "").strip()
     if not msg:
         raise HTTPException(422, "message is required")
-    to = os.environ.get("TEST_PARENT_PHONE", "")
-    ok = await twilio_send(to, msg)
-    row = {"id": logic.new_id("sent"), "student_id": s["student_id"],
-           "to": to or "test parent (synthetic)", "message": msg,
-           "status": "delivered" if ok else "test-mode (not delivered)", "ts": logic.now()}
-    await store.put("sent", row)
-    s["parent_sent_at"] = row["ts"]
+    a = await need("assignments", s["assignment_id"], "assignment")
+    st = await need("students", s["student_id"], "student")
+    # v3.13: each guardian with updates != off, in their language, via prefers, honoring quiet hours
+    rows = await center_ops.send_update(s, a, st, await tutor_name(st), msg, body.get("messages"))
+    s = await need("sessions", sid, "session")
+    s["parent_sent_at"] = rows[0]["ts"]
     await store.put("sessions", s)
-    return {"sent": row}
+    return {"sent": rows[0], "sent_all": rows}
 
 
 @api.get("/sent-log")
@@ -917,4 +943,6 @@ async def demo_reset():
     return {"ok": True}
 
 
+center_ops.init(store, at_risk, twilio_send)
 app.include_router(api)
+app.include_router(center_ops.router)

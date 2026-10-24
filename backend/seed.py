@@ -4,13 +4,14 @@ import json
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
+import center
 import lesson as lessons
 import pip_ai
 from logic import new_ladder, now
 
 SEED = Path(__file__).parent / "seed"
 COLLS = ["center", "tutors", "students", "assignments", "sessions", "events", "sent", "workshops",
-         "pilot", "themes"]
+         "pilot", "themes", "guardians", "notes", "threads"]  # last three: v3.13 center ops
 
 
 def _load(name):
@@ -246,6 +247,7 @@ async def seed(store):
     a["lesson"] = lessons.load_lesson(a["id"])
     if not a["lesson"]:
         del a["lesson"]
+    a["subject"] = center.infer_subject(a)
     await store.put("assignments", a)
     main = a
     for x in lessons.load_extra_assignments():
@@ -265,6 +267,7 @@ async def seed(store):
             c.setdefault("weapon", "")
         if not ex.get("quiz"):
             ex["quiz"] = pip_ai.quiz_for(ex)
+        ex["subject"] = center.infer_subject(ex)
         await store.put("assignments", ex)
         if ex["id"] == "a_tri" and ex.get("lesson", {}).get("offline_demo"):
             main = ex  # the main demo mission (Maya): seeded sessions + insight are about it
@@ -290,6 +293,7 @@ async def seed(store):
     students["s001"]["album"] = [{"assignment_id": main["id"], "boss_name": main["boss"]["name"],
                                   "card_no": 1, "variant": "comeback", "date": maya["created_at"]}]
     await store.put("sessions", maya)
+    center.apply_student_ops(students)  # v3.13: enrollments + packages, guardian_ids
     for s in students.values():
         await store.put("students", s)
     # Synthetic "app open" events: 11 non-Maya students, no assignment due, this week.
@@ -305,3 +309,4 @@ async def seed(store):
         await store.put("events", {"id": f"ev_seed_{sid}", "kind": "open", "student_id": sid,
                                    "ts": ts, "due": False, "synthetic": True})
     await store.put("pilot", {"id": "pilot", "status": "not_started"})
+    await center.seed_ops(store)  # v3.13: guardians, notes, threads, sent rows, Theo's sat_math K.O.
