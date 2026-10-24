@@ -1,362 +1,790 @@
 ---
-version: 1.0
+version: 2.0
 name: Pip
 description: >
-  One forest-dark system with two registers. Studio (landing, tutor, owner, pricing) is calm
-  editorial glass: Fraunces titles, Manrope body, Geist Mono facts, ice as the only action
-  color, one shadow tier. Play (student screens) is the same palette made tactile: pill
-  buttons with a pressed edge, soft Fraunces display, state glows, and short game motion.
-  The boss fight is the loudest moment; the K.O. card is the quietest (matte near-black,
-  one metallic hairline). Coral belongs to Pip's wrong rules and the boss's HP, never to
-  the student's answers. Variable names match frontend/src/styles/tokens.css; NEW marks additions.
+  Two registers, one product. Studio (landing, tutor, owner, pricing, parent preview) is a calm
+  editorial web app on willder's forest: Fraunces titles, Manrope body, Geist Mono facts, ice as
+  the only action color, hairline rows, one shadow tier. Play (every student screen) is a game,
+  not a web app: a full-screen scene (Daylight Arcade by default, Night Arcade as a toggle),
+  the mascot filling the middle like Talking Tom, glossy gel buttons with a chunky pressable
+  edge, thick-outlined panels, stickers and ribbons, a segmented boss HP bar, a level map, comic
+  speech bubbles, and every screen fitting one phone viewport without scrolling. The boss fight
+  is the loudest moment; the K.O. card is the quiet premium exception. Coral belongs only to
+  boss HP and Pip's wrong beliefs, never to the student's answers. Variable names match
+  frontend/src/styles/tokens.css; NEW marks additions.
 
 colors:
-  ink:            { hex: "#001914", role: "page ground (forest)" }
-  surface:        { hex: "#0A2721", role: "solid card, Play boss panel base" }
-  surface-2:      { hex: "#12372E", role: "raised: Pip bubble, chips, composer" }
-  surface-3:      { hex: "#1A4639", role: "highest raised: avatars, taunt bubble" }
-  overlay:        { hex: "#10372E", role: "sheets, toasts, popovers (opaque)" }
-  divider:        { value: "rgba(215,212,202,0.12)", role: "row hairlines" }
-  border:         { value: "rgba(215,212,202,0.18)", role: "secondary button, chip edge" }
-  glass-edge:     { value: "rgba(215,212,202,0.17)", role: "glass card edge" }
-  fg:             { hex: "#EFEFE9", role: "titles, body, values (15.8:1 on ink)" }
-  fg-muted:       { hex: "#D4D4CD", role: "descriptions, body on glass (7.1:1 on surface-3)" }
-  fg-subtle:      { hex: "#A8B8AE", role: "metadata, eyebrows, placeholders (5.1:1 on surface-3)" }
-  ice:            { hex: "#C9FCFC", role: "the one action color: primary button, links, next step" }
-  ice-ink:        { hex: "#001914", role: "text on ice (16.4:1)" }
-  ice-soft:       { value: "rgba(201,252,252,0.10)", role: "student bubble, Tuesday box fill" }
-  ice-line:       { value: "rgba(201,252,252,0.32)", role: "student bubble edge, info pill edge" }
-  ice-edge:       { hex: "#6FB7B9", role: "NEW Play primary button pressed-edge (decorative)" }
-  focus:          { hex: "#A7DFE6", role: "2px focus ring everywhere" }
-  sunset:         { hex: "#F59B76", role: "Studio warm accent; 'Misconception' pill text (7.4:1)" }
-  ribbon:         { hex: "#62A2B2", role: "backdrop ribbon only" }
-  success:        { hex: "#A6D4B4", role: "Studio ok pills" }
-  warning:        { hex: "#F3C480", role: "Studio vague pills; Play failed-send edge" }
-  danger:         { hex: "#EF968D", role: "Studio errors and destructive only" }
-  coral:          { hex: "#FF8A7A", role: "Play only: boss HP fill, Pip's wrong rule glow (6.9:1 on surface)" }
-  coral-soft:     { value: "rgba(255,138,122,0.14)", role: "boss panel wash" }
-  coral-line:     { value: "rgba(255,138,122,0.55)", role: "wrong-rule chip edge" }
-  coral-ink:      { hex: "#9E3427", role: "NEW coral text on paper notes (6.4:1 on note)" }
-  mint:           { hex: "#8FE3B0", role: "Play: understanding meters, fixed rule, quiz pass (8.6:1 on surface-2)" }
-  mint-soft:      { value: "rgba(143,227,176,0.12)", role: "pass row wash" }
-  mint-line:      { value: "rgba(143,227,176,0.5)", role: "fixed chip edge" }
-  mint-ink:       { hex: "#1F6B45", role: "NEW mint text on paper notes (5.8:1 on note)" }
-  sun:            { hex: "#FFD27A", role: "Play: equipped weapon, unlock sparkle, coins, her quoted words (9.2:1 on surface-2)" }
-  sun-soft:       { value: "rgba(255,210,122,0.14)", role: "equipped chip fill, quote highlighter" }
-  sun-line:       { value: "rgba(255,210,122,0.55)", role: "NEW weapon hover edge" }
-  note:           { hex: "#FBF3D9", role: "sticky-note paper" }
-  note-ink:       { hex: "#1C241F", role: "text on note (14.3:1)" }
-  note-ink-muted: { hex: "#4B5650", role: "NEW concept tag on note (6.9:1)" }
-  ko-bg:          { hex: "#14161F", role: "NEW K.O. card matte near-black" }
-  ko-meta:        { hex: "#9BA09C", role: "NEW K.O. card metadata (6.8:1 on ko-bg)" }
-  pip-default:    { hex: "#B9A2FF", role: "NEW mascot default colorway (lilac, cream patch #E2D8FF); Y2K colorways bubblegum #FF8FC7, aqua #5FE3E8, lime #B8F04A, tangerine #FF9A3C are 3D materials only, never UI chrome or text" }
-  holo:           { value: "conic-gradient(from 210deg, #FF8FC7, #FFD27A, #B8F04A, #5FE3E8, #B9A2FF, #FF8FC7)", role: "NEW Play-only holo sticker and K.O. number sheen" }
-  chrome:         { value: "linear-gradient(180deg, #FFFFFF 0%, #D9DEE3 45%, #8E99A3 52%, #E9EEF2 100%)", role: "NEW Play-only chrome sticker, ice-ink text 6.3:1 at darkest stop" }
+  studio:   # :root default; tutor, owner, landing, pricing, parent preview
+    ink:        { hex: "#001914", role: "page ground (forest)" }
+    surface:    { hex: "#0A2721", role: "solid card" }
+    surface-2:  { hex: "#12372E", role: "raised" }
+    surface-3:  { hex: "#1A4639", role: "highest raised" }
+    overlay:    { hex: "#10372E", role: "sheets, toasts" }
+    fg:         { hex: "#EFEFE9", role: "main text, 15.8:1 on ink" }
+    fg-muted:   { hex: "#D4D4CD", role: "supporting text, 7.1:1 worst" }
+    fg-subtle:  { hex: "#A8B8AE", role: "metadata, 5.1:1 worst" }
+    ice:        { hex: "#C9FCFC", role: "the one action color; ice-ink #001914 on it, 16.4:1" }
+    focus:      { hex: "#A7DFE6", role: "2px focus ring" }
+    sunset:     { hex: "#F59B76", role: "warm accent; Misconception pill, 7.4:1" }
+    success:    { hex: "#A6D4B4" }
+    warning:    { hex: "#F3C480" }
+    danger:     { hex: "#EF968D", role: "Studio errors and destructive only" }
+  play-day:   # [data-register="play"][data-theme="day"], Daylight Arcade, the default
+    sky:          { value: "linear-gradient(180deg, #BFE6FF 0%, #D8F1FF 45%, #E3FCEB 100%)", role: "NEW scene background" }
+    ink:          { hex: "#D8F1FF", role: "ground fallback" }
+    surface:      { hex: "#FFFFFF", role: "panel top" }
+    surface-2:    { hex: "#EEF6FF", role: "panel bottom, Pip-side fills" }
+    surface-3:    { hex: "#DCE8F4", role: "tracks, pressed wells" }
+    fg:           { hex: "#10213F", role: "deep navy text, 12.2:1 worst (sky top)" }
+    fg-muted:     { hex: "#2E4466", role: "7.5:1 worst" }
+    fg-subtle:    { hex: "#4A5F80", role: "4.9:1 worst; 15px+ only" }
+    ice:          { hex: "#2A63F5", role: "electric blue action fill; white label 5.0:1" }
+    ice-ink:      { hex: "#FFFFFF", role: "label on action" }
+    link:         { hex: "#1F4FD6", role: "NEW action as text, 5.1:1 worst" }
+    outline:      { hex: "#10213F", role: "NEW 3px outlines and pressable edges, 13.7:1 vs sky" }
+    mint:         { hex: "#1A7030", role: "her progress as text, 4.7:1 worst" }
+    mint-fill:    { hex: "#3FBF4F", role: "NEW her progress as fill; navy label 6.7:1" }
+    sun:          { hex: "#8F5200", role: "her wins as text, 4.7:1 worst" }
+    sun-fill:     { hex: "#FFB020", role: "NEW her wins as fill; navy label 8.8:1" }
+    coral:        { hex: "#B52E1B", role: "boss and Pip's wrong rules as text, 4.7:1 worst" }
+    coral-fill:   { hex: "#FF6B5E", role: "NEW boss HP and wrong-rule fill; navy label 5.7:1" }
+    her-bubble:   { hex: "#EAF3FB", role: "NEW her speech bubble; navy 14.3:1" }
+  play-night: # [data-register="play"][data-theme="night"], Night Arcade
+    sky:          { value: "radial-gradient(120% 60% at 50% 110%, rgba(51,225,255,.18), transparent 60%), linear-gradient(180deg, #0E1530 0%, #1B1F4D 100%)", role: "NEW scene + stars" }
+    ink:          { hex: "#0E1530" }
+    surface:      { hex: "#333E86", role: "panel top (frosted)" }
+    surface-2:    { hex: "#2A3370", role: "panel bottom" }
+    surface-3:    { hex: "#354085", role: "tracks, wells" }
+    fg:           { hex: "#FFFFFF", role: "9.4:1 worst" }
+    fg-muted:     { hex: "#DCE3FF", role: "7.4:1 worst" }
+    fg-subtle:    { hex: "#B8C2EE", role: "5.4:1 worst; 15px+ only" }
+    ice:          { hex: "#33E1FF", role: "electric cyan action; ice-ink #0E1530 label 11.4:1" }
+    ice-ink:      { hex: "#0E1530" }
+    link:         { hex: "#33E1FF", role: "6.0:1 worst" }
+    outline:      { hex: "#050A1F", role: "gel and sticker outlines" }
+    panel-outline: { hex: "#6E7BD6", role: "NEW panel outline, 4.7:1 vs night sky" }
+    mint:         { hex: "#A3F04A", role: "lime progress, text and fill, 6.8:1 worst" }
+    sun:          { hex: "#FFD23F", role: "yellow wins, text and fill, 6.5:1 worst" }
+    coral:        { hex: "#FFA89C", role: "boss text, 5.1:1 worst" }
+    coral-fill:   { hex: "#FF8A7A", role: "HP fill; ink label 7.9:1" }
+    her-bubble:   { hex: "#C9F6FF", role: "ink 15.5:1" }
+  shared:
+    note:         { hex: "#FBF3D9", role: "sticky-note and notebook paper; note-ink #1C241F 14.3:1, navy 14.4:1" }
+    coral-ink:    { hex: "#9E3427", role: "coral text on paper, 6.4:1" }
+    mint-ink:     { hex: "#1A7030", role: "green text on paper, 5.6:1" }
+    ko-bg:        { hex: "#14161F", role: "K.O. card matte near-black, both themes" }
+    ko-meta:      { hex: "#9BA09C", role: "K.O. card metadata, 6.8:1" }
+    holo:         { value: "conic-gradient(from 210deg, #33E1FF, #A3F04A, #FFD23F, #FF9A3C, #4F82FF, #33E1FF)", role: "Play sticker sheen and K.O. number; every stop >= 5.1:1 on ko-bg" }
+    chrome:       { value: "linear-gradient(180deg, #FFFFFF 0%, #D9DEE3 45%, #8E99A3 52%, #E9EEF2 100%)", role: "chrome sticker; navy text 6.3:1 at darkest stop" }
+    pip-default:  { hex: "#5FE3E8", role: "default mascot colorway Aqua / Cream (3D only)" }
 
 typography:
-  fonts:
-    display: "Fraunces (Google Fonts, axes ital,opsz,wght,SOFT,WONK)"
-    sans: "Manrope 400-800"
-    mono: "Geist Mono 400-500, font-feature-settings 'tnum'"
-    url: "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..800,0..100,0..1;1,9..144,400..800,0..100,0..1&family=Geist+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap"
+  url: "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Fredoka:wdth,wght@75..125,400..700&family=Geist+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap"   # verified 200
   studio:
-    hero:        { font: display, size: "36 / 48 @640 / 60 @1024", weight: 500, lh: 1.05, ls: "-0.02em", soft: 0 }
-    page-title:  { font: display, size: "32 / 40 @640", weight: 500, lh: 1.1, ls: "-0.02em" }
-    section:     { font: display, size: 24, weight: 500, lh: 1.2 }
-    stat-number: { font: display, size: "40 (insight count 56)", weight: 500, lh: 1, numeric: "lining-nums tabular-nums" }
-    card-title:  { font: sans, size: 18, weight: 700, lh: 1.35 }
-    body:        { font: sans, size: 16, weight: 400, lh: 1.6 }
-    small:       { font: sans, size: 14, weight: 500, lh: 1.5 }
-    eyebrow:     { font: sans, size: 12, weight: 600, lh: 1.4, ls: "0.14em", case: upper }
-    quote:       { font: display, size: 17, weight: 400, style: italic, lh: 1.5 }
-    mono:        { font: mono, size: "13-14", weight: 400 }
-  play:
-    display:     { font: display, size: "32 / 44 @1024", weight: 700, lh: 1.05, ls: "-0.015em", soft: 100 }
-    boss-name:   { font: display, size: "24 / 32 @1024", weight: 700, lh: 1.15, soft: 100, wonk: 1 }
-    hud-name:    { font: sans, size: 15, weight: 800, lh: 1.2 }
-    chat:        { font: sans, size: 16, weight: 500, lh: 1.5 }
-    caption:     { font: sans, size: 16, weight: 800, lh: 1.3 }
-    damage:      { font: mono, size: 22, weight: 500 }
-    button:      { font: sans, size: 16, weight: 800, ls: "0.01em" }
-    note-quote:  { font: display, size: 17, weight: 400, style: italic, lh: 1.45 }
-    ko-equation: { font: display, size: 32, weight: 400, soft: 0 }
-    ko-meta:     { font: mono, size: 12, ls: "0.08em" }
-  floor: "14px for anything that carries information; 12px only for eyebrows and mono metadata"
+    hero:        { font: Fraunces, size: "36 / 48 @640 / 60 @1024", weight: 500, lh: 1.05, ls: "-0.02em" }
+    page-title:  { font: Fraunces, size: "32 / 40 @640", weight: 500, lh: 1.1 }
+    section:     { font: Fraunces, size: 24, weight: 500 }
+    stat-number: { font: Fraunces, size: "40 (insight 56)", weight: 500, numeric: "lining-nums tabular-nums" }
+    card-title:  { font: Manrope, size: 18, weight: 700 }
+    body:        { font: Manrope, size: 16, weight: 400, lh: 1.6 }
+    small:       { font: Manrope, size: 14, weight: 500 }
+    eyebrow:     { font: Manrope, size: 12, weight: 600, ls: "0.14em", case: upper }
+    quote:       { font: Fraunces, size: 17, style: italic }
+    mono:        { font: Geist Mono, size: "13-14" }
+  play:          # Fredoka = --font-game (NEW)
+    title:       { font: Fredoka, size: "40 / 56 @1024", weight: 700, wdth: 112, lh: 1.0 }
+    ribbon:      { font: Fredoka, size: 22, weight: 700, wdth: 108 }
+    button-lg:   { font: Fredoka, size: 30, weight: 700, wdth: 112, case: upper, note: "PLAY" }
+    button:      { font: Fredoka, size: 20, weight: 700, note: "large bold text, 3:1 rule applies; still >= 4.5:1 on mid fill" }
+    button-sm:   { font: Fredoka, size: 17, weight: 600 }
+    hud-number:  { font: Fredoka, size: 18, weight: 700, numeric: tabular-nums }
+    speech:      { font: Fredoka, size: 19, weight: 500, lh: 1.3, note: "Pip's comic bubble" }
+    sticker:     { font: Fredoka, size: 15, weight: 700 }
+    icon-label:  { font: Fredoka, size: 15, weight: 600 }
+    stamp:       { font: Fredoka, size: 96, weight: 700, wdth: 125, note: "K.O." }
+    body-small:  { font: Manrope, size: 16, weight: 600, lh: 1.45, note: "her words, chat history, notes, quiz work" }
+  floor: "Play: 15px minimum anywhere, labels at most 3 words. Studio: 14px informative, 12px eyebrows and mono only"
 
 rounded:
-  sm: 10px      # --r-sm small buttons, mono chips
-  md: 12px      # --r-md Studio buttons, inputs, panels
-  lg: 16px      # --r-lg Studio cards; Play overrides to 20px
-  xl: 22px      # --r-xl sheets; Play overrides to 28px (mission card, boss panel)
-  note: 6px     # NEW sticky notes
-  bubble: 18px  # NEW chat bubbles (tail corner 6px)
-  ko: 20px      # NEW K.O. card
-  cloud: 40px   # NEW Pip's Brain cloud
-  pill: 999px   # NEW chips, Play buttons, composer, HP bar
+  studio: { sm: 10px, md: 12px, lg: 16px, xl: 22px }
+  play:   { sticker: 12px, bubble: 24px, panel: 24px, sheet: 28px, gel: 999px, icon: 50% }
+  note: 6px
+  ko: 20px
+  cloud: 40px
 
-spacing: { s1: 4px, s2: 8px, s3: 12px, s4: 16px, s5: 20px, s6: 24px, s8: 32px, s10: 40px, s12: 48px, s16: 64px, s24: 96px, gutter: "16px; 24px @768", content: 72rem, narrow: 44rem, measure: 68ch, tap: 44px }
+spacing: { s1: 4px, s2: 8px, s3: 12px, s4: 16px, s5: 20px, s6: 24px, s8: 32px, s10: 40px, s12: 48px, s16: 64px, gutter: "16px; 24px @768 (Play: 12px)", content: 72rem, tap: "44px Studio; 48px Play minimum, 56px default" }
 
 elevation:
-  glass:      "border 1px var(--glass-edge); var(--glass-fill); blur(10px) saturate(1.08); 0 20px 56px -30px rgba(0,0,0,.5), inset 0 1px 0 rgba(239,239,233,.05)"
-  overlay:    "solid #10372E; 0 16px 40px -18px rgba(0,0,0,.7)"
-  lift:       "NEW Play: 0 18px 40px -20px rgba(0,0,0,.7)"
-  note:       "NEW 0 1px 0 rgba(0,0,0,.06), 0 12px 24px -14px rgba(0,0,0,.7)"
-  edge-ice:   "NEW Play primary: 0 4px 0 #6FB7B9, 0 10px 24px -12px rgba(201,252,252,.45)"
-  edge-dark:  "NEW Play secondary: 0 4px 0 #061F19"
-  glow-coral: "NEW 0 0 0 2px #FF8A7A, 0 0 32px -6px rgba(255,138,122,.65)"
-  glow-mint:  "NEW 0 0 0 2px #8FE3B0, 0 0 28px -8px rgba(143,227,176,.55)"
-  glow-sun:   "NEW 0 0 0 1.5px #FFD27A, 0 0 20px -6px rgba(255,210,122,.6)"
-  ko-card:    "NEW 0 40px 80px -40px rgba(0,0,0,.9); no blur, no glass"
+  studio-glass: "1px var(--glass-edge); blur(10px); 0 20px 56px -30px rgba(0,0,0,.5)"
+  studio-overlay: "solid #10372E; 0 16px 40px -18px rgba(0,0,0,.7)"
+  play-gel:     "NEW 3px outline; 0 6px 0 var(--gel-edge); inset 0 -4px 8px rgba(0,0,0,.18); inset 0 2px 0 rgba(255,255,255,.55); 0 10px 18px -8px rgba(16,33,63,.45)"
+  play-panel:   "NEW 3px outline; inset 0 2px 0 var(--panel-hi); 0 5px 0 var(--panel-edge); 0 14px 24px -14px rgba(16,33,63,.35)"
+  play-sticker: "NEW 2.5px outline; 0 3px 0 var(--outline)"
+  ko-card:      "0 40px 80px -40px rgba(0,0,0,.9); no blur, no outline"
 
-motion:  # timings reconciled with UX_TEARDOWN.md section 6a (that file has the rationale and sources)
-  instant: 100ms   # NEW budget: tap -> first visible reaction, on pointerdown, optimistic, never waits on the network
-  fast: 160ms      # --fast hovers, chip states, taunt and caption slide-in
-  med: 240ms       # --med sheets, toasts, card rise, squash-stretch
-  slow: 450ms      # NEW HP ghost drain, note flip (400ms)
-  ease: "cubic-bezier(0.2, 0.7, 0.2, 1)"        # --ease default
-  ease-out: "cubic-bezier(0.16, 1, 0.3, 1)"     # NEW reveals, damage float, shake decay
-  ease-pop: "cubic-bezier(0.34, 1.56, 0.64, 1)" # NEW Play only: squash-stretch, unlock pop, K.O. stamp
+motion:  # timings from UX_TEARDOWN.md §6a
+  instant: 100ms     # tap -> first visible reaction, on pointerdown, never waits on the network
+  press: 100ms       # gel sink + squash
+  fast: 160ms
+  med: 240ms
+  screen: 260ms      # NEW swoosh/scale-in between screens and K.O. beats (<= 300ms)
+  slow: 450ms
+  ease: "cubic-bezier(0.2, 0.7, 0.2, 1)"
+  ease-out: "cubic-bezier(0.16, 1, 0.3, 1)"
+  ease-pop: "cubic-bezier(0.34, 1.56, 0.64, 1)"   # Play only
   hit-stop: "70ms on a hit, 120ms on the K.O. hit"
-  shake-hit: "280ms ease-out decay, translateX +/-8px, rotate +/-1.5deg, 4 oscillations"
+  shake-hit: "280ms, translateX +/-8px, rotate +/-1.5deg, 4 decaying oscillations"
   shake-heal: "360ms, scale 1 -> 1.08 -> 1, wobble +/-3deg"
-  squash: "240ms ease-pop, scale (1.15,0.85) -> (0.95,1.05) -> 1"
-  screen-shake: "K.O. only: +/-4px, 200ms; never on chat text"
-  hp: "fill drops instantly; white ghost waits 150ms then drains over 450ms"
-  damage-float: "rise 28px, fade, 700ms"
-  caption: "slide in 160ms, hold 2.8s, tap to dismiss"
-  unlock-pop: "220ms, scale 0 -> 1.1 -> 1, one sparkle"
-  hit-sequence-max: "900ms from hit-stop to end of ghost drain, then the caption"
-  idle: "3D: breathe scale 1.00-1.02 over 3.2s; blink 120ms every 2.5-6s (random); look-around every 8-14s; Pip moves 20% slower than the boss"
-  ai-wait: "send -> 'Pip is listening' + 4deg lean within 100ms; dots after 1s; 'still thinking' + retry after 8s"
-  skip: "anything over 1.5s is tap-to-skip; intros show 'Skip intro'"
-  reduced: "prefers-reduced-motion: no shake, hit-stop, bob, float, flip or sweep; a 150ms opacity/color flash marks the event instead; captions and labels still appear"
+  squash: "240ms ease-pop, (1.15,0.85) -> (0.95,1.05) -> 1"
+  screen-shake: "K.O. only: +/-4px, 200ms"
+  hp: "segments drop instantly; white ghost waits 150ms, drains 450ms"
+  damage-float: "28px rise + fade, 700ms"
+  caption: "pop in 160ms, hold 2.8s, tap to dismiss"
+  unlock-pop: "220ms, scale 0 -> 1.1 -> 1, up to 3 star-glints"
+  hit-sequence-max: 900ms
+  idle: "breathe 1.00-1.02 over 3.2s; blink 120ms every 2.5-6s; look-around every 8-14s; Pip 20% slower than the boss"
+  ai-wait: "lean 4deg + 'Pip is listening' within 100ms; dots after 1s; 'still thinking' + retry after 8s"
+  skip: "anything over 1.5s is tap-to-skip"
+  reduced: "no shake, hit-stop, squash, drift, twinkle, flip or swoosh; screens crossfade 120ms; events flash 150ms (opacity/color); labels unchanged"
 ---
 
 # Pip Design System
 
 ## Visual Theme & Atmosphere
 
-Pip lives on willder's forest ground (`#001914`) under a faint ice ribbon with a sunset edge and a 9% soft-light grain. Text is ivory, actions are ice, and every surface is glass or a solid forest step. One identity, two registers, switched by one attribute on the shell root: `data-register="studio"` (default) or `data-register="play"` (set when `Shell` gets `game`).
+Pip has two registers in one system, switched on the shell root: `data-register="studio"` (default) or `data-register="play"` (set when `Shell` gets `game`). Play also carries `data-theme="day"` or `data-theme="night"`.
 
-**Studio** (landing, tutor, owner, gap report, pricing, parent preview) borrows Oura's editorial calm and Linear's precision: Fraunces titles at weight 500 with stone relief, Manrope body, Geist Mono for counts, dates and IDs, hairline rows instead of boxes, one shadow tier, one filled ice button per screen, no spring easing, no glows. Coral never appears; a misconception reads as a sunset pill and the boss is a neutral chip.
+**Studio** (landing, tutor, owner, gap report, pricing, parent preview) is willder's calm web app. Forest ground (`#001914`), a faint ice ribbon, ivory text, glass cards, Fraunces titles, Manrope body, Geist Mono facts. It borrows Oura's editorial calm and Linear's precision: hairline rows, one shadow tier, one filled ice button per screen. No boss humor; the boss is a neutral chip.
 
-**Play** (student home, mission, Pip's Brain, quiz, K.O.) keeps the palette and adds PlayStation and Spotify energy with Airbnb warmth: Fraunces at weight 700 with `SOFT 100` (rounded, friendly, still the brand face), pill buttons with a 4px pressed edge, 20 to 28px card radii, state glows (coral, mint, sun), a 1.04 hover-scale on anything collectible, and short game motion. The 3D Pip, boss and garden carry Y2K charm (glossy candy plastic, bubblegum/aqua/lime/lilac/tangerine colorways, a holo or chrome accent) and are the main color source on screen; the UI stays forest, with only small Y2K accents (gloss highlights, holo stickers, star-glints), so the mascot and boss pop.
+**Play** (student home, mission, Pip's Brain, quiz, K.O.) is a game screen, not a website. The references are Talking Tom's layout (the character fills the middle, round icon buttons around the edges), Wii/DS-era menus and Frutiger Aero (glossy aqua bubbles, clouds, sky), PS2/Xbox-era menus, early glossy app icons, and Club Penguin's chunky panels. Kept gender-neutral and not babyish: the energy is Switch, Fortnite, Minecraft and Duolingo, not pastel candy.
+- **Daylight Arcade** (default): sky-to-mint gradient, soft clouds, a few bubbles, white panels with 3px navy outlines, deep navy text, electric-blue gel buttons, lime for her progress, sunny yellow-orange for her wins.
+- **Night Arcade** (toggle): navy-to-indigo with stars and a cyan horizon glow, frosted indigo panels, white text, electric-cyan gel buttons, lime progress, yellow wins.
+- **Both:** chunky rounded Fredoka for anything big, a 3D stage that blends into the scene, and every screen fitting one phone viewport.
 
-Volume map, loudest to quietest: boss hit (shake, flash, floating damage) > K.O. stamp > weapon unlock > Brain note flip > chat > mission card > Studio screens > the K.O. card, which is matte, silent and nearly empty.
+**Volume map, loudest to quietest:** boss hit (hit-stop, shake, segment burst, damage sticker) > K.O. stamp > weapon unlock > Brain note flip > speech bubbles > level map > home title screen > Studio > the K.O. card. The card is matte near-black, silent and nearly empty: the premium exception inside the game.
 
 ## Color Palette & Roles
 
-- **Ground ladder:** `--ink` page, `--surface` solid card, `--surface-2` raised element, `--surface-3` highest raised, `--overlay` for anything floating. Glass (`.glass`) sits over the backdrop; dense lists use solid surfaces.
-- **Text roles:** `--fg`, `--fg-muted`, `--fg-subtle` only. Never an alpha step of ivory. All three pass 4.5:1 on ink, surface, surface-2 and surface-3 (worst case fg-subtle on surface-3: 5.1:1).
-- **Ice** is the single action color in both registers: primary button, links, focus-adjacent highlights, the mission's next step. Text on ice is `--ice-ink`.
-- **Play state colors** (never in Studio):
-  - `--mint`: the student's progress. Understanding meters, fixed rules, quiz passes, taught steps.
-  - `--sun`: the student's wins. Equipped weapon, the unlock sparkle, coins, the highlighter behind her quoted words in Pip's "Saving that:" lines.
-  - `--coral`: the boss and Pip's wrong beliefs. HP fill, boss panel wash, the boss's damage and heal floaters ("−40", "+20 HP"), wrong-rule glow, a missed quiz row's 3px edge. It never touches her chat bubble, her composer, her name, or any status about her.
-- **Paper:** `--note` with `--note-ink`; on paper use `--coral-ink` and `--mint-ink` for labels, because coral and mint fail contrast on cream.
-- **Studio status pills:** Explained well `pill--ok` (success), Vague `pill--warn` (warning), Misconception `pill--gap` (sunset). Errors and destructive actions use `--danger`.
-- **K.O. card:** its own closed palette: `--ko-bg`, `--fg`, `--ko-meta`, plus the metallic hairline gradient `linear-gradient(90deg, transparent, #8F8A7A 12%, #EFE6C8 38%, #C9FCFC 55%, #F59B76 72%, #8F8A7A 88%, transparent)`.
-- **Mascot:** `--pip-default` and the Y2K colorways are 3D materials only. Customized colors live in the canvas, never in UI chrome. In the UI, the Y2K palette appears only through `--holo` and `--chrome` on Play stickers and the K.O. number.
-- Color never carries meaning alone: every glow has a label ("Pip believes this 😵", "fixed after 1 re-teach"), every pill has a word.
+**Locked role rules (every theme, every register):**
+- **Action** (`--ice` slot: ice in Studio, electric blue by day, cyan by night) is the only filled-button color, and the only link color through `--link`.
+- **Coral** (`--coral` text, `--coral-fill`) is only boss HP, the boss's taunts and floaters, and Pip's wrong beliefs (wrong-rule glow and sticker, a missed quiz result, which is Pip's). It never touches her bubble, her input, her name or any status about her, and never appears in Studio.
+- **Progress** (`--mint` text, `--mint-fill`): her progress (level-map rings, taught nodes, fixed rules, quiz passes).
+- **Wins** (`--sun`, `--sun-fill`): her wins (equipped weapon, coins, unlock glints, the highlighter behind her quoted words).
+- **No pink or lilac anywhere in the UI.** Mascot colorways are her choice and live only in the 3D scene.
+- **Every color state has a word or icon too:** "Pip believes this 😵", "fixed after 1 re-teach", "Pip got it", the HP number.
+- **Text vs. fill:** by day the bright role colors fail as text on white, so each role has a text value (`--mint`, `--sun`, `--coral`) and a fill value (`--*-fill`). By night the bright value passes both ways, except coral, which is split (`#FFA89C` text, `#FF8A7A` fill). Fills meet the 3:1 boundary rule through their 3px outline, not their hue.
+
+**Studio palette:** unchanged from v1 (front matter `studio`). Text roles `--fg`, `--fg-muted`, `--fg-subtle` only, never alpha steps of ivory. Status pills: Explained well `pill--ok`, Vague `pill--warn`, Misconception `pill--gap` (sunset).
+
+**AA contrast, Daylight Arcade.** Worst case is the lowest ratio across sky top `#BFE6FF`, sky mid `#D8F1FF`, sky bottom `#E3FCEB`, panel `#FFFFFF`/`#EEF6FF` and well `#DCE8F4`.
+
+| Pair | Worst | On panel |
+|---|---|---|
+| fg `#10213F` | 12.18 | 14.69 |
+| fg-muted `#2E4466` | 7.48 | 9.02 |
+| fg-subtle `#4A5F80` (15px+) | 4.93 | 5.95 |
+| link `#1F4FD6` | 5.08 | 6.12 |
+| mint text `#1A7030` | 4.69 | 5.66 |
+| sun text `#8F5200` | 4.73 | 5.71 |
+| coral text `#B52E1B` | 4.74 | 5.71 |
+| white label on blue gel mid `#2A63F5` / bottom `#1F4FD6` | 5.00 / 6.67 | |
+| navy on secondary gel `#FFFFFF`→`#E6EEF8` | 13.69 | |
+| navy on lime / sun / coral fills | 6.69 / 8.76 / 5.73 | |
+| navy on Pip's bubble `#FFFFFF` / her bubble `#EAF3FB` / note paper | 16.01 / 14.27 / 14.43 | |
+| navy outline vs sky (UI boundary) | 13.69 | |
+| placeholder `#4A5F80` on input `#FFFFFF` | 6.48 | |
+
+**AA contrast, Night Arcade.** Worst case is the lowest ratio across `#0E1530`, `#1B1F4D`, panel `#333E86`/`#2A3370`, surface `#1F2758` and well `#354085`.
+
+| Pair | Worst | On panel |
+|---|---|---|
+| fg `#FFFFFF` | 9.44 | 11.63 |
+| fg-muted `#DCE3FF` | 7.41 | 9.12 |
+| fg-subtle `#B8C2EE` (15px+) | 5.39 | 6.64 |
+| cyan `#33E1FF` | 6.01 | 7.39 |
+| lime `#A3F04A` | 6.80 | 8.37 |
+| yellow `#FFD23F` | 6.54 | 8.05 |
+| coral text `#FFA89C` | 5.10 | 6.28 |
+| ink `#0E1530` on cyan gel top `#8AF0FF` / mid `#33E1FF` / bottom `#14B8DB` | 13.68 / 11.43 / 7.62 | |
+| white on indigo secondary gel `#333E86`→`#2A3370` | 9.66 / 11.63 | |
+| ink on lime / yellow / coral fills | 12.94 / 12.44 / 7.85 | |
+| ink on her bubble `#C9F6FF` | 15.50 | |
+| panel outline `#6E7BD6` vs sky | 4.68 | |
+| placeholder `#B8C2EE` on input `#2A3370` | 6.64 | |
+
+I adjusted these until they passed: the night panel top went from `#3A4590` to `#333E86`, night fg-subtle from `#AEB8E8` to `#B8C2EE`, night coral text from `#FF9C8F` to `#FFA89C`, and the day link from `#2458E0` to `#1F4FD6`. Day lime, sun and coral were each split into a fill and a darker text value.
+
+**K.O. card:** its own closed palette in both themes: `--ko-bg`, `#EFEFE9`, `--ko-meta`, the metallic hairline, and an optional holo number.
 
 ## Typography Rules
 
-- Load the URL in front matter once in `index.html` (it adds the `SOFT` and `WONK` axes to the current Fraunces request; verified 200).
-- Studio display: `.display { font-variation-settings: "SOFT" 0, "WONK" 0; font-weight: 500; }` plus `text-shadow: var(--heading-shadow)` on h1/h2 only.
-- Play display: `[data-register="play"] .display, .boss__name, .ko__stamp { font-variation-settings: "SOFT" 100, "WONK" 0; font-weight: 700; }`. Boss names add `"WONK" 1` for a slightly unhinged lean. No heading shadow in Play: the soft face reads better clean.
-- Manrope does all UI: 15px/700 Studio buttons, 16px/800 Play buttons, 16px/500 chat, 14px/500 supporting, 12px/600 uppercase 0.14em eyebrows.
-- Geist Mono with `tnum` for HP ("60 HP"), damage ("−40"), grades, dates, "No. 0147", "Brain v2", quiz progress "2/3". Never mono capitals as labels.
-- The student's own words are always Fraunces italic 17px (note quotes, gap-report evidence, K.O. back, "Saving that: '…'" segments). Her words get a typeface; nobody else's do.
-- Line lengths: body max 68ch; chat bubbles max 82% of column on phones, 60ch on laptop.
-- Minimums: 16px for body and every input (prevents iOS zoom), 14px for anything informative, 12px for eyebrows and mono metadata only.
+- **Fonts:** load the front-matter URL in `index.html` (verified 200). It drops Fraunces' SOFT/WONK axes, which Play no longer needs, and adds Fredoka. `--font-game: 'Fredoka', 'Manrope', system-ui, sans-serif`.
+- **Studio:** unchanged. Fraunces 500 titles with `--heading-shadow`, Manrope UI, Geist Mono facts, Fraunces italic 17px for the student's quoted words in gap reports.
+- **Play display:** Fredoka (`font-variation-settings: "wdth" 112` for titles, ribbons, PLAY and the K.O. stamp; 100 elsewhere) for headings, ribbons, buttons, HUD numbers, stickers, icon labels and Pip's speech bubble.
+- **Play body:** Manrope 600 16px only for small body text: her words, chat history, note quotes, quiz work, input text (17px).
+- **Labels:** big, bold, short. Buttons are at most 3 words ("PLAY", "Quiz Pip", "Re-teach", "Next"). Only PLAY and the K.O. stamp are uppercase.
+- **Big text gets an outline:** Play titles and the K.O. stamp over the scene use `paint-order: stroke fill; -webkit-text-stroke: 6px var(--outline)` plus `text-shadow: 0 4px 0 var(--outline)`, so they read on any sky.
+- **Her words:** in Play, Manrope 600 inside curly quotes with the win highlighter `background: linear-gradient(transparent 58%, color-mix(in oklch, var(--sun-fill) 45%, transparent) 58%)`. In Studio and on the K.O. card, Fraunces italic.
+- **Numbers:** `font-variant-numeric: tabular-nums` for HP, coins and quiz dots; Geist Mono only on the K.O. card ("No. 0147").
+- **Size floors:** no Play text below 15px. No "small grey text": `--fg-subtle` is for 15px+ secondary labels only. Inputs are at least 16px.
 
 ## Component Stylings
 
-**Buttons.** Studio (`.btn`): 44px tall (`.btn--lg` 52px), padding 0 18px, `--r-md`, Manrope 700 15px. Primary: ice fill, ice-ink text, hover `#DCFEFE`, active `scale(.98)`. Secondary (`.btn`): transparent, 1px `--border`, hover border `--field-border-hover` and fill `rgba(239,239,233,.04)`. Ghost (`.btn--ghost`): no border, `--fg-muted`, hover `--fg` with a `--divider` border. Play overrides: radius 999px, Manrope 800 16px, height 52px for the screen's main action; primary adds `box-shadow: var(--edge-ice)` and on `:active` `transform: translateY(3px); box-shadow: 0 1px 0 #6FB7B9`; secondary gets `--surface-2` fill and `var(--edge-dark)`; hover (pointer: fine) `translateY(-1px)` over 160ms. Disabled: opacity .5, no edge, no transform. One primary per screen in both registers.
+### Play: ready-to-apply CSS
 
-**Inputs.** Existing `.input/.textarea/.select`: 44px min, `--r-md`, 1px `--field-border` (3.7:1 on surface-2), fill `--field-bg`, 16px text, focus `outline 2px var(--focus)`. Labels 14px/600 `--fg-muted` above, 6px gap. Errors: 14px `--danger` line below with an icon, field border `--danger` (Studio only).
+Paste into `student.css`. It maps onto the existing class names. New classes are `.gel-btn`, `.icon-btn`, `.ribbon`, `.bubble`, `.tray` and `.play-screen`; `.panel` is redefined only inside Play.
 
-**Composer (Play).** `.composer-wrap` sticky bottom 0, z 30, padding `8px var(--gutter) calc(8px + env(safe-area-inset-bottom))`, background `linear-gradient(to top, var(--ink) 72%, transparent)`. `.composer`: flex, min-height 52px, radius 999px (24px once it grows past one line), `--surface-2` fill, 1px `--field-border`, padding 4px 4px 4px 16px, `:focus-within` 2px `--focus` outline. `.composer__input`: borderless, 16px, auto-grow 1 to 5 lines (max 132px). `.composer__send`: 44px circle, ice fill, ice-ink arrow 20px; disabled `--surface-3` with `--fg-subtle` icon. The "I'm done teaching, quiz Pip!" `.quiz-btn` sits directly above the composer, full width; `.is-ready` makes it primary and plays one 600ms ring pulse (`0 0 0 0 → 0 0 0 8px rgba(201,252,252,0)`).
+```css
+/* ---------- Play tokens: Daylight Arcade (default) ---------- */
+[data-register="play"], [data-register="play"][data-theme="day"] {
+  color-scheme: light;
+  --font-game: 'Fredoka', 'Manrope', system-ui, sans-serif;
+  --sky: linear-gradient(180deg, #BFE6FF 0%, #D8F1FF 45%, #E3FCEB 100%);
+  --ink: #D8F1FF; --surface: #FFFFFF; --surface-2: #EEF6FF; --surface-3: #DCE8F4; --overlay: #FFFFFF;
+  --fg: #10213F; --fg-muted: #2E4466; --fg-subtle: #4A5F80;
+  --ice: #2A63F5; --ice-ink: #FFFFFF; --link: #1F4FD6; --focus: #10213F;
+  --ice-soft: rgba(42,99,245,.12); --ice-line: rgba(42,99,245,.4);
+  --mint: #1A7030; --mint-fill: #3FBF4F; --sun: #8F5200; --sun-fill: #FFB020;
+  --coral: #B52E1B; --coral-fill: #FF6B5E; --coral-ink: #9E3427; --mint-ink: #1A7030;
+  --outline: #10213F; --outline-w: 3px; --panel-outline: #10213F;
+  --panel-fill: linear-gradient(180deg, #FFFFFF 0%, #EEF6FF 100%);
+  --panel-hi: #FFFFFF; --panel-edge: #10213F;
+  --gel-primary: linear-gradient(180deg, #4F82FF 0%, #2A63F5 40%, #1F4FD6 100%);
+  --gel-primary-ink: #FFFFFF; --gel-primary-edge: #10213F; --gel-text-shadow: 0 2px 0 rgba(16,33,63,.45);
+  --gel-secondary: linear-gradient(180deg, #FFFFFF 0%, #E6EEF8 100%);
+  --gel-secondary-ink: #10213F; --gel-secondary-edge: #10213F;
+  --gel-win: linear-gradient(180deg, #FFD27A 0%, #FFB020 55%, #F59B0B 100%);
+  --sticker-ink: #10213F; --bubble-fill: #FFFFFF; --her-bubble: #EAF3FB;
+  --track: rgba(16,33,63,.12); --tint-1: rgba(16,33,63,.04); --tint-2: rgba(16,33,63,.10);
+  --divider: rgba(16,33,63,.12); --border: rgba(16,33,63,.2);
+  --field-bg: #FFFFFF; --field-border: #10213F; --field-placeholder: #4A5F80;
+  --scrim: rgba(16,33,63,.55); --path-dot: #10213F;
+  --heading-shadow: none;
+}
+/* ---------- Play tokens: Night Arcade ---------- */
+[data-register="play"][data-theme="night"] {
+  color-scheme: dark;
+  --sky: radial-gradient(120% 60% at 50% 110%, rgba(51,225,255,.18), transparent 60%),
+         linear-gradient(180deg, #0E1530 0%, #1B1F4D 100%);
+  --ink: #0E1530; --surface: #333E86; --surface-2: #2A3370; --surface-3: #354085; --overlay: #1F2758;
+  --fg: #FFFFFF; --fg-muted: #DCE3FF; --fg-subtle: #B8C2EE;
+  --ice: #33E1FF; --ice-ink: #0E1530; --link: #33E1FF; --focus: #33E1FF;
+  --ice-soft: rgba(51,225,255,.14); --ice-line: rgba(51,225,255,.45);
+  --mint: #A3F04A; --mint-fill: #A3F04A; --sun: #FFD23F; --sun-fill: #FFD23F;
+  --coral: #FFA89C; --coral-fill: #FF8A7A;
+  --outline: #050A1F; --panel-outline: #6E7BD6;
+  --panel-fill: linear-gradient(180deg, rgba(51,62,134,.92) 0%, rgba(42,51,112,.92) 100%);
+  --panel-hi: rgba(255,255,255,.18); --panel-edge: #050A1F;
+  --gel-primary: linear-gradient(180deg, #8AF0FF 0%, #33E1FF 40%, #14B8DB 100%);
+  --gel-primary-ink: #0E1530; --gel-primary-edge: #0B7F9C; --gel-text-shadow: 0 1px 0 rgba(255,255,255,.35);
+  --gel-secondary: linear-gradient(180deg, #333E86 0%, #2A3370 100%);
+  --gel-secondary-ink: #FFFFFF; --gel-secondary-edge: #050A1F;
+  --gel-win: linear-gradient(180deg, #FFE27A 0%, #FFD23F 55%, #F2B705 100%);
+  --sticker-ink: #0E1530; --bubble-fill: #FFFFFF; --her-bubble: #C9F6FF;
+  --track: rgba(255,255,255,.14); --tint-1: rgba(255,255,255,.04); --tint-2: rgba(255,255,255,.10);
+  --divider: rgba(255,255,255,.14); --border: rgba(255,255,255,.22);
+  --field-bg: #2A3370; --field-border: #6E7BD6; --field-placeholder: #B8C2EE;
+  --scrim: rgba(5,10,31,.7); --path-dot: #B8C2EE;
+}
 
-**Mission card (`.mcard`).** Glass, Play radius 28px, padding 16px (24px at 768). Order: `.mcard__why` (eyebrow "Why this matters" then 15px `--fg-muted`), the path, `.mcard__next`. `.mpath` on phones is a scroll-snap rail: `display:grid; grid-auto-flow:column; grid-auto-columns:144px; gap:8px; overflow-x:auto; scroll-snap-type:x mandatory`, right edge faded with a 16px mask, and the `.is-next` step scrolled into view on load. At 768+: `grid-template-columns: repeat(3, minmax(0,1fr)) 112px 112px`, no scroll. Connectors: `.mpath__item:not(:last-child)::after` 2px line in `--divider`, `--mint` once the left step is taught. `.mstep`: button, min-height 96px, padding 12px, radius 16px, fill `rgba(239,239,233,.03)`, 1px `--divider`, grid gap 8px; `.mstep__n` 28px circle `--surface-3` Manrope 800 14px; `.mstep__text` 14px/600, 2-line clamp; `.meter` 6px pill track `rgba(239,239,233,.08)`, fill `--mint`, width transition 450ms ease-out. States: `.is-next` 1.5px `--ice` border plus `0 0 0 4px var(--ice-soft)`, number circle ice with ice-ink; `.is-taught` number circle mint with ink "✓"; `.is-focus` fill `--surface-2`; `.mstep--boss .meter` fill coral; `.is-ko` emoji `grayscale(1) opacity(.55)` plus a mono "K.O." label. A taught step's mint check pops in over 200ms ease-pop. `.mcard__next`: 15px/600 `--fg`, arrow in ice; the `--done` variant uses mint text. It always shows where the mission ends, e.g. "② of ③ · then the boss · then Pip's exam". Students respect a visible end; no countdowns. `.mcard--compact` (sticky during chat at 1024+): nodes only (28px circles in a row) plus the next line, max 64px tall.
+/* ---------- Scene backgrounds (the .backdrop the Shell already renders) ---------- */
+[data-register="play"] .backdrop { background: var(--sky); }
+[data-register="play"][data-theme="day"] .backdrop::before {          /* soft clouds */
+  inset: 0; background:
+    radial-gradient(70px 28px at 16% 12%, #fff 96%, transparent),
+    radial-gradient(48px 24px at 23% 9%, #fff 96%, transparent),
+    radial-gradient(90px 32px at 80% 20%, rgba(255,255,255,.92) 96%, transparent),
+    radial-gradient(56px 26px at 88% 17%, rgba(255,255,255,.92) 96%, transparent),
+    radial-gradient(160px 46px at 50% 96%, rgba(255,255,255,.75), transparent 70%);
+  animation: drift 60s linear infinite alternate;
+}
+[data-register="play"][data-theme="day"] .backdrop::after {           /* a few bubbles */
+  opacity: 1; mix-blend-mode: normal; background:
+    radial-gradient(circle at 12% 70%, rgba(255,255,255,.9) 0 2px, rgba(255,255,255,.35) 3px 9px, transparent 10px),
+    radial-gradient(circle at 90% 58%, rgba(255,255,255,.9) 0 2px, rgba(255,255,255,.35) 3px 7px, transparent 8px),
+    radial-gradient(circle at 76% 84%, rgba(255,255,255,.9) 0 2px, rgba(255,255,255,.35) 3px 12px, transparent 13px),
+    radial-gradient(circle at 30% 40%, rgba(255,255,255,.8) 0 1px, rgba(255,255,255,.3) 2px 5px, transparent 6px);
+  animation: float 14s ease-in-out infinite alternate;
+}
+[data-register="play"][data-theme="night"] .backdrop::before {        /* stars, two tiles */
+  inset: 0; background:
+    radial-gradient(1.5px 1.5px at 20px 30px, #fff 50%, transparent),
+    radial-gradient(1px 1px at 120px 80px, #fff 50%, transparent),
+    radial-gradient(1.5px 1.5px at 70px 150px, #DCE3FF 50%, transparent);
+  background-size: 180px 180px;
+}
+[data-register="play"][data-theme="night"] .backdrop::after {
+  opacity: .6; mix-blend-mode: normal;
+  background: radial-gradient(1px 1px at 40px 60px, #fff 50%, transparent),
+              radial-gradient(1.5px 1.5px at 200px 20px, #33E1FF 50%, transparent);
+  background-size: 260px 260px; animation: twinkle 4s ease-in-out infinite alternate;
+}
+@keyframes drift { to { transform: translateX(24px); } }
+@keyframes float { to { transform: translateY(-16px); } }
+@keyframes twinkle { from { opacity: .35; } to { opacity: .8; } }
 
-**Boss panel (`.boss`), the loudest component.** Background `radial-gradient(80% 60% at 50% 0%, var(--coral-soft), transparent 70%), var(--surface)`, 1px `rgba(255,138,122,.28)` border, radius 28px, padding 20px (24px at 1024), `--lift` shadow. `.boss__top`: emoji 64px (88px at 1024) with a 2.4s ease-in-out idle bob of −4px, then eyebrow "Boss · lives in Pip's head" and `.boss__name` (Play display, WONK 1). `.boss__story` 15px `--fg-muted`. HP (`.hp--big`): 14px tall pill, track `rgba(239,239,233,.08)` with `inset 0 1px 2px rgba(0,0,0,.4)`, fill `linear-gradient(90deg,#FF6F5E,#FF8A7A 60%,#FFB4A3)`. The fill drops instantly (no width transition on damage). A `.hp__ghost` span behind it (`rgba(239,239,233,.7)`) keeps the old width for 150ms, then drains over 450ms ease-out: impact first, then loss. Heals grow the fill over 240ms. `.hp__label` is Geist Mono 13px `--fg-muted` above the bar, right-aligned. Compact `.hp` is 8px. The boss is the over-animated one: bouncy, fast, a 2.4s idle bob of −4px.
-- **Hit sequence (`.shake-hit`), 900ms at most from hit-stop to the end of the ghost drain:** a 70ms hit-stop (the boss holds still, `animation-delay: 70ms`); then squash, `scale(1.15,.85) → (.95,1.05) → 1` over 240ms ease-pop, running together with the shake, `translateX(±8px) rotate(±1.5deg)` in 4 decaying oscillations over 280ms ease-out; the emoji flashes `brightness(1.8) saturate(.4)` for 90ms; a `.dmg` floater "−40" (Geist Mono 22px `--coral`, `text-shadow 0 2px 8px rgba(0,0,0,.6)`) rises 28px and fades over 700ms; then the ghost drains, and only then does the caption appear. The page never shakes on a normal hit, and chat text never moves. Optional `navigator.vibrate(10)` (Android only).
-- **Heal (`.shake-heal`):** no translate shake. Over 360ms the boss gloats: `scale(1 → 1.08 → 1)` with a ±3deg wobble and a smug bob. The panel border pulses to solid coral twice (2 × 240ms), and a "+20 HP" floater appears in coral mono.
-- **Whiff (`.shake-whiff`):** the emoji tilts `rotate(-6deg)` and back over 280ms. Caption: "Addini Bottomini is unbothered." in `--fg-muted`.
-- **Captions (`.caption--hit|heal|whiff`):** centered system lines in the chat flow, Manrope 800 16px `--fg`, 12px above and below, never attached to her bubble; `role="status"`. They slide in over 160ms, hold for 2.8s, and dismiss on tap. The current 3.4s hold is too long.
-- **Taunt (`.taunt`):** `--surface-3` bubble, 1px `rgba(255,138,122,.35)`, radius 14px 14px 14px 4px, Manrope 600 italic 14px `--fg-muted`. It fires once when she starts typing, debounced, at most once every 20s. In over 160ms (fade plus 4px rise); auto-hides after 2400ms.
-- **Reduced motion:** no hit-stop, squash or shake. The HP fill and the panel border flash for 150ms (opacity and color only); the damage number appears without moving; the caption is unchanged.
-- **HUD (`.hud-wrap`)** on phones: sticky `top: 60px`, 56px tall, `rgba(0,25,20,.86)` + `blur(12px)`, bottom `--divider`; 28px emoji, `.hud__name` 15px/800 truncated, 8px HP, `.hud__eq` 13px `--sun` truncated to 40% width.
+/* ---------- One-viewport screen frame ---------- */
+[data-register="play"] .play-screen {
+  height: var(--vvh, 100dvh); overflow: hidden; display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr) auto auto;      /* hud, map, stage, tray, composer */
+  font-family: var(--font-game); color: var(--fg);
+  animation: screen-in var(--screen, 260ms) var(--ease-out) both;
+}
+@keyframes screen-in { from { opacity: 0; transform: translateX(var(--from, 24px)) scale(.96); } }
 
-**Weapon chips (`.weapon`).** Button, min-height 44px, padding 0 16px, radius 999px, `--surface-2`, 1px `--border`, Manrope 700 14px `--fg`. Hover (pointer: fine): `scale(1.04)` and `--sun-line` border over 160ms ease-out; active `scale(.97)`. `.is-on`: `--sun-soft` fill, `var(--glow-sun)`, `.weapon__eq` 12px mono `--sun` "equipped". `.is-new` (first render after unlock) pops `scale(0 → 1.1 → 1)` over 220ms ease-pop with one sun sparkle (a 6px dot that scales out and fades over 400ms). No full-screen modal for an unlock. When several weapons unlock at once, they share one toast ("Weapons unlocked: Cleaver, Ruler") with no emoji pile-up. Weapons only come from explaining, are never used up, and nothing about them looks purchasable.
+/* ---------- Gel buttons ---------- */
+.gel-btn {
+  --gel: var(--gel-primary); --gel-ink: var(--gel-primary-ink); --gel-edge: var(--gel-primary-edge);
+  position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 56px; padding: 0 28px; border-radius: 999px;
+  border: var(--outline-w) solid var(--outline);
+  background: radial-gradient(ellipse 46% 24% at 50% 24%, rgba(255,255,255,.75), rgba(255,255,255,0)) , var(--gel);
+  color: var(--gel-ink); font: 700 20px/1 var(--font-game); text-shadow: var(--gel-text-shadow);
+  box-shadow: 0 6px 0 var(--gel-edge), inset 0 -4px 8px rgba(0,0,0,.18),
+              inset 0 2px 0 rgba(255,255,255,.55), 0 10px 18px -8px rgba(16,33,63,.45);
+  transition: transform 100ms var(--ease-out), box-shadow 100ms var(--ease-out), filter 160ms;
+  cursor: pointer; -webkit-tap-highlight-color: transparent; user-select: none;
+}
+.gel-btn:active, .gel-btn.is-pressed { transform: translateY(5px) scale(1.03, .95);
+  box-shadow: 0 1px 0 var(--gel-edge), inset 0 -2px 6px rgba(0,0,0,.2), inset 0 2px 0 rgba(255,255,255,.4); }
+@media (hover: hover) and (pointer: fine) { .gel-btn:hover { transform: translateY(-2px); filter: brightness(1.05); } }
+.gel-btn--secondary { --gel: var(--gel-secondary); --gel-ink: var(--gel-secondary-ink); --gel-edge: var(--gel-secondary-edge); text-shadow: none; }
+.gel-btn--win { --gel: var(--gel-win); --gel-ink: var(--sticker-ink); --gel-edge: var(--outline); text-shadow: none; }
+.gel-btn--lg { min-height: 72px; min-width: 220px; font-size: 30px; font-variation-settings: "wdth" 112; text-transform: uppercase; }
+.gel-btn--sm { min-height: 48px; padding: 0 18px; font-size: 17px; font-weight: 600; box-shadow: 0 4px 0 var(--gel-edge), inset 0 2px 0 rgba(255,255,255,.5); }
+.gel-btn:disabled { filter: grayscale(.6) opacity(.6); transform: none; box-shadow: 0 2px 0 var(--gel-edge); cursor: not-allowed; }
+.gel-btn:focus-visible, .icon-btn:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; }
 
-**Chat bubbles (`.msg`).** Column gap 4px within one speaker, 16px when the speaker changes. `.msg--pip` left: `.msg__face` 32px circle `--surface-3` with the mood emoji at 18px; `.msg__bubble` `--surface-2`, 1px `--divider`, radius `18px 18px 18px 6px`, padding 10px 14px, 16px/1.5 `--fg`. Quoted student words inside Pip's lines (`<q>`): Fraunces italic, `background: linear-gradient(transparent 55%, var(--sun-soft) 55%)` highlighter. `.msg--me` right: `--ice-soft` fill, 1px `--ice-line`, radius `18px 18px 6px 18px`, `--fg` text (10.4:1). Her bubble never changes color for being wrong. `.is-pending` opacity .7 with a 12px mono "sending"; `.is-failed` 1px dashed `--warning` and a linklike "Didn't send. Try again"; `.is-flash` (jumped to from a note) two 600ms pulses of `0 0 0 2px var(--sun)`.
+/* ---------- Round icon buttons (screen edges) ---------- */
+/* icon buttons: use both classes, class="gel-btn icon-btn" */
+.icon-btn { width: 56px; min-height: 56px; height: 56px; padding: 0; border-radius: 50%; font-size: 26px; }
+.icon-btn--sm { width: 48px; height: 48px; min-height: 48px; font-size: 22px; }
+.icon-btn__label { display: block; margin-top: 8px; font: 600 15px/1 var(--font-game); color: var(--fg); text-align: center; }
 
-**"Pip is thinking."** Within 100ms of send, the 3D Pip leans forward 4deg and tilts its head, and an `aria-live="polite"` line reads "Pip is listening…". The wait is shown on the character, not with a spinner. If the reply takes longer than 1s, a `.msg--pip` with `.dots` appears (three 6px dots, `--fg-subtle`, 1.2s blink, 0.2s stagger, min-width 56px), the label changes to "Pip is thinking…", and Pip plays its writing pose. After 8s, add a 14px `--fg-subtle` line "Still thinking. Long thought." and a secondary "Try again" button. Never a spinner in the chat.
+/* ---------- Game panels, stickers, ribbons ---------- */
+[data-register="play"] .panel {
+  border: var(--outline-w) solid var(--panel-outline); border-radius: 24px; padding: 16px;
+  background: var(--panel-fill); color: var(--fg);
+  box-shadow: inset 0 2px 0 var(--panel-hi), 0 5px 0 var(--panel-edge), 0 14px 24px -14px rgba(16,33,63,.35);
+}
+[data-register="play"][data-theme="night"] .panel { -webkit-backdrop-filter: blur(12px) saturate(1.2); backdrop-filter: blur(12px) saturate(1.2); }
+[data-register="play"] .sticker {
+  display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 12px;
+  border: 2.5px solid var(--outline); background: #FFFFFF; color: var(--sticker-ink);
+  font: 700 15px/1.1 var(--font-game); transform: rotate(var(--tilt, -3deg)); box-shadow: 0 3px 0 var(--outline);
+}
+.sticker--progress { background: var(--mint-fill); }
+.sticker--win { background: var(--sun-fill); }
+.sticker--boss { background: var(--coral-fill); }
+.sticker--chrome { background: linear-gradient(180deg, #FFFFFF 0%, #D9DEE3 45%, #8E99A3 52%, #E9EEF2 100%); color: #10213F; }
+.ribbon {
+  position: relative; display: inline-block; padding: 8px 28px; transform: rotate(-2deg);
+  background: var(--ice); color: var(--ice-ink); font: 700 22px/1.1 var(--font-game);
+  font-variation-settings: "wdth" 108; border: var(--outline-w) solid var(--outline);
+  border-radius: 8px; box-shadow: 0 4px 0 var(--outline);
+}
+.ribbon::before, .ribbon::after {                    /* notched tails */
+  content: ''; position: absolute; top: 10px; width: 22px; height: 100%; z-index: -1;
+  background: var(--gel-primary-edge); border: var(--outline-w) solid var(--outline);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 30% 50%);
+}
+.ribbon::before { left: -16px; } .ribbon::after { right: -16px; transform: scaleX(-1); }
 
-**Pip's Brain (`.brain`).** `.brain__cloud`: `radial-gradient(120% 90% at 30% 0%, #1D4A3E, #12372E 60%)`, 1px `--glass-edge`, radius 40px, padding 28px 20px 32px (40px 32px at 1024), `--lift` plus `inset 0 1px 0 rgba(239,239,233,.06)`. Three `.brain__puff` circles (22, 14, 8px, same fill and border) trail from the bottom-left corner toward Pip's stage at offsets (40px, −18px), (22px, −36px), (10px, −50px). `.brain__head`: eyebrow "Pip's Brain", mono chip "v1". `.brain__notes`: grid, 1 column, 2 at 640, 3 at 1024, gap 16px. `.note`: button, `--note` paper, `--note-ink`, radius 6px, padding 16px 16px 12px, min-height 120px, `--note` shadow, tilt by position (`3n+1` −1.2deg, `3n+2` 0.8deg, `3n` −0.4deg), a tape strip `::before` 44×14px `rgba(239,239,233,.35)` at top center rotated −2deg; hover (pointer: fine) straightens to 0deg and rises 2px over 160ms. `.note__quote` Fraunces italic 17px in curly quotes; `.note__tag` 12px/600 uppercase 0.14em `--note-ink-muted`. `.note--wrong`: `var(--glow-coral)` plus the note shadow. On reveal it wobbles ±2deg once (300ms) and its glow breathes from 32 to 44px twice (2 × 1.6s), then holds still. `.note__flag` 14px/700 `--coral-ink` "Pip believes this 😵". `.note--fixed`: `var(--glow-mint)`, flag in `--mint-ink` "fixed after N re-teach". Wrong → fixed is a 400ms `rotateY(180deg)` flip with the content swapped at 50%; reduced motion swaps instantly. Quotes are always her exact words. This is the money shot, so polish it first.
+/* ---------- HUD (replaces .topbar on Play) ---------- */
+[data-register="play"] .topbar { display: none; }
+[data-register="play"] .hud {
+  display: grid; grid-template-columns: 56px minmax(0, 1fr) auto; align-items: center; gap: 10px;
+  padding: calc(6px + env(safe-area-inset-top)) 12px 6px; height: auto; min-height: 64px;
+  background: none; border: 0; backdrop-filter: none;
+}
+.hud__name { font: 700 15px/1.1 var(--font-game); color: var(--fg); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.hud__right { display: flex; gap: 8px; }
+[data-register="play"] .hp {                          /* segmented glossy HP: 10 x 10 HP */
+  position: relative; height: 20px; border-radius: 10px; overflow: hidden;
+  background: var(--track); border: var(--outline-w) solid var(--outline);
+}
+[data-register="play"] .hp__fill, [data-register="play"] .hp__ghost { position: absolute; inset: 0 auto 0 0; }
+[data-register="play"] .hp__fill { background: linear-gradient(180deg, #FFB0A6 0%, var(--coral-fill) 50%, #E04A3C 100%); transition: none; }
+[data-register="play"] .hp__ghost { background: #FFFFFF; transition: width 450ms var(--ease-out) 150ms; }
+[data-register="play"] .hp::before { content: ''; position: absolute; inset: 2px 6px auto; height: 35%; border-radius: 6px; background: rgba(255,255,255,.45); z-index: 2; }
+[data-register="play"] .hp::after { content: ''; position: absolute; inset: 0; z-index: 3;
+  background: repeating-linear-gradient(90deg, transparent 0 calc(10% - 2px), var(--outline) calc(10% - 2px) 10%); }
+[data-register="play"] .hp__label { font: 700 18px/1 var(--font-game); font-variant-numeric: tabular-nums; color: var(--fg); }
 
-**Quiz rows (`.qitem`).** Glass, radius 20px, padding 16px, 3px left edge. `.qitem__head`: `.qitem__n` 28px mono circle plus `.qitem__q` 16px/600. `.qitem__pip`: Pip's answer as a Pip bubble; `.qitem__line` the work in Geist Mono 14px `--fg-muted` on `rgba(239,239,233,.03)` with radius 10px and padding 10px 12px. The work types out one line every 300ms (tap to show it all; reduced motion shows it all at once). On an odd result, Pip shows 😵 and does a fall-over squash (240ms); `.qitem__rule` chip "Used rule ③" linking to its note (`.is-wrong` gets a `--coral-line` edge). `.qitem--pass`: mint edge, 🎉 or 💡 face, 14px/700 `--mint` "Pip got it". `.qitem--miss`: coral edge, 😵 face, `.qitem__bug` 15px/600 `--fg` "My brain has a bug. Help me fix it", and `.qitem__fix` as the screen's only primary, "Re-teach Pip". Never a ✗, a red row or a score against her; progress is three 10px dots (mint filled, coral ring, empty).
+/* ---------- Level map (the existing .mpath / .mstep markup) ---------- */
+[data-register="play"] .mpath { display: flex; align-items: center; height: 64px; padding: 0 12px; margin: 0; list-style: none; }
+[data-register="play"] .mpath__item { display: flex; align-items: center; flex: 1 1 auto; }
+[data-register="play"] .mpath__item:last-child { flex: 0 0 auto; }
+[data-register="play"] .mpath__item:not(:last-child)::after {
+  content: ''; flex: 1; height: 8px; margin: 0 4px;
+  background: radial-gradient(circle, var(--path-dot) 3px, transparent 3.5px) 0 50% / 12px 8px repeat-x;
+}
+[data-register="play"] .mpath__item:has(.is-taught)::after {
+  background-image: radial-gradient(circle, var(--mint-fill) 3.5px, transparent 4px);
+}
+[data-register="play"] .mstep {
+  position: relative; flex: none; width: 48px; height: 48px; padding: 0; border-radius: 50%;
+  display: grid; place-items: center; border: var(--outline-w) solid var(--outline);
+  background: radial-gradient(ellipse 50% 26% at 50% 26%, rgba(255,255,255,.8), transparent), var(--gel-secondary);
+  color: var(--gel-secondary-ink); font: 700 20px/1 var(--font-game); box-shadow: 0 4px 0 var(--outline);
+}
+[data-register="play"] .mstep__text, [data-register="play"] .mstep__sub { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+[data-register="play"] .mstep .meter {                 /* progress ring; set style="--m: 60" */
+  position: absolute; inset: -7px; border-radius: 50%; height: auto; background:
+    conic-gradient(var(--mint-fill) calc(var(--m, 0) * 1%), var(--track) 0);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 5px), #000 calc(100% - 4px));
+          mask: radial-gradient(farthest-side, transparent calc(100% - 5px), #000 calc(100% - 4px));
+}
+[data-register="play"] .mstep .meter__fill { display: none; }
+[data-register="play"] .mstep.is-next { background: radial-gradient(ellipse 50% 26% at 50% 26%, rgba(255,255,255,.7), transparent), var(--gel-primary); color: var(--gel-primary-ink); animation: node-pulse 1.2s var(--ease-out) 2; }
+[data-register="play"] .mstep.is-taught { background: radial-gradient(ellipse 50% 26% at 50% 26%, rgba(255,255,255,.7), transparent), var(--mint-fill); color: var(--sticker-ink); }
+[data-register="play"] .mstep--boss { width: 56px; height: 56px; font-size: 28px; border-color: var(--outline); box-shadow: 0 4px 0 var(--outline), 0 0 0 4px var(--coral-fill); }
+[data-register="play"] .mstep--boss.is-ko { filter: grayscale(1); opacity: .6; }
+@keyframes node-pulse { 50% { box-shadow: 0 4px 0 var(--outline), 0 0 0 8px var(--ice-line); } }
 
-**K.O. screen (`.ko`), loud then quiet.** Phase 1, about 1.6s: the boss (3D or 112px emoji) centered on the arena; the "Pick a finishing move" weapon chips; on pick, a 120ms hit-stop, then the only screen shake in the product (the `.ko__stage`, ±4px, 200ms), and the boss squashes flat (`scale(1.4,.1)`) and slides out, 500ms in total. Optional `navigator.vibrate([15,40,15])`. The whole phase is tap-to-skip. `.ko__stamp` "K.O." in Play display at 72px, `rotate(-6deg)`, `scale(1.4 → 1)` over 240ms ease-pop. `.ko__finisher` caption 18px/800, `.ko__title` "Addini Bottomini has left Pip's brain." in Play display at 28px, `.ko__version` mono ice chip "Brain v1 → v2". No confetti, no exclamation marks. Phase 2, starting 400ms after the stamp: the card rises (opacity 0 → 1, 16px → 0, 480ms ease-out) on a `rgba(0,10,8,.86)` scrim. Then `.ko-next`: Pip's rumor question as a bubble, and the next boss as a silhouette (`.silhouette`: `filter: brightness(0)` at opacity .5, name half-masked "Divid████").
+/* ---------- Comic speech bubbles (Talking-Tom layout) ---------- */
+.bubble {
+  position: relative; max-width: min(92%, 340px); padding: 12px 16px; border-radius: 24px;
+  background: var(--bubble-fill); color: #10213F; border: var(--outline-w) solid var(--outline);
+  box-shadow: 0 4px 0 var(--outline); font: 500 19px/1.3 var(--font-game);
+  animation: bubble-pop 160ms var(--ease-pop) both;
+}
+.bubble::after {                                   /* tail toward Pip's head */
+  content: ''; position: absolute; left: 50%; bottom: -15px; width: 22px; height: 22px;
+  background: inherit; border-right: var(--outline-w) solid var(--outline); border-bottom: var(--outline-w) solid var(--outline);
+  transform: translateX(-50%) rotate(45deg); border-bottom-right-radius: 4px;
+}
+.bubble--pip { margin: 8px auto 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.bubble--me { background: var(--her-bubble); font: 600 16px/1.4 'Manrope', sans-serif; max-width: 78%; margin-left: auto; border-width: 2.5px; }
+.bubble--me::after { left: auto; right: 22px; transform: rotate(45deg); }
+.bubble--boss { background: var(--coral-fill); color: #10213F; font-weight: 700; font-size: 16px; transform: rotate(3deg); }
+@keyframes bubble-pop { from { opacity: 0; transform: translateY(6px) scale(.9); } }
 
-**K.O. card (`.ko-card`), the quietest component.** `aspect-ratio: 9/16`, width `min(78vw, 340px)`, `--ko-bg` with the grain tile at opacity .05 soft-light, 1px `rgba(239,239,233,.08)`, radius 20px, padding 28px 24px, `ko-card` shadow, flex column with space-between. Front: top row "No. 0147" (12px mono, 0.08em, `--ko-meta`) on the left and two 20px emoji on the right; the metallic hairline (1px, full width, 38% from the top, `background-size: 200%`) sweeps once, slowly, over 6s with `ease-in-out`, then stays still (the cut from the loud K.O. to calm); center equation Fraunces 400 32px `--fg` "½ + ⅓ =" with "⅖" in `--ko-meta` struck by a 1.5px line; bottom nickname Manrope 600 14px `--fg` and date 12px mono `--ko-meta`. Back (tap to flip; `perspective:1200px`, `rotateY(180deg)` 600ms `--ease`; reduced motion crossfades in 160ms): boss name Fraunces 600 20px, eyebrow "Your rule" plus her quote in Fraunces italic 17px, eyebrow "Pip said" plus his dumbest line at 14px `--ko-meta`. Below the card: ghost "Save image" and primary "Done". Never: XP, scores, "achievement", confetti, exclamation marks, rank, the center's name.
+/* ---------- Bottom: weapon tray + chunky input ---------- */
+.tray { display: flex; align-items: center; gap: 8px; height: 56px; padding: 0 12px; overflow-x: auto; scrollbar-width: none; }
+/* weapons: render as class="weapon gel-btn gel-btn--secondary gel-btn--sm" */
+[data-register="play"] .weapon { flex: none; }
+[data-register="play"] .weapon.is-on { --gel: var(--gel-win); --gel-ink: var(--sticker-ink); }
+[data-register="play"] .composer-wrap { padding: 8px 12px calc(8px + env(safe-area-inset-bottom)); background: none; }
+[data-register="play"] .composer {
+  display: flex; align-items: center; gap: 8px; min-height: 60px; padding: 4px 4px 4px 18px;
+  border-radius: 30px; border: var(--outline-w) solid var(--field-border); background: var(--field-bg);
+  box-shadow: inset 0 3px 0 var(--tint-2), 0 4px 0 var(--outline);
+}
+[data-register="play"] .composer__input { font: 600 17px/1.35 'Manrope', sans-serif; color: var(--fg); background: none; border: 0; max-height: 72px; }
+/* send: class="composer__send gel-btn icon-btn" */
+[data-register="play"] .composer__send { width: 52px; height: 52px; min-height: 52px; }
 
-**Gap report (Studio).** `.report-head`: eyebrow "Gap report", `.h-page` student name, mono meta line at 14px `--fg-subtle` ("Fractions · 18 min teaching · quiz passed after 1 re-teach"). `.report-stats`: three stat tiles. `.gap-list` is divided rows, not cards (Linear): `.gap` grid `32px 1fr`, padding 20px 0, `--divider` between rows; `.gap__n` circled mono; `.gap__head` concept 16px/700 plus status pill; `.gap__quote` Fraunces italic 17px `--fg-muted` (not small or subtle) with a 2px `--divider` left rule and 14px padding; a "fixed after 1 re-teach" `pill--ok`; the boss as a neutral `.chip` "students call it Addini Bottomini 🍕🦵". `.tuesday`: `--ice-soft` fill, 1px `--ice-line`, radius 16px, padding 20px; eyebrow in `--ice` "Start Tuesday's session here"; opener 16px/1.6 `--fg`; `.tuesday__row` with a 112px label column (14px `--fg-subtle`) for Root cause and Pip's question (quote style). Parent preview `.phone`: max 320px, `--surface-3` bubbles with radius 18px, sender as an eyebrow.
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  [data-register="play"] .backdrop::before, [data-register="play"] .backdrop::after { animation: none; }
+  [data-register="play"] .play-screen { animation: fade 120ms linear both; }
+  .gel-btn:active { transform: none; }
+}
+```
 
-**Roster (`.roster__list`).** Phones: rows with dividers, grid areas `"who action" "since since"`, padding 14px 0; `.roster__name` 16px/700, grade 13px mono `--fg-subtle`; since-last-session 14px `--fg-muted`, 2-line clamp, "—" in `--fg-subtle`; `.avatar--pip` gets a 2px ice ring plus a 16px Pip badge at the bottom-right. At 1024+: `.roster__head` visible (eyebrow style), columns `minmax(200px,1.1fr) 72px minmax(0,3fr) 132px`, min row height 64px, hover fill `rgba(239,239,233,.03)`, the whole row links to the report, action "Report →" linklike.
+Compose by stacking classes in the markup (`class="gel-btn icon-btn"`, `class="weapon gel-btn gel-btn--secondary gel-btn--sm"`).
 
-**Insight card (`.insight`).** Glass, padding 24px (32px at 1024); grid `2fr 1fr` at 1024, stacked below. `.insight__main`: eyebrow "Center insight", count in Fraunces 500 56px, "students share the same mistake:" 18px/600, `.insight__mis` "adding the bottoms" in Fraunces italic 24px, boss chip, primary "Plan a workshop". `.insight__stat` holds the stat tile "Came back on their own this week".
+**Theme toggle** (Play only; Studio stays forest). On the home screen, a round icon button in the top-right toggles ☀️ / 🌙, with `aria-pressed` and the label "Night mode".
 
-**Stat tile (`.stat`).** `.panel` (`rgba(239,239,233,.03)`, 1px `--divider`, radius 12px, padding 16px); eyebrow label; `.stat__n` Fraunces 500 40px/1, lining tabular numerals; caption 14px `--fg-muted`. A missing measurement shows "—" with "not measured yet", never 0.
+```js
+const KEY = 'pip.theme'
+export function initialTheme() {
+  try { const t = localStorage.getItem(KEY); if (t === 'day' || t === 'night') return t } catch {}
+  return matchMedia('(prefers-color-scheme: dark)').matches ? 'night' : 'day'
+}
+export function applyTheme(root, t) {
+  root.dataset.theme = t
+  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', t === 'night' ? '#0E1530' : '#BFE6FF')
+}
+export function setTheme(root, t) { applyTheme(root, t); try { localStorage.setItem(KEY, t) } catch {} }
+```
 
-**Pricing card (`.price`).** One glass card, max-width 440px, centered, padding 28px; eyebrow "Pilot"; `.price__big` "$4" in Fraunces 500 64px plus "/ active student / month" 16px `--fg-muted`; "$99 minimum" 14px mono `--fg-subtle`; `.price__calc` range plus a mono result ("120 students → $480/mo"); `.price__list` four 15px items with 16px ice checks; primary block "Start pilot"; 12px eyebrow footnote "Stripe test mode".
+- **First visit:** follow `prefers-color-scheme`, and keep following live OS changes (a `matchMedia` change listener) until she taps the toggle.
+- **After a tap:** her choice is remembered and wins over the OS.
+- **Switching:** a 240ms crossfade of `background` and `color` on the shell (instant under reduced motion). `MascotStage` gets `theme={t}`.
+- **Studio:** leaving Play restores the meta color to `#001914`.
 
-**Toasts, empty, error, loading.** `.toast` stays on `--overlay` with a 3px left edge: `--success` ok, `--ice` info, `--danger` error (Studio) or `--warning` (Play). Auto-dismiss after 4s, at most 2 stacked, `role="status"`; on screens with the composer, `bottom: calc(76px + env(safe-area-inset-bottom))`. `.state`: 40px Pip face, 18px/700 title, one 15px `--fg-muted` line, one button. Play errors are deadpan and never blame her ("Pip lost the thread." plus a secondary "Try again"); Studio errors are plain ("Couldn't load the roster." plus "Retry"). Loading uses `.skeleton` bars (Studio tables: five 56px rows), and `.dots` in chat; spinners only inside buttons.
+### Play components
 
-**3D canvas placement.** The canvas is transparent (`alpha: true`) with no box: Pip stands on the page on drei `ContactShadows` (opacity .35, blur 2.5). Lighting: a soft key light from the upper left and a cool rim light (`#A7DFE6`) that separates Pip from the forest ground. DPR capped at 1.5, 30fps, paused offscreen and when the tab is hidden, a still pose under reduced motion, `.stage-fallback` emoji if WebGL fails, a circular `.skeleton` while loading. No text ever sits on the canvas. Touch: a poke reacts on `pointerdown` within 100ms with a squash and one of 4–6 reactions per zone (head, body), never the same one twice in a row, with no network call. Eyes follow the pointer within ±15deg.
+**Gel buttons and icon buttons.** One primary gel per screen (blue by day, cyan by night). Secondary gels are white by day and indigo by night. The win gel (sun) is used only for the equipped weapon and for the K.O. finisher pick.
+- **Press:** 100ms, sink 5px, squash `scale(1.03,.95)`, and the edge collapses to 1px. Feedback fires on `pointerdown`.
+- **Sizes:** `--lg` 72px (PLAY), default 56px, `--sm` 48px. Labels are Fredoka 700 at 20px or more, so the large-text rule applies, and the label still clears 4.5:1 on the gel's middle stop.
+- **Icon buttons:** 56px circles (48px small) with a 26px icon and an optional label under them (Fredoka 600 15px). They sit along the screen edges, Talking Tom style. Every icon button has an `aria-label`.
 
-**Mascot, boss and garden art direction: Y2K charm.** This overrides the matte-vinyl direction in UX_TEARDOWN.md §6b; that section's proportions, deadpan rules and silhouette test still apply. The target is Talking Tom's glossy juiciness, Kick the Buddy's ragdoll boss and the Forest app's growing tree. It should read as a glossy collectible toy, never a plush or a baby animal.
-- **Shape:** head about the same size as the body (1:1 to 1.2:1, never the infant 2:1), stubby limbs, a low center of gravity, a slight 3/4 turn by default, and a silhouette readable as a solid shape at 48px.
-- **Material (Pip):** glossy candy plastic. `MeshPhysicalMaterial` with roughness .2–.35, metalness 0, clearcoat 1, clearcoatRoughness .08, `sheen` .3. One accent per figure: either iridescent (`iridescence` 1, `iridescenceIOR` 1.3, thickness range 100–400) or chrome (metalness 1, roughness .12) on the antenna, badge or one accessory.
-- **Colorways:** 2–3 colors per figure, named like sneaker colorways. Bases are bubblegum `#FF8FC7`, aqua `#5FE3E8`, lime `#B8F04A`, lilac `#B9A2FF` and tangerine `#FF9A3C`. Each has a lighter belly and face patch, the base mixed about 55% toward `#FFF6FB` (bubblegum patch `#FFD3E8`, aqua `#C4F6F8`, lime `#E4FAB8`, lilac `#E2D8FF`, tangerine `#FFD3AE`). The default is "Lilac / Cream". Never rainbow on one body. These hexes are 3D materials and never UI chrome.
-- **Eyes and expression:** glossy black capsule eyes with two specular dots (a large one upper-left and a small one lower-right) under heavy deadpan lids, closed about 30% by default. Emotion comes from lid height, tilt and a slow blink, not eye size. 💡 lifts the lids and rounds the eyes for 400ms.
-- **Sparkles:** sparing. Only on an unlock, a fix or a level-up, three star-glints at most, and never during idle.
-- **Boss:** a glossy ragdoll in slapstick (Kick the Buddy). Same candy-plastic material in the boss's own two emoji-derived colors, floppy spring-jointed limbs that flail on a hit and settle within about 600ms, squash on impact, and a bouncy over-animated tempo (Pip stays 20% slower: the straight man). On a K.O. it flops flat and slides out. Cartoon only: no blood, no gore, no real-world weapons.
-- **Garden (Grow play style):** a Forest-app tree growing on a small floating island inside a rounded aqua sky (`linear-gradient(180deg, #A8F4F6 0%, #5FC9E0 100%)`, radius 28px, the only light backdrop in Play). Glossy round leaves, slow rising bubbles (6–14px, white at .35 with a 1px highlight, 6–10s rise, at most 6 on screen), and growth in steps seed → sprout → sapling → blooming tree with a 600ms ease-pop grow. It never wilts or dies; a setback sprouts a weed that re-teaching pulls out. No text on the sky.
-- **Lighting:** a soft key light from the upper left, an aqua rim light (`#A7DFE6`), and a white hemisphere fill so the clearcoat catches one bright highlight. `ContactShadows` at opacity .35, blur 2.5.
-- **Accessories:** exactly `none | glasses | scarf | pencil | badge | backpack`. Nerdy and earned. No caps, headphones or sunglasses.
-- **Picker:** randomize does a 300ms spin-and-settle; the preview turntable auto-rotates at 0.4 rad/s and can be dragged to spin.
+**Panels, stickers, ribbons.** Play has no hairline web cards; everything is a `.panel` with a 3px outline, a top-light gradient and a 5px edge.
+- **Stickers** (`.sticker`, ±2–4deg tilt via `--tilt`) carry status: progress (lime), win (sun), boss and Pip-believes (coral), chrome for Brain-version badges. `.sticker--holo` adds the holo overlay at .5 opacity with one 1.2s sweep when it first appears.
+- **Ribbons** title a screen or a mission ("Fractions", "Pip's Brain v1", "K.O."), centered, −2deg.
 
-**Y2K accents: Play register only.** Studio screens never get these. The K.O. card gets only the holo number.
-- **Gloss on pill buttons:** Play `.btn` adds a top highlight, `background-image: linear-gradient(180deg, rgba(255,255,255,.38) 0%, rgba(255,255,255,0) 52%)`, over the fill, plus a 1px inner white line `inset 0 1px 0 rgba(255,255,255,.65)`, layered with the pressed edge. On `.btn--primary` the result stays at least 16:1 (a lighter fill under dark ice-ink text). On secondary buttons use `.10` and `.18`. Weapon chips and the composer send button get the same highlight at half strength.
-- **Chrome/holo sticker** (`.sticker`, used for the Brain badge "Brain v2", `.brain-badge`, `.ko__version`). Pill shape, padding 4px 10px, Geist Mono 500 13px.
-  - Chrome: fill `linear-gradient(180deg, #FFFFFF 0%, #D9DEE3 45%, #8E99A3 52%, #E9EEF2 100%)`, `--ice-ink` text (6.3:1 at the darkest stop), `inset 0 1px 0 #fff, 0 2px 6px -2px rgba(0,0,0,.5)`, rotated −3deg.
-  - Holo (`.sticker--holo`): the same, with `conic-gradient(from 210deg, #FF8FC7, #FFD27A, #B8F04A, #5FE3E8, #B9A2FF, #FF8FC7)` at opacity .55 blended `overlay` on top. It sweeps once when it first appears (background-position over 1.2s); no loop.
-- **K.O. card number:** "No. 0147" may carry the holo gradient as text (`background: var(--holo); -webkit-background-clip: text; color: transparent`; every stop is at least 8.3:1 on `--ko-bg`). It is static except for the one 6s sweep it shares with the metallic hairline. Nothing else on the card changes: no confetti, no sparkles, no gloss.
-- **Star-glint sparkles** (`.glint`): a 4-point star, `clip-path: polygon(50% 0, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0 50%, 39% 39%)`, 8–12px, `#FFFFFF` or `--sun`. Each one scales 0 → 1 → 0 while rotating 45deg over 400ms ease-out, with 3 at most per event, staggered 60ms. They appear only on a weapon unlock, a fixed Brain note, a Brain version-up or garden growth. Never idle, never in Studio, removed under reduced motion.
+**HUD** (mission, Brain, quiz).
+- **Left:** a round 🏠 home icon button.
+- **Center:** the boss name (Fredoka 700 15px) over the segmented glossy HP bar (10 segments, 20px tall, coral gel fill, navy separators) with the HP number at 18px.
+- **Right:** a round Brain-version badge (48px chrome sticker, "v2") and a mute icon button (sound off by default).
+- **Rules:** no text nav links, no top bar, no avatar menu on student screens. On a hit, each lost segment pops white for 150ms, then drains over 450ms.
 
-| Screen | 390px | 1024px+ |
+**Level map** (the existing `.mpath`, `.mstep` markup).
+- **Path:** nodes ① ② ③ (48px gel circles) → boss (56px, emoji, coral ring) → exam (🏆 48px), joined by a dotted path that turns lime as steps are taught.
+- **Progress ring:** each step node wears a lime progress ring (`--m`, 0–100).
+- **States:** the next step is the primary gel with two 1.2s ring pulses; a taught step is lime with a ✓; a K.O.'d boss is grayscale. All steps stay open, so she picks the order.
+- **Step names:** tapping a node shows its concept as a sticker label floating under the map for 2.4s (absolute, so the layout doesn't move) and sets the focus.
+- **Next hint:** said by Pip in the bubble ("Teach me ② next, or any step"), not printed under the map. The end is always visible on the map itself.
+
+**Speech bubbles** (CONTRACT v3.1, `framing="hero"`).
+- **Pip's bubble:** Pip's latest line is a comic bubble (white, 3px outline, tail down) at the top of the stage, above Pip's head. Fredoka 500 19px, 3 lines at most (Pip speaks in 1–2 sentences). The bubble pops in over 160ms; when voice is on, captions always show and `mouth` animates.
+- **Her bubble:** her last message is a small bubble (`--her-bubble`, Manrope 600 16px, 2 lines, tail to the bottom-right) overlaid at the bottom-right of the stage. It "flies" 24px up and fades into Pip's head after Pip answers (260ms). It never changes color for being wrong.
+- **Pip thinking:** within 100ms Pip leans 4deg, and the bubble shows "…" as three 8px bouncing dots (Fredoka) with an `aria-live="polite"` "Pip is listening…". After 1s Pip plays its writing pose and the label changes to "Pip is thinking…". After 8s the bubble shows "Still thinking. Long thought." plus a secondary "Try again" gel.
+- **Boss taunts:** `.bubble--boss` (coral, tilted 3deg) near the boss at the stage's top-right, once when she starts typing, at most once every 20s, auto-hiding after 2.4s.
+- **Chat history:** a round 📓 icon button in the tray opens it as a bottom-sheet notebook.
+  - **Panel:** `--note` paper ruled with `repeating-linear-gradient(180deg, transparent 0 31px, rgba(16,33,63,.10) 31px 32px)`, a 2px `--ice-line` margin rule at 40px, a 3px outline, a 28px top radius, and a height of 80% of the viewport.
+  - **Content:** it scrolls inside itself. Pip's lines carry a 32px face; her lines are right-aligned in her bubble style. Navy text on paper is 14.4:1 in both themes.
+
+**Weapon tray and input.**
+- **Tray (56px):** 📓 history, the weapon gels (`--sm`, the equipped one in sun with "⚔"), and on the right "Quiz Pip ▶". The quiz button is secondary until every step is taught, then becomes the screen's primary with a 220ms pop.
+- **Weapons:** new weapons pop `scale(0 → 1.1 → 1)` in 220ms with up to 3 star-glints. Several unlocks share one sticker toast. Weapons are never used up and never look purchasable. The tray scrolls sideways inside itself if needed.
+- **Input:** a chunky rounded field (60px, 30px radius, 3px outline, inner top shadow) with a 52px round send gel and the placeholder "Explain it to Pip…". It is never a bordered web form field.
+
+**Boss feedback** (timings from UX_TEARDOWN.md §6a). The boss is the 3D glossy ragdoll standing smaller behind Pip to the right (falling back to an emoji when there is no WebGL).
+- **Hit (`.shake-hit`), 900ms at most:** 70ms hit-stop, then a 240ms ease-pop squash together with a 280ms ±8px / ±1.5deg shake on the boss only. HP segments drop at once. A coral damage sticker "−40" rises 28px and fades over 700ms. Then a caption sticker pops in at the top-center of the stage (white sticker, Fredoka 700 18px, held 2.8s, tap to dismiss).
+- **Heal (`.shake-heal`):** the boss gloats over 360ms (scale 1.08, ±3deg) with a "+20 HP" coral sticker.
+- **Whiff (`.shake-whiff`):** a 280ms tilt and "Addini Bottomini is unbothered."
+- **Never:** a page shake on a normal hit, or moving chat text. Optional `navigator.vibrate(10)`.
+
+**Pip's Brain** (one screen).
+- **Layout:** a ribbon title "Pip's Brain v1", then a cloud-shaped panel (`.brain__cloud`: `--panel-fill`, 3px outline, 40px radius, three `.brain__puff` circles trailing to Pip at the bottom-left).
+- **Notes:** cream paper, a tape strip, alternating ±1.2deg tilt, her quote in Manrope 600 17px (3-line clamp, tap to read the full message in the notebook), and a 15px concept sticker.
+- **Paging:** at most 3 notes per page (2 when the stage area is under 520px tall). More pages are horizontal scroll-snap pages inside the cloud, with dot stickers and a "Next ▶" secondary gel; the page itself never scrolls.
+- **Wrong note:** a coral glow `0 0 0 3px var(--coral-fill), 0 0 28px -4px var(--coral-fill)`, a one-time ±2deg wobble, and a coral sticker "Pip believes this 😵".
+- **Fixed note:** lime glow and a lime sticker "fixed after N re-teach", reached by a 400ms flip with up to 3 glints.
+- **Bottom:** the "Quiz Pip ▶" primary gel.
+
+**Quiz** (one question per screen).
+- **Top:** the HUD with three dot stickers.
+- **Center:** Pip, with the question and then Pip's work typed into the speech bubble one line every 300ms (tap to show it all).
+- **Result:** a sticker: "Pip got it" (lime, 💡/🎉) or "My brain has a bug 😵" (coral, Pip's miss), plus a small "Used rule ③" sticker that opens that note in a sheet.
+- **Bottom:** "Next ▶" (primary), or on a miss "Re-teach" (primary) with "Next" as secondary.
+- **Never:** a ✗, a red row or a score against her.
+
+**K.O. sequence.** Full-screen beats, each fitting one viewport. Moving between beats is a 260ms swoosh. "Next ▶" is a gel at the bottom; tapping anywhere also advances after 1.5s.
+1. **Finisher:** a ribbon "Pick a finishing move" and the weapons as big win gels. On pick: 120ms hit-stop, ±4px/200ms screen shake (the only one in the product), and the ragdoll squashes flat and slides out over 500ms. Optional `vibrate([15,40,15])`.
+2. **Stamp:** "K.O." in Fredoka 700 96px (wdth 125, 6px outline stroke) stamps in at −6deg (`scale 1.4 → 1`, 240ms ease-pop), with the caption "Addini Bottomini has left Pip's brain.", a chrome sticker "Brain v1 → v2" and Pip celebrating. No confetti, no "!".
+3. **Card:** the quiet K.O. card (below) on a `--scrim`, with "Save image" (secondary) and "Next" (primary).
+4. **Cliffhanger:** Pip's rumor question in the bubble, plus the next boss as a black silhouette with a half-masked name ("Divid████").
+5. **What Ms. Rivera sees:** one panel with the three concepts and their statuses in plain words (stickers), and a 🏠 "Home" primary gel.
+
+**K.O. card (`.ko-card`), the quiet premium exception.** It is unchanged in both themes and takes no gel, outline, Fredoka, sticker or glint.
+- **Card:** `aspect-ratio: 9/16`, width `min(78vw, 340px)`, `--ko-bg` with grain at .05, a 1px `rgba(239,239,233,.08)` edge, 20px radius, 28px 24px padding.
+- **Front:** "No. 0147" (Geist Mono 12px `--ko-meta`, optionally holo text) and two emoji; a 1px metallic hairline that sweeps once over 6s; the struck equation in Fraunces 400 32px; nickname (Manrope 600 14px) and date (mono 12px) at the bottom.
+- **Back:** tap to flip (600ms; a 160ms crossfade under reduced motion) to the boss name (Fraunces 600 20px), her rule (Fraunces italic 17px) and Pip's line.
+- **Never:** XP, scores, confetti, "!", ranks, the center's name.
+
+**Student home = title screen** (one viewport).
+- **Scene:** the full scene with Pip centered in its room (`framing="hero"`, about 55% of the height).
+- **Above Pip:** its speech bubble with one line (the cliffhanger, or "I don't know much yet. That's why I need you.").
+- **Top corners:** a Brain-version chrome sticker (top-left); theme ☀️/🌙 and mute icon buttons (top-right).
+- **Below Pip:** a ribbon with the current mission's topic and a "vs 🍕🦵" boss sticker, then the big "PLAY" gel (`--lg`) that resumes or starts the current mission.
+- **Bottom row:** three labeled round icon buttons: "Look" (opens the picker sheet), "Vault" (opens the shelf sheet of defeated bosses), "Missions" (a sheet listing other missions and the saved session).
+- **States:** with no mission, PLAY is disabled with Pip saying "No mission yet. Ms. Rivera will send one."
+
+**Toasts, empty, error, loading (Play).**
+- **Toasts:** sticker toasts drop in just under the HUD (never at the bottom, where the input is), 2 at most, 4s, `role="status"`.
+- **Empty and error:** a panel with Pip's face, one line and one gel. Errors are deadpan and never blame her: "Pip lost the thread." plus a "Try again" gel. Never a red banner.
+- **Loading:** Pip's thinking bubble or a pulsing silhouette. No spinner, no skeleton bars.
+
+**Screen transitions.**
+- **Forward:** `screen-in` (opacity plus 24px slide plus `scale(.96 → 1)`, 260ms ease-out); `--from: -24px` for back.
+- **View Transitions:** use `document.startViewTransition` where supported, with the same keyframes on `::view-transition-new(root)`.
+- **Reduced motion:** a 120ms crossfade.
+- **Never:** confetti.
+
+**3D stage and environments** (`MascotStage` props `theme`, `framing`, `mouth`).
+- **Canvas:** transparent (`alpha: true`), no box, border or card. The canvas sits in the stage grid row and the scene gradient shows through, so Pip stands in the scene. No text ever sits on the canvas; bubbles and stickers are DOM overlays positioned above it.
+- **Performance:** DPR ≤ 1.5, 30fps, paused offscreen, a still pose under reduced motion, an emoji fallback without WebGL.
+- **Touch:** a poke reacts on `pointerdown` within 100ms with one of 4–6 reactions per zone, never the same one twice in a row. Pip's eyes follow the pointer within ±15deg.
+
+| Environment | `theme="day"` (bright pastel) | `theme="night"` (dusk / neon) |
 |---|---|---|
-| Landing | 220px stage above the headline | right column, 480px square, beside the hero copy |
-| Student home (`.sh-hero__stage`) | 260px "room" glass with `--surface` floor glow, Brain badge top-right | 360px, left of the copy |
-| Mission | 168px under the HUD, collapses to 96px (240ms) when the composer is focused | sticky left column, 360px, above the mission card |
-| Brain and quiz | 140px Pip at the bottom-left, the cloud's puffs pointing at him | 220px left of the cloud |
-| K.O. | arena stage for phase 1, then hidden behind the scrim | same |
-| Tutor and owner | no canvas; 20px static Pip avatar | same |
+| Lights | hemisphere sky `#D8F1FF` / ground `#E3FCEB` at 1.0; warm-white key upper-left 1.1; white rim | hemisphere `#333E86` / `#0E1530` at .6; cool key .8; cyan rim `#33E1FF` .9 |
+| Arena | pastel playground disc (mint-sand `#E8F7E4`, white rim), soft `ContactShadows` .35 | dark disc `#1B1F4D` with an emissive cyan ring (`#33E1FF`, .8) and a yellow spot on the boss |
+| Room | walls sky `#CDEBFF`, rug sand `#F3E3C3`, accents mint `#BFF0D4`, a sunny window | walls `#1E2860`, rug `#2A3370`, desk lamp warm `#FFD23F` pool, a cyan neon strip |
+| Garden | floating island (grass `#7FD67A` on sand), aqua sky, slow bubbles | the same island at dusk, a moon, yellow fireflies (≤ 8 emissive points) |
+| Fog / bg | none (the CSS sky shows) | none (the CSS stars show) |
+
+No pink or lilac lights in either theme.
+
+**Mascot, boss and garden art direction.** The mascots are fuzzy, soft, cute cartoon collectibles (Y2K fuzzy-toy and fuzzy-collectible energy), not baby plush. The boss is the shiny villain against the fuzzy friend. The proportions, deadpan rules and silhouette test from UX_TEARDOWN.md §6b still apply.
+- **Shape:** head about the size of the body (1:1 to 1.2:1, never the infant 2:1), stubby limbs, a low center of gravity, a slight 3/4 turn, readable as a solid shape at 48px. Little ear tufts and a crown tuft give each creature its one defining feature.
+- **Fur (all creatures except the bot):**
+  - **Body:** fuzzy velvet, `MeshPhysicalMaterial` roughness .85–.95, metalness 0, `sheen` 1, `sheenRoughness` .6–.8, `sheenColor` the patch tint.
+  - **Shell fur:** 12 shells on phones and 20 on laptop, offset along the normals 0–0.03 units, alpha from a noise texture that thins toward the tips, with gravity droop on the outer shells.
+  - **Tufts:** 3–6 hair-card tufts on the head and ears. The fluff wobbles on poke (a 240ms spring).
+- **The bot:** the one glossy option. Candy plastic, roughness .2–.35, clearcoat 1, one chrome or iridescent accent.
+- **Eyes:** glossy black capsules with two specular dots (a large one upper-left, a small one lower-right) under heavy deadpan lids, about 30% closed. No lashes, no big shiny irises. Emotion comes from the lids and tilt; 💡 rounds the eyes for 400ms.
+- **Colorways:** gender-neutral and her choice: aqua `#5FE3E8` (default, "Aqua / Cream"), tangerine `#FF9A3C`, lime `#B8F04A`, sky `#7CC4FF`, sand `#E8CFA0`, graphite `#5A6378`. Each has a lighter belly and face patch (the base mixed 55% toward `#FFF8F0`) and darker tufts (the base at −25% lightness). By day, the aqua default gets `#2BB8C2` tufts and a white rim light so it separates from the sky. 3D only.
+- **Boss:** glossy candy plastic (roughness .2–.35, clearcoat 1) in its own two emoji-derived colors. A floppy spring-jointed ragdoll that flails on hits and settles within about 600ms, is bouncier than Pip, flops flat on K.O., and stays cartoon only.
+- **Garden:** a Forest-app tree on the floating island. Glossy round leaves, growth seed → sprout → sapling → bloom with a 600ms pop. It never wilts; a setback sprouts a weed that re-teaching pulls out.
+- **Accessories:** exactly `none | glasses | scarf | pencil | badge | backpack`.
+- **Picker:** randomize does a 300ms spin-and-settle; the turntable auto-rotates at 0.4 rad/s and can be dragged.
+- **Sparkles:** star-glints (`.glint`, a 4-point star clip-path, 8–12px, white or `--sun-fill`, 400ms) appear only on an unlock, a fix, a level-up or garden growth, 3 at most per event, never idle, never in Studio, never on the K.O. card.
+
+### Studio components (unchanged from v1)
+
+**Buttons.** `.btn` 44px (`--lg` 52px), `--r-md`, Manrope 700 15px. Primary: ice fill with ice-ink text, hover `#DCFEFE`, active `scale(.98)`. Secondary: transparent with a 1px `--border`. Ghost: no border, `--fg-muted`. One primary per screen; no gloss, edges or pills.
+
+**Inputs.** `.input/.textarea/.select`: 44px, `--r-md`, 1px `--field-border` (3.7:1), 16px text, a 2px `--focus` outline.
+
+**Gap report.**
+- **Head:** `.report-head` with an eyebrow, the student name and a mono meta line.
+- **Rows:** `.gap-list` is divided rows (not cards). Each `.gap` has a status pill and a `.gap__quote` in Fraunces italic 17px `--fg-muted` with a 2px left rule. "Fixed after 1 re-teach" uses `pill--ok`. The boss is a neutral `.chip`.
+- **Tuesday box:** `.tuesday` on `--ice-soft` with a 1px `--ice-line`, 16px radius and 20px padding, holding the opener, Root cause, and Pip's question.
+- **Parent preview:** `.phone` with `--surface-3` bubbles.
+- **Phones:** summary first (status pills for the three concepts and the Tuesday opener); quotes expand on tap.
+
+**Roster.** Rows with dividers on phones (name, grade in mono, since-last-session with a 2-line clamp, "—" in `--fg-subtle`, `.avatar--pip` with an ice ring). At 1024: a grid `minmax(200px,1.1fr) 72px minmax(0,3fr) 132px`, 64px rows, and the whole row links to the report.
+
+**Insight card.** Glass, 24px padding (32px at 1024), `2fr 1fr` at 1024: eyebrow, a Fraunces 56px count, the misconception in Fraunces italic 24px, the boss chip, and the primary "Plan a workshop". The stat tile sits beside it.
+
+**Stat tile.** `.panel` (Studio: `rgba(239,239,233,.03)`, 1px `--divider`, 12px radius, 16px padding), eyebrow, Fraunces 500 40px number, 14px caption. A missing measurement shows "—" with "not measured yet", never 0.
+
+**Pricing card.** One glass card, max 440px: "$4" in Fraunces 64px, "/ active student / month", "$99 minimum" in mono, a range calculator, four checked items, the primary "Start pilot", and a "Stripe test mode" footnote.
+
+**Toasts, empty, error, loading.** `.toast` on `--overlay` with a 3px left edge (`--success`, `--ice`, `--danger`), 4s; `.state` with one line and one button; `.skeleton` rows for tables.
 
 ## Layout Principles
 
-- 4px base grid: 4, 8, 12, 16, 20, 24, 32, 40, 48, 64, 96. Gutter 16px (24px at 768). Content 72rem; reading pages (`.page--narrow`) 44rem.
-- Studio rhythm: 48px between sections on phones, 64px at 1024; 16px inside cards (24px at 768). Prefer divided rows to nested cards; never put a card in a card.
-- Play rhythm is tighter: 24px between blocks (32px at 1024); every Play screen shows the next action without scrolling at 390×844.
-- Mission screen on phones, top to bottom: top bar 60px, HUD 56px (sticky), stage 168px, mission card (collapsible after the first message), chat log, `.quiz-btn`, composer (sticky). At 1024: `grid-template-columns: minmax(320px, 5fr) 7fr; gap 32px`; left column (stage, `.mcard--compact`, boss panel) is sticky at `top: 76px`; the right chat column is at most 680px wide, with the composer pinned to its bottom.
-- Owner at 1024: insight card full width, then the roster. Tutor: page head with "New Pip mission" primary, insight slot, roster.
-- Landing: hero copy plus stage, three role buttons (stacked full width on phones, a 3-column row at 768, each 52px), footer "Demo center with synthetic data." in 14px `--fg-subtle`.
+**Play: one viewport, no page scroll.** Every Play screen fits `100dvh` at 390×844 and still works at 375×667.
+- **Frame:** `.play-screen` is a fixed-height grid with `overflow: hidden`.
+- **Overflow:** anything that doesn't fit becomes pages (scroll-snap plus dots plus a Next gel), tabs, or a sheet or drawer that scrolls inside itself (chat history, the Vault, the Missions list, a full note). Never a long page.
+- **Keyboard:** track `visualViewport`: set `--vvh` to `visualViewport.height` and add `.is-typing` when it is more than 150px shorter than `innerHeight`.
+
+| Mission screen row | 390×844 | 375×667 | Keyboard open (844 → ~508 / 667 → ~363) |
+|---|---|---|---|
+| Safe-area top | 47 | 0 | same |
+| HUD (home, HP, badge, mute) | 64 | 56 | 48 (HP only, buttons 40px) |
+| Level map | 64 | 56 (nodes 40px) | hidden |
+| Stage (Pip, boss, both bubbles) | flex: about 503 (min 280) | flex: about 435 (min 240) | flex: about 384 / about 247 |
+| ↳ Pip's bubble (overlay, 3 lines) | ≤ 104 | ≤ 104 | ≤ 80 (2 lines) |
+| ↳ her bubble (overlay, 2 lines) | ≤ 64 | ≤ 64 | hidden |
+| Weapon tray | 56 | 52 | hidden |
+| Input row | 76 (60 + 16) | 68 (56 + 12) | 76 / 68 |
+| Safe-area bottom | 34 | 0 | 0 |
+
+In Safari with its toolbars showing, `dvh` is about 94px shorter. The stage absorbs the difference; if the stage would fall below its minimum, the level map collapses into 5 tiny dots inside the HUD.
+
+| Screen | 390×844 budget | 375×667 |
+|---|---|---|
+| Home title | sticker and icons 64 · bubble 80 · Pip 360 · ribbon 52 · PLAY 72 · icon row 96 · safe areas | Pip 250, bubble 2 lines |
+| Brain | HUD 64 · ribbon 48 · cloud with 3 notes (≈ 112 each) · Pip 140 (overlapping the cloud's corner) · Quiz gel 76 | 2 notes per page |
+| Quiz | HUD 64 · Pip and bubble with work (stage) · result sticker 48 · gel row 76 | bubble 4 lines, the rest via "Show all" |
+| K.O. beats | each beat: content centered, gel row 76 at the bottom | card width `min(78vw, 300px)` |
+
+- **Laptop (≥1024):** the scene stays full-bleed. The HUD spans up to 1100px; the stage stays centered at up to 640px; the chat notebook docks as a right panel (380px, always open); Brain notes show 3-up without paging; level-map nodes grow to 56px (boss 64px). Still no page scroll.
+- **Studio:** 4px grid, a 16px gutter (24px at 768), 72rem content. Sections 48px apart on phones and 64px at 1024. Divided rows rather than nested cards. On phones, minimize scrolling: summary first, details behind taps (gap-report quotes expand; the roster shows name and since-last-session first, with the report one tap away). Scrolling is acceptable in Studio.
 
 ## Depth & Elevation
 
 | Level | Studio | Play |
 |---|---|---|
-| 0 | `--ink` plus backdrop and grain | `.backdrop--game` (ribbon at 0.32) |
-| 1 | `.glass` cards (blur 10, glass shadow) | glass plus `--lift` on mission card, boss panel, Brain cloud |
-| 2 | `--overlay`: sheets, toasts, dropdowns, solid with overlay shadow | same, plus the tactile button edges |
-| State | `--focus` ring only | `glow-coral`, `glow-mint`, `glow-sun` |
-| Special | n/a | K.O. card: matte, no blur, single deep shadow |
+| 0 | forest `--ink`, ribbon, grain | scene: day sky with clouds and bubbles / night navy with stars and cyan horizon |
+| 1 | `.glass` (blur 10, one shadow) | `.panel`: 3px outline, top highlight, 5px edge (frosted blur 12 at night) |
+| 2 | `--overlay` sheets and toasts | gels and icon buttons: outline, gloss, 6px pressable edge; stickers with a 3px edge |
+| State | 2px focus ring | coral, lime and sun glows (3px ring plus a 28px halo); 3px focus ring with a 4px offset |
+| Special | n/a | K.O. card: matte, flat, one deep shadow; no outline or gloss |
 
-Rules: one glowing element per viewport, except wrong and fixed notes in the Brain. Glows mean state, never decoration. Text never sits on raw backdrop ribbons; it sits on glass or solid surfaces. Sheets are bottom sheets on phones (radius 22px on top) and centered 640px dialogs at 768.
+Pressable things have an edge, and static things have none or a shallow one. The edge is the affordance: if it has a 6px edge, it can be pressed. Glows mean state only, with one per viewport (except Brain notes). Sheets are bottom sheets (a 28px top radius, 3px outline) on phones and centered 560px panels at 768+.
 
 ## Do's and Don'ts
 
 **Do**
-- Keep ice the single action color in both registers; one filled button per screen.
-- Put the student's words in Fraunces italic everywhere, and quote her exactly.
-- React within 100ms of every touch, on `pointerdown`, optimistically and without waiting on the network; animate transform, opacity and width only.
-- Keep the hit sequence at 900ms or less and make anything over 1.5s tap-to-skip; every intro has "Skip intro" (ages 10–15 skip anything that repeats; UX_TEARDOWN.md §5).
-- Write Pip's lines with no "!" and no "Great job" or "Awesome": deadpan, treating her as the expert. Physical comedy (squash, wobble, fall-over) lands on the boss, and on Pip only when its rule fails.
-- Keep sound off by default behind a visible toggle (cues under 300ms: pop, thwack, boing, low gong); haptics are progressive enhancement, Android only.
-- Pair each color state with words: "Pip believes this 😵", "fixed after 1 re-teach", "Pip got it".
-- Use the 1.04 hover-scale only on collectible or choosable things: weapon chips, shelf items, mission tiles.
-- Honor `prefers-reduced-motion` with the existing global rule; also stop hit-stop, the boss bob, the K.O. flip, the sweep and the damage float, and keep a non-motion signal (a 150ms opacity/color flash).
-- Check every new pair against 4.5:1 (text) and 3:1 (control edges), on the brightest surface it can sit on.
+- Make Play look like a game: a full-screen scene, the character in the middle, round icon buttons on the edges, gels, panels, stickers, ribbons, comic bubbles, the level map.
+- Fit every Play screen in one viewport. Page, tab or drawer instead of scrolling.
+- Keep the action color the only filled-button color, with one primary gel per screen.
+- React within 100ms on `pointerdown`; keep the hit sequence at 900ms or less; make anything over 1.5s tap-to-skip; keep screen transitions at 300ms or less.
+- Write Pip's lines with no "!" and no "Great job": deadpan, treating her as the expert. Physical comedy lands on the boss.
+- Pair every color state with a word or icon. Check every pair against 4.5:1 (text) and 3:1 (UI boundaries) in both themes.
+- Keep sound off by default (with a mute icon button). Honor `prefers-reduced-motion` everywhere.
 
-**Don't**
-- Use coral or `--danger` on her bubble, her composer, her name, a ✗, a score, or any Studio screen.
-- Bring boss humor, glows, spring easing or pill buttons into Studio; there the boss is a neutral chip.
-- Put XP, confetti, exclamation marks, ranks or the center's name on the K.O. card.
-- Use streaks, countdowns, guilt copy ("Pip misses you"), timers, nagging badges, need meters that drain while she is away, a purchasable currency, loot boxes, consumable weapons, locked items that advertise a purchase, or rewards for sharing (full list: UX_TEARDOWN.md §6d).
-- Make the mascot plush or baby-proportioned (head larger than 1.2× the body, big shiny irises, lashes), or give it caps, headphones or sunglasses; the accessories are `none | glasses | scarf | pencil | badge | backpack`.
-- Let a tap do damage; HP moves only on judged explanations.
-- Use alpha steps of ivory for text, or text below 14px except eyebrows and mono metadata.
-- Add another accent hue to UI chrome (the Y2K colorways stay in the 3D scene, plus `--holo` on stickers), or a font outside Fraunces, Manrope and Geist Mono.
-- Put gloss, holo, chrome or glints on Studio screens, or sparkles anywhere on the K.O. card; never let sparkles idle or exceed 3 per event.
-- Animate on loop anything that carries text; run a hit shake longer than 280ms; shake the screen for anything but the K.O.; fire more than one taunt per 20s.
+**Don't (Play screens)**
+- Top nav bars, text nav links, avatar menus, breadcrumbs, tables, dropdowns/`<select>`, hairline web cards, small grey text, form-looking inputs, spinners, skeleton bars, or a scrolling page.
+- Pink or lilac in the UI. Pastel-candy styling. Babyish styling: the infant 2:1 head, lashes, big shiny irises.
+- Coral on her bubble, her input, her name, a ✗ or a score. Red banners for errors.
+- Confetti anywhere. XP, scores, "!", ranks or the center's name on the K.O. card. Gel, outline, Fredoka or glints on the card.
+- Streaks, countdowns, guilt copy, need meters that drain while she is away, purchasable currency, loot boxes, consumable weapons, locked items that advertise a purchase, rewards for sharing (UX_TEARDOWN.md §6d).
+- Caps, headphones or sunglasses on the mascot. A tap that does damage.
+- More than 3 glints per event, idle sparkles, screen shake outside the K.O., or more than one taunt per 20s.
+
+**Don't (Studio)**
+- Gels, stickers, Fredoka, the boss's humor, glows or the Play palettes on tutor, owner, landing, pricing or parent screens.
+- Alpha steps of ivory for text, or text below 14px except eyebrows and mono metadata.
 
 ## Responsive Behavior
 
-| Width | Changes |
-|---|---|
-| 360–389 | Test floor. No horizontal page scroll; the mission rail scrolls inside itself. |
-| 390 (base) | One column. Composer and sheets pinned to the bottom with `env(safe-area-inset-bottom)`. Every tap target ≥ 44px (chips 44px tall, send 44px circle). Primary actions within the bottom 40% of the screen on Play. Roster rows stacked. |
-| 640 | Hero 48px; page title 40px; Brain notes 2-up. |
-| 768 | Gutter 24px; mission path becomes a 5-column row; sheets become dialogs; landing role buttons in a row; cards padded 24px. |
-| 1024 | Hero 60px; mission screen splits 5fr/7fr with a sticky left column; roster becomes a table grid; insight card 2fr/1fr; Brain notes 3-up; boss emoji 88px. |
-| 1280+ | Content caps at 72rem; extra width becomes margin, never wider text. |
+| Width | Play | Studio |
+|---|---|---|
+| 360–389 | test floor; level-map nodes 40px; tray scrolls inside itself | no horizontal scroll |
+| 375×667 | the budget above; 2 Brain notes per page; quiz bubble 4 lines | summary first |
+| 390×844 (base) | the budget above; 56px icon buttons; thumbs reach PLAY, the input and the tray in the bottom 40% | one column, 44px targets |
+| 768 | the stage widens; sheets become centered 560px panels | gutter 24; sheets become dialogs |
+| 1024+ | notebook docks right (380px); Brain 3-up; HUD up to 1100px; nodes 56px | roster grid; insight 2fr/1fr; hero 60px |
 
-Hover effects sit behind `@media (hover: hover) and (pointer: fine)` so phones never get sticky hover states. Use `100dvh` for full-height Play screens. Keyboard: every note, step, chip and card flip is a `<button>`; focus is a 2px `--focus` ring with a 2px offset; the HP bar is `role="meter"`; captions and "Pip is thinking" announce via `aria-live="polite"`.
+- **Hover:** only under `(hover: hover) and (pointer: fine)`.
+- **Tap targets:** 48px minimum in Play, 44px in Studio.
+- **Semantics:** every node, note, sticker-button and card flip is a `<button>`. The HP bar is `role="meter"` with `aria-valuenow`. Bubbles, captions and the thinking state announce via `aria-live="polite"`.
+- **Orientation:** landscape phones get the same scene in a two-column frame (stage left, bubble, tray and input right), still with no scroll.
 
 ## Theming: build your own UI (S10)
 
-A student theme is a small DESIGN.md: a token set in the same front-matter shape as this file, plus a one-line **Visual Theme & Atmosphere** description. A theme can change the look; it can never change what the system means. It is visual only, with no uploads, and is stored as "My theme".
+A student theme is a small DESIGN.md: a token set in this file's front-matter shape plus a one-line atmosphere. It can change the look, never the meaning, and is visual only (no uploads). It is saved as "My theme" and applied on the `[data-register="play"]` root.
 
 ```yaml
 theme:
-  name: "Y2K Aqua"
-  atmosphere: "Deep-sea night with aqua glass buttons and lime progress."
-  colors: { ground, surface, surface-2, fg, fg-muted, fg-subtle, action, action-ink, progress, win, boss }
-  display: soft            # editorial (SOFT 0, wght 500) | soft (SOFT 100, wght 700) | wonky (soft + WONK 1)
-  radius: normal           # tight 0.75x | normal 1x | round 1.25x, multiplies --r-* (pill stays pill)
-  bubble: round            # round 18px | square 8px | pill 999px; the tail corner stays 6px
-  pattern: grain           # none | grain | dots | grid | ruled | bubbles, CSS only, opacity <= .06
-  motion: normal           # low (no shake, half travel, no glints) | normal
+  name: "Night Arcade"
+  atmosphere: "Navy arcade at night: frosted panels, cyan gels, lime progress."
+  base: night                    # day | night: picks the Play token block it overrides
+  colors: { sky-top, sky-bottom, panel-top, panel-bottom, fg, fg-muted, fg-subtle, action, action-ink, outline, progress, win, boss }
+  display: chunky                # chunky (Fredoka wdth 112) | regular (100) | narrow (88)
+  radius: normal                 # tight 0.75x | normal 1x | round 1.25x (gels stay pills)
+  bubble: comic                  # comic (24px, tail) | square (10px, tail) | cloud (puffs)
+  scene: clouds                  # clouds | stars | bubbles | grid | ruled | none (CSS only)
+  motion: normal                 # low (no shake, half travel, no glints) | normal
 ```
 
-**Presets** (original; never named after or imitating a real brand or product). Each is checked: every text role is at least 4.5:1 on ground, surface and surface-2; the worst case is listed.
+**Presets** (original names; never named after or imitating a real brand). The worst text pair is across sky, panel and well.
 
-| Preset | ground / surface / surface-2 | fg / fg-muted / fg-subtle | action / action-ink | progress / win / boss | display, radius, bubble, pattern | worst text pair |
-|---|---|---|---|---|---|---|
-| **Night Forest** (default) | `#001914` `#0A2721` `#12372E` | `#EFEFE9` `#D4D4CD` `#A8B8AE` | `#C9FCFC` / `#001914` | `#8FE3B0` `#FFD27A` `#FF8A7A` | soft, normal, round, grain | fg-subtle 6.3:1 |
-| **Y2K Aqua** | `#031A2B` `#0A2A40` `#123A55` | `#EEF9FF` `#CFE6F2` `#9FC3D6` | `#5FE3E8` / `#031A2B` | `#B8F04A` `#FFD27A` `#FF8A7A` | soft, round, pill, bubbles | boss 5.2:1 |
-| **Bubblegum** | `#1E0A1C` `#2B1229` `#3A1A37` | `#FFF0F7` `#F2D3E3` `#C9A3B8` | `#FF9AD5` / `#1E0A1C` | `#8FE3B0` `#FFD27A` `#FF7A5C` | wonky, round, round, dots | boss 5.9:1 |
-| **Chrome** | `#111316` `#1A1D21` `#252A30` | `#F2F4F6` `#D3D8DD` `#A3ABB3` | `#DDE3E8` / `#111316` | `#8FE3B0` `#FFD27A` `#FF8A7A` | editorial, tight, square, grid | fg-subtle 6.2:1 |
-| **Notebook** (light) | `#F7F3E8` `#FFFDF6` `#EFE9D8` | `#1C241F` `#3D4A42` `#56635A` | `#245B64` / `#F7F3E8` | `#1A6E42` `#805300` `#B23A29` | editorial, normal, square, ruled | boss 4.9:1 |
+| Preset | sky / panel | fg trio | action / label | progress / win / boss | outline | scene, display | worst text pair |
+|---|---|---|---|---|---|---|---|
+| **Daylight Arcade** (default) | `#BFE6FF`→`#E3FCEB` / `#FFFFFF`→`#EEF6FF` | `#10213F` `#2E4466` `#4A5F80` | `#2A63F5` / `#FFFFFF` | `#1A7030`·`#3FBF4F` / `#8F5200`·`#FFB020` / `#B52E1B`·`#FF6B5E` | `#10213F` | clouds, chunky | fg-subtle 4.9:1 |
+| **Night Arcade** (dark default) | `#0E1530`→`#1B1F4D` / `#333E86`→`#2A3370` | `#FFFFFF` `#DCE3FF` `#B8C2EE` | `#33E1FF` / `#0E1530` | `#A3F04A` / `#FFD23F` / `#FFA89C`·`#FF8A7A` | `#050A1F`, panels `#6E7BD6` | stars, chunky | coral 5.1:1 |
+| **Deep Aqua** | `#031A2B`→`#0A2A40` / `#123A55` | `#EEF9FF` `#CFE6F2` `#9FC3D6` | `#5FE3E8` / `#031A2B` | `#B8F04A` / `#FFD27A` / `#FF8A7A` | `#01101C` | bubbles, regular | boss 5.2:1 |
+| **Night Forest** | `#001914`→`#0A2721` / `#12372E` | `#EFEFE9` `#D4D4CD` `#A8B8AE` | `#C9FCFC` / `#001914` | `#8FE3B0` / `#FFD27A` / `#FF8A7A` | `#000D0A` | stars, regular | fg-subtle 6.3:1 |
+| **Chrome** | `#111316`→`#1A1D21` / `#252A30` | `#F2F4F6` `#D3D8DD` `#A3ABB3` | `#DDE3E8` / `#111316` | `#8FE3B0` / `#FFD27A` / `#FF8A7A` | `#000000` | grid, narrow | fg-subtle 6.2:1 |
+| **Notebook** (light) | `#F7F3E8`→`#FFFDF6` / `#EFE9D8` | `#1C241F` `#3D4A42` `#56635A` | `#245B64` / `#F7F3E8` | `#1A6E42` / `#805300` / `#B23A29` | `#1C241F` | ruled, regular | boss 4.9:1 |
 
-In Notebook, the sticky notes keep `--note` paper with a 1px `#D8CFB6` edge, and glows drop to 1.5px rings with no blur halo.
+**She may change:** the hex within each role, the display width, the radius scale, the bubble style, the scene, the motion level (low or normal), and Pip's look (3D).
 
-**What a student may change:** the hex within each role, display mood, radius scale, bubble style, background pattern, and motion intensity (low or normal). Plus Pip's look, which lives in the 3D scene.
+**Locked:**
+- **Role meanings:** action is the only filled-button and link color; boss (coral) hue stays at 0–20deg and is only for boss HP and Pip's wrong beliefs; progress hue stays at 90–170deg; win is her wins.
+- **No pink or lilac** (hue 280–345deg) in the action, progress or win slots.
+- **Structure and access:** fonts, the type scale and 15px floor, 48px tap targets, the 3px outline and gel structure, spacing, the one-viewport rule, focus ring width, reduced motion, all copy, and the K.O. card.
 
-**What is locked:**
-- **Role meanings.** Action (ice slot) is the only filled-button and link color. Boss (coral slot) is only boss HP and Pip's wrong beliefs; its hue must stay between 0 and 20deg and it never touches her bubble. Progress (mint slot) is her progress; hue 90–170deg. Win (sun slot) is her wins.
-- **Layout and access:** the type scale and font families, the 14px minimum, 44px tap targets, the spacing scale, focus ring width, and layout.
-- **Motion and voice:** `prefers-reduced-motion` always beats the theme's motion setting, and all copy is unchanged.
+**Validation on save,** live in the picker and again on save:
+1. **Contrast:** every text role needs 4.5:1 on sky top, sky bottom, panel top, panel bottom and well. The action label needs 4.5:1 on the gel's middle stop. Outline vs sky and panel outline vs sky need 3:1. Role fills need their label at 4.5:1; role text values need 4.5:1 on the panel.
+2. **Auto-adjust:** step a failing pick's OKLCH lightness 1% at a time toward passing (keeping hue and chroma) and stop at the first pass. Say so inline: "Adjusted your lime a little so text stays readable (4.6:1)." Never adjust a color she didn't pick.
+3. **Coral vs progress:** at least 60deg of hue apart, and coral vs action at least 30deg. They are never told apart by hue alone: the stickers, faces and HP number stay on in every theme.
+4. **Scene patterns:** at most .06 opacity behind text, and contrast is re-checked on the brightest pixel.
 
-**Validation on save,** run live in the picker and again on save:
-1. **Contrast:** every text role on ground, surface and surface-2 needs 4.5:1. `action-ink` on `action` needs 4.5:1; `action` against ground needs 3:1 (a UI boundary). Progress, win and boss on surface-2 need 3:1 as fills and 4.5:1 where they are text ("Pip got it", "+20 HP").
-2. **Auto-adjust:** if a pick fails, step its OKLCH lightness by 1% toward passing, keeping hue and chroma, and stop at the first passing value. Show it inline: "Adjusted your lime slightly so text stays readable (4.6:1)." Never refuse silently, and never adjust a color she didn't pick.
-3. **Coral and mint stay distinguishable:** a boss–progress hue gap of at least 60deg, and boss–action at least 30deg. They are never told apart by hue alone: "Pip believes this 😵", "fixed after N re-teach", 😵/🎉 faces and the HP label stay on in every theme.
-4. **Pattern:** the pattern's opacity is capped at .06, and contrast is re-checked against the pattern's brightest pixel.
-
-**Application:** theme tokens are CSS variables set inline on the `[data-register="play"]` root only. They map onto `--ink`, `--surface`, `--surface-2`, `--fg*`, `--ice`, `--ice-ink`, `--mint`, `--sun`, `--coral`, `--r-*`, plus `--bubble-r` and `--pattern`. Derived tints (`*-soft`, `*-line`, glows) are computed with `color-mix(in oklch, var(--x) 14%, transparent)`, so a theme never has to define them. Studio screens, tutor, owner and parent surfaces, and the K.O. card's core layout (matte `--ko-bg`, type, metadata) never take a student theme; the K.O. card may take her `action` hue only on the hairline sweep. Center themes (the owner's colors as the default student theme) use the same validator.
+**Where it applies:** theme tokens override the Play blocks above, inline on the Play root only. Gel stops are derived from `action` (top +12% lightness, bottom −8%) with `color-mix(in oklch, …)`. Soft and line tints are derived at 14% and 45%. Studio, tutor, owner and parent surfaces, and the K.O. card's layout and palette, never take a theme. A center theme (the owner's colors as the student default) runs through the same validator.
 
 ## Agent Prompt Guide
 
-Quick reference: ground `#001914`, glass card `#0A2721`, raised `#12372E`, text `#EFEFE9` / `#D4D4CD` / `#A8B8AE`, action ice `#C9FCFC` on `#001914`, Play states mint `#8FE3B0` (her progress), sun `#FFD27A` (her wins), coral `#FF8A7A` (boss and Pip's wrong rules only), paper `#FBF3D9` with `#1C241F`, K.O. card `#14161F`. Fonts: Fraunces (SOFT 0 at weight 500 for Studio; SOFT 100 at weight 700 for Play), Manrope, Geist Mono.
+**Quick reference.**
+- **Studio:** forest `#001914`, ivory `#EFEFE9`, ice action `#C9FCFC`, Fraunces, Manrope, Geist Mono.
+- **Play day:** sky `#BFE6FF`→`#E3FCEB`, white panels, navy text and outlines `#10213F`, blue gel `#2A63F5` with a white label, lime `#3FBF4F` (text `#1A7030`), sun `#FFB020` (text `#8F5200`), coral `#FF6B5E` (text `#B52E1B`).
+- **Play night:** `#0E1530`→`#1B1F4D`, frosted indigo panels, white text, cyan gel `#33E1FF` with a `#0E1530` label, lime `#A3F04A`, yellow `#FFD23F`, coral `#FF8A7A` (text `#FFA89C`).
+- **Shared:** Fredoka for anything big, Manrope 600 16px for small body. K.O. card `#14161F`.
 
-Ready prompts:
-- "Style the boss panel per DESIGN_SYSTEM.md: surface with a coral radial wash, 28px radius, 64px emoji with a 4px idle bob, Fraunces 700 SOFT 100 WONK 1 name at 24px, a 14px pill HP bar with a coral gradient fill and a white damage ghost, and shake-hit, shake-heal and shake-whiff keyframes (70ms hit-stop, 280ms ±8px shake, 240ms squash), an instant HP drop with a ghost that drains over 450ms after 150ms, and a coral mono damage floater; total ≤ 900ms."
-- "Restyle Pip's Brain as a 40px-radius thought cloud with three trailing puffs toward Pip; notes are cream paper with a tape strip and alternating tilt, quotes in Fraunces italic 17px; wrong notes get the coral glow and a #9E3427 'Pip believes this 😵' flag; fixed notes get the mint glow and a #1F6B45 flag, with a ±2deg reveal wobble on the wrong note and a 400ms rotateY flip from wrong to fixed."
-- "Build the K.O. card: 9:16, #14161F matte, 20px radius, 'No. 0147' in 12px Geist Mono with an optional holo text sheen, one 1px metallic hairline that sweeps once over 6s, the struck-through equation in Fraunces 32px, nickname and date at the bottom, tap to flip to boss name, her rule and Pip's line. No XP, no confetti, no exclamation marks."
-- "Apply the Play register under [data-register=play]: pill buttons 52px with a 4px #6FB7B9 pressed edge, 20/28px radii, Fraunces SOFT 100 headings, weapon chips 44px tall with a 1.04 hover-scale and a sun glow when equipped."
-- "Make the mission screen mobile-first: sticky 56px HUD under the top bar, 168px 3D stage that collapses to 96px on composer focus, the chat with Pip bubbles on the left (surface-2) and hers on the right (ice-soft), and a pill composer pinned to the bottom with a 44px ice send button and safe-area padding."
-- "Studio gap report: divided rows rather than cards, status pills (ok, warn, sunset), evidence quotes in Fraunces italic 17px with a 2px left rule, an ice-soft 'Start Tuesday's session here' box, the boss as a neutral chip. No coral, no glows."
+**Ready prompts.**
+- "Convert the student mission screen to the Play game layout in DESIGN_SYSTEM.md: a `.play-screen` grid at 100dvh with no page scroll; a HUD with a 🏠 icon button, boss name and segmented 10-part glossy HP bar, Brain badge and mute; a level map of ① ② ③ → boss → 🏆 nodes with progress rings; a centered 3D Pip with a comic speech bubble above its head and her last message bottom-right; a weapon tray with 📓 history and 'Quiz Pip ▶'; a chunky rounded input with a round send gel. Use the day/night token blocks."
+- "Build the student home as a game title screen: Pip centered in its room, a one-line bubble, a ribbon with the mission topic and boss sticker, a 72px 'PLAY' gel, and round icon buttons for Look, Vault, Missions, theme and mute. It must fit 375×667 without scrolling."
+- "Style the boss hit: 70ms hit-stop, 240ms squash, 280ms ±8px shake on the boss only, HP segments drop instantly with a white ghost that drains over 450ms after 150ms, a coral '−40' sticker rising 28px over 700ms, then a caption sticker for 2.8s; 900ms at most in total."
+- "Pip's Brain as one screen: a cloud panel with at most 3 paper notes per page (scroll-snap pages with dots), wrong note in coral glow with a 'Pip believes this 😵' sticker, fixed note in lime with a 'fixed after N re-teach' sticker, and the 'Quiz Pip ▶' primary gel."
+- "Keep the K.O. card quiet: 9:16, #14161F matte, Geist Mono 'No. 0147' (optionally holo), one metallic hairline sweeping once over 6s, Fraunces equation, tap to flip. No gel, outline, Fredoka, confetti or '!'."
