@@ -214,3 +214,8 @@ fame → stages (club_show → runway → arena_concert) + covers; squad → cre
 creator → fashion pieces / room items / mod slots; family → egg early → mini Pips + photo wall; explorer → new
 world backdrops. Non-romantic by design (no dating/partner storylines; no bar/alcohol settings) — all-ages.
 POST `/api/students/{id}/dream {dream}`; `payoff.dream_unlock {kind, id, title, line}`.
+
+## v3.11 (secret "Main Character" form)
+After the third K.O. the student unlocks `form: "main"` (Pip2D `form="main"`), an alternative look to v3: absurdly
+over-confident, still deadpan ("i have mastered the triangle. it bows to me."). Earned only. No "chad/alpha/sigma"
+wording, no real-person likeness. `Student.forms_unlocked: string[]`; payoff adds `unlocked_form`.
