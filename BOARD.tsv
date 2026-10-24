@@ -195,3 +195,7 @@ sat	item	P2D-10	backlog	3d	SCREEN	Runway poses, club accessories + lighting, Duk
 sat	item	F12	backlog	frontend	SCREEN	Apply G4 (after F10/F11 essentials)
 sat	item	B14	backlog	backend	DATA	Prompt-to-mod: /api/themes/generate (Claude structured Theme + server-side rule enforcement + offline keyword presets), /api/themes gallery, student active theme
 sat	item	F13	backlog	frontend	SCREEN	Mods sheet: prompt box ('describe your vibe'), live preview, apply/save, gallery of presets + center mods, shows 'adjusted for readability' notes
+sat	item	MOT-1	doing	coordinator	JOURNEY	Upgrade motivation: vibe evolution paths, stage unlocks, Pip voice growth, crew (reformed boss friend, duo partner, egg -> mini Pip spaced review)
+sat	item	P2D-11	backlog	3d	SCREEN	Vibe-specific evolution (cool sleeker, ugly weirder, cute cuter); reformed boss states (Duke, walrus, penguin, hamster); egg + mini Pip (6 animals); duo partner pose
+sat	item	B15	backlog	backend	DATA	crew + unlocks on student, reformed boss on K.O., duo choice, egg at v3/3 K.O.s, mini review session (~2 texts), Pip voice growth by version in prompts
+sat	item	F14	backlog	frontend	SCREEN	Crew row on home, reformed boss join beat after K.O., duo in fights, egg hatch moment, mini review entry, stage unlock reveal

@@ -194,3 +194,15 @@ AA contrast on every text pair (auto-adjusts lightness, lists changes in `adjust
 progress vs boss ≥ 60° hue apart, pattern opacity capped. Name/vibe_line moderated (no profanity; ≤ 24 / 60 chars).
 Offline or on error: keyword → nearest preset ("rave/club/neon" → Club, "runway/fashion" → Runway, "vaporwave", "y2k",
 "notebook", "forest", …), `source: "preset"`. Themes apply only to Play screens; Studio never takes a student theme.
+
+## v3.9 (why upgrade: vibe paths, world unlocks, Pip's crew)
+- Evolution follows the vibe: cool → sleeker (chrome/streetwear), ugly → weirder, cute → cuter (`Pip2D version + vibe`).
+- Brain versions unlock stages: v2 → Club battle stage, v3 → Runway finale + a second mod slot. `Student.unlocks: string[]`.
+- Pip's voice grows: v2/v3 Pip is a bit sharper and more confident and makes callbacks to the student's rules.
+- **Crew** (non-romantic): `Student.crew: [{kind: "reformed_boss"|"duo"|"mini", id, name, joined_at, from_assignment?}]`.
+  K.O. adds the defeated boss as `reformed_boss` (reformed state art + one reformed line, e.g. Duke Doublecount:
+  "I have recounted. It is half. I would like to join you."). A `duo` partner is chosen once (another animal) and
+  appears in boss fights for a combo hit on a level-3 explanation. An **egg** appears at brain v3 (or after 3 K.O.s)
+  and hatches a `mini` Pip; a mini session is a short spaced review: Pip teaches the mini an old rule the student
+  taught, the mini gets one thing wrong, the student fixes it (counts as a review, ~2 texts).
+- K.O. `payoff` adds `new_crew[]` and `unlocked[]`.
