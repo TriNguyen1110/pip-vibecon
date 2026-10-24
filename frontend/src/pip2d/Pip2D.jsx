@@ -2,6 +2,9 @@ import { useEffect, useId, useRef, useState } from 'react'
 import { BLUSH, BOSS_TINT, EYE, MOOD_ALIASES, MOUTH, TONGUE } from './tokens'
 import { CREATURE_DEFS } from './creatures'
 import { mix } from './shapes'
+import { ACCESSORIES_2D, Y2KDefs, Gel, Glint, Sparkles, StarClips, Charm, FrostVisor, Shades, HoloBandAid, RimLight, starPath } from './y2k'
+
+export { ACCESSORIES_2D }
 import './pip2d.css'
 
 // Pip as a flat, hand-inked 2D character. viewBox 200 x 220, no dependencies.
@@ -42,10 +45,6 @@ const MOOD_MOUTH = {
   possessed: 'smirk',
 }
 
-function Star({ x, y, r, fill = '#fff' }) {
-  const s = r * 0.32
-  return <path d={`M${x},${y - r} L${x + s},${y - s} L${x + r},${y} L${x + s},${y + s} L${x},${y + r} L${x - s},${y + s} L${x - r},${y} L${x - s},${y - s} Z`} fill={fill} />
-}
 
 // Big black oval eye, two highlights, deadpan lid cut as a flat ink line.
 function Eye({ e, lid = 0.35, look = [0, 0], scale = 1, ink, tint, sparkle, ring, uid }) {
@@ -76,8 +75,7 @@ function Eye({ e, lid = 0.35, look = [0, 0], scale = 1, ink, tint, sparkle, ring
           <ellipse cx={cx} cy={cy} rx={rx} ry={ry} fill={tint ? '#2A0E12' : EYE} />
           {tint && <ellipse cx={cx} cy={cy + ry * 0.25} rx={rx * 0.62} ry={ry * 0.45} fill={tint} />}
           <circle cx={cx - rx * 0.32} cy={hy} r={rx * 0.34} fill="#fff" />
-          <circle cx={cx + rx * 0.36} cy={cy + ry * 0.48} r={rx * 0.16} fill="#fff" />
-          {sparkle && <Star x={cx + rx * 0.3} y={hy + 2} r={rx * 0.28} />}
+          <Glint x={cx + rx * 0.34} y={cy + ry * 0.42} r={rx * (sparkle ? 0.34 : 0.28)} />
         </g>
       </g>
       {lid > 0.02 && <line x1={cx - chord} y1={ly} x2={cx + chord} y2={ly} stroke={ink} strokeWidth={Math.max(3, rx * 0.28)} strokeLinecap="round" />}
@@ -185,7 +183,7 @@ function talkShape(mouth) {
   return 'o'
 }
 
-function Sprout({ pose, anchor, t, flower, tint }) {
+function Sprout({ pose, anchor, t, flower, tint, gid }) {
   const sp = SPROUTS[pose] ?? SPROUTS.droop
   const col = tint ?? (anchor.yuzu ? '#7CC46A' : t.body)
   const [tx, ty] = sp.tip
@@ -198,6 +196,7 @@ function Sprout({ pose, anchor, t, flower, tint }) {
           <circle cx={anchor.x} cy={anchor.y + 13} r="14" fill="#F6C344" stroke={t.ink} strokeWidth="3.6" />
           <path d={`M${anchor.x - 8},${anchor.y + 8} C${anchor.x - 6},${anchor.y + 4} ${anchor.x - 3},${anchor.y + 3} ${anchor.x},${anchor.y + 3}`} fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round" opacity="0.8" />
           <circle cx={anchor.x + 5} cy={anchor.y + 17} r="1.4" fill="#D69A1E" />
+          <Gel id={gid} x={anchor.x - 5} y={anchor.y + 7} r={4.5} />
           <circle cx={anchor.x - 3} cy={anchor.y + 20} r="1.4" fill="#D69A1E" />
         </g>
       )}
@@ -223,7 +222,12 @@ function Sprout({ pose, anchor, t, flower, tint }) {
             <circle cx={tx - 4.5} cy={ty - 4.5} r="3" fill="#fff" />
           </g>
         ) : (
-          pose !== 'question' && <ellipse cx={tx} cy={ty} rx="7.5" ry="5.5" transform={`rotate(-25 ${tx} ${ty})`} fill={col} stroke={t.ink} strokeWidth="3.4" />
+          pose !== 'question' && (
+            <g>
+              <ellipse cx={tx} cy={ty} rx="7.5" ry="5.5" transform={`rotate(-25 ${tx} ${ty})`} fill={col} stroke={t.ink} strokeWidth="3.4" />
+              <Gel id={gid} x={tx - 2} y={ty - 1.5} r={2.6} />
+            </g>
+          )
         )}
         {flower && !bulb && (
           <g>
@@ -238,18 +242,25 @@ function Sprout({ pose, anchor, t, flower, tint }) {
   )
 }
 
-function Accessory({ type, t, A }) {
+function Accessory({ type, t, A, id, hx0, hx1, visorY }) {
   const [L, R] = A.eyes
+  if (type === 'starclips') return <StarClips id={id} A={A} t={t} />
+  if (type === 'charm') return <Charm id={id} A={A} t={t} />
+  if (type === 'visor') return <FrostVisor id={id} hx0={hx0} hx1={hx1} y={visorY} t={t} />
+  if (type === 'shades') return <Shades id={id} A={A} t={t} />
   if (type === 'glasses') {
     const r = Math.max(L.rx, L.ry) + 8
     const hw = A.head.w / 2
     return (
-      <g fill="none" stroke={t.ink} strokeWidth="4" strokeLinecap="round">
-        <circle cx={L.cx} cy={L.cy} r={r} fill="rgba(201,252,252,.16)" />
-        <circle cx={R.cx} cy={R.cy} r={r} fill="rgba(201,252,252,.16)" />
-        <path d={`M${L.cx + r},${L.cy - 4} Q100,${L.cy - 9} ${R.cx - r},${R.cy - 4}`} />
-        <path d={`M${L.cx - r},${L.cy - 3} L${A.head.cx - hw + 2},${L.cy - 9}`} />
-        <path d={`M${R.cx + r},${R.cy - 3} L${A.head.cx + hw - 2},${R.cy - 9}`} />
+      <g fill="none" stroke={t.ink} strokeWidth="3.6" strokeLinecap="round">
+        {/* Y2K tinted oval lenses */}
+        <ellipse cx={L.cx} cy={L.cy} rx={r * 1.12} ry={r * 0.86} fill={`url(#${id}lens)`} />
+        <ellipse cx={R.cx} cy={R.cy} rx={r * 1.12} ry={r * 0.86} fill={`url(#${id}lens)`} />
+        <path d={`M${L.cx - r * 0.6},${L.cy - r * 0.4} L${L.cx - r * 0.2},${L.cy - r * 0.62}`} stroke="#fff" strokeWidth="2.4" opacity="0.85" />
+        <path d={`M${R.cx - r * 0.6},${R.cy - r * 0.4} L${R.cx - r * 0.2},${R.cy - r * 0.62}`} stroke="#fff" strokeWidth="2.4" opacity="0.85" />
+        <path d={`M${L.cx + r * 1.12},${L.cy - 4} Q100,${L.cy - 9} ${R.cx - r * 1.12},${R.cy - 4}`} />
+        <path d={`M${L.cx - r * 1.12},${L.cy - 3} L${A.head.cx - hw + 2},${L.cy - 9}`} />
+        <path d={`M${R.cx + r * 1.12},${R.cy - 3} L${A.head.cx + hw - 2},${R.cy - 9}`} />
       </g>
     )
   }
@@ -281,10 +292,16 @@ function Accessory({ type, t, A }) {
     const [bx, by] = A.badge
     return (
       <g>
-        <circle cx={bx} cy={by} r="12" fill="#C9FCFC" stroke={t.ink} strokeWidth="3.2" />
-        <text x={bx} y={by + 4} textAnchor="middle" fontFamily="system-ui, sans-serif" fontWeight="800" fontSize="10" fill={t.ink}>
+        {/* chrome-rimmed holographic sticker */}
+        <g transform={`translate(${bx} ${by}) scale(1.3) translate(${-bx} ${-by})`}>
+        <circle cx={bx} cy={by} r="14" fill={`url(#${id}chrome)`} stroke={t.ink} strokeWidth="2.8" />
+        <circle cx={bx} cy={by} r="10.5" fill={`url(#${id}holo)`} />
+        <path d={starPath(bx, by - 1, 5.5)} fill="#fff" opacity="0.9" />
+        <text x={bx} y={by + 9} textAnchor="middle" fontFamily="system-ui, sans-serif" fontWeight="900" fontSize="6.5" fill={t.ink}>
           v2
         </text>
+        <Gel id={id} x={bx - 5} y={by - 6} r={3} />
+        </g>
       </g>
     )
   }
@@ -378,6 +395,7 @@ export function Pip2D({
   animate = true,
   depth = false,
   tilt,
+  holo = false,
   className = '',
   title,
 }) {
@@ -392,6 +410,8 @@ export function Pip2D({
   const cool = vibe === 'cool'
   const ugly = vibe === 'ugly'
   const awakened = form === 'awakened'
+  // vibe defaults when no accessory is chosen: cute = star clips, cool = frosted visor
+  const acc = accessory === 'none' ? (cute ? 'starclips' : cool ? 'visor' : 'none') : accessory
   const id = useId().replace(/:/g, '')
   const blink = useBlink(animate)
   const hop = useHop(m, animate)
@@ -433,6 +453,7 @@ export function Pip2D({
         <circle cx="11" cy="9" r="1" fill="#000" opacity="0.12" />
         <circle cx="7" cy="14" r="0.9" fill="#fff" opacity="0.25" />
       </pattern>
+      <Y2KDefs id={id} />
       {cool && (
         <filter id={`${id}neon`} x="-10%" y="-10%" width="120%" height="120%">
           <feMorphology in="SourceAlpha" operator="dilate" radius="2.2" result="d" />
@@ -455,18 +476,20 @@ export function Pip2D({
           <ellipse cx="100" cy="128" rx="86" ry="90" fill="none" stroke="#C9FCFC" strokeWidth="2.5" opacity="0.8" />
         </g>
       )}
-      {accessory === 'backpack' && <BackpackBehind t={t} A={A} />}
+      {acc === 'backpack' && <BackpackBehind t={t} A={A} />}
       {split && (
-        <g filter={cool ? `url(#${id}neon)` : undefined}>
+        <g>
           <def.Art t={t} id={`${id}k`} part="back" />
         </g>
       )}
     </>
   )
+  const rimKind = holo ? 'holo' : cool ? 'chrome' : null
   const body = (
-    <g filter={cool ? `url(#${id}neon)` : undefined}>
+    <>
       <def.Art t={t} id={id} part={split ? 'body' : 'all'} />
-    </g>
+      {rimKind && <RimLight id={id} kind={rimKind} Art={def.Art} t={t} split={split} />}
+    </>
   )
   const face = (
     <>
@@ -477,12 +500,8 @@ export function Pip2D({
           ))}
         </g>
       )}
-      {cool && (
-        <g>
-          <path d={`M${hx0},${visorY} Q100,${visorY - 16} ${hx1},${visorY} L${hx1 - 2},${visorY + 11} Q100,${visorY - 5} ${hx0 + 2},${visorY + 11} Z`} fill={t.visor} stroke={t.ink} strokeWidth="3" strokeLinejoin="round" />
-          <path d={`M${hx0 + 4},${visorY + 9} Q100,${visorY - 6} ${hx1 - 4},${visorY + 9}`} fill="none" stroke={t.neon} strokeWidth="2.4" strokeLinecap="round" />
-        </g>
-      )}
+      {cute && A.blush.map(([x, y], i) => <circle key={`bg${i}`} cx={x - 4} cy={y - 2} r="1.8" fill="#fff" opacity="0.85" />)}
+      {A.nose && <Gel id={id} x={A.nose[0] - 2} y={A.nose[1] - 1.5} r={2.6} />}
       {ugly && plainEyes && (
         <g fill="none" stroke={t.ink} strokeWidth="2.6" strokeLinecap="round" opacity="0.55">
           {A.eyes.map((e, i) => (
@@ -500,12 +519,20 @@ export function Pip2D({
       <Mouth shape={mouthShape} ink={t.ink} a={A.mouth} ugly={ugly} />
     </>
   )
-  const sprout = <Sprout pose={awakened ? 'crown' : spec.sprout} anchor={A.sprout} t={t} flower={cute && !awakened} tint={m === 'possessed' ? BOSS_TINT : undefined} />
+  const sprout = (
+    <>
+      <Sprout pose={awakened ? 'crown' : spec.sprout} anchor={A.sprout} t={t} flower={false} tint={m === 'possessed' ? BOSS_TINT : undefined} gid={id} />
+      {(m === 'aha' || m === 'proud') && <Sparkles A={A} />}
+    </>
+  )
+
   const front = (
     <>
       {m === 'notes' && <Notebook t={t} A={A} />}
       {m === 'overwhelmed' && <SweatDrop at={A.sweat} />}
-      <Accessory type={accessory} t={t} A={A} />
+      {ugly && <HoloBandAid A={A} t={t} id={id} />}
+      {ugly && acc !== 'starclips' && <StarClips id={id} A={A} t={t} bent />}
+      <Accessory type={acc} t={t} A={A} id={id} hx0={hx0} hx1={hx1} visorY={visorY} />
     </>
   )
   const label = title ?? `Pip the ${def.name} looks ${m}`

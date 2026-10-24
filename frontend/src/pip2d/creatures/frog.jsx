@@ -34,6 +34,10 @@ const anchors = {
   ],
   sweat: [172, 60],
   visorY: 46,
+  clips: [
+    [36, 66],
+    [164, 64],
+  ],
 }
 
 function Art({ t, id }) {

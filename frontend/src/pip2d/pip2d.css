@@ -29,6 +29,12 @@
 .pip2d-sweat { animation: pip2d-sweat 2.2s ease-in infinite; }
 @keyframes pip2d-sweat { 0% { transform: translateY(0); opacity: 1; } 80% { transform: translateY(10px); opacity: 1; } 100% { transform: translateY(12px); opacity: 0; } }
 
+/* Y2K sparkle field (aha / hype only) */
+.pip2d-twinkle { transform-box: fill-box; transform-origin: center; animation: pip2d-twinkle 1.4s ease-in-out infinite; }
+.pip2d-twinkle-1 { animation-delay: 0.45s; }
+.pip2d-twinkle-2 { animation-delay: 0.9s; }
+@keyframes pip2d-twinkle { 0%, 100% { transform: scale(0.35) rotate(0deg); opacity: 0.3; } 50% { transform: scale(1) rotate(45deg); opacity: 1; } }
+
 /* 2.5D depth mode */
 .pip2d-depth { position: relative; display: inline-block; perspective: calc(var(--size, 200px) * 3.2); --rx: 0deg; --ry: 0deg; --tx: 0px; --sheen: 0px; }
 .pip2d-depth-tilt { position: absolute; inset: 0; transform-style: preserve-3d; transform: rotateX(var(--rx)) rotateY(var(--ry)); }
@@ -42,6 +48,6 @@
 .pip2d-sheen { transform: translateX(var(--sheen)); }
 
 @media (prefers-reduced-motion: reduce) {
-  .pip2d-breathe, .pip2d-hop, .pip2d-dot, .pip2d-glow, .pip2d-sweat { animation: none; }
+  .pip2d-breathe, .pip2d-hop, .pip2d-dot, .pip2d-glow, .pip2d-sweat, .pip2d-twinkle { animation: none; }
   .pip2d-eyes { transition: none; }
 }
