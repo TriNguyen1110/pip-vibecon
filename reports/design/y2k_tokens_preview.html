@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Pip Y2K Tokens</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400..900&family=Manrope:wght@400;600;700;800&family=Geist+Mono:wght@400;500&family=VT323&family=Silkscreen:wght@400;700&family=Michroma&family=Fraunces:ital,opsz,wght@0,9..144,500;1,9..144,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="y2k_tokens.css.patch.css">
+<style>
+  /* Preview-only layout. Everything visual is from the patch file or plain CSS here; no images. */
+  * { box-sizing: border-box; }
+  body { margin: 0; width: 2200px; background: #E9ECF1; font-family: Manrope, sans-serif; color: #0B0B12; }
+  header { padding: 36px 48px 20px; display: flex; align-items: flex-end; gap: 28px; }
+  header .y2k-chrome-text { --size: 76px; }
+  header p { margin: 0 0 10px; font: 600 17px/1.5 Manrope; color: #34364A; max-width: 980px; }
+  .eyebrow { font: 400 13px/1 Michroma, sans-serif; letter-spacing: .12em; text-transform: uppercase; color: #55586E; }
+  .strip { margin: 0 48px 28px; padding: 26px 28px; background: #fff; border-radius: 20px; box-shadow: 0 0 0 1px rgba(11,11,18,.1);
+    display: grid; grid-template-columns: repeat(6, 1fr); gap: 26px 28px; align-items: start; }
+  .rec { display: flex; flex-direction: column; gap: 12px; }
+  .rec .row { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+  .rec .tag { font: 500 12px/1.3 'Geist Mono', monospace; color: #55586E; }
+  .rec .name { font: 800 16px/1.2 Manrope; }
+  .cols { margin: 0 48px 48px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 22px; }
+  .col { border-radius: 26px; overflow: hidden; position: relative; isolation: isolate; padding: 22px 20px 26px;
+    display: flex; flex-direction: column; gap: 16px; }
+  .col__head { display: flex; justify-content: space-between; align-items: baseline; }
+  .col__who { font: 800 20px/1.1 Unbounded, sans-serif; letter-spacing: -.01em; }
+  .dose { font: 700 12px/1 Michroma; letter-spacing: .1em; padding: 6px 10px; border-radius: 999px; }
+  .col__note { font: 600 14px/1.45 Manrope; margin: -6px 0 2px; }
+  .lbl { font: 500 12px/1 'Geist Mono', monospace; letter-spacing: .06em; text-transform: uppercase; opacity: .72; margin-bottom: -8px; }
+
+  /* PLAY 10-12: Frutiger-aero sky, aqua gel, bubbles */
+  .play { background: linear-gradient(180deg, #8ED3FF 0%, #C9ECFF 45%, #E6FBEA 100%); color: #10213F; }
+  .play .dose { background: var(--y2k-lime); color: #0E2400; box-shadow: 0 0 0 1.5px var(--y2k-lime-rim); }
+  .play .panel { background: linear-gradient(180deg, #FFFFFF 0%, #EEF6FF 100%); border-radius: 24px; padding: 14px 16px;
+    box-shadow: 0 0 0 2.5px #10213F, 0 5px 0 #10213F, inset 0 2px 0 #fff; }
+  .pip-bubble { background: #fff; color: #10213F; border-radius: 22px 22px 22px 6px; padding: 12px 16px; font: 700 17px/1.35 Manrope;
+    box-shadow: 0 0 0 2.5px #10213F, inset 0 -6px 10px -6px rgba(30,141,235,.25); position: relative; }
+  .pip-bubble::before { content: ''; position: absolute; left: 10%; right: 10%; top: 3px; height: 10px; border-radius: 999px; background: linear-gradient(180deg, rgba(220,240,255,.9), rgba(255,255,255,0)); }
+  .stage { position: relative; height: 210px; display: grid; place-items: end center; }
+  .mascot { width: 120px; height: 120px; border-radius: 50% 50% 46% 46%; margin-bottom: 4px; position: relative;
+    background: radial-gradient(circle at 40% 30%, #FFFFFF 0 8%, #C9F3FF 30%, #5FE3E8 70%, #2CB5C0 100%);
+    box-shadow: 0 0 0 3px #10213F, inset 0 -10px 18px rgba(0,80,100,.25); }
+  .mascot::before, .mascot::after { content: ''; position: absolute; top: 46px; width: 12px; height: 16px; border-radius: 50%; background: #10213F; }
+  .mascot::before { left: 38px; } .mascot::after { right: 38px; }
+  .stage .y2k-podium { position: absolute; bottom: 0; left: 14%; width: 72%; margin: 0; }
+  .stage .y2k-star { position: absolute; }
+
+  /* COOL 13-15: club dark + cybercore + chrome type + night LCD */
+  .cool { background: radial-gradient(70% 40% at 50% 0%, rgba(63,91,255,.35), transparent 70%), linear-gradient(180deg, #07040F 0%, #0C1033 100%); color: #FFFFFF; }
+  .cool::after { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--y2k-scanlines); pointer-events: none; }
+  .cool .dose { background: var(--y2k-lcd-night); color: var(--y2k-lcd-night-ink); box-shadow: 0 0 0 1px #7CF4FF66; }
+  .cool .col__note { color: #DCD5F2; }
+  .cool .y2k-bubble-her { background: linear-gradient(180deg, #E9FCFF 0%, #BFF3FF 100%); box-shadow: 0 0 0 1.5px #2EF2FF, 0 0 18px -4px rgba(46,242,255,.6), inset 0 2px 0 #fff; }
+  .cool .panel { background: linear-gradient(180deg, rgba(37,26,66,.9), rgba(20,14,40,.9)); border-radius: 16px; padding: 14px 16px;
+    box-shadow: 0 0 0 1.5px #6C5BB0, 0 0 24px -8px rgba(123,108,255,.5), inset 0 1px 0 rgba(255,255,255,.14); }
+  .cyber-card { height: 150px; border-radius: 14px; overflow: hidden; display: grid; place-items: center; box-shadow: 0 0 0 1.5px #3F5BFF; }
+  .cyber-card .y2k-chrome-text { --size: 54px; }
+
+  /* FOCUS 15-17: calm light, one LCD bar, chrome goal badge */
+  .focus { background: linear-gradient(180deg, #FFFFFF 0%, #EEF0F4 100%); color: #0B0B12; }
+  .focus .dose { background: #fff; color: #1670D8; box-shadow: 0 0 0 1.5px #1670D8; }
+  .focus .col__note { color: #34364A; }
+  .focus .panel { background: #fff; border-radius: 16px; padding: 14px 16px; box-shadow: 0 0 0 1.5px #0B0B12; }
+  .goal { display: inline-flex; align-items: center; gap: 10px; padding: 6px 14px 6px 6px; border-radius: 999px; background: var(--y2k-chrome-soft);
+    box-shadow: 0 0 0 1.5px #2A2F38, inset 0 1px 0 #fff; font: 700 15px/1 Manrope; }
+  .goal b { font: 400 26px/1 VT323; background: #0B0B12; color: #7CF4FF; padding: 4px 8px; border-radius: 999px; }
+  .focus .pip-mini { width: 44px; height: 44px; border-radius: 50%; background: radial-gradient(circle at 40% 30%, #fff 0 8%, #C9F3FF 30%, #5FE3E8 70%, #2CB5C0); box-shadow: 0 0 0 2px #0B0B12; flex: none; }
+  .focus .pip-line { display: flex; gap: 10px; align-items: flex-start; font: 600 16px/1.45 Manrope; }
+
+  /* STUDIO: Ink at Work, low dose */
+  .studio { background: #0C0A18; color: #F4F2FA; }
+  .studio .dose { background: transparent; color: #A9A3C4; box-shadow: 0 0 0 1px rgba(214,210,230,.3); }
+  .studio .col__note { color: #D6D2E6; }
+  .studio .card { background: #15122A; border: 1px solid rgba(214,210,230,.16); border-radius: 16px; padding: 16px; }
+  .studio .card h4 { margin: 0 0 6px; font: 500 22px/1.15 Fraunces, serif; }
+  .studio .muted { color: #A9A3C4; font: 600 12px/1 Manrope; letter-spacing: .14em; text-transform: uppercase; }
+  .studio .rowx { display: flex; justify-content: space-between; align-items: center; padding: 11px 0; border-top: 1px solid rgba(214,210,230,.12); font: 500 15px/1.3 Manrope; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 20px; border-radius: 999px; font: 700 15px/1 Manrope;
+    border: 1.5px solid transparent; box-shadow: 0 2px 0 rgba(0,0,0,.45); }
+  .btn--primary { background-color: #2EF2FF; border-color: #2EF2FF; color: #0C0A18; }
+  .btn--secondary { background: transparent; border-color: rgba(214,210,230,.3); color: #F4F2FA; }
+  .pill-ok { font: 700 13px/1 Manrope; padding: 5px 10px; border-radius: 999px; background: rgba(182,255,59,.14); color: #B6FF3B; }
+
+  /* PARENT: very low */
+  .parent { background: #FFFFFF; color: #0B0B12; box-shadow: inset 0 0 0 1px rgba(11,11,18,.1); }
+  .parent .dose { background: #F1F3F6; color: #34364A; }
+  .parent .col__note { color: #34364A; }
+  .parent .big { font: 700 22px/1.35 Manrope; }
+  .parent .body { font: 500 18px/1.55 Manrope; color: #1A1C28; }
+  .parent .btn--primary { background-color: #1670D8; border-color: #1670D8; color: #fff; min-height: 52px; font-size: 17px; box-shadow: 0 2px 0 #06336E; }
+  .parent .card { border-radius: 18px; padding: 16px; background: #F6F7F9; }
+  .kid { display: flex; gap: 12px; align-items: center; }
+  .kid .face { width: 52px; height: 52px; border-radius: 50%; background: radial-gradient(circle at 40% 30%, #fff 0 8%, #C9F3FF 30%, #5FE3E8 70%, #2CB5C0); }
+  footer { margin: 0 48px 40px; font: 600 14px/1.5 Manrope; color: #55586E; }
+</style></head>
+<body>
+<header>
+  <div>
+    <div class="eyebrow">DES-Y2K · proposed tokens · built from scratch in CSS</div>
+    <div class="y2k-chrome-text" style="margin-top:8px">pip y2k</div>
+  </div>
+  <p>Y2K materials (aqua gel, liquid chrome, candy plastic, LCD, window chrome) fused with the 2012–16 mobile-game UI our 10–15s grew up on (pressable rim, coin capsule, orb icons). Dose scales by audience: high for play, styled for cool, medium for focus, low for Studio, very low for parents. Source: <b>reports/design/y2k_tokens.css.patch.css</b>.</p>
+</header>
+
+<section class="strip">
+  <div class="rec"><div class="name">1 · Aqua gel pill</div>
+    <div class="row"><button class="y2k-gel">Play</button><button class="y2k-gel y2k-gel--lime y2k-gel--sm">Teach</button></div>
+    <div class="row"><button class="y2k-gel y2k-gel--sun y2k-gel--sm">Claim</button><button class="y2k-gel y2k-gel--smoke y2k-gel--sm">Go</button><button class="y2k-gel y2k-gel--chrome y2k-gel--sm">Skip</button></div>
+    <div class="tag">split gradient · gloss cap 46% · caustic inset · 1.5px rim · 6px edge</div></div>
+  <div class="rec"><div class="name">2 · Liquid chrome type + starbursts</div>
+    <div class="row"><span class="y2k-chrome-text" style="--size:58px">K.O.</span>
+      <span class="y2k-star" style="--s:40px"></span><span class="y2k-star" style="--s:22px"></span></div>
+    <div class="tag">horizon chrome: #FFF→#A9B2BD 46% / #3C434D 50% →#FFF · 2.2% ink stroke · 4-pt clip-path star</div></div>
+  <div class="rec"><div class="name">3 · LCD panels</div>
+    <div class="row"><span class="y2k-lcd y2k-lcd--green">LV 07</span><span class="y2k-lcd">12:45</span><span class="y2k-lcd y2k-lcd--night">1480</span></div>
+    <div class="tag">dot-matrix 3px · inset 2px 5px · VT323 · green 9.3:1 · blue 11.5:1 · night 13.9:1</div></div>
+  <div class="rec"><div class="name">4 · 2016 HUD: capsule + orb</div>
+    <div class="row"><span class="y2k-capsule"><span class="y2k-capsule__coin"></span>1,250<span class="y2k-capsule__plus">+</span></span><span class="y2k-orb">🏠</span></div>
+    <div class="tag">dark glass pill, coin overlaps left, lime + · orb = chrome ring + glass dome</div></div>
+  <div class="rec"><div class="name">5 · Window chrome</div>
+    <div class="y2k-window"><div class="y2k-window__bar">pip — thinking<span class="y2k-window__btn">✕</span></div><div class="y2k-window__body" style="font-size:15px">Window sheet for drawers & cool-mode bubbles.</div></div>
+    <div class="tag">titlebar #6DB4FF→#2569DB 40%→#1550C4 56% · r 12/12/8/8</div></div>
+  <div class="rec"><div class="name">6 · Candy plastic + glass knob</div>
+    <div class="row"><div class="y2k-device" style="width:92px;height:92px;padding:0"></div><div class="y2k-device y2k-device--lime" style="width:92px;height:92px;padding:0;border-radius:var(--r-y2k-blob)"></div>
+      <span class="y2k-switch" role="switch" aria-checked="true"></span></div>
+    <div class="tag">rgba tint .4–.6 · ribs 2/7px · blur 8px sat 1.4 · inset top highlight</div></div>
+</section>
+
+<section class="cols">
+  <!-- PLAY 10-12 -->
+  <div class="col play">
+    <div class="col__head"><span class="col__who">Play · 10–12</span><span class="dose">HIGH</span></div>
+    <div class="col__note">Bubbly aqua gel, bubbles, chrome sparkles on wins. The 2016 game HUD sits on top.</div>
+    <div class="lbl">status bar</div>
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <span class="y2k-orb" style="width:52px;height:52px;font-size:22px">🏠</span>
+      <span class="y2k-capsule"><span class="y2k-capsule__coin"></span>320<span class="y2k-capsule__plus">+</span></span>
+      <span class="y2k-lcd y2k-lcd--green" style="font-size:20px">LV 3</span>
+    </div>
+    <div class="lbl">pip speaks</div>
+    <div class="pip-bubble">Area of a triangle is base times height. Easy. Right?</div>
+    <div class="stage">
+      <span class="y2k-bubble" style="--d:34px;left:12%;top:20px"></span><span class="y2k-bubble" style="--d:20px;left:22%;top:80px"></span>
+      <span class="y2k-bubble" style="--d:26px;right:14%;top:40px"></span>
+      <span class="y2k-star" style="--s:26px;right:26%;top:56px"></span><span class="y2k-star" style="--s:14px;right:20%;top:96px"></span>
+      <div class="y2k-podium"></div><div class="mascot"></div>
+    </div>
+    <div class="lbl">her bubble</div>
+    <div class="y2k-bubble-her" style="align-self:flex-end;max-width:85%">No! You cut the rectangle in half.</div>
+    <div class="lbl">buttons</div>
+    <button class="y2k-gel" style="min-height:64px;font-size:24px">Play</button>
+    <div style="display:flex;gap:12px"><button class="y2k-gel y2k-gel--lime y2k-gel--sm" style="flex:1">Teach</button><button class="y2k-gel y2k-gel--sun y2k-gel--sm" style="flex:1">Claim</button></div>
+    <div class="lbl">level-up</div>
+    <div class="panel" style="text-align:center"><span class="y2k-chrome-text" style="--size:44px">LEVEL UP</span></div>
+  </div>
+
+  <!-- COOL 13-15 -->
+  <div class="col cool">
+    <div class="col__head"><span class="col__who">Cool · 13–15</span><span class="dose">HIGH · STYLED</span></div>
+    <div class="col__note">Chrome type, blue-backlit LCD, cybercore scanlines, smoke-glass windows. Deadpan, never babyish.</div>
+    <div class="lbl">status bar</div>
+    <div class="y2k-statusbar y2k-lcd y2k-lcd--night" style="font-size:20px">
+      <span class="y2k-signal"><i></i><i></i><i></i><i class="is-off"></i></span>
+      <span>DUKE.DBL</span>
+      <span class="y2k-lcd-hp" style="flex:1"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="is-off"></i><i class="is-off"></i><i class="is-off"></i></span>
+      <span>70</span>
+      <span class="y2k-battery"><i></i><i></i><i class="is-off"></i></span>
+    </div>
+    <div class="lbl">pip speaks (window)</div>
+    <div class="y2k-window y2k-window--smoke"><div class="y2k-window__bar">pip.brain — v1<span class="y2k-window__btn">✕</span></div>
+      <div class="y2k-window__body" style="font-size:17px">base times height. that's the rule. prove me wrong.</div></div>
+    <div class="lbl">her bubble</div>
+    <div class="y2k-bubble-her" style="align-self:flex-end;max-width:85%">it's half. a triangle is half the box.</div>
+    <div class="lbl">k.o. card back</div>
+    <div class="cyber-card y2k-cyber"><span class="y2k-chrome-text">K.O.</span></div>
+    <div class="lbl">buttons</div>
+    <button class="y2k-gel y2k-gel--smoke" style="box-shadow:0 0 0 1.5px #000,0 6px 0 #000,0 0 22px rgba(46,242,255,.45),var(--y2k-caustic),inset 0 1px 0 rgba(255,255,255,.6)">Fight</button>
+    <div style="display:flex;gap:12px"><button class="y2k-gel y2k-gel--chrome y2k-gel--sm" style="flex:1">Re-teach</button><button class="y2k-gel y2k-gel--lime y2k-gel--sm" style="flex:1">Quiz</button></div>
+    <div class="lbl">panel</div>
+    <div class="panel" style="font:600 16px/1.45 Manrope">Weapon: <b style="color:#FFE14D">Copy-and-Flip Mirror</b><br><span style="font:400 20px/1 VT323;color:#7CF4FF">EQUIPPED · 2/3 NOTES FIXED</span></div>
+  </div>
+
+  <!-- FOCUS 15-17 -->
+  <div class="col focus">
+    <div class="col__head"><span class="col__who">Focus · SAT</span><span class="dose">MEDIUM</span></div>
+    <div class="col__note">Calm and score-forward. One LCD status bar, aqua only on the primary, and a chrome goal badge.</div>
+    <div class="lbl">status bar</div>
+    <div class="y2k-statusbar y2k-lcd" style="font-size:20px;justify-content:space-between">
+      <span>SAT MATH</span><span>GOAL 680</span><span>NOW 610</span><span>23:14</span>
+    </div>
+    <div class="lbl">goal badge</div>
+    <div><span class="goal"><b>680</b>Target score · Dec 6</span></div>
+    <div class="lbl">pip (small)</div>
+    <div class="panel"><div class="pip-line"><span class="pip-mini"></span><span>I think the slope of y = 3 − 2x is 3. Walk me through why that's wrong.</span></div></div>
+    <div class="lbl">her bubble</div>
+    <div class="y2k-bubble-her" style="align-self:flex-end;max-width:85%;font-size:16px">Slope is the x coefficient, so −2. The 3 is the intercept.</div>
+    <div class="lbl">buttons</div>
+    <button class="y2k-gel" style="min-height:52px;font-size:16px;letter-spacing:.02em">Check my answer</button>
+    <button class="y2k-gel y2k-gel--chrome y2k-gel--sm">Skip</button>
+    <div class="lbl">progress</div>
+    <div class="panel" style="font:600 15px/1.5 Manrope">Linear functions <span style="float:right;font:400 22px/1 VT323">4/5</span>
+      <div style="height:10px;border-radius:999px;background:#E6E9EF;margin-top:8px;box-shadow:inset 0 1px 2px rgba(0,0,0,.2)"><div style="width:80%;height:100%;border-radius:999px;background:var(--y2k-lime);box-shadow:0 0 0 1px var(--y2k-lime-rim)"></div></div></div>
+  </div>
+
+  <!-- STUDIO -->
+  <div class="col studio" data-audience="studio">
+    <div class="col__head"><span class="col__who">Studio · tutor/owner</span><span class="dose">LOW</span></div>
+    <div class="col__note">Ink at Work stays. Y2K is limited to one gloss line on the primary, glass-knob pill switches and one quiet LCD-style KPI. Nothing animates.</div>
+    <div class="lbl">top bar</div>
+    <div style="display:flex;align-items:center;gap:12px"><span class="y2k-chrome-text" style="--size:28px">pip</span><span style="font:600 13px/1 Manrope;padding:5px 10px;border:1px solid rgba(214,210,230,.25);border-radius:999px;color:#D6D2E6">Bright Path Tutoring</span></div>
+    <div class="lbl">kpi</div>
+    <div class="card"><div class="muted">Active students · Oct</div>
+      <div style="display:flex;align-items:baseline;gap:12px;margin-top:10px"><span class="y2k-lcd">142</span><span style="color:#B6FF3B;font:700 14px Manrope">+18 vs Sep</span></div></div>
+    <div class="lbl">roster</div>
+    <div class="card"><h4>Your students</h4>
+      <div class="rowx"><span>Maya R. · Area of a triangle</span><span class="pill-ok">Explained well</span></div>
+      <div class="rowx"><span>Owen T. · Fractions</span><span style="font:700 13px Manrope;color:#F59B76">Misconception</span></div>
+      <div class="rowx"><span>Notify parents weekly</span><span class="y2k-switch" role="switch" aria-checked="true"></span></div>
+      <div class="rowx"><span>Quiet hours 9pm–7am</span><span class="y2k-switch" role="switch" aria-checked="false"></span></div></div>
+    <div class="lbl">buttons</div>
+    <div style="display:flex;gap:10px"><span class="btn btn--primary">+ New Pip mission</span><span class="btn btn--secondary">Export</span></div>
+  </div>
+
+  <!-- PARENT -->
+  <div class="col parent" data-audience="parent">
+    <div class="col__head"><span class="col__who">Parent</span><span class="dose">VERY LOW</span></div>
+    <div class="col__note">One screen per idea, 18px body, AAA text. The only Y2K touches are an aqua-glass ring around Pip and one aqua pill.</div>
+    <div class="lbl">this week</div>
+    <div class="card"><div class="kid"><span class="y2k-avatar-ring"><span class="face" style="display:block"></span></span><div><div class="big">Maya</div><div style="font:600 15px Manrope;color:#34364A">Grade 6 · Ms. Rivera</div></div></div></div>
+    <div class="big">Maya taught Pip 3 ideas and fixed one mistake.</div>
+    <div class="body">She explained why a triangle's area is half of base times height, in her own words: <i style="font-family:Fraunces">"you cut the rectangle in half."</i></div>
+    <div class="lbl">action</div>
+    <span class="btn btn--primary" style="align-self:stretch">Message Ms. Rivera</span>
+    <div class="lbl">setting</div>
+    <div class="card" style="display:flex;justify-content:space-between;align-items:center;font:600 17px Manrope">Weekly update by text <span class="y2k-switch" role="switch" aria-checked="true" style="background:#1670D8;border-color:#1670D8"></span></div>
+  </div>
+</section>
+<footer>Contrast checked: white on aqua label band 4.8:1, ink on lime 7.6:1, ink on sun 8.3:1, LCD inks 9.3–13.9:1, Studio fg on surface 16.4:1. Reduced motion stops glints and bubbles. No pink in UI. No OS or brand logos.</footer>
+</body></html>

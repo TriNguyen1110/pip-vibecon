@@ -10,3 +10,8 @@ reports/verification/**/*.png
 reports/frontend/**/*.png
 reports/frontend/**/*.webm
 reports/verification/**/*.webm
+
+# Third-party Pinterest reference captures: local reference only, never ship
+reports/design/pinterest/
+reports/design/y2k_board.png
+reports/design/y2k_board.html
