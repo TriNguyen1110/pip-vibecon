@@ -128,3 +128,11 @@ speech synthesis); no audio is recorded, stored or sent. Captions always show; v
 Student (Play) screens get two palettes: **Daylight Arcade** (default) and **Night Arcade** (toggle; first visit
 follows `prefers-color-scheme`, choice remembered). `MascotStage` gains optional `theme: "day"|"night"` so
 environments light and color themselves to match. Studio (tutor/owner/landing) keeps the forest palette.
+
+## v3.3 (mascot vibe)
+`vibe: "cute"|"cool"|"ugly"` — a third mascot choice next to creature and accessory. Stored on the session
+(`Session.vibe`, sent in POST /api/sessions; default "cute"), passed to `MascotStage` as `vibe`. cute = the fuzzy
+friend; cool = sleek, confident, streetwear-collectible (dark/matte colourways, chrome or neon accents, a visor or
+hood option, half-lidded unimpressed eyes); ugly = intentionally ugly-cute (Labubu/Ugly Doll energy: crooked
+toothy grin, mismatched eye sizes, eye bags, scruffy uneven fur, a stitched patch, one wonky ear/horn) — still
+friendly, never gross or scary. All three keep Pip's deadpan personality.
