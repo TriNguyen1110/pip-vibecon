@@ -47,3 +47,9 @@ sat	item	V1	backlog	verifier	JOURNEY	DEMO_SCRIPT end to end locally (offline + l
 sat	item	C1	doing	coordinator	SUBMIT	COMMANDS.md, GitHub repo, integration, Emergent import
 sat	item	A1	doing	architect	SUBMIT	Review ARCHITECTURE.md + CONTRACT.md: contract gaps, latency, Emergent import risk, demo SPOFs, cuts
 sat	item	G1	doing	design-lead	SCREEN	DESIGN_SYSTEM.md (awesome-design-md format): willder identity + Oura/Linear (Studio) + PlayStation/Spotify/Airbnb (Play); frontend applies after
+sat	item	B1	review	backend	DATA	backend/server.py+seed.py: curl offline OK: center insight count 14, came_back 11, roster t1 12 students w/ Since-last-session, s001, open; MemoryStore local / Mongo via MONGO_URL (Mongo path untested here)
+sat	item	B2	review	backend	JOURNEY	POST /api/assignments/draft + /api/assignments: offline draft for non-fraction topic saved w/ 3 concepts+boss+quiz; live AI path (WORK_MODEL structured) untested without key
+sat	item	B3	review	backend	JOURNEY	session create templated opening; 6 DEMO_SCRIPT turns offline: meters k1 35/k2 60, hits -25/-25, heal +20 (hp 70), Saving that echoed, Cleaver unlocked+equipped; live chat path untested without key
+sat	item	B4	review	backend	JOURNEY	quiz offline: k3 miss with literal 5/12 line; reteach k3 msg; re-teach+quiz -> ko true, fixed_after 1, brain_version 2, cliffhanger appended, finisher set
+sat	item	B5	review	backend	DATA	report (quote verbatim, fixed after 1), parent preview/send -> sent-log (test-mode not delivered), workshop note lists 14 students, pilot checkout simulated + confirm active, demo reset restores saved session
+sat	item	B6	review	backend	JOURNEY	ANTHROPIC_API_KEY unset -> /api/health mode offline; bogus key -> 401 logged, every path (turn/quiz/report) falls back, no error to student
