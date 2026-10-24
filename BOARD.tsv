@@ -46,3 +46,4 @@ sat	item	D1	doing	3d	SCREEN	MascotStage: 6 procedural creatures, accessories, mo
 sat	item	V1	backlog	verifier	JOURNEY	DEMO_SCRIPT end to end locally (offline + live), then on the Emergent URL
 sat	item	C1	doing	coordinator	SUBMIT	COMMANDS.md, GitHub repo, integration, Emergent import
 sat	item	A1	doing	architect	SUBMIT	Review ARCHITECTURE.md + CONTRACT.md: contract gaps, latency, Emergent import risk, demo SPOFs, cuts
+sat	item	G1	doing	design-lead	SCREEN	DESIGN_SYSTEM.md (awesome-design-md format): willder identity + Oura/Linear (Studio) + PlayStation/Spotify/Airbnb (Play); frontend applies after

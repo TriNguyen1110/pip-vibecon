@@ -50,6 +50,7 @@ Server, not the model, owns numbers: HP, meters, unlocks, brain version, counts.
 | `frontend/**` except `frontend/src/three/**` | frontend |
 | `frontend/src/three/**` | 3d |
 | `tests/**`, `reports/verification/**`, `done` rows | verifier |
+| `DESIGN_SYSTEM.md` (visual spec the frontend and 3D follow) | design lead |
 
 ## Integration gates (Saturday)
 1. **Contract freeze**: CONTRACT.md + this doc reviewed by the architect; changes only via coordinator.
