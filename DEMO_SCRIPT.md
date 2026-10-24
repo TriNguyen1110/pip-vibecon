@@ -1,5 +1,9 @@
 # Demo script: Maya's messages (copy to paste during recording; never type live)
 
+Before each take: Reset demo data, then warm (`POST /api/demo/warm`), check `/api/health` says `ai: live`.
+The assign beat drafts a mission for a **different** student and topic (e.g. "Expanding (a + b)²") to show it
+works beyond fractions; Maya teaches her pinned, seeded fractions mission.
+
 Synthetic student. Paste one at a time and wait for Pip's full reply (never cut inside a
 reply). Pip's replies will vary; the beats below must happen. If a beat doesn't happen,
 the verifier logs it and `emergent-coach` writes a fix prompt.

@@ -13,37 +13,42 @@ Ownership: backend owner edits `backend/` only; frontend owner edits `frontend/`
 Concept      { id, text, weapon }                       // weapon: "Common Denominator Cleaver 🔪🍕"
 Boss         { name, emoji, backstory }                 // emoji: two emoji, e.g. "🍕🦵"
 Assignment   { id, student_id, tutor_id, grade, topic, why_it_matters, concepts: Concept[3],
-               misconception, root_prerequisite, boss: Boss, cliffhanger, created_at }
+               misconception, root_prerequisite, boss: Boss, cliffhanger,
+               quiz: [{id, concept_id, question, answer}], created_at }
+               // The frontend posts the edited draft back with ALL fields (spread the draft);
+               // the backend keeps unknown fields.
 Message      { from: "pip"|"student"|"system", text, ts, event?: Event }
 Event        { kind: "hit"|"heal"|"none", amount, caption, weapon?, unlocked?: string[] }
-Rule         { id, concept_id, quote, correct, fixed_after?: number }
+Rule         { id, concept_id, quote, correct, msg_index, fixed_after?: number }  // msg_index = transcript index of the student message the quote came from
 QuizItem     { id, concept_id, question, rule_id|null, pip_answer, passed, line }
 GapConcept   { concept_id, concept_text, status: "explained"|"vague"|"misconception",
                quote|null, fixed_after|null }
 GapReport    { concepts: GapConcept[], minutes, quiz_passed, quiz_total, opener,
                root_cause, cliffhanger, summary, student_view: string[] }
 Session      { id, student_id, assignment_id, status: "teaching"|"quizzed"|"complete",
-               look: "blob"|"bot"|"doodle", creature, transcript: Message[],
+               look: "blob"|"bot"|"doodle", creature: "blob"|"cat"|"dragon"|"axolotl"|"frog"|"bot",
+               accessory: "none"|"cap"|"glasses"|"scarf"|"headphones", transcript: Message[],
                meters: {[concept_id]: 0..100}, boss_hp: 0..100, weapons: string[],
                equipped: string|null, mood: "confused"|"lightbulb"|"stuck"|"celebrating",
-               brain: Rule[], quiz: QuizItem[], reteach_count, reteach_concept|null,
+               brain: Rule[], quiz: QuizItem[], reteach_count, reteach_concept|null, reteach_from|null,
                brain_version: 1|2|3, ko: bool, finisher|null, gap_report: GapReport|null,
-               saved?: bool, label?: string }
-Student      { id, name, grade, tutor_id, interests: string|null, since_last_session: string|null }
+               parent_message|null, saved?: bool, label?: string }
+Student      { id, name, grade, tutor_id, interests: string|null, since_last_session: string|null,
+               last_session_id: string|null }
 ```
 
 ## Endpoints
 
 | Method + path | Body | Returns |
 |---|---|---|
-| GET `/api/health` | | `{ok, model}` |
+| GET `/api/health` | | `{ok, model, ai: "live"|"offline", store: "mongo"|"memory"}` |
 | GET `/api/center` | | `{center, insight: {misconception, count, boss_name}, came_back_this_week, pilot: {status}}` |
 | GET `/api/tutors/{tutor_id}/roster` | | `{tutor, students: Student[]}` (Ms. Rivera = `t1`) |
 | GET `/api/students/{student_id}` | | `{student, assignments: Assignment[], sessions: Session[]}` (Maya = `s001`) |
 | POST `/api/students/{student_id}/open` | | `{ok}` (records an app open; counts toward "came back on their own") |
 | POST `/api/assignments/draft` | `{student_id, grade, topic}` | `Assignment` (unsaved, `id: null`) — slow-ish AI call |
 | POST `/api/assignments` | `Assignment` (edited draft) | `Assignment` (saved) |
-| POST `/api/sessions` | `{assignment_id, student_id, look, creature}` | `Session` (with Pip's opening messages) |
+| POST `/api/sessions` | `{assignment_id, student_id, look, creature, accessory}` | `Session` (with Pip's opening messages) |
 | GET `/api/sessions/{id}` | | `Session` |
 | POST `/api/sessions/{id}/turn` | `{text}` | `Session` (new student + Pip messages appended; meters/HP/mood/weapons updated) |
 | POST `/api/sessions/{id}/equip` | `{weapon}` | `Session` |
@@ -58,6 +63,32 @@ Student      { id, name, grade, tutor_id, interests: string|null, since_last_ses
 | POST `/api/pilot/checkout` | | `{url}` (Stripe test Checkout URL, or the in-app success URL when Stripe isn't configured, with `simulated: true`) |
 | POST `/api/pilot/confirm` | | `{pilot: {status}}` |
 | POST `/api/demo/reset` | | `{ok}` |
+| POST `/api/demo/warm` | | `{ok, ai}` (one tiny call per AI schema; run before recording) |
 
 Errors: non-2xx with `{detail}`. AI calls can take a few seconds; the UI shows
 "Pip is thinking…" and keeps the student's message visible immediately (optimistic).
+
+## Behavior rules (coordinator decisions after the architect review)
+1. **Saved sessions are invisible to logic.** Sessions with `saved: true` never count for the opener's
+   recall, `since_last_session`, `last_session_id`, the insight count or "came back". The insight counts
+   only sessions whose final Brain still holds the wrong rule (seed gives 14).
+2. **Opening:** Pip's last opening message is always the misconception claim (e.g. "1/2 + 1/3 = 2/5…").
+   An interests question or old-rule recall may come before it in the same opening, never after.
+   After `/api/demo/reset`, Maya (`s001`) has interests pre-filled and no prior sessions, so her
+   opening is just the claim. Maya's demo mission is the seeded `a_frac`, pinned as her current mission.
+3. **Re-teach and retry:** `POST /reteach {concept_id}` → `status: "teaching"`, `reteach_count += 1`,
+   `reteach_from` = transcript length, Pip asks to be fixed. After ≥ 1 student turn the UI shows
+   "Let Pip retry", which calls `POST /quiz`. In re-teach mode `/quiz` re-extracts only that concept's
+   rule from messages after `reteach_from`, sets `fixed_after = reteach_count` when it becomes correct,
+   re-asks only that question and keeps the other results. All passed → `ko: true`, `status: "complete"`,
+   `brain_version += 1` (only at K.O.).
+4. **Quiz items:** `pip_answer` is the worked answer ("5/12"); `line` is Pip's in-character sentence.
+5. **Gap report at K.O.:** built deterministically inside the K.O. response (statuses, quotes,
+   fixed_after, minutes, quiz counts, root cause from `root_prerequisite`, templated opener for the
+   weakest concept, cliffhanger, `student_view`). AI may polish `summary`/`opener` in the background.
+   `parent_message` is pre-generated in the same background task (template fallback) so Preview is instant.
+6. **Concurrency:** one in-flight turn per session (server lock; UI disables Send while waiting).
+7. **Stripe** success/cancel URLs derive from the request's `Origin` header.
+8. **No XP in the UI.** Boss taunts while typing are frontend templates using `boss.name`.
+9. **Demo safety:** `PIP_FORCE_OFFLINE=1` runs the scripted fractions demo deterministically (labeled
+   "offline demo"); the saved session is a complete, re-taught K.O. run with a gap report.
