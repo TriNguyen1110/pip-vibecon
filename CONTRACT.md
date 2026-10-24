@@ -206,3 +206,11 @@ Offline or on error: keyword → nearest preset ("rave/club/neon" → Club, "run
   and hatches a `mini` Pip; a mini session is a short spaced review: Pip teaches the mini an old rule the student
   taught, the mini gets one thing wrong, the student fixes it (counts as a review, ~2 texts).
 - K.O. `payoff` adds `new_crew[]` and `unlocked[]`.
+
+## v3.10 (Pip's Dream: the mascot as the kid's extension)
+`Student.pip_dream: "fame"|"squad"|"creator"|"family"|"explorer"` chosen after naming (changeable later). The K.O.
+payoff's unlocks and the ceremony copy follow the dream; learning is identical for all:
+fame → stages (club_show → runway → arena_concert) + covers; squad → crew grows (reformed bosses, duo) + group photo;
+creator → fashion pieces / room items / mod slots; family → egg early → mini Pips + photo wall; explorer → new
+world backdrops. Non-romantic by design (no dating/partner storylines; no bar/alcohol settings) — all-ages.
+POST `/api/students/{id}/dream {dream}`; `payoff.dream_unlock {kind, id, title, line}`.
