@@ -58,3 +58,5 @@ sat	item	B4	review	backend	JOURNEY	v2 quiz: msg_index+snapped quotes, reteach_fr
 sat	item	B5	review	backend	DATA	v2: Maya saved session is a hand-written complete run (fixed_after 1, report, parent msg), saved invisible to logic, insight 14, Origin-based Stripe URLs, /demo/warm, health ai/store
 sat	item	B6	review	backend	JOURNEY	v2: PIP_FORCE_OFFLINE=1 verified (health ai offline, offline_demo true); bogus key falls back on 401
 sat	item	U1	review	ux-research	SCREEN	UX_TEARDOWN.md: Talking Tom/Ben, Kick the Buddy, Sims, mods; ages 10-15 shifts; Now/Later list with timings
+sat	item	F1	review	frontend	SCREEN	All 10 routes built; npm run build passes; headless Chromium 390px ran DEMO_SCRIPT end to end against backend v2 offline (reset, start, 6 turns, quiz miss, note jump, re-teach, retry, K.O., finisher, gap report, parent send, workshop, pilot) with 0 console errors, no horizontal scroll
+sat	item	G1	review	design-lead	SCREEN	DESIGN_SYSTEM.md 304 lines: Studio/Play registers, tokens, components, motion from UX_TEARDOWN, mascot art direction
