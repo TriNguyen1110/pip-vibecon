@@ -60,3 +60,4 @@ sat	item	B6	review	backend	JOURNEY	v2: PIP_FORCE_OFFLINE=1 verified (health ai o
 sat	item	U1	review	ux-research	SCREEN	UX_TEARDOWN.md: Talking Tom/Ben, Kick the Buddy, Sims, mods; ages 10-15 shifts; Now/Later list with timings
 sat	item	F1	review	frontend	SCREEN	All 10 routes built; npm run build passes; headless Chromium 390px ran DEMO_SCRIPT end to end against backend v2 offline (reset, start, 6 turns, quiz miss, note jump, re-teach, retry, K.O., finisher, gap report, parent send, workshop, pilot) with 0 console errors, no horizontal scroll
 sat	item	G1	review	design-lead	SCREEN	DESIGN_SYSTEM.md 304 lines: Studio/Play registers, tokens, components, motion from UX_TEARDOWN, mascot art direction
+stretch	item	35	backlog	frontend	SCREEN	After 34: build-your-own UI themes in the DESIGN_SYSTEM token format (presets + student tweaks, roles locked, AA contrast auto-fix on save, Play register only) + owner center theme

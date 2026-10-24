@@ -309,7 +309,9 @@ letters refer to PRODUCT_SPEC.md.
   side like a mod: pick a theme (colors, light or dark, chat bubble style, background
   pattern, font size) from a set of presets, then tweak individual pieces and save it as
   'My theme'. Themes are visual only and never change content, the boss, or anything a
-  tutor sees. Also add a **center theme** the owner sets (center colors and logo on
+  tutor sees. Themes follow DESIGN_SYSTEM.md's theming rules (same token format as the
+  design system, role meanings locked, every text pair checked for WCAG AA on save and
+  auto-adjusted if it fails, applied only to student screens). Also add a **center theme** the owner sets (center colors and logo on
   student screens, used as the default). No uploading images or code, and no sharing
   themes between students yet. Don't change anything else."
 
