@@ -1,8 +1,8 @@
-import { Shape, Sliver, ell } from '../shapes'
+import { Shape, Plush, ell } from '../shapes'
 
 // Frog: eye domes breaking the top line, wide mouth line, sitting pose with folded legs.
 const tokens = {
-  cute: { body: '#8FCB4E', shade: '#74AD3A', belly: '#E6F5BC', ink: '#2F4A1A', dark: '#5E8F2E' },
+  cute: { body: '#8FCB4E', shade: '#6EA636', belly: '#E6F5BC', ink: '#2F4A1A', dark: '#5E8F2E' },
   cool: { body: '#4F6136', shade: '#42512C', belly: '#7C8C5E', ink: '#151C0C', dark: '#2E3920', neon: '#B8F04A', visor: '#15181D' },
   ugly: { body: '#9AA54C', shade: '#808A3C', belly: '#E8E4B4', ink: '#3A4019', dark: '#6A7330' },
 }
@@ -47,6 +47,9 @@ function Art({ t, id }) {
       <Shape d={ell(64, 72, 30, 28)} fill={t.body} shade={t.shade} ink={t.ink} uid={`${id}d1`} sx={-6} sy={-5} />
       <Shape d={ell(136, 72, 30, 28)} fill={t.body} shade={t.shade} ink={t.ink} uid={`${id}d2`} sx={-6} sy={-5} />
       <path d="M40,96 C60,88 140,88 160,96 C150,104 50,104 40,96 Z" fill={t.body} />
+      <path d={ell(64, 72, 30, 28)} fill={`url(#${id}speck)`} />
+      <path d={ell(136, 72, 30, 28)} fill={`url(#${id}speck)`} />
+      <path d={BODY} fill={`url(#${id}speck)`} />
       <path d={ell(100, 168, 46, 28)} fill={t.belly} />
       <g fill={t.dark} opacity="0.5">
         <circle cx="150" cy="140" r="7" />
@@ -61,8 +64,9 @@ function Art({ t, id }) {
           ))}
         </g>
       ))}
-      <Sliver d="M40,64 C44,52 54,46 64,45" w={5} />
-      <Sliver d="M36,128 C36,112 42,100 50,94" w={5} />
+      <Plush id={id} cx={56} cy={52} rx={12} ry={6} />
+      <Plush id={id} cx={128} cy={52} rx={12} ry={6} />
+      <Plush id={id} cx={44} cy={124} rx={8} ry={16} rot={10} o={0.35} />
     </g>
   )
 }

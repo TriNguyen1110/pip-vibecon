@@ -1,4 +1,4 @@
-import { Shape, Sliver, InkStroke, ell } from '../shapes'
+import { Shape, Plush, InkStroke, ell } from '../shapes'
 
 // Axolotl: soft aqua-mint, frilly gill fronds, wide smile-line face.
 const tokens = {
@@ -46,6 +46,7 @@ function Art({ t, id }) {
       {/* tail fin peeking out to the side */}
       <Shape d="M130,186 C156,178 176,186 182,200 C166,206 146,204 130,198 Z" fill={t.body} shade={null} ink={t.ink} uid={`${id}tf`} shadow={false} />
       <Shape d={BODY} fill={t.body} shade={t.shade} ink={t.ink} uid={`${id}b`} />
+      <path d={BODY} fill={`url(#${id}speck)`} />
       <path d={ell(100, 178, 24, 18)} fill={t.belly} />
       <Shape d={ell(78, 200, 12, 7)} fill={t.body} ink={t.ink} uid={`${id}f1`} shadow={false} />
       <Shape d={ell(122, 200, 12, 7)} fill={t.body} ink={t.ink} uid={`${id}f2`} shadow={false} />
@@ -63,7 +64,8 @@ function Art({ t, id }) {
         <circle key={`f${i}`} cx={x} cy={y} r={i < 6 ? 7.5 : 5.5} fill={t.gill} stroke={t.ink} strokeWidth="3" />
       ))}
       <Shape d={HEAD} fill={t.body} shade={t.shade} ink={t.ink} uid={`${id}h`} />
-      <Sliver d="M42,96 C44,78 58,62 78,58" />
+      <path d={HEAD} fill={`url(#${id}speck)`} />
+      <Plush id={id} cx={70} cy={74} rx={20} ry={9} />
     </g>
   )
 }

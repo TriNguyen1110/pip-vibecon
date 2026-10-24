@@ -1,47 +1,83 @@
-// Shared hand-inked drawing helpers for Pip2D creatures.
+import { furPath, pathToPoints } from './fuzz'
 
-// A flat-filled shape with one cel-shadow crescent (lower right) and a hand-made double ink outline.
-export function Shape({ d, fill, shade, ink, uid, shadow = true, sx = -9, sy = -7, w = 3.6 }) {
+// Shared soft, hand-inked drawing helpers for Pip2D creatures.
+
+export function mix(a, b, t) {
+  const pa = parseInt(a.slice(1), 16)
+  const pb = parseInt(b.slice(1), 16)
+  const ch = (p, s) => (p >> s) & 255
+  const c = (s) => Math.round(ch(pa, s) + (ch(pb, s) - ch(pa, s)) * t)
+  return `#${((1 << 24) | (c(16) << 16) | (c(8) << 8) | c(0)).toString(16).slice(1)}`
+}
+
+// A plush shape: soft radial shading (light upper-left -> shade at the rim) and a lighter hand-made double ink line.
+// fur = { key, seed, amp, spacing, zone } rebuilds the outline from small irregular tufts (mammals).
+export function Shape({ d, pts, fur, fill, shade, ink, uid, shadow = true, w = 3.2 }) {
+  const path = fur ? furPath(fur.key, pts ?? pathToPoints(d), fur) : d
   return (
     <g>
       {shadow && shade ? (
         <>
-          <clipPath id={uid}>
-            <path d={d} />
-          </clipPath>
-          <path d={d} fill={shade} />
-          <g clipPath={`url(#${uid})`}>
-            <path d={d} fill={fill} transform={`translate(${sx} ${sy})`} />
-          </g>
+          <radialGradient id={`${uid}g`} cx="0.36" cy="0.3" r="0.82">
+            <stop offset="0" stopColor={mix(fill, '#ffffff', 0.16)} />
+            <stop offset="0.55" stopColor={fill} />
+            <stop offset="1" stopColor={shade} />
+          </radialGradient>
+          <path d={path} fill={`url(#${uid}g)`} />
         </>
       ) : (
-        <path d={d} fill={fill} />
+        <path d={path} fill={fill} />
       )}
-      <Outline d={d} ink={ink} w={w} />
+      <Outline d={path} ink={ink} w={w} />
     </g>
   )
 }
 
-// Two slightly offset strokes so the line weight wobbles (3.5-4.6px): hand-made, not vector-perfect.
-export function Outline({ d, ink, w = 3.6 }) {
+// Two slightly offset strokes so the line weight wobbles (~3-3.8px): hand-made, not vector-perfect.
+export function Outline({ d, ink, w = 3.2 }) {
   return (
     <>
       <path d={d} fill="none" stroke={ink} strokeWidth={w} strokeLinejoin="round" strokeLinecap="round" />
-      <path d={d} fill="none" stroke={ink} strokeWidth={w - 1} strokeLinejoin="round" strokeLinecap="round" transform="translate(0.9 1.1)" />
+      <path d={d} fill="none" stroke={ink} strokeWidth={Math.max(1.4, w - 1.1)} strokeLinejoin="round" strokeLinecap="round" transform="translate(0.8 1)" />
     </>
   )
 }
 
-// One white rim-highlight sliver.
-export function Sliver({ d, w = 5.5 }) {
-  return <path d={d} fill="none" stroke="#fff" strokeWidth={w} strokeLinecap="round" opacity="0.85" />
+// Soft plush highlight (blurred white blob), uses the SVG's shared `${id}soft` filter.
+export function Plush({ id, cx, cy, rx, ry, rot = -30, o = 0.5 }) {
+  return <ellipse cx={cx} cy={cy} rx={rx} ry={ry} transform={`rotate(${rot} ${cx} ${cy})`} fill="#fff" opacity={o} filter={`url(#${id}soft)`} />
 }
 
-// A thick inked stroke-shape (tails, gill fronds, sprout stems).
-export function InkStroke({ d, color, ink, w = 10 }) {
+// Legacy hard sliver (kept for the bean).
+export function Sliver({ d, w = 5.5 }) {
+  return <path d={d} fill="none" stroke="#fff" strokeWidth={w} strokeLinecap="round" opacity="0.6" />
+}
+
+// A small group of three short curved hair strokes (fur texture).
+export function Hair({ x, y, rot = 0, s = 1, color }) {
+  return (
+    <g transform={`translate(${x} ${y}) rotate(${rot}) scale(${s})`} fill="none" stroke={color} strokeWidth="2.2" strokeLinecap="round">
+      <path d="M-5,4 Q-6,-1 -3,-6" />
+      <path d="M0,5 Q-1,-1 2,-7" />
+      <path d="M5,4 Q4,0 7,-4" />
+    </g>
+  )
+}
+
+// A thick inked stroke-shape (tails, gill fronds). fluffy = scalloped fur edge around it.
+export function InkStroke({ d, color, ink, w = 10, fluffy = false }) {
+  if (fluffy) {
+    return (
+      <>
+        <path d={d} fill="none" stroke={ink} strokeWidth={w + 14} strokeLinecap="round" strokeLinejoin="round" strokeDasharray="0.1 6.5" />
+        <path d={d} fill="none" stroke={color} strokeWidth={w + 8.5} strokeLinecap="round" strokeLinejoin="round" strokeDasharray="0.1 6.5" />
+        <path d={d} fill="none" stroke={color} strokeWidth={w + 6} strokeLinecap="round" strokeLinejoin="round" />
+      </>
+    )
+  }
   return (
     <>
-      <path d={d} fill="none" stroke={ink} strokeWidth={w + 7} strokeLinecap="round" strokeLinejoin="round" />
+      <path d={d} fill="none" stroke={ink} strokeWidth={w + 6} strokeLinecap="round" strokeLinejoin="round" />
       <path d={d} fill="none" stroke={color} strokeWidth={w} strokeLinecap="round" strokeLinejoin="round" />
     </>
   )
@@ -53,7 +89,7 @@ export function rrect(x, y, w, h, r) {
   return `M${x + rr},${y} H${x + w - rr} Q${x + w},${y} ${x + w},${y + rr} V${y + h - rr} Q${x + w},${y + h} ${x + w - rr},${y + h} H${x + rr} Q${x},${y + h} ${x},${y + h - rr} V${y + rr} Q${x},${y} ${x + rr},${y} Z`
 }
 
-// Ellipse path.
+// Ellipse path (A arcs; use ellipsePoints() from fuzz.js when it needs a fur edge).
 export function ell(cx, cy, rx, ry) {
   return `M${cx - rx},${cy} A${rx},${ry} 0 1,0 ${cx + rx},${cy} A${rx},${ry} 0 1,0 ${cx - rx},${cy} Z`
 }

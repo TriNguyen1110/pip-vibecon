@@ -1,6 +1,7 @@
 import { useEffect, useId, useRef, useState } from 'react'
 import { BLUSH, BOSS_TINT, EYE, MOOD_ALIASES, MOUTH, TONGUE } from './tokens'
 import { CREATURE_DEFS } from './creatures'
+import { mix } from './shapes'
 import './pip2d.css'
 
 // Pip as a flat, hand-inked 2D character. viewBox 200 x 220, no dependencies.
@@ -382,7 +383,9 @@ export function Pip2D({
   const A = def.anchors
   const m = MOOD_ALIASES[mood] ?? mood
   const spec = MOOD_SPEC[m] ?? MOOD_SPEC.deadpan
-  const t = def.tokens[vibe] ?? def.tokens.cute
+  const t0 = def.tokens[vibe] ?? def.tokens.cute
+  // softer, warmer ink: pulled a little toward the body colour
+  const t = { ...t0, ink: mix(t0.ink, t0.body, 0.2) }
   const cute = vibe === 'cute'
   const cool = vibe === 'cool'
   const ugly = vibe === 'ugly'
@@ -421,6 +424,14 @@ export function Pip2D({
   return (
     <svg className={`pip2d ${className}`} width={size} height={size * 1.1} viewBox="0 0 200 220" role="img" aria-label={title ?? `Pip the ${def.name} looks ${m}`}>
       <defs>
+        <filter id={`${id}soft`} x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="4" />
+        </filter>
+        <pattern id={`${id}speck`} width="16" height="16" patternUnits="userSpaceOnUse">
+          <circle cx="3" cy="4" r="1.3" fill="#fff" opacity="0.35" />
+          <circle cx="11" cy="9" r="1" fill="#000" opacity="0.12" />
+          <circle cx="7" cy="14" r="0.9" fill="#fff" opacity="0.25" />
+        </pattern>
         {cool && (
           <filter id={`${id}neon`} x="-10%" y="-10%" width="120%" height="120%">
             <feMorphology in="SourceAlpha" operator="dilate" radius="2.2" result="d" />
