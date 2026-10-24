@@ -175,3 +175,8 @@ sat	item	B12	backlog	backend	DATA	After PACE-1: kind-aware questioning; Maya pin
 sat	item	P2	backlog	pitch	PITCH	PITCH + DEMO_SCRIPT on the triangle-area demo
 sat	item	G3	doing	design-lead	SCREEN	Nostalgia + more-Y2K addendum to DESIGN_SYSTEM
 sat	item	F10	backlog	frontend	SCREEN	Apply G3 nostalgia pass; map the triangle boss in Boss2D selection
+sat	item	P2D-7	review	3d	SCREEN	Triangle-area boss (placeholder id 'triangle') in Boss2D: smug glossy coral triangle holding a sign '△ = b × h', smug / cracked (sign tilts + cracks, sweat, gritted mouth) / ko (sign snaps in two, X eyes, dizzy stars, body tipped), crisp gloss + soft gel shine. Boss2D now resolves boss by id or by lesson boss name/backstory keywords via exported bossIdFor() (triangle/area/b x h -> triangle; walrus|penguin|hamster keywords too); a_tri.assignment.json not present yet, so the display name stays a placeholder. Shot: reports/design/boss_triangle.png (3 states + capybara smug/aha/hype reactions). npm run build OK
+sat	item	INV-1	doing	coordinator	JOURNEY	Investment loop spec: name your Pip, persistent brain versions + evolution forms, earn-only commemorative items, album, callbacks to taught rules, K.O. evolution ceremony
+sat	item	B13	backlog	backend	DATA	CONTRACT v3.7 student Pip state, pip-name endpoint, payoff on K.O., opening/callback lines quoting taught rules
+sat	item	P2D-8	doing	3d	SCREEN	Evolution forms v1/v2/v3 for all 6 animals + commemorative item art (half_pin, fixed_it_star, comeback holo variant)
+sat	item	F11	backlog	frontend	SCREEN	First-run naming, K.O. evolution ceremony (before/after, new item reveal), album in Vault, wear earned items, plaque on home

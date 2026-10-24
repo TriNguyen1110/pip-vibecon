@@ -166,3 +166,16 @@ Boss captions (hit/heal/taunt) are spoken in the boss voice; short announcer sti
 - `a_frac` stays as a secondary mission (another student); SAT missions unchanged.
 - Center insight + seeded sessions move to the triangle misconception (14 students); the saved session becomes a
   complete triangle run. The K.O. card strikes "A = b × h".
+
+## v3.7 (investment + payoff: Pip carries your teaching)
+Student gains persistent Pip state (across sessions): `pip_name` (named on first session, default "Pip"),
+`brain_version` (1 → 2 → 3, raised only by K.O.s; never decays), `earned_items: string[]` (commemorative,
+earn-only, named after what they taught: e.g. "half_pin" for triangle area, "fixed_it_star" for winning after a
+re-teach, "comeback_holo" card variant), `album: [{assignment_id, boss_name, card_no, variant, date}]`.
+Endpoints: POST `/api/students/{id}/pip-name {name}` (moderated: 1–16 chars, no profanity → fallback "Pip");
+GET `/api/students/{id}` returns the fields above. K.O. response adds `payoff: {from_version, to_version,
+new_items[], card}`.
+Behavior: (1) the next mission's opening quotes one rule the student taught before ("I still remember your thing:
+'two triangles make a rectangle'"), in Pip's voice; (2) Pip's lines occasionally apply a taught rule to a new
+situation (callback), so the student sees their teaching alive; (3) evolution forms are visible everywhere the
+mascot appears (v2 / v3 looks), and earned items can be worn; (4) no decay, no streak guilt, nothing purchasable.
