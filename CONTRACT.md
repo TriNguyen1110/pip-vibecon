@@ -123,3 +123,8 @@ saying…"), never "Correct!", never teacher phrases. Seeded missions: `a_frac` 
 while Pip speaks) and `framing: "default"|"hero"` (hero = Talking-Tom layout: Pip large and centered, facing the
 student; in the arena the boss stands smaller behind Pip to the right). Pip's voice is client-side only (browser
 speech synthesis); no audio is recorded, stored or sent. Captions always show; voice is never the only channel.
+
+## v3.2 (student palette)
+Student (Play) screens get two palettes: **Daylight Candy** (default) and **Night Arcade** (toggle; first visit
+follows `prefers-color-scheme`, choice remembered). `MascotStage` gains optional `theme: "day"|"night"` so
+environments light and color themselves to match. Studio (tutor/owner/landing) keeps the forest palette.
