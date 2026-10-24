@@ -10,12 +10,12 @@
       "provenance": "Fena (professional): 'Young, sassy girl character.' Original character voice, no impression language. Audited B11."
     },
     "ugly": {
-      "voice_id": "EaX6rnyDKjJx35tchi80",
-      "name": "Nelson - High-Pitched, Anxious Nerd",
+      "voice_id": "dfZGXKiIzjizWtJ0NgPy",
+      "name": "Michael Mouse",
       "stability": 0.6,
       "style": 0.3,
       "speed": 0.9,
-      "provenance": "Nelson (professional, shared library): 'Socially anxious nerd with expressive, slightly squeaky delivery.' Original character voice; no impression, parody, celebrity or famous-character wording. Replaced 'Michael Mouse' (description said 'emulating famous characters'). Audited B11."
+      "provenance": "ElevenLabs library voice that emulates a famous cartoon character; kept by owner decision for the hackathon demo. Review before any public launch. Alternates: Nelson EaX6rnyDKjJx35tchi80, Spitfire bxu4ptGyGRXdGcFkahWB."
     },
     "cool": {
       "voice_id": "rMwQM6pPoLHjNQDAGxOA",
