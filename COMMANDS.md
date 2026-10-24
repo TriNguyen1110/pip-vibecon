@@ -5,7 +5,7 @@ Backend (FastAPI, port 8001):
 - Run: `cd backend && .venv/bin/uvicorn server:app --port 8001 --reload`
 - Smoke: `curl -s localhost:8001/api/health`
 - Env (`backend/.env`, git-ignored; see `backend/.env.example`): `ANTHROPIC_API_KEY` (no key = offline mode),
-  `MONGO_URL` + `DB_NAME` (unset = in-memory store), optional `PIP_CHAT_MODEL`, `TWILIO_*`, `STRIPE_SECRET_KEY`.
+  `MONGO_URL` + `DB_NAME` (unset = in-memory store), optional `PIP_CHAT_MODEL`, `TWILIO_*`, `STRIPE_SECRET_KEY`, `ELEVENLABS_API_KEY` + `ELEVENLABS_VOICE_ID` (+ optional `ELEVENLABS_MODEL`) for Pip's voice (unset = browser voice).
 
 Frontend (Vite React, port 5173, proxies /api to 8001):
 - Install: `cd frontend && npm install`

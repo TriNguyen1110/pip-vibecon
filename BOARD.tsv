@@ -123,3 +123,4 @@ sat	item	P2D-4	review	3d	SCREEN	Bosses in 2D: frontend/src/pip2d/Boss2D.jsx <Bos
 sat	item	B9	doing	backend	DATA	POST /api/tts ElevenLabs proxy with timestamps (key server-side, cache, timeout, fallback flag)
 sat	item	F8	backlog	frontend	SCREEN	Use /api/tts audio + alignment for Pip's voice and visemes; fallback to speechSynthesis; mute respected
 sat	fact	asset-accounts	user-owned	coordinator	SUBMIT	ElevenLabs, WorldLabs (Marble) and Higgsfield need the user's accounts/keys; nothing generated with them yet
+sat	item	B9	review	backend	JOURNEY	POST /api/tts: ElevenLabs with-timestamps (fields verified in docs), LRU 200, 8s timeout, {fallback:true} on missing config or any error, key never logged/returned; mapping + retry + cache unit-tested with mocked httpx, fallback verified by curl; no live key tested

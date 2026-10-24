@@ -1,7 +1,10 @@
 """Pip API (FastAPI). Every route is under /api; see CONTRACT.md."""
 
 import asyncio
+import base64
+import hashlib
 import logging
+from collections import OrderedDict
 import re
 import os
 from contextlib import asynccontextmanager
@@ -604,6 +607,67 @@ async def pilot_confirm():
     p = {"id": "pilot", "status": "active", "ts": logic.now()}
     await store.put("pilot", p)
     return {"pilot": {"status": p["status"]}}
+
+
+# ------------------------------------------------------------------ text to speech (ElevenLabs)
+
+TTS_DEFAULT_MODEL = "eleven_multilingual_v2"  # the documented default of the with-timestamps endpoint
+TTS_MAX_CHARS = 600
+_tts_cache: "OrderedDict[str, dict]" = OrderedDict()
+TTS_CACHE_SIZE = 200
+
+
+def map_tts_response(j: dict) -> dict | None:
+    """ElevenLabs with-timestamps JSON -> our shape; None if audio or alignment is missing."""
+    al = j.get("alignment") or j.get("normalized_alignment")
+    if not j.get("audio_base64") or not isinstance(al, dict):
+        return None
+    keys = ("characters", "character_start_times_seconds", "character_end_times_seconds")
+    if not all(isinstance(al.get(k), list) for k in keys):
+        return None
+    return {"audio_b64": j["audio_base64"], "mime": "audio/mpeg", "alignment": {k: al[k] for k in keys}}
+
+
+async def _eleven(text: str, key: str, voice: str, model: str) -> httpx.Response:
+    async with httpx.AsyncClient(timeout=8) as c:
+        return await c.post(
+            f"https://api.elevenlabs.io/v1/text-to-speech/{voice}/with-timestamps",
+            headers={"xi-api-key": key, "content-type": "application/json"},
+            json={"text": text, "model_id": model,
+                  "voice_settings": {"stability": 0.5, "similarity_boost": 0.75}})
+
+
+@api.post("/tts")
+async def tts(body: dict = Body(default={})):
+    """Pip's voice. Never raises to the student: any problem returns {fallback: true} (browser voice)."""
+    fb = {"fallback": True}
+    try:
+        text = (body.get("text") or "").strip()[:TTS_MAX_CHARS]
+        key = os.environ.get("ELEVENLABS_API_KEY", "")
+        voice = os.environ.get("ELEVENLABS_VOICE_ID", "")
+        model = os.environ.get("ELEVENLABS_MODEL") or TTS_DEFAULT_MODEL
+        if not (text and key and voice):
+            return fb
+        ck = hashlib.sha256(f"{text}\x00{voice}\x00{model}".encode()).hexdigest()
+        if ck in _tts_cache:
+            _tts_cache.move_to_end(ck)
+            return _tts_cache[ck]
+        r = await _eleven(text, key, voice, model)
+        if r.status_code in (400, 422) and model != TTS_DEFAULT_MODEL:  # model not accepted here
+            r = await _eleven(text, key, voice, TTS_DEFAULT_MODEL)
+        if r.status_code != 200:
+            log.warning("tts: elevenlabs status %s", r.status_code)
+            return fb
+        out = map_tts_response(r.json())
+        if not out:
+            return fb
+        _tts_cache[ck] = out
+        while len(_tts_cache) > TTS_CACHE_SIZE:
+            _tts_cache.popitem(last=False)
+        return out
+    except Exception as e:  # noqa: BLE001 - never leak the key or fail the student
+        log.warning("tts failed: %s", type(e).__name__)
+        return fb
 
 
 @api.post("/demo/warm")
