@@ -75,7 +75,7 @@ function ReportBody({ report, student, assignment, session, sessionId }) {
       <div className="report-stats">
         <div className="stat">
           <span className="mono stat__n">{report.minutes ?? '—'}</span>
-          <span className="small subtle">minutes teaching</span>
+          <span className="small subtle">{report.minutes === 1 ? 'minute' : 'minutes'} teaching</span>
         </div>
         <div className="stat">
           <span className="mono stat__n">
@@ -85,7 +85,7 @@ function ReportBody({ report, student, assignment, session, sessionId }) {
         </div>
         <div className="stat">
           <span className="mono stat__n">{session?.reteach_count ?? 0}</span>
-          <span className="small subtle">re-teach</span>
+          <span className="small subtle">{session?.reteach_count === 1 ? 're-teach' : 're-teaches'}</span>
         </div>
       </div>
 

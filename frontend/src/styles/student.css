@@ -2074,3 +2074,125 @@ div.mstep {
     opacity: 0.4;
   }
 }
+
+/* ---------- V1 fixes ---------- */
+/* D-5: 44px tap targets */
+.brand,
+.back {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Mission header spans the grid; on laptops: stage, compact rail, boss panel. */
+.mission__head {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: 8px;
+  min-width: 0;
+}
+.mission__why {
+  font-size: 15px;
+  color: var(--fg-muted);
+}
+.mission__why .eyebrow {
+  margin-right: 6px;
+}
+.mission__side {
+  padding-top: 0;
+}
+@media (min-width: 1024px) {
+  .mission__head {
+    grid-column: 1 / -1;
+  }
+  .mission__side > .arena {
+    order: -1;
+  }
+  .mission__side {
+    gap: 12px;
+  }
+}
+/* Compact mission rail (laptop): nodes in a row plus the next line. */
+.mcard--compact {
+  padding: 12px 16px;
+  gap: 8px;
+}
+.mcard--compact .mpath {
+  display: flex;
+  gap: 6px;
+  overflow: visible;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+.mcard--compact .mpath__item {
+  flex: 1 1 0;
+}
+.mcard--compact .mstep {
+  min-height: 0;
+  padding: 8px;
+  gap: 6px;
+  grid-template-rows: auto auto;
+  justify-items: center;
+  text-align: center;
+}
+.mcard--compact .mstep__text,
+.mcard--compact .mstep__sub {
+  display: none;
+}
+.mcard--compact .mstep__n--emoji {
+  justify-content: center;
+  height: 28px;
+  padding-right: 6px;
+}
+.mcard--compact .mcard__next {
+  font-size: 14px;
+}
+@media (min-width: 1024px) {
+  /* Keep the boss's HP bar above the fold on a 1280x800 laptop while teaching. */
+  .mission:not(.mission--exam) .boss__story {
+    display: none;
+  }
+  .mission:not(.mission--exam) .boss {
+    padding: 16px 20px;
+    gap: 10px;
+  }
+  .mission:not(.mission--exam) .boss__emoji {
+    font-size: 44px;
+  }
+}
+
+/* D-6: the HUD taunt replaces the name row instead of covering the chat. */
+.hud__taunt {
+  font-size: 14px;
+  font-weight: 600;
+  font-style: italic;
+  color: var(--fg-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  animation: rise var(--fast) var(--ease-out);
+}
+
+/* D-7: phones in the exam: a small Pip under the cloud's puffs, no big arena. */
+.brain-pip {
+  width: 140px;
+  margin: -36px 0 0 -8px;
+}
+@media (max-width: 1023px) {
+  .mission--exam .mission__side > .arena {
+    display: none;
+  }
+  .mission--exam .brain {
+    margin-bottom: 8px;
+  }
+  .mission--exam .brain__hint {
+    padding-left: 0;
+    text-align: right;
+  }
+}
+
+/* K.O. card sized to leave the cliffhanger and actions in reach on phones. */
+.ko-card {
+  width: min(78vw, 340px, calc(62dvh * 9 / 16));
+}

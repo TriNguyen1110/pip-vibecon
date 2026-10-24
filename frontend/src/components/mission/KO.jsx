@@ -164,12 +164,11 @@ export default function KO({
             accessory={accessory}
             mood={phase === 'fight' ? 'lightbulb' : 'celebrating'}
             env="arena"
+            bossEmoji={boss.emoji}
+            bossHp={phase === 'fight' ? 8 : 0}
             reaction={react}
-            height={200}
+            height={260}
           />
-          <span className="ko__boss" aria-hidden>
-            {boss.emoji}
-          </span>
           {phase === 'stamp' && (
             <span className="ko__stamp" aria-hidden>
               K.O.
@@ -215,11 +214,6 @@ export default function KO({
         </div>
       </section>
 
-      <div className="ko__cardwrap">
-        <KoCard session={session} assignment={assignment} nickname={nickname} pipLine={pipLine} />
-        <p className="small subtle">Tap the card to flip it. It’s yours to keep.</p>
-      </div>
-
       {cliff && (
         <section className="cliff">
           <span className="msg__face" aria-hidden>
@@ -231,6 +225,11 @@ export default function KO({
           </div>
         </section>
       )}
+
+      <div className="ko__cardwrap">
+        <KoCard session={session} assignment={assignment} nickname={nickname} pipLine={pipLine} />
+        <p className="small subtle">Tap the card to flip it. It’s yours to keep.</p>
+      </div>
 
       <section className="ko-next" aria-label="Coming up">
         <div className="silhouette">

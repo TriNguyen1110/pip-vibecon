@@ -27,7 +27,7 @@ export function nextStep(session, concepts) {
   }
 }
 
-export default function MissionCard({ session, assignment, concepts, focus, onFocus }) {
+export default function MissionCard({ session, assignment, concepts, focus, onFocus, compact }) {
   const meters = session.meters ?? {}
   const hp = session.boss_hp ?? 100
   const step = nextStep(session, concepts)
@@ -44,8 +44,8 @@ export default function MissionCard({ session, assignment, concepts, focus, onFo
 
   const quizPassed = session.quiz?.filter((q) => q.passed).length ?? 0
   return (
-    <section className="mcard glass" aria-label="Mission">
-      {assignment?.why_it_matters && (
+    <section className={`mcard glass${compact ? ' mcard--compact' : ''}`} aria-label="Mission">
+      {!compact && assignment?.why_it_matters && (
         <p className="mcard__why">
           <span className="eyebrow">Why this matters</span>
           {assignment.why_it_matters}

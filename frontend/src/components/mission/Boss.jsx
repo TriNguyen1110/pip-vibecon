@@ -57,17 +57,20 @@ export function BossHud({ boss, hp, equipped, fx, taunt }) {
       </span>
       <div className="grow" style={{ minWidth: 0 }}>
         <div className="hud__row">
-          <span className="hud__name">{boss?.name ?? 'The Boss'}</span>
-          {equipped && <span className="hud__eq">⚔ {equipped}</span>}
+          {taunt ? (
+            <span className="hud__taunt" role="status">
+              {taunt}
+            </span>
+          ) : (
+            <>
+              <span className="hud__name">{boss?.name ?? 'The Boss'}</span>
+              {equipped && <span className="hud__eq">⚔ {equipped}</span>}
+            </>
+          )}
         </div>
         <HpBar hp={hp} />
       </div>
       <Dmg dmg={fx?.amount ? fx : null} />
-      {taunt && (
-        <span className="taunt taunt--hud" role="status">
-          {taunt}
-        </span>
-      )}
     </div>
   )
 }

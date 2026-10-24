@@ -47,7 +47,7 @@ export default function StudentHome() {
   const bossFor = (s) => assignments.find((a) => a.id === s.assignment_id)?.boss
   const latest = sessions.filter((s) => !s.saved).at(-1)
   const cliff = vault.length ? (vault.at(-1).gap_report?.cliffhanger ?? assignments.find((a) => a.id === vault.at(-1).assignment_id)?.cliffhanger) : null
-  const brainV = Math.max(1, ...sessions.map((s) => s.brain_version ?? 1))
+  const brainV = Math.max(1, ...sessions.filter((s) => !s.saved).map((s) => s.brain_version ?? 1))
 
   async function start({ creature, accessory }) {
     const next = { creature, accessory }

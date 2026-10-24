@@ -142,10 +142,13 @@ function MissionView({ initial }) {
           }
         }
       }
-      const unlocked = [...new Set([...evs.flatMap((e) => e.unlocked ?? []), ...(next.weapons ?? []).filter((w) => !(prev.weapons ?? []).includes(w))])]
+      const announced = evs.flatMap((e) => e.unlocked ?? [])
+      const unlocked = [...new Set([...announced, ...(next.weapons ?? []).filter((w) => !(prev.weapons ?? []).includes(w))])]
       if (unlocked.length) {
         flash('fresh', setFreshWeapons, unlocked, 1200)
-        toast(`${unlocked.length > 1 ? 'Weapons' : 'Weapon'} unlocked: ${unlocked.join(', ')}`)
+        // The chat already shows "Unlocked: …" for announced ones; a toast would cover the captions.
+        const silent = unlocked.filter((w) => !announced.includes(w))
+        if (silent.length) toast(`${silent.length > 1 ? 'Weapons' : 'Weapon'} unlocked: ${silent.join(', ')}`)
       }
       if (next.mood !== prev.mood) setReaction((r) => r + 1)
     },
@@ -303,7 +306,7 @@ function MissionView({ initial }) {
   const reteachIdx = concepts.findIndex((c) => c.id === session.reteach_concept)
   const placeholder = focusConcept ? `Explain to Pip: ${focusConcept.text}` : 'Explain it to Pip…'
   const typing = !!input.trim() && !sending
-  const stageH = wide ? 240 : 168
+  const stageH = wide ? 220 : 168
 
   /* ---------- K.O. ---------- */
   if (status === 'complete' && !showBrainAfterKO) {
@@ -341,7 +344,7 @@ function MissionView({ initial }) {
       )}
 
       <div className={`mission${quizzedView ? ' mission--exam' : ''}`}>
-        <aside className="mission__side">
+        <header className="mission__head">
           <div className="mission__titlebar">
             <Link to="/student" className="small back">
               ← Pip’s room
@@ -349,11 +352,19 @@ function MissionView({ initial }) {
             {session.label && <span className="chip">{session.label}</span>}
           </div>
           <h1 className="mission__topic">{assignment?.topic ?? 'Pip mission'}</h1>
+          {wide && assignment?.why_it_matters && (
+            <p className="mission__why">
+              <span className="eyebrow">Why this matters</span> {assignment.why_it_matters}
+            </p>
+          )}
+        </header>
+        <aside className="mission__side">
           <MissionCard
             session={session}
             assignment={assignment}
             concepts={concepts}
             focus={focus}
+            compact={wide}
             onFocus={status === 'teaching' ? focusStep : null}
           />
           <div className="arena">
@@ -404,6 +415,20 @@ function MissionView({ initial }) {
                 onNote={jumpToSource}
                 justFixed={justFixed}
               />
+              {!wide && (
+                <div className="brain-pip">
+                  <Mascot
+                    creature={session.creature ?? 'blob'}
+                    look={session.look}
+                    accessory={accessory}
+                    mood={quizBusy ? 'confused' : session.mood ?? 'confused'}
+                    env="room"
+                    reaction={reaction}
+                    height={140}
+                    onTap={() => setReaction((r) => r + 1)}
+                  />
+                </div>
+              )}
               {actionErr && <ActionError error={actionErr} onRetry={quizBusy ? null : quiz} />}
               {!quizBusy && session.quiz?.length > 0 && (
                 <QuizResults
