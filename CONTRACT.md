@@ -27,7 +27,7 @@ GapReport    { concepts: GapConcept[], minutes, quiz_passed, quiz_total, opener,
                root_cause, cliffhanger, summary, student_view: string[] }
 Session      { id, student_id, assignment_id, status: "teaching"|"quizzed"|"complete",
                look: "blob"|"bot"|"doodle", creature: "blob"|"cat"|"dragon"|"axolotl"|"frog"|"bot",
-               accessory: "none"|"cap"|"glasses"|"scarf"|"headphones", transcript: Message[],
+               accessory: "none"|"glasses"|"scarf"|"pencil"|"badge"|"backpack"  // nerdy, earned; no caps/headphones (DESIGN.md), transcript: Message[],
                meters: {[concept_id]: 0..100}, boss_hp: 0..100, weapons: string[],
                equipped: string|null, mood: "confused"|"lightbulb"|"stuck"|"celebrating",
                brain: Rule[], quiz: QuizItem[], reteach_count, reteach_concept|null, reteach_from|null,
