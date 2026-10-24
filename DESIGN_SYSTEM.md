@@ -711,6 +711,7 @@ Pressable things have an edge, and static things have none or a shallow one. The
 - Streaks, countdowns, guilt copy, need meters that drain while she is away, purchasable currency, loot boxes, consumable weapons, locked items that advertise a purchase, rewards for sharing (UX_TEARDOWN.md §6d).
 - Caps, headphones or sunglasses on the mascot. A tap that does damage.
 - More than 3 glints per event, idle sparkles, screen shake outside the K.O., or more than one taunt per 20s.
+- Copies of real products in the nostalgia pass: OS window controls, handheld silhouettes, logos, fonts or sounds (see Nostalgia guardrails).
 
 **Don't (Studio)**
 - Gels, stickers, Fredoka, the boss's humor, glows or the Play palettes on tutor, owner, landing, pricing or parent screens.
@@ -730,6 +731,245 @@ Pressable things have an edge, and static things have none or a shallow one. The
 - **Tap targets:** 48px minimum in Play, 44px in Studio.
 - **Semantics:** every node, note, sticker-button and card flip is a `<button>`. The HP bar is `role="meter"` with `aria-valuenow`. Bubbles, captions and the thinking state announce via `aria-live="polite"`.
 - **Orientation:** landscape phones get the same scene in a two-column frame (stage left, bubble, tray and input right), still with no scroll.
+
+## Nostalgia pass (G3, Play only)
+
+**The brief:** more Y2K, plus the childhood these students actually had. For 10–15-year-olds that is about 2014–2020: blocky sandbox worlds, spooky-cute night games, crewmate-style party games, catch-'em-outside phone games, and iPad stickers. On top of that, the wider Y2K and Frutiger Aero revival ("2026 is the new 2016"; research/CHARACTERS_TEENS.md).
+
+**What the nostalgia means here:** glossy plastic, sticker albums, chunky load bars, save points, starry wallpapers and an early-2000s handheld. Nothing should feel like a 4-year-old's app.
+
+**Guardrails:**
+- Play register only; Studio is unchanged.
+- Gender-neutral palettes only (the Play tokens).
+- No copied IP, logos, fonts, sounds or silhouettes from real products. Every frame, window and icon below is an original shape.
+- The one-viewport rule and the performance budget still hold.
+- Every effect is off under `prefers-reduced-motion` or `motion: low`.
+
+**Performance budget for this pass:**
+- **Weight:** CSS-only patterns; no new images except optional sound files (≤ 150 KB total).
+- **Rendering:** at most 20 sparkle nodes alive; `backdrop-filter` on at most 2 elements per screen; animate only `transform` and `opacity`.
+- **Background tabs:** pause every loop when `document.hidden` (toggle `.is-hidden` on `<html>` and set `animation-play-state: paused`).
+
+### 1. Vault as a sticker album
+- **Page:** the Vault sheet holds an album page with a 3×3 slot grid that fits the sheet without scrolling. More stickers go on more pages: scroll-snap, page dots, and a "Next ▶" gel.
+- **Earned slot:** a puffy glossy sticker. The boss emoji (44px) sits on a gloss dome with a white die-cut border and a 3D drop; its name strip is Fredoka 600 15px.
+- **Empty slot:** a dashed outline. The next boss shows as a black silhouette with half a name ("Divid████"): curiosity, never a purchase.
+- **Holo variant:** earned only by the comeback (a wrong rule she fixed by re-teaching), never by luck or money. It uses the same sticker with `.is-holo`.
+- **New sticker:** it drops in (`translateY(-40px) rotate(-12deg) → 0`, then squash `scale(1.08,.92) → 1`, 360ms, ease-pop), plays "sticker-stick", and makes 3 glints.
+- **Tapping a sticker:** it peels (240ms): the corner curls up, the sticker lifts and tilts, "sticker-peel" plays, then the K.O. card opens in a sheet. Each sticker is a `<button aria-label="Addini Bottomini, defeated Oct 24">`.
+
+```css
+[data-register="play"] .album { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; padding: 12px;
+  background: var(--note); border-radius: 16px; box-shadow: inset 0 3px 6px rgba(16,33,63,.18); }
+[data-register="play"] .album__slot { aspect-ratio: 1; border-radius: 18px; border: 3px dashed rgba(16,33,63,.28);
+  display: grid; place-items: center; font: 600 15px/1.1 var(--font-game); color: #2E4466; }   /* 8.9:1 on note */
+.album-sticker { position: relative; width: 100%; height: 100%; display: grid; place-items: center; padding: 6px;
+  border-radius: 18px; border: 4px solid #FFFFFF;                                  /* die-cut margin */
+  background: radial-gradient(ellipse 60% 34% at 50% 22%, rgba(255,255,255,.85), rgba(255,255,255,0)),
+              radial-gradient(circle at 50% 60%, #FFFFFF, #E6EEF8);
+  box-shadow: 0 0 0 2.5px var(--outline), 0 5px 0 var(--outline), 0 12px 18px -10px rgba(16,33,63,.5),
+              inset 0 -6px 10px rgba(16,33,63,.10);                                 /* puffy */
+  transform: rotate(var(--tilt, -2deg)); transition: transform 160ms var(--ease-out); }
+.album-sticker.is-holo { background: radial-gradient(ellipse 60% 34% at 50% 22%, rgba(255,255,255,.85), transparent),
+  conic-gradient(from 210deg, #33E1FF, #A3F04A, #FFD23F, #FF9A3C, #4F82FF, #33E1FF); }
+.album-sticker::after {                                                            /* peel corner */
+  content: ''; position: absolute; right: -4px; bottom: -4px; width: 26px; height: 26px; border-radius: 0 0 14px 0;
+  background: linear-gradient(135deg, transparent 50%, #E8EEF5 50%, #FFFFFF 75%);
+  box-shadow: -3px -3px 6px rgba(16,33,63,.25); transform: scale(0); transform-origin: 100% 100%;
+  transition: transform 240ms var(--ease-pop); }
+.album-sticker.is-peeling { transform: translateY(-6px) rotate(4deg) perspective(400px) rotateX(10deg); }
+.album-sticker.is-peeling::after { transform: scale(1); }
+.album-sticker.is-new { animation: stick-in 360ms var(--ease-pop) both; }
+@keyframes stick-in { 0% { transform: translateY(-40px) rotate(-12deg); opacity: 0; }
+  70% { transform: translateY(0) rotate(-2deg) scale(1.08,.92); opacity: 1; } 100% { transform: rotate(-2deg); } }
+```
+
+### 2. Window-chrome sheets and drawers
+Every Play sheet (notebook history, Vault, Missions, Look, the Rivera beat panel) wears one original glossy OS-window skin:
+- **Title bar:** a pill-ended glossy bar with a small app-icon sticker on the left and the title in Fredoka 700 19px, which counts as large text (white on blue 5.0–6.7:1 by day, ink on cyan 7.6–13.7:1 by night).
+- **Bubbles:** two round glossy bubbles on the right: a fold bubble (aqua, "–", collapses the sheet to half height) and a close bubble (sun, "×"). Each is 24px visually inside a 48px hit area. This arrangement (round, right-side, aqua plus sun) deliberately matches no real OS.
+- **Body:** an inset panel (a sunken well with an inner shadow) that is the only part that scrolls.
+- **Motion:** the window opens with a 220ms scale-in from the button that opened it (`transform-origin` set from the trigger's rect) and closes in 160ms.
+
+```css
+[data-register="play"] .sheet { padding: 0; border: var(--outline-w) solid var(--outline); border-radius: 22px 22px 0 0;
+  background: var(--panel-fill); box-shadow: 0 -6px 0 rgba(16,33,63,.12), 0 -20px 50px -20px rgba(16,33,63,.5);
+  animation: win-in 220ms var(--ease-pop) both; }
+@keyframes win-in { from { opacity: 0; transform: translateY(16px) scale(.94); } }
+.win__bar { display: flex; align-items: center; gap: 10px; height: 52px; padding: 0 6px 0 14px;
+  border-bottom: var(--outline-w) solid var(--outline); border-radius: 19px 19px 0 0;
+  background: radial-gradient(ellipse 70% 40% at 50% 18%, rgba(255,255,255,.55), rgba(255,255,255,0)), var(--gel-primary);
+  color: var(--gel-primary-ink); font: 700 19px/1 var(--font-game); text-shadow: var(--gel-text-shadow); }
+.win__title { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.win__btn { width: 48px; height: 48px; display: grid; place-items: center; background: none; border: 0; cursor: pointer; }
+.win__btn::before { content: attr(data-glyph); width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center;
+  border: 2.5px solid var(--outline); color: #10213F; font: 700 16px/1 var(--font-game);
+  background: radial-gradient(ellipse 60% 35% at 50% 25%, rgba(255,255,255,.9), rgba(255,255,255,0)), var(--bubble, #FFD23F);
+  box-shadow: 0 2px 0 var(--outline); }
+.win__btn--fold { --bubble: #5FE3E8; }
+.win__btn:active::before { transform: translateY(2px) scale(.94); box-shadow: none; }
+.win__body { margin: 10px; max-height: calc(var(--vvh, 100dvh) * .7); overflow: auto; overscroll-behavior: contain;
+  border-radius: 14px; border: 2px solid var(--outline); background: var(--surface);
+  box-shadow: inset 0 3px 8px rgba(16,33,63,.18); }
+.win__body--paper { background: var(--note) repeating-linear-gradient(180deg, transparent 0 31px, rgba(16,33,63,.10) 31px 32px); }
+```
+
+Markup: `<div class="win__bar"><span class="sticker">📓</span><span class="win__title">Notebook</span><button class="win__btn win__btn--fold" data-glyph="–" aria-label="Fold"></button><button class="win__btn" data-glyph="×" aria-label="Close"></button></div><div class="win__body">…</div>`.
+
+### 3. Handheld-console frame (desktop option)
+`.device--handheld` is an alternative skin for the existing desktop `PhoneFrame` (`.device`): an original translucent candy-plastic handheld from the 2000s.
+- **Shell:** a tall rounded slab with a 56px radius, the same 390×844 screen, and a 120px chin below it.
+- **See-through plastic:** the shell is tinted and shows faint "internals" (a CSS dot grid).
+- **Top:** an arc of 6 speaker dots and a lime power LED.
+- **Chin:** a navy plus-shaped pad on the left, two round glossy buttons on the right (aqua and sun), and a small pill "home" button in the center. Only the pill is real (it routes to student home); the rest are decorative and `aria-hidden`.
+- **Colorways follow the Play theme:** "Aqua Ice" by day, "Smoke" (graphite-indigo with a cyan LED glow) by night.
+- **Switch:** a "Frame: Phone / Handheld" sticker toggle under the device, saved as `pip.frame` (try/catch). Phone stays the default for the demo video.
+- **Scaling:** the existing `--device-scale` math now uses the taller 414×992 box.
+
+```css
+.device--handheld { width: 414px; height: 992px; border-radius: 56px; padding: 12px 12px 136px;
+  background: radial-gradient(circle, rgba(255,255,255,.22) 1px, transparent 1.5px) 0 0 / 10px 10px,
+              linear-gradient(160deg, rgba(95,227,232,.62) 0%, rgba(42,99,245,.42) 100%);
+  border: 3px solid rgba(16,33,63,.85);
+  box-shadow: inset 0 3px 0 rgba(255,255,255,.7), inset 0 -10px 24px rgba(16,33,63,.25), 0 30px 60px -24px rgba(16,33,63,.55);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+[data-theme="night"] .device--handheld { background: radial-gradient(circle, rgba(255,255,255,.12) 1px, transparent 1.5px) 0 0 / 10px 10px,
+  linear-gradient(160deg, rgba(60,66,110,.75), rgba(14,21,48,.85)); box-shadow: inset 0 3px 0 rgba(255,255,255,.25),
+  0 0 40px -10px rgba(51,225,255,.45), 0 30px 60px -24px rgba(0,0,0,.7); }
+.device--handheld .device__screen { border-radius: 30px; border: 3px solid #10213F; }
+.handheld__pad { position: absolute; left: 44px; bottom: 34px; width: 72px; height: 72px; background: #10213F;
+  clip-path: polygon(33% 0, 67% 0, 67% 33%, 100% 33%, 100% 67%, 67% 67%, 67% 100%, 33% 100%, 33% 67%, 0 67%, 0 33%, 33% 33%); }
+.handheld__ab { position: absolute; right: 40px; bottom: 44px; display: flex; gap: 14px; transform: rotate(-18deg); }
+.handheld__ab i { width: 38px; height: 38px; border-radius: 50%; border: 3px solid #10213F; box-shadow: 0 4px 0 #10213F;
+  background: radial-gradient(ellipse 55% 35% at 50% 25%, rgba(255,255,255,.85), transparent), var(--c, #5FE3E8); }
+.handheld__ab i + i { --c: #FFD23F; }
+.handheld__led { position: absolute; top: 22px; right: 48px; width: 8px; height: 8px; border-radius: 50%; background: #A3F04A; box-shadow: 0 0 8px #A3F04A; }
+```
+
+### 4. Tap sparkles
+A pointerdown anywhere on the Play root spawns a 5-star burst. Each star is a 6–10px 4-point star (the `.glint` clip-path) in white, `--sun-fill` or `--ice`, flies 18–28px outward at a random angle, and scales 1 → 0 over 280ms ease-out.
+- **Limits:** at most 1 burst per 80ms and at most 20 live nodes; each node is removed on `animationend`.
+- **Not on:** text selection inside the notebook or while dragging.
+- **Off:** under reduced motion or `motion: low`.
+
+```css
+.tapstar { position: fixed; z-index: 90; width: var(--s, 8px); height: var(--s, 8px); pointer-events: none;
+  background: var(--c, #FFFFFF); clip-path: polygon(50% 0, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0 50%, 39% 39%);
+  filter: drop-shadow(0 0 2px rgba(16,33,63,.35)); animation: tapstar 280ms var(--ease-out) forwards; }
+@keyframes tapstar { to { transform: translate(var(--dx), var(--dy)) rotate(90deg) scale(0); opacity: .2; } }
+@media (prefers-reduced-motion: reduce) { .tapstar { display: none; } }
+```
+```js
+let last = 0
+export function tapStars(e) {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches || e.timeStamp - last < 80) return
+  last = e.timeStamp
+  if (document.querySelectorAll('.tapstar').length > 15) return
+  const colors = ['#FFFFFF', 'var(--sun-fill)', 'var(--ice)']
+  for (let i = 0; i < 5; i++) {
+    const a = Math.random() * Math.PI * 2, d = 18 + Math.random() * 10, s = document.createElement('i')
+    s.className = 'tapstar'
+    s.style.cssText = `left:${e.clientX - 4}px;top:${e.clientY - 4}px;--s:${6 + Math.random() * 4}px;--c:${colors[i % 3]};--dx:${Math.cos(a) * d}px;--dy:${Math.sin(a) * d}px`
+    s.addEventListener('animationend', () => s.remove())
+    document.body.appendChild(s)
+  }
+}
+```
+
+### 5. Chunky loading bar with a bouncing Pip
+Use it for AI waits longer than 1s that happen outside the chat bubble: quiz grading (`QuizWait`), building Pip's Brain, mission start, saving.
+- **Bar:** 10 glossy blocks in a 3px-outlined, 30px-tall tray, `min(280px, 80%)` wide. The blocks fill one at a time every 220ms, and the bar loops with a quick double-blink when full. It is indeterminate on purpose: it never claims real progress.
+- **Pip:** a small 2D Pip (40px, the stage-fallback art or emoji) hops block to block above the bar (translateY −14px and back per block, with a squash on landing).
+- **Label:** under the bar, Fredoka 600 17px `--fg`: "Pip is thinking…". After 8s: "Still thinking. Long thought." and a "Try again" secondary gel.
+- **Reduced motion:** a static half-filled bar with a 1.2s opacity pulse; Pip doesn't hop.
+
+```css
+.loadbar { position: relative; display: grid; grid-template-columns: repeat(10, 1fr); gap: 3px; width: min(280px, 80%);
+  height: 30px; padding: 4px; border: var(--outline-w) solid var(--outline); border-radius: 12px; background: var(--surface-3);
+  box-shadow: inset 0 3px 6px rgba(16,33,63,.2), 0 4px 0 var(--outline); }
+.loadbar__block { border-radius: 4px; opacity: 0;
+  background: radial-gradient(ellipse 60% 35% at 50% 25%, rgba(255,255,255,.8), transparent), var(--gel-primary);
+  animation: block 2.2s steps(1, end) infinite; animation-delay: calc(var(--i) * 220ms); }
+@keyframes block { 0% { opacity: 0; } 10%, 92% { opacity: 1; } 95% { opacity: .4; } 100% { opacity: 0; } }
+.loadbar__pip { position: absolute; bottom: 100%; left: 4px; width: 40px; height: 40px; margin-bottom: 4px;
+  animation: hop-x 2.2s steps(10, end) infinite, hop-y 220ms var(--ease-out) infinite alternate; }
+@keyframes hop-x { to { transform: translateX(calc(min(280px, 80vw) - 48px)); } }
+@keyframes hop-y { to { translate: 0 -14px; } }
+```
+
+### 6. Wallpapers and drifting clouds
+`--wallpaper` is a CSS-only tile layered under the scene gradient, at ≤ .06 opacity. It shows only in open scene areas; panels, gels and bubbles are opaque, so text contrast is unchanged. Choices: `stars | checkers | bubbles | none` (part of the S10 theme `scene` field).
+- **Day:** soft sky checkers `conic-gradient(rgba(16,33,63,.05) 25%, transparent 0 50%, rgba(16,33,63,.05) 0 75%, transparent 0) 0 0 / 48px 48px`, plus bubbles (§ scene CSS).
+- **Night:** stars (§ scene CSS) plus tiny plus-sparkles: `radial-gradient(2px 6px at 30px 30px, rgba(255,255,255,.5), transparent), radial-gradient(6px 2px at 30px 30px, rgba(255,255,255,.5), transparent) 0 0 / 120px 120px`.
+- **Clouds (day):** two layers. The near layer has 3 bigger clouds drifting at 90s per cycle, the far layer 4 small clouds at 140s, with `transform: translateX` loops (GPU). Night swaps them for 2 slow, faint nebula blobs (`rgba(51,225,255,.06)`).
+- **Off:** paused when the tab is hidden and static under reduced motion.
+
+### 7. Micro-sounds (off by default; the mute icon in the HUD and home)
+- **Format:** each sound is ≤ 300ms except where noted, at volume .4, with no overlap of the same sound inside 80ms.
+- **Source:** synthesize tonight with WebAudio (no assets needed), or use original short files ≤ 150 KB total. No sounds sampled from real games or devices.
+
+| Sound | When |
+|---|---|
+| pop | gel button press (on pointerdown) |
+| boop | icon button press, theme toggle |
+| bubble-blip | Pip's bubble appears |
+| swoosh | screen or K.O.-beat transition, window open |
+| plink | weapon unlock and star-glints |
+| thwack | boss hit (at the hit-stop) |
+| boing | boss heal / gloat |
+| sticker-stick | new Vault sticker lands |
+| sticker-peel | Vault sticker tapped |
+| block-tick | each loading-bar block (quiet, .2 volume) |
+| save-chime (600ms) | save point: a Brain rule saved or the Brain version going up |
+| low-gong (800ms) | K.O. stamp |
+
+### 8. Glitter and chrome text (K.O. stamp and level-ups)
+`.glitter-text` is for the K.O. stamp (beat 2), "Brain v2", and the "Weapon unlocked" sticker title. It never appears on the K.O. card.
+- **Fill:** a light chrome gradient with a fine glitter dot layer, clipped to the text.
+- **Edge:** a 6px navy stroke (`paint-order: stroke fill`) plus a 4px navy drop.
+- **Sheen:** one light sweep over 1.2s, then still, with up to 3 glints.
+- **AA:** every fill stop is ≥ 11:1 against the navy stroke (`#FFFFFF` 16.0, `#FFF3B0` 14.3, `#FFD23F` 11.1, `#BDF6FF` 13.6). The stroke is 13.7:1 against the day sky. By night the fill itself is ≥ 12.4:1 against the sky. The text is large (≥ 40px), so 3:1 would be enough.
+
+```css
+.glitter-text { font: 700 96px/1 var(--font-game); font-variation-settings: "wdth" 125; letter-spacing: .02em;
+  background:
+    radial-gradient(circle, rgba(255,255,255,.95) 0 .6px, transparent 1px) 0 0 / 7px 7px,           /* glitter */
+    linear-gradient(105deg, transparent 40%, rgba(255,255,255,.9) 50%, transparent 60%) -150% 0 / 200% 100% no-repeat,  /* sheen */
+    linear-gradient(180deg, #FFFFFF 0%, #FFF3B0 35%, #FFD23F 52%, #BDF6FF 72%, #FFFFFF 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  -webkit-text-stroke: 6px var(--outline); paint-order: stroke fill;
+  filter: drop-shadow(0 4px 0 var(--outline));
+  animation: sheen 1.2s var(--ease-out) 240ms 1 both; }
+@keyframes sheen { to { background-position: 0 0, 150% 0, 0 0; } }
+@media (prefers-reduced-motion: reduce) { .glitter-text { animation: none; } }
+@media (forced-colors: active) { .glitter-text { color: CanvasText; background: none; -webkit-text-stroke: 0; } }
+```
+
+### 9. Save points for Pip's Brain
+Pip's Brain saves like a game. A glossy 5-point star icon (`.savepoint`) marks every moment the Brain changes:
+- **Rule saved** (Pip's "Saving that: '…'"): a 28px star blips beside Pip's bubble (scale 0 → 1.2 → 1, 300ms) with a "Saved" sticker for 1.2s and the save-chime.
+- **Rule fixed** after re-teach: the star appears on the fixed note's sticker.
+- **Brain version up** (K.O. beat 2): a 72px star spins once (360deg, 600ms ease-out) and floats up 12px. Under it, a `.glitter-text` "Brain v2" at 40px and a chrome sticker "Save point reached". In the HUD, the Brain badge gains a small star for the rest of the session.
+- **Star style:** sun gel fill, a navy outline made with stacked drop-shadows (clip-path removes borders), and a white gloss. Navy on sun is 11.1:1 for any glyph inside.
+
+```css
+.savepoint { width: var(--size, 28px); height: var(--size, 28px);
+  background: radial-gradient(ellipse 50% 30% at 45% 30%, rgba(255,255,255,.9), transparent), var(--gel-win);
+  clip-path: polygon(50% 2%, 62% 36%, 98% 38%, 69% 59%, 79% 95%, 50% 74%, 21% 95%, 31% 59%, 2% 38%, 38% 36%);
+  filter: drop-shadow(2px 0 0 var(--outline)) drop-shadow(-2px 0 0 var(--outline)) drop-shadow(0 2px 0 var(--outline))
+          drop-shadow(0 -2px 0 var(--outline)) drop-shadow(0 3px 0 var(--outline));
+  animation: save-in 300ms var(--ease-pop) both; }
+.savepoint--big { --size: 72px; animation: save-spin 600ms var(--ease-out) both; }
+@keyframes save-in { from { transform: scale(0); } 70% { transform: scale(1.2); } }
+@keyframes save-spin { from { transform: rotate(-360deg) scale(.4); } to { transform: translateY(-12px); } }
+```
+
+**Nostalgia guardrails** (add to the Don'ts):
+- No real-product shapes. No four-color window flags, no red/yellow/green traffic lights, no copied handheld silhouettes, logos, fonts, startup sounds or meme characters.
+- No loot boxes, random paid rewards or purchasable stickers. The holo variant is earned only by fixing a wrong rule, never by luck or money.
+- No sparkle trails while idle, and no confetti.
+- No glitter on the K.O. card, which stays quiet.
+- No wallpaper behind text above .06 opacity.
 
 ## Theming: build your own UI (S10)
 
