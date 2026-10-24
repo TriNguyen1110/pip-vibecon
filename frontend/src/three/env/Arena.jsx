@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { RoundedBox } from '@react-three/drei'
 import * as THREE from 'three'
-import { Mat } from '../parts/Mat'
+import { Mat, CHROME } from '../parts/Mat'
 import { BlobShadow } from '../parts/BlobShadow'
 import { emojiTexture, glowTexture } from '../parts/textures'
 import { squash3 } from '../Mascot'
@@ -14,9 +14,10 @@ const STONE_TOP = '#17463D'
 const BAR_W = 1.04
 const CORAL = '#F59B76'
 const CORAL_LOW = '#FF6B5E'
-const BOSS = '#FF6F91'
-const BOSS_DARK = '#E2517A'
-const BOSS_BELLY = '#FFD3E0'
+const BOSS = '#FF5A4E'
+const BOSS_BELLY = '#FFD0C4'
+const CAPE = '#6A2C9C'
+const INK_BOOT = '#2A1630'
 
 // Kick-the-Buddy style stitch marks between two points.
 function Stitches({ from, to, n = 5, vertical = false }) {
@@ -68,6 +69,7 @@ function Boss({ emoji, hp, reduced }) {
   const headG = useRef()
   const arms = [useRef(), useRef()]
   const ears = [useRef(), useRef()]
+  const cape = useRef()
   const panelMat = useRef()
   const fill = useRef()
   const fillMat = useRef()
@@ -173,7 +175,8 @@ function Boss({ emoji, hp, reduced }) {
     if (body.current) {
       body.current.visible = !(s.koAt != null && (reduced ? t - s.koAt > 0.15 : slide > 3))
       body.current.position.set(x + slide, s.bob + smug, 0)
-      body.current.rotation.z = rz + Math.sin(t * 2.1) * 0.035
+      body.current.rotation.z = rz + Math.sin(t * 2.1) * 0.045
+      body.current.rotation.y = reduced ? 0 : Math.sin(t * 2.1) * 0.22 // idle swagger
       body.current.scale.set(sx, sy, sx)
     }
     // floppy ragdoll limbs
@@ -187,8 +190,9 @@ function Boss({ emoji, hp, reduced }) {
       r.current.rotation.x = reduced ? 0 : hitFlop * 0.4 * sgn
     })
     ears.forEach((r, i) => {
-      if (r.current) r.current.rotation.z = (i ? -1 : 1) * (0.35 + Math.sin(t * 6.8 + i * 2) * 0.12 + (reduced ? 0 : hitFlop * 0.5))
+      if (r.current) r.current.rotation.z = (i ? -1 : 1) * (0.3 + (reduced ? 0 : hitFlop * 0.25))
     })
+    if (cape.current) cape.current.rotation.x = 0.12 + Math.sin(t * 4.2) * 0.06 + (reduced ? 0 : Math.abs(hitFlop) * 0.4)
     if (headG.current) {
       headG.current.rotation.x = reduced ? 0 : -0.35 * Math.max(0, hitFlop) * (ht < 0.6 ? 1 : 0.5)
       headG.current.rotation.z = Math.sin(t * 2.7) * 0.05 + (reduced ? 0 : hitFlop * 0.12)
@@ -206,7 +210,7 @@ function Boss({ emoji, hp, reduced }) {
       const k = ht >= 0 ? ht / 0.7 : 1
       dmg.current.visible = k < 1
       if (k < 1) {
-        dmg.current.position.y = 1.5 + easeOut(k) * 0.28
+        dmg.current.position.y = 1.58 + easeOut(k) * 0.28
         dmgMat.current.opacity = k < 0.6 ? 1 : 1 - (k - 0.6) / 0.4
       }
     }
@@ -224,78 +228,114 @@ function Boss({ emoji, hp, reduced }) {
         <ringGeometry args={[0.4, 0.46, 40]} />
         <meshBasicMaterial color={UI.sunset} toneMapped={false} />
       </mesh>
-      {/* the boss: glossy stitched ragdoll with an emoji decal face */}
+      {/* the boss: a smug slapstick villain. Glossy ragdoll, emoji face decal, cape and belt. */}
       <group position={[0, 0.25, 0]} scale={0.85}>
         <group ref={body}>
-          <mesh position={[0, 0.7, -0.35]}>
+          <mesh position={[0, 0.7, -0.45]}>
             <planeGeometry args={[2.2, 2.2]} />
             <meshBasicMaterial map={glowTexture()} color={UI.sunset} transparent opacity={0.3} depthWrite={false} toneMapped={false} />
           </mesh>
+          {/* cape */}
+          <group ref={cape} position={[0, 0.78, -0.02]}>
+            <mesh position={[0, -0.32, 0]} scale={[1, 1, 0.9]}>
+              <cylinderGeometry args={[0.36, 0.5, 0.66, 28, 1, true, Math.PI / 2 + 0.35, Math.PI - 0.7]} />
+              <Mat color={CAPE} rough={0.3} side={THREE.DoubleSide} />
+            </mesh>
+            <mesh rotation={[Math.PI / 2, 0, 0]}>
+              <torusGeometry args={[0.3, 0.045, 8, 28]} />
+              <Mat color={CAPE} rough={0.3} />
+            </mesh>
+          </group>
           {[-1, 1].map((sg) => (
-            <group key={`leg${sg}`} position={[sg * 0.15, 0.2, 0]}>
+            <group key={`leg${sg}`} position={[sg * 0.16, 0.2, 0]}>
               <mesh position={[0, -0.06, 0]}>
-                <capsuleGeometry args={[0.085, 0.1, 4, 10]} />
+                <capsuleGeometry args={[0.09, 0.1, 4, 10]} />
                 <Mat color={BOSS} />
               </mesh>
-              <mesh position={[0, -0.15, 0.05]} scale={[1.1, 0.6, 1.4]}>
+              <mesh position={[sg * 0.02, -0.15, 0.06]} scale={[1.15, 0.6, 1.5]}>
                 <sphereGeometry args={[0.1, 14, 10]} />
-                <Mat color={BOSS_DARK} />
+                <Mat color={INK_BOOT} />
               </mesh>
             </group>
           ))}
-          <mesh position={[0, 0.48, 0]} scale={[1, 1.05, 0.85]}>
+          {/* puffed chest */}
+          <mesh position={[0, 0.47, 0]} scale={[1.08, 1, 0.9]}>
             <sphereGeometry args={[0.36, 32, 24]} />
-            <meshPhysicalMaterial ref={panelMat} color={BOSS} roughness={0.25} clearcoat={1} clearcoatRoughness={0.08} />
+            <meshPhysicalMaterial ref={panelMat} color={BOSS} roughness={0.25} clearcoat={1} clearcoatRoughness={0.08} sheen={0.3} />
           </mesh>
-          <mesh position={[0.02, 0.44, 0.29]} scale={[1, 1.1, 0.35]}>
-            <sphereGeometry args={[0.19, 20, 14]} />
-            <Mat color={BOSS_BELLY} />
+          <mesh position={[0, 0.6, 0.13]} scale={[1.15, 0.78, 0.85]}>
+            <sphereGeometry args={[0.27, 28, 18]} />
+            <Mat color={BOSS} />
           </mesh>
-          <Stitches from={[-0.02, 0.62, 0.3]} to={[-0.06, 0.28, 0.27]} n={5} />
+          <mesh position={[0, 0.6, 0.3]} scale={[1.2, 0.8, 0.3]}>
+            <sphereGeometry args={[0.16, 20, 14]} />
+            <Mat color={BOSS_BELLY} outline={false} />
+          </mesh>
+          <Stitches from={[-0.16, 0.48, 0.32]} to={[-0.2, 0.26, 0.24]} n={4} />
+          {/* belt + chrome buckle */}
+          <mesh position={[0, 0.33, 0]} rotation={[Math.PI / 2, 0, 0]} scale={[1.05, 0.9, 1]}>
+            <torusGeometry args={[0.335, 0.045, 10, 36]} />
+            <Mat color={INK_BOOT} rough={0.3} />
+          </mesh>
+          <RoundedBox args={[0.15, 0.11, 0.04]} radius={0.02} smoothness={2} position={[0, 0.33, 0.33]}>
+            <Mat {...CHROME} />
+          </RoundedBox>
           {[-1, 1].map((sg, i) => (
-            <group key={`arm${sg}`} ref={arms[i]} position={[sg * 0.3, 0.62, 0]}>
-              <mesh position={[0, -0.18, 0]}>
-                <capsuleGeometry args={[0.075, 0.24, 4, 10]} />
+            <group key={`arm${sg}`} ref={arms[i]} position={[sg * 0.33, 0.66, 0.02]}>
+              <mesh position={[0, -0.17, 0]}>
+                <capsuleGeometry args={[0.08, 0.22, 4, 10]} />
                 <Mat color={BOSS} />
               </mesh>
-              <mesh position={[0, -0.36, 0]}>
-                <sphereGeometry args={[0.095, 14, 10]} />
-                <Mat color={BOSS_DARK} />
+              <mesh position={[0, -0.35, 0]}>
+                <sphereGeometry args={[0.1, 14, 10]} />
+                <Mat color="#FFFFFF" />
               </mesh>
             </group>
           ))}
-          <group ref={headG} position={[0, 0.86, 0]}>
-            <RoundedBox args={[0.78, 0.68, 0.6]} radius={0.24} smoothness={4} position={[0, 0.3, 0]}>
+          <group ref={headG} position={[0, 0.86, 0.02]}>
+            <RoundedBox args={[0.8, 0.72, 0.6]} radius={0.24} smoothness={4} position={[0, 0.3, 0]}>
               <Mat color={BOSS} />
             </RoundedBox>
-            <RoundedBox args={[0.6, 0.52, 0.06]} radius={0.12} smoothness={3} position={[0, 0.28, 0.28]}>
+            <RoundedBox args={[0.62, 0.6, 0.06]} radius={0.14} smoothness={3} position={[0, 0.29, 0.28]}>
               <Mat color={UI.ivory} rough={0.25} />
             </RoundedBox>
-            <mesh position={[0, 0.28, 0.315]}>
-              <planeGeometry args={[0.5, 0.5]} />
+            <mesh position={[0, 0.37, 0.315]}>
+              <planeGeometry args={[0.48, 0.48]} />
               <meshBasicMaterial map={tex} transparent toneMapped={false} />
             </mesh>
-            <Stitches from={[-0.3, 0.6, 0.14]} to={[0.3, 0.6, 0.14]} n={6} vertical />
+            {/* smug angled brows (inner ends down) */}
+            {[-1, 1].map((sg) => (
+              <mesh key={`brow${sg}`} position={[sg * 0.14, 0.62, 0.33]} rotation={[0, 0, Math.PI / 2 + sg * 0.42]}>
+                <capsuleGeometry args={[0.034, 0.17, 4, 10]} />
+                <Mat color={INK_BOOT} rough={0.2} />
+              </mesh>
+            ))}
+            {/* cocky lopsided grin */}
+            <group position={[0.04, 0.12, 0.31]} rotation={[0, 0, 0.16]}>
+              <mesh scale={[1.35, 0.62, 0.35]}>
+                <sphereGeometry args={[0.13, 22, 12, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2]} />
+                <meshStandardMaterial color={INK_BOOT} roughness={0.4} side={THREE.DoubleSide} />
+              </mesh>
+              <mesh position={[0, -0.012, 0.03]}>
+                <boxGeometry args={[0.28, 0.035, 0.02]} />
+                <meshStandardMaterial color="#FFFFFF" roughness={0.3} />
+              </mesh>
+            </group>
+            <Stitches from={[-0.3, 0.64, -0.05]} to={[0.3, 0.64, -0.05]} n={6} vertical />
+            {/* little villain horns */}
             {[-1, 1].map((sg, i) => (
-              <group key={`ear${sg}`} ref={ears[i]} position={[sg * 0.3, 0.6, 0]}>
-                <mesh position={[0, 0.12, 0]} scale={[1, 1, 0.7]}>
-                  <capsuleGeometry args={[0.07, 0.14, 4, 10]} />
-                  <Mat color={BOSS_DARK} />
+              <group key={`horn${sg}`} ref={ears[i]} position={[sg * 0.27, 0.64, 0]}>
+                <mesh position={[0, 0.1, 0]}>
+                  <coneGeometry args={[0.075, 0.22, 16]} />
+                  <Mat color="#FFF1E6" rough={0.25} />
                 </mesh>
               </group>
             ))}
-            {/* a big sewn-on button */}
-            <group position={[0.3, 0.05, 0.27]} rotation={[0.3, 0.5, 0]}>
-              <mesh rotation={[Math.PI / 2, 0, 0]}>
-                <cylinderGeometry args={[0.07, 0.07, 0.03, 20]} />
-                <Mat color={UI.ice} />
-              </mesh>
-            </group>
           </group>
         </group>
       </group>
       {/* HP bar */}
-      <group ref={bar} position={[0, 1.78, 0.05]}>
+      <group ref={bar} position={[0, 1.86, 0.05]}>
         <RoundedBox args={[BAR_W + 0.1, 0.17, 0.1]} radius={0.06} smoothness={3}>
           <Mat color="#06201B" rough={0.5} />
         </RoundedBox>

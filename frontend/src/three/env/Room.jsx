@@ -99,7 +99,7 @@ function Lamp({ position }) {
 function Rug() {
   const bubbles = useMemo(() => Array.from({ length: 18 }, (_, i) => (i / 18) * Math.PI * 2), [])
   return (
-    <group position={[0, 0, 0.12]} scale={[1, 1, 0.66]}>
+    <group position={[0, 0, 0.18]} scale={[0.92, 1, 0.62]}>
       <mesh position={[0, 0.012, 0]}>
         <cylinderGeometry args={[1.0, 1.0, 0.024, 48]} />
         <Mat color={Y2K.bubblegum} rough={0.5} coat={0.3} />
@@ -148,44 +148,76 @@ function Plant({ position }) {
   )
 }
 
+const R = 1.5 // round floor radius; the curved back wall shares it
+const WALL_H = 1.72
+
+// Place an object on the inside of the curved wall at angle a (0 = straight back), facing the room.
+function OnWall({ a, y, children, inset = 0.03 }) {
+  const r = R - 0.06 - inset
+  return (
+    <group position={[Math.sin(a) * r, y, -Math.cos(a) * r]} rotation={[0, -a, 0]}>
+      {children}
+    </group>
+  )
+}
+
+// A self-contained round diorama that floats on the page (fits fully inside the frame).
 export function Room() {
   return (
     <group>
-      {/* floor + wall diorama */}
-      <RoundedBox args={[3.9, 0.2, 2.7]} radius={0.08} smoothness={3} position={[0, -0.1, -0.05]}>
-        <Mat color={FLOOR} rough={0.6} coat={0.3} />
-      </RoundedBox>
-      <RoundedBox args={[3.9, 2.6, 0.16]} radius={0.08} smoothness={3} position={[0, 1.2, -1.36]}>
-        <Mat color={WALL} rough={0.7} coat={0.2} />
-      </RoundedBox>
-      <RoundedBox args={[3.9, 0.62, 0.06]} radius={0.03} smoothness={2} position={[0, 0.31, -1.26]}>
-        <Mat color="#D9CBFF" rough={0.6} coat={0.3} />
-      </RoundedBox>
-      <mesh position={[0, 0.63, -1.24]}>
-        <boxGeometry args={[3.9, 0.04, 0.08]} />
-        <Mat color="#FFFFFF" rough={0.3} />
+      <BlobShadow size={3.6} opacity={0.35} position={[0, -0.17, 0]} />
+      <mesh position={[0, -0.08, 0]}>
+        <cylinderGeometry args={[R, R, 0.16, 64]} />
+        <Mat color={FLOOR} rough={0.5} coat={0.4} />
+      </mesh>
+      <mesh position={[0, WALL_H / 2 - 0.02, 0]}>
+        <cylinderGeometry args={[R - 0.02, R - 0.02, WALL_H, 64, 1, true, Math.PI / 2 + 0.25, Math.PI - 0.5]} />
+        <Mat color={WALL} rough={0.6} coat={0.3} side={THREE.DoubleSide} />
+      </mesh>
+      <mesh position={[0, 0.28, 0]}>
+        <cylinderGeometry args={[R - 0.05, R - 0.05, 0.56, 64, 1, true, Math.PI / 2 + 0.25, Math.PI - 0.5]} />
+        <Mat color="#D9CBFF" rough={0.5} coat={0.4} side={THREE.DoubleSide} />
+      </mesh>
+      {/* wall cap + floor rim */}
+      <mesh position={[0, WALL_H - 0.02, 0]} rotation={[Math.PI / 2, 0, -Math.PI + 0.25]}>
+        <torusGeometry args={[R - 0.02, 0.035, 8, 48, Math.PI - 0.5]} />
+        <Mat color="#FFFFFF" rough={0.25} />
+      </mesh>
+      <mesh position={[0, 0, 0]} rotation={[Math.PI / 2, 0, 0]}>
+        <torusGeometry args={[R, 0.04, 8, 64]} />
+        <Mat color="#F3DCC8" rough={0.3} />
       </mesh>
 
       {/* framed card */}
-      <group position={[0.95, 1.5, -1.25]} rotation={[0, 0, -0.04]}>
-        <RoundedBox args={[0.64, 0.5, 0.06]} radius={0.04} smoothness={3}>
-          <Mat color={Y2K.lilac} rough={0.25} />
-        </RoundedBox>
-        <mesh position={[0, 0, 0.032]}>
-          <planeGeometry args={[0.52, 0.39]} />
-          <meshStandardMaterial map={cardTexture()} roughness={0.6} />
-        </mesh>
-      </group>
+      <OnWall a={0.42} y={1.2}>
+        <group rotation={[0, 0, -0.04]}>
+          <RoundedBox args={[0.6, 0.46, 0.05]} radius={0.04} smoothness={3}>
+            <Mat color={Y2K.lilac} rough={0.25} />
+          </RoundedBox>
+          <mesh position={[0, 0, 0.027]}>
+            <planeGeometry args={[0.49, 0.36]} />
+            <meshStandardMaterial map={cardTexture()} roughness={0.6} />
+          </mesh>
+        </group>
+      </OnWall>
 
       {/* star stickers */}
-      <Star position={[-0.9, 1.75, -1.27]} size={1.3} rot={0.2} />
-      <Star position={[-0.55, 1.45, -1.27]} size={0.8} color={Y2K.aqua} rot={-0.3} />
-      <Star position={[-1.2, 1.3, -1.27]} size={0.9} color={Y2K.bubblegum} rot={0.5} />
-      <Star position={[1.55, 1.9, -1.27]} size={0.7} color={Y2K.aqua} rot={0.1} />
+      <OnWall a={-0.45} y={1.42} inset={0}>
+        <Star position={[0, 0, 0]} size={1.3} rot={0.2} />
+      </OnWall>
+      <OnWall a={-0.2} y={1.22} inset={0}>
+        <Star position={[0, 0, 0]} size={0.8} color={Y2K.aqua} rot={-0.3} />
+      </OnWall>
+      <OnWall a={-0.7} y={1.05} inset={0}>
+        <Star position={[0, 0, 0]} size={0.9} color={Y2K.bubblegum} rot={0.5} />
+      </OnWall>
+      <OnWall a={0.95} y={1.45} inset={0}>
+        <Star position={[0, 0, 0]} size={0.7} color={Y2K.aqua} rot={0.1} />
+      </OnWall>
 
       <Rug />
-      <Plant position={[-1.4, 0, -0.8]} />
-      <Lamp position={[1.35, 0, -0.75]} />
+      <Plant position={[-0.95, 0, -0.75]} />
+      <Lamp position={[0.95, 0, -0.7]} />
     </group>
   )
 }

@@ -34,9 +34,12 @@ export function Mat({
 }) {
   const toon = useToon()
   if (toon) {
+    // physical-only props don't exist on MeshToonMaterial (iridescence breaks shader compile)
+    // eslint-disable-next-line no-unused-vars
+    const { iridescence, iridescenceIOR, iridescenceThicknessRange, sheen, sheenColor, clearcoat, clearcoatRoughness, ...toonRest } = rest
     return (
       <>
-        <meshToonMaterial color={color} gradientMap={toonGradient()} emissive={emissive} emissiveIntensity={glow} {...rest} />
+        <meshToonMaterial color={color} gradientMap={toonGradient()} emissive={emissive} emissiveIntensity={glow} {...toonRest} />
         {outline && <Outlines thickness={thick} color={INK} />}
       </>
     )

@@ -124,7 +124,7 @@ export function MascotStage({
 }) {
   // Legacy `look`: bot -> bot, blob -> blob, doodle -> ink-outline toon variant. Only used when creature is absent.
   const resolved = CREATURES.includes(creature) ? creature : look === 'bot' ? 'bot' : 'blob'
-  const toon = look === 'doodle'
+  const toon = !CREATURES.includes(creature) && look === 'doodle'
   const safeEnv = ENVIRONMENTS.includes(env) ? env : 'room'
   const safeAcc = ACCESSORIES.includes(accessory) ? accessory : 'none'
   const reduced = usePrefersReducedMotion()
@@ -179,10 +179,10 @@ export function MascotStage({
 }
 
 // Small static portrait for lists (~64px). Rendered once per combo on a shared offscreen canvas.
-export function MascotThumb({ creature = 'blob', accessory = 'none', look, size = 64, mood = 'idle', style }) {
+export function MascotThumb({ creature, accessory = 'none', look, size = 64, mood = 'idle', style }) {
   const [src, setSrc] = useState(null)
   const resolved = CREATURES.includes(creature) ? creature : look === 'bot' ? 'bot' : 'blob'
-  const toon = look === 'doodle'
+  const toon = !CREATURES.includes(creature) && look === 'doodle'
   useEffect(() => {
     let alive = true
     if (!hasWebGL2()) return

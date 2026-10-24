@@ -6,13 +6,13 @@ import { Garden } from './Garden'
 export const ENV_MAP = {
   room: {
     Component: Room,
-    frame: { target: [0, 0.8, 0], w: 1.85, h: 1.22, elev: 0.26 },
-    mascot: { pos: [0, 0, 0.15], rotY: 0.3 },
+    frame: { target: [0, 0.74, 0], w: 1.74, h: 1.4, elev: 0.3 },
+    mascot: { pos: [0, 0, 0.25], rotY: 0.3, scale: 0.9 },
     shadowY: 0.032,
   },
   arena: {
     Component: Arena,
-    frame: { target: [0.05, 0.78, 0], w: 1.95, h: 1.05, elev: 0.24 },
+    frame: { target: [0.05, 0.88, 0], w: 1.95, h: 1.2, elev: 0.24 },
     mascot: { pos: [-0.9, 0, 0.2], rotY: 0.32 },
   },
   garden: {
