@@ -136,3 +136,13 @@ friend; cool = sleek, confident, streetwear-collectible (dark/matte colourways, 
 hood option, half-lidded unimpressed eyes); ugly = intentionally ugly-cute (Labubu/Ugly Doll energy: crooked
 toothy grin, mismatched eye sizes, eye bags, scruffy uneven fur, a stitched patch, one wonky ear/horn) — still
 friendly, never gross or scary. All three keep Pip's deadpan personality.
+
+## v3.4 (Pip's voice via ElevenLabs)
+| Method + path | Body | Returns |
+|---|---|---|
+| POST `/api/tts` | `{text, session_id?}` | `{audio_b64, mime: "audio/mpeg", alignment: {characters[], character_start_times_seconds[], character_end_times_seconds[]} }` or `{fallback: true}` when ElevenLabs isn't configured / fails |
+Backend calls ElevenLabs `/v1/text-to-speech/{voice_id}/with-timestamps` with `ELEVENLABS_API_KEY`,
+`ELEVENLABS_VOICE_ID`, `ELEVENLABS_MODEL` (default `eleven_flash_v2_5`; verify it's accepted on this endpoint, else
+use the documented default), caches by hash(text+voice) in memory, 8 s timeout. The key never reaches the browser.
+Frontend plays the audio and drives Pip2D `viseme` from the character alignment; if `fallback`, it uses browser
+speechSynthesis as before. Only Pip's lines are spoken; no student audio is recorded or sent.
