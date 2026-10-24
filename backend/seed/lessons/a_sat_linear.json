@@ -22,6 +22,7 @@
   "concepts": [
     {
       "concept_id": "k1",
+      "kind": "reason",
       "look_fors": [
         "Says the two sides of an equation are equal (like a balanced scale)",
         "Says that changing only one side breaks the equality, so any change has to happen to both sides",
@@ -44,15 +45,16 @@
     },
     {
       "concept_id": "k2",
+      "kind": "procedure",
       "look_fors": [
+        "Walks one example step by step, doing each step to both sides",
         "Uses the opposite operation to undo what was done to x (subtract to undo +, divide to undo ×)",
-        "Explains why: the opposite operation cancels the number, leaving x by itself",
-        "Applies it to both sides, in an order that works (undo the adding before the multiplying)"
+        "Undoes the adding before the multiplying, or corrects Pip when Pip does it wrong"
       ],
       "probe_ladder": [
         "Then how do I get x by itself without tipping anything?",
-        "Why subtract? Why not add, or divide first?",
-        "In 3x = 15, the 3 is stuck to the x. How do I get it off, and what happens to the 15?",
+        "Walk me through 2x + 6 = 20 one line at a time. What does it look like after each step?",
+        "I'll try 3x = 15 myself: I take 3 away from both sides and get x = 12. Is that right? What do I do instead?",
         "Then for 2x + 6 = 20 I can divide just the 2x by 2 and get x + 6 = 10. That's what my rule says."
       ],
       "spoilers": [
@@ -62,19 +64,20 @@
         "subtract 4 from both sides",
         "x = 5"
       ],
-      "friend_nudge": "My friend said solving is like getting undressed after getting dressed: what went on last comes off first…? I don't know what that has to do with x."
+      "friend_nudge": "My friend said whatever was done to x last has to be undone first…? I don't know which one that is."
     },
     {
       "concept_id": "k3",
+      "kind": "procedure",
       "look_fors": [
-        "Puts the answer back in for x in the original equation",
+        "Walks the check on one example: puts the answer in for x in the original equation",
         "Says the answer is right only if both sides come out equal (and wrong if they don't)",
         "Does the check on an example and reports both sides"
       ],
       "probe_ladder": [
         "How would I know if my answer is actually right?",
         "If I say x = 10 for 2x + 6 = 20, how could you prove I'm wrong without solving it again?",
-        "Where do I put the answer back in, the first equation or the last line I wrote? Why that one?",
+        "I'll try: I put my answer into the last line I wrote, it works, so I'm done checking. Is that the right line to check?",
         "Then if I put x = 10 into 2x + 6 = 20 and get 26, I can keep x = 10, because 26 is close to 20. Close is fine?"
       ],
       "spoilers": [
@@ -89,7 +92,7 @@
   "offline_demo": {
     "assignment_id": "a_sat_linear",
     "student_id": "s009",
-    "note": "Dev's SAT Math run, same beats as the fractions demo: why-question, refusal, real explanation (hit), procedure only (next rung), real explanations for k2 and k3 (hits), a shortcut that is the misconception (heal, sets up the k2 quiz miss), re-teach that applies the fix to the quiz equation and checks it (level 3, critical). Pip's opening is the server's templated claim from the misconception. 'rung' is the 1-based probe_ladder rung Pip ends the reply on, for 'next_concept_id'. Every quote after 'Saving that:' is a verbatim substring of that turn's student message.",
+    "note": "Dev's SAT Math run, same beats as the fractions demo: why-question, refusal, real explanation (hit), procedure only (next rung), real explanations for k2 and k3 (hits), a shortcut that is the misconception (heal, sets up the k2 quiz miss), re-teach that applies the fix to the quiz equation and checks it (level 3, critical). Pip's opening is the server's templated claim from the misconception. 'rung' is the 1-based probe_ladder rung Pip ends the reply on, for 'next_concept_id'. Every quote after 'Saving that:' is a verbatim substring of that turn's student message. Kinds: k1 reason (Pip asks why); k2 and k3 procedure (Pip asks for a walk-through of one example or predicts wrong and gets corrected).",
     "turns": [
       {
         "n": 1,
@@ -141,20 +144,20 @@
         "filed_rule": "",
         "next_concept_id": "k2",
         "rung": 2,
-        "pip": "So you're saying take 6 away on both sides, then divide by 2. Why subtract? Why not add, or divide first?"
+        "pip": "So you're saying take 6 away on both sides, then divide by 2. Walk me through 2x + 6 = 20 one line at a time. What does it look like after each step?"
       },
       {
         "n": 5,
         "phase": "teach",
-        "student": "because the 6 is being added to 2x so subtracting it cancels it out. and the 2 is multiplying x so dividing undoes it. so 2x = 14 and x = 7",
+        "student": "first take 6 off both sides so its 2x = 14, because minus 6 cancels the plus 6. then divide both sides by 2 because dividing undoes times 2. so x = 7",
         "kind": "explain",
         "concept_id": "k2",
         "level": 2,
         "event": "hit",
-        "filed_rule": "the 2 is multiplying x so dividing undoes it",
+        "filed_rule": "dividing undoes times 2",
         "next_concept_id": "k3",
         "rung": 1,
-        "pip": "So you're saying each step undoes something that was done to x. Saving that: 'the 2 is multiplying x so dividing undoes it'. How would I know if my answer is actually right?"
+        "pip": "So you're saying each step undoes something that was done to x. Saving that: 'dividing undoes times 2'. How would I know if my answer is actually right?"
       },
       {
         "n": 6,

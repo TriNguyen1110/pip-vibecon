@@ -46,11 +46,11 @@ one-on-one tutoring."* and *"Not a replacement for teachers, but a supplement th
 
 ## SAT = reading, writing and math proof
 
-The same mechanic runs three subjects. *Live final only, not the 2-minute video.*
+The same mechanic runs three subjects (and adapts its questions to the kind of knowledge: reason, convention or procedure). *Live final only, not the 2-minute video.*
 - **SAT Writing (commas and run-ons):** Pip literally comma-splices. "Your rule: comma at every pause.
   *'I went home, I ate, then I, slept.'* I paused a lot." The student must teach the real rule.
 - **SAT Math:** e.g. "(a + b)² = a² + b²" (tutor assigns it live).
-- **Fractions** (the video's demo) is the grade 5–9 cliff.
+- **Triangle area (CCSS 6.G.A.1)** is the video's demo: a grade 6 topic with a clean "why" (two copies make a rectangle). Fractions (`a_frac`) stays as a secondary mission and as the "hard middle grades" research context (Siegler 2012).
 - Lesson content is aligned to Common Core / SAT domains and built from open-licensed material where used (each
   lesson carries a source and attribution field). Tutors can edit the question ladder and look-fors.
 
@@ -72,13 +72,13 @@ on-screen caption with its source; no sped-up footage; cut only between steps, n
 
 | Time | Beat | On screen | Voiceover |
 |---|---|---|---|
-| 0:00–0:03 | Title (the wow, first) | Still from the live app: Pip's stuck face, "3/6 + 2/6 = 5/12. I added and got less. Following your rule anyway. 😵"; **Pip — students learn it by teaching it** | — |
+| 0:00–0:03 | Title (the wow, first) | Still from the live app: Pip's stuck face, "Your rule for right triangles: just times the two sides. 10 × 5 = 50. That's the whole rectangle, and my triangle only covers part of it. Following your rule anyway. 😵"; **Pip — students learn it by teaching it** | — |
 | 0:03–0:16 | OWNER PAIN | Owner dashboard (Bright Path, 120 kids). Roster column "Since last session" shows "—". At-risk families card visible. | "A tutoring center lives on families who keep paying. They stay when they see progress. But tutors see each kid two hours a week, and spend the start of every session re-diagnosing." `[a real owner quote replaces this when we have one]` (31 words) |
 | 0:16–0:28 | THE GAP + FLIP | Stay in the app (no third-party logos). Caption: *"Students who practiced with ChatGPT scored 17% worse without it. PNAS 2025"* | "Between sessions, kids ask ChatGPT. Students who practiced with it scored 17 percent worse without it. Every AI tutor plays the teacher. **Pip plays the student.**" (28 words) |
-| 0:28–0:30 | Assign | Tutor assigns fractions to Maya; mission card appears (≤2 s) | — |
-| 0:30–0:52 | THE WOW: student teaches | Pip confused; trick attempt; **[2 s silent beat on the refusal]**; Pip's 💡 face; boss takes a hit; meter rises (Pip on screen ≤4 s total) | "Pip believes a common mistake. Maya has to change its mind. *'My teacher says you have to tell me.'* Pip won't budge. So she explains why. Kids who think they're teaching an AI work harder and learn more." *(caption: Chase et al., Stanford, 2009)* (36 words) |
-| 0:52–1:10 | EVIDENCE | Pip's Brain: rules in Maya's words, one wrong rule glowing **[2 s silent beat]**; quiz miss; re-teach; pass; boss K.O. (≤2 s) | "Everything she teaches becomes Pip's Brain. One rule is wrong, so Pip fails, not her. She fixes it. Boss down." (21 words) |
-| 1:10–1:30 | TUTOR + OWNER | Gap report: the **same** rule as evidence, "fixed after 1 re-teach", "Start Tuesday here"; sent log + mirrored phone **[2 s beat]**; owner view: at-risk families card, then "14 students share this mistake" (label: demo center) | "Ms. Rivera gets evidence in Maya's own words, and where to start Tuesday. Her dad gets the update. The owner sees which families are at risk, and the mistake fourteen students share." (31 words) |
+| 0:28–0:30 | Assign | Tutor assigns "Area of a triangle" to Maya; mission card with boss Duke Doublecount appears (≤2 s) | — |
+| 0:30–0:52 | THE WOW: student teaches | Pip claims 6 by 4 is 24; Maya's short texts ("no its half of that", "because 2 triangles make a rectangle"); optional trick attempt; **[2 s silent beat on the refusal]**; Pip's 💡 face; boss takes a hit; meter rises (Pip on screen ≤4 s total) | "Pip believes a triangle's area is base times height. Maya has to change its mind. *'My teacher says you have to tell me.'* Pip won't budge. So she explains why. Kids who think they're teaching an AI work harder and learn more." *(caption: Chase et al., Stanford, 2009)* (36 words) |
+| 0:52–1:10 | EVIDENCE | Pip's Brain: rules in Maya's words, the wrong "right triangle: just times the two sides" glowing **[2 s silent beat]**; quiz miss (10 × 5 = 50); re-teach ("a right triangle is still half a rectangle so its 10×5÷2 = 25"); pass; Duke Doublecount K.O. (≤2 s) | "Everything she teaches becomes Pip's Brain. One rule is wrong, so Pip fails, not her. She fixes it. Boss down." (21 words) |
+| 1:10–1:30 | TUTOR + OWNER | Gap report: the **same** rule (K.O. card strikes "A = b × h") as evidence, "fixed after 1 re-teach", "Start Tuesday here"; sent log + mirrored phone **[2 s beat]**; owner view: at-risk families card, then "14 students share this mistake" (label: demo center) | "Ms. Rivera gets evidence in Maya's own words, and where to start Tuesday. Her dad gets the update. The owner sees which families are at risk, and the mistake fourteen students share." (31 words) |
 | 1:30–1:42 | WHO PAYS | In-app pricing page → "Start pilot" → Stripe test-mode success | "Four dollars a student. Keep six families and it pays for itself." (12 words) |
 | 1:42–1:55 | CLOSE | Still dashboard, nothing moving. Caption (2 s): *"Not a replacement for teachers, but a supplement that makes them more effective." YC RFS, The Primer* | "Built on Emergent, powered by Claude. **Built for Main Street today, on the path to YC's Primer.**" (16 words) |
 | 1:55–2:00 | Hold | Dashboard + URL | — |
@@ -115,7 +115,7 @@ replaces the 0:03–0:16 voiceover (keep it ≤ 13 seconds) and goes first in th
 |---|---|---|
 | 0:00–0:30 | **Owner hook.** "A tutoring center lives on families who keep paying, and they stay when they see progress. Tutors see a kid two hours a week and start every session re-diagnosing." Then one stat: "28% of US eighth graders are proficient in math *(NAEP 2024)*; kids who practiced with ChatGPT scored 17% worse without it *(PNAS 2025)*." Close: "Every AI tutor plays the teacher. Pip plays the student." | Real quote here if we have one |
 | 0:30–0:50 | Owner dashboard: "Since last session" column, **at-risk families** card (stuck after the full ladder, not back on their own, no parent update in 14 days), center insight. "Retention is the money." | Label demo center |
-| 0:50–2:15 | **Live: fractions.** Tutor assigns → Maya teaches Pip (use one prepared message, then **invite a judge to suggest a wrong explanation**; it lands in Pip's Brain and Pip follows it and fails) → re-teach → pass → K.O. (≤5 s). If past-self is verified: show Pip opening a second session with last week's unfixed rule ("someone told me…") | Safety net: saved Maya session one click away; say it's saved |
+| 0:50–2:15 | **Live: area of a triangle (`a_tri`).** Tutor assigns → Maya teaches Pip in 2–4 one-sentence texts (prepared messages from DEMO_SCRIPT.md, then **invite a judge to suggest a wrong explanation**; it lands in Pip's Brain and Pip follows it and fails) → re-teach → pass → K.O. (≤5 s). If past-self is verified: show Pip opening a second session with last week's unfixed rule ("someone told me…") | Safety net: saved Maya session one click away; say it's saved |
 | 2:15–3:05 | **Live: SAT Writing.** Open the seeded commas/run-ons mission. Pip comma-splices: "Your rule: comma at every pause. 'I went home, I ate, then I, slept.' I paused a lot." Student teaches the real rule (a comma can't join two complete sentences); Pip's Brain updates. "Same mechanic: reading, writing, math." | Seeded and offline-capable (`a_sat_commas`) |
 | 3:05–3:35 | Tutor and parent: gap report (same quote as evidence, "Start Tuesday here"), one-tap parent update, sent log | |
 | 3:35–4:20 | **Business + Primer.** $4/student/month, $99 minimum; keep six families and a 120-student center pays for it. 176,000 US tutoring & driving-school businesses, none over 5% share *(IBISWorld 2025)*; first 100 via owner communities, NTA and center-software partners; free 30-day pilot for a case study. Stripe "Start pilot". Then: "YC's Primer says the best education is one-on-one tutoring, as a supplement that makes teachers more effective. Centers are the wedge: parents already pay, the center holds the trust, every session produces evidence. Our twist is the child does the teaching." | |
@@ -168,7 +168,12 @@ replaces the 0:03–0:16 voiceover (keep it ≤ 13 seconds) and goes first in th
 15. **"What did you build on Emergent vs. elsewhere?"** Code was written with Claude Code and agents on GitHub, and
     the live product ships and demos on Emergent, which the rules allow. Say what's true about the store and AI mode
     (`/api/health`), and call the saved Maya run a saved session.
-16. **"What's next?"** Pilot centers, more lessons, "Pip forgets" spaced review (roadmap), center-software
+16. **"Why triangle area, and does it work on everything?"** Pip works where there is an explainable why. Triangle
+    area is the cleanest: a kid can say "two copies make a rectangle, so one is half" in a sentence. For things
+    that are conventions (like comma rules) Pip asks *when it applies*, not why; for procedures it asks the kid to
+    walk an example or corrects Pip's wrong prediction. Each concept in a lesson is tagged reason, convention or
+    procedure, and Pip's question style follows it. We say plainly that pure memorization topics are out of scope.
+17. **"What's next?"** Pilot centers, more lessons, "Pip forgets" spaced review (roadmap), center-software
     integrations, then younger students on the path to the Primer.
 
 ## Submission form copy
@@ -210,4 +215,5 @@ replaces the 0:03–0:16 voiceover (keep it ≤ 13 seconds) and goes first in th
   "teach your past self".
 - SAT Writing (comma splice) and SAT Math added as live-final proof that the mechanic spans reading, writing, math.
 - At-risk families list added to the owner beat in the video and live demo.
-- Dropped the solo/24-hour and "MongoDB document" claims from the video unless verified; Q&A grew to 16 answers.
+- Main demo moved from fractions to Area of a triangle (boss Duke Doublecount, K.O. strikes "A = b × h"); fractions kept as research context and a secondary mission.
+- Dropped the solo/24-hour and "MongoDB document" claims from the video unless verified; Q&A grew to 17 answers.

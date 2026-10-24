@@ -22,6 +22,7 @@
   "concepts": [
     {
       "concept_id": "k1",
+      "kind": "reason",
       "look_fors": [
         "Says the pieces are different sizes (a half is bigger than a third)",
         "Says you can only count pieces together when they are the same size, so 1/2 + 1/3 can't be added as they are",
@@ -43,6 +44,7 @@
     },
     {
       "concept_id": "k2",
+      "kind": "reason",
       "look_fors": [
         "Rewrites both fractions with the same denominator (for example 1/2 = 3/6 and 1/3 = 2/6)",
         "Explains why that denominator works: both denominators go into it, so both fractions can be cut evenly into those pieces",
@@ -67,6 +69,7 @@
     },
     {
       "concept_id": "k3",
+      "kind": "reason",
       "look_fors": [
         "Adds only the numerators once the denominators match",
         "Explains that the denominator names the size of the piece, so it stays the same (sixths plus sixths are still sixths)",

@@ -1,0 +1,70 @@
+{
+  "id": "a_tri",
+  "student_id": "s001",
+  "tutor_id": "t1",
+  "grade": 6,
+  "topic": "Area of a triangle",
+  "why_it_matters": "Working out how much fabric a triangle flag or a pennant needs, without buying twice as much as you use.",
+  "concepts": [
+    {
+      "id": "k1",
+      "text": "Two identical triangles fit together to make a rectangle (or a parallelogram)",
+      "weapon": "Copy-and-Flip Mirror 🪞"
+    },
+    {
+      "id": "k2",
+      "text": "A rectangle's area is base × height",
+      "weapon": "Row-by-Row Ruler 📏"
+    },
+    {
+      "id": "k3",
+      "text": "So one triangle is half of that rectangle: area = ½ × base × height",
+      "weapon": "Fold-in-Half Fan 🪭"
+    }
+  ],
+  "misconception": "Area of a triangle is base times height, so a 6 by 4 triangle is 24",
+  "root_prerequisite": "Area of a rectangle (base × height)",
+  "boss": {
+    "name": "Duke Doublecount",
+    "emoji": "🦚🪧",
+    "backstory": "A peacock in a tiny cape who carries a sign reading '△ = b × h' and claims the whole rectangle every time he sees half of one.",
+    "lines": {
+      "taunt": [
+        "I have counted the entire rectangle. You are welcome.",
+        "Twenty-four. As is customary.",
+        "Halves are for creatures with smaller signs."
+      ],
+      "heal": [
+        "Excellent. Base times height. Write that on everything.",
+        "Splendid. The sign remains correct."
+      ],
+      "hit": [
+        "This is most irregular. Kindly stop folding my rectangle.",
+        "I did not authorize a second triangle."
+      ],
+      "ko": "I object to being divided by two."
+    }
+  },
+  "cliffhanger": "I heard a parallelogram is base × height too. Even the slanted ones? That can't be right… right?",
+  "quiz": [
+    {
+      "id": "q_k1",
+      "concept_id": "k1",
+      "question": "A triangle has base 6 and height 4. Put two copies of it together. What shape can they make, and what are its base and height?",
+      "answer": "A rectangle (or a parallelogram) with base 6 and height 4."
+    },
+    {
+      "id": "q_k2",
+      "concept_id": "k2",
+      "question": "What is the area of a rectangle with base 10 and height 5?",
+      "answer": "50 square units (10 × 5)."
+    },
+    {
+      "id": "q_k3",
+      "concept_id": "k3",
+      "question": "A right triangle has a base of 10 and a height of 5. What is its area?",
+      "answer": "25 square units (10 × 5 ÷ 2): it is half of a 10 by 5 rectangle."
+    }
+  ],
+  "created_at": "2026-10-24T22:00:00+00:00"
+}

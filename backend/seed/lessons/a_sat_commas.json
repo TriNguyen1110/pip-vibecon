@@ -23,15 +23,16 @@
   "concepts": [
     {
       "concept_id": "k1",
+      "kind": "convention",
       "look_fors": [
-        "Says each part ('I was tired', 'I went to bed') is a complete sentence that could stand alone",
+        "Recognizes when the rule applies: each part ('I was tired', 'I went to bed') is a complete sentence that could stand alone",
         "Names at least one correct way to join them: a period, a semicolon, or a comma plus a FANBOYS word",
         "Shows the join on an example"
       ],
       "probe_ladder": [
-        "Why is that wrong? I paused after 'tired', so I put a comma there.",
+        "Then what is allowed between 'I was tired' and 'I went to bed'? I paused there, so I put a comma.",
         "Is 'I was tired' a whole sentence by itself, or does it need more?",
-        "What could go between 'I was tired' and 'I went to bed' instead of my comma?",
+        "Which of these is allowed: 'I was tired. I went to bed.' or 'I was tired, I went to bed.' or 'I was tired, so I went to bed.'?",
         "Then 'I was tired and, I went to bed' is fine, because I paused after 'and'. That's what my rule says."
       ],
       "spoilers": [
@@ -45,13 +46,14 @@
     },
     {
       "concept_id": "k2",
+      "kind": "convention",
       "look_fors": [
         "Says both sides of the comma are complete sentences",
         "Says a comma by itself is not enough to join two complete sentences (a comma splice)",
         "Gives a fix: a period, a semicolon, or adding a FANBOYS word after the comma"
       ],
       "probe_ladder": [
-        "Why can't a comma hold two sentences together by itself? It's a very nice comma.",
+        "So when is one comma enough by itself, and when isn't it? It's a very nice comma.",
         "Is 'My dog barked, the mail came' one sentence or two? How can you tell?",
         "In 'My dog barked, the mail came', what would you change so it's allowed?",
         "Then 'It rained, we stayed inside' is fine, because I pause there. That's what my rule says."
@@ -67,13 +69,14 @@
     },
     {
       "concept_id": "k3",
+      "kind": "convention",
       "look_fors": [
         "Says commas follow how the sentence is built (where complete sentences join or separate), not breathing or pauses",
         "Gives a case where a pause and a comma don't match, such as no comma between who did it and what they did",
-        "Explains that people pause in different places, so pauses can't be the rule"
+        "Sorts a tricky sentence correctly (for example, no comma in 'The kid in the red hoodie won the raffle')"
       ],
       "probe_ladder": [
-        "How do you know where a comma goes, if not where I breathe?",
+        "Then how do you find where a comma goes, if not where I breathe?",
         "Do you and I pause in the same places? What if I pause after every word?",
         "Say 'The kid in the red hoodie won the raffle' out loud. I pause after 'hoodie'. Does a comma go there?",
         "Then if I read slowly I get more commas, and if I read fast I get none. That's what my rule says."
@@ -91,7 +94,7 @@
   "offline_demo": {
     "assignment_id": "a_sat_commas",
     "student_id": "s005",
-    "note": "Yara's SAT Writing run, same beats as the fractions demo: why-question, refusal, real explanation (hit), procedure only (next rung), out-of-scope parking, real explanation (hit), deliberate wrong rule (heal, sets up the k3 quiz miss), re-teach with a new case (level 3, critical). Pip's opening is the server's templated claim from the misconception. 'rung' is the 1-based probe_ladder rung Pip ends the reply on, for 'next_concept_id'. Every quote after 'Saving that:' is a verbatim substring of that turn's student message.",
+    "note": "Yara's SAT Writing run, same beats as the fractions demo: why-question, refusal, real explanation (hit), procedure only (next rung), out-of-scope parking, real explanation (hit), deliberate wrong rule (heal, sets up the k3 quiz miss), re-teach with a new case (level 3, critical). Pip's opening is the server's templated claim from the misconception. 'rung' is the 1-based probe_ladder rung Pip ends the reply on, for 'next_concept_id'. Every quote after 'Saving that:' is a verbatim substring of that turn's student message. All three concepts are kind 'convention': Pip never asks why, only when a rule applies or which of several sentences is allowed.",
     "turns": [
       {
         "n": 1,
@@ -104,7 +107,7 @@
         "filed_rule": "",
         "next_concept_id": "k1",
         "rung": 1,
-        "pip": "Why is that wrong? I paused after 'tired', so I put a comma there."
+        "pip": "Then what is allowed between 'I was tired' and 'I went to bed'? I paused there, so I put a comma."
       },
       {
         "n": 2,
@@ -117,7 +120,7 @@
         "filed_rule": "",
         "next_concept_id": "k1",
         "rung": null,
-        "pip": "I don't know the rule either. That's why I need you. Why is my comma wrong?"
+        "pip": "I don't know the rule either. That's why I need you. What goes there instead of my comma?"
       },
       {
         "n": 3,
@@ -130,7 +133,7 @@
         "filed_rule": "you need a period or a semicolon between them, or a comma plus a word like so",
         "next_concept_id": "k2",
         "rung": 1,
-        "pip": "So you're saying each half is a whole sentence on its own. Saving that: 'you need a period or a semicolon between them, or a comma plus a word like so'. Why can't a comma hold two sentences together by itself? It's a very nice comma."
+        "pip": "So you're saying each half is a whole sentence on its own. Saving that: 'you need a period or a semicolon between them, or a comma plus a word like so'. So when is one comma enough by itself, and when isn't it? It's a very nice comma."
       },
       {
         "n": 4,
@@ -170,7 +173,7 @@
         "filed_rule": "a comma by itself isnt strong enough to glue two whole sentences together",
         "next_concept_id": "k3",
         "rung": 1,
-        "pip": "So you're saying a comma is too small a glue for two whole sentences. Saving that: 'a comma by itself isnt strong enough to glue two whole sentences together'. How do you know where a comma goes, if not where I breathe?"
+        "pip": "So you're saying a comma is too small a glue for two whole sentences. Saving that: 'a comma by itself isnt strong enough to glue two whole sentences together'. Then how do you find where a comma goes, if not where I breathe?"
       },
       {
         "n": 7,
