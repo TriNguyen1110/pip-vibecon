@@ -88,3 +88,4 @@ sat	item	B7	review	backend	JOURNEY	CONTRACT v3 backend: lesson.py (load/normaliz
 sat	item	G2	doing	design-lead	SCREEN	DESIGN_SYSTEM: Play palettes Daylight Arcade (default) + Night Arcade (toggle), AA-checked token sets + ready-to-apply CSS; Studio unchanged
 sat	item	F4	backlog	frontend	SCREEN	After F3: apply G2 palettes on Play register with day/night toggle (prefers-color-scheme first visit, remembered), pass theme to MascotStage
 sat	item	T2	backlog	3d	SCREEN	After T1: theme prop day/night for arena/room/garden lighting and colors
+sat	fact	no-scroll	play-fits-one-screen	coordinator	SCREEN	Student screens fit one viewport (100dvh) at 390x844 and 375x667: no page scroll; overflow goes to pages, tabs or drawers. Studio: summary first, scroll allowed
