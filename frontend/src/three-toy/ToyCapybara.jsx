@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unknown-property */
 import { useLayoutEffect, useMemo, useRef } from 'react'
 import * as THREE from 'three'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
