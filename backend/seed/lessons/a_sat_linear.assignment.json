@@ -25,9 +25,9 @@
   "misconception": "When you move a number to the other side it stays the same, so 2x + 6 = 20 becomes 2x = 20 + 6 and x = 13",
   "root_prerequisite": "The equals sign means both sides have the same value (and inverse operations: subtracting undoes adding, dividing undoes multiplying)",
   "boss": {
-    "name": "Keepi Plusarelli",
-    "emoji": "🧳➕",
-    "backstory": "A tiny suitcase that carries numbers across the equals sign and never lets them change their sign."
+    "name": "Hop-Hop Hamster",
+    "emoji": "🐹🧳",
+    "backstory": "A hamster hauling a suitcase stamped \"2x = 20 + 6\" across the equals sign without changing a single sign."
   },
   "cliffhanger": "I heard some equations have no answer at all, like x + 1 = x + 2. That can't be right… right?",
   "quiz": [

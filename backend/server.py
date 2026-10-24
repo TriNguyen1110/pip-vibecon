@@ -199,7 +199,7 @@ async def save_assignment(body: dict = Body(...)):
          "concepts": [{"id": c.get("id") or f"k{i + 1}", "text": c["text"],
                        "weapon": c.get("weapon", "")} for i, c in enumerate(cs)],
          "created_at": body.get("created_at") or logic.now()}
-    a.setdefault("boss", {"name": "Mistakio Blunderini", "emoji": "🍝😵", "backstory": ""})
+    a.setdefault("boss", {"name": "Guess-Guess Goose", "emoji": "🪿🎲", "backstory": "A goose rolling dice instead of checking its work."})
     for k in ("cliffhanger", "root_prerequisite", "why_it_matters"):
         a.setdefault(k, "")
     if a.get("lesson"):

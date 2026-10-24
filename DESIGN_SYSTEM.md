@@ -546,7 +546,7 @@ export function setTheme(root, t) { applyTheme(root, t); try { localStorage.setI
 **Boss feedback** (timings from UX_TEARDOWN.md §6a). The boss is the 3D glossy ragdoll standing smaller behind Pip to the right (falling back to an emoji when there is no WebGL).
 - **Hit (`.shake-hit`), 900ms at most:** 70ms hit-stop, then a 240ms ease-pop squash together with a 280ms ±8px / ±1.5deg shake on the boss only. HP segments drop at once. A coral damage sticker "−40" rises 28px and fades over 700ms. Then a caption sticker pops in at the top-center of the stage (white sticker, Fredoka 700 18px, held 2.8s, tap to dismiss).
 - **Heal (`.shake-heal`):** the boss gloats over 360ms (scale 1.08, ±3deg) with a "+20 HP" coral sticker.
-- **Whiff (`.shake-whiff`):** a 280ms tilt and "Addini Bottomini is unbothered."
+- **Whiff (`.shake-whiff`):** a 280ms tilt and "Top-Top Bottom-Bottom is unbothered."
 - **Never:** a page shake on a normal hit, or moving chat text. Optional `navigator.vibrate(10)`.
 
 **Pip's Brain** (one screen).
@@ -566,7 +566,7 @@ export function setTheme(root, t) { applyTheme(root, t); try { localStorage.setI
 
 **K.O. sequence.** Full-screen beats, each fitting one viewport. Moving between beats is a 260ms swoosh. "Next ▶" is a gel at the bottom; tapping anywhere also advances after 1.5s.
 1. **Finisher:** a ribbon "Pick a finishing move" and the weapons as big win gels. On pick: 120ms hit-stop, ±4px/200ms screen shake (the only one in the product), and the ragdoll squashes flat and slides out over 500ms. Optional `vibrate([15,40,15])`.
-2. **Stamp:** "K.O." in Fredoka 700 96px (wdth 125, 6px outline stroke) stamps in at −6deg (`scale 1.4 → 1`, 240ms ease-pop), with the caption "Addini Bottomini has left Pip's brain.", a chrome sticker "Brain v1 → v2" and Pip celebrating. No confetti, no "!".
+2. **Stamp:** "K.O." in Fredoka 700 96px (wdth 125, 6px outline stroke) stamps in at −6deg (`scale 1.4 → 1`, 240ms ease-pop), with the caption "Top-Top Bottom-Bottom has left Pip's brain.", a chrome sticker "Brain v1 → v2" and Pip celebrating. No confetti, no "!".
 3. **Card:** the quiet K.O. card (below) on a `--scrim`, with "Save image" (secondary) and "Next" (primary).
 4. **Cliffhanger:** Pip's rumor question in the bubble, plus the next boss as a black silhouette with a half-masked name ("Divid████").
 5. **What Ms. Rivera sees:** one panel with the three concepts and their statuses in plain words (stickers), and a 🏠 "Home" primary gel.

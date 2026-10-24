@@ -48,8 +48,8 @@ FRAC = {
     ],
     "misconception": "You add the tops and the bottoms, so 1/2 + 1/3 = 2/5",
     "root_prerequisite": "Equivalent fractions",
-    "boss": {"name": "Addini Bottomini", "emoji": "🍕🦵",
-             "backstory": "A pizza with legs that adds everything, including the bottoms."},
+    "boss": {"name": "Top-Top Bottom-Bottom", "emoji": "🦭🪧",
+             "backstory": "A smug walrus wearing a sandwich board that reads \"1/2 + 1/3 = 2/5\"."},
     "cliffhanger": "I heard dividing by a fraction can make a number bigger. "
                    "That can't be right… right?",
     "quiz": [
@@ -113,8 +113,10 @@ statement is 0 to 10, a clear explanation with a why is 25 to 50). Empty list if
 (hit_strength light/solid/critical by how strong); "heal" when the student teaches the misconception \
 itself or a wrong rule; otherwise "none" (hit_strength then "light").
 - filed_rule: a rule the student just stated, copied verbatim from their latest message, else "".
-- caption: for a hit, one slapstick line that names the equipped weapon (or a very good point if none); \
-for a heal, the boss gloating in one line; otherwise "". Cartoon slapstick only, nothing cruel.
+- caption: for a hit, one slapstick line that names the equipped weapon (or a very good point if none), \
+in the boss's deadpan, overly formal villain voice, losing with dignity; for a heal, the boss gloating in \
+that same voice about trivial nonsense (e.g. "I have added the bottoms for three hundred years. I will \
+not stop now."); otherwise "". Cartoon slapstick only, nothing cruel.
 - interests: what the student is into, only if they just told you; otherwise "".
 - mood: confused, lightbulb (an idea clicked), stuck, or celebrating.
 
@@ -142,8 +144,9 @@ message is about (0, 1, 2 in the order listed; -1 if none).
 and say nothing about it.
 - filed_rule: a rule the student just stated, copied verbatim from their latest message, else "".
 - caption: for a level 2 or 3 explanation, one slapstick line naming the equipped weapon (or a very good \
-point if none) as the boss takes a hit; for a wrong rule, the boss gloating in one line; otherwise "". \
-Cartoon slapstick only, nothing cruel.
+point if none) as the boss takes a hit, in the boss's deadpan, overly formal villain voice, losing with \
+dignity; for a wrong rule, the boss gloating in that voice about trivial nonsense (e.g. "I have added the \
+bottoms for three hundred years. I will not stop now."); otherwise "". Cartoon slapstick only, nothing cruel.
 - interests: what the student is into, only if they just told you; otherwise "".
 - mood: confused, lightbulb (an idea clicked), stuck, or celebrating.
 
@@ -417,11 +420,11 @@ def rule_text(text: str) -> str:
 def _boss_caption(kind: str, session: dict, a: dict, strength: str = "solid") -> str:
     boss = a["boss"]["name"]
     if kind == "heal":
-        return f"{boss} heard that and did a little dance. +20 HP"
+        return f"{boss}: \"My error is restored. I have held it for three hundred years.\" +20 HP"
     n = HP_HIT[strength]
     w = session.get("equipped")
-    return (f"{boss} got whacked by the {w}. −{n} HP" if w
-            else f"{boss} took a very good point right in the crust. −{n} HP")
+    return (f"{boss}: \"I have been struck by the {w}. I accept this with dignity.\" −{n} HP" if w
+            else f"{boss}: \"A point I did not anticipate. I accept it with dignity.\" −{n} HP")
 
 
 def offline_turn(session: dict, a: dict, student: dict, text: str) -> dict:
@@ -646,9 +649,12 @@ will teach a naive AI classmate named Pip the topic. Produce:
 silly weapon name (a tool or move with an emoji, e.g. "Common Denominator Cleaver 🪓") named after it.
 - misconception: ONE common misconception Pip will believe at the start, as a student would say it.
 - root_prerequisite: the earlier skill the topic depends on.
-- boss: the misconception personified. An original, absurd silly fake-Italian style name, a two-emoji \
-look, one line of ridiculous backstory. Original only: no existing meme or cartoon characters, no slang, \
-nothing gross, scary, rude, or about real people.
+- boss: the misconception personified. name: a chantable two-part name with rhythm or repetition \
+(e.g. "Top-Top Bottom-Bottom", "Hop-Hop Hamster"); NOT Italian-sounding, no existing meme or cartoon \
+characters, no slang. It is one animal plus one object, absurdly mashed up, and the misconception is its \
+costume or prop (e.g. a smug walrus wearing a sandwich board that reads "1/2 + 1/3 = 2/5"). emoji: exactly \
+two emoji. backstory: one deadpan line naming the costume or prop. Nothing gross, scary, rude, or about \
+real people.
 - cliffhanger: one honest question about the NEXT topic that Pip cannot answer, phrased as a rumor, ending \
 with something like "That can't be right... right?". Do not answer it.
 - quiz: exactly 3 questions, one per concept in order, each with a short correct answer.
@@ -675,9 +681,9 @@ DRAFT_SCHEMA = obj({
     }),
 })
 
-_BOSSES = [("Mistakio Blunderini", "🍝😵", "A spaghetti noodle who is wrong with great confidence."),
-           ("Guessa Fortunato", "🎲🧀", "A wedge of cheese that solves everything by rolling dice."),
-           ("Shortcuttini Skippo", "🛵🍕", "A scooter that skips every step and arrives nowhere.")]
+_BOSSES = [("Sum-Sum Sasquatch", "🦶🧮", "A sasquatch in a tiny tie, holding a sign that reads \"JUST GUESS, IT'S FINE\"."),
+           ("Skip-Skip Stoat", "🦦🛵", "A stoat riding a scooter that has never once checked its work."),
+           ("Rush-Rush Rooster", "🐓⏱️", "A rooster wearing a stopwatch hat that declares every answer finished early.")]
 
 
 async def draft(topic: str, grade: int) -> dict:

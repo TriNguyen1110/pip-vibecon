@@ -68,24 +68,24 @@ def _maya_saved(a):
                     f"{k1}", 3, None),
         ("pip", f"Saving that: '{k1}'. So how do I add them, then?", 3,
          {"kind": "hit", "amount": 25, "unlocked": [],
-          "caption": f"{boss} took a very good point right in the crust. −25 HP"}),
+          "caption": f"{boss}: \"A point I did not anticipate. I accept it with dignity.\" −25 HP"}),
         ("student", "you make them the same size. 1/2 is 3/6 and 1/3 is 2/6", 4, None),
         ("pip", "Why sixths? Why not fifths?", 4, None),
         ("student", "because 2 and 3 both go into 6", 5, None),
         ("pip", "Saving that: 'because 2 and 3 both go into 6'. And then what do I do with the "
                 "numbers on top?", 5,
          {"kind": "hit", "amount": 25, "unlocked": [w["k2"]],
-          "caption": f"{boss} got sliced into sixths. −25 HP"}),
+          "caption": f"{boss}: \"I have been divided into sixths. I accept this with dignity.\" −25 HP"}),
         ("student", "you just add the top numbers and the bottom numbers", 6, None),
         ("pip", "Saving that: 'you just add the top numbers and the bottom numbers'. Okay. What "
                 "next?", 6, {"kind": "heal", "amount": 20, "unlocked": [],
-                             "caption": f"{boss} heard that and did a little dance. +20 HP"}),
+                             "caption": f"{boss}: \"I have added the bottoms for three hundred years. I will not stop now.\" +20 HP"}),
         ("pip", 'My brain has a bug about this: "you just add the top numbers and the bottom '
                 'numbers". Fix it?', 8, None),
         ("student", m8, 9, None),
         ("pip", f"Saving that: '{m8}'. That replaces my old rule. Should I try one?", 9,
          {"kind": "hit", "amount": 40, "unlocked": [w["k3"]], "weapon": w["k2"],
-          "caption": f"{boss} got pinched by the {w['k2']}. −40 HP"}),
+          "caption": f"{boss}: \"I have been struck by the {w['k2']}. I accept this with dignity.\" −40 HP"}),
         ("pip", a["cliffhanger"], 11, None),
     ]
     tr = []
@@ -158,7 +158,7 @@ async def seed(store):
         if sid not in students:
             continue
         les = x.get("lesson") and lessons.normalize_lesson(x["lesson"]) or lessons.load_lesson(x["id"])
-        ex = {"boss": {"name": "Mistakio Blunderini", "emoji": "🍝😵", "backstory": ""},
+        ex = {"boss": {"name": "Guess-Guess Goose", "emoji": "🪿🎲", "backstory": "A goose rolling dice instead of checking its work."},
               "cliffhanger": "", "root_prerequisite": "", "why_it_matters": "", **x,
               "student_id": sid, "tutor_id": tid or students[sid]["tutor_id"],
               "grade": grade or students[sid]["grade"], "created_at": x.get("created_at") or now()}

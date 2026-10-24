@@ -44,8 +44,8 @@ Growth: Brain v1 → v2 → v3 (a version badge on Pip and on Pip's Brain).
 ## The boss: where the brainrot lives
 
 Brainrot energy goes into **the boss only**: the misconception becomes an absurd original
-creature with a fake-Italian name, a two-emoji look and one line of ridiculous lore
-("Addini Bottomini 🍕🦵, a pizza with legs that adds everything, including the bottoms").
+creature with a chantable two-part name, a two-emoji look and one line of ridiculous lore
+("Top-Top Bottom-Bottom 🦭🪧, a smug walrus in a sandwich board that reads "1/2 + 1/3 = 2/5"").
 Claude generates a new one per assignment, so it works for any topic ("Heavierino
 Fallerino 🎳🪶" for physics, "Squarino Distributini 🟦💥" for SAT Math's (a + b)²).
 

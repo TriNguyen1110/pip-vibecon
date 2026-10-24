@@ -65,9 +65,9 @@ letters refer to PRODUCT_SPEC.md.
 > Also have Claude write one short **"Why this matters"** line from real life for a
 > 10–15 year old (splitting a pizza, a sneaker discount, doubling a recipe).
 >
-> Claude also turns the misconception into a **boss**: an original, absurd name in a
-> silly fake-Italian style, a two-emoji look, and one line of ridiculous backstory
-> (example: "Addini Bottomini 🍕🦵, a pizza with legs that adds everything, including the
+> Claude also turns the misconception into a **boss**: an original, absurd mashup with a chantable
+> two-part name (not Italian-sounding, no meme slang), a two-emoji look, and one line of ridiculous backstory
+> (example: "Top-Top Bottom-Bottom 🦭🪧, a pizza with legs that adds everything, including the
 > bottoms"). The boss must be original: no existing meme or cartoon characters, no slang,
 > nothing gross, scary, rude or about real people. The tutor can edit or regenerate any of
 > these before saving. Saving creates an assignment on that student's home
@@ -92,10 +92,10 @@ letters refer to PRODUCT_SPEC.md.
 > student explains well unlocks a silly **weapon** named after it (example: "Common
 > Denominator Cleaver 🔪🍕"). When the student gives a real *why* explanation against the
 > misconception, the boss takes a hit: HP drops, a quick shake, and a one-line slapstick
-> caption naming the weapon ("Addini Bottomini got sliced into sixths. −40 HP"). Vague
-> answers do nothing ("Addini Bottomini is unbothered. 0 damage"). If the student teaches
+> caption naming the weapon ("Top-Top Bottom-Bottom got sliced into sixths. −40 HP"). Vague
+> answers do nothing ("Top-Top Bottom-Bottom is unbothered. 0 damage"). If the student teaches
 > the misconception itself, the boss **heals** (+20 HP) and gloats in one silly line.
-> Pip comments deadpan ("The boss is yelling in fake Italian. I'm still taking notes.").
+> Pip comments deadpan ("The boss is yelling in chantable. I'm still taking notes.").
 > Cartoon slapstick only: splats, squashes, pies, slicing pizza. Nothing bloody or cruel.
 > HP comes from the same judgment as the understanding meter, so button-mashing can't
 > win.
@@ -164,7 +164,7 @@ letters refer to PRODUCT_SPEC.md.
 > If there's no rule for it: "You didn't teach me that one." A miss is always **Pip's**
 > mistake: show Pip's stuck face and "My brain has a bug. Help me fix it", never a red ✗
 > or a score against the student. Mark each question passed or missed. Award XP per pass.
-> When all three pass, the boss gets a **K.O.** screen ("Addini Bottomini has left
+> When all three pass, the boss gets a **K.O.** screen ("Top-Top Bottom-Bottom has left
 > Pip's brain"), the student picks one of her unlocked weapons as the finishing move (one
 > silly caption, no extra scoring), Pip celebrates and **upgrades its brain** (Brain v1 →
 > v2 → v3), and the mission is marked complete. For a missed question, "Re-teach Pip"
@@ -205,7 +205,7 @@ letters refer to PRODUCT_SPEC.md.
 >
 > On the owner dashboard add a **Center insight** card: the most common misconception
 > across all sessions and how many students hold it (from the session documents), in
-> plain words, with the boss name as a small chip ("students call it Addini Bottomini"),
+> plain words, with the boss name as a small chip ("students call it Top-Top Bottom-Bottom"),
 > and a
 > "Plan a workshop" button that saves a workshop note listing those students. Next to
 > it, a small stat: **"Came back on their own this week"**: how many students opened
