@@ -80,23 +80,41 @@ def lc(lesson: dict, cid: str) -> dict | None:
     return next((c for c in lesson["concepts"] if c["concept_id"] == cid and c["probe_ladder"]), None)
 
 
+_STOP = {"about", "after", "again", "being", "brand", "could", "every", "first", "other", "plain", "shown",
+         "their", "there", "these", "thing", "those", "using", "where", "which", "while", "words", "would",
+         "means", "works", "example", "examples", "problem", "problems"}
+
+
+def _phrase(txt: str, n: int = 7) -> str:
+    head = txt.strip().rstrip(".?").split(",")[0]
+    return " ".join(head.split()[:n]).lower()
+
+
 def offline_lesson(concepts: list[dict], topic: str) -> dict:
     """Generic lesson used when no AI is available (drafts offline)."""
     t = topic.rstrip(".")
+    topic_words = set(re.findall(r"[a-z]{4,}", t.lower()))
     cs = []
     for c in concepts:
         txt = c["text"].rstrip(".")
+        nouns = []
+        for w in re.findall(r"[A-Za-z]{5,}", txt):
+            w = w.lower()
+            if w not in _STOP and w not in topic_words and w not in nouns:
+                nouns.append(w)
         cs.append({
             "concept_id": c["id"],
-            "look_fors": [w for w in re.findall(r"[A-Za-z]{5,}", txt)][:4],
+            "look_fors": [f"Says in their own words: {_phrase(txt)}",
+                          "Gives a reason (because...), not just steps",
+                          "Shows it on one small example they chose"],
             "probe_ladder": [
-                f"Can you say in your own words what this means: {txt.lower()}?",
+                f"Can you tell me in your own words what part of {t.lower()} this is about?",
                 "Why is that true? Like, what would go wrong if it wasn't?",
                 "Can you show me with a small example?",
                 "What would you do if the numbers or words were different?"],
-            "spoilers": [],
-            "friend_nudge": f"A friend of mine said to think about why '{txt.lower()}' matters before "
-                            "doing any steps. Does that help?"})
+            "spoilers": nouns[:4],
+            "friend_nudge": f"A friend of mine said to think about why it matters before doing any steps "
+                            f"({_phrase(txt, 5)}). Does that help?"})
     return {"standard": f"Tutor-drafted: {t}", "source": "Drafted offline (generic)", "attribution": "",
             "in_scope": [t], "out_of_scope": [], "concepts": cs}
 

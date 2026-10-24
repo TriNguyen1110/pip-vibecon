@@ -125,8 +125,11 @@ def _maya_saved(a):
 # Synthetic at-risk signal (label: synthetic). Everyone else gets a recent return + a parent update.
 EXTRA_OWNERS = {"a_sat_commas": ("s005", "t1", 8), "a_sat_linear": ("s009", "t5", 8)}
 STUCK = {"s101": "k3"}              # stuck after the full ladder
-NO_RETURN = {"s065", "s040"}        # no "came back on their own" event in 14 days
+NO_RETURN = {"s035", "s040"}        # no "came back on their own" event in 14 days
 NO_UPDATE = {"s095", "s040"}        # completed session, no parent update since
+
+
+AT_RISK_TO_T1 = ("s101", "s095")    # reassigned to Ms. Rivera so her at-risk card has 3 (s035 is hers already)
 
 
 async def seed(store):
@@ -144,6 +147,8 @@ async def seed(store):
                              "last_session_id": None}
     for sid in ("s005", "s009"):  # SAT missions are grade 11; Pip mirrors the student's grade
         students[sid]["grade"] = 11
+    for sid in AT_RISK_TO_T1:
+        students[sid]["tutor_id"] = "t1"
     students["s001"]["interests"] = "soccer"  # Maya's opening is just the claim
     base = raw["assignment"]
     a = {**pip_ai.FRAC, "id": base["id"], "student_id": "s001", "tutor_id": "t1", "grade": 6,
