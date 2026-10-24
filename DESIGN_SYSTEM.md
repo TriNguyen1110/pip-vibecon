@@ -14,7 +14,7 @@ description: >
   frontend/src/styles/tokens.css; NEW marks additions.
 
 colors:
-  studio:   # :root default; tutor, owner, landing, pricing, parent preview
+  studio:   # v1 forest values; G4 replaces them with 'Ink at Work' (see Shared brand layer): ink #0C0A18, surface #15122A/#1D1936/#262144, fg #F4F2FA/#D6D2E6/#A9A3C4, accent #2EF2FF, accent-2 #B6FF3B
     ink:        { hex: "#001914", role: "page ground (forest)" }
     surface:    { hex: "#0A2721", role: "solid card" }
     surface-2:  { hex: "#12372E", role: "raised" }
@@ -79,7 +79,7 @@ colors:
     pip-default:  { hex: "#5FE3E8", role: "default mascot colorway Aqua / Cream (3D only)" }
 
 typography:
-  url: "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Fredoka:wdth,wght@75..125,400..700&family=Geist+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap"   # verified 200
+  url: "https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Geist+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@400..900&display=swap"   # verified 200 (G4)
   studio:
     hero:        { font: Fraunces, size: "36 / 48 @640 / 60 @1024", weight: 500, lh: 1.05, ls: "-0.02em" }
     page-title:  { font: Fraunces, size: "32 / 40 @640", weight: 500, lh: 1.1 }
@@ -91,17 +91,19 @@ typography:
     eyebrow:     { font: Manrope, size: 12, weight: 600, ls: "0.14em", case: upper }
     quote:       { font: Fraunces, size: 17, style: italic }
     mono:        { font: Geist Mono, size: "13-14" }
-  play:          # Fredoka = --font-game (NEW)
-    title:       { font: Fredoka, size: "40 / 56 @1024", weight: 700, wdth: 112, lh: 1.0 }
-    ribbon:      { font: Fredoka, size: 22, weight: 700, wdth: 108 }
-    button-lg:   { font: Fredoka, size: 30, weight: 700, wdth: 112, case: upper, note: "PLAY" }
-    button:      { font: Fredoka, size: 20, weight: 700, note: "large bold text, 3:1 rule applies; still >= 4.5:1 on mid fill" }
-    button-sm:   { font: Fredoka, size: 17, weight: 600 }
-    hud-number:  { font: Fredoka, size: 18, weight: 700, numeric: tabular-nums }
-    speech:      { font: Fredoka, size: 19, weight: 500, lh: 1.3, note: "Pip's comic bubble" }
-    sticker:     { font: Fredoka, size: 15, weight: 700 }
-    icon-label:  { font: Fredoka, size: 15, weight: 600 }
-    stamp:       { font: Fredoka, size: 96, weight: 700, wdth: 125, note: "K.O." }
+  play:          # G4: Unbounded = --font-game (replaces Fredoka); Bodoni Moda = --font-editorial (NEW)
+    title:       { font: Unbounded, size: "30 / 44 @1024", weight: 800, lh: 1.0, ls: "-0.02em" }
+    editorial:   { font: Bodoni Moda, size: "36-72", weight: 800, opsz: 96, note: "mastheads, THE NEW LOOK, cover quotes (italic 500)" }
+    ribbon:      { font: Unbounded, size: 18, weight: 700, case: upper, ls: "0.04em" }
+    button-lg:   { font: Unbounded, size: 24, weight: 800, case: upper, ls: "0.06em", note: "PLAY" }
+    button:      { font: Unbounded, size: 17, weight: 600, note: "below large-text size, so labels hold >= 4.5:1 (they reach 7.2-19.6:1)" }
+    button-sm:   { font: Unbounded, size: 15, weight: 600 }
+    hud-number:  { font: Geist Mono, size: 18, weight: 500, numeric: tabular-nums }
+    speech:      { font: Manrope, size: 18, weight: 700, lh: 1.3, note: "Pip's bubble: plain, deadpan" }
+    caption:     { font: Unbounded, size: 16, weight: 700, case: upper, ls: "0.04em", note: "MC captions" }
+    sticker:     { font: Geist Mono, size: 15, weight: 500, case: upper, ls: "0.06em", note: "tags, look numbers, issue numbers" }
+    icon-label:  { font: Manrope, size: 15, weight: 700 }
+    stamp:       { font: Unbounded, size: 88, weight: 900, note: "K.O." }
     body-small:  { font: Manrope, size: 16, weight: 600, lh: 1.45, note: "her words, chat history, notes, quiz work" }
   floor: "Play: 15px minimum anywhere, labels at most 3 words. Studio: 14px informative, 12px eyebrows and mono only"
 
@@ -154,7 +156,11 @@ motion:  # timings from UX_TEARDOWN.md §6a
 
 Pip has two registers in one system, switched on the shell root: `data-register="studio"` (default) or `data-register="play"` (set when `Shell` gets `game`). Play also carries `data-theme="day"` or `data-theme="night"`.
 
+> **G4 update:** Studio moves from forest to **Ink at Work** and shares the wordmark, Signal Cyan, Acid Lime, the scene language and the button family with Play. The landing hero is now the app's Club world. See *Shared brand layer* below.
+
 **Studio** (landing, tutor, owner, gap report, pricing, parent preview) is willder's calm web app. Forest ground (`#001914`), a faint ice ribbon, ivory text, glass cards, Fraunces titles, Manrope body, Geist Mono facts. It borrows Oura's editorial calm and Linear's precision: hairline rows, one shadow tier, one filled ice button per screen. No boss humor; the boss is a neutral chip.
+
+> **G4 update:** the Play look is now **Runway** (day, default) and **Club** (night): runway fashion show plus club/concert energy, Unbounded and Bodoni Moda type, lasers, spotlights, a lookbook Vault and a runway-walk K.O. See *Runway & Club* below; it supersedes the Daylight/Night Arcade palettes, Fredoka, the sticker album and the sky backdrops wherever they conflict. Layout, components and role rules below still apply.
 
 **Play** (student home, mission, Pip's Brain, quiz, K.O.) is a game screen, not a website. The references are Talking Tom's layout (the character fills the middle, round icon buttons around the edges), Wii/DS-era menus and Frutiger Aero (glossy aqua bubbles, clouds, sky), PS2/Xbox-era menus, early glossy app icons, and Club Penguin's chunky panels. Kept gender-neutral and not babyish: the energy is Switch, Fortnite, Minecraft and Duolingo, not pastel candy.
 - **Daylight Arcade** (default): sky-to-mint gradient, soft clouds, a few bubbles, white panels with 3px navy outlines, deep navy text, electric-blue gel buttons, lime for her progress, sunny yellow-orange for her wins.
@@ -175,6 +181,8 @@ Pip has two registers in one system, switched on the shell root: `data-register=
 - **Text vs. fill:** by day the bright role colors fail as text on white, so each role has a text value (`--mint`, `--sun`, `--coral`) and a fill value (`--*-fill`). By night the bright value passes both ways, except coral, which is split (`#FFA89C` text, `#FF8A7A` fill). Fills meet the 3:1 boundary rule through their 3px outline, not their hue.
 
 **Studio palette:** unchanged from v1 (front matter `studio`). Text roles `--fg`, `--fg-muted`, `--fg-subtle` only, never alpha steps of ivory. Status pills: Explained well `pill--ok`, Vague `pill--warn`, Misconception `pill--gap` (sunset).
+
+*(Daylight and Night Arcade are superseded by Runway and Club in G4; the values below remain as the 'Daylight Arcade' / 'Night Arcade' presets.)*
 
 **AA contrast, Daylight Arcade.** Worst case is the lowest ratio across sky top `#BFE6FF`, sky mid `#D8F1FF`, sky bottom `#E3FCEB`, panel `#FFFFFF`/`#EEF6FF` and well `#DCE8F4`.
 
@@ -712,6 +720,7 @@ Pressable things have an edge, and static things have none or a shallow one. The
 - Caps, headphones or sunglasses on the mascot. A tap that does damage.
 - More than 3 glints per event, idle sparkles, screen shake outside the K.O., or more than one taunt per 20s.
 - Copies of real products in the nostalgia pass: OS window controls, handheld silhouettes, logos, fonts or sounds (see Nostalgia guardrails).
+- Bar, drink, VIP-lounge or anything alcohol- or drug-coded in the Runway & Club look; flashes faster than 2 per second, flashes above .3 opacity, or red flashes; borrowed slang in narrator copy.
 
 **Don't (Studio)**
 - Gels, stickers, Fredoka, the boss's humor, glows or the Play palettes on tutor, owner, landing, pricing or parent screens.
@@ -971,6 +980,477 @@ Pip's Brain saves like a game. A glossy 5-point star icon (`.savepoint`) marks e
 - No glitter on the K.O. card, which stays quiet.
 - No wallpaper behind text above .06 opacity.
 
+## Runway & Club (G4, Play only; supersedes the childlike parts above)
+
+The user's note: Play reads "a bit too childish". The new energy is a runway fashion show plus a club or concert night: vibey, weirder, more creative. It stays all-ages for 10–15-year-olds and for tutoring-center buyers. The settings are fashion week, a concert, a dance battle and rave lights. Never a bar, drinks, or anything alcohol- or drug-coded: no bottles, cups, bartenders, smoke, pills or "VIP lounge" cues. Studio is unchanged. The one-viewport rule, the performance budget, reduced motion and every role rule still hold.
+
+**What this supersedes.** Where this section conflicts with G2 or G3, this section wins.
+
+| Before | Now |
+|---|---|
+| Daylight Arcade (baby-blue sky, clouds, bubbles) | **Runway** (`data-theme="day"`): gallery white to silver, chrome and holo |
+| Night Arcade (navy, stars) | **Club** (`data-theme="night"`): black-violet, neon lasers, haze |
+| Fredoka everywhere | **Unbounded** (wide, geometric, flyer energy) for display, buttons and captions; **Bodoni Moda** for editorial moments; Manrope for speech and body; Geist Mono for tags and numbers |
+| 3px navy outlines, comic bubble look | 2px ink outlines in Runway, 1.5px violet edges plus neon glow in Club; sharper radii (panels 16px, stickers 6px) |
+| Sticker-album Vault | **Lookbook** of magazine covers (§5) |
+| Wallpapers (checkers, bubbles, stars) and drifting clouds | Lasers and haze (Club), gallery grid and light leaks (Runway), surreal props (§6) |
+| K.O. beat 2 (stamp + glitter) | **Runway walk** (§4) |
+| Glitter text | **Chrome text** (same structure, glitter layer removed) |
+| Candy handheld frame | kept as an option, colorways "Ice Chrome" (Runway) and "Smoke Neon" (Club) |
+
+**What stays from G2 and G3:**
+- Gel buttons, restyled: black chrome pills in Runway, neon pills in Club.
+- Round icon buttons, the HUD, the segmented HP bar, the level map, the one-viewport layout budget.
+- Window-style sheets, re-skinned as chrome title bars.
+- The chunky loader, restyled as an equalizer.
+- Tap sparkles, now chrome or neon.
+- Save points, now a chrome star.
+- The sound list, re-voiced (§7).
+- The K.O. card, which stays the quiet exception.
+
+**No-pink rule, refined:** magenta `#FF2BD6` appears only as scene light (lasers, haze, rim light, flashes). It is never a role color, button, text or status, and it always comes paired with cyan and lime so the palette reads club, not candy.
+
+### 1–2. Theme tokens: Runway (day, default) and Club (night)
+
+AA results, worst case across each theme's backgrounds:
+
+| Text role | Runway (on `#FFFFFF`, `#EEF0F4`, silver `#D9DDE5`, panel `#F6F7F9`, well `#E6E9EF`) | Club (on `#07040F`, `#140A26`, panel `#1C1233`, `#251A42`, well `#2E2250`) |
+|---|---|---|
+| fg | `#0B0B12` 14.4 | `#FFFFFF` 14.4 |
+| fg-muted | `#34364A` 8.7 | `#DCD5F2` 10.2 |
+| fg-subtle (15px+) | `#55586E` 5.1 | `#ADA3D1` 6.1 |
+| link / action as text | `#3A2BD8` 6.1 | `#2EF2FF` 10.5 |
+| progress text | `#2F6B00` 4.8 | `#B6FF3B` 11.9 |
+| win text | `#8A5200` 4.7 | `#FFE14D` 11.0 |
+| boss text | `#B0281A` 4.9 | `#FF9D92` 7.2 |
+| button label on action gel | white on black chrome 15.5–19.6 | `#07040F` on cyan 9.1–16.7 |
+| label on progress / win / boss fill | `#0B0B12` on `#B6FF3B` 16.2, `#FFB020` 10.7, `#FF6F61` 7.2 | `#07040F` on lime 16.8, `#FFE14D` 15.6, `#FF6F61` 7.5 |
+| outline vs base (UI boundary) | `#0B0B12` 14.4 | `#6C5BB0` 3.6 |
+
+```css
+/* ---------- Runway (day, default): gallery white -> silver, chrome + holo ---------- */
+[data-register="play"], [data-register="play"][data-theme="day"] {
+  color-scheme: light;
+  --font-game: 'Unbounded', 'Manrope', system-ui, sans-serif;
+  --font-editorial: 'Bodoni Moda', 'Fraunces', Georgia, serif;
+  --sky: radial-gradient(90% 50% at 50% 0%, #FFFFFF 0%, rgba(255,255,255,0) 70%),
+         linear-gradient(180deg, #FFFFFF 0%, #EEF0F4 55%, #D9DDE5 100%);
+  --ink: #EEF0F4; --surface: #FFFFFF; --surface-2: #F6F7F9; --surface-3: #E6E9EF; --overlay: #FFFFFF;
+  --fg: #0B0B12; --fg-muted: #34364A; --fg-subtle: #55586E;
+  --ice: #0B0B12; --ice-ink: #FFFFFF; --link: #3A2BD8; --focus: #3A2BD8;
+  --ice-soft: rgba(11,11,18,.06); --ice-line: rgba(11,11,18,.3);
+  --mint: #2F6B00; --mint-fill: #B6FF3B; --sun: #8A5200; --sun-fill: #FFB020;
+  --coral: #B0281A; --coral-fill: #FF6F61;
+  --outline: #0B0B12; --outline-w: 2px; --panel-outline: #0B0B12;
+  --panel-fill: linear-gradient(180deg, #FFFFFF 0%, #F6F7F9 100%); --panel-hi: #FFFFFF; --panel-edge: rgba(11,11,18,.9);
+  --gel-primary: linear-gradient(180deg, #3A3B48 0%, #23232E 40%, #0B0B12 100%);
+  --gel-primary-ink: #FFFFFF; --gel-primary-edge: #000000; --gel-text-shadow: none;
+  --gel-secondary: linear-gradient(180deg, #FFFFFF 0%, #E9ECF1 48%, #C9CED8 52%, #EEF0F4 100%);   /* chrome */
+  --gel-secondary-ink: #0B0B12; --gel-secondary-edge: #0B0B12;
+  --gel-win: linear-gradient(180deg, #FFD66B 0%, #FFB020 60%, #E89A00 100%);
+  --sticker-ink: #0B0B12; --bubble-fill: #FFFFFF; --her-bubble: #F1EEFF;      /* violet tint, ink 17.2:1 */
+  --track: rgba(11,11,18,.12); --tint-1: rgba(11,11,18,.03); --tint-2: rgba(11,11,18,.08);
+  --divider: rgba(11,11,18,.12); --border: rgba(11,11,18,.22);
+  --field-bg: #FFFFFF; --field-border: #0B0B12; --field-placeholder: #55586E;
+  --scrim: rgba(11,11,18,.6); --path-dot: #0B0B12;
+  --holo: conic-gradient(from 200deg, #2EF2FF, #B6FF3B, #FFE14D, #FF9A3C, #7B6CFF, #2EF2FF);
+  --r-panel: 16px; --r-sticker: 6px;
+}
+/* ---------- Club (night): black-violet, neon lasers, haze ---------- */
+[data-register="play"][data-theme="night"] {
+  color-scheme: dark;
+  --sky: radial-gradient(70% 40% at 50% 0%, rgba(123,108,255,.22), transparent 70%),
+         linear-gradient(180deg, #07040F 0%, #140A26 100%);
+  --ink: #07040F; --surface: #1C1233; --surface-2: #251A42; --surface-3: #2E2250; --overlay: #1C1233;
+  --fg: #FFFFFF; --fg-muted: #DCD5F2; --fg-subtle: #ADA3D1;
+  --ice: #2EF2FF; --ice-ink: #07040F; --link: #2EF2FF; --focus: #2EF2FF;
+  --ice-soft: rgba(46,242,255,.12); --ice-line: rgba(46,242,255,.45);
+  --mint: #B6FF3B; --mint-fill: #B6FF3B; --sun: #FFE14D; --sun-fill: #FFE14D;
+  --coral: #FF9D92; --coral-fill: #FF6F61;
+  --outline: #07040F; --outline-w: 1.5px; --panel-outline: #6C5BB0;
+  --panel-fill: linear-gradient(180deg, rgba(37,26,66,.86) 0%, rgba(28,18,51,.86) 100%);
+  --panel-hi: rgba(255,255,255,.14); --panel-edge: rgba(0,0,0,.6);
+  --gel-primary: linear-gradient(180deg, #9AF8FF 0%, #2EF2FF 45%, #12BFD0 100%);
+  --gel-primary-ink: #07040F; --gel-primary-edge: #0A7E8A; --gel-text-shadow: none;
+  --gel-secondary: linear-gradient(180deg, #34285C 0%, #251A42 100%);
+  --gel-secondary-ink: #FFFFFF; --gel-secondary-edge: #000000;
+  --gel-win: linear-gradient(180deg, #FFF09A 0%, #FFE14D 55%, #E6C200 100%);
+  --sticker-ink: #07040F; --bubble-fill: #FFFFFF; --her-bubble: #D9FBFF;      /* ink 18.6:1 */
+  --track: rgba(255,255,255,.12); --tint-1: rgba(255,255,255,.04); --tint-2: rgba(255,255,255,.09);
+  --divider: rgba(255,255,255,.12); --border: rgba(255,255,255,.22);
+  --field-bg: #1C1233; --field-border: #6C5BB0; --field-placeholder: #ADA3D1;
+  --scrim: rgba(7,4,15,.78); --path-dot: #ADA3D1;
+  --neon-glow: 0 0 0 1.5px rgba(46,242,255,.9), 0 0 18px rgba(46,242,255,.45);
+}
+[data-register="play"] .panel { border-width: var(--outline-w); border-radius: var(--r-panel, 16px); }
+[data-register="play"][data-theme="night"] .panel { box-shadow: inset 0 1px 0 var(--panel-hi), 0 0 24px -8px rgba(123,108,255,.45); }
+[data-register="play"] .sticker { border-radius: var(--r-sticker, 6px); font: 500 15px/1.1 'Geist Mono', monospace; text-transform: uppercase; letter-spacing: .06em; }
+[data-register="play"] .ribbon { font: 700 18px/1.1 var(--font-game); text-transform: uppercase; letter-spacing: .04em;
+  border-radius: 4px; transform: rotate(-1.5deg); }
+[data-register="play"][data-theme="night"] .gel-btn:not(.gel-btn--secondary) { box-shadow: 0 5px 0 var(--gel-edge), 0 0 22px rgba(46,242,255,.45), inset 0 2px 0 rgba(255,255,255,.6); }
+```
+
+**Runway scene:** white gallery walls fading to a silver floor. Add a faint 1px runway-centerline grid (`linear-gradient(90deg, transparent calc(50% - .5px), rgba(11,11,18,.06) 0 calc(50% + .5px), transparent 0)`) plus two soft holo light leaks at the corners (`radial-gradient(40% 30% at 0% 10%, rgba(46,242,255,.14), transparent)`, `radial-gradient(40% 30% at 100% 80%, rgba(182,255,59,.12), transparent)`).
+- **Editorial moments:** big Bodoni Moda headlines at the top of the home, K.O. and Vault screens, e.g. a 56px *"The fractions issue."*, set black on white.
+- **Chrome and holo:** chrome appears on secondary gels and badges; holo only on the Brain badge, the earned-item tag and the cover mastheads of comeback issues.
+
+**Club scene:** a black-violet room with 5 laser beams fanning down from an off-screen rig. Beams are 1–2deg wide and alternate cyan, magenta and lime at .22–.35 alpha; they sweep ±8deg over 12s (alternate, ease-in-out) and blend with `screen`. Haze is two pre-blurred radial gradients drifting 20s (no `filter: blur`, for performance). The HUD carries a subtle beat pulse at 120 BPM.
+
+```css
+[data-register="play"][data-theme="night"] .backdrop::before {          /* lasers */
+  inset: -10% -20% 0; transform-origin: 50% 0; mix-blend-mode: screen; background:
+    conic-gradient(from 150deg at 50% -6%, transparent 0 8deg, rgba(46,242,255,.32) 8deg 9.5deg, transparent 9.5deg 19deg,
+      rgba(255,43,214,.26) 19deg 20.5deg, transparent 20.5deg 30deg, rgba(182,255,59,.24) 30deg 31deg, transparent 31deg 41deg,
+      rgba(255,43,214,.26) 41deg 42.5deg, transparent 42.5deg 52deg, rgba(46,242,255,.32) 52deg 53.5deg, transparent 53.5deg 360deg);
+  animation: laser-sweep 12s ease-in-out infinite alternate;
+}
+[data-register="play"][data-theme="night"] .backdrop::after {           /* haze */
+  opacity: 1; mix-blend-mode: screen; background:
+    radial-gradient(60% 30% at 30% 70%, rgba(123,108,255,.16), transparent 70%),
+    radial-gradient(50% 26% at 75% 55%, rgba(255,43,214,.10), transparent 70%),
+    radial-gradient(80% 30% at 50% 100%, rgba(46,242,255,.10), transparent 70%);
+  animation: haze 20s ease-in-out infinite alternate;
+}
+@keyframes laser-sweep { from { transform: rotate(-8deg); } to { transform: rotate(8deg); } }
+@keyframes haze { to { transform: translate(-6%, -3%) scale(1.08); } }
+[data-register="play"][data-theme="night"] .hud .hp { animation: beat 500ms ease-out infinite; }     /* 120 BPM */
+@keyframes beat { 0% { box-shadow: 0 0 0 0 rgba(46,242,255,.0); } 12% { box-shadow: 0 0 14px 1px rgba(46,242,255,.45); } 100% { box-shadow: 0 0 0 0 rgba(46,242,255,0); } }
+@media (prefers-reduced-motion: reduce) {
+  [data-register="play"] .backdrop::before, [data-register="play"] .backdrop::after, [data-register="play"] .hud .hp { animation: none; }
+}
+```
+
+### 3. Boss fight = spotlight battle stage
+- **Stage (3D `env="arena"`, `theme` aware):** Pip stands on a round podium with an LED rim (Runway: chrome podium with a white rim; Club: black podium with a cyan LED rim). The boss is on a DJ-booth-style plinth (a deck with two glowing discs, no screens, no logos) behind and to the right.
+- **Spotlights:** two cones from the top corners, drawn as DOM overlays above the canvas and below the bubbles: `linear-gradient(180deg, rgba(255,255,255,.28), transparent)` clipped to a triangle, `mix-blend-mode: screen` in Club and `multiply`-free white in Runway. Idle, they rest on Pip; on a hit they snap to the boss in 120ms.
+- **Crowd:** a 72px silhouette strip pinned to the stage bottom, two layers of head-and-shoulder shapes (CSS radial gradients) in `#000` at .85 (Club) or `#0B0B12` at .12 (Runway). It bobs ±2px on the beat. On a hit it jumps (−6px over 180ms) with a few raised arms (3 small rounded bars that scale in); on a whiff it stays still, and the caption reads "The crowd is unconvinced."
+- **Bass drop on a hit,** added to the G2 hit sequence, which still totals 900ms or less:
+  1. At the 70ms hit-stop, the stage scales 1 → 1.015 → 1 over 160ms (`.stage.is-drop`).
+  2. A flash overlay pulses in 120ms: white at most .28 opacity in Runway, cyan-white at most .25 in Club, never red.
+  3. The lasers lock onto the boss for 400ms (Club).
+  4. Then the usual squash, shake, segment drop and damage tag.
+- **Flash safety (WCAG 2.3.1):** at most 2 flashes per second anywhere in the product, flash opacity ≤ .3, no saturated red flashes, and flashes are disabled entirely under reduced motion, which gets a 150ms color change on the HP bar instead.
+
+```css
+.stage-fx { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.spot { position: absolute; top: -10%; width: 60%; height: 120%; mix-blend-mode: screen; transition: transform 120ms var(--ease-out);
+  background: linear-gradient(180deg, rgba(255,255,255,.28), rgba(255,255,255,0) 85%);
+  clip-path: polygon(45% 0, 55% 0, 100% 100%, 0 100%); }
+.spot--l { left: -10%; transform: rotate(-18deg); transform-origin: 50% 0; }
+.spot--r { right: -10%; transform: rotate(18deg); transform-origin: 50% 0; }
+.stage.is-hit .spot--l { transform: rotate(-4deg); } .stage.is-hit .spot--r { transform: rotate(6deg); }
+.crowd { position: absolute; left: 0; right: 0; bottom: 0; height: 72px; opacity: var(--crowd-a, .85);
+  background: radial-gradient(14px 16px at 20px 26px, #000 98%, transparent) 0 0 / 40px 72px repeat-x,
+              radial-gradient(24px 30px at 20px 72px, #000 98%, transparent) 0 0 / 40px 72px repeat-x;
+  animation: bob 500ms ease-in-out infinite alternate; }
+.crowd--back { bottom: 14px; transform: scale(.85); opacity: .55; background-position: 20px 0, 20px 0; animation-delay: 250ms; }
+[data-theme="day"] .crowd { --crowd-a: .12; }
+.stage.is-hit .crowd { animation: jump 180ms var(--ease-out) 1; }
+.flash { position: absolute; inset: 0; pointer-events: none; opacity: 0; background: radial-gradient(circle at 60% 45%, #FFFFFF, transparent 65%); }
+.stage.is-drop .flash { animation: flash 120ms linear 1; }
+.stage.is-drop { animation: drop 160ms var(--ease-out) 1; }
+@keyframes bob { to { transform: translateY(-2px); } }
+@keyframes jump { 50% { transform: translateY(-6px); } }
+@keyframes flash { 30% { opacity: .28; } 100% { opacity: 0; } }
+@keyframes drop { 40% { transform: scale(1.015); } }
+@media (prefers-reduced-motion: reduce) { .crowd, .stage.is-drop, .stage.is-drop .flash, .stage.is-hit .crowd { animation: none; } }
+```
+
+### 4. K.O. evolution = runway walk
+This replaces G2's K.O. beat 2. Beats are still full screens; the whole walk is tap-to-skip and lasts about 3.2s.
+1. **The drop (finisher, about 1.2s):** "PICK THE FINAL DROP" ribbon, weapons as gels. On pick, a 120ms hit-stop, the one ±4px screen shake, the boss flops off its plinth, the lasers converge, and the low gong plays.
+2. **The walk (about 2s):** the scene cuts to a catwalk in perspective: a floor plane with `perspective: 700px; transform: rotateX(62deg)`, a center stripe, and two rows of edge lights (dots) running to a vanishing point near the top third.
+   - **Strut:** Pip (3D `framing="hero"` walk cycle, or 2D Pip scaling .45 → 1 with a ±3deg hip-sway every 400ms) struts from the back to the front at 20% slower than any boss move. That's the deadpan.
+   - **Flashes:** camera bursts pop along both sides as 4-point white stars, 80ms each, at most 2 per second, each ≤ 10% of the screen area, with the camera-shutter sound.
+   - **The pose:** Pip freezes at the front in its evolution pose.
+3. **The new look (about 1.2s, waits for a tap):** Pip stays posed under one spotlight. The top line is a Bodoni Moda 800 italic 44px *"The new look."* Beneath it sits a look card (a white sticker in Runway, a neon-edged panel in Club) in Geist Mono uppercase:
+   - `LOOK 02 — PIP V2`
+   - the earned item: `WEARING: THE HALF PIN` (from `payoff.new_items`)
+   - `FIXED IT, 1 RE-TEACH`, only if it was a comeback
+
+   A chrome text "Brain v2" save point appears with the save-chime. Pip wears the earned item from here on (CONTRACT v3.7).
+4. **The card** (the quiet K.O. card, unchanged), then 5. **the cliffhanger** ("Next season:" with the silhouette and half-name), then 6. **what Ms. Rivera sees**.
+
+```css
+.catwalk { position: absolute; inset: 35% -30% -10%; transform: perspective(700px) rotateX(62deg); transform-origin: 50% 0;
+  background: linear-gradient(90deg, transparent 44%, rgba(255,255,255,.5) 44% 45%, transparent 45% 55%, rgba(255,255,255,.5) 55% 56%, transparent 56%),
+              var(--catwalk, linear-gradient(180deg, #D9DDE5, #FFFFFF)); }
+[data-theme="night"] .catwalk { --catwalk: linear-gradient(180deg, #140A26, #2E2250); }
+.catwalk::before, .catwalk::after { content: ''; position: absolute; top: 0; bottom: 0; width: 6px;
+  background: radial-gradient(circle, var(--ice) 2px, transparent 3px) 0 0 / 6px 28px repeat-y; }
+.catwalk::before { left: 43%; } .catwalk::after { right: 43%; }
+.strut { animation: strut-in 2s cubic-bezier(.3,.1,.3,1) both, sway 400ms ease-in-out 5 alternate; }
+@keyframes strut-in { from { transform: translateY(-38%) scale(.45); } to { transform: none; } }
+@keyframes sway { from { rotate: -3deg; } to { rotate: 3deg; } }
+.camflash { position: absolute; width: 56px; height: 56px; background: #FFFFFF; opacity: 0;
+  clip-path: polygon(50% 0, 58% 42%, 100% 50%, 58% 58%, 50% 100%, 42% 58%, 0 50%, 42% 42%);
+  animation: camflash 80ms linear 1 both; animation-delay: var(--t); }
+@keyframes camflash { 40% { opacity: .9; transform: scale(1.1); } 100% { opacity: 0; } }
+.newlook { font: italic 800 44px/1 var(--font-editorial); font-variation-settings: "opsz" 96; color: var(--fg); letter-spacing: -.02em; }
+@media (prefers-reduced-motion: reduce) { .strut, .camflash { animation: none; } .camflash { display: none; } }
+```
+
+### 5. Vault = lookbook of magazine covers
+The Vault sheet becomes "The Lookbook": a 2×2 grid of 3:4 covers per page (each about 175×233 at 390px), which fits without scrolling. More covers go on further pages (scroll-snap, page dots, "Next ▶"). Each beaten boss is one issue.
+
+**Cover anatomy:**
+- **Masthead:** "PIP" in Bodoni Moda 900 at 64px (scaled to cover width), letter-spacing −.03em, top-center. Pip's pose image (the `thumb.jsx` render or Pip2D) overlaps the bottom of the masthead, the classic head-over-logo move (masthead `z-index: 1`, Pip `z-index: 2`).
+- **Issue line:** Geist Mono 12px `NO. 0147 · OCT 2026` under the masthead (the one 12px exception, as metadata).
+- **Cover quote:** the boss's K.O. line in Bodoni Moda italic 500 16px (*"Addini Bottomini has left Pip's brain."*).
+- **Cover lines:** two short Unbounded 600 12px uppercase lines, e.g. "THE ½ + ⅓ ISSUE" and "WEARING: THE HALF PIN".
+- **Comeback issues:** the holo masthead (`background: var(--holo); -webkit-background-clip: text`) plus the line "EXCLUSIVE: HOW IT GOT FIXED".
+- **Background:** a dark editorial gradient from `#0B0B12` to the boss's tint at 30% (e.g. `#3A1830`), with a white masthead (19.6:1) and `#F2EDE4` text (15.4:1). Covers look the same in both themes, the way magazines do.
+- **Next issue:** a dimmed cover with Pip's silhouette, the next boss's half-name and "COMING NEXT SEASON". Curiosity, never a purchase.
+- **Open:** tapping a cover zooms it to full screen (260ms, from the tile's rect), and a second tap flips it to the K.O. card. Each cover is a `<button aria-label="Issue 0147, Addini Bottomini, October 2026">`.
+
+```css
+.lookbook { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 12px; }
+.cover { position: relative; aspect-ratio: 3 / 4; overflow: hidden; border-radius: 6px; padding: 10px; color: #F2EDE4;
+  background: radial-gradient(80% 50% at 50% 70%, color-mix(in oklch, var(--boss-tint, #7B6CFF) 30%, transparent), transparent), #0B0B12;
+  box-shadow: 0 0 0 1.5px #0B0B12, 0 14px 24px -14px rgba(0,0,0,.6); transition: transform 160ms var(--ease-out); }
+.cover__mast { position: relative; z-index: 1; display: block; text-align: center; color: #FFFFFF;
+  font: 900 clamp(40px, 15cqw, 64px)/.9 var(--font-editorial); letter-spacing: -.03em; }
+.cover--comeback .cover__mast { background: var(--holo); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.cover__pip { position: absolute; z-index: 2; left: 10%; right: 10%; top: 16%; bottom: 18%; object-fit: contain; }
+.cover__issue { position: relative; z-index: 3; font: 500 12px/1 'Geist Mono', monospace; letter-spacing: .08em; text-align: center; }
+.cover__quote { position: absolute; z-index: 3; left: 10px; right: 10px; bottom: 30px; font: italic 500 16px/1.15 var(--font-editorial); }
+.cover__line { position: absolute; z-index: 3; left: 10px; bottom: 10px; font: 600 12px/1 var(--font-game); text-transform: uppercase; letter-spacing: .06em; color: #FFE14D; }
+.cover--next { filter: grayscale(1) brightness(.55); }
+@media (hover: hover) and (pointer: fine) { .cover:hover { transform: translateY(-4px) rotate(-1deg); } }
+```
+
+The cover lines at 12px pass AA (`#FFE14D` on `#0B0B12` is 15.6:1, white 19.6:1). They are metadata; the cover quote at 16px carries the meaning.
+
+### 6. Surreal props
+Background props make the scene feel art-directed and slightly weird. They are decorative (`aria-hidden`), sit behind everything (`z-index: 0`, above `.backdrop`), and are capped at 4 per screen, drifting with transforms only.
+- **Chrome blob:** an organic sphere, `border-radius: 42% 58% 63% 37% / 41% 44% 56% 59%`, filled `radial-gradient(circle at 32% 28%, #FFFFFF 0 8%, #D9DDE5 22%, #8A90A0 48%, #3A3B48 70%, #C9CED8 100%)`. It morphs its radius over 18s and floats ±10px.
+- **Glossy shapes:** a ring (`radial-gradient(circle, transparent 52%, var(--c) 53% 70%, transparent 71%)` plus a white gloss), a pill, and a 4-point star, in lime, cyan or chrome.
+- **Holo fog:** a 240px blob of `var(--holo)` at .16 opacity with `border-radius: 50%` and a pre-blurred edge (`mask: radial-gradient(closest-side, #000, transparent)`), drifting 24s.
+- **Placement:** home (2 props), mission (1, behind the boss side), K.O. walk (3, in the background), Vault (0). Never behind text or a bubble.
+- **3D option:** the 3D env can render the same props (chrome `MeshPhysicalMaterial` metalness 1, roughness .1) when the device is not throttled.
+
+```css
+.prop { position: absolute; z-index: 0; pointer-events: none; will-change: transform; animation: prop-float 9s ease-in-out infinite alternate; }
+.prop--blob { width: 120px; aspect-ratio: 1; border-radius: 42% 58% 63% 37% / 41% 44% 56% 59%;
+  background: radial-gradient(circle at 32% 28%, #FFFFFF 0 8%, #D9DDE5 22%, #8A90A0 48%, #3A3B48 70%, #C9CED8 100%);
+  animation: prop-float 9s ease-in-out infinite alternate, blob 18s ease-in-out infinite alternate; }
+.prop--ring { width: 80px; aspect-ratio: 1; border-radius: 50%;
+  background: radial-gradient(ellipse 40% 20% at 40% 25%, rgba(255,255,255,.8), transparent), radial-gradient(circle, transparent 52%, var(--c, #B6FF3B) 53% 70%, transparent 71%); }
+.prop--fog { width: 240px; aspect-ratio: 1; border-radius: 50%; background: var(--holo); opacity: .16;
+  -webkit-mask: radial-gradient(closest-side, #000, transparent); mask: radial-gradient(closest-side, #000, transparent); }
+@keyframes prop-float { to { transform: translateY(-10px) rotate(6deg); } }
+@keyframes blob { to { border-radius: 58% 42% 37% 63% / 56% 59% 41% 44%; } }
+@media (prefers-reduced-motion: reduce) { .prop { animation: none; } }
+```
+
+### 7. Copy tone: confident editorial and MC
+- **Two voices.** The *narrator* (ribbons, captions, MC lines, cover lines) is a confident host: short, declarative, a little dramatic. *Pip* stays deadpan and literal. The contrast is the joke, the same straight-man rule as before.
+- **Narrator examples:**
+  - "Tonight's challenger: Addini Bottomini."
+  - "Step ② is open. The floor is yours."
+  - "Sliced into sixths. −40."
+  - "The crowd felt that."
+  - "The crowd is unconvinced."
+  - "Final drop. Pick it."
+  - "The new look."
+  - "Look 02."
+  - "Next season: Divid████."
+  - "Front row is waiting." (home, with a mission)
+- **Pip examples:**
+  - "I walked. People took photos. I don't know why."
+  - "This is my new look. I'm told it is a look."
+- **Rules:** no exclamation marks; no borrowed or trending slang (no "slay", "ate", "serve", "it's giving", "no cap", "mother", "periodt", "rizz"); no club-drink, VIP, or after-party language; no "Great job". Captions are uppercase Unbounded at most 6 words; editorial headlines are sentence-case Bodoni italic.
+
+### 8. Mascot defaults: less kid-cute
+- **Default vibe** in the picker and on a new student: `cool`. Its default colorway is "Graphite / Acid": body graphite `#5A6378` fuzz, a lime `#B6FF3B` crown tuft, a chrome visor. Half-lidded, unimpressed eyes.
+- **cute** keeps its blush and flowers but loses baby styling: muted pastel-free colorways (aqua, sand, sky), small cheek blush (`#FF9A8A` at .35), and at most one flower clip.
+- **cool** leans editorial streetwear: matte or chrome, a visor or hood option, neon piping in Club.
+- **ugly** leans avant-garde: asymmetric runway-weird (one oversized ear or horn, a stitched patch in a contrasting fabric, crooked toothy grin, eye bags). Friendly, never gross.
+- **Evolution forms** read as new looks: v2 adds a structured collar or shoulder piece in the vibe's material; v3 adds a chrome or holo accessory slot. Earned items (CONTRACT v3.7) are worn as styling: a pin on the collar, a holo badge on the chest.
+- **All vibes:** deadpan voice; accessory list unchanged (`none | glasses | scarf | pencil | badge | backpack`, plus earned items); no lashes, no infant 2:1 head, no big shiny irises.
+
+### What else changes
+- **Window sheets:** the title bar becomes chrome (Runway: `--gel-secondary` with black title; Club: `#251A42` with a cyan 1px underline glow and white title). The fold and close bubbles become chrome and lime dots.
+- **Loader:** the chunky bar becomes a 10-bar equalizer. Bars of random height animate (transform `scaleY`, 300ms steps) in `--ice`, with Pip bobbing on top instead of hopping. The "Pip is thinking…" label and the 8s retry stay.
+- **Tap sparkles:** chrome and neon colors (`#FFFFFF`, `--ice`, `#B6FF3B`; magenta allowed in Club because it is light, not UI).
+- **Sounds (§ G3 list):** pop → *click*, boop → *tick*, thwack → *bass hit*, low-gong → *bass drop*. Add *camera-shutter* (runway flashes), *crowd-cheer* (≤ 600ms, K.O. pose), and *record-scratch* (whiff). Still off by default and synthesized or original.
+- **Presets (S10):** Runway and Club replace Daylight Arcade and Night Arcade as the two defaults; the other presets remain options.
+
+### Do first (frontend, G4 including the brand layer)
+1. **Tokens and fonts in one commit.**
+   - Paste the Runway and Club Play blocks.
+   - Swap Studio `:root` to Ink at Work, with cyan as the primary and lime as success.
+   - Update the font link (add Unbounded and Bodoni Moda, drop Fredoka); `--font-game` becomes Unbounded.
+   - Every screen restyles at once, and the forest/game mismatch disappears.
+2. **Wordmark and icon.** Add the `.wordmark` component (landing, Studio top bar, Play home) and the SVG mark as the favicon and PWA icon, and set `theme-color` to `#0C0A18`.
+3. **Landing hero in the app world.** The `data-register="play" data-theme="night"` hero with the `.scene` lasers and haze, spotlights, crowd, the podium phone, and Pip and Duke Doublecount. Then the three glossy proof panels and the Studio-style business section.
+4. **Spotlight stage and Club scene on the mission screen.** Spots, crowd and the bass-drop flash inside the existing hit sequence, within the flash limits; the HUD beat pulse.
+5. **K.O. runway walk and the Lookbook Vault.** The catwalk, strut, flashes and "The new look." with `payoff` items; then the 2×2 magazine covers from `album[]`.
+
+Then:
+- **Studio:** header bands and row avatars; the flat button family.
+- **Play:** surreal props; the copy pass; mascot default `cool`; the equalizer loader; sound re-voice.
+
+## Shared brand layer: one world (G4)
+
+**The problem:** the landing and Studio look like a calm dark-forest editorial site, while the student app is a runway/club game, so they read as two products.
+
+**The fix:** one brand layer used everywhere: one wordmark, one signature accent plus one secondary, one scene language and one button family.
+- The landing's first screen *is* the app's world.
+- Studio stays calm and dense, with readable tables: "the same world, at work".
+
+**Retiring forest:** willder's forest green stays willder's brand and leaves Pip. Studio moves to **Ink at Work**, a calm, desaturated cousin of Club. This is only a token swap in `tokens.css :root`; every Studio class name stays.
+
+### 1. Wordmark and app icon
+- **Wordmark:** "pip", lowercase, in Unbounded 900 with tracking −.045em. A small lime thought-bubble (one dot and a smaller trailing dot) sits after the word at cap height. That bubble is Pip's signature: Pip is always thinking about what you taught it.
+- **Fill:** chrome (white → silver → steel → white) with an ink stroke of 4% of the size, painted under the fill. In Club it may switch to holo.
+- **Contrast:** it is large display text, so 3:1 applies. The stroke is 14.4:1 on Runway white, and the chrome's darkest stop is 6.1:1 on Ink and 6.4:1 on Club.
+- **Where:**
+  - Landing hero: 72–120px.
+  - Landing nav and Studio top bar: 24px, replacing the forest `.brand` text.
+  - Play home title screen: 40px, top-left.
+  - Play HUD: none, because the HUD has no text chrome (the 🏠 icon button stays).
+  - Favicon, PWA icon, `theme-color` `#0C0A18`, OG image (the hero scene crop).
+- **Icon:** the mark is an original geometric "p" (a rounded stem plus a ring bowl) in chrome, the lime thought-bubble, and one cyan laser streak on a black-violet tile. It needs no web font, so the favicon renders before fonts load. All content sits inside the 80% maskable safe zone. Save it as `public/pip-icon.svg` and export 192/512 PNGs (plus maskable) to `public/icons/`.
+
+```html
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Pip">
+  <defs>
+    <linearGradient id="t" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1C1233"/><stop offset="1" stop-color="#07040F"/></linearGradient>
+    <linearGradient id="c" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".45" stop-color="#D9DDE5"/><stop offset=".53" stop-color="#8A90A0"/><stop offset="1" stop-color="#EEF0F4"/></linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="url(#t)"/>
+  <path d="M6 46 L58 20" stroke="#2EF2FF" stroke-opacity=".45" stroke-width="1.5"/>
+  <rect x="15" y="18" width="10" height="36" rx="5" fill="url(#c)"/>
+  <circle cx="33" cy="29" r="10" fill="none" stroke="url(#c)" stroke-width="9"/>
+  <circle cx="50" cy="13" r="4.5" fill="#B6FF3B"/><circle cx="45" cy="19.5" r="2" fill="#B6FF3B"/>
+</svg>
+```
+
+```css
+.wordmark { --wm: 28px; display: inline-flex; align-items: flex-start; font: 900 var(--wm)/.9 'Unbounded', 'Manrope', sans-serif;
+  letter-spacing: -.045em; text-transform: lowercase; color: transparent;
+  background: linear-gradient(180deg, #FFFFFF 0%, #D9DDE5 45%, #8A90A0 53%, #EEF0F4 100%);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-stroke: calc(var(--wm) * .04) var(--wm-stroke, #0B0B12); paint-order: stroke fill; }
+.wordmark::after { content: ''; width: .2em; height: .2em; margin: -.05em 0 0 .08em; border-radius: 50%;
+  background: var(--accent-2, #B6FF3B); box-shadow: -.15em .17em 0 -.055em var(--accent-2, #B6FF3B); }
+[data-theme="night"] .wordmark--holo { background-image: conic-gradient(from 200deg, #2EF2FF, #B6FF3B, #FFE14D, #FF9A3C, #7B6CFF, #2EF2FF); }
+@media (forced-colors: active) { .wordmark { color: CanvasText; background: none; -webkit-text-stroke: 0; } .wordmark::after { background: CanvasText; } }
+```
+
+### 2. Signature accent and secondary (both registers)
+- **Signal Cyan `#2EF2FF` (`--accent`)** means *act*.
+  - **Fills:** Studio's primary button (replacing ice), Club's primary gel, focus rings on dark grounds, the selected state.
+  - **Runway:** cyan is light, never text on white. It shows as the 2px inner edge of the black primary gel and in the laser streak.
+  - **Labels on cyan:** always ink `#0C0A18` or `#07040F`, 14.2:1 or better.
+- **Acid Lime `#B6FF3B` (`--accent-2`)** means *learned*.
+  - **Where:** the wordmark's thought-bubble, her progress in Play, and Studio's "Explained well" pill and "taught this week" rings (replacing sage `#A6D4B4`).
+  - **On white:** text uses `#2F6B00`.
+- **Unchanged role rules:** coral is boss HP and Pip's wrong beliefs in Play only; Studio never uses coral; magenta is scene light only.
+
+| Token | Runway (day) | Club (night) | Studio "Ink at Work" |
+|---|---|---|---|
+| `--accent` | `#2EF2FF` (edge and glow only) | `#2EF2FF` (gel) | `#2EF2FF` (flat button, ink label 14.2:1; text 11.0:1) |
+| `--accent-2` | fill `#B6FF3B`, text `#2F6B00` | `#B6FF3B` | `#B6FF3B` (12.6:1) |
+
+**Studio "Ink at Work"** (`tokens.css :root`; same variable names; AA worst case across `#0C0A18`, `#15122A`, `#1D1936`, `#262144`):
+- **Grounds:** `--ink #0C0A18`, `--surface #15122A`, `--surface-2 #1D1936`, `--surface-3 #262144`, `--overlay #1D1936`.
+- **Text:** `--fg #F4F2FA` 13.7, `--fg-muted #D6D2E6` 10.3, `--fg-subtle #A9A3C4` 6.3.
+- **Action:** `--ice` (now `--accent`) `#2EF2FF` with `--ice-ink #0C0A18`; `--focus #2EF2FF`.
+- **States:** `--success #B6FF3B` 12.6, `--warning #FFE14D` 11.7, `--sunset` (Misconception pill) `#F59B76` 7.1, `--danger #FFA3A3` 8.0.
+- **Fields:** `--field-border #7A73A0` 3.5.
+- **Materials:** `--glass-fill: linear-gradient(120deg, rgba(29,25,54,.62), rgba(12,10,24,.52))`, `--glass-edge: rgba(214,210,230,.16)`.
+- **Backdrop:** `.backdrop` ribbon recolored to violet haze `rgba(123,108,255,.18)` with a cyan edge `rgba(46,242,255,.10)`. Grain stays.
+- **Type:** Fraunces stays for Studio titles and her quotes (calm editorial).
+
+### 3. Same scene on the landing hero
+The landing hero is a slice of the app: a full-bleed Club scene (the night tokens, lasers, haze, a crowd strip) whatever the visitor's OS theme, because it is the most striking first frame.
+- **Desktop:** the live phone (`PhoneFrame`) stands center-right on a podium under two spotlights. Pip (2D, `framing="hero"`) stands at the front-left of the podium. Duke Doublecount (the triangle-area boss, `Boss2D` `variant="club"`) poses on a DJ-booth plinth behind and to the right, a little smaller, under the coral rim light.
+- **Mobile:** no iframe. Wordmark, headline, Pip and Duke art, then the CTA, which opens the student app directly.
+
+Reuse the Play tokens by scoping the hero, and render the scene with a `.scene` element. `.scene` is an absolutely positioned twin of `.backdrop`: extend every `.backdrop`, `::before` and `::after` selector in the Club CSS to `.backdrop, .scene`.
+
+```html
+<section class="landing-hero" data-register="play" data-theme="night">
+  <div class="scene" aria-hidden="true"></div>
+  <div class="stage-fx" aria-hidden="true"><i class="spot spot--l"></i><i class="spot spot--r"></i><i class="crowd"></i></div>
+  <div class="landing-hero__copy">…wordmark, headline, sub, role buttons…</div>
+  <div class="landing-hero__show">…Pip2D · PhoneFrame on .podium · Boss2D variant="club"…</div>
+</section>
+```
+```css
+.landing-hero { position: relative; isolation: isolate; min-height: 100dvh; display: grid; align-items: center; overflow: hidden;
+  grid-template-columns: 1fr; padding: 24px 16px 96px; color: var(--fg); background: var(--ink); }
+@media (min-width: 1024px) { .landing-hero { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); padding: 48px 48px 0; } }
+.scene { position: absolute; inset: 0; z-index: -1; background: var(--sky); overflow: hidden; }
+.landing-hero__headline { font: 800 clamp(34px, 5vw, 64px)/1.02 var(--font-game); letter-spacing: -.03em; }
+.landing-hero__headline em { font: italic 700 1.08em/1 var(--font-editorial); letter-spacing: -.02em; color: var(--accent, #2EF2FF); }  /* 11:1 on Club */
+.landing-hero__sub { font: 500 18px/1.5 'Manrope', sans-serif; color: var(--fg-muted); max-width: 34ch; }
+.podium { width: 70%; height: 36px; margin: -18px auto 0; border-radius: 50%; background: radial-gradient(ellipse at 50% 30%, #3A2E66, #120B22 70%);
+  box-shadow: 0 0 0 2px #2EF2FF66, 0 0 30px rgba(46,242,255,.35); }
+```
+Copy keeps the pitch exactly: **"Every AI tutor plays the teacher. *Pip plays the student.*"** The second sentence is in Bodoni italic and cyan. The subline "For tutoring centers: know what every student understands, before they walk in." follows, then three buttons in the Play gel family: "Try as Maya" (primary cyan gel), "Open as Ms. Rivera" and "Owner view" (secondary).
+
+### 4. Studio: the same world, at work
+Studio keeps its density, readable tables and calm motion (no lasers moving, no glows on data), and adopts:
+- **The wordmark** (24px) in the top bar, and the "Bright Path Tutoring" chip beside it.
+- **A header band:** a static, light version of the scene behind each page head, as a 132px band at the top of tutor, owner, report and pricing pages. Violet haze, two still laser lines and a slow fade into the ground. No animation and no crowd. The page title sits on it: `--fg` on the band's lightest point (where the cyan line crosses the haze) is 10.0:1.
+- **Avatars in rows:**
+  - Roster rows show each student's own Pip head: 28px, from `thumb.jsx` or `Pip2D` at `size={28}`, with their vibe and creature. The ring is lime if they taught this week and `--divider` otherwise.
+  - The boss appears as a neutral chip with a 20px `Boss2D` icon plus its name ("🦚 Duke Doublecount"), next to the plain-language misconception.
+  - The insight card's count gets the boss's 48px icon.
+  - Coral stays out of Studio.
+- **Buttons from the same family** (below), and the accent and secondary from §2.
+
+```css
+.studio-band { position: absolute; inset: 0 0 auto; height: 132px; z-index: -1; pointer-events: none;
+  background:
+    linear-gradient(100deg, transparent 0 58%, rgba(46,242,255,.14) 58% 58.4%, transparent 58.4%),
+    linear-gradient(80deg, transparent 0 72%, rgba(182,255,59,.10) 72% 72.3%, transparent 72.3%),
+    radial-gradient(60% 120% at 80% 0%, rgba(123,108,255,.20), transparent 70%), var(--ink);
+  -webkit-mask: linear-gradient(180deg, #000 55%, transparent); mask: linear-gradient(180deg, #000 55%, transparent); }
+.row-avatar { width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; background: var(--surface-3);
+  box-shadow: 0 0 0 2px var(--ring, var(--divider)); overflow: hidden; }
+.row-avatar.is-taught { --ring: #B6FF3B; }
+.boss-chip { display: inline-flex; align-items: center; gap: 6px; padding: 2px 10px 2px 4px; border-radius: 999px;
+  border: 1px solid var(--border); color: var(--fg-muted); font: 500 14px/1.3 'Manrope', sans-serif; }
+```
+
+### 5. One button family
+Same pill radius, same edge logic and same color meaning everywhere; only the material changes.
+
+| | Play gel (`.gel-btn`) | Studio flat (`.btn`) |
+|---|---|---|
+| Shape | pill 999px, 52–72px | pill 999px, 44px (`--lg` 52px) |
+| Material | gloss highlight, inner glow, outline, 5–6px pressable edge | flat fill, 1.5px border, **2px edge** `0 2px 0 rgba(0,0,0,.45)`, no gloss |
+| Press | sink 5px plus squash (100ms) | sink 2px, edge to 0 (100ms), no squash |
+| Primary | Runway black chrome / Club cyan | cyan `#2EF2FF` with ink label (14.2:1) |
+| Secondary | chrome or indigo gel | transparent with a 1.5px `--border`, `--fg` label |
+| Ghost | n/a | no border, `--fg-muted` |
+| Type | Unbounded 600 17px (PLAY 800 24px uppercase) | Manrope 700 15px |
+
+```css
+.btn { border-radius: 999px; border-width: 1.5px; box-shadow: 0 2px 0 rgba(0,0,0,.45); transition: transform 100ms var(--ease), box-shadow 100ms var(--ease); }
+.btn:active { transform: translateY(2px); box-shadow: 0 0 0 rgba(0,0,0,0); }
+.btn--primary { background: var(--accent, #2EF2FF); border-color: var(--accent, #2EF2FF); color: #0C0A18; }
+.btn--primary:hover { background: #7DF7FF; border-color: #7DF7FF; }
+.btn--ghost { box-shadow: none; }
+```
+
+### 6. Landing structure (rewrite)
+The landing may scroll; it is Studio's register at the bottom, with the app's world on top. Order:
+1. **Hero in the app world:** the Club scene, wordmark, pitch, role buttons, and the live phone with Pip and Duke Doublecount (§3). Desktop is one viewport; mobile is one viewport plus a CTA.
+2. **Three proof sections as glossy panels.** Each sits on the Club scene, fading in haze toward Ink as you scroll. Each is a `.panel` in the Club style (1.5px `#6C5BB0` edge plus a neon glow), with a Geist Mono numeral, an Unbounded 700 28px headline, one Manrope line and a small live visual built from real components (no screenshots). Each animates once when 50% visible and is static under reduced motion. Panels are stacked on phones and in a 3-column row at 1024.
+   - **01 · She teaches.** "Maya explains why ½ + ⅓ isn't ⅖." Visual: her bubble, then a boss hit (HP segment drop and the "−40" tag).
+   - **02 · Pip believes exactly what she said.** Visual: the three Brain notes; the wrong one glows coral, then flips to lime "fixed after 1 re-teach".
+   - **03 · Her tutor sees the gap, in her words.** Visual: one gap-report row in **Studio** style (pill, quote in Fraunces italic, the Tuesday opener). This panel is the bridge: its glossy edge fades to the Studio hairline.
+3. **Business section in Studio style:** Ink ground with the header band. The insight card ("14 students share the same mistake" plus the Duke chip), the pricing card ($4 per active student per month, $99 minimum, "Start pilot" flat primary), then the footer "Demo center with synthetic data."
+
+**Contrast:**
+- **Proof panels:** headline `#FFFFFF` on the Club panel 14.4:1, lines `#DCD5F2` 10.2:1.
+- **Business:** Studio roles as above (worst 6.3:1).
+
 ## Theming: build your own UI (S10)
 
 A student theme is a small DESIGN.md: a token set in this file's front-matter shape plus a one-line atmosphere. It can change the look, never the meaning, and is visual only (no uploads). It is saved as "My theme" and applied on the `[data-register="play"]` root.
@@ -992,8 +1472,10 @@ theme:
 
 | Preset | sky / panel | fg trio | action / label | progress / win / boss | outline | scene, display | worst text pair |
 |---|---|---|---|---|---|---|---|
-| **Daylight Arcade** (default) | `#BFE6FF`→`#E3FCEB` / `#FFFFFF`→`#EEF6FF` | `#10213F` `#2E4466` `#4A5F80` | `#2A63F5` / `#FFFFFF` | `#1A7030`·`#3FBF4F` / `#8F5200`·`#FFB020` / `#B52E1B`·`#FF6B5E` | `#10213F` | clouds, chunky | fg-subtle 4.9:1 |
-| **Night Arcade** (dark default) | `#0E1530`→`#1B1F4D` / `#333E86`→`#2A3370` | `#FFFFFF` `#DCE3FF` `#B8C2EE` | `#33E1FF` / `#0E1530` | `#A3F04A` / `#FFD23F` / `#FFA89C`·`#FF8A7A` | `#050A1F`, panels `#6E7BD6` | stars, chunky | coral 5.1:1 |
+| **Runway** (default, G4) | `#FFFFFF`→`#D9DDE5` / `#FFFFFF`→`#F6F7F9` | `#0B0B12` `#34364A` `#55586E` | `#0B0B12` / `#FFFFFF` | `#2F6B00`·`#B6FF3B` / `#8A5200`·`#FFB020` / `#B0281A`·`#FF6F61` | `#0B0B12` | gallery, editorial | sun text 4.7:1 |
+| **Club** (dark default, G4) | `#07040F`→`#140A26` / `#251A42`→`#1C1233` | `#FFFFFF` `#DCD5F2` `#ADA3D1` | `#2EF2FF` / `#07040F` | `#B6FF3B` / `#FFE14D` / `#FF9D92`·`#FF6F61` | `#6C5BB0` | lasers, wide | fg-subtle 6.1:1 |
+| **Daylight Arcade** | `#BFE6FF`→`#E3FCEB` / `#FFFFFF`→`#EEF6FF` | `#10213F` `#2E4466` `#4A5F80` | `#2A63F5` / `#FFFFFF` | `#1A7030`·`#3FBF4F` / `#8F5200`·`#FFB020` / `#B52E1B`·`#FF6B5E` | `#10213F` | clouds, chunky | fg-subtle 4.9:1 |
+| **Night Arcade** | `#0E1530`→`#1B1F4D` / `#333E86`→`#2A3370` | `#FFFFFF` `#DCE3FF` `#B8C2EE` | `#33E1FF` / `#0E1530` | `#A3F04A` / `#FFD23F` / `#FFA89C`·`#FF8A7A` | `#050A1F`, panels `#6E7BD6` | stars, chunky | coral 5.1:1 |
 | **Deep Aqua** | `#031A2B`→`#0A2A40` / `#123A55` | `#EEF9FF` `#CFE6F2` `#9FC3D6` | `#5FE3E8` / `#031A2B` | `#B8F04A` / `#FFD27A` / `#FF8A7A` | `#01101C` | bubbles, regular | boss 5.2:1 |
 | **Night Forest** | `#001914`→`#0A2721` / `#12372E` | `#EFEFE9` `#D4D4CD` `#A8B8AE` | `#C9FCFC` / `#001914` | `#8FE3B0` / `#FFD27A` / `#FF8A7A` | `#000D0A` | stars, regular | fg-subtle 6.3:1 |
 | **Chrome** | `#111316`→`#1A1D21` / `#252A30` | `#F2F4F6` `#D3D8DD` `#A3ABB3` | `#DDE3E8` / `#111316` | `#8FE3B0` / `#FFD27A` / `#FF8A7A` | `#000000` | grid, narrow | fg-subtle 6.2:1 |
@@ -1003,7 +1485,7 @@ theme:
 
 **Locked:**
 - **Role meanings:** action is the only filled-button and link color; boss (coral) hue stays at 0–20deg and is only for boss HP and Pip's wrong beliefs; progress hue stays at 90–170deg; win is her wins.
-- **No pink or lilac** (hue 280–345deg) in the action, progress or win slots.
+- **No pink or lilac** (hue 280–345deg) in the action, progress or win slots. Magenta may appear only as scene light (Club lasers, haze), never in a slot.
 - **Structure and access:** fonts, the type scale and 15px floor, 48px tap targets, the 3px outline and gel structure, spacing, the one-viewport rule, focus ring width, reduced motion, all copy, and the K.O. card.
 
 **Validation on save,** live in the picker and again on save:
