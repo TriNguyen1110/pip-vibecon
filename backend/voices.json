@@ -7,23 +7,23 @@
       "stability": 0.55,
       "style": 0.25,
       "speed": 0.95,
-      "provenance": "Fena (professional): 'Young, sassy girl character.' Original character voice, no impression language. Audited B11."
+      "provenance": "Fena (professional): 'Young, sassy girl character.' Original character voice, no impression language. Audited B11. Default Pip voice for every vibe (owner decision 2026-10-24)."
     },
     "ugly": {
-      "voice_id": "dfZGXKiIzjizWtJ0NgPy",
-      "name": "Michael Mouse",
+      "voice_id": "BlgEcC0TfWpBak7FmvHW",
+      "name": "Fena",
       "stability": 0.6,
       "style": 0.3,
       "speed": 0.9,
-      "provenance": "ElevenLabs library voice that emulates a famous cartoon character; kept by owner decision for the hackathon demo. Review before any public launch. Alternates: Nelson EaX6rnyDKjJx35tchi80, Spitfire bxu4ptGyGRXdGcFkahWB."
+      "provenance": "Fena (professional): 'Young, sassy girl character.' Original character voice, no impression language. Audited B11. Default Pip voice for every vibe (owner decision 2026-10-24)."
     },
     "cool": {
-      "voice_id": "rMwQM6pPoLHjNQDAGxOA",
-      "name": "Tri",
+      "voice_id": "BlgEcC0TfWpBak7FmvHW",
+      "name": "Fena",
       "stability": 0.65,
       "style": 0.15,
       "speed": 0.95,
-      "provenance": "Tri: the project owner's own cloned voice, used with their consent. Audited B11."
+      "provenance": "Fena (professional): 'Young, sassy girl character.' Original character voice, no impression language. Audited B11. Default Pip voice for every vibe (owner decision 2026-10-24)."
     }
   },
   "boss": {
@@ -101,5 +101,31 @@
       "hop-hop",
       "a_sat_linear"
     ]
+  },
+  "pip_choices": {
+    "bright": {
+      "voice_id": "BlgEcC0TfWpBak7FmvHW",
+      "name": "Fena",
+      "stability": 0.55,
+      "style": 0.25,
+      "speed": 0.95,
+      "provenance": "Fena (professional): 'Young, sassy girl character.' Original character voice, no impression language. Audited B11."
+    },
+    "chaotic": {
+      "voice_id": "dfZGXKiIzjizWtJ0NgPy",
+      "name": "Michael Mouse",
+      "stability": 0.6,
+      "style": 0.3,
+      "speed": 0.9,
+      "provenance": "ElevenLabs library voice that emulates a famous cartoon character; kept by owner decision for the hackathon demo. Review before any public launch. Alternates: Nelson EaX6rnyDKjJx35tchi80, Spitfire bxu4ptGyGRXdGcFkahWB."
+    },
+    "chill": {
+      "voice_id": "rMwQM6pPoLHjNQDAGxOA",
+      "name": "Tri",
+      "stability": 0.65,
+      "style": 0.15,
+      "speed": 0.95,
+      "provenance": "Tri: the project owner's own cloned voice, used with their consent. Audited B11."
+    }
   }
 }
