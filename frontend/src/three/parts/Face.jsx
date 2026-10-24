@@ -111,6 +111,30 @@ function Mouth({ mood, m, color, glow, tongue }) {
   )
 }
 
+// Speaking mouth: an oval whose height follows `mouth` (scaled by the parent). Bot: its glowing screen bar grows.
+function TalkMouth({ m, color, glow, tongue }) {
+  if (glow) {
+    return (
+      <mesh scale={[0.5 * m, 0.2 * m, 0.06 * m]}>
+        <sphereGeometry args={[1, 20, 12]} />
+        <EyeMat glow color={color} />
+      </mesh>
+    )
+  }
+  return (
+    <group position={[0, -0.05 * m, 0]}>
+      <mesh scale={[0.3 * m, 0.3 * m, 0.1 * m]}>
+        <sphereGeometry args={[1, 22, 14]} />
+        <EyeMat color={color} />
+      </mesh>
+      <mesh position={[0, -0.14 * m, 0.06 * m]} scale={[0.17 * m, 0.09 * m, 0.06 * m]}>
+        <sphereGeometry args={[1, 14, 10]} />
+        <meshStandardMaterial color={tongue} roughness={0.5} />
+      </mesh>
+    </group>
+  )
+}
+
 export function Face({ cfg, mood = 'idle', anim, glow = false }) {
   const L = useRef()
   const R = useRef()
@@ -129,10 +153,20 @@ export function Face({ cfg, mood = 'idle', anim, glow = false }) {
   const { w, h } = cfg
   const eyeScale = [ROUND[lidKey] ?? 1, 1, 1]
 
+  const moodMouth = useRef()
+  const talkMouth = useRef()
+  const talkInner = useRef()
   useFrame(() => {
     const b = anim?.current?.blink ?? 1
     if (L.current) L.current.scale.y = b
     if (R.current) R.current.scale.y = b
+    const o = anim?.current?.mouth ?? 0
+    const talking = o > 0.03
+    if (moodMouth.current) moodMouth.current.visible = !talking
+    if (talkMouth.current) {
+      talkMouth.current.visible = talking
+      if (talking) talkInner.current.scale.set(1 - o * 0.15, 0.15 + o * 0.95, 1)
+    }
   })
 
   return (
@@ -151,7 +185,14 @@ export function Face({ cfg, mood = 'idle', anim, glow = false }) {
         </At>
       ))}
       <At a={cfg.mouth}>
-        <Mouth mood={mood} m={cfg.mouthW} color={mouthColor} glow={glow} tongue={cfg.tongue ?? '#F59B76'} />
+        <group ref={moodMouth}>
+          <Mouth mood={mood} m={cfg.mouthW} color={mouthColor} glow={glow} tongue={cfg.tongue ?? '#F59B76'} />
+        </group>
+        <group ref={talkMouth} visible={false}>
+          <group ref={talkInner}>
+            <TalkMouth m={cfg.mouthW} color={mouthColor} glow={glow} tongue={cfg.tongue ?? '#F59B76'} />
+          </group>
+        </group>
       </At>
       {cfg.blush &&
         cfg.blush.map((a, i) => (

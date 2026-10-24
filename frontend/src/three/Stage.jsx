@@ -6,6 +6,9 @@ import { Environment, Lightformer } from '@react-three/drei'
 import { Mascot } from './Mascot'
 import { ENV_MAP } from './env'
 import { StyleCtx } from './parts/Mat'
+import { CREATURE_MAP } from './creatures'
+import { ThemeCtx } from './parts/theme'
+import { THEMES } from './palette'
 
 function CameraRig({ frame, sway = true }) {
   const camera = useThree((s) => s.camera)
@@ -44,14 +47,16 @@ export function StudioEnv() {
   )
 }
 
-export function Lights({ env }) {
+export function Lights({ env, theme = THEMES.day }) {
+  const night = theme.name === 'night'
   return (
     <>
-      <hemisphereLight args={['#FFFFFF', env === 'garden' ? '#5E8F5A' : '#5B4F63', 0.9]} />
-      <directionalLight position={[-3, 5, 4]} intensity={1.9} color="#FFF4E6" />
-      <directionalLight position={[3.5, 2.5, -4]} intensity={1.6} color="#A7DFE6" />
-      {env === 'arena' && <pointLight position={[1.1, 1.2, 0.9]} intensity={2.2} distance={3.5} decay={2} color="#FF9C80" />}
-      {env === 'room' && <pointLight position={[1.25, 0.9, -0.5]} intensity={1.6} distance={3} decay={2} color="#FFC6E6" />}
+      <hemisphereLight args={theme.hemi} />
+      <directionalLight position={[-3, 5, 4]} intensity={theme.key[1]} color={theme.key[0]} />
+      <directionalLight position={[3.5, 2.5, -4]} intensity={theme.rim[1]} color={theme.rim[0]} />
+      {env === 'arena' && <pointLight position={[1.1, 1.2, 0.9]} intensity={2.2} distance={3.5} decay={2} color={theme.arena.point} />}
+      {env === 'arena' && night && <spotLight position={[0, 5, 2.5]} angle={0.55} penumbra={0.7} intensity={18} distance={9} decay={2} color="#F2F6FF" />}
+      {env === 'room' && <pointLight position={[1.25, 0.9, -0.5]} intensity={night ? 2.4 : 1.4} distance={3} decay={2} color={theme.room.point} />}
     </>
   )
 }
@@ -76,18 +81,29 @@ function FpsDriver({ fps = 30, active = true }) {
   return null
 }
 
+// Talking-Tom "hero" composition: Pip large, centered, facing the camera, feet low in the frame.
+function heroFrame(top) {
+  // feet ~1/4 up from the bottom; enough width to show the boss / room around Pip
+  return { target: [0, top * 0.5, 0], w: 0.95, h: top * 0.92, elev: 0.1 }
+}
+
 function Scene(props) {
-  const { creature, toon, mood, accessory, env, bossEmoji, bossHp, reaction, onTap, growth, weed, reduced, active } = props
-  const E = ENV_MAP[env] ?? ENV_MAP.room ?? Object.values(ENV_MAP)[0]
+  const { creature, toon, mood, accessory, env, bossEmoji, bossHp, reaction, onTap, growth, weed, reduced, active, hero, mouthRef, theme } = props
+  const T = THEMES[theme] ?? THEMES.day
+  const E = ENV_MAP[env] ?? ENV_MAP.room
   const Env = E.Component
+  const top = (CREATURE_MAP[creature] ?? CREATURE_MAP.blob).spec.top
+  const frame = useMemo(() => (hero ? heroFrame(top) : E.frame), [hero, top, E])
+  const place = hero ? E.hero ?? { pos: [0, 0, 0.2], rotY: 0 } : E.mascot
   return (
+    <ThemeCtx.Provider value={T}>
     <StyleCtx.Provider value={{ toon }}>
       <FpsDriver active={active} />
-      <CameraRig frame={E.frame} sway={!reduced} />
-      <Lights env={env} />
+      <CameraRig frame={frame} sway={!reduced} />
+      <Lights env={env} theme={T} />
       <StudioEnv />
-      <Env bossEmoji={bossEmoji} bossHp={bossHp} growth={growth} weed={weed} reduced={reduced} />
-      <group position={E.mascot.pos} rotation={[0, E.mascot.rotY, 0]} scale={E.mascot.scale ?? 1}>
+      <Env bossEmoji={bossEmoji} bossHp={bossHp} growth={growth} weed={weed} reduced={reduced} hero={hero} />
+      <group position={place.pos} rotation={[0, place.rotY, 0]} scale={place.scale ?? 1}>
         <Mascot
           creature={creature}
           mood={mood}
@@ -95,10 +111,12 @@ function Scene(props) {
           reaction={reaction}
           onTap={onTap}
           reduced={reduced}
-          shadowY={E.shadowY ?? 0.006}
+          mouthRef={mouthRef}
+          shadowY={(hero ? E.heroShadowY : null) ?? E.shadowY ?? 0.006}
         />
       </group>
     </StyleCtx.Provider>
+    </ThemeCtx.Provider>
   )
 }
 

@@ -8,9 +8,8 @@ import { BlobShadow } from '../parts/BlobShadow'
 import { emojiTexture, glowTexture } from '../parts/textures'
 import { squash3 } from '../Mascot'
 import { UI } from '../palette'
+import { useTheme } from '../parts/theme'
 
-const STONE = '#123D35'
-const STONE_TOP = '#17463D'
 const BAR_W = 1.04
 const CORAL = '#F59B76'
 const CORAL_LOW = '#FF6B5E'
@@ -222,7 +221,7 @@ function Boss({ emoji, hp, reduced }) {
       {/* plinth */}
       <mesh position={[0, 0.12, 0]}>
         <cylinderGeometry args={[0.5, 0.56, 0.24, 36]} />
-        <Mat color="#0F2D27" rough={0.35} />
+        <Mat color={useTheme().arena.plinth} rough={0.35} />
       </mesh>
       <mesh position={[0, 0.245, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <ringGeometry args={[0.4, 0.46, 40]} />
@@ -367,6 +366,7 @@ function Boss({ emoji, hp, reduced }) {
 const easeOut = (k) => 1 - Math.pow(1 - k, 3)
 
 function Orb({ position, color, phase = 0 }) {
+  const pillar = useTheme().arena.pillar
   const g = useRef()
   useFrame((s) => {
     if (g.current) g.current.position.y = position[1] + Math.sin(s.clock.elapsedTime * 1.2 + phase) * 0.05
@@ -375,7 +375,7 @@ function Orb({ position, color, phase = 0 }) {
     <group>
       <mesh position={[position[0], position[1] / 2 - 0.1, position[2]]}>
         <cylinderGeometry args={[0.13, 0.17, position[1] - 0.2, 16]} />
-        <Mat color={STONE} rough={0.75} />
+        <Mat color={pillar} rough={0.75} />
       </mesh>
       <group ref={g} position={position}>
         <mesh>
@@ -400,27 +400,64 @@ function Ring({ position, color, r = 0.55 }) {
   )
 }
 
-export function Arena({ bossEmoji = '👾', bossHp = 100, reduced }) {
+// Night: two soft stadium light beams (additive gradient quads; no extra shadow lights).
+function Beams() {
+  return [-1, 1].map((sg) => (
+    <mesh key={sg} position={[sg * 1.5, 1.7, -1.6]} rotation={[0, 0, sg * 0.42]}>
+      <planeGeometry args={[1.1, 3.6]} />
+      <meshBasicMaterial map={beamTexture()} color="#DDEBFF" transparent opacity={0.22} depthWrite={false} toneMapped={false} blending={THREE.AdditiveBlending} />
+    </mesh>
+  ))
+}
+
+let beamTex
+function beamTexture() {
+  if (!beamTex) {
+    const c = document.createElement('canvas')
+    c.width = 64
+    c.height = 128
+    const g = c.getContext('2d')
+    const v = g.createLinearGradient(0, 0, 0, 128)
+    v.addColorStop(0, 'rgba(255,255,255,1)')
+    v.addColorStop(1, 'rgba(255,255,255,0)')
+    g.fillStyle = v
+    g.fillRect(0, 0, 64, 128)
+    const h = g.createLinearGradient(0, 0, 64, 0)
+    h.addColorStop(0, 'rgba(0,0,0,1)')
+    h.addColorStop(0.5, 'rgba(0,0,0,0)')
+    h.addColorStop(1, 'rgba(0,0,0,1)')
+    g.globalCompositeOperation = 'destination-out'
+    g.fillStyle = h
+    g.fillRect(0, 0, 64, 128)
+    beamTex = new THREE.CanvasTexture(c)
+  }
+  return beamTex
+}
+
+export function Arena({ bossEmoji = '👾', bossHp = 100, reduced, hero }) {
+  const A = useTheme().arena
   const hp = THREE.MathUtils.clamp(Number.isFinite(bossHp) ? bossHp : 100, 0, 100)
   return (
     <group>
       <mesh position={[0, -0.16, 0]}>
         <cylinderGeometry args={[2.45, 2.3, 0.32, 56]} />
-        <Mat color={STONE} rough={0.6} coat={0.2} />
+        <Mat color={A.side} rough={0.6} coat={0.2} />
       </mesh>
       <mesh position={[0, 0.001, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <circleGeometry args={[2.3, 56]} />
-        <Mat color={STONE_TOP} rough={0.7} coat={0.15} outline={false} />
+        <Mat color={A.top} rough={0.7} coat={0.15} outline={false} />
       </mesh>
       <mesh position={[0, 0.004, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <ringGeometry args={[2.26, 2.33, 64]} />
-        <meshBasicMaterial color={UI.ice} transparent opacity={0.7} toneMapped={false} />
+        <meshBasicMaterial color={A.rim} transparent opacity={0.8} toneMapped={false} />
       </mesh>
-      <Ring position={[-0.95, 0.006, 0.15]} color={UI.ice} />
-      <Ring position={[1.0, 0.006, -0.1]} color={UI.sunset} r={0.7} />
-      <Orb position={[-2.05, 1.3, -1.2]} color={UI.ice} />
-      <Orb position={[2.05, 1.3, -1.2]} color={UI.sunset} phase={1.7} />
-      <group position={[1.0, 0, -0.1]} rotation={[0, -0.32, 0]}>
+      <Ring position={hero ? [0, 0.006, 0.35] : [-0.95, 0.006, 0.15]} color={A.ring} />
+      <Ring position={hero ? [0.8, 0.006, -1.45] : [1.0, 0.006, -0.1]} color={UI.sunset} r={hero ? 0.5 : 0.7} />
+      <Orb position={hero ? [-1.25, 1.3, -1.9] : [-2.05, 1.3, -1.2]} color={A.orbs[0]} />
+      {A.beams && <Beams />}
+      <Orb position={hero ? [1.7, 1.3, -1.9] : [2.05, 1.3, -1.2]} color={A.orbs[1]} phase={1.7} />
+      {/* hero: the boss stands smaller, behind Pip to the right */}
+      <group position={hero ? [0.8, 0, -1.45] : [1.0, 0, -0.1]} rotation={[0, hero ? -0.3 : -0.32, 0]} scale={hero ? 0.8 : 1}>
         <Boss emoji={bossEmoji} hp={hp} reduced={reduced} />
       </group>
     </group>

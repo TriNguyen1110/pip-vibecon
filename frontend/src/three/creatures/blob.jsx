@@ -5,7 +5,7 @@ import { Mat } from '../parts/Mat'
 import { makeLathe, onLathe } from '../parts/geo'
 import { CREATURE_COLORS } from '../palette'
 
-// "Lilac / Cream": Pip's default form. A soft teardrop with a single cowlick.
+// "Aqua / Cream": Pip's default form. A soft teardrop with a single cowlick.
 const C = CREATURE_COLORS.blob
 const PIVOT = 0.4
 const lathe = makeLathe([

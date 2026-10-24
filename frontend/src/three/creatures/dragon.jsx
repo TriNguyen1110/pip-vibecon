@@ -6,7 +6,7 @@ import { Mat } from '../parts/Mat'
 import { faceOnEllipsoid, onEllipsoid } from '../parts/geo'
 import { CREATURE_COLORS, INK } from '../palette'
 
-// "Aqua / Lilac": stubby baby-free dragon; lilac horns, wings and spikes are the one accent.
+// "Lilac / Lime": stubby dragon; lime horns, wings and spikes are the one accent.
 const C = CREATURE_COLORS.dragon
 const HR = [0.45, 0.4, 0.42]
 const BODY = { c: [0, 0.44, 0], r: [0.4, 0.44, 0.37] }

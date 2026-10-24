@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unknown-property, react-refresh/only-export-components */
-import { Component, Suspense, lazy, useEffect, useRef, useState } from 'react'
+import { Component, Suspense, lazy, memo, useCallback, useEffect, useRef, useState } from 'react'
 
 // Public API (imported by the app). Keep these names and props stable.
 export const CREATURES = ['blob', 'cat', 'dragon', 'axolotl', 'frog', 'bot']
@@ -7,10 +7,17 @@ export const ACCESSORIES = ['none', 'glasses', 'scarf', 'pencil', 'badge', 'back
 export const ENVIRONMENTS = ['room', 'arena', 'garden']
 
 // three.js is code-split: the emoji fallback shows while it loads and on any WebGL error.
-const Stage = lazy(() => import('./Stage.jsx'))
+const LazyStage = lazy(() => import('./Stage.jsx'))
+// Memoized so a fast-changing `mouth` prop (read through a ref) never re-renders the 3D tree.
+const Stage = memo(function Stage(props) {
+  return <LazyStage {...props} />
+})
 
 const FACE = { confused: '🤔', lightbulb: '💡', stuck: '😵', celebrating: '🎉' }
-const GARDEN_SKY = 'linear-gradient(180deg, #A8F4F6 0%, #5FC9E0 100%)'
+const GARDEN_SKY = {
+  day: 'linear-gradient(180deg, #9FDBFF 0%, #BDF5E2 100%)',
+  night: 'linear-gradient(180deg, #0F1838 0%, #2A2F6E 100%)',
+}
 
 let webgl2
 function hasWebGL2() {
@@ -52,7 +59,7 @@ function useInView(ref) {
   return inView
 }
 
-export function StageFallback({ mood = 'confused', env, bossEmoji, bossHp, height = 260, onTap }) {
+export function StageFallback({ mood = 'confused', env, bossEmoji, bossHp, height = 260, onTap, mouth }) {
   const hp = Math.max(0, Math.min(100, Number.isFinite(bossHp) ? bossHp : 100))
   const size = Math.max(40, Math.min(120, height * 0.34))
   return (
@@ -72,7 +79,14 @@ export function StageFallback({ mood = 'confused', env, bossEmoji, bossHp, heigh
         userSelect: 'none',
       }}
     >
-      <span style={{ fontSize: size, lineHeight: 1, filter: 'drop-shadow(0 8px 14px rgba(0,0,0,.35))' }}>{FACE[mood] ?? '🤔'}</span>
+      <span style={{ position: 'relative', display: 'inline-flex', flexDirection: 'column', alignItems: 'center' }}>
+        <span style={{ fontSize: size, lineHeight: 1, filter: 'drop-shadow(0 8px 14px rgba(0,0,0,.35))' }}>{FACE[mood] ?? '🤔'}</span>
+        {Number.isFinite(mouth) && mouth > 0.02 && (
+          <span aria-hidden style={{ fontSize: size * 0.28, lineHeight: 1, marginTop: 4, color: 'currentColor' }}>
+            {mouth > 0.3 ? '●' : '○'}
+          </span>
+        )}
+      </span>
       {env === 'arena' && (
         <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
           <span style={{ fontSize: size * 0.9, lineHeight: 1 }}>{bossEmoji || '👾'}</span>
@@ -121,6 +135,9 @@ export function MascotStage({
   onTap,
   growth,
   weed = false,
+  mouth = 0,
+  framing = 'default',
+  theme = 'day',
 }) {
   // Legacy `look`: bot -> bot, blob -> blob, doodle -> ink-outline toon variant. Only used when creature is absent.
   const resolved = CREATURES.includes(creature) ? creature : look === 'bot' ? 'bot' : 'blob'
@@ -132,9 +149,18 @@ export function MascotStage({
   const inView = useInView(box)
   const [ok] = useState(() => (typeof document === 'undefined' ? false : hasWebGL2()))
   const [lost, setLost] = useState(false)
+  const onLost = useCallback(() => setLost(true), [])
+  // `mouth` changes many times per second: hand it to the scene through a ref.
+  const mouthRef = useRef(0)
+  mouthRef.current = Number.isFinite(mouth) ? Math.max(0, Math.min(1, mouth)) : 0
+  const tapRef = useRef(onTap)
+  tapRef.current = onTap
+  const handleTap = useCallback(() => tapRef.current?.(), [])
+  const hero = framing === 'hero'
+  const safeTheme = theme === 'night' ? 'night' : 'day'
 
   const fallback = (
-    <StageFallback mood={mood} env={safeEnv} bossEmoji={bossEmoji} bossHp={bossHp} height={height} onTap={onTap} />
+    <StageFallback mood={mood} env={safeEnv} bossEmoji={bossEmoji} bossHp={bossHp} height={height} onTap={onTap} mouth={mouth} />
   )
 
   return (
@@ -145,7 +171,7 @@ export function MascotStage({
         width: '100%',
         height,
         borderRadius: safeEnv === 'garden' ? 28 : undefined,
-        background: safeEnv === 'garden' ? GARDEN_SKY : undefined,
+        background: safeEnv === 'garden' ? GARDEN_SKY[safeTheme] : undefined,
         overflow: safeEnv === 'garden' ? 'hidden' : undefined,
       }}
     >
@@ -164,12 +190,15 @@ export function MascotStage({
               bossEmoji={bossEmoji}
               bossHp={bossHp}
               reaction={reaction}
-              onTap={onTap}
+              onTap={handleTap}
               growth={growth}
               weed={weed}
               reduced={reduced}
               active={inView}
-              onContextLost={() => setLost(true)}
+              hero={hero}
+              theme={safeTheme}
+              mouthRef={mouthRef}
+              onContextLost={onLost}
             />
           </Suspense>
         </GLBoundary>

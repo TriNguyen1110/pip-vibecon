@@ -39,6 +39,7 @@ export function Mascot({
   still = false,
   reduced = false,
   shadowY = 0.004,
+  mouthRef,
 }) {
   const C = CREATURE_MAP[creature] ?? CREATURE_MAP.blob
   const spec = C.spec
@@ -63,6 +64,7 @@ export function Mascot({
     lookAt: -10,
     lookDir: 0,
     nextLook: 6 + Math.random() * 4,
+    mouth: 0,
   })
 
   // External reaction counter -> one of the body reactions.
@@ -101,6 +103,11 @@ export function Mascot({
     }
     const bt = t - a.blinkAt
     a.blink = bt >= 0 && bt < 0.12 ? 1 - Math.sin((Math.PI * bt) / 0.12) * 0.95 : 1
+
+    // talking: ~60 ms smoothing of the externally driven mouth openness
+    const target = mouthRef?.current ?? 0
+    a.mouth += (target - a.mouth) * (1 - Math.exp(-dt / 0.06))
+    if (a.mouth < 0.003 && target === 0) a.mouth = 0
 
     for (const m of MOODS) a.w[m] = damp(a.w[m], m === mood ? 1 : 0, 5, dt)
     const W = a.w
@@ -191,7 +198,8 @@ export function Mascot({
       }
     }
 
-    const sy = (1 + 0.02 * breathe - W.stuck * 0.03) * (1 - 0.15 * land) * rsy * (hop > 0.02 ? 1.03 : 1)
+    const talk = reduced ? 0 : a.mouth
+    const sy = (1 + 0.02 * breathe - W.stuck * 0.03) * (1 - 0.15 * land) * rsy * (hop > 0.02 ? 1.03 : 1) * (1 + 0.025 * talk)
     const sx = rsx / Math.sqrt(1 + 0.02 * breathe - W.stuck * 0.03) / Math.sqrt(1 - 0.15 * land)
 
     if (root.current) {
@@ -204,7 +212,8 @@ export function Mascot({
     if (head.current) {
       const k = spec.tilt ?? 1
       head.current.rotation.z = a.tiltZ * k
-      head.current.rotation.x = a.tiltX * k + a.pitch * k
+      // slight head bob on syllable peaks (head lifts as the mouth opens)
+      head.current.rotation.x = a.tiltX * k + a.pitch * k - talk * 0.09 * Math.max(0.6, k)
       head.current.rotation.y = (a.yaw + shake) * Math.max(0.5, k)
     }
     if (shadow.current) {

@@ -7,6 +7,7 @@ import { BlobShadow } from '../parts/BlobShadow'
 import { Sparkles } from '../parts/MoodIcon'
 import { easeOutBack } from '../parts/geo'
 import { Y2K } from '../palette'
+import { useTheme } from '../parts/theme'
 
 const GRASS = '#86D85E'
 const GRASS_DARK = '#6CC24C'
@@ -200,6 +201,7 @@ function Weed({ on }) {
 
 // At most 6 slow bubbles (6-10 s rise), white at .35 with a highlight.
 function Bubbles() {
+  const G = useTheme().garden
   const items = useMemo(
     () =>
       Array.from({ length: 6 }, (_, i) => ({
@@ -227,7 +229,11 @@ function Bubbles() {
     <group key={i} ref={(el) => (refs.current[i] = el)}>
       <mesh>
         <sphereGeometry args={[b.r, 16, 12]} />
-        <meshPhysicalMaterial color="#FFFFFF" transparent opacity={0.35} roughness={0.05} clearcoat={1} depthWrite={false} />
+        {G.glow ? (
+          <meshBasicMaterial color={G.bubble} transparent opacity={0.7} depthWrite={false} toneMapped={false} />
+        ) : (
+          <meshPhysicalMaterial color={G.bubble} transparent opacity={0.35} roughness={0.05} clearcoat={1} depthWrite={false} />
+        )}
       </mesh>
       <mesh position={[-b.r * 0.35, b.r * 0.4, b.r * 0.8]}>
         <sphereGeometry args={[b.r * 0.22, 8, 6]} />
@@ -295,11 +301,11 @@ function Island() {
   )
 }
 
-export function Garden({ growth, weed }) {
+export function Garden({ growth, weed, hero }) {
   return (
     <group>
       <Island />
-      <group position={[-0.72, 0, -0.3]} scale={1.3}>
+      <group position={hero ? [-0.85, 0, -0.75] : [-0.72, 0, -0.3]} scale={1.3}>
         <Tree growth={growth} />
       </group>
       <Weed on={!!weed} />
