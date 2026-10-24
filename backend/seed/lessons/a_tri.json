@@ -28,10 +28,10 @@
         "The shape they make has the same base and height as the triangle (may be implied)"
       ],
       "probe_ladder": [
-        "Why is that wrong? It has a base and a height. I multiplied them.",
-        "If I draw my 6 by 4 triangle inside a 6 by 4 box, does it fill the whole box?",
-        "What is in the empty part of the box? Is it the same shape as my triangle?",
-        "Then a long skinny triangle and a 6 by 4 box with the same base and height take up the same space. That's what my rule says."
+        "why is that wrong? it has a base and a height, so i multiplied them.",
+        "if my 6 by 4 triangle sits in a 6 by 4 box, does it fill the whole box?",
+        "what's in the empty part of the box? same shape as my triangle?",
+        "then a skinny triangle and a 6 by 4 box take up the same space. that's what my rule says."
       ],
       "spoilers": [
         "two triangles make",
@@ -51,10 +51,10 @@
         "Walks the example, or corrects Pip's wrong prediction (like adding 6 + 4)"
       ],
       "probe_ladder": [
-        "How big is the shape they make together?",
-        "Walk me through a 6 by 4 rectangle. How do you get its area?",
-        "I'll guess: a 6 by 4 rectangle is 6 + 4 = 10 squares. Is that right? Count them for me.",
-        "Then a 6 by 4 rectangle and a 6 by 4 triangle are both 24. That's what my rule says."
+        "how big is the shape they make together?",
+        "walk me through a 6 by 4 rectangle. how do you get its area?",
+        "i'll guess a 6 by 4 rectangle is 6 + 4 = 10 squares. is that right?",
+        "then a 6 by 4 rectangle and a 6 by 4 triangle are both 24. that's what my rule says."
       ],
       "spoilers": [
         "4 rows of 6",
@@ -71,10 +71,10 @@
         "Applies it: base × height ÷ 2 on an example (6 × 4 ÷ 2 = 12)"
       ],
       "probe_ladder": [
-        "Why would a triangle get less than base times height? I multiplied them.",
-        "Does a triangle with base 6 and height 4 cover all 24 squares of a 6 by 4 box?",
-        "Is a triangle with base 8 and height 3 bigger than one with base 6 and height 4? Show me how you know.",
-        "Then a triangle that covers only part of a 6 by 4 box is still 24, the same as the whole box. That's what my rule says."
+        "why would a triangle get less than base times height?",
+        "does a 6 by 4 triangle cover all 24 squares of a 6 by 4 box?",
+        "is a triangle with base 8 and height 3 bigger than one with base 6 and height 4?",
+        "then a triangle covering part of a 6 by 4 box is still 24, same as the whole box. that's what my rule says."
       ],
       "spoilers": [
         "half",
@@ -92,7 +92,7 @@
   "offline_demo": {
     "assignment_id": "a_tri",
     "student_id": "s001",
-    "note": "Maya's main demo (CONTRACT v3.6). Pip's opening is the server's templated claim: 'I'm learning area of a triangle. I already know one rule: Area of a triangle is base times height, so a 6 by 4 triangle is 24. Easy.' Turns 1-3 are three one-sentence texts that bring every concept to level 2 (ready for quiz). Turn 4 is the deliberate wrong rule (heal) that makes Pip miss the right-triangle question; turn 5 is the re-teach (level 3: applied to the new case). 'rung' is the 1-based probe_ladder rung Pip ends the reply on, for 'next_concept_id'. 'also' lists other concepts the same message moves. Every quote after 'Saving that:' is a verbatim substring of that turn's student message.",
+    "note": "Maya's main demo (CONTRACT v3.6). Pip's opening is the server's templated claim: 'I'm learning area of a triangle. I already know one rule: Area of a triangle is base times height, so a 6 by 4 triangle is 24. Easy.' Turns 1-3 are three one-sentence texts that bring every concept to level 2 (ready for quiz). Turn 4 is the deliberate wrong rule (heal) that makes Pip miss the right-triangle question; turn 5 is the re-teach (level 3: applied to the new case). 'rung' is the 1-based probe_ladder rung Pip ends the reply on, for 'next_concept_id'. 'also' lists other concepts the same message moves. Every quote after 'Saving that:' is a verbatim substring of that turn's student message. PACE-1: every Pip reply is at most 2 short sentences besides the 'Saving that' filing, a 'so you're saying' paraphrase appears at most every other turn (8 words max), nothing already given is re-asked, and the turn marked ready_for_quiz ends with 'ok i think i get it. quiz me?'.",
     "turns": [
       {
         "n": 1,
@@ -105,7 +105,7 @@
         "filed_rule": "",
         "next_concept_id": "k3",
         "rung": 1,
-        "pip": "So you're saying my 24 is too much, and the triangle is half of it. Why would a triangle get less than base times height? I multiplied them."
+        "pip": "so you're saying 24 is too much. why would a triangle get less than base times height?"
       },
       {
         "n": 2,
@@ -118,7 +118,7 @@
         "filed_rule": "because 2 triangles make a rectangle",
         "next_concept_id": "k2",
         "rung": 1,
-        "pip": "So you're saying two of my triangles fit together into one rectangle. Saving that: 'because 2 triangles make a rectangle'. How big is the shape they make together?"
+        "pip": "Saving that: 'because 2 triangles make a rectangle'. how big is the shape they make together?"
       },
       {
         "n": 3,
@@ -137,7 +137,8 @@
         "filed_rule": "so 6×4÷2 = 12",
         "next_concept_id": null,
         "rung": null,
-        "pip": "So you're saying the rectangle is 6 times 4, which is 24, and my triangle is half of it, so 12. Saving that: 'so 6×4÷2 = 12'. That's all three things in my brain."
+        "pip": "Saving that: 'so 6×4÷2 = 12'. ok i think i get it. quiz me?",
+        "ready_for_quiz": true
       },
       {
         "n": 4,
@@ -150,13 +151,13 @@
         "filed_rule": "for a right triangle you just times the two sides",
         "next_concept_id": null,
         "rung": null,
-        "pip": "Saving that: 'for a right triangle you just times the two sides'. A special rule for corners. I like special rules."
+        "pip": "Saving that: 'for a right triangle you just times the two sides'. a special rule for corners."
       },
       {
         "n": 5,
         "phase": "reteach",
         "reteach_concept_id": "k3",
-        "pip_ask": "My brain has a bug. Help me fix it: what is the area of a right triangle with base 10 and height 5?",
+        "pip_ask": "my brain has a bug. help me fix it: what's the area of a right triangle with base 10 and height 5?",
         "student": "no a right triangle is still half a rectangle so its 10×5÷2 = 25",
         "kind": "explain",
         "concept_id": "k3",
@@ -165,7 +166,7 @@
         "filed_rule": "a right triangle is still half a rectangle",
         "next_concept_id": null,
         "rung": null,
-        "pip": "So you're saying a corner doesn't change anything, and it's still half of the rectangle. Saving that: 'a right triangle is still half a rectangle'. That replaces my corner rule."
+        "pip": "so you're saying corners don't change anything. Saving that: 'a right triangle is still half a rectangle'."
       }
     ],
     "quiz": [
@@ -185,7 +186,7 @@
         "concept_id": "k3",
         "passed": false,
         "pip_answer": "50",
-        "line": "Your rule for right triangles: just times the two sides. 10 × 5 = 50. That's the whole 10 by 5 rectangle, and my triangle only covers part of it. Following your rule anyway. 😵"
+        "line": "Your rule for right triangles: times the two sides. 10 × 5 = 50, which is the whole rectangle. Following your rule anyway. 😵"
       }
     ],
     "retry": [
@@ -193,7 +194,7 @@
         "concept_id": "k3",
         "passed": true,
         "pip_answer": "25",
-        "line": "10 times 5 is 50 for the whole rectangle. A right triangle is still half of it. 25."
+        "line": "The whole 10 by 5 rectangle is 50. A right triangle is still half of it, so 25."
       }
     ]
   }

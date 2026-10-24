@@ -29,10 +29,10 @@
         "Shows it on an example (for example, taking 6 off both sides of 2x + 6 = 20)"
       ],
       "probe_ladder": [
-        "Why is that wrong? The 6 just moved to the other side. Nothing got lost.",
-        "If I take the 6 away from only the left side of 2x + 6 = 20, are the two sides still equal?",
-        "Say a scale has 2 boxes and 6 marbles on one side and 20 marbles on the other, and it's level. What can I take off without it tipping?",
-        "Then x + 3 = 5 turns into x = 8, because the 3 moves over and stays +3. And 8 + 3 is 5? That's what my rule says."
+        "why is that wrong? the 6 just moved over, nothing got lost.",
+        "if i take 6 off only the left side of 2x + 6 = 20, are the sides still equal?",
+        "a level scale has 2 boxes and 6 marbles on one side and 20 marbles on the other. what can i take off without tipping it?",
+        "then x + 3 = 5 turns into x = 8, because the 3 moves over and stays +3. that's what my rule says."
       ],
       "spoilers": [
         "same thing to both sides",
@@ -52,10 +52,10 @@
         "Undoes the adding before the multiplying, or corrects Pip when Pip does it wrong"
       ],
       "probe_ladder": [
-        "Then how do I get x by itself without tipping anything?",
-        "Walk me through 2x + 6 = 20 one line at a time. What does it look like after each step?",
-        "I'll try 3x = 15 myself: I take 3 away from both sides and get x = 12. Is that right? What do I do instead?",
-        "Then for 2x + 6 = 20 I can divide just the 2x by 2 and get x + 6 = 10. That's what my rule says."
+        "then how do i get x by itself without tipping anything?",
+        "i'll try 3x = 15: take 3 off both sides, so x = 12. is that right?",
+        "walk me through 5x + 2 = 17 one line at a time?",
+        "then for 2x + 6 = 20 i divide just the 2x by 2 and get x + 6 = 10. that's what my rule says."
       ],
       "spoilers": [
         "inverse operation",
@@ -75,10 +75,10 @@
         "Does the check on an example and reports both sides"
       ],
       "probe_ladder": [
-        "How would I know if my answer is actually right?",
-        "If I say x = 10 for 2x + 6 = 20, how could you prove I'm wrong without solving it again?",
-        "I'll try: I put my answer into the last line I wrote, it works, so I'm done checking. Is that the right line to check?",
-        "Then if I put x = 10 into 2x + 6 = 20 and get 26, I can keep x = 10, because 26 is close to 20. Close is fine?"
+        "how would i know if my answer is actually right?",
+        "if i say x = 10 for 2x + 6 = 20, how do you prove i'm wrong without solving again?",
+        "i put my answer into the last line i wrote and it worked. is that the right line to check?",
+        "then if x = 10 gives 26 instead of 20, i keep it, because 26 is close. close is fine?"
       ],
       "spoilers": [
         "plug it back in",
@@ -92,7 +92,7 @@
   "offline_demo": {
     "assignment_id": "a_sat_linear",
     "student_id": "s009",
-    "note": "Dev's SAT Math run, same beats as the fractions demo: why-question, refusal, real explanation (hit), procedure only (next rung), real explanations for k2 and k3 (hits), a shortcut that is the misconception (heal, sets up the k2 quiz miss), re-teach that applies the fix to the quiz equation and checks it (level 3, critical). Pip's opening is the server's templated claim from the misconception. 'rung' is the 1-based probe_ladder rung Pip ends the reply on, for 'next_concept_id'. Every quote after 'Saving that:' is a verbatim substring of that turn's student message. Kinds: k1 reason (Pip asks why); k2 and k3 procedure (Pip asks for a walk-through of one example or predicts wrong and gets corrected).",
+    "note": "Dev's SAT Math run, same beats as the fractions demo: why-question, refusal, real explanation (hit), procedure only (next rung), real explanations for k2 and k3 (hits), a shortcut that is the misconception (heal, sets up the k2 quiz miss), re-teach that applies the fix to the quiz equation and checks it (level 3, critical). Pip's opening is the server's templated claim from the misconception. 'rung' is the 1-based probe_ladder rung Pip ends the reply on, for 'next_concept_id'. Every quote after 'Saving that:' is a verbatim substring of that turn's student message. Kinds: k1 reason (Pip asks why); k2 and k3 procedure (Pip asks for a walk-through of one example or predicts wrong and gets corrected). PACE-1: every Pip reply is at most 2 short sentences besides the 'Saving that' filing, a 'so you're saying' paraphrase appears at most every other turn (8 words max), nothing already given is re-asked, and the turn marked ready_for_quiz ends with 'ok i think i get it. quiz me?'.",
     "turns": [
       {
         "n": 1,
@@ -105,7 +105,7 @@
         "filed_rule": "",
         "next_concept_id": "k1",
         "rung": 1,
-        "pip": "Why is that wrong? The 6 just moved to the other side. Nothing got lost."
+        "pip": "why is that wrong? the 6 just moved over, nothing got lost."
       },
       {
         "n": 2,
@@ -118,7 +118,7 @@
         "filed_rule": "",
         "next_concept_id": "k1",
         "rung": null,
-        "pip": "I don't know the answer either. That's why I need you. Why is moving the 6 wrong?"
+        "pip": "i don't know it either. that's why i need you."
       },
       {
         "n": 3,
@@ -131,7 +131,7 @@
         "filed_rule": "if you take 6 off one side you have to take 6 off the other side or it tips",
         "next_concept_id": "k2",
         "rung": 1,
-        "pip": "So you're saying the equals sign is a scale, and anything I take off one side I take off the other. Saving that: 'if you take 6 off one side you have to take 6 off the other side or it tips'. Then how do I get x by itself without tipping anything?"
+        "pip": "so you're saying it's a balance scale. Saving that: 'if you take 6 off one side you have to take 6 off the other side or it tips'. then how do i get x by itself without tipping anything?"
       },
       {
         "n": 4,
@@ -144,33 +144,34 @@
         "filed_rule": "",
         "next_concept_id": "k2",
         "rung": 2,
-        "pip": "So you're saying take 6 away on both sides, then divide by 2. Walk me through 2x + 6 = 20 one line at a time. What does it look like after each step?"
+        "pip": "i'll try 3x = 15: take 3 off both sides, so x = 12. is that right?"
       },
       {
         "n": 5,
         "phase": "teach",
-        "student": "first take 6 off both sides so its 2x = 14, because minus 6 cancels the plus 6. then divide both sides by 2 because dividing undoes times 2. so x = 7",
+        "student": "no the 3 is times x so you divide both sides by 3 and get x = 5, dividing undoes times",
         "kind": "explain",
         "concept_id": "k2",
         "level": 2,
         "event": "hit",
-        "filed_rule": "dividing undoes times 2",
+        "filed_rule": "dividing undoes times",
         "next_concept_id": "k3",
         "rung": 1,
-        "pip": "So you're saying each step undoes something that was done to x. Saving that: 'dividing undoes times 2'. How would I know if my answer is actually right?"
+        "pip": "Saving that: 'dividing undoes times'. how would i know if my answer is actually right?"
       },
       {
         "n": 6,
         "phase": "teach",
-        "student": "just plug 7 back in. 2 times 7 plus 6 is 20, and the other side is 20, so both sides match",
+        "student": "just plug 5 back in. 3 times 5 is 15, and the other side is 15, so both sides match",
         "kind": "explain",
         "concept_id": "k3",
         "level": 2,
         "event": "hit",
-        "filed_rule": "2 times 7 plus 6 is 20, and the other side is 20, so both sides match",
+        "filed_rule": "3 times 5 is 15, and the other side is 15, so both sides match",
         "next_concept_id": null,
         "rung": null,
-        "pip": "So you're saying I put 7 where the x was, and if both sides come out the same, it's right. Saving that: '2 times 7 plus 6 is 20, and the other side is 20, so both sides match'. That's all three things in my brain."
+        "pip": "Saving that: '3 times 5 is 15, and the other side is 15, so both sides match'. ok i think i get it. quiz me?",
+        "ready_for_quiz": true
       },
       {
         "n": 7,
@@ -183,13 +184,13 @@
         "filed_rule": "the fast way is you just move the number to the other side",
         "next_concept_id": null,
         "rung": null,
-        "pip": "Saving that: 'the fast way is you just move the number to the other side'. Fast is good. I'll use that one."
+        "pip": "Saving that: 'the fast way is you just move the number to the other side'. fast is good."
       },
       {
         "n": 8,
         "phase": "reteach",
         "reteach_concept_id": "k2",
-        "pip_ask": "My brain has a bug. Help me fix it: what happens to the 4 in 3x + 4 = 19 when it moves?",
+        "pip_ask": "my brain has a bug. help me fix it: what happens to the 4 in 3x + 4 = 19 when it moves?",
         "student": "no wait. moving it is really subtracting 4 from both sides, so the plus 4 turns into minus 4 on the other side. 3x = 19 - 4 = 15 so x = 5. and 3 times 5 plus 4 is 19 so it checks",
         "kind": "explain",
         "concept_id": "k2",
@@ -198,7 +199,7 @@
         "filed_rule": "moving it is really subtracting 4 from both sides",
         "next_concept_id": null,
         "rung": null,
-        "pip": "So you're saying moving is secretly subtracting from both sides, so the 4 changes sign on the way over. Saving that: 'moving it is really subtracting 4 from both sides'. That replaces my fast rule."
+        "pip": "so you're saying moving is secretly subtracting. Saving that: 'moving it is really subtracting 4 from both sides'."
       }
     ],
     "quiz": [
@@ -206,19 +207,19 @@
         "concept_id": "k1",
         "passed": true,
         "pip_answer": "No. Take 6 off both sides: 2x = 14.",
-        "line": "No. You said if you take 6 off one side you take 6 off the other, or it tips. So 2x = 14."
+        "line": "No. You said take 6 off both sides or it tips, so 2x = 14."
       },
       {
         "concept_id": "k2",
         "passed": false,
         "pip_answer": "x = 23/3",
-        "line": "Your rule: just move the number to the other side. 3x + 4 = 19 became 3x = 19 + 4 = 23, so x = 23/3. I put it back in like you taught me and got 27, not 19. Following your rule anyway. 😵"
+        "line": "Your rule: just move the number. 3x = 19 + 4, so x = 23/3, and checking it gives 27, not 19. Following your rule anyway. 😵"
       },
       {
         "concept_id": "k3",
         "passed": true,
         "pip_answer": "Yes: 5(4) - 3 = 17",
-        "line": "5 times 4 minus 3 is 17. The other side is 17. Both sides match, so yes."
+        "line": "5 times 4 minus 3 is 17, same as the other side. So yes."
       }
     ],
     "retry": [
@@ -226,7 +227,7 @@
         "concept_id": "k2",
         "passed": true,
         "pip_answer": "x = 5",
-        "line": "3x + 4 = 19. Take 4 off both sides: 3x = 15. Divide both sides by 3: x = 5. I put it back in: 3 times 5 plus 4 is 19. Both sides match."
+        "line": "Take 4 off both sides: 3x = 15, so x = 5. Checking: 3 times 5 plus 4 is 19."
       }
     ]
   }
