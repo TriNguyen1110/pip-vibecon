@@ -92,3 +92,28 @@ Errors: non-2xx with `{detail}`. AI calls can take a few seconds; the UI shows
 8. **No XP in the UI.** Boss taunts while typing are frontend templates using `boss.name`.
 9. **Demo safety:** `PIP_FORCE_OFFLINE=1` runs the scripted fractions demo deterministically (labeled
    "offline demo"); the saved session is a complete, re-taught K.O. run with a gap report.
+
+## v3 additions (Saturday evening; additive, nothing above changes)
+```
+Lesson       { standard, source, attribution, in_scope: string[], out_of_scope: string[],
+               concepts: [{ concept_id, look_fors: string[], probe_ladder: string[4],
+                            spoilers: string[], friend_nudge }] }
+               // stored on Assignment as `lesson`; hidden from students; tutor can edit ladder/look-fors
+Event        { ..., level?: 0|1|2|3 }      // rubric level of the explanation that produced the event
+GapConcept   { ..., stuck: bool }          // true when the probe ladder ran out without a level-2 explanation
+Session      { ..., opening_source: "claim"|"past_self" }  // past_self = Pip believes the student's own
+                                                           // last unfixed misconception ("someone told me…")
+AtRisk       { student_id, name, reasons: string[] }      // plain-language reasons, tutor/owner only
+```
+| Method + path | Body | Returns |
+|---|---|---|
+| GET `/api/center/at-risk` | | `{students: AtRisk[]}` (stuck after the full ladder, no return on their own in 14 days, or no parent update in 14 days) |
+
+Rules: rubric levels 0 none/off-topic (+0), 1 procedure without reason (+5, no damage), 2 reason tied to meaning
+(+25, hit), 3 reason + applied to a new case (+40, critical). Pip asks only from the current concept's
+`probe_ladder`, in order; the server replaces any reply that contains a `spoilers` string with the next ladder
+rung. Out-of-scope topics get "Not in my brain yet." and are noted for the tutor. After the last rung Pip offers
+the concept's `friend_nudge` (a hint framed as something a friend said, never the answer), then moves on and
+marks the concept `stuck` if still below level 2. Pip talks like a confused friend: paraphrases back ("So you're
+saying…"), never "Correct!", never teacher phrases. Seeded missions: `a_frac` (Maya, fractions) and `a_sat_commas`
+(a different student, SAT Writing: commas and run-ons), both hand-written and offline-capable.
