@@ -1,10 +1,13 @@
 import { useEffect, useId, useRef, useState } from 'react'
 import { BLUSH, BOSS_TINT, EYE, MOOD_ALIASES, MOUTH, TONGUE } from './tokens'
 import { CREATURE_DEFS } from './creatures'
-import { mix } from './shapes'
+import { mix, Shape } from './shapes'
+import { ellipsePoints } from './fuzz'
+import { HalfPinArt, FixedStarArt } from './earned'
 import { ACCESSORIES_2D, Y2KDefs, Gel, Glint, Sparkles, StarClips, Charm, FrostVisor, Shades, HoloBandAid, RimLight, starPath } from './y2k'
 
 export { ACCESSORIES_2D }
+export { Sticker2D, ComebackFrame, EARNED_ITEMS } from './earned'
 import './pip2d.css'
 
 // Pip as a flat, hand-inked 2D character. viewBox 200 x 220, no dependencies.
@@ -183,7 +186,7 @@ function talkShape(mouth) {
   return 'o'
 }
 
-function Sprout({ pose, anchor, t, flower, tint, gid }) {
+function Sprout({ pose, anchor, t, flower, tint, gid, grown }) {
   const sp = SPROUTS[pose] ?? SPROUTS.droop
   const col = tint ?? (anchor.yuzu ? '#7CC46A' : t.body)
   const [tx, ty] = sp.tip
@@ -211,6 +214,14 @@ function Sprout({ pose, anchor, t, flower, tint, gid }) {
         )}
         <path d={sp.d} fill="none" stroke={t.ink} strokeWidth="13" strokeLinecap="round" strokeLinejoin="round" />
         <path d={sp.d} fill="none" stroke={col} strokeWidth="6.5" strokeLinecap="round" strokeLinejoin="round" />
+        {grown && !bulb && (
+          // v2: a second leaf on the stem + a small glowing bud
+          <g>
+            <ellipse cx="91" cy="33" rx="7.5" ry="4.5" transform="rotate(30 91 33)" fill={col} stroke={t.ink} strokeWidth="3" />
+            <circle className="pip2d-glow" cx={tx + 6} cy={ty - 6} r="7" fill="#FFF3A0" />
+            <circle cx={tx + 6} cy={ty - 6} r="3.6" fill="#FFD25A" stroke={t.ink} strokeWidth="2" />
+          </g>
+        )}
         {pose === 'crown' && (
           <path d={`M${tx - 20},${ty + 8} L${tx - 22},${ty - 10} L${tx - 11},${ty - 2} L${tx},${ty - 22} L${tx + 11},${ty - 2} L${tx + 22},${ty - 10} L${tx + 20},${ty + 8} Z`} fill="#FFD25A" stroke={t.ink} strokeWidth="3.4" strokeLinejoin="round" />
         )}
@@ -245,6 +256,8 @@ function Sprout({ pose, anchor, t, flower, tint, gid }) {
 function Accessory({ type, t, A, id, hx0, hx1, visorY }) {
   const [L, R] = A.eyes
   if (type === 'starclips') return <StarClips id={id} A={A} t={t} />
+  if (type === 'half_pin') return <HalfPinArt x={A.badge[0]} y={A.badge[1]} s={1.5} id={id} ink={t.ink} />
+  if (type === 'fixed_it_star') return <FixedStarArt x={A.badge[0]} y={A.badge[1]} s={1.4} id={id} ink={t.ink} />
   if (type === 'charm') return <Charm id={id} A={A} t={t} />
   if (type === 'visor') return <FrostVisor id={id} hx0={hx0} hx1={hx1} y={visorY} t={t} />
   if (type === 'shades') return <Shades id={id} A={A} t={t} />
@@ -396,6 +409,7 @@ export function Pip2D({
   depth = false,
   tilt,
   holo = false,
+  version,
   className = '',
   title,
 }) {
@@ -409,7 +423,10 @@ export function Pip2D({
   const cute = vibe === 'cute'
   const cool = vibe === 'cool'
   const ugly = vibe === 'ugly'
-  const awakened = form === 'awakened'
+  // evolution: v1 base, v2 grown, v3 awakened (form="awakened" is v3)
+  const ver = form === 'awakened' ? 3 : Math.max(1, Math.min(3, Number(version) || 1))
+  const awakened = ver === 3
+  const grown = ver >= 2
   // vibe defaults when no accessory is chosen: cute = star clips, cool = frosted visor
   const acc = accessory === 'none' ? (cute ? 'starclips' : cool ? 'visor' : 'none') : accessory
   const id = useId().replace(/:/g, '')
@@ -419,8 +436,8 @@ export function Pip2D({
 
   // eyes: cool = permanent ~60% lid; ugly = tired (heavier lids + bags)
   const lids = (spec.lids ?? [0.35, 0.37]).map((l) => {
-    const v = ugly ? Math.min(0.6, l + 0.15) : l
-    return cool ? Math.max(v, 0.6) : v
+    const v = (ugly ? Math.min(0.6, l + 0.15) : l) - (grown ? 0.05 : 0)
+    return Math.max(0, cool ? Math.max(v, 0.6) : v)
   })
   const sizes = spec.scale ?? [1, 1]
   const plainEyes = !['arcs', 'spiral', 'dots'].includes(spec.eyes)
@@ -476,6 +493,17 @@ export function Pip2D({
           <ellipse cx="100" cy="128" rx="86" ry="90" fill="none" stroke="#C9FCFC" strokeWidth="2.5" opacity="0.8" />
         </g>
       )}
+      {awakened && (
+        // v3: cape-like fluffy back tuft peeking out at the shoulders
+        <Shape
+          pts={ellipsePoints(100, A.neck.y + 4, (A.neck.x1 - A.neck.x0) / 2 + 16, 38)}
+          fur={{ key: `cape-${def.name}`, seed: 77, amp: 3.6, spacing: 7, tuftChance: 0.35 }}
+          fill={mix(t.body, '#ffffff', 0.25)}
+          shade={t.shade}
+          ink={t.ink}
+          uid={`${id}cape`}
+        />
+      )}
       {acc === 'backpack' && <BackpackBehind t={t} A={A} />}
       {split && (
         <g>
@@ -521,7 +549,15 @@ export function Pip2D({
   )
   const sprout = (
     <>
-      <Sprout pose={awakened ? 'crown' : spec.sprout} anchor={A.sprout} t={t} flower={false} tint={m === 'possessed' ? BOSS_TINT : undefined} gid={id} />
+      {grown && (
+        // v2+: a bigger head tuft around the sprout
+        <g>
+          {[-1, 1, 0].map((k) => (
+            <ellipse key={k} cx={A.sprout.x + k * 10} cy={A.sprout.y + (A.sprout.yuzu ? 22 : 6) - (k === 0 ? 3 : 0)} rx="6" ry="10" transform={`rotate(${k * 35} ${A.sprout.x + k * 10} ${A.sprout.y + (A.sprout.yuzu ? 22 : 6)})`} fill={t.body} stroke={t.ink} strokeWidth="2.6" />
+          ))}
+        </g>
+      )}
+      <Sprout pose={awakened ? 'crown' : spec.sprout} anchor={A.sprout} t={t} flower={false} tint={m === 'possessed' ? BOSS_TINT : undefined} gid={id} grown={grown} />
       {(m === 'aha' || m === 'proud') && <Sparkles A={A} />}
     </>
   )
@@ -530,6 +566,26 @@ export function Pip2D({
     <>
       {m === 'notes' && <Notebook t={t} A={A} />}
       {m === 'overwhelmed' && <SweatDrop at={A.sweat} />}
+      {grown && acc !== 'scarf' && (
+        // level-up collar: a slim glossy holo band with a star tag
+        <g>
+          <path d={`M${A.neck.x0 + 14},${A.neck.y - 3} Q100,${A.neck.y + 7} ${A.neck.x1 - 14},${A.neck.y - 4}`} fill="none" stroke={t.ink} strokeWidth="9" strokeLinecap="round" />
+          <path d={`M${A.neck.x0 + 14},${A.neck.y - 3} Q100,${A.neck.y + 7} ${A.neck.x1 - 14},${A.neck.y - 4}`} fill="none" stroke={`url(#${id}holo)`} strokeWidth="5" strokeLinecap="round" />
+          <path d={starPath(100, A.neck.y + 10, 6.5)} fill="#FFD25A" stroke={t.ink} strokeWidth="2" strokeLinejoin="round" />
+        </g>
+      )}
+      {awakened && (
+        // v3: star-glint fur sheen
+        <g>
+          {[
+            [A.blush[0][0] - 6, A.blush[0][1] + 24, 4.5],
+            [A.blush[1][0] + 4, A.blush[1][1] + 30, 5.5],
+            [A.head.cx + A.head.w * 0.36, A.head.top + 26, 4],
+          ].map(([x, y, r], i) => (
+            <Glint key={i} x={x} y={y} r={r} />
+          ))}
+        </g>
+      )}
       {ugly && <HoloBandAid A={A} t={t} id={id} />}
       {ugly && acc !== 'starclips' && <StarClips id={id} A={A} t={t} bent />}
       <Accessory type={acc} t={t} A={A} id={id} hx0={hx0} hx1={hx1} visorY={visorY} />

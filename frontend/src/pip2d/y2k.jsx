@@ -1,7 +1,7 @@
 // Y2K finish for the soft Pips: gel shine, holo/chrome gradients, star clips, charm, frosted visor, shield shades.
 // Everything reads from the SVG's shared defs (Y2KDefs) so each Pip adds only a few gradients.
 
-export const ACCESSORIES_2D = ['none', 'glasses', 'scarf', 'pencil', 'badge', 'backpack', 'starclips', 'charm', 'visor', 'shades']
+export const ACCESSORIES_2D = ['none', 'glasses', 'scarf', 'pencil', 'badge', 'backpack', 'starclips', 'charm', 'visor', 'shades', 'half_pin', 'fixed_it_star']
 
 export function Y2KDefs({ id }) {
   return (

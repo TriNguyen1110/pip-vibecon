@@ -14,14 +14,14 @@ export const BOSS_NAMES = {
   walrus: 'Top-Top Bottom-Bottom',
   penguin: 'Pause-Pause Penguin',
   hamster: 'Hop-Hop Hamster',
-  triangle: 'Triangle boss', // placeholder until content names it (a_tri.assignment.json)
+  triangle: 'Duke Doublecount',
 }
 
 // Pick a boss by id, or by keywords in the lesson's boss name / backstory.
 export function bossIdFor(idOrName = '') {
   const s = String(idOrName).toLowerCase()
   if (BOSS_NAMES[s]) return s
-  if (/triangle|△|tri\b|area|b\s*[×x*]\s*h|base.*height/.test(s)) return 'triangle'
+  if (/doublecount|duke|peacock|triangle|△|tri\b|area|b\s*[×x*]\s*h|base.*height/.test(s)) return 'triangle'
   if (/walrus|top-top|bottom-bottom|fraction/.test(s)) return 'walrus'
   if (/penguin|pause|comma/.test(s)) return 'penguin'
   if (/hamster|hop-hop|suitcase/.test(s)) return 'hamster'
@@ -299,48 +299,93 @@ function Hamster({ state, id }) {
   )
 }
 
-// Placeholder triangle boss: a smug glossy triangle who forgot the 1/2, holding up "△ = b × h".
-function Triangle({ state, id }) {
-  const fill = '#FF6F5E'
-  const shade = '#D9503F'
+// Duke Doublecount (boss id "triangle"): a smug aristocratic peacock in a tiny cape, holding "△ = b × h".
+// He claims the whole rectangle every time: his tail fan is a big rectangle. Each hit divides it by two:
+// cracked = folded diagonally into a triangle; K.O. = folded flat in half.
+function Peacock({ state, id }) {
+  const blue = '#2F62D9'
+  const blueShade = '#2147A8'
   const ko = state === 'ko'
-  const BODY = 'M98,54 Q110,34 122,54 L188,184 Q197,203 176,203 L44,203 Q23,203 32,184 Z'
+  const FAN = 'M48,14 H172 Q198,14 198,40 V124 Q198,150 172,150 H48 Q22,150 22,124 V40 Q22,14 48,14 Z'
+  const spots = []
+  for (const y of [40, 78, 116]) for (const x of [50, 90, 130, 170]) spots.push([x, y])
+  const fanClip =
+    state === 'cracked'
+      ? 'M18,154 L202,154 L18,10 Z' // half of the rectangle: a triangle
+      : ko
+        ? 'M18,10 L110,10 L110,154 L18,154 Z' // folded flat in half
+        : 'M10,6 H210 V160 H10 Z'
   return (
-    <g transform={ko ? 'rotate(-12 110 220)' : undefined}>
-      <V d={ell(80, 210, 15, 9)} fill="#2E2140" uid={`${id}l1`} w={3.6} />
-      <V d={ell(140, 210, 15, 9)} fill="#2E2140" uid={`${id}l2`} w={3.6} />
-      {/* hand on hip */}
-      <V d="M40,170 C22,160 20,140 30,132 C38,140 40,152 50,158 Z" fill={fill} shade={shade} uid={`${id}a1`} />
-      <V d={BODY} fill={fill} shade={shade} uid={`${id}b`} sx={-14} sy={-10} />
-      <path d="M64,190 L156,190" stroke="#FFD0C4" strokeWidth="10" strokeLinecap="round" opacity="0.6" />
-      <Gloss x={92} y={84} rx={14} ry={5.5} rot={-55} />
-      <ellipse cx="78" cy="150" rx="7" ry="13" transform="rotate(25 78 150)" fill="#fff" opacity="0.5" filter={`url(#${id}gel)`} />
-      <BossEyes L={[92, 128]} R={[128, 127]} r={8} state={state} lid={fill} />
-      {state === 'smug' && <path d="M96,156 Q112,164 126,150" fill="none" stroke={INK} strokeWidth="4" strokeLinecap="round" />}
-      {state === 'cracked' && <path d="M96,158 L104,154 L112,158 L120,154 L128,158" fill="none" stroke={INK} strokeWidth="3.6" strokeLinecap="round" strokeLinejoin="round" />}
-      {ko && <ellipse cx="111" cy="158" rx="8" ry="6" fill="#3A1426" stroke={INK} strokeWidth="3" />}
-      {/* the sign, held up high */}
+    <g transform={ko ? 'rotate(-10 110 232)' : undefined}>
+      <defs>
+        <clipPath id={`${id}fan`}>
+          <path d={fanClip} />
+        </clipPath>
+      </defs>
+      {/* the rectangle tail fan */}
+      <g transform={ko ? 'translate(0 22) scale(1 0.86)' : undefined}>
+        {state === 'cracked' && <path d="M22,14 L198,150 L198,40 Q198,14 172,14 Z" fill="#1F8C82" opacity="0.28" />}
+        <g clipPath={`url(#${id}fan)`}>
+          <V d={FAN} fill="#2FB5A8" shade="#23968B" uid={`${id}f`} sx={-12} sy={-8} />
+          {spots.map(([x, y], i) => (
+            <path key={`r${i}`} d={`M110,168 L${x},${y}`} stroke="#1F7C73" strokeWidth="2" opacity="0.6" />
+          ))}
+          {spots.map(([x, y], i) => (
+            <g key={i}>
+              <ellipse cx={x} cy={y} rx="13" ry="15" fill="#F2C14E" stroke={INK} strokeWidth="2.4" />
+              <ellipse cx={x} cy={y + 1} rx="8.5" ry="10.5" fill="#2E7FD6" />
+              <ellipse cx={x} cy={y + 2} rx="4.5" ry="6" fill="#1B2560" />
+              <circle cx={x - 3} cy={y - 4} r="2" fill="#fff" />
+            </g>
+          ))}
+        </g>
+        {state === 'cracked' && <path d="M22,14 L198,150" stroke={INK} strokeWidth="4" strokeLinecap="round" strokeDasharray="10 5" />}
+        {ko && <path d="M110,14 L110,150" stroke={INK} strokeWidth="4" strokeLinecap="round" strokeDasharray="10 5" />}
+      </g>
+      {/* legs */}
+      <path d="M98,206 L96,230 M122,206 L124,230" stroke="#E08A2E" strokeWidth="5" strokeLinecap="round" />
+      <path d="M88,231 L104,231 M116,231 L132,231" stroke="#E08A2E" strokeWidth="4.5" strokeLinecap="round" />
+      {/* body + neck + head */}
+      <V d={ell(110, 172, 40, 42)} fill={blue} shade={blueShade} uid={`${id}b`} />
+      <V d="M98,150 C96,128 98,112 102,104 L118,104 C122,112 124,128 122,150 Z" fill={blue} shade={blueShade} uid={`${id}n`} />
+      <V d={ell(110, 92, 23, 21)} fill={blue} shade={blueShade} uid={`${id}h`} sx={-6} sy={-5} />
+      {/* crest */}
+      {[[96, 50], [110, 44], [124, 50]].map(([x, y], i) => (
+        <g key={i}>
+          <path d={`M110,72 L${x},${y}`} stroke={INK} strokeWidth="2.6" strokeLinecap="round" />
+          <circle cx={x} cy={y} r="5" fill="#2FB5A8" stroke={INK} strokeWidth="2.4" />
+          <circle cx={x} cy={y} r="2" fill="#F2C14E" />
+        </g>
+      ))}
+      <Gloss x={100} y={80} rx={7} ry={3} rot={-35} />
+      <BossEyes L={[100, 92]} R={[121, 91]} r={5.5} state={state} lid={blue} />
+      <V d="M104,101 L117,101 L110,113 Z" fill="#F2A33A" shade="#D9862A" uid={`${id}bk`} w={3} sx={-3} sy={-2} />
+      {/* tiny cape with a gold clasp */}
+      <V d="M82,142 Q110,128 138,142 L146,172 Q110,164 74,172 Z" fill="#8B2FC9" shade="#6E1FA6" uid={`${id}cape`} />
+      <path d="M84,142 Q110,130 136,142" fill="none" stroke="#F2C14E" strokeWidth="4" strokeLinecap="round" />
+      <circle cx="110" cy="136" r="5" fill="#FF5AA5" stroke={INK} strokeWidth="2.4" />
+      <ellipse cx="88" cy="160" rx="6" ry="12" transform="rotate(20 88 160)" fill="#fff" opacity="0.4" filter={`url(#${id}gel)`} />
+      {/* the sign */}
       {ko ? (
         <g>
           <path d="M184,236 L178,206" stroke="#8A5A3C" strokeWidth="7" strokeLinecap="round" />
-          <Board x={96} y={176} w={104} h={50} lines={['△ = b × h']} size={21} state="ko" id={`${id}s`} />
+          <Board x={98} y={182} w={100} h={46} lines={['△ = b × h']} size={19} state="ko" id={`${id}s`} />
         </g>
       ) : (
-        <g transform={state === 'cracked' ? 'rotate(10 170 150)' : undefined}>
-          <V d="M162,156 C176,150 182,136 178,124 C170,126 164,138 156,146 Z" fill={fill} shade={shade} uid={`${id}a2`} />
-          <path d="M172,140 L172,62" stroke={INK} strokeWidth="10" strokeLinecap="round" />
-          <path d="M172,140 L172,62" stroke="#A8724C" strokeWidth="5" strokeLinecap="round" />
-          <Board x={118} y={10} w={100} h={54} lines={['△ = b × h']} size={21} state={state === 'cracked' ? 'cracked' : 'smug'} id={`${id}s`} />
-          <circle cx="172" cy="132" r="8" fill={fill} stroke={INK} strokeWidth="3.4" />
+        <g transform={state === 'cracked' ? 'rotate(8 170 190)' : undefined}>
+          <path d="M176,236 L176,196" stroke={INK} strokeWidth="9" strokeLinecap="round" />
+          <path d="M176,236 L176,196" stroke="#A8724C" strokeWidth="4.5" strokeLinecap="round" />
+          <Board x={122} y={150} w={94} h={48} lines={['△ = b × h']} size={19} state={state === 'cracked' ? 'cracked' : 'smug'} id={`${id}s`} />
+          <V d={ell(150, 196, 12, 8)} fill={blue} shade={blueShade} uid={`${id}w`} w={3} />
         </g>
       )}
-      {state === 'cracked' && <Sweat x={56} y={96} />}
-      {ko && <KOStars x={110} y={30} />}
+      {state === 'cracked' && <Sweat x={140} y={66} />}
+      {ko && <KOStars x={110} y={36} />}
     </g>
   )
 }
 
-const ART = { walrus: Walrus, penguin: Penguin, hamster: Hamster, triangle: Triangle }
+const ART = { walrus: Walrus, penguin: Penguin, hamster: Hamster, triangle: Peacock }
 
 export function Boss2D({ boss = 'walrus', state, hp, size = 200, className = '', title }) {
   const id = useId().replace(/:/g, '')
