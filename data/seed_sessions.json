@@ -1,0 +1,1544 @@
+{
+ "assignment": {
+  "id": "a_frac",
+  "topic": "Adding fractions with unlike denominators",
+  "why_it_matters": "Splitting a pizza with friends who each want a different-sized slice.",
+  "concepts": [
+   {
+    "id": "k1",
+    "text": "Fractions can only be added when the pieces are the same size"
+   },
+   {
+    "id": "k2",
+    "text": "Find a common denominator by making equivalent fractions"
+   },
+   {
+    "id": "k3",
+    "text": "Once denominators match, add the numerators and keep the denominator"
+   }
+  ],
+  "misconception": "You add the tops and the bottoms, so 1/2 + 1/3 = 2/5",
+  "root_prerequisite": "Equivalent fractions"
+ },
+ "sessions": [
+  {
+   "id": "sess001",
+   "student_id": "s101",
+   "assignment_id": "a_frac",
+   "status": "completed",
+   "synthetic": true,
+   "pips_brain": [
+    {
+     "id": "r_k1",
+     "concept": "k1",
+     "quote": "the pieces have to be the same size or you're adding different things",
+     "correct": true
+    },
+    {
+     "id": "r_k2",
+     "concept": "k2",
+     "quote": "you make them both sixths because 2 and 3 both go into 6",
+     "correct": true
+    },
+    {
+     "id": "r_k3",
+     "concept": "k3",
+     "quote": "you just add the top numbers and the bottom numbers",
+     "correct": false
+    }
+   ],
+   "quiz": [
+    {
+     "concept": "k1",
+     "passed": true
+    },
+    {
+     "concept": "k2",
+     "passed": true
+    },
+    {
+     "concept": "k3",
+     "passed": false
+    }
+   ],
+   "reteach_count": 1,
+   "minutes": 9,
+   "xp": 40,
+   "pip_stage": "egg",
+   "holds_misconception": true,
+   "since_last_session": "Explains same-size pieces; still adds the bottoms"
+  },
+  {
+   "id": "sess002",
+   "student_id": "s065",
+   "assignment_id": "a_frac",
+   "status": "completed",
+   "synthetic": true,
+   "pips_brain": [
+    {
+     "id": "r_k1",
+     "concept": "k1",
+     "quote": "the pieces have to be the same size or you're adding different things",
+     "correct": true
+    },
+    {
+     "id": "r_k2",
+     "concept": "k2",
+     "quote": "you make them both sixths because 2 and 3 both go into 6",
+     "correct": true
+    },
+    {
+     "id": "r_k3",
+     "concept": "k3",
+     "quote": "you just add the top numbers and the bottom numbers",
+     "correct": false
+    }
+   ],
+   "quiz": [
+    {
+     "concept": "k1",
+     "passed": true
+    },
+    {
+     "concept": "k2",
+     "passed": true
+    },
+    {
+     "concept": "k3",
+     "passed": false
+    }
+   ],
+   "reteach_count": 1,
+   "minutes": 18,
+   "xp": 40,
+   "pip_stage": "egg",
+   "holds_misconception": true,
+   "since_last_session": "Explains same-size pieces; still adds the bottoms"
+  },
+  {
+   "id": "sess003",
+   "student_id": "s095",
+   "assignment_id": "a_frac",
+   "status": "completed",
+   "synthetic": true,
+   "pips_brain": [
+    {
+     "id": "r_k1",
+     "concept": "k1",
+     "quote": "the pieces have to be the same size or you're adding different things",
+     "correct": true
+    },
+    {
+     "id": "r_k2",
+     "concept": "k2",
+     "quote": "you make them both sixths because 2 and 3 both go into 6",
+     "correct": true
+    },
+    {
+     "id": "r_k3",
+     "concept": "k3",
+     "quote": "you just add the top numbers and the bottom numbers",
+     "correct": false
+    }
+   ],
+   "quiz": [
+    {
+     "concept": "k1",
+     "passed": true
+    },
+    {
+     "concept": "k2",
+     "passed": true
+    },
+    {
+     "concept": "k3",
+     "passed": false
+    }
+   ],
+   "reteach_count": 1,
+   "minutes": 22,
+   "xp": 40,
+   "pip_stage": "egg",
+   "holds_misconception": true,
+   "since_last_session": "Explains same-size pieces; still adds the bottoms"
+  },
+  {
+   "id": "sess004",
+   "student_id": "s040",
+   "assignment_id": "a_frac",
+   "status": "completed",
+   "synthetic": true,
+   "pips_brain": [
+    {
+     "id": "r_k1",
+     "concept": "k1",
+     "quote": "the pieces have to be the same size or you're adding different things",
+     "correct": true
+    },
+    {
+     "id": "r_k2",
+     "concept": "k2",
+     "quote": "multiply top and bottom by the same number so it's still the same amount",
+     "correct": true
+    },
+    {
+     "id": "r_k3",
+     "concept": "k3",
+     "quote": "you just add the top numbers and the bottom numbers",
+     "correct": false
+    }
+   ],
+   "quiz": [
+    {
+     "concept": "k1",
+     "passed": true
+    },
+    {
+     "concept": "k2",
+     "passed": true
+    },
+    {
+     "concept": "k3",
+     "passed": false
+    }
+   ],
+   "reteach_count": 1,
+   "minutes": 13,
+   "xp": 40,
+   "pip_stage": "egg",
+   "holds_misconception": true,
+   "since_last_session": "Explains same-size pieces; still adds the bottoms"
+  },
+  {
+   "id": "sess005",
+   "student_id": "s025",
+   "assignment_id": "a_frac",
+   "status": "completed",
+   "synthetic": true,
+   "pips_brain": [
+    {
+     "id": "r_k1",
+     "concept": "k1",
+     "quote": "halves and thirds are different sized slices so you can't just add them",
+     "correct": true
+    },
+    {
+     "id": "r_k2",
+     "concept": "k2",
+     "quote": "you make them both sixths because 2 and 3 both go into 6",
+     "correct": true
+    },
+    {
+     "id": "r_k3",
+     "concept": "k3",
+     "quote": "you just add the top numbers and the bottom numbers",
+     "correct": false
+    }
+   ],
+   "quiz": [
+    {
+     "concept": "k1",
+     "passed": true
+    },
+    {
+     "concept": "k2",
+     "passed": true
+    },
+    {
+     "concept": "k3",
+     "passed": false
+    }
+   ],
+   "reteach_count": 0,
+   "minutes": 9,
+   "xp": 40,
+   "pip_stage": "egg",
+   "holds_misconception": true,
+   "since_last_session": "Explains same-size pieces; still adds the bottoms"
+  },
+  {
+   "id": "sess006",
+   "student_id": "s013",
+   "assignment_id": "a_frac",
+   "status": "completed",
+   "synthetic": true,
+   "pips_brain": [
+    {
+     "id": "r_k1",
+     "concept": "k1",
+     "quote": "the pieces have to be the same size or you're adding different things",
+     "correct": true
+    },
+    {
+     "id": "r_k2",
+     "concept": "k2",
+     "quote": "multiply top and bottom by the same number so it's still the same amount",
+     "correct": true
+    },
+    {
+     "id": "r_k3",
+     "concept": "k3",
+     "quote": "you just add the top numbers and the bottom numbers",
+     "correct": false
+    }
+   ],
+   "quiz": [
+    {
+     "concept": "k1",
+     "passed": true
+    },
+    {
+     "concept": "k2",
+     "passed": true
+    },
+    {
+     "concept": "k3",
+     "passed": false
+    }
+   ],
+   "reteach_count": 1,
+   "minutes": 11,
+   "xp": 40,
+   "pip_stage": "egg",
+   "holds_misconception": true,
+   "since_last_session": "Explains same-size pieces; still adds the bottoms"
+  },
+  {
+   "id": "sess007",
+   "student_id": "s114",
+   "assignment_id": "a_frac",
+   "status": "completed",
+   "synthetic": true,
+   "pips_brain": [
+    {
+     "id": "r_k1",
+     "concept": "k1",
+     "quote": "halves and thirds are different sized slices so you can't just add them",
+     "correct": true
+    },
+    {
+     "id": "r_k2",
+     "concept": "k2",
+     "quote": "multiply top and bottom by the same number so it's still the same amount",
+     "correct": true
+    },
+    {
+     "id": "r_k3",
+     "concept": "k3",
+     "quote": "you just add the top numbers and the bottom numbers",
+     "correct": false
+    }
+   ],
+   "quiz": [
+    {
+     "concept": "k1",
+     "passed": true
+    },
+    {
+     "concept": "k2",
+     "passed": true
+    },
+    {
+     "concept": "k3",
+     "passed": false
+    }
+   ],
+   "reteach_count": 0,
+   "minutes": 21,
+   "xp": 40,
+   "pip_stage": "egg",
+   "holds_misconception": true,
+   "since_last_session": "Explains same-size pieces; still adds the bottoms"
+  },
+  {
+   "id": "sess008",
+   "student_id": "s100",
+   "assignment_id": "a_frac",
+   "status": "completed",
+   "synthetic": true,
+   "pips_brain": [
+    {
+     "id": "r_k1",
+     "concept": "k1",
+     "quote": "the pieces have to be the same size or you're adding different things",
+     "correct": true
+    },
+    {
+     "id": "r_k2",
+     "concept": "k2",
+     "quote": "multiply top and bottom by the same number so it's still the same amount",
+     "correct": true
+    },
+    {
+     "id": "r_k3",
+     "concept": "k3",
+     "quote": "you just add the top numbers and the bottom numbers",
+     "correct": false
+    }
+   ],
+   "quiz": [
+    {
+     "concept": "k1",
+     "passed": true
+    },
+    {
+     "concept": "k2",
+     "passed": true
+    },
+    {
+     "concept": "k3",
+     "passed": false
+    }
+   ],
+   "reteach_count": 1,
+   "minutes": 9,
+   "xp": 40,
+   "pip_stage": "egg",
+   "holds_misconception": true,
+   "since_last_session": "Explains same-size pieces; still adds the bottoms"
+  },
+  {
+   "id": "sess009",
+   "student_id": "s062",
+   "assignment_id": "a_frac",
+   "status": "completed",
+   "synthetic": true,
+   "pips_brain": [
+    {
+     "id": "r_k1",
+     "concept": "k1",
+     "quote": "halves and thirds are different sized slices so you can't just add them",
+     "correct": true
+    },
+    {
+     "id": "r_k2",
+     "concept": "k2",
+     "quote": "you make them both sixths because 2 and 3 both go into 6",
+     "correct": true
+    },
+    {
+     "id": "r_k3",
+     "concept": "k3",
+     "quote": "you just add the top numbers and the bottom numbers",
+     "correct": false
+    }
+   ],
+   "quiz": [
+    {
+     "concept": "k1",
+     "passed": true
+    },
+    {
+     "concept": "k2",
+     "passed": true
+    },
+    {
+     "concept": "k3",
+     "passed": false
+    }
+   ],
+   "reteach_count": 1,
+   "minutes": 14,
+   "xp": 40,
+   "pip_stage": "egg",
+   "holds_misconception": true,
+   "since_last_session": "Explains same-size pieces; still adds the bottoms"
+  },
+  {
+   "id": "sess010",
+   "student_id": "s116",
+   "assignment_id": "a_frac",
+   "status": "completed",
+   "synthetic": true,
+   "pips_brain": [
+    {
+     "id": "r_k1",
+     "concept": "k1",
+     "quote": "halves and thirds are different sized slices so you can't just add them",
+     "correct": true
+    },
+    {
+     "id": "r_k2",
+     "concept": "k2",
+     "quote": "you make them both sixths because 2 and 3 both go into 6",
+     "correct": true
+    },
+    {
+     "id": "r_k3",
+     "concept": "k3",
+     "quote": "you just add the top numbers and the bottom numbers",
+     "correct": false
+    }
+   ],
+   "quiz": [
+    {
+     "concept": "k1",
+     "passed": true
+    },
+    {
+     "concept": "k2",
+     "passed": true
+    },
+    {
+     "concept": "k3",
+     "passed": false
+    }
+   ],
+   "reteach_count": 2,
+   "minutes": 16,
+   "xp": 40,
+   "pip_stage": "egg",
+   "holds_misconception": true,
+   "since_last_session": "Explains same-size pieces; still adds the bottoms"
+  },
+  {
+   "id": "sess011",
+   "student_id": "s035",
+   "assignment_id": "a_frac",
+   "status": "completed",
+   "synthetic": true,
+   "pips_brain": [
+    {
+     "id": "r_k1",
+     "concept": "k1",
+     "quote": "halves and thirds are different sized slices so you can't just add them",
+     "correct": true
+    },
+    {
+     "id": "r_k2",
+     "concept": "k2",
+     "quote": "you make them both sixths because 2 and 3 both go into 6",
+     "correct": true
+    },
+    {
+     "id": "r_k3",
+     "concept": "k3",
+     "quote": "you just add the top numbers and the bottom numbers",
+     "correct": false
+    }
+   ],
+   "quiz": [
+    {
+     "concept": "k1",
+     "passed": true
+    },
+    {
+     "concept": "k2",
+     "passed": true
+    },
+    {
+     "concept": "k3",
+     "passed": false
+    }
+   ],
+   "reteach_count": 1,
+   "minutes": 22,
+   "xp": 40,
+   "pip_stage": "egg",
+   "holds_misconception": true,
+   "since_last_session": "Explains same-size pieces; still adds the bottoms"
+  },
+  {
+   "id": "sess012",
+   "student_id": "s090",
+   "assignment_id": "a_frac",
+   "status": "completed",
+   "synthetic": true,
+   "pips_brain": [
+    {
+     "id": "r_k1",
+     "concept": "k1",
+     "quote": "the pieces have to be the same size or you're adding different things",
+     "correct": true
+    },
+    {
+     "id": "r_k2",
+     "concept": "k2",
+     "quote": "you make them both sixths because 2 and 3 both go into 6",
+     "correct": true
+    },
+    {
+     "id": "r_k3",
+     "concept": "k3",
+     "quote": "you just add the top numbers and the bottom numbers",
+     "correct": false
+    }
+   ],
+   "quiz": [
+    {
+     "concept": "k1",
+     "passed": true
+    },
+    {
+     "concept": "k2",
+     "passed": true
+    },
+    {
+     "concept": "k3",
+     "passed": false
+    }
+   ],
+   "reteach_count": 1,
+   "minutes": 10,
+   "xp": 40,
+   "pip_stage": "egg",
+   "holds_misconception": true,
+   "since_last_session": "Explains same-size pieces; still adds the bottoms"
+  },
+  {
+   "id": "sess013",
+   "student_id": "s085",
+   "assignment_id": "a_frac",
+   "status": "completed",
+   "synthetic": true,
+   "pips_brain": [
+    {
+     "id": "r_k1",
+     "concept": "k1",
+     "quote": "halves and thirds are different sized slices so you can't just add them",
+     "correct": true
+    },
+    {
+     "id": "r_k2",
+     "concept": "k2",
+     "quote": "you make them both sixths because 2 and 3 both go into 6",
+     "correct": true
+    },
+    {
+     "id": "r_k3",
+     "concept": "k3",
+     "quote": "you just add the top numbers and the bottom numbers",
+     "correct": false
+    }
+   ],
+   "quiz": [
+    {
+     "concept": "k1",
+     "passed": true
+    },
+    {
+     "concept": "k2",
+     "passed": true
+    },
+    {
+     "concept": "k3",
+     "passed": false
+    }
+   ],
+   "reteach_count": 0,
+   "minutes": 19,
+   "xp": 40,
+   "pip_stage": "egg",
+   "holds_misconception": true,
+   "since_last_session": "Explains same-size pieces; still adds the bottoms"
+  },
+  {
+   "id": "sess014",
+   "student_id": "s049",
+   "assignment_id": "a_frac",
+   "status": "completed",
+   "synthetic": true,
+   "pips_brain": [
+    {
+     "id": "r_k1",
+     "concept": "k1",
+     "quote": "the pieces have to be the same size or you're adding different things",
+     "correct": true
+    },
+    {
+     "id": "r_k2",
+     "concept": "k2",
+     "quote": "you make them both sixths because 2 and 3 both go into 6",
+     "correct": true
+    },
+    {
+     "id": "r_k3",
+     "concept": "k3",
+     "quote": "you just add the top numbers and the bottom numbers",
+     "correct": false
+    }
+   ],
+   "quiz": [
+    {
+     "concept": "k1",
+     "passed": true
+    },
+    {
+     "concept": "k2",
+     "passed": true
+    },
+    {
+     "concept": "k3",
+     "passed": false
+    }
+   ],
+   "reteach_count": 2,
+   "minutes": 21,
+   "xp": 40,
+   "pip_stage": "egg",
+   "holds_misconception": true,
+   "since_last_session": "Explains same-size pieces; still adds the bottoms"
+  },
+  {
+   "id": "sess015",
+   "student_id": "s093",
+   "assignment_id": "a_frac",
+   "status": "completed",
+   "synthetic": true,
+   "pips_brain": [
+    {
+     "id": "r_k1",
+     "concept": "k1",
+     "quote": "they have to match",
+     "correct": true,
+     "vague": true
+    },
+    {
+     "id": "r_k2",
+     "concept": "k2",
+     "quote": "multiply top and bottom by the same number so it's still the same amount",
+     "correct": true
+    },
+    {
+     "id": "r_k3",
+     "concept": "k3",
+     "quote": "you only add the top numbers because the bottom just says the size",
+     "correct": true
+    }
+   ],
+   "quiz": [
+    {
+     "concept": "k1",
+     "passed": true
+    },
+    {
+     "concept": "k2",
+     "passed": true
+    },
+    {
+     "concept": "k3",
+     "passed": true
+    }
+   ],
+   "reteach_count": 2,
+   "minutes": 9,
+   "xp": 100,
+   "pip_stage": "baby",
+   "holds_misconception": false,
+   "since_last_session": "Explains common denominators; ready for mixed numbers"
+  },
+  {
+   "id": "sess016",
+   "student_id": "s004",
+   "assignment_id": "a_frac",
+   "status": "completed",
+   "synthetic": true,
+   "pips_brain": [
+    {
+     "id": "r_k1",
+     "concept": "k1",
+     "quote": "they have to match",
+     "correct": true,
+     "vague": true
+    },
+    {
+     "id": "r_k2",
+     "concept": "k2",
+     "quote": "you make them both sixths because 2 and 3 both go into 6",
+     "correct": true
+    },
+    {
+     "id": "r_k3",
+     "concept": "k3",
+     "quote": "once they're both sixths you add 3 and 2 and it stays sixths",
+     "correct": true
+    }
+   ],
+   "quiz": [
+    {
+     "concept": "k1",
+     "passed": true
+    },
+    {
+     "concept": "k2",
+     "passed": true
+    },
+    {
+     "concept": "k3",
+     "passed": true
+    }
+   ],
+   "reteach_count": 1,
+   "minutes": 14,
+   "xp": 100,
+   "pip_stage": "baby",
+   "holds_misconception": false,
+   "since_last_session": "Explains common denominators; ready for mixed numbers"
+  },
+  {
+   "id": "sess017",
+   "student_id": "s096",
+   "assignment_id": "a_frac",
+   "status": "completed",
+   "synthetic": true,
+   "pips_brain": [
+    {
+     "id": "r_k1",
+     "concept": "k1",
+     "quote": "the pieces have to be the same size or you're adding different things",
+     "correct": true
+    },
+    {
+     "id": "r_k2",
+     "concept": "k2",
+     "quote": "multiply top and bottom by the same number so it's still the same amount",
+     "correct": true
+    },
+    {
+     "id": "r_k3",
+     "concept": "k3",
+     "quote": "once they're both sixths you add 3 and 2 and it stays sixths",
+     "correct": true
+    }
+   ],
+   "quiz": [
+    {
+     "concept": "k1",
+     "passed": true
+    },
+    {
+     "concept": "k2",
+     "passed": true
+    },
+    {
+     "concept": "k3",
+     "passed": true
+    }
+   ],
+   "reteach_count": 0,
+   "minutes": 15,
+   "xp": 100,
+   "pip_stage": "baby",
+   "holds_misconception": false,
+   "since_last_session": "Explains common denominators; ready for mixed numbers"
+  },
+  {
+   "id": "sess018",
+   "student_id": "s113",
+   "assignment_id": "a_frac",
+   "status": "completed",
+   "synthetic": true,
+   "pips_brain": [
+    {
+     "id": "r_k1",
+     "concept": "k1",
+     "quote": "they have to match",
+     "correct": true,
+     "vague": true
+    },
+    {
+     "id": "r_k2",
+     "concept": "k2",
+     "quote": "multiply top and bottom by the same number so it's still the same amount",
+     "correct": true
+    },
+    {
+     "id": "r_k3",
+     "concept": "k3",
+     "quote": "once they're both sixths you add 3 and 2 and it stays sixths",
+     "correct": true
+    }
+   ],
+   "quiz": [
+    {
+     "concept": "k1",
+     "passed": true
+    },
+    {
+     "concept": "k2",
+     "passed": true
+    },
+    {
+     "concept": "k3",
+     "passed": true
+    }
+   ],
+   "reteach_count": 0,
+   "minutes": 11,
+   "xp": 100,
+   "pip_stage": "baby",
+   "holds_misconception": false,
+   "since_last_session": "Explains common denominators; ready for mixed numbers"
+  },
+  {
+   "id": "sess019",
+   "student_id": "s011",
+   "assignment_id": "a_frac",
+   "status": "completed",
+   "synthetic": true,
+   "pips_brain": [
+    {
+     "id": "r_k1",
+     "concept": "k1",
+     "quote": "the pieces have to be the same size or you're adding different things",
+     "correct": true
+    },
+    {
+     "id": "r_k2",
+     "concept": "k2",
+     "quote": "you find the common one",
+     "correct": true,
+     "vague": true
+    },
+    {
+     "id": "r_k3",
+     "concept": "k3",
+     "quote": "once they're both sixths you add 3 and 2 and it stays sixths",
+     "correct": true
+    }
+   ],
+   "quiz": [
+    {
+     "concept": "k1",
+     "passed": true
+    },
+    {
+     "concept": "k2",
+     "passed": true
+    },
+    {
+     "concept": "k3",
+     "passed": true
+    }
+   ],
+   "reteach_count": 1,
+   "minutes": 19,
+   "xp": 100,
+   "pip_stage": "baby",
+   "holds_misconception": false,
+   "since_last_session": "Explains common denominators; ready for mixed numbers"
+  },
+  {
+   "id": "sess020",
+   "student_id": "s080",
+   "assignment_id": "a_frac",
+   "status": "completed",
+   "synthetic": true,
+   "pips_brain": [
+    {
+     "id": "r_k1",
+     "concept": "k1",
+     "quote": "they have to match",
+     "correct": true,
+     "vague": true
+    },
+    {
+     "id": "r_k2",
+     "concept": "k2",
+     "quote": "multiply top and bottom by the same number so it's still the same amount",
+     "correct": true
+    },
+    {
+     "id": "r_k3",
+     "concept": "k3",
+     "quote": "you only add the top numbers because the bottom just says the size",
+     "correct": true
+    }
+   ],
+   "quiz": [
+    {
+     "concept": "k1",
+     "passed": false
+    },
+    {
+     "concept": "k2",
+     "passed": true
+    },
+    {
+     "concept": "k3",
+     "passed": true
+    }
+   ],
+   "reteach_count": 1,
+   "minutes": 11,
+   "xp": 80,
+   "pip_stage": "egg",
+   "holds_misconception": false,
+   "since_last_session": "Explains common denominators; ready for mixed numbers"
+  },
+  {
+   "id": "sess021",
+   "student_id": "s019",
+   "assignment_id": "a_frac",
+   "status": "completed",
+   "synthetic": true,
+   "pips_brain": [
+    {
+     "id": "r_k1",
+     "concept": "k1",
+     "quote": "halves and thirds are different sized slices so you can't just add them",
+     "correct": true
+    },
+    {
+     "id": "r_k2",
+     "concept": "k2",
+     "quote": "you make them both sixths because 2 and 3 both go into 6",
+     "correct": true
+    },
+    {
+     "id": "r_k3",
+     "concept": "k3",
+     "quote": "once they're both sixths you add 3 and 2 and it stays sixths",
+     "correct": true
+    }
+   ],
+   "quiz": [
+    {
+     "concept": "k1",
+     "passed": true
+    },
+    {
+     "concept": "k2",
+     "passed": true
+    },
+    {
+     "concept": "k3",
+     "passed": true
+    }
+   ],
+   "reteach_count": 1,
+   "minutes": 19,
+   "xp": 100,
+   "pip_stage": "baby",
+   "holds_misconception": false,
+   "since_last_session": "Explains common denominators; ready for mixed numbers"
+  },
+  {
+   "id": "sess022",
+   "student_id": "s006",
+   "assignment_id": "a_frac",
+   "status": "completed",
+   "synthetic": true,
+   "pips_brain": [
+    {
+     "id": "r_k1",
+     "concept": "k1",
+     "quote": "halves and thirds are different sized slices so you can't just add them",
+     "correct": true
+    },
+    {
+     "id": "r_k2",
+     "concept": "k2",
+     "quote": "multiply top and bottom by the same number so it's still the same amount",
+     "correct": true
+    },
+    {
+     "id": "r_k3",
+     "concept": "k3",
+     "quote": "once they're both sixths you add 3 and 2 and it stays sixths",
+     "correct": true
+    }
+   ],
+   "quiz": [
+    {
+     "concept": "k1",
+     "passed": true
+    },
+    {
+     "concept": "k2",
+     "passed": true
+    },
+    {
+     "concept": "k3",
+     "passed": true
+    }
+   ],
+   "reteach_count": 1,
+   "minutes": 10,
+   "xp": 100,
+   "pip_stage": "baby",
+   "holds_misconception": false,
+   "since_last_session": "Explains common denominators; ready for mixed numbers"
+  },
+  {
+   "id": "sess023",
+   "student_id": "s108",
+   "assignment_id": "a_frac",
+   "status": "completed",
+   "synthetic": true,
+   "pips_brain": [
+    {
+     "id": "r_k1",
+     "concept": "k1",
+     "quote": "halves and thirds are different sized slices so you can't just add them",
+     "correct": true
+    },
+    {
+     "id": "r_k2",
+     "concept": "k2",
+     "quote": "you find the common one",
+     "correct": true,
+     "vague": true
+    },
+    {
+     "id": "r_k3",
+     "concept": "k3",
+     "quote": "you only add the top numbers because the bottom just says the size",
+     "correct": true
+    }
+   ],
+   "quiz": [
+    {
+     "concept": "k1",
+     "passed": true
+    },
+    {
+     "concept": "k2",
+     "passed": true
+    },
+    {
+     "concept": "k3",
+     "passed": true
+    }
+   ],
+   "reteach_count": 1,
+   "minutes": 11,
+   "xp": 100,
+   "pip_stage": "baby",
+   "holds_misconception": false,
+   "since_last_session": "Explains common denominators; ready for mixed numbers"
+  },
+  {
+   "id": "sess024",
+   "student_id": "s038",
+   "assignment_id": "a_frac",
+   "status": "completed",
+   "synthetic": true,
+   "pips_brain": [
+    {
+     "id": "r_k1",
+     "concept": "k1",
+     "quote": "halves and thirds are different sized slices so you can't just add them",
+     "correct": true
+    },
+    {
+     "id": "r_k2",
+     "concept": "k2",
+     "quote": "multiply top and bottom by the same number so it's still the same amount",
+     "correct": true
+    },
+    {
+     "id": "r_k3",
+     "concept": "k3",
+     "quote": "you only add the top numbers because the bottom just says the size",
+     "correct": true
+    }
+   ],
+   "quiz": [
+    {
+     "concept": "k1",
+     "passed": true
+    },
+    {
+     "concept": "k2",
+     "passed": true
+    },
+    {
+     "concept": "k3",
+     "passed": true
+    }
+   ],
+   "reteach_count": 0,
+   "minutes": 13,
+   "xp": 100,
+   "pip_stage": "baby",
+   "holds_misconception": false,
+   "since_last_session": "Explains common denominators; ready for mixed numbers"
+  },
+  {
+   "id": "sess025",
+   "student_id": "s078",
+   "assignment_id": "a_frac",
+   "status": "completed",
+   "synthetic": true,
+   "pips_brain": [
+    {
+     "id": "r_k1",
+     "concept": "k1",
+     "quote": "the pieces have to be the same size or you're adding different things",
+     "correct": true
+    },
+    {
+     "id": "r_k2",
+     "concept": "k2",
+     "quote": "you find the common one",
+     "correct": true,
+     "vague": true
+    },
+    {
+     "id": "r_k3",
+     "concept": "k3",
+     "quote": "once they're both sixths you add 3 and 2 and it stays sixths",
+     "correct": true
+    }
+   ],
+   "quiz": [
+    {
+     "concept": "k1",
+     "passed": true
+    },
+    {
+     "concept": "k2",
+     "passed": false
+    },
+    {
+     "concept": "k3",
+     "passed": true
+    }
+   ],
+   "reteach_count": 0,
+   "minutes": 12,
+   "xp": 80,
+   "pip_stage": "egg",
+   "holds_misconception": false,
+   "since_last_session": "Explains common denominators; ready for mixed numbers"
+  },
+  {
+   "id": "sess026",
+   "student_id": "s063",
+   "assignment_id": "a_frac",
+   "status": "completed",
+   "synthetic": true,
+   "pips_brain": [
+    {
+     "id": "r_k1",
+     "concept": "k1",
+     "quote": "halves and thirds are different sized slices so you can't just add them",
+     "correct": true
+    },
+    {
+     "id": "r_k2",
+     "concept": "k2",
+     "quote": "you make them both sixths because 2 and 3 both go into 6",
+     "correct": true
+    },
+    {
+     "id": "r_k3",
+     "concept": "k3",
+     "quote": "then you add them",
+     "correct": true,
+     "vague": true
+    }
+   ],
+   "quiz": [
+    {
+     "concept": "k1",
+     "passed": true
+    },
+    {
+     "concept": "k2",
+     "passed": true
+    },
+    {
+     "concept": "k3",
+     "passed": true
+    }
+   ],
+   "reteach_count": 1,
+   "minutes": 10,
+   "xp": 100,
+   "pip_stage": "baby",
+   "holds_misconception": false,
+   "since_last_session": "Explains common denominators; ready for mixed numbers"
+  },
+  {
+   "id": "sess027",
+   "student_id": "s103",
+   "assignment_id": "a_frac",
+   "status": "completed",
+   "synthetic": true,
+   "pips_brain": [
+    {
+     "id": "r_k1",
+     "concept": "k1",
+     "quote": "halves and thirds are different sized slices so you can't just add them",
+     "correct": true
+    },
+    {
+     "id": "r_k2",
+     "concept": "k2",
+     "quote": "multiply top and bottom by the same number so it's still the same amount",
+     "correct": true
+    },
+    {
+     "id": "r_k3",
+     "concept": "k3",
+     "quote": "once they're both sixths you add 3 and 2 and it stays sixths",
+     "correct": true
+    }
+   ],
+   "quiz": [
+    {
+     "concept": "k1",
+     "passed": true
+    },
+    {
+     "concept": "k2",
+     "passed": true
+    },
+    {
+     "concept": "k3",
+     "passed": true
+    }
+   ],
+   "reteach_count": 2,
+   "minutes": 14,
+   "xp": 100,
+   "pip_stage": "baby",
+   "holds_misconception": false,
+   "since_last_session": "Explains common denominators; ready for mixed numbers"
+  },
+  {
+   "id": "sess028",
+   "student_id": "s088",
+   "assignment_id": "a_frac",
+   "status": "completed",
+   "synthetic": true,
+   "pips_brain": [
+    {
+     "id": "r_k1",
+     "concept": "k1",
+     "quote": "the pieces have to be the same size or you're adding different things",
+     "correct": true
+    },
+    {
+     "id": "r_k2",
+     "concept": "k2",
+     "quote": "multiply top and bottom by the same number so it's still the same amount",
+     "correct": true
+    },
+    {
+     "id": "r_k3",
+     "concept": "k3",
+     "quote": "you only add the top numbers because the bottom just says the size",
+     "correct": true
+    }
+   ],
+   "quiz": [
+    {
+     "concept": "k1",
+     "passed": true
+    },
+    {
+     "concept": "k2",
+     "passed": true
+    },
+    {
+     "concept": "k3",
+     "passed": true
+    }
+   ],
+   "reteach_count": 1,
+   "minutes": 19,
+   "xp": 100,
+   "pip_stage": "baby",
+   "holds_misconception": false,
+   "since_last_session": "Explains common denominators; ready for mixed numbers"
+  },
+  {
+   "id": "sess029",
+   "student_id": "s064",
+   "assignment_id": "a_frac",
+   "status": "completed",
+   "synthetic": true,
+   "pips_brain": [
+    {
+     "id": "r_k1",
+     "concept": "k1",
+     "quote": "halves and thirds are different sized slices so you can't just add them",
+     "correct": true
+    },
+    {
+     "id": "r_k2",
+     "concept": "k2",
+     "quote": "you make them both sixths because 2 and 3 both go into 6",
+     "correct": true
+    },
+    {
+     "id": "r_k3",
+     "concept": "k3",
+     "quote": "you only add the top numbers because the bottom just says the size",
+     "correct": true
+    }
+   ],
+   "quiz": [
+    {
+     "concept": "k1",
+     "passed": true
+    },
+    {
+     "concept": "k2",
+     "passed": true
+    },
+    {
+     "concept": "k3",
+     "passed": true
+    }
+   ],
+   "reteach_count": 0,
+   "minutes": 12,
+   "xp": 100,
+   "pip_stage": "baby",
+   "holds_misconception": false,
+   "since_last_session": "Explains common denominators; ready for mixed numbers"
+  },
+  {
+   "id": "sess030",
+   "student_id": "s003",
+   "assignment_id": "a_frac",
+   "status": "completed",
+   "synthetic": true,
+   "pips_brain": [
+    {
+     "id": "r_k1",
+     "concept": "k1",
+     "quote": "halves and thirds are different sized slices so you can't just add them",
+     "correct": true
+    },
+    {
+     "id": "r_k2",
+     "concept": "k2",
+     "quote": "multiply top and bottom by the same number so it's still the same amount",
+     "correct": true
+    },
+    {
+     "id": "r_k3",
+     "concept": "k3",
+     "quote": "once they're both sixths you add 3 and 2 and it stays sixths",
+     "correct": true
+    }
+   ],
+   "quiz": [
+    {
+     "concept": "k1",
+     "passed": true
+    },
+    {
+     "concept": "k2",
+     "passed": true
+    },
+    {
+     "concept": "k3",
+     "passed": true
+    }
+   ],
+   "reteach_count": 1,
+   "minutes": 21,
+   "xp": 100,
+   "pip_stage": "baby",
+   "holds_misconception": false,
+   "since_last_session": "Explains common denominators; ready for mixed numbers"
+  }
+ ],
+ "maya_saved_session": {
+  "id": "sess_maya_saved",
+  "student_id": "s001",
+  "assignment_id": "a_frac",
+  "status": "completed",
+  "label": "saved session (backup for demo)",
+  "synthetic": true,
+  "transcript": [
+   {
+    "from": "pip",
+    "text": "Hi! I'm Pip. I'm supposed to learn adding fractions and I'm SO confused. Wait, I think I get it: 1/2 + 1/3 = 2/5, right? You just add the tops and the bottoms!"
+   },
+   {
+    "from": "student",
+    "text": "no thats wrong"
+   },
+   {
+    "from": "pip",
+    "text": "Hmm, but why is it wrong? It looks right to me \ud83e\udd14"
+   },
+   {
+    "from": "student",
+    "text": "my teacher says you have to tell me the answer"
+   },
+   {
+    "from": "pip",
+    "text": "Haha, I don't know the answer either! That's why I need YOU to teach me."
+   },
+   {
+    "from": "student",
+    "text": "ok so imagine a pizza. half a pizza is way bigger than a third of a pizza. the pieces are different sizes so you cant just add them"
+   },
+   {
+    "from": "pip",
+    "text": "Ohhh \ud83d\udca1 so a half slice and a third slice aren't the same kind of slice? Then how do we add them?"
+   },
+   {
+    "from": "student",
+    "text": "you make them the same size. 1/2 is 3/6 and 1/3 is 2/6"
+   },
+   {
+    "from": "pip",
+    "text": "Wait, why sixths? Why not fifths?"
+   },
+   {
+    "from": "student",
+    "text": "because 2 and 3 both go into 6"
+   },
+   {
+    "from": "pip",
+    "text": "Okay! So now we have 3/6 and 2/6. What do I do?"
+   },
+   {
+    "from": "student",
+    "text": "you just add the top numbers and the bottom numbers"
+   },
+   {
+    "from": "pip",
+    "text": "Got it! I'll remember that \ud83e\udde0"
+   }
+  ],
+  "pips_brain": [
+   {
+    "id": "r_k1",
+    "concept": "k1",
+    "quote": "the pieces are different sizes so you cant just add them",
+    "correct": true
+   },
+   {
+    "id": "r_k2",
+    "concept": "k2",
+    "quote": "because 2 and 3 both go into 6",
+    "correct": true
+   },
+   {
+    "id": "r_k3",
+    "concept": "k3",
+    "quote": "you just add the top numbers and the bottom numbers",
+    "correct": false
+   }
+  ],
+  "quiz": [
+   {
+    "concept": "k1",
+    "passed": true
+   },
+   {
+    "concept": "k2",
+    "passed": true
+   },
+   {
+    "concept": "k3",
+    "passed": false,
+    "pip_says": "You told me to add the bottoms, so... 3/6 + 2/6 = 5/12? \ud83d\ude35"
+   }
+  ],
+  "reteach_count": 0,
+  "minutes": 11,
+  "xp": 40,
+  "pip_stage": "egg"
+ }
+}

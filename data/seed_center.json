@@ -1,0 +1,890 @@
+{
+ "center": {
+  "id": "c1",
+  "name": "Bright Path Tutoring",
+  "label": "demo center (synthetic data)",
+  "students": 120,
+  "tutors": 8,
+  "grades": "5-9",
+  "plan": {
+   "price_per_student_usd": 4,
+   "minimum_usd": 99
+  }
+ },
+ "tutors": [
+  {
+   "id": "t1",
+   "name": "Ms. Rivera"
+  },
+  {
+   "id": "t2",
+   "name": "Mr. Chen"
+  },
+  {
+   "id": "t3",
+   "name": "Ms. Okafor"
+  },
+  {
+   "id": "t4",
+   "name": "Mr. Patel"
+  },
+  {
+   "id": "t5",
+   "name": "Ms. Nguyen"
+  },
+  {
+   "id": "t6",
+   "name": "Mr. Alvarez"
+  },
+  {
+   "id": "t7",
+   "name": "Ms. Kim"
+  },
+  {
+   "id": "t8",
+   "name": "Mr. Brooks"
+  }
+ ],
+ "students": [
+  {
+   "id": "s001",
+   "name": "Maya R.",
+   "grade": 6,
+   "tutor_id": "t1",
+   "pip": null
+  },
+  {
+   "id": "s002",
+   "name": "Sid N.",
+   "grade": 9,
+   "tutor_id": "t3",
+   "pip": null
+  },
+  {
+   "id": "s003",
+   "name": "Jude F.",
+   "grade": 6,
+   "tutor_id": "t3",
+   "pip": null
+  },
+  {
+   "id": "s004",
+   "name": "Paige C.",
+   "grade": 8,
+   "tutor_id": "t3",
+   "pip": null
+  },
+  {
+   "id": "s005",
+   "name": "Yara K.",
+   "grade": 8,
+   "tutor_id": "t1",
+   "pip": null
+  },
+  {
+   "id": "s006",
+   "name": "Aisha R.",
+   "grade": 9,
+   "tutor_id": "t2",
+   "pip": null
+  },
+  {
+   "id": "s007",
+   "name": "Leo T.",
+   "grade": 6,
+   "tutor_id": "t8",
+   "pip": null
+  },
+  {
+   "id": "s008",
+   "name": "Uma R.",
+   "grade": 8,
+   "tutor_id": "t5",
+   "pip": null
+  },
+  {
+   "id": "s009",
+   "name": "Dev C.",
+   "grade": 8,
+   "tutor_id": "t5",
+   "pip": null
+  },
+  {
+   "id": "s010",
+   "name": "Ana Y.",
+   "grade": 6,
+   "tutor_id": "t6",
+   "pip": null
+  },
+  {
+   "id": "s011",
+   "name": "Omar C.",
+   "grade": 7,
+   "tutor_id": "t6",
+   "pip": null
+  },
+  {
+   "id": "s012",
+   "name": "Paige B.",
+   "grade": 6,
+   "tutor_id": "t6",
+   "pip": null
+  },
+  {
+   "id": "s013",
+   "name": "Diego C.",
+   "grade": 6,
+   "tutor_id": "t2",
+   "pip": null
+  },
+  {
+   "id": "s014",
+   "name": "Theo Y.",
+   "grade": 9,
+   "tutor_id": "t3",
+   "pip": null
+  },
+  {
+   "id": "s015",
+   "name": "Zane S.",
+   "grade": 9,
+   "tutor_id": "t5",
+   "pip": null
+  },
+  {
+   "id": "s016",
+   "name": "Finn V.",
+   "grade": 8,
+   "tutor_id": "t5",
+   "pip": null
+  },
+  {
+   "id": "s017",
+   "name": "Gus G.",
+   "grade": 5,
+   "tutor_id": "t8",
+   "pip": null
+  },
+  {
+   "id": "s018",
+   "name": "Xavi E.",
+   "grade": 8,
+   "tutor_id": "t3",
+   "pip": null
+  },
+  {
+   "id": "s019",
+   "name": "Priya S.",
+   "grade": 6,
+   "tutor_id": "t3",
+   "pip": null
+  },
+  {
+   "id": "s020",
+   "name": "Chloe T.",
+   "grade": 6,
+   "tutor_id": "t4",
+   "pip": null
+  },
+  {
+   "id": "s021",
+   "name": "Gia H.",
+   "grade": 5,
+   "tutor_id": "t3",
+   "pip": null
+  },
+  {
+   "id": "s022",
+   "name": "Nico V.",
+   "grade": 8,
+   "tutor_id": "t4",
+   "pip": null
+  },
+  {
+   "id": "s023",
+   "name": "Ravi G.",
+   "grade": 9,
+   "tutor_id": "t5",
+   "pip": null
+  },
+  {
+   "id": "s024",
+   "name": "Ravi C.",
+   "grade": 7,
+   "tutor_id": "t6",
+   "pip": null
+  },
+  {
+   "id": "s025",
+   "name": "Ana L.",
+   "grade": 6,
+   "tutor_id": "t3",
+   "pip": null
+  },
+  {
+   "id": "s026",
+   "name": "Uma W.",
+   "grade": 9,
+   "tutor_id": "t7",
+   "pip": null
+  },
+  {
+   "id": "s027",
+   "name": "Diego H.",
+   "grade": 6,
+   "tutor_id": "t1",
+   "pip": null
+  },
+  {
+   "id": "s028",
+   "name": "Noah R.",
+   "grade": 8,
+   "tutor_id": "t6",
+   "pip": null
+  },
+  {
+   "id": "s029",
+   "name": "Xavi C.",
+   "grade": 5,
+   "tutor_id": "t2",
+   "pip": null
+  },
+  {
+   "id": "s030",
+   "name": "Priya P.",
+   "grade": 9,
+   "tutor_id": "t7",
+   "pip": null
+  },
+  {
+   "id": "s031",
+   "name": "Gia S.",
+   "grade": 7,
+   "tutor_id": "t7",
+   "pip": null
+  },
+  {
+   "id": "s032",
+   "name": "Bodhi N.",
+   "grade": 9,
+   "tutor_id": "t4",
+   "pip": null
+  },
+  {
+   "id": "s033",
+   "name": "Lila K.",
+   "grade": 6,
+   "tutor_id": "t5",
+   "pip": null
+  },
+  {
+   "id": "s034",
+   "name": "Owen L.",
+   "grade": 8,
+   "tutor_id": "t2",
+   "pip": null
+  },
+  {
+   "id": "s035",
+   "name": "Yara W.",
+   "grade": 8,
+   "tutor_id": "t1",
+   "pip": null
+  },
+  {
+   "id": "s036",
+   "name": "Faye J.",
+   "grade": 7,
+   "tutor_id": "t1",
+   "pip": null
+  },
+  {
+   "id": "s037",
+   "name": "Rosa P.",
+   "grade": 7,
+   "tutor_id": "t7",
+   "pip": null
+  },
+  {
+   "id": "s038",
+   "name": "Ezra K.",
+   "grade": 6,
+   "tutor_id": "t8",
+   "pip": null
+  },
+  {
+   "id": "s039",
+   "name": "Amara M.",
+   "grade": 6,
+   "tutor_id": "t1",
+   "pip": null
+  },
+  {
+   "id": "s040",
+   "name": "Ravi A.",
+   "grade": 7,
+   "tutor_id": "t8",
+   "pip": null
+  },
+  {
+   "id": "s041",
+   "name": "Ruby H.",
+   "grade": 9,
+   "tutor_id": "t3",
+   "pip": null
+  },
+  {
+   "id": "s042",
+   "name": "Felix W.",
+   "grade": 6,
+   "tutor_id": "t8",
+   "pip": null
+  },
+  {
+   "id": "s043",
+   "name": "Luna F.",
+   "grade": 9,
+   "tutor_id": "t1",
+   "pip": null
+  },
+  {
+   "id": "s044",
+   "name": "Kai C.",
+   "grade": 5,
+   "tutor_id": "t4",
+   "pip": null
+  },
+  {
+   "id": "s045",
+   "name": "Gus A.",
+   "grade": 7,
+   "tutor_id": "t8",
+   "pip": null
+  },
+  {
+   "id": "s046",
+   "name": "Noah F.",
+   "grade": 6,
+   "tutor_id": "t5",
+   "pip": null
+  },
+  {
+   "id": "s047",
+   "name": "Ivy F.",
+   "grade": 5,
+   "tutor_id": "t3",
+   "pip": null
+  },
+  {
+   "id": "s048",
+   "name": "Wren T.",
+   "grade": 9,
+   "tutor_id": "t2",
+   "pip": null
+  },
+  {
+   "id": "s049",
+   "name": "Kira T.",
+   "grade": 7,
+   "tutor_id": "t5",
+   "pip": null
+  },
+  {
+   "id": "s050",
+   "name": "Ben N.",
+   "grade": 7,
+   "tutor_id": "t3",
+   "pip": null
+  },
+  {
+   "id": "s051",
+   "name": "Nora T.",
+   "grade": 6,
+   "tutor_id": "t3",
+   "pip": null
+  },
+  {
+   "id": "s052",
+   "name": "Luna R.",
+   "grade": 6,
+   "tutor_id": "t5",
+   "pip": null
+  },
+  {
+   "id": "s053",
+   "name": "Cleo H.",
+   "grade": 8,
+   "tutor_id": "t3",
+   "pip": null
+  },
+  {
+   "id": "s054",
+   "name": "Theo D.",
+   "grade": 6,
+   "tutor_id": "t4",
+   "pip": null
+  },
+  {
+   "id": "s055",
+   "name": "Ben C.",
+   "grade": 6,
+   "tutor_id": "t4",
+   "pip": null
+  },
+  {
+   "id": "s056",
+   "name": "Amara Y.",
+   "grade": 7,
+   "tutor_id": "t8",
+   "pip": null
+  },
+  {
+   "id": "s057",
+   "name": "Jae L.",
+   "grade": 9,
+   "tutor_id": "t8",
+   "pip": null
+  },
+  {
+   "id": "s058",
+   "name": "Rosa E.",
+   "grade": 9,
+   "tutor_id": "t1",
+   "pip": null
+  },
+  {
+   "id": "s059",
+   "name": "Gus F.",
+   "grade": 6,
+   "tutor_id": "t4",
+   "pip": null
+  },
+  {
+   "id": "s060",
+   "name": "Tara H.",
+   "grade": 5,
+   "tutor_id": "t4",
+   "pip": null
+  },
+  {
+   "id": "s061",
+   "name": "Finn K.",
+   "grade": 7,
+   "tutor_id": "t4",
+   "pip": null
+  },
+  {
+   "id": "s062",
+   "name": "Ezra L.",
+   "grade": 6,
+   "tutor_id": "t4",
+   "pip": null
+  },
+  {
+   "id": "s063",
+   "name": "Lila S.",
+   "grade": 7,
+   "tutor_id": "t5",
+   "pip": null
+  },
+  {
+   "id": "s064",
+   "name": "Leo H.",
+   "grade": 6,
+   "tutor_id": "t5",
+   "pip": null
+  },
+  {
+   "id": "s065",
+   "name": "Gus H.",
+   "grade": 6,
+   "tutor_id": "t4",
+   "pip": null
+  },
+  {
+   "id": "s066",
+   "name": "Xavi T.",
+   "grade": 7,
+   "tutor_id": "t6",
+   "pip": null
+  },
+  {
+   "id": "s067",
+   "name": "Zoe C.",
+   "grade": 6,
+   "tutor_id": "t8",
+   "pip": null
+  },
+  {
+   "id": "s068",
+   "name": "Ana R.",
+   "grade": 6,
+   "tutor_id": "t8",
+   "pip": null
+  },
+  {
+   "id": "s069",
+   "name": "Chloe W.",
+   "grade": 7,
+   "tutor_id": "t4",
+   "pip": null
+  },
+  {
+   "id": "s070",
+   "name": "Mia D.",
+   "grade": 6,
+   "tutor_id": "t1",
+   "pip": null
+  },
+  {
+   "id": "s071",
+   "name": "Wren K.",
+   "grade": 8,
+   "tutor_id": "t2",
+   "pip": null
+  },
+  {
+   "id": "s072",
+   "name": "Jae M.",
+   "grade": 6,
+   "tutor_id": "t4",
+   "pip": null
+  },
+  {
+   "id": "s073",
+   "name": "Hana E.",
+   "grade": 5,
+   "tutor_id": "t4",
+   "pip": null
+  },
+  {
+   "id": "s074",
+   "name": "Felix J.",
+   "grade": 7,
+   "tutor_id": "t6",
+   "pip": null
+  },
+  {
+   "id": "s075",
+   "name": "Ruby J.",
+   "grade": 7,
+   "tutor_id": "t8",
+   "pip": null
+  },
+  {
+   "id": "s076",
+   "name": "Lila F.",
+   "grade": 6,
+   "tutor_id": "t3",
+   "pip": null
+  },
+  {
+   "id": "s077",
+   "name": "Leo C.",
+   "grade": 6,
+   "tutor_id": "t8",
+   "pip": null
+  },
+  {
+   "id": "s078",
+   "name": "Faye A.",
+   "grade": 6,
+   "tutor_id": "t8",
+   "pip": null
+  },
+  {
+   "id": "s079",
+   "name": "Wren S.",
+   "grade": 6,
+   "tutor_id": "t4",
+   "pip": null
+  },
+  {
+   "id": "s080",
+   "name": "Hana D.",
+   "grade": 7,
+   "tutor_id": "t2",
+   "pip": null
+  },
+  {
+   "id": "s081",
+   "name": "Diego F.",
+   "grade": 8,
+   "tutor_id": "t4",
+   "pip": null
+  },
+  {
+   "id": "s082",
+   "name": "Jae G.",
+   "grade": 6,
+   "tutor_id": "t3",
+   "pip": null
+  },
+  {
+   "id": "s083",
+   "name": "Kira P.",
+   "grade": 6,
+   "tutor_id": "t5",
+   "pip": null
+  },
+  {
+   "id": "s084",
+   "name": "Chloe N.",
+   "grade": 7,
+   "tutor_id": "t1",
+   "pip": null
+  },
+  {
+   "id": "s085",
+   "name": "Ben V.",
+   "grade": 6,
+   "tutor_id": "t5",
+   "pip": null
+  },
+  {
+   "id": "s086",
+   "name": "Nora S.",
+   "grade": 9,
+   "tutor_id": "t4",
+   "pip": null
+  },
+  {
+   "id": "s087",
+   "name": "Nico F.",
+   "grade": 7,
+   "tutor_id": "t1",
+   "pip": null
+  },
+  {
+   "id": "s088",
+   "name": "Finn E.",
+   "grade": 7,
+   "tutor_id": "t2",
+   "pip": null
+  },
+  {
+   "id": "s089",
+   "name": "Elena T.",
+   "grade": 7,
+   "tutor_id": "t4",
+   "pip": null
+  },
+  {
+   "id": "s090",
+   "name": "Wren L.",
+   "grade": 7,
+   "tutor_id": "t4",
+   "pip": null
+  },
+  {
+   "id": "s091",
+   "name": "Ruby A.",
+   "grade": 6,
+   "tutor_id": "t8",
+   "pip": null
+  },
+  {
+   "id": "s092",
+   "name": "Liam B.",
+   "grade": 6,
+   "tutor_id": "t3",
+   "pip": null
+  },
+  {
+   "id": "s093",
+   "name": "Diego J.",
+   "grade": 7,
+   "tutor_id": "t4",
+   "pip": null
+  },
+  {
+   "id": "s094",
+   "name": "Nico D.",
+   "grade": 6,
+   "tutor_id": "t7",
+   "pip": null
+  },
+  {
+   "id": "s095",
+   "name": "Gus Y.",
+   "grade": 6,
+   "tutor_id": "t4",
+   "pip": null
+  },
+  {
+   "id": "s096",
+   "name": "Chloe H.",
+   "grade": 6,
+   "tutor_id": "t5",
+   "pip": null
+  },
+  {
+   "id": "s097",
+   "name": "Mateo E.",
+   "grade": 7,
+   "tutor_id": "t4",
+   "pip": null
+  },
+  {
+   "id": "s098",
+   "name": "Tara T.",
+   "grade": 5,
+   "tutor_id": "t5",
+   "pip": null
+  },
+  {
+   "id": "s099",
+   "name": "Kai A.",
+   "grade": 6,
+   "tutor_id": "t6",
+   "pip": null
+  },
+  {
+   "id": "s100",
+   "name": "Tara W.",
+   "grade": 9,
+   "tutor_id": "t7",
+   "pip": null
+  },
+  {
+   "id": "s101",
+   "name": "Owen T.",
+   "grade": 5,
+   "tutor_id": "t6",
+   "pip": null
+  },
+  {
+   "id": "s102",
+   "name": "Faye F.",
+   "grade": 7,
+   "tutor_id": "t5",
+   "pip": null
+  },
+  {
+   "id": "s103",
+   "name": "Quinn E.",
+   "grade": 9,
+   "tutor_id": "t5",
+   "pip": null
+  },
+  {
+   "id": "s104",
+   "name": "Zoe G.",
+   "grade": 9,
+   "tutor_id": "t2",
+   "pip": null
+  },
+  {
+   "id": "s105",
+   "name": "Wren P.",
+   "grade": 9,
+   "tutor_id": "t5",
+   "pip": null
+  },
+  {
+   "id": "s106",
+   "name": "Owen Y.",
+   "grade": 6,
+   "tutor_id": "t2",
+   "pip": null
+  },
+  {
+   "id": "s107",
+   "name": "Dani H.",
+   "grade": 7,
+   "tutor_id": "t4",
+   "pip": null
+  },
+  {
+   "id": "s108",
+   "name": "Ana F.",
+   "grade": 7,
+   "tutor_id": "t8",
+   "pip": null
+  },
+  {
+   "id": "s109",
+   "name": "Dani D.",
+   "grade": 8,
+   "tutor_id": "t1",
+   "pip": null
+  },
+  {
+   "id": "s110",
+   "name": "Ivy Y.",
+   "grade": 6,
+   "tutor_id": "t7",
+   "pip": null
+  },
+  {
+   "id": "s111",
+   "name": "Mateo T.",
+   "grade": 7,
+   "tutor_id": "t2",
+   "pip": null
+  },
+  {
+   "id": "s112",
+   "name": "Lila M.",
+   "grade": 8,
+   "tutor_id": "t7",
+   "pip": null
+  },
+  {
+   "id": "s113",
+   "name": "Ravi N.",
+   "grade": 6,
+   "tutor_id": "t3",
+   "pip": null
+  },
+  {
+   "id": "s114",
+   "name": "Omar D.",
+   "grade": 9,
+   "tutor_id": "t8",
+   "pip": null
+  },
+  {
+   "id": "s115",
+   "name": "Ava E.",
+   "grade": 5,
+   "tutor_id": "t8",
+   "pip": null
+  },
+  {
+   "id": "s116",
+   "name": "Mila B.",
+   "grade": 6,
+   "tutor_id": "t2",
+   "pip": null
+  },
+  {
+   "id": "s117",
+   "name": "Paige F.",
+   "grade": 7,
+   "tutor_id": "t5",
+   "pip": null
+  },
+  {
+   "id": "s118",
+   "name": "Faye N.",
+   "grade": 6,
+   "tutor_id": "t6",
+   "pip": null
+  },
+  {
+   "id": "s119",
+   "name": "Isla W.",
+   "grade": 6,
+   "tutor_id": "t2",
+   "pip": null
+  },
+  {
+   "id": "s120",
+   "name": "Nico M.",
+   "grade": 8,
+   "tutor_id": "t6",
+   "pip": null
+  }
+ ]
+}

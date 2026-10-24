@@ -1,0 +1,35 @@
+ts	kind	id	value	owner	scope	note
+prep	item	01	backlog	coordinator	RESEARCH	Before kickoff: 3-5 tutor/center-owner conversations; log exact quotes in research/interviews.md (allowed pre-kickoff)
+prep	item	02	backlog	researcher	RESEARCH	Verify top-5 data points in RESEARCH.md by opening each source; flag anything unverified
+prep	item	03	backlog	coordinator	SUBMIT	Emergent account on the YC-application email, 2000 credits visible, Google Drive folder for the video, phone number for judging
+prep	item	18	backlog	coordinator	RESEARCH	Get one real tutor/owner quote (tonight by text, or attendees Saturday); label honestly; it replaces the opener's 2nd sentence (+~6 pts per panel)
+sat	item	21	backlog	coordinator	SUBMIT	At kickoff: confirm whether MongoDB/Claude/AWS/Stripe run side prizes or tracks; if yes, enable S3 and plan a second submission
+prep	fact	team	solo	coordinator	SUBMIT	Solo team; Tri is team lead and submitter; track = Education & training
+sat	item	04	backlog	emergent-coach	SCREEN	By 12:00: data model (one document per session incl. Pip's Brain) + dashboard with 'Since last session' column + seeded synthetic center (120 students, 30 sessions, 14 with the misconception); uses data/seed_*.json, DESIGN.md palette, judge-ready landing page; first public deploy (check A)
+sat	item	05	backlog	emergent-coach	SCREEN	By 13:00: tutor assigns a Pip mission (any math/science topic or SAT Math skill); Claude proposes 3 concepts + 1 misconception + an original absurd boss for it; plus a real-life 'Why this matters' line; tutor edits; persists (checks B, M, R)
+sat	item	06	backlog	emergent-coach	JOURNEY	By 16:00: static mission card (steps, Boss, Exam); literal deadpan Pip (3 looks: blob/bot/doodle, emoji moods; no slang or baby talk; files rules back in her words); typing; student teaches Pip; resistance handled without lecturing or mentioning adults; one question at a time; misconception dropped only after a why; refuses 'just tell me' and 'my teacher says'; any-order steps; asks why for memorized steps; smaller concrete question after 2 vague tries; understanding meter; boss fight (HP bar, slapstick hit captions, weapons from explained concepts, heals on the misconception) (checks C, K, N, P, Q, S)
+sat	item	07	backlog	emergent-coach	JOURNEY	By 18:00: Pip's Brain extracted once with verbatim quotes + highlighted wrong rule; quiz answered only from Brain citing rule IDs; re-teach updates Brain; XP/level; on a miss Pip follows the wrong rule exactly and states the odd result in one line; misses framed as Pip's mistake, never a red X on the student; boss K.O. + finishing move on pass; brain upgrades v1 to v2 (checks D, E, L, S)
+sat	item	08	backlog	emergent-coach	JOURNEY	By 21:00: gap report uses the same Brain quotes, 'fixed after N re-teach', Tuesday opener + root-cause prerequisite; roster column updates (checks F, O)
+sat	item	09	backlog	emergent-coach	SCREEN	By 22:30: center-branded parent SMS/email in test mode + sent log; Center insight card (14 students) + Plan a workshop (checks G, H)
+sat	item	10	backlog	emergent-coach	SCREEN	By 01:00: polish, loading/error states, phone width, Reset demo data with a labeled saved session (check J)
+sat	item	17	backlog	emergent-coach	SCREEN	By 23:30: in-app pricing page + Stripe Checkout test-mode 'Start pilot' (check I)
+sat	item	23	backlog	coordinator	PITCH	Sat 1:00: rough cut 1, opener 0:03-0:29 on the deployed URL, timed
+sat	item	24	backlog	coordinator	PITCH	Sat 6:00: rough cut 2, Pip beats 0:29-1:11; adjust the script to what Pip actually does
+sat	item	25	backlog	coordinator	PITCH	Sat 11:30 PM: full 2:00 rough cut; watch as a judge; dull screens get polish, not features
+sat	item	12	backlog	pitch	PITCH	Sat night: lock 2:00 video script against what verifier passed; rehearse once with a timer
+sun	item	11	backlog	verifier	JOURNEY	Sun 9:00-10:00: full acceptance pass from a private window on the deployed URL; feature freeze 10:00
+sun	item	13	backlog	coordinator	PITCH	Sun 10:15-11:15: record 2 takes of the video on the deployed URL; pick best; title card only
+sun	item	14	backlog	coordinator	SUBMIT	Sun by 11:40: Drive link set to anyone-with-link, test in private window, submit form + Emergent job ID + research sources
+sun	item	15	backlog	pitch	PITCH	Sun 12:00-3:30: 5-min live final demo script + 2-min Q&A prep; rehearse twice
+stretch	item	16	backlog	emergent-coach	JOURNEY	Only after 08 is done: student uploads a photo of handwritten work; Pip reads it and reacts
+stretch	item	19	cut	coordinator	JOURNEY	Pip forgets: cut from the build per judge panel; Q&A 'what's next' only
+stretch	item	20	backlog	emergent-coach	JOURNEY	Only after Gate 3: hold-to-talk input; for the live final, not the 2:00 video
+stretch	item	26	backlog	emergent-coach	JOURNEY	Only after Gate 3: 'bug on purpose' (EMERGENT_PROMPTS S4): student predicts Pip's wrong answer from a deliberate wrong rule; correct prediction counts as understanding; live final, not the video
+sat	item	27	backlog	coordinator	RESEARCH	Lunch 1:20-2:30: show Pip's opening and the quiz miss to one 13-15-year-old (or a parent of one); log the reaction verbatim in research/interviews.md; adjust Pip's personality only, not the mechanic
+sun	item	29	backlog	pitch	PITCH	Live final: rehearse assigning one science topic and one SAT Math skill on the spot; keep a pre-made science assignment as backup
+stretch	item	30	backlog	emergent-coach	SCREEN	Only after Gate 3: K.O. card (EMERGENT_PROMPTS S5): lowkey premium collectible, numbered, tap to flip, Save image only; no rewards for sharing; nickname only; nothing about tutoring by default. Optional 1s shot after the K.O. in the video
+stretch	item	31	backlog	emergent-coach	JOURNEY	Only after Gate 3: play styles + own mascot (EMERGENT_PROMPTS S6): Raise/Fight/Grow over the same three events; creature, name, accessories; never cruel setbacks; teaching unchanged
+stretch	item	32	backlog	emergent-coach	JOURNEY	Only after 31: coins for understanding only, cosmetics/tools only, never sold; mission complete = mascot's next form (S7)
+stretch	item	33	backlog	emergent-coach	JOURNEY	After Gate 3, cheapest of S8-S10: mascot feels alive (tap/hold/poke reactions, idle moments, Hear Pip say it via browser text-to-speech; never record voices)
+stretch	item	34	backlog	emergent-coach	JOURNEY	After 32: deep mascot creator (layered parts, randomize) + Pip's room decorated with coin items; milestone cards framed on the wall (S9)
+stretch	item	35	backlog	emergent-coach	SCREEN	After 34: mod-style student themes (presets + tweaks, My theme) + owner-set center theme; visual only; no uploads or sharing (S10)
