@@ -155,3 +155,14 @@ voice from `backend/voices.json` (voice IDs + ElevenLabs voice_settings per role
 `narrator` Tri. Students can override Pip's voice in the Look sheet (`pip_voice`), saved on the session.
 Boss captions (hit/heal/taunt) are spoken in the boss voice; short announcer stings ("BOSS FIGHT", "K.O.",
 "BRAIN UPGRADED") in Xavier's voice. Mute silences all; captions always show.
+
+## v3.6 (triangle-area demo + knowledge kinds)
+- Lesson concepts gain `kind: "reason"|"convention"|"procedure"`. Pip's question style follows it: reason → ask
+  why (one-sentence reasons count); convention → never ask why, ask when it applies / sort a tricky case;
+  procedure → ask to walk one example or let Pip predict and be corrected.
+- **Main demo mission:** `a_tri` — "Area of a triangle" (CCSS 6.G.A.1), Maya s001, grade 6. Misconception:
+  "triangle area = base × height". Root prerequisite: area of a rectangle. Reasons a kid gives in one sentence:
+  two copies make a rectangle (or parallelogram), so one triangle is half. Target: ready for quiz in 2–4 texts.
+- `a_frac` stays as a secondary mission (another student); SAT missions unchanged.
+- Center insight + seeded sessions move to the triangle misconception (14 students); the saved session becomes a
+  complete triangle run. The K.O. card strikes "A = b × h".

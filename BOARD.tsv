@@ -169,3 +169,9 @@ sat	item	PACE-1	doing	backend	JOURNEY	Fix circling + 3-4 text teaching: global c
 sat	item	TUNE-1	blocked	coordinator	JOURNEY	Live prompt tuning loop via eval_pip.py: needs a working AI key (OpenRouter expired; AI Gateway key awaiting user OK)
 sat	item	P2D-6	doing	3d	SCREEN	Y2K pass on 2D mascots: gel shine, star-glint eyes, holo rim, Y2K accessories (starclips, charm, visor, shades), aha/hype sparkles; keep fuzzy
 sat	item	P2D-6	review	3d	SCREEN	Y2K finish on the soft Pips (src/pip2d/y2k.jsx): soft-edged gel shine on yuzu, sprout tip, nose and blush; 4-point star glint as the 2nd eye highlight; chrome rim (cool) / optional holo rim (holo prop) built from a dilated silhouette mask; badge = chrome-ringed holo sticker; glasses = tinted oval lenses; new accessories starclips, charm, visor (frosted candy), shades (tinted shield) -> ACCESSORIES_2D exported from Pip2D.jsx; aha/hype twinkle sparkles (CSS, reduced-motion off); vibe defaults when accessory=none: cute=starclips, cool=frosted visor + chrome rim, ugly=cracked holo band-aid + bent star clip. Shots: reports/design/roster_y2k.png, vibes_y2k.png, accessories_y2k.png. npm run build OK
+sat	item	L2	doing	content	DATA	Triangle-area lesson a_tri (+assignment, quiz, offline_demo 2-4 texts) + concept kinds on all lessons
+sat	item	P2D-7	doing	3d	SCREEN	Boss2D for the triangle boss (smug/cracked/KO)
+sat	item	B12	backlog	backend	DATA	After PACE-1: kind-aware questioning; Maya pinned to a_tri; insight/seeded sessions/saved session on triangle; a_frac secondary
+sat	item	P2	backlog	pitch	PITCH	PITCH + DEMO_SCRIPT on the triangle-area demo
+sat	item	G3	doing	design-lead	SCREEN	Nostalgia + more-Y2K addendum to DESIGN_SYSTEM
+sat	item	F10	backlog	frontend	SCREEN	Apply G3 nostalgia pass; map the triangle boss in Boss2D selection
