@@ -219,3 +219,8 @@ POST `/api/students/{id}/dream {dream}`; `payoff.dream_unlock {kind, id, title, 
 After the third K.O. the student unlocks `form: "main"` (Pip2D `form="main"`), an alternative look to v3: absurdly
 over-confident, still deadpan ("i have mastered the triangle. it bows to me."). Earned only. No "chad/alpha/sigma"
 wording, no real-person likeness. `Student.forms_unlocked: string[]`; payoff adds `unlocked_form`.
+
+## v3.12 (settings: topic stages + dream places)
+`Scene2D` backdrops: skatepark (a_tri boss stage; triangular ramp), boba (a_frac), studio (a_sat_commas), arcade
+(a_sat_linear), rooftop (Fame finale + landing hero), photobooth (lookbook cover shoot). Assignments gain optional
+`scene`; the frontend uses `sceneFor()` when absent. Unlocked places follow Pip's Dream and brain versions.

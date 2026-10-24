@@ -208,3 +208,5 @@ sat	item	G4	review	design-lead	SCREEN	Runway (day) + Club (night) themes, Unboun
 sat	item	G5	review	design-lead	SCREEN	Shared brand layer: chrome 'pip' wordmark + icon, cyan=act/lime=learned, Studio 'Ink at Work', landing hero in Club world, one button family
 sat	item	B14	review	backend	JOURNEY	v3.8 themes: backend/themes.py (7 presets, keyword fallback, AI generate with enforcement: AA contrast with 1% lightness steps, boss hue 0-20, action/boss/progress/pink rules, pattern cap, name/vibe limits, profanity), POST /api/themes/generate, GET /api/themes, POST /api/students/{id}/theme; tests/backend/test_themes.py incl. adversarial + 300-palette fuzz
 sat	item	P2D-12	doing	3d	SCREEN	Secret Main Character final form (all animals/vibes), comedic over-confidence, no manosphere coding or real-person likeness
+sat	item	SCN-1	doing	scenes	SCREEN	Scene2D backdrops: skatepark, boba, studio, arcade, rooftop, photobooth (day/night), sceneFor()
+sat	item	F15	backlog	frontend	SCREEN	Use Scene2D as the mission stage backdrop per assignment, rooftop on landing/fame finale, photobooth for the cover shoot
