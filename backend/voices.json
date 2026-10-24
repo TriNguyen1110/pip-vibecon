@@ -1,19 +1,105 @@
 {
   "note": "ElevenLabs voice ids are not secrets. Settings go in voice_settings; similarity_boost defaults to 0.75.",
   "pip": {
-    "cute": {"voice_id": "BlgEcC0TfWpBak7FmvHW", "name": "Fena", "stability": 0.55, "style": 0.25, "speed": 0.95},
-    "ugly": {"voice_id": "dfZGXKiIzjizWtJ0NgPy", "name": "Michael Mouse", "stability": 0.6, "style": 0.3, "speed": 0.88},
-    "cool": {"voice_id": "rMwQM6pPoLHjNQDAGxOA", "name": "Tri", "stability": 0.65, "style": 0.15, "speed": 0.95}
+    "cute": {
+      "voice_id": "BlgEcC0TfWpBak7FmvHW",
+      "name": "Fena",
+      "stability": 0.55,
+      "style": 0.25,
+      "speed": 0.95,
+      "provenance": "Fena (professional): 'Young, sassy girl character.' Original character voice, no impression language. Audited B11."
+    },
+    "ugly": {
+      "voice_id": "EaX6rnyDKjJx35tchi80",
+      "name": "Nelson - High-Pitched, Anxious Nerd",
+      "stability": 0.6,
+      "style": 0.3,
+      "speed": 0.9,
+      "provenance": "Nelson (professional, shared library): 'Socially anxious nerd with expressive, slightly squeaky delivery.' Original character voice; no impression, parody, celebrity or famous-character wording. Replaced 'Michael Mouse' (description said 'emulating famous characters'). Audited B11."
+    },
+    "cool": {
+      "voice_id": "rMwQM6pPoLHjNQDAGxOA",
+      "name": "Tri",
+      "stability": 0.65,
+      "style": 0.15,
+      "speed": 0.95,
+      "provenance": "Tri: the project owner's own cloned voice, used with their consent. Audited B11."
+    }
   },
   "boss": {
-    "walrus": {"voice_id": "2ajXGJNYBR0iNHpS4VZb", "name": "Rob", "stability": 0.5, "style": 0.55, "speed": 0.92},
-    "penguin": {"voice_id": "2gPFXx8pN3Avh27Dw5Ma", "name": "Oxley", "stability": 0.6, "style": 0.35, "speed": 1.0, "min_grade": 11,
-                "younger": {"voice_id": "2ajXGJNYBR0iNHpS4VZb", "name": "Rob", "stability": 0.6, "style": 0.35, "speed": 0.95}},
-    "hamster": {"voice_id": "a5zfmqTslZJBP0jutmVY", "name": "Jen Frankie", "stability": 0.45, "style": 0.6, "speed": 1.0},
-    "default": {"voice_id": "2ajXGJNYBR0iNHpS4VZb", "name": "Rob", "stability": 0.5, "style": 0.55, "speed": 0.92}
+    "walrus": {
+      "voice_id": "2ajXGJNYBR0iNHpS4VZb",
+      "name": "Rob",
+      "stability": 0.5,
+      "style": 0.55,
+      "speed": 0.92,
+      "provenance": "Rob (professional): 'A tough British man. Gritty, Experienced, Strong.' Original character voice. Audited B11."
+    },
+    "penguin": {
+      "voice_id": "2gPFXx8pN3Avh27Dw5Ma",
+      "name": "Oxley",
+      "stability": 0.6,
+      "style": 0.35,
+      "speed": 1.0,
+      "min_grade": 11,
+      "younger": {
+        "voice_id": "2ajXGJNYBR0iNHpS4VZb",
+        "name": "Rob",
+        "stability": 0.6,
+        "style": 0.35,
+        "speed": 0.95,
+        "provenance": "Rob, see walrus."
+      },
+      "provenance": "Oxley (professional): original evil-character voice, no impression language. Its description is dark ('terrifying', 'serial killer'), so it is only used for grade 11+ with campy settings; the younger variant uses Rob. Audited B11."
+    },
+    "hamster": {
+      "voice_id": "a5zfmqTslZJBP0jutmVY",
+      "name": "Jen Frankie",
+      "stability": 0.45,
+      "style": 0.6,
+      "speed": 1.0,
+      "provenance": "Jen Frankie (professional, by Miss Frankie): 'Reality TV wife... funny American female character voice.' Original character voice. Audited B11."
+    },
+    "default": {
+      "voice_id": "2ajXGJNYBR0iNHpS4VZb",
+      "name": "Rob",
+      "stability": 0.5,
+      "style": 0.55,
+      "speed": 0.92,
+      "provenance": "Rob, see walrus. Audited B11."
+    }
   },
-  "announcer": {"voice_id": "YOq2y2Up4RgXP2HyXjE5", "name": "Xavier", "stability": 0.4, "style": 0.8, "speed": 1.0},
-  "narrator": {"voice_id": "rMwQM6pPoLHjNQDAGxOA", "name": "Tri", "stability": 0.65, "style": 0.15, "speed": 0.95},
-  "boss_keys": {"walrus": ["walrus", "top-top", "a_frac"], "penguin": ["penguin", "pause-pause", "a_sat_commas"],
-                "hamster": ["hamster", "hop-hop", "a_sat_linear"]}
+  "announcer": {
+    "voice_id": "LG95yZDEHg6fCZdQjLqj",
+    "name": "Phil - Explosive, Passionate Announcer",
+    "stability": 0.4,
+    "style": 0.8,
+    "speed": 1.0,
+    "provenance": "Phil (professional, shared library): 'An explosive voice, commentating every electrifying suplex and championship clash with unbridled passion!' Original announcer voice; no impression or famous-character wording. Replaced Xavier, whose description said it was inspired by a classic arena shooter's announcer 'originally voiced by' a named actor (owner/sound-alike status unclear). Audited B11."
+  },
+  "narrator": {
+    "voice_id": "rMwQM6pPoLHjNQDAGxOA",
+    "name": "Tri",
+    "stability": 0.65,
+    "style": 0.15,
+    "speed": 0.95,
+    "provenance": "Tri: the project owner's own cloned voice, used with their consent. Audited B11."
+  },
+  "boss_keys": {
+    "walrus": [
+      "walrus",
+      "top-top",
+      "a_frac"
+    ],
+    "penguin": [
+      "penguin",
+      "pause-pause",
+      "a_sat_commas"
+    ],
+    "hamster": [
+      "hamster",
+      "hop-hop",
+      "a_sat_linear"
+    ]
+  }
 }
