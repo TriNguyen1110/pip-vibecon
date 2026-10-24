@@ -31,9 +31,9 @@ function Gills({ side, still }) {
           <group key={i} position={[dx * 0.04, (1 - i) * 0.09, 0]} rotation={[0, 0, Math.atan2(-dx, dy)]}>
             <mesh position={[0, len / 2 + 0.04, 0]}>
               <capsuleGeometry args={[0.05, len, 4, 10]} />
-              <Fur color={C.accent} />
+              <Fur color={C.accent} glow={C.glow ?? 0} />
             </mesh>
-            <Ball r={0.035} position={[0.045, len * 0.55, 0.02]} color={C.accent} seg={10} outline={false} />
+            <Ball r={0.035} position={[0.045, len * 0.55, 0.02]} color={C.accent} emissive={C.accent} glow={C.glow ?? 0} seg={10} outline={false} />
           </group>
         )
       })}
@@ -138,5 +138,9 @@ export default {
     sweat: [0.45, 0.14, 0.22],
     shadow: 1.2,
     top: 1.4,
+    tufts: [[-0.95, 0.45], [0.9, 0.5], [-1.45, -0.05], [0.25, 0.78]].map(([t, p]) => onEllipsoid([0, 0, 0], HR, t, p)),
+    lumps: [[1.3, 0.1], [-2.3, 0.3], [2.8, -0.2]].map(([t, p]) => onEllipsoid(BODY.c, BODY.r, t, p)),
+    pin: { position: [0.52, 0.02, 0.1], quaternion: [0, 0, -0.2, 0.98], normal: [0, 0, 1] },
+    visor: { y: 0.16, rTop: 0.467, rBot: 0.512, h: 0.07, sz: 0.81 },
   },
 }

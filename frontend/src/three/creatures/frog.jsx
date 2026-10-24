@@ -23,7 +23,7 @@ function Body() {
   return (
     <group>
       {[-1, 1].map((s) => (
-        <Ball key={s} r={0.12} s={[1.3, 0.45, 1.2]} position={[s * 0.27, 0.04, 0.38]} color={C.accent} />
+        <Ball key={s} r={0.12} s={[1.3, 0.45, 1.2]} position={[s * 0.27, 0.04, 0.38]} color={C.accent} emissive={C.accent} glow={C.glow ?? 0} />
       ))}
       {[-1, 1].map((s) => (
         <Ball key={`b${s}`} r={0.2} s={[0.85, 0.7, 1.2]} position={[s * 0.52, 0.14, -0.1]} color={C.body} fur />
@@ -89,5 +89,8 @@ export default {
     sweat: [0.52, 0.12, 0.25],
     shadow: 1.45,
     top: 1.12,
+    tufts: [[-0.95, 0.45], [0.95, 0.4], [2.6, 0.55], [0, 0.95], [-2.4, 0.3]].map(([t, p]) => onEllipsoid([0, 0, 0], R, t, p)),
+    lumps: [[1.6, -0.2], [-1.9, 0.1], [2.9, 0.3]].map(([t, p]) => onEllipsoid([0, 0.5, 0], R, t, p)),
+    pin: onEllipsoid(BUMPS[1], [BUMP_R, BUMP_R, BUMP_R], 0.5, 0.75, 0.01),
   },
 }

@@ -31,12 +31,12 @@ function Body() {
         <Mat {...CHROME} />
       </mesh>
       {[-1, 1].map((s) => (
-        <Ball key={s} r={0.12} s={[1.1, 0.55, 1.3]} position={[s * 0.18, 0.05, 0.08]} color={C.accent} />
+        <Ball key={s} r={0.12} s={[1.1, 0.55, 1.3]} position={[s * 0.18, 0.05, 0.08]} color={C.accent} emissive={C.accent} glow={C.glow ?? 0} />
       ))}
       {[-1, 1].map((s) => (
         <group key={`a${s}`}>
           <Rod a={[s * 0.36, 0.52, 0.02]} b={[s * 0.43, 0.3, 0.1]} r={0.06} color={C.body} />
-          <Ball r={0.07} position={[s * 0.44, 0.26, 0.11]} color={C.accent} seg={16} />
+          <Ball r={0.07} position={[s * 0.44, 0.26, 0.11]} color={C.accent} emissive={C.accent} glow={C.glow ?? 0} seg={16} />
         </group>
       ))}
     </group>
@@ -62,7 +62,7 @@ function Head({ still, accessory }) {
         [-1, 1].map((s) => (
           <mesh key={s} position={[s * 0.45, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
             <cylinderGeometry args={[0.09, 0.09, 0.08, 20]} />
-            <Mat color={C.accent} />
+            <Mat color={C.accent} emissive={C.accent} glow={C.glow ?? 0} />
           </mesh>
         ))}
       <group position={[0, 0.34, 0]} rotation={[0, 0, ugly ? 0.6 : 0]}>
@@ -71,7 +71,7 @@ function Head({ still, accessory }) {
           <Mat {...CHROME} />
         </mesh>
         <group ref={ball} position={[0, 0.22, 0]}>
-          <Ball r={0.055} color={C.accent} seg={18} />
+          <Ball r={0.055} color={C.accent} emissive={C.accent} glow={C.glow ?? 0} seg={18} />
         </group>
       </group>
     </group>
@@ -116,5 +116,7 @@ export default {
     shadow: 1.15,
     top: 1.7,
     headZone: 0.0,
+    pin: { position: [-0.33, 0.27, 0.3], quaternion: [0, 0, 0.38, 0.925], normal: [0, 0, 1] },
+    visor: { box: { pos: [0, 0.255, 0.33], size: [0.74, 0.05, 0.06] } },
   },
 }

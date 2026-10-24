@@ -8,8 +8,9 @@ import { useVibe } from './vibe'
 
 // Fuzzy-friend look (T4/T5): velvet sheen everywhere + clumped shell fur on the big body/head meshes.
 // 8 shells; they are on only for the live stage and switch off on slow devices (see FurGovernor in Stage.jsx).
-export const FurCtx = createContext({ shells: false })
+export const FurCtx = createContext({ shells: false, smooth: false })
 const useShells = () => useContext(FurCtx).shells
+const useSmooth = () => useContext(FurCtx).smooth
 
 const WHITE = new THREE.Color('#ffffff')
 
@@ -222,14 +223,16 @@ function FurShells({ color, len, density, layers, bald, scruff = 0 }) {
 
 // Velvet material for fuzzy parts. `shells` adds real fluff (big meshes only). Doodle look falls back to toon.
 // bald: up to two [x, y, z, cos] zones (object-space normal directions) kept fur-free, e.g. the face mask.
-export function Fur({ color, shells = false, len = 0.045, density = [4, 2], layers = 8, bald, outline }) {
+export function Fur({ color, shells = false, len = 0.045, density = [4, 2], layers = 8, bald, outline, glow = 0 }) {
   const toon = useToon()
   const vibe = useVibe()
   const allowShells = useShells()
+  // thumbnails: velvet only, no strand normal map (reads plush, not noisy, at 64px)
+  const smooth = useSmooth()
   const sheenColor = useMemo(() => new THREE.Color(color).lerp(WHITE, 0.5), [color])
   if (toon) return <Mat color={color} outline={outline} />
   // cool vibe: sleek satin vinyl, no fluff (also the cheapest path)
-  if (vibe === 'cool') return <Mat color={color} rough={0.45} coat={0.35} outline={outline} />
+  if (vibe === 'cool') return <Mat color={color} rough={0.45} coat={0.35} outline={outline} emissive={color} glow={glow} />
   return (
     <>
       <meshPhysicalMaterial
@@ -239,7 +242,7 @@ export function Fur({ color, shells = false, len = 0.045, density = [4, 2], laye
         sheen={1}
         sheenRoughness={0.8}
         sheenColor={sheenColor}
-        normalMap={furNormal()}
+        normalMap={smooth ? null : furNormal()}
         normalScale={[0.55, 0.55]}
       />
       {shells && allowShells && (

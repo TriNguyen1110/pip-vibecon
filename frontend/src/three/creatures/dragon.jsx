@@ -25,7 +25,7 @@ function Spike({ a, h = 0.12, r = 0.055 }) {
     <At a={a}>
       <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, 0, h * 0.35]}>
         <coneGeometry args={[r, h, 14]} />
-        <Mat color={C.accent} />
+        <Mat color={C.accent} emissive={C.accent} glow={C.glow ?? 0} />
       </mesh>
     </At>
   )
@@ -66,7 +66,7 @@ function Body({ still }) {
         <group key={`w${s}`} ref={wings[i]} position={[s * 0.18, 0.66, -0.3]}>
           <mesh position={[s * 0.2, 0.08, 0]} rotation={[0, 0, s * 0.5]} scale={[1.2, 0.8, 0.16]}>
             <sphereGeometry args={[0.2, 20, 14]} />
-            <Mat color={C.accent} />
+            <Mat color={C.accent} emissive={C.accent} glow={C.glow ?? 0} />
           </mesh>
         </group>
       ))}
@@ -84,7 +84,7 @@ function Body({ still }) {
       />
       <mesh position={[0.66, 0.38, -0.4]} rotation={[0.4, 0, -0.75]}>
         <coneGeometry args={[0.08, 0.16, 4]} />
-        <Mat color={C.accent} />
+        <Mat color={C.accent} emissive={C.accent} glow={C.glow ?? 0} />
       </mesh>
     </group>
   )
@@ -115,7 +115,7 @@ function Head() {
         <group key={s} position={[s * 0.19, 0.36, -0.06]} rotation={ugly && s > 0 ? [-0.2, 0, -1.0] : [-0.45, 0, -s * 0.3]}>
           <mesh position={[0, 0.06, 0]}>
             <coneGeometry args={[0.065, 0.24, 16]} />
-            <Mat color={C.accent} />
+            <Mat color={C.accent} emissive={C.accent} glow={C.glow ?? 0} />
           </mesh>
         </group>
       ))}
@@ -168,5 +168,9 @@ export default {
     sweat: [0.4, 0.16, 0.22],
     shadow: 1.2,
     top: 1.5,
+    tufts: [[-0.95, 0.45], [0.9, 0.5], [-1.45, -0.05], [0.25, 0.78]].map(([t, p]) => onEllipsoid([0, 0, 0], HR, t, p)),
+    lumps: [[1.3, 0.1], [-2.3, 0.3], [2.8, -0.2]].map(([t, p]) => onEllipsoid(BODY.c, BODY.r, t, p)),
+    pin: { position: [0.3, 0.43, 0.03], quaternion: [0, 0, -0.38, 0.925], normal: [0, 0, 1] },
+    visor: { y: 0.2, rTop: 0.392, rBot: 0.437, h: 0.07, sz: 0.93 },
   },
 }

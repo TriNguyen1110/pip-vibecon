@@ -62,7 +62,7 @@ function Head() {
         {[-0.45, 0, 0.45].map((rz, i) => (
           <mesh key={i} position={[Math.sin(rz) * 0.09, 0.11 - Math.abs(rz) * 0.05, i === 1 ? 0.01 : -0.01]} rotation={[0, 0, -rz]} scale={[0.55, 1.6, 0.55]}>
             <sphereGeometry args={[0.085, 14, 10]} />
-            <Fur color={vibe === 'cool' ? C.accent : C.body} />
+            <Fur color={vibe === 'cool' ? C.accent : C.body} glow={vibe === 'cool' ? C.glow ?? 0 : 0} />
           </mesh>
         ))}
       </group>
@@ -98,5 +98,10 @@ export default {
     sweat: [0.48, 0.18, 0.32],
     shadow: 1.45,
     top: 1.28,
+    // vibe extras (head frame unless noted)
+    tufts: [[-0.9, 0.95], [0.75, 0.98], [-1.7, 0.72], [1.6, 0.55]].map(([t, y]) => onLathe(lathe, t, y, 0, OFF)),
+    lumps: [[1.25, 0.3], [-2.2, 0.45], [2.7, 0.75]].map(([t, y]) => onLathe(lathe, t, y)), // body frame
+    pin: onLathe(lathe, -0.55, 0.93, 0.01, OFF),
+    visor: { y: 0.47, rTop: 0.39, rBot: 0.462, h: 0.08 },
   },
 }

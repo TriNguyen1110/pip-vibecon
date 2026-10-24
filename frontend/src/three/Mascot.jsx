@@ -6,6 +6,7 @@ import { CREATURE_MAP } from './creatures'
 import { Face } from './parts/Face'
 import { HeadAccessory, BodyAccessory, StitchPatch } from './parts/Accessory'
 import { useVibe, useCreatureColors } from './parts/vibe'
+import { UglyTufts, Lumps, Bandage, Visor } from './parts/VibeParts'
 import { MoodIcon, SweatDrop, Sparkles } from './parts/MoodIcon'
 import { BlobShadow } from './parts/BlobShadow'
 import { damp, easeInOut } from './parts/geo'
@@ -218,7 +219,9 @@ export function Mascot({
       const k = spec.tilt ?? 1
       head.current.rotation.z = a.tiltZ * k
       // slight head bob on syllable peaks (head lifts as the mouth opens)
-      head.current.rotation.x = a.tiltX * k + a.pitch * k - talk * 0.09 * Math.max(0.6, k)
+      // cool: chin up with a slow, cocky nod
+      const chin = vibe === 'cool' ? -0.08 + 0.035 * Math.sin(t * 0.9) : 0
+      head.current.rotation.x = a.tiltX * k + a.pitch * k - talk * 0.09 * Math.max(0.6, k) + chin * Math.max(0.6, k)
       head.current.rotation.y = (a.yaw + shake) * Math.max(0.5, k)
     }
     if (shadow.current) {
@@ -249,11 +252,15 @@ export function Mascot({
           <group rotation={[0, 0, vibe === 'ugly' ? -0.035 : 0]} scale={vibe === 'ugly' ? [1.05, 0.97, 1] : 1}>
           <C.Body accessory={accessory} mood={mood} still={still} />
           <BodyAccessory type={accessory} spec={spec} />
-          {vibe === 'ugly' && spec.badge && <StitchPatch anchor={spec.badge} color={pal.accent} />}
+          {vibe === 'ugly' && spec.badge && <StitchPatch anchor={spec.badge} color={pal.accent} size={creature === 'bot' ? 0.2 : 0.28} />}
+          {vibe === 'ugly' && spec.lumps && <Lumps anchors={spec.lumps} color={pal.body} fur={creature !== 'bot'} />}
           <group ref={head} position={spec.head}>
             <C.Head accessory={accessory} mood={mood} still={still} />
             <Face cfg={spec.face} mood={still ? 'idle' : mood} anim={anim} glow={spec.glow} />
             <HeadAccessory type={accessory} spec={spec} />
+            {vibe === 'cool' && accessory !== 'glasses' && <Visor v={spec.visor} accent={pal.accent} />}
+            {vibe === 'ugly' && spec.tufts && <UglyTufts anchors={spec.tufts} color={pal.body} />}
+            {vibe === 'ugly' && <Bandage a={spec.pin} />}
             {!still && <MoodIcon mood={mood} position={spec.icon} />}
             {!still && mood === 'stuck' && <SweatDrop position={spec.sweat} />}
           </group>

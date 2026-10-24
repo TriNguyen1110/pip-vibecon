@@ -7,9 +7,11 @@ import { StudioEnv } from './Stage'
 import { StyleCtx } from './parts/Mat'
 import { CREATURE_MAP } from './creatures'
 import { VibeCtx } from './parts/vibe'
+import { FurCtx } from './parts/Fur'
 
 // One shared offscreen canvas renders each thumbnail once; results are cached as data URLs.
 const SIZE = 160
+const THUMB_FUR = { shells: false, smooth: true }
 const cache = new Map()
 let chain = Promise.resolve()
 let canvas = null
@@ -37,6 +39,7 @@ function ThumbScene({ creature, accessory, toon, mood, vibe, done }) {
   camera.lookAt(0, cy, 0)
   return (
     <VibeCtx.Provider value={vibe}>
+    <FurCtx.Provider value={THUMB_FUR}>
     <StyleCtx.Provider value={{ toon }}>
       <hemisphereLight args={['#FFFFFF', '#5B4F63', 0.9]} />
       <directionalLight position={[-3, 5, 4]} intensity={1.9} />
@@ -47,6 +50,7 @@ function ThumbScene({ creature, accessory, toon, mood, vibe, done }) {
       </group>
       <Capture done={done} />
     </StyleCtx.Provider>
+    </FurCtx.Provider>
     </VibeCtx.Provider>
   )
 }

@@ -78,7 +78,7 @@ function Head() {
           </mesh>
           <mesh position={[0, -0.01, 0.065]} scale={[1, 1, 0.45]}>
             <coneGeometry args={[0.085, 0.2, 16]} />
-            <Mat color={C.accent} outline={false} />
+            <Mat color={C.accent} emissive={C.accent} glow={C.glow ?? 0} outline={false} />
           </mesh>
         </group>
       ))}
@@ -106,7 +106,7 @@ function Head() {
       <At a={nose}>
         <mesh scale={[1.35, 0.85, 0.7]}>
           <sphereGeometry args={[0.032, 14, 10]} />
-          <Mat color={C.accent} outline={false} />
+          <Mat color={C.accent} emissive={C.accent} glow={C.glow ?? 0} outline={false} />
         </mesh>
       </At>
       {stripes.map((a, i) => (
@@ -154,5 +154,9 @@ export default {
     sweat: [0.4, 0.16, 0.2],
     shadow: 1.1,
     top: 1.55,
+    tufts: [[-0.95, 0.45], [0.9, 0.5], [-1.45, -0.05], [0.25, 0.78]].map(([t, p]) => onEllipsoid([0, 0, 0], HR, t, p)),
+    lumps: [[1.3, 0.1], [-2.3, 0.3], [2.8, -0.2]].map(([t, p]) => onEllipsoid(BODY.c, BODY.r, t, p)),
+    pin: { position: [0.36, 0.36, 0.1], quaternion: [0, 0, -0.29, 0.957], normal: [0, 0, 1] },
+    visor: { y: 0.17, rTop: 0.415, rBot: 0.457, h: 0.07, sz: 0.89 },
   },
 }

@@ -185,31 +185,35 @@ export function Backpack({ pack }) {
   )
 }
 
-// ugly vibe: a stitched-on patch (body frame), mirrored from the badge anchor
-export function StitchPatch({ anchor, color }) {
+// ugly vibe: a big stitched-on patch (body frame), mirrored from the badge anchor, with cross-stitches
+export function StitchPatch({ anchor, color, size = 0.3 }) {
   const [x, y, z] = anchor.position
   const [qx, qy, qz, qw] = anchor.quaternion
-  const stitches = [
-    [-0.075, 0, Math.PI / 2],
-    [0.075, 0, Math.PI / 2],
-    [0, 0.065, 0],
-    [0, -0.065, 0],
-  ]
+  const W = size
+  const H = size * 0.85
+  const crosses = []
+  const n = 4
+  for (let i = 0; i < n; i++) {
+    const k = -0.5 + (i + 0.5) / n
+    crosses.push([k * W, H / 2], [k * W, -H / 2], [W / 2, k * H], [-W / 2, k * H])
+  }
   return (
     <group position={[-x, y, z]} quaternion={[qx, -qy, -qz, qw]}>
-      <group rotation={[0, 0, 0.25]}>
-        <mesh position={[0, 0, 0.004]}>
-          <boxGeometry args={[0.15, 0.13, 0.016]} />
+      <group rotation={[0, 0, 0.22]}>
+        <mesh position={[0, 0, 0.006]}>
+          <boxGeometry args={[W, H, 0.02]} />
           <Mat color={color} rough={0.85} coat={0} />
         </mesh>
-        {stitches.map(([sx, sy, r], i) =>
-          [-1, 0, 1].map((k) => (
-            <mesh key={`${i}${k}`} position={[sx + (r ? 0 : k * 0.045), sy + (r ? k * 0.04 : 0), 0.015]} rotation={[0, 0, r ? Math.PI / 2 : 0]}>
-              <capsuleGeometry args={[0.006, 0.026, 3, 6]} />
-              <meshStandardMaterial color={INK} roughness={0.6} />
-            </mesh>
-          )),
-        )}
+        {crosses.map(([cx, cy], i) => (
+          <group key={i} position={[cx, cy, 0.02]}>
+            {[0.785, -0.785].map((r) => (
+              <mesh key={r} rotation={[0, 0, r]}>
+                <capsuleGeometry args={[0.007, size * 0.11, 3, 6]} />
+                <meshStandardMaterial color={INK} roughness={0.6} />
+              </mesh>
+            ))}
+          </group>
+        ))}
       </group>
     </group>
   )
