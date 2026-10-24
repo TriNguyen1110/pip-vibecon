@@ -257,6 +257,7 @@ async def create_session(body: dict = Body(...)):
     s = logic.new_session(a, st["id"], look, body.get("creature") or look, acc,
                           openings(st, a, earlier[-1:], past))
     s["opening_source"] = "past_self" if past else "claim"
+    s["vibe"] = body.get("vibe") if body.get("vibe") in ("cute", "cool", "ugly") else "cute"
     await store.put("sessions", s)
     st["last_session_id"] = s["id"]
     await store.put("students", st)

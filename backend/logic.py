@@ -64,7 +64,7 @@ def new_session(assignment: dict, student_id: str, look: str, creature: str, acc
         "weapons": [], "equipped": None, "mood": "confused", "brain": [], "quiz": [],
         "reteach_count": 0, "reteach_concept": None, "reteach_from": None, "parent_message": None, "brain_version": 1, "ko": False,
         "finisher": None, "gap_report": None, "created_at": now(),
-        "misconception_stated": True, "opening_source": "claim", "ladder": new_ladder(assignment),
+        "misconception_stated": True, "opening_source": "claim", "vibe": "cute", "ladder": new_ladder(assignment),
         "parked": [], "turn_log": [],
     }
 
