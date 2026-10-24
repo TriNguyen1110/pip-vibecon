@@ -16,6 +16,7 @@ import httpx  # noqa: E402
 from fastapi import APIRouter, BackgroundTasks, Body, FastAPI, HTTPException, Request  # noqa: E402
 from fastapi.middleware.cors import CORSMiddleware  # noqa: E402
 
+import lesson as lessons  # noqa: E402
 import llm  # noqa: E402
 import logic  # noqa: E402
 import pip_ai  # noqa: E402
@@ -90,6 +91,62 @@ async def center():
             "came_back_this_week": len(back), "pilot": {"status": pilot["status"]}}
 
 
+GRACE_DAYS = 3     # a session this fresh cannot be "no return" or "no update" yet
+WINDOW_DAYS = 14
+
+
+def _dt(ts: str) -> datetime:
+    return datetime.fromisoformat(ts)
+
+
+@api.get("/center/at-risk")
+async def at_risk():
+    """Students who need a human: stuck after the full ladder, no return in 14 days, or no parent update."""
+    now = datetime.now(timezone.utc)
+    cut, grace = now - timedelta(days=WINDOW_DAYS), now - timedelta(days=GRACE_DAYS)
+    assignments = {x["id"]: x for x in await store.all("assignments")}
+    by_student: dict[str, list[dict]] = {}
+    for s in await store.all("sessions"):
+        if not s.get("saved"):
+            by_student.setdefault(s["student_id"], []).append(s)
+    opens: dict[str, list[datetime]] = {}
+    for e in await store.all("events", kind="open"):
+        if not e["due"]:
+            opens.setdefault(e["student_id"], []).append(_dt(e["ts"]))
+    sent: dict[str, list[datetime]] = {}
+    for r in await store.all("sent"):
+        sent.setdefault(r["student_id"], []).append(_dt(r["ts"]))
+    out = []
+    for sid, sess in by_student.items():
+        st = await store.get("students", sid)
+        if not st:
+            continue
+        reasons = []
+        for s in sorted(sess, key=lambda x: x["created_at"]):
+            a = assignments.get(s["assignment_id"])
+            for cid, v in (s.get("ladder") or {}).items():
+                if v.get("stuck") and a and not any(
+                        r["correct"] and r["concept_id"] == cid for r in s["brain"]):
+                    reasons.append(f"Stuck after the full ladder on \"{logic.short_name(a, cid)}\" "
+                                   f"({a['topic']}). Pip's friend hint did not unlock it.")
+        latest = max(sess, key=lambda x: x["created_at"])
+        if _dt(latest["created_at"]) <= grace and not any(t >= cut for t in opens.get(sid, [])):
+            reasons.append("Has not come back to the app on their own in 14 days.")
+        done = [s for s in sess if s["status"] in ("quizzed", "complete") and _dt(s["created_at"]) <= grace]
+        if done:
+            last_done = max(done, key=lambda x: x["created_at"])
+            sent_at = [t for t in sent.get(sid, [])]
+            if last_done.get("parent_sent_at"):
+                sent_at.append(_dt(last_done["parent_sent_at"]))
+            if not any(t >= _dt(last_done["created_at"]) for t in sent_at):
+                reasons.append("No parent update sent since their last completed session.")
+        if reasons:
+            out.append({"student_id": sid, "name": st["name"], "reasons": reasons,
+                        "synthetic": any(s.get("synthetic") for s in sess)})
+    out.sort(key=lambda x: (-len(x["reasons"]), x["student_id"]))
+    return {"students": out, "label": "synthetic demo data"}
+
+
 @api.get("/tutors/{tutor_id}/roster")
 async def roster(tutor_id: str):
     tutor = await need("tutors", tutor_id, "tutor")
@@ -145,6 +202,9 @@ async def save_assignment(body: dict = Body(...)):
     a.setdefault("boss", {"name": "Mistakio Blunderini", "emoji": "🍝😵", "backstory": ""})
     for k in ("cliffhanger", "root_prerequisite", "why_it_matters"):
         a.setdefault(k, "")
+    if a.get("lesson"):
+        a["lesson"] = lessons.normalize_lesson(a["lesson"]) or lessons.offline_lesson(
+            a["concepts"], a["topic"])
     if {q.get("concept_id") for q in a.get("quiz") or []} != set(logic.concept_ids(a)):
         a["quiz"] = pip_ai.quiz_for(a)
     await store.put("assignments", a)
@@ -153,15 +213,31 @@ async def save_assignment(body: dict = Body(...)):
 
 # ------------------------------------------------------------------ sessions
 
-def openings(student: dict, a: dict, earlier: list[dict]) -> list[str]:
+def past_self_rule(a: dict, student_sessions: list[dict], assignments: dict) -> str | None:
+    """The student's own last unfixed wrong rule on this topic family (most recent non-saved session)."""
+    fam = lessons.topic_family(a)
+    same = [s for s in student_sessions if not s.get("saved") and s.get("brain")
+            and s["assignment_id"] in assignments
+            and lessons.topic_family(assignments[s["assignment_id"]]) == fam]
+    if not same:
+        return None
+    last = max(same, key=lambda s: s["created_at"])
+    bad = next((r for r in last["brain"] if not r["correct"] and not r.get("fixed_after")), None)
+    return bad["quote"].strip().rstrip(".") if bad else None
+
+
+def openings(student: dict, a: dict, earlier: list[dict], past: str | None = None) -> list[str]:
     """Instant templated opening (no AI call). The LAST message is always the misconception claim."""
-    claim = (f"I'm learning {a['topic'].lower()}. I already know one rule: {a['misconception']}. "
-             "Easy.")
+    if past:  # M1 past-self: the student's own old mistake, framed as hearsay, never as theirs
+        claim = f"I'm learning {a['topic'].lower()}. Someone told me {past}. Seems easy."
+    else:
+        claim = (f"I'm learning {a['topic'].lower()}. I already know one rule: {a['misconception']}. "
+                 "Easy.")
     if not student.get("interests"):
         return ["Hi. I'm Pip. Before we start: what are you into? A game, a sport, music, food. "
                 "Anything.", claim]
     old = [r for s in earlier for r in s["brain"]]
-    if old:
+    if old and not past:
         return [f'Hi. I\'m Pip. Last time you told me: "{old[0]["quote"]}". Still true?', claim]
     return ["Hi. I'm Pip. " + claim]
 
@@ -170,13 +246,17 @@ def openings(student: dict, a: dict, earlier: list[dict]) -> list[str]:
 async def create_session(body: dict = Body(...)):
     a = await need("assignments", body.get("assignment_id", ""), "assignment")
     st = await need("students", body.get("student_id", ""), "student")
-    earlier = sorted([s for s in await store.all("sessions", student_id=st["id"])
-                      if not s.get("saved") and s["brain"]], key=lambda s: s["created_at"])
+    mine = await store.all("sessions", student_id=st["id"])
+    earlier = sorted([s for s in mine if not s.get("saved") and s["brain"]],
+                     key=lambda s: s["created_at"])
+    assignments = {x["id"]: x for x in await store.all("assignments")}
+    past = past_self_rule(a, mine, assignments)
     look = body.get("look") if body.get("look") in ("blob", "bot", "doodle") else "blob"
     acc = body.get("accessory") if body.get("accessory") in (
         "none", "cap", "glasses", "scarf", "headphones") else "none"
     s = logic.new_session(a, st["id"], look, body.get("creature") or look, acc,
-                          openings(st, a, earlier[-1:]))
+                          openings(st, a, earlier[-1:], past))
+    s["opening_source"] = "past_self" if past else "claim"
     await store.put("sessions", s)
     st["last_session_id"] = s["id"]
     await store.put("students", st)
@@ -381,6 +461,8 @@ async def _reteach(sid: str, body: dict):
            "You didn't teach me that one. Can you teach it to me?")
     s.update(reteach_count=s["reteach_count"] + 1, reteach_concept=cid, status="teaching",
              mood="stuck")
+    lessons.ensure_ladder(s, a)
+    lessons.reset_concept(s, cid)
     s["transcript"].append({"from": "pip", "text": msg, "ts": logic.now(),
                             "event": {"kind": "none", "amount": 0, "caption": "", "unlocked": []}})
     s["reteach_from"] = len(s["transcript"])
@@ -465,6 +547,8 @@ async def parent_send(sid: str, body: dict = Body(...)):
            "to": to or "test parent (synthetic)", "message": msg,
            "status": "delivered" if ok else "test-mode (not delivered)", "ts": logic.now()}
     await store.put("sent", row)
+    s["parent_sent_at"] = row["ts"]
+    await store.put("sessions", s)
     return {"sent": row}
 
 

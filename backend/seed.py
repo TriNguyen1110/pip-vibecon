@@ -4,8 +4,9 @@ import json
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
+import lesson as lessons
 import pip_ai
-from logic import now
+from logic import new_ladder, now
 
 SEED = Path(__file__).parent / "seed"
 COLLS = ["center", "tutors", "students", "assignments", "sessions", "events", "sent", "workshops",
@@ -38,8 +39,13 @@ def _session(raw, a):
         "brain_version": 2 if ok else 1, "ko": ok, "finisher": None, "gap_report": None,
         "parent_message": None, "synthetic": True, "minutes": raw["minutes"],
         "since_last_session": raw.get("since_last_session"), "created_at": now(),
-        "misconception_stated": True,
+        "misconception_stated": True, "opening_source": "claim", "ladder": new_ladder(a),
+        "parked": [], "turn_log": [],
     }
+
+
+def _dt(ts: str):
+    return datetime.fromisoformat(ts)
 
 
 def _maya_saved(a):
@@ -112,7 +118,15 @@ def _maya_saved(a):
         "brain_version": 2, "ko": True, "finisher": {"weapon": w["k2"], "caption": cap},
         "gap_report": None, "parent_message": None, "saved": True, "label": "saved session",
         "synthetic": True, "created_at": now(), "misconception_stated": True,
+        "opening_source": "claim", "ladder": new_ladder(a), "parked": [], "turn_log": [],
     }
+
+
+# Synthetic at-risk signal (label: synthetic). Everyone else gets a recent return + a parent update.
+EXTRA_OWNERS = {"a_sat_commas": ("s005", "t1", 8), "a_sat_linear": ("s009", "t5", 8)}
+STUCK = {"s101": "k3"}              # stuck after the full ladder
+NO_RETURN = {"s065", "s040"}        # no "came back on their own" event in 14 days
+NO_UPDATE = {"s095", "s040"}        # completed session, no parent update since
 
 
 async def seed(store):
@@ -128,13 +142,42 @@ async def seed(store):
         s = {k: v for k, v in s.items() if k != "pip"}
         students[s["id"]] = {**s, "interests": None, "since_last_session": None,
                              "last_session_id": None}
+    for sid in ("s005", "s009"):  # SAT missions are grade 11; Pip mirrors the student's grade
+        students[sid]["grade"] = 11
     students["s001"]["interests"] = "soccer"  # Maya's opening is just the claim
     base = raw["assignment"]
     a = {**pip_ai.FRAC, "id": base["id"], "student_id": "s001", "tutor_id": "t1", "grade": 6,
          "topic": base["topic"], "created_at": now()}
+    a["lesson"] = lessons.load_lesson(a["id"])
+    if not a["lesson"]:
+        del a["lesson"]
     await store.put("assignments", a)
-    for r in raw["sessions"]:
+    for x in lessons.load_extra_assignments():
+        owner = EXTRA_OWNERS.get(x["id"], (x.get("student_id"), x.get("tutor_id"), x.get("grade")))
+        sid, tid, grade = x.get("student_id") or owner[0], x.get("tutor_id") or owner[1], x.get("grade") or owner[2]
+        if sid not in students:
+            continue
+        les = x.get("lesson") and lessons.normalize_lesson(x["lesson"]) or lessons.load_lesson(x["id"])
+        ex = {"boss": {"name": "Mistakio Blunderini", "emoji": "🍝😵", "backstory": ""},
+              "cliffhanger": "", "root_prerequisite": "", "why_it_matters": "", **x,
+              "student_id": sid, "tutor_id": tid or students[sid]["tutor_id"],
+              "grade": grade or students[sid]["grade"], "created_at": x.get("created_at") or now()}
+        if les:
+            ex["lesson"] = les
+        for i, c in enumerate(ex["concepts"]):
+            c.setdefault("id", f"k{i + 1}")
+            c.setdefault("weapon", "")
+        if not ex.get("quiz"):
+            ex["quiz"] = pip_ai.quiz_for(ex)
+        await store.put("assignments", ex)
+    for i, r in enumerate(raw["sessions"]):
         s = _session(r, a)
+        s["created_at"] = (datetime.now(timezone.utc) - timedelta(days=4 + i % 9, hours=i)
+                           ).isoformat(timespec="seconds")
+        if r["student_id"] not in NO_UPDATE:
+            s["parent_sent_at"] = (_dt(s["created_at"]) + timedelta(hours=20)).isoformat(timespec="seconds")
+        if r["student_id"] in STUCK:
+            s["ladder"][STUCK[r["student_id"]]].update(rung=4, nudged=True, stuck=True)
         students[r["student_id"]].update(since_last_session=r["since_last_session"],
                                          last_session_id=s["id"])
         await store.put("sessions", s)
@@ -146,6 +189,10 @@ async def seed(store):
         await store.put("students", s)
     # Synthetic "app open" events: 11 non-Maya students, no assignment due, this week.
     busy = {r["student_id"] for r in raw["sessions"]}
+    for i, sid in enumerate(sorted(busy - NO_RETURN)):  # returned 8-13 days ago: outside "this week"
+        ts = (datetime.now(timezone.utc) - timedelta(days=8 + i % 6)).isoformat(timespec="seconds")
+        await store.put("events", {"id": f"ev_seed_old_{sid}", "kind": "open", "student_id": sid,
+                                   "ts": ts, "due": False, "synthetic": True})
     pick = [sid for sid in sorted(students) if sid != "s001" and sid not in busy][:11]
     t0 = datetime.now(timezone.utc)
     for i, sid in enumerate(pick):

@@ -48,6 +48,11 @@ def short_name(assignment: dict, concept_id: str) -> str:
     return " ".join(c["text"].lower().rstrip(".").split()[:6]) if c else concept_id
 
 
+def new_ladder(assignment: dict) -> dict:
+    return {c["id"]: {"rung": 0, "nudged": False, "stuck": False, "done": False, "best_level": 0}
+            for c in assignment["concepts"]}
+
+
 def new_session(assignment: dict, student_id: str, look: str, creature: str, accessory: str,
                 openings: list[str]) -> dict:
     return {
@@ -59,7 +64,8 @@ def new_session(assignment: dict, student_id: str, look: str, creature: str, acc
         "weapons": [], "equipped": None, "mood": "confused", "brain": [], "quiz": [],
         "reteach_count": 0, "reteach_concept": None, "reteach_from": None, "parent_message": None, "brain_version": 1, "ko": False,
         "finisher": None, "gap_report": None, "created_at": now(),
-        "misconception_stated": True,
+        "misconception_stated": True, "opening_source": "claim", "ladder": new_ladder(assignment),
+        "parked": [], "turn_log": [],
     }
 
 
@@ -92,6 +98,8 @@ def apply_turn(session: dict, assignment: dict, student_text: str, r: dict) -> d
     session["mood"] = r["mood"]
     event = {"kind": kind, "amount": amount, "caption": r["caption"] if kind != "none" else "",
              "unlocked": unlocked}
+    if r.get("level") is not None:
+        event["level"] = r["level"]
     if kind == "hit" and equipped_before:
         event["weapon"] = equipped_before
     return {"from": "pip", "text": r["reply"], "ts": now(), "event": event}

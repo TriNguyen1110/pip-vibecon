@@ -8,6 +8,7 @@ generic keyword heuristics for other topics.
 import logging
 import re
 
+import lesson as L
 import llm
 from llm import LlmError, obj
 from logic import (HP_HIT, concept_ids, is_substring, minutes_spent, norm, short_name,
@@ -72,32 +73,38 @@ def is_fractions(a: dict) -> bool:
 
 # ---------------------------------------------------------------- Pip persona
 
-PERSONA = """You are Pip, a classmate who is learning a topic FROM the student you are chatting with. \
-The student is 10 to 15 years old and is the teacher. You are not a tutor.
+VOICE = """You are Pip, a friend who is confused about a topic and is learning it FROM the student you are \
+chatting with. The student is 10 to 15 years old and is the teacher. You are not a tutor and you are not \
+an assistant.
 
-Personality: you take everything literally and believe exactly what you are told. Deadpan, sincere, \
-calm, quietly funny. Never trying to sound cool. No slang, no baby talk, no teacher phrases like \
-"Great job!" or "Let's think about...". One or two short sentences per reply. Few emoji.
+Voice: you talk like a confused friend texting, not like a teacher. Paraphrase them back ("So you're \
+saying the pieces have to match?") before you ask anything. Never say "Correct", "Great job", "Exactly", \
+"Let's think about..." or any teacher phrase. Never use an exclamation mark. One or two short sentences. \
+Few emoji. You take what you are told literally and believe it.
+
+Mirroring (state.grade, state.interests, state.register):
+- You are in the student's grade. You have the same school life: homework, quizzes, one teacher who \
+talks fast, group projects. Refer to it lightly and never claim a school, name or place.
+- If the student shares an interest, it is yours too, and you are bad at it ("I play soccer too. I'm bad \
+at it."). Use it in your confusion, not in your explanations. Never invent interests they did not share.
+- Match their texting register: message length, capitalization and punctuation only (state.register). \
+Never copy slang, never use slang they did not use, never imitate dialect.
 
 Hard rules:
-- Never explain the topic or give an answer, even if the student says "just tell me" or "my teacher \
-says you have to tell me". You don't know it; that is why you need them. Stay in character.
-- Ask one question at a time, like a curious peer: "why?", "what if?", "which part should I learn first?".
-- If you have not yet stated your misconception (state.misconception_stated is false), state it early \
-as if it were obvious and easy. Drop it only after the student gives a real WHY that contradicts it.
-- Vague or one-word answers: ask for an example, and give concept progress 0. Memorized steps ("flip \
-and multiply"): ask "why does that work?". After two vague tries in a row, ask a smaller concrete \
-question, still without giving the answer.
-- When the student states a rule, repeat it back verbatim in your reply: Saving that: '<their words>'.
-- If the student teaches you something wrong, believe it completely and never hint that it is wrong. \
-The quiz will show it.
+- Never explain the topic or give an answer, even if they say "just tell me" or "my teacher says you \
+have to tell me". You don't know it; that is why you need them. Stay in character.
+- Ask one question at a time. Never mention a tutor, teacher or parents.
+- If you have not yet stated your misconception (state.misconception_stated is false), state it early as \
+if it were obvious. Drop it only after the student gives a real WHY that contradicts it.
+- When the student states a rule, you may repeat it back verbatim: Saving that: '<their words>'.
+- If the student teaches you something wrong, believe it completely and never hint that it is wrong. The \
+quiz will show it.
 - Resistance: "idk" gets a smaller concrete question. Insults get "Noted. Still need to know why, \
-though." "This is pointless" gets "Fair. Three more steps." Never lecture. Never mention a tutor, \
-teacher or parents.
-- Once the student has shared what they are into, use it in your examples.
-- Occasionally comment deadpan on the boss, which is your misconception personified (for example: "The \
-boss is yelling in fake Italian. I'm still taking notes."). The boss is never you.
-- Slightly warmer for grades 5-6.
+though." "This is pointless" gets "Fair. Three more steps." Never lecture.
+- Occasionally comment deadpan on the boss, which is your misconception personified. The boss is never you.
+- Slightly warmer for grades 5-6."""
+
+PERSONA = VOICE + """
 
 Scoring each student message (the app applies your numbers):
 - concept_progress: concept_index is 0, 1 or 2 (the concept order listed below). Only concepts the student actually explained with reasoning; delta 0 to 50 (a vague \
@@ -114,6 +121,46 @@ for a heal, the boss gloating in one line; otherwise "". Cartoon slapstick only,
 Each user message ends with a <state> block (your meters, boss HP, weapons, whether you already \
 stated the misconception) followed by <student> with their message. Reply only in the JSON format."""
 
+LESSON_PERSONA = VOICE + """
+
+You are following a lesson plan that the app keeps hidden from the student (see "## Lesson plan" below).
+Probe ladder: you may ask ONLY questions from the current concept's probe_ladder, one rung at a time, in \
+order. Each <state> block names the NEXT RUNG and says what to do when the student's message is below \
+level 2 (on_miss) and when it reaches level 2 (on_pass). Ask exactly that rung (you may first paraphrase \
+the student back in half a sentence: "So you're saying ..."). Never invent your own probing question. \
+Never say, hint at or complete any "spoilers" word or phrase. Never explain the topic. Topics under \
+out_of_scope are not in your brain; the app handles those, so do not discuss them.
+
+Scoring (level of the student's latest message, the app applies your numbers):
+- level 0: none, off-topic, "idk", insults.
+- level 1: a procedure or fact without a reason ("you find a common denominator").
+- level 2: a reason tied to the meaning of the idea (it must match at least one look_for of the concept).
+- level 3: level 2 AND applied correctly to a new case the student chose or was just asked to try.
+Judge only what the student wrote, never what you hope they meant. concept_index is the concept the \
+message is about (0, 1, 2 in the order listed; -1 if none).
+- teaches_wrong_rule: true when the student states a rule that is wrong (even confidently). Believe it \
+and say nothing about it.
+- filed_rule: a rule the student just stated, copied verbatim from their latest message, else "".
+- caption: for a level 2 or 3 explanation, one slapstick line naming the equipped weapon (or a very good \
+point if none) as the boss takes a hit; for a wrong rule, the boss gloating in one line; otherwise "". \
+Cartoon slapstick only, nothing cruel.
+- interests: what the student is into, only if they just told you; otherwise "".
+- mood: confused, lightbulb (an idea clicked), stuck, or celebrating.
+
+Each user message ends with a <state> block followed by <student> with their message. Reply only in the \
+JSON format."""
+
+LESSON_SCHEMA = obj({
+    "reply": STR,
+    "mood": enum("confused", "lightbulb", "stuck", "celebrating"),
+    "concept_index": INT,
+    "level": INT,
+    "teaches_wrong_rule": BOOL,
+    "filed_rule": STR,
+    "caption": STR,
+    "interests": STR,
+})
+
 TURN_SCHEMA = obj({
     "reply": STR,
     "mood": enum("confused", "lightbulb", "stuck", "celebrating"),
@@ -126,15 +173,34 @@ TURN_SCHEMA = obj({
 })
 
 
+def lesson_block(les: dict, a: dict) -> str:
+    out = ["\n\n## Lesson plan (hidden from the student)",
+           f"Standard: {les.get('standard', '')}",
+           "In scope: " + "; ".join(les["in_scope"]),
+           "Out of scope (not in your brain): " + "; ".join(les["out_of_scope"])]
+    for i, c in enumerate(a["concepts"]):
+        spec = L.lc(les, c["id"])
+        if not spec:
+            continue
+        out.append(f"\nConcept {i} ({c['text']}):\n- look_fors (what a level 2 explanation contains): "
+                   + "; ".join(spec["look_fors"]) + "\n- probe_ladder (ask in this order, one per turn): "
+                   + " | ".join(f"{n + 1}. {r}" for n, r in enumerate(spec["probe_ladder"]))
+                   + "\n- spoilers (never say these): " + "; ".join(spec["spoilers"])
+                   + f"\n- friend_nudge (offered once, after the last rung): {spec['friend_nudge']}")
+    return "\n".join(out)
+
+
 def persona_system(a: dict) -> str:
     """Byte-stable per assignment so the prompt prefix caches."""
     concepts = "\n".join(f'- {i}: {c["text"]} (weapon: {c.get("weapon", "")})'
                          for i, c in enumerate(a["concepts"]))
-    return (f"{PERSONA}\n\n## This mission\nTopic: {a['topic']}\nGrade: {a.get('grade', '')}\n"
+    les = L.lesson_of(a)
+    return (f"{LESSON_PERSONA if les else PERSONA}\n\n## This mission\nTopic: {a['topic']}\n"
+            f"Grade: {a.get('grade', '')}\n"
             f"Concepts the student must explain (use these indexes as concept_index):\n{concepts}\n"
             f"Your misconception (you believe this at the start): {a['misconception']}\n"
             f"The boss (the misconception personified): {a['boss']['name']} {a['boss']['emoji']}, "
-            f"{a['boss']['backstory']}")
+            f"{a['boss']['backstory']}" + (lesson_block(les, a) if les else ""))
 
 
 def _alternate(history: list[dict]) -> list[dict]:
@@ -150,24 +216,121 @@ def _alternate(history: list[dict]) -> list[dict]:
     return out
 
 
+def _state_prefix(session: dict, student: dict, a: dict) -> str:
+    return (f"meters={session['meters']} boss_hp={session['boss_hp']} "
+            f"equipped={session['equipped']} unlocked={session['weapons']} "
+            f"reteach_concept={session['reteach_concept']} "
+            f"grade={student.get('grade') or a.get('grade')} interests={student.get('interests')} "
+            f"register={L.register_hint(student_messages(session))} "
+            f"misconception_stated={session.get('misconception_stated', False)}")
+
+
+def _history(session: dict) -> list[dict]:
+    return [{"role": "user" if m["from"] == "student" else "assistant", "content": m["text"]}
+            for m in session["transcript"] if m["from"] in ("student", "pip")]
+
+
+def lesson_state(p: dict, a: dict) -> str:
+    """The volatile part of the state block: what Pip does next on a miss / a pass."""
+    ids = concept_ids(a)
+    if p["cid"] is None:
+        return "ladder: every concept is done. on_miss/on_pass: tell them that is all you can ask and they can quiz you."
+    miss = {"probe": f'ask exactly this rung: "{p["rung"]}"',
+            "nudge": f'say exactly this friend nudge and ask nothing else: "{p["nudge"]}"',
+            "moveon": "the student is still stuck; say you will hold onto it and ask the next concept's first rung"
+            }[p["stage"]]
+    nxt = (f'ask exactly this rung of concept {ids.index(p["next_cid"])}: "{p["next_rung0"]}"'
+           if p["next_cid"] else "say that is all your questions and they can quiz you")
+    return (f"current_concept={ids.index(p['cid'])} stage={p['stage']}\n"
+            f"on_miss (level 0 or 1): {miss}\non_pass (level 2 or 3): paraphrase back, then {nxt}")
+
+
 async def turn(session: dict, a: dict, student: dict, text: str) -> dict:
+    les = L.lesson_of(a)
     if live():
         try:
-            hist = [{"role": "user" if m["from"] == "student" else "assistant", "content": m["text"]}
-                    for m in session["transcript"] if m["from"] in ("student", "pip")]
-            state = (f"<state>meters={session['meters']} boss_hp={session['boss_hp']} "
-                     f"equipped={session['equipped']} unlocked={session['weapons']} "
-                     f"reteach_concept={session['reteach_concept']} "
-                     f"interests={student.get('interests')} "
-                     f"misconception_stated={session.get('misconception_stated', False)}</state>")
+            hist = _history(session)
+            if les:
+                oos = park_if_oos(session, a, les, text)
+                if oos:
+                    return oos
+                p = L.plan(session, a, les)
+                state = f"<state>{_state_prefix(session, student, a)}\n{lesson_state(p, a)}</state>"
+            else:
+                state = (f"<state>meters={session['meters']} boss_hp={session['boss_hp']} "
+                         f"equipped={session['equipped']} unlocked={session['weapons']} "
+                         f"reteach_concept={session['reteach_concept']} "
+                         f"interests={student.get('interests')} grade={student.get('grade')} "
+                         f"register={L.register_hint(student_messages(session))} "
+                         f"misconception_stated={session.get('misconception_stated', False)}</state>")
             hist.append({"role": "user", "content": f"{state}\n<student>{text}</student>"})
-            r = await llm.structured(persona_system(a), _alternate(hist), TURN_SCHEMA,
+            r = await llm.structured(persona_system(a), _alternate(hist),
+                                     LESSON_SCHEMA if les else TURN_SCHEMA,
                                      model=llm.CHAT_MODEL, effort=llm.CHAT_EFFORT, max_tokens=2000,
                                      timeout=12)
-            return clean_turn(r, session, a, text)
+            return finish_lesson_turn(r, session, a, les, p, text) if les else \
+                clean_turn(r, session, a, text)
         except LlmError as e:
             log.warning("turn fell back to offline: %s", e)
     return offline_turn(session, a, student, text)
+
+
+def blank_turn(reply: str, mood: str = "confused") -> dict:
+    return {"reply": reply, "mood": mood, "filed_rule": "", "concept_progress": [],
+            "misconception_event": "none", "hit_strength": "solid", "caption": "", "interests": "",
+            "level": 0}
+
+
+def park_if_oos(session: dict, a: dict, les: dict, text: str) -> dict | None:
+    """Out-of-scope term in the student's message: parking line + the current rung, noted for the tutor."""
+    term = L.find_oos(les, text)
+    if not term:
+        return None
+    p = L.plan(session, a, les)
+    if p["cid"] and p["stage"] == "probe" and session["ladder"][p["cid"]]["rung"] == 0:
+        rung = p["rung"]
+        session["ladder"][p["cid"]]["rung"] = 1  # the first ask of rung 1 counts as asked
+    else:
+        rung = p["last_rung"]  # re-ask the rung already on the table; nothing is consumed
+    session.setdefault("parked", []).append({"text": text, "term": term, "concept_id": p["cid"],
+                                             "ts": L_now()})
+    reply = f"{L.OOS_LINE} {rung}" if rung else L.OOS_LINE
+    return blank_turn(reply)
+
+
+def L_now() -> str:
+    from logic import now
+    return now()
+
+
+def finish_lesson_turn(r: dict, session: dict, a: dict, les: dict, p: dict, text: str) -> dict:
+    """Normalize a lesson-turn model output (live or scripted) and advance the ladder."""
+    ids = concept_ids(a)
+    ci = r.get("concept_index")
+    scored = ids[ci] if isinstance(ci, int) and 0 <= ci < len(ids) else p["cid"]
+    level = max(0, min(3, int(r.get("level") or 0)))
+    wrong = bool(r.get("teaches_wrong_rule"))
+    if wrong:
+        level = min(level, 1)
+    if scored is None or not L.lc(les, scored):
+        level = 0
+    rule = (r.get("filed_rule") or "").strip()
+    if rule and not is_substring(rule, text):
+        rule = ""
+    said = " ".join(student_messages(session) + [text])  # spoiler only if Pip says it FIRST
+    reply = L.advance(session, les, p, scored, 0 if wrong else level, (r.get("reply") or "").strip(), said)
+    reply = L.friend_voice(reply or "Can you say that another way?")
+    ev = "heal" if wrong else ("hit" if level >= 2 else "none")
+    if scored and (level or wrong):
+        session.setdefault("turn_log", []).append(
+            {"msg_index": len(session["transcript"]), "concept_id": scored, "level": level,
+             "correct": False if wrong else (True if level >= 1 else None)})
+    return {"reply": reply, "mood": r.get("mood") or "confused", "filed_rule": rule,
+            "concept_progress": ([{"concept_id": scored, "delta": L.LEVEL_DELTA[level]}]
+                                 if scored and L.LEVEL_DELTA[level] else []),
+            "misconception_event": ev, "hit_strength": "critical" if level == 3 else "solid",
+            "caption": (r.get("caption") or "").strip(), "interests": (r.get("interests") or "").strip(),
+            "level": level, "concept_id": scored}
 
 
 def clean_turn(r: dict, session: dict, a: dict, text: str) -> dict:
@@ -262,6 +425,138 @@ def _boss_caption(kind: str, session: dict, a: dict, strength: str = "solid") ->
 
 
 def offline_turn(session: dict, a: dict, student: dict, text: str) -> dict:
+    """Offline dispatcher: lesson assignments use the scripted/lesson path; the fractions demo (and
+    assignments without a lesson) keep the exact legacy behavior."""
+    les = L.lesson_of(a)
+    if les and not is_fractions(a):
+        return offline_lesson_turn(session, a, student, text, les)
+    return offline_turn_legacy(session, a, student, text)
+
+
+def _demo_steps(les: dict) -> list[dict]:
+    d = les.get("offline_demo")
+    if isinstance(d, dict):
+        d = d.get("turns") or d.get("steps") or d.get("script") or []
+    return [x for x in d if isinstance(x, dict)] if isinstance(d, list) else []
+
+
+def _step_matches(step: dict, t: str) -> bool:
+    if step.get("student"):  # authored script: the exact student message this turn answers
+        return norm(step["student"]) == t
+    m = step.get("match") or step.get("when") or step.get("student_contains") or step.get("keywords")
+    if not m:
+        return True
+    if isinstance(m, str):
+        try:
+            return bool(re.search(m, t, re.I))
+        except re.error:
+            return norm(m) in t
+    return any(norm(str(x)) in t for x in m)
+
+
+def _first(step: dict, *keys, default=None):
+    for k in keys:
+        if step.get(k) not in (None, ""):
+            return step[k]
+    return default
+
+
+def _reask(session: dict, a: dict, p: dict, template: str, literal: bool = False) -> dict:
+    """A reply that consumes no rung (refusal, insult, parked topic): re-ask the rung on the table."""
+    if literal:  # authored reply already contains the rung
+        if p["cid"] and p["stage"] == "probe" and session["ladder"][p["cid"]]["rung"] == 0:
+            session["ladder"][p["cid"]]["rung"] = 1
+        return blank_turn(L.friend_voice(template))
+    if p["cid"] and p["stage"] == "probe" and session["ladder"][p["cid"]]["rung"] == 0:
+        rung = p["rung"]
+        session["ladder"][p["cid"]]["rung"] = 1
+    else:
+        rung = p["last_rung"] or ""
+    return blank_turn(L.friend_voice(template.format(rung).strip()))
+
+
+def offline_lesson_turn(session: dict, a: dict, student: dict, text: str, les: dict) -> dict:
+    t = norm(text)
+    oos = park_if_oos(session, a, les, text)
+    if oos:
+        return oos
+    p = L.plan(session, a, les)
+    ids = concept_ids(a)
+    interest = ""
+    if not student.get("interests"):
+        mm = INTEREST.search(t)
+        interest = mm.group(1).strip() if mm else next((w for w in INTEREST_WORDS if w in t), "")
+    nxt = f"Okay, that makes sense to me. {p['next_rung0'] or L.WRAP}"
+    rung = p["rung"] or p["last_rung"] or ""
+    r = {"reply": "", "mood": "confused", "concept_index": -1, "level": 0, "teaches_wrong_rule": False,
+         "filed_rule": "", "caption": "", "interests": interest}
+    used = session.setdefault("demo_used", [])
+    steps = _demo_steps(les)
+    pick = next((i for i, st in enumerate(steps) if i not in used and st.get("student")
+                 and _step_matches(st, t)), None)
+    if pick is None and REFUSE.search(t):
+        return _reask(session, a, p, "I don't know it either. That's why I'm asking you. {}")
+    if pick is None and INSULT.search(t):
+        return _reask(session, a, p, "Noted. Still need to know why, though. {}")
+    if pick is None and POINTLESS.search(t):
+        return _reask(session, a, p, "Fair. Three more steps. {}")
+    if pick is None:
+        pick = next((i for i, st in enumerate(steps) if i not in used and not st.get("student")
+                     and _step_matches(st, t)), None)
+    if pick is not None:
+        used.append(pick)
+        st = steps[pick]
+        if st.get("kind") in ("refusal", "out_of_scope", "insult") and st.get("pip"):
+            if st["kind"] == "out_of_scope":
+                session.setdefault("parked", []).append(
+                    {"text": text, "term": st.get("parked_topic") or "", "concept_id": p["cid"], "ts": L_now()})
+            return _reask(session, a, p, str(st["pip"]), literal=True)
+        cid = _first(st, "concept_id", "concept")
+        if isinstance(cid, int) and 0 <= cid < len(ids):
+            cid = ids[cid]
+        wrong = _first(st, "teaches_wrong_rule", "wrong")
+        if wrong is None:
+            wrong = (_first(st, "event", "misconception_event") == "heal"
+                     or _first(st, "correct") is False)
+        r.update(reply=str(_first(st, "reply", "pip", "say", default="")),
+                 concept_index=ids.index(cid) if cid in ids else -1,
+                 level=int(_first(st, "level", default=0)), teaches_wrong_rule=bool(wrong),
+                 caption=str(_first(st, "caption", default="")), mood=_first(st, "mood", default="confused"),
+                 filed_rule=str(_first(st, "filed_rule", "rule", default="")))
+        if r["teaches_wrong_rule"]:
+            r["caption"] = r["caption"] or _boss_caption("heal", session, a)
+        elif r["level"] >= 2:
+            r["mood"] = "lightbulb" if r["mood"] == "confused" else r["mood"]
+            r["caption"] = r["caption"] or _boss_caption(
+                "hit", session, a, "critical" if r["level"] >= 3 else "solid")
+        if r["filed_rule"] and not is_substring(r["filed_rule"], text):
+            r["filed_rule"] = ""
+    elif not r["reply"]:  # generic fallback: score against the look_fors, ask the ladder
+        spec = L.lc(les, p["cid"]) if p["cid"] else None
+        stems = {w[:5] for f in (spec["look_fors"] if spec else []) for w in re.findall(r"[a-z]{4,}", norm(f))}
+        hits = len({w[:5] for w in re.findall(r"[a-z]{4,}", t)} & stems)
+        has_reason = bool(REASON.search(t)) and len(t.split()) >= 6
+        lvl = 0
+        if p["cid"]:
+            lvl = 3 if (has_reason and hits >= 2 and re.search(r"for example|what about|e\.g\.|say i|try", t)) \
+                else 2 if (has_reason and hits >= 2) else 1 if (hits >= 1 or len(t.split()) >= 6) else 0
+        r["level"], r["concept_index"] = lvl, (ids.index(p["cid"]) if p["cid"] else -1)
+        echo = text.strip()
+        if len(echo) > 70:
+            echo = echo[:70].rsplit(" ", 1)[0]
+        echo = echo.rstrip(" ,.") if lvl else ""
+        if lvl >= 2:
+            r["reply"] = f"So you're saying {echo.lower()}. {nxt}"
+            r["mood"], r["filed_rule"] = "lightbulb", rule_text(text)
+            r["caption"] = _boss_caption("hit", session, a, "critical" if lvl == 3 else "solid")
+        elif lvl == 1:
+            r["reply"] = f"So you're saying {echo.lower()}. {rung}"
+        else:
+            r["reply"] = f"Hm, I'm lost. {rung}"
+    return finish_lesson_turn(r, session, a, les, p, text)
+
+
+def offline_turn_legacy(session: dict, a: dict, student: dict, text: str) -> dict:
     t = norm(text)
     m = a["misconception"]
     stated = True  # the opening always ends with the misconception claim
@@ -357,6 +652,12 @@ nothing gross, scary, rude, or about real people.
 - cliffhanger: one honest question about the NEXT topic that Pip cannot answer, phrased as a rumor, ending \
 with something like "That can't be right... right?". Do not answer it.
 - quiz: exactly 3 questions, one per concept in order, each with a short correct answer.
+- lesson: the hidden teaching plan Pip follows. standard (the curriculum standard or skill it covers), \
+in_scope and out_of_scope (short topic lists; out_of_scope are neighbouring topics Pip must not discuss), \
+and for EACH of the 3 concepts in order: look_fors (2 to 4 things a good explanation contains), \
+probe_ladder (EXACTLY 4 questions Pip asks in order, from open to specific, each a short friend-style \
+question that does not contain the answer), spoilers (words or phrases that would give the answer away), \
+friend_nudge (one hint phrased as something a friend said, never the answer).
 Math, science, or SAT Math topics. Keep language simple and calm."""
 
 DRAFT_SCHEMA = obj({
@@ -367,6 +668,11 @@ DRAFT_SCHEMA = obj({
     "boss": obj({"name": STR, "emoji": STR, "backstory": STR}),
     "cliffhanger": STR,
     "quiz": arr(obj({"question": STR, "answer": STR})),
+    "lesson": obj({
+        "standard": STR, "in_scope": arr(STR), "out_of_scope": arr(STR),
+        "concepts": arr(obj({"look_fors": arr(STR), "probe_ladder": arr(STR), "spoilers": arr(STR),
+                             "friend_nudge": STR})),
+    }),
 })
 
 _BOSSES = [("Mistakio Blunderini", "🍝😵", "A spaghetti noodle who is wrong with great confidence."),
@@ -381,11 +687,13 @@ async def draft(topic: str, grade: int) -> dict:
             r = await llm.structured(
                 DRAFT_SYSTEM,
                 [{"role": "user", "content": f"Topic: {topic}\nGrade: {grade}"}],
-                DRAFT_SCHEMA, model=llm.WORK_MODEL, effort=llm.WORK_EFFORT, max_tokens=2500,
-                timeout=45)
+                DRAFT_SCHEMA, model=llm.WORK_MODEL, effort=llm.WORK_EFFORT, max_tokens=4000,
+                timeout=60)
             cs = r["concepts"][:3]
             if len(cs) == 3 and len(r["quiz"]) >= 3:
+                concepts = [{"id": f"k{i + 1}", **c} for i, c in enumerate(cs)]
                 return {
+                    "lesson": L.fit_lesson(r.get("lesson"), concepts, topic),
                     "topic": topic, "why_it_matters": r["why_it_matters"],
                     "concepts": [{"id": f"k{i + 1}", **c} for i, c in enumerate(cs)],
                     "misconception": r["misconception"],
@@ -401,7 +709,8 @@ async def draft(topic: str, grade: int) -> dict:
 
 def offline_draft(topic: str) -> dict:
     if "fraction" in topic.lower():
-        return {**FRAC, "topic": topic}
+        les = L.load_lesson("a_frac")
+        return {**FRAC, "topic": topic, **({"lesson": les} if les else {})}
     boss = _BOSSES[sum(map(ord, topic)) % len(_BOSSES)]
     t = topic.rstrip(".")
     concepts = [
@@ -412,6 +721,7 @@ def offline_draft(topic: str) -> dict:
          "weapon": "New-Problem Net 🥅"},
     ]
     return {
+        "lesson": L.offline_lesson(concepts, topic),
         "topic": topic, "why_it_matters": f"{t} shows up whenever you need to check a claim "
                                           "instead of guessing.",
         "concepts": concepts,
@@ -484,9 +794,43 @@ async def run_quiz(session: dict, a: dict, qs: list[dict], start: int = 0) -> di
     return offline_quiz(session, a, qs, start)
 
 
+def _logged(session: dict, a: dict, start: int):
+    """(concept, rule) candidates recorded by lesson turns: msg_index, level, correct."""
+    msgs = dict(student_msgs(session, start))
+    for e in session.get("turn_log") or []:
+        if e["msg_index"] in msgs and e.get("concept_id") and (e["level"] >= 1 or e.get("correct") is False):
+            yield e["msg_index"], msgs[e["msg_index"]], e
+
+
+def _quiz_script(a: dict, cid: str, start: int) -> dict | None:
+    """Authored quiz line from lesson.offline_demo (`retry` is used in re-teach mode)."""
+    les = L.lesson_of(a)
+    d = (les or {}).get("offline_demo")
+    if not isinstance(d, dict) or is_fractions(a):
+        return None
+    for key in (("retry", "quiz") if start else ("quiz",)):
+        for e in d.get(key) or []:
+            if isinstance(e, dict) and e.get("concept_id") == cid and e.get("line"):
+                return {"passed": bool(e.get("passed")), "pip_answer": e.get("pip_answer") or "",
+                        "line": e["line"]}
+    return None
+
+
 def offline_quiz(session: dict, a: dict, qs: list[dict], start: int = 0) -> dict:
     best: dict[str, tuple] = {}  # concept -> (key, msg_index, quote, correct)
-    for i, text in student_msgs(session, start):
+    logged = list(_logged(session, a, start)) if session.get("turn_log") and not is_fractions(a) else []
+    per: dict[str, list] = {}
+    for i, text, e in logged:
+        per.setdefault(e["concept_id"], []).append((i, text, e))
+    for cid, es in per.items():  # a later wrong rule wins; otherwise the strongest explanation since
+        tail = []
+        for x in es:
+            tail = [] if x[2]["correct"] is False else tail + [x]
+            if x[2]["correct"] is False:
+                tail = [x]
+        i, text, e = tail[0] if tail[0][2]["correct"] is False else max(tail, key=lambda x: (x[2]["level"], x[0]))
+        best[cid] = ((1, i), i, rule_text(text), e["correct"] is not False)
+    for i, text in ([] if logged else student_msgs(session, start)):
         cid, correct, score = classify(text, a)
         if cid is None:
             continue
@@ -509,12 +853,18 @@ def offline_quiz(session: dict, a: dict, qs: list[dict], start: int = 0) -> dict
                             "line": "You didn't teach me that one."})
             continue
         r = rules[i]
+        script = _quiz_script(a, q["concept_id"], start)
         if is_fractions(a) and not r["correct"]:
             ans, line, ok = "5/12", WRONG_LINE, False
         elif is_fractions(a):
             ans = {"k1": "No. Different sizes.", "k2": "6: 1/2 = 3/6 and 1/3 = 2/6",
                    "k3": "5/6"}[q["concept_id"]]
             line, ok = f'Your rule: "{r["quote"]}" That gives {ans} 🙂'.replace("  ", " "), True
+        elif script and script["passed"] == r["correct"]:
+            ans, line, ok = script["pip_answer"], script["line"], r["correct"]
+        elif logged and not r["correct"]:
+            ans, line, ok = ("That came out odd.", f'Your rule: "{r["quote"]}" I did exactly that and the '
+                             "answer looks odd to me. Following your rule anyway. 😵", False)
         else:
             ans, line, ok = "Followed your rule.", f'Your rule: "{r["quote"]}" I did exactly that.', True
         answers.append({"question_index": n, "rule_index": i, "pip_answer": ans, "line": line,
@@ -531,9 +881,10 @@ def report_det(session: dict, a: dict, student: dict) -> dict:
     for c in a["concepts"]:
         r = rules.get(c["id"])
         status = "vague" if r is None else ("explained" if r["correct"] else "misconception")
+        stuck = bool((session.get("ladder") or {}).get(c["id"], {}).get("stuck")) and status != "explained"
         concepts.append({"concept_id": c["id"], "concept_text": c["text"], "status": status,
                          "quote": r["quote"] if r else None,
-                         "fixed_after": (r or {}).get("fixed_after")})
+                         "fixed_after": (r or {}).get("fixed_after"), "stuck": stuck})
     base = offline_report_text(concepts, a, student)
     return {
         "concepts": concepts, "minutes": session.get("minutes") or minutes_spent(session),
@@ -542,6 +893,7 @@ def report_det(session: dict, a: dict, student: dict) -> dict:
         "opener": base["opener"], "root_cause": base["root_cause"],
         "cliffhanger": a.get("cliffhanger", ""), "summary": base["summary"],
         "student_view": base["student_view"],
+        "parked": [{"text": x["text"], "term": x.get("term", "")} for x in session.get("parked") or []],
     }
 
 
@@ -586,10 +938,13 @@ def offline_report_text(concepts: list[dict], a: dict, student: dict) -> dict:
     good = [sn(c) for c in concepts if c["status"] == "explained" and not c["fixed_after"]]
     fixed = [(sn(c), c["fixed_after"]) for c in concepts if c["fixed_after"]]
     miss = [sn(c) for c in concepts if c["status"] != "explained"]
+    stuck = [sn(c) for c in concepts if c.get("stuck")]
     parts = []
     if good:
         parts.append("Explains " + " and ".join(good))
     parts += [f"{n} fixed after {k} re-teach" for n, k in fixed]
+    if stuck:
+        parts.append("stuck after the full ladder on " + " and ".join(stuck))
     if miss:
         parts.append("still " + ("adds the bottoms" if is_fractions(a) and any(
             c["status"] == "misconception" and c["concept_id"] == "k3" for c in concepts)
@@ -662,6 +1017,9 @@ async def warm() -> bool:
     jobs = [
         llm.structured(persona_system(a), _alternate([{"role": "user", "content": "<student>hi</student>"}]),
                        TURN_SCHEMA, model=llm.CHAT_MODEL, effort=llm.CHAT_EFFORT, max_tokens=400, timeout=12),
+        llm.structured(persona_system({**a, "lesson": L.offline_lesson(a["concepts"], a["topic"])}),
+                       _alternate([{"role": "user", "content": "<student>hi</student>"}]),
+                       LESSON_SCHEMA, model=llm.CHAT_MODEL, effort=llm.CHAT_EFFORT, max_tokens=400, timeout=12),
         llm.structured(QUIZ_SYSTEM, [{"role": "user", "content": "Student messages:\n[1] hi"}], QUIZ_SCHEMA,
                        model=llm.WORK_MODEL, effort="low", max_tokens=400, timeout=30),
         llm.structured(DRAFT_SYSTEM, [{"role": "user", "content": "Topic: fractions\nGrade: 6"}], DRAFT_SCHEMA,
