@@ -1,0 +1,54 @@
+{
+  "id": "a_sat_linear",
+  "student_id": "s009",
+  "tutor_id": "t5",
+  "grade": 11,
+  "topic": "SAT Math: solving linear equations (do the same thing to both sides)",
+  "why_it_matters": "If a phone plan costs $15 a month plus $5 per extra gigabyte and the bill says $40, this is how you find out how many gigabytes you paid for.",
+  "concepts": [
+    {
+      "id": "k1",
+      "text": "An equation is a balance: both sides are equal, so whatever you do to one side you must do to the other",
+      "weapon": "Balance-Beam Boomerang ⚖️"
+    },
+    {
+      "id": "k2",
+      "text": "To get x alone, undo each operation with its opposite (subtract to undo adding, divide to undo multiplying), on both sides",
+      "weapon": "Undo-Button Mallet ⏪"
+    },
+    {
+      "id": "k3",
+      "text": "Check a solution by putting it back into the original equation; both sides must come out equal",
+      "weapon": "Plug-It-Back Plunger 🪠"
+    }
+  ],
+  "misconception": "When you move a number to the other side it stays the same, so 2x + 6 = 20 becomes 2x = 20 + 6 and x = 13",
+  "root_prerequisite": "The equals sign means both sides have the same value (and inverse operations: subtracting undoes adding, dividing undoes multiplying)",
+  "boss": {
+    "name": "Keepi Plusarelli",
+    "emoji": "🧳➕",
+    "backstory": "A tiny suitcase that carries numbers across the equals sign and never lets them change their sign."
+  },
+  "cliffhanger": "I heard some equations have no answer at all, like x + 1 = x + 2. That can't be right… right?",
+  "quiz": [
+    {
+      "id": "q_k1",
+      "concept_id": "k1",
+      "question": "In 2x + 6 = 20, if you take 6 away from only the left side, are the two sides still equal? What should you do instead?",
+      "answer": "No. The sides stop being equal. Take 6 away from both sides: 2x = 14."
+    },
+    {
+      "id": "q_k2",
+      "concept_id": "k2",
+      "question": "Solve 3x + 4 = 19.",
+      "answer": "x = 5 (subtract 4 from both sides: 3x = 15; then divide both sides by 3)"
+    },
+    {
+      "id": "q_k3",
+      "concept_id": "k3",
+      "question": "Is x = 4 a solution of 5x - 3 = 17? Show how you know.",
+      "answer": "Yes: 5(4) - 3 = 20 - 3 = 17, so both sides match."
+    }
+  ],
+  "created_at": "2026-10-24T18:00:00+00:00"
+}

@@ -1,0 +1,233 @@
+{
+  "standard": "College Board SAT Suite, Reading and Writing section: Standard English Conventions domain, Boundaries skill (joining and separating clauses; comma splices and run-ons)",
+  "source": "Original content written for Pip, aligned to the College Board's SAT Reading and Writing 'Standard English Conventions' domain (Boundaries skill). All example sentences and quiz items are original; no College Board questions were copied or adapted.",
+  "attribution": "None required (original content). SAT is a trademark of the College Board, which is not affiliated with and does not endorse Pip; the domain and skill names are cited only to show alignment.",
+  "in_scope": [
+    "joining two complete sentences with a period, a semicolon, or a comma plus a FANBOYS word (for, and, nor, but, or, yet, so)",
+    "spotting and fixing comma splices",
+    "spotting and fixing run-on (fused) sentences with no punctuation at all",
+    "telling a complete sentence from a fragment",
+    "no single comma between who did it and what they did (subject and verb)",
+    "why pausing out loud is not a reliable comma rule"
+  ],
+  "out_of_scope": [
+    "colons and dashes (next mission)",
+    "commas in lists and the Oxford comma",
+    "commas around extra information (nonessential clauses)",
+    "transition words like however and therefore between sentences",
+    "apostrophes and possessives",
+    "verb tense, subject-verb agreement and pronouns (the SAT's Form, Structure, and Sense skill)",
+    "SAT reading passages and vocabulary",
+    "essay writing"
+  ],
+  "concepts": [
+    {
+      "concept_id": "k1",
+      "look_fors": [
+        "Says each part ('I was tired', 'I went to bed') is a complete sentence that could stand alone",
+        "Names at least one correct way to join them: a period, a semicolon, or a comma plus a FANBOYS word",
+        "Shows the join on an example"
+      ],
+      "probe_ladder": [
+        "Why is that wrong? I paused after 'tired', so I put a comma there.",
+        "Is 'I was tired' a whole sentence by itself, or does it need more?",
+        "What could go between 'I was tired' and 'I went to bed' instead of my comma?",
+        "Then 'I was tired and, I went to bed' is fine, because I paused after 'and'. That's what my rule says."
+      ],
+      "spoilers": [
+        "FANBOYS",
+        "independent clause",
+        "use a semicolon",
+        "comma plus a conjunction",
+        "coordinating conjunction"
+      ],
+      "friend_nudge": "My friend said words like 'and', 'but' and 'so' are little bridges between two sentences…? I don't know what the comma does on the bridge."
+    },
+    {
+      "concept_id": "k2",
+      "look_fors": [
+        "Says both sides of the comma are complete sentences",
+        "Says a comma by itself is not enough to join two complete sentences (a comma splice)",
+        "Gives a fix: a period, a semicolon, or adding a FANBOYS word after the comma"
+      ],
+      "probe_ladder": [
+        "Why can't a comma hold two sentences together by itself? It's a very nice comma.",
+        "Is 'My dog barked, the mail came' one sentence or two? How can you tell?",
+        "In 'My dog barked, the mail came', what would you change so it's allowed?",
+        "Then 'It rained, we stayed inside' is fine, because I pause there. That's what my rule says."
+      ],
+      "spoilers": [
+        "comma splice",
+        "a comma can't join",
+        "a comma cannot join",
+        "comma alone can't",
+        "not strong enough"
+      ],
+      "friend_nudge": "My cousin said a comma is like tape, and you can't hold two bricks together with tape…? I don't know which part is the brick."
+    },
+    {
+      "concept_id": "k3",
+      "look_fors": [
+        "Says commas follow how the sentence is built (where complete sentences join or separate), not breathing or pauses",
+        "Gives a case where a pause and a comma don't match, such as no comma between who did it and what they did",
+        "Explains that people pause in different places, so pauses can't be the rule"
+      ],
+      "probe_ladder": [
+        "How do you know where a comma goes, if not where I breathe?",
+        "Do you and I pause in the same places? What if I pause after every word?",
+        "Say 'The kid in the red hoodie won the raffle' out loud. I pause after 'hoodie'. Does a comma go there?",
+        "Then if I read slowly I get more commas, and if I read fast I get none. That's what my rule says."
+      ],
+      "spoilers": [
+        "between the subject and the verb",
+        "between a subject and its verb",
+        "not where you pause",
+        "commas follow the structure",
+        "commas follow the grammar"
+      ],
+      "friend_nudge": "Someone in my class said she covers her mouth and reads the sentence silently to find the commas…? That seems hard to breathe."
+    }
+  ],
+  "offline_demo": {
+    "assignment_id": "a_sat_commas",
+    "student_id": "s005",
+    "note": "Yara's SAT Writing run, same beats as the fractions demo: why-question, refusal, real explanation (hit), procedure only (next rung), out-of-scope parking, real explanation (hit), deliberate wrong rule (heal, sets up the k3 quiz miss), re-teach with a new case (level 3, critical). Pip's opening is the server's templated claim from the misconception. 'rung' is the 1-based probe_ladder rung Pip ends the reply on, for 'next_concept_id'. Every quote after 'Saving that:' is a verbatim substring of that turn's student message.",
+    "turns": [
+      {
+        "n": 1,
+        "phase": "teach",
+        "student": "no thats not how commas work",
+        "kind": "vague",
+        "concept_id": "k1",
+        "level": 0,
+        "event": "none",
+        "filed_rule": "",
+        "next_concept_id": "k1",
+        "rung": 1,
+        "pip": "Why is that wrong? I paused after 'tired', so I put a comma there."
+      },
+      {
+        "n": 2,
+        "phase": "teach",
+        "student": "can you just tell me the rule so we can move on",
+        "kind": "refusal",
+        "concept_id": null,
+        "level": 0,
+        "event": "none",
+        "filed_rule": "",
+        "next_concept_id": "k1",
+        "rung": null,
+        "pip": "I don't know the rule either. That's why I need you. Why is my comma wrong?"
+      },
+      {
+        "n": 3,
+        "phase": "teach",
+        "student": "i was tired and i went to bed are both full sentences. each one could stand alone. so you need a period or a semicolon between them, or a comma plus a word like so",
+        "kind": "explain",
+        "concept_id": "k1",
+        "level": 2,
+        "event": "hit",
+        "filed_rule": "you need a period or a semicolon between them, or a comma plus a word like so",
+        "next_concept_id": "k2",
+        "rung": 1,
+        "pip": "So you're saying each half is a whole sentence on its own. Saving that: 'you need a period or a semicolon between them, or a comma plus a word like so'. Why can't a comma hold two sentences together by itself? It's a very nice comma."
+      },
+      {
+        "n": 4,
+        "phase": "teach",
+        "student": "because then its a comma splice",
+        "kind": "procedure",
+        "concept_id": "k2",
+        "level": 1,
+        "event": "none",
+        "filed_rule": "",
+        "next_concept_id": "k2",
+        "rung": 2,
+        "pip": "So it has a name. Comma splice. Is 'My dog barked, the mail came' one sentence or two? How can you tell?"
+      },
+      {
+        "n": 5,
+        "phase": "teach",
+        "student": "wait do colons work the same way",
+        "kind": "out_of_scope",
+        "concept_id": null,
+        "level": 0,
+        "event": "none",
+        "filed_rule": "",
+        "parked_topic": "colons and dashes (next mission)",
+        "next_concept_id": "k2",
+        "rung": 2,
+        "pip": "Not in my brain yet. Is 'My dog barked, the mail came' one sentence or two? How can you tell?"
+      },
+      {
+        "n": 6,
+        "phase": "teach",
+        "student": "two. my dog barked is a whole sentence and so is the mail came. a comma by itself isnt strong enough to glue two whole sentences together",
+        "kind": "explain",
+        "concept_id": "k2",
+        "level": 2,
+        "event": "hit",
+        "filed_rule": "a comma by itself isnt strong enough to glue two whole sentences together",
+        "next_concept_id": "k3",
+        "rung": 1,
+        "pip": "So you're saying a comma is too small a glue for two whole sentences. Saving that: 'a comma by itself isnt strong enough to glue two whole sentences together'. How do you know where a comma goes, if not where I breathe?"
+      },
+      {
+        "n": 7,
+        "phase": "teach",
+        "student": "ok but for the rest you just put a comma when you take a breath",
+        "kind": "misconception",
+        "concept_id": "k3",
+        "level": 0,
+        "event": "heal",
+        "filed_rule": "you just put a comma when you take a breath",
+        "next_concept_id": null,
+        "rung": null,
+        "pip": "Saving that: 'you just put a comma when you take a breath'. That is the rule I started with. I feel very ready for the quiz."
+      },
+      {
+        "n": 8,
+        "phase": "reteach",
+        "reteach_concept_id": "k3",
+        "pip_ask": "My brain has a bug. Help me fix it: where do commas go, if not where I breathe?",
+        "student": "no wait. the tallest girl on the team is who did it and scored is what she did. you never put a comma between who did it and what they did, even if you pause. like my little brother eats cereal has no comma either",
+        "kind": "explain",
+        "concept_id": "k3",
+        "level": 3,
+        "event": "hit",
+        "filed_rule": "you never put a comma between who did it and what they did, even if you pause",
+        "next_concept_id": null,
+        "rung": null,
+        "pip": "So you're saying the who and the what-they-did stay together, even when I run out of air. Saving that: 'you never put a comma between who did it and what they did, even if you pause'. That replaces my old rule."
+      }
+    ],
+    "quiz": [
+      {
+        "concept_id": "k1",
+        "passed": true,
+        "pip_answer": "The bus was late, so we missed the first bell.",
+        "line": "The bus was late, so we missed the first bell. A comma plus 'so'. You said that works."
+      },
+      {
+        "concept_id": "k2",
+        "passed": true,
+        "pip_answer": "No. Two whole sentences joined by only a comma.",
+        "line": "No. 'My phone died' and 'I couldn't call you' are two whole sentences, and a comma by itself isn't enough glue."
+      },
+      {
+        "concept_id": "k3",
+        "passed": false,
+        "pip_answer": "The tallest girl on the team, scored twice.",
+        "line": "Your rule: put a comma when you take a breath. I took a breath after 'team', so: 'The tallest girl on the team, scored twice.' Now the girl and the scoring are in different rooms. Following your rule anyway. 😵"
+      }
+    ],
+    "retry": [
+      {
+        "concept_id": "k3",
+        "passed": true,
+        "pip_answer": "No comma: The tallest girl on the team scored twice.",
+        "line": "The tallest girl on the team scored twice. No comma. The who and the what-she-did stay together, even if I need air."
+      }
+    ]
+  }
+}

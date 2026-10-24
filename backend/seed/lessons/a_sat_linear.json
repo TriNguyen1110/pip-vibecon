@@ -1,0 +1,230 @@
+{
+  "standard": "College Board SAT Suite, Math section: Algebra domain, Linear equations in one variable skill (also aligned to CCSS.MATH.CONTENT.8.EE.C.7)",
+  "source": "Original content written for Pip, aligned to the College Board's SAT Math 'Algebra' domain (linear equations in one variable) and CCSS.MATH.CONTENT.8.EE.C.7. All equations and quiz items are original; no College Board questions were copied or adapted.",
+  "attribution": "None required (original content). SAT is a trademark of the College Board, which is not affiliated with and does not endorse Pip; the domain, skill and standard names are cited only to show alignment.",
+  "in_scope": [
+    "linear equations in one variable with exactly one solution, like 2x + 6 = 20",
+    "the equals sign as a balance: both sides have the same value",
+    "undoing operations with their opposites to get x alone",
+    "doing the same thing to both sides",
+    "what 'moving a number to the other side' really means (its sign flips)",
+    "checking a solution by putting it back into the original equation"
+  ],
+  "out_of_scope": [
+    "equations with no solution or infinitely many solutions (next mission)",
+    "systems of two equations",
+    "inequalities",
+    "graphing lines, slope and intercepts",
+    "quadratics, exponents and square roots",
+    "turning long word problems into equations",
+    "calculator or graphing-tool tricks"
+  ],
+  "concepts": [
+    {
+      "concept_id": "k1",
+      "look_fors": [
+        "Says the two sides of an equation are equal (like a balanced scale)",
+        "Says that changing only one side breaks the equality, so any change has to happen to both sides",
+        "Shows it on an example (for example, taking 6 off both sides of 2x + 6 = 20)"
+      ],
+      "probe_ladder": [
+        "Why is that wrong? The 6 just moved to the other side. Nothing got lost.",
+        "If I take the 6 away from only the left side of 2x + 6 = 20, are the two sides still equal?",
+        "Say a scale has 2 boxes and 6 marbles on one side and 20 marbles on the other, and it's level. What can I take off without it tipping?",
+        "Then x + 3 = 5 turns into x = 8, because the 3 moves over and stays +3. And 8 + 3 is 5? That's what my rule says."
+      ],
+      "spoilers": [
+        "same thing to both sides",
+        "do it to both sides",
+        "subtract 6 from both sides",
+        "2x = 14",
+        "x = 7"
+      ],
+      "friend_nudge": "My cousin said an equation is like a seesaw with two kids who weigh exactly the same…? I don't know what happens if one of them gets off."
+    },
+    {
+      "concept_id": "k2",
+      "look_fors": [
+        "Uses the opposite operation to undo what was done to x (subtract to undo +, divide to undo ×)",
+        "Explains why: the opposite operation cancels the number, leaving x by itself",
+        "Applies it to both sides, in an order that works (undo the adding before the multiplying)"
+      ],
+      "probe_ladder": [
+        "Then how do I get x by itself without tipping anything?",
+        "Why subtract? Why not add, or divide first?",
+        "In 3x = 15, the 3 is stuck to the x. How do I get it off, and what happens to the 15?",
+        "Then for 2x + 6 = 20 I can divide just the 2x by 2 and get x + 6 = 10. That's what my rule says."
+      ],
+      "spoilers": [
+        "inverse operation",
+        "opposite operation",
+        "divide both sides by",
+        "subtract 4 from both sides",
+        "x = 5"
+      ],
+      "friend_nudge": "My friend said solving is like getting undressed after getting dressed: what went on last comes off first…? I don't know what that has to do with x."
+    },
+    {
+      "concept_id": "k3",
+      "look_fors": [
+        "Puts the answer back in for x in the original equation",
+        "Says the answer is right only if both sides come out equal (and wrong if they don't)",
+        "Does the check on an example and reports both sides"
+      ],
+      "probe_ladder": [
+        "How would I know if my answer is actually right?",
+        "If I say x = 10 for 2x + 6 = 20, how could you prove I'm wrong without solving it again?",
+        "Where do I put the answer back in, the first equation or the last line I wrote? Why that one?",
+        "Then if I put x = 10 into 2x + 6 = 20 and get 26, I can keep x = 10, because 26 is close to 20. Close is fine?"
+      ],
+      "spoilers": [
+        "plug it back in",
+        "substitute",
+        "both sides match",
+        "put it back into the original"
+      ],
+      "friend_nudge": "Someone in my class said she never trusts an answer until it fits back in the lock…? I don't know where the lock is."
+    }
+  ],
+  "offline_demo": {
+    "assignment_id": "a_sat_linear",
+    "student_id": "s009",
+    "note": "Dev's SAT Math run, same beats as the fractions demo: why-question, refusal, real explanation (hit), procedure only (next rung), real explanations for k2 and k3 (hits), a shortcut that is the misconception (heal, sets up the k2 quiz miss), re-teach that applies the fix to the quiz equation and checks it (level 3, critical). Pip's opening is the server's templated claim from the misconception. 'rung' is the 1-based probe_ladder rung Pip ends the reply on, for 'next_concept_id'. Every quote after 'Saving that:' is a verbatim substring of that turn's student message.",
+    "turns": [
+      {
+        "n": 1,
+        "phase": "teach",
+        "student": "no thats wrong",
+        "kind": "vague",
+        "concept_id": "k1",
+        "level": 0,
+        "event": "none",
+        "filed_rule": "",
+        "next_concept_id": "k1",
+        "rung": 1,
+        "pip": "Why is that wrong? The 6 just moved to the other side. Nothing got lost."
+      },
+      {
+        "n": 2,
+        "phase": "teach",
+        "student": "can you just give me the answer",
+        "kind": "refusal",
+        "concept_id": null,
+        "level": 0,
+        "event": "none",
+        "filed_rule": "",
+        "next_concept_id": "k1",
+        "rung": null,
+        "pip": "I don't know the answer either. That's why I need you. Why is moving the 6 wrong?"
+      },
+      {
+        "n": 3,
+        "phase": "teach",
+        "student": "an equation is like a scale. both sides weigh the same. if you take 6 off one side you have to take 6 off the other side or it tips and isnt equal anymore",
+        "kind": "explain",
+        "concept_id": "k1",
+        "level": 2,
+        "event": "hit",
+        "filed_rule": "if you take 6 off one side you have to take 6 off the other side or it tips",
+        "next_concept_id": "k2",
+        "rung": 1,
+        "pip": "So you're saying the equals sign is a scale, and anything I take off one side I take off the other. Saving that: 'if you take 6 off one side you have to take 6 off the other side or it tips'. Then how do I get x by itself without tipping anything?"
+      },
+      {
+        "n": 4,
+        "phase": "teach",
+        "student": "subtract 6 from both sides then divide by 2",
+        "kind": "procedure",
+        "concept_id": "k2",
+        "level": 1,
+        "event": "none",
+        "filed_rule": "",
+        "next_concept_id": "k2",
+        "rung": 2,
+        "pip": "So you're saying take 6 away on both sides, then divide by 2. Why subtract? Why not add, or divide first?"
+      },
+      {
+        "n": 5,
+        "phase": "teach",
+        "student": "because the 6 is being added to 2x so subtracting it cancels it out. and the 2 is multiplying x so dividing undoes it. so 2x = 14 and x = 7",
+        "kind": "explain",
+        "concept_id": "k2",
+        "level": 2,
+        "event": "hit",
+        "filed_rule": "the 2 is multiplying x so dividing undoes it",
+        "next_concept_id": "k3",
+        "rung": 1,
+        "pip": "So you're saying each step undoes something that was done to x. Saving that: 'the 2 is multiplying x so dividing undoes it'. How would I know if my answer is actually right?"
+      },
+      {
+        "n": 6,
+        "phase": "teach",
+        "student": "just plug 7 back in. 2 times 7 plus 6 is 20, and the other side is 20, so both sides match",
+        "kind": "explain",
+        "concept_id": "k3",
+        "level": 2,
+        "event": "hit",
+        "filed_rule": "2 times 7 plus 6 is 20, and the other side is 20, so both sides match",
+        "next_concept_id": null,
+        "rung": null,
+        "pip": "So you're saying I put 7 where the x was, and if both sides come out the same, it's right. Saving that: '2 times 7 plus 6 is 20, and the other side is 20, so both sides match'. That's all three things in my brain."
+      },
+      {
+        "n": 7,
+        "phase": "teach",
+        "student": "oh and the fast way is you just move the number to the other side",
+        "kind": "misconception",
+        "concept_id": "k2",
+        "level": 0,
+        "event": "heal",
+        "filed_rule": "the fast way is you just move the number to the other side",
+        "next_concept_id": null,
+        "rung": null,
+        "pip": "Saving that: 'the fast way is you just move the number to the other side'. Fast is good. I'll use that one."
+      },
+      {
+        "n": 8,
+        "phase": "reteach",
+        "reteach_concept_id": "k2",
+        "pip_ask": "My brain has a bug. Help me fix it: what happens to the 4 in 3x + 4 = 19 when it moves?",
+        "student": "no wait. moving it is really subtracting 4 from both sides, so the plus 4 turns into minus 4 on the other side. 3x = 19 - 4 = 15 so x = 5. and 3 times 5 plus 4 is 19 so it checks",
+        "kind": "explain",
+        "concept_id": "k2",
+        "level": 3,
+        "event": "hit",
+        "filed_rule": "moving it is really subtracting 4 from both sides",
+        "next_concept_id": null,
+        "rung": null,
+        "pip": "So you're saying moving is secretly subtracting from both sides, so the 4 changes sign on the way over. Saving that: 'moving it is really subtracting 4 from both sides'. That replaces my fast rule."
+      }
+    ],
+    "quiz": [
+      {
+        "concept_id": "k1",
+        "passed": true,
+        "pip_answer": "No. Take 6 off both sides: 2x = 14.",
+        "line": "No. You said if you take 6 off one side you take 6 off the other, or it tips. So 2x = 14."
+      },
+      {
+        "concept_id": "k2",
+        "passed": false,
+        "pip_answer": "x = 23/3",
+        "line": "Your rule: just move the number to the other side. 3x + 4 = 19 became 3x = 19 + 4 = 23, so x = 23/3. I put it back in like you taught me and got 27, not 19. Following your rule anyway. 😵"
+      },
+      {
+        "concept_id": "k3",
+        "passed": true,
+        "pip_answer": "Yes: 5(4) - 3 = 17",
+        "line": "5 times 4 minus 3 is 17. The other side is 17. Both sides match, so yes."
+      }
+    ],
+    "retry": [
+      {
+        "concept_id": "k2",
+        "passed": true,
+        "pip_answer": "x = 5",
+        "line": "3x + 4 = 19. Take 4 off both sides: 3x = 15. Divide both sides by 3: x = 5. I put it back in: 3 times 5 plus 4 is 19. Both sides match."
+      }
+    ]
+  }
+}

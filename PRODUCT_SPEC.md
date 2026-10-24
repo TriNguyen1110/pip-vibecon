@@ -32,8 +32,7 @@ student's own words; the owner sees misconceptions across the center.
 - **Next:** SAT Math for 16–17-year-olds (the concepts behind missed practice-test
   questions; centers sell SAT prep as a premium program). Science stays chat-only: no
   simulations, since Brilliant already does interactive sims well.
-- **Not for now:** under ~10 (reading/explaining load), SAT Reading/Writing and other
-  memorization subjects, speed drills, unsupervised use
+- **Not for now:** under ~10 (reading/explaining load), memorization subjects, speed drills, unsupervised use
   by students with significant learning or language needs.
 - **Centers:** independent, math-focused (grades 5–9 core), 50–300 students, selling "understanding,
   not worksheets". Not first: locked-method franchises, online marketplaces, schools.
@@ -90,7 +89,7 @@ parent updates sent (sent log), workshop notes, pilot checkout status.
 
 ## Out of scope
 
-SAT Reading/Writing and non-STEM subjects, science simulations, posting to social apps
+SAT Reading/Writing beyond the seeded commas/run-ons mission, non-STEM subjects, science simulations, posting to social apps
 and challenge-a-friend links (roadmap; the K.O. card is Save image only), buying coins
 with real money (never), loot boxes, recording or storing kids' voices, user-uploaded images
 or code and sharing user-made themes (needs moderation), real payments, real student data, scheduling, billing, LMS or

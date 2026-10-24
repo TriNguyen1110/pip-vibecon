@@ -1,0 +1,54 @@
+{
+  "id": "a_sat_commas",
+  "student_id": "s005",
+  "tutor_id": "t1",
+  "grade": 11,
+  "topic": "SAT Writing: commas and run-on sentences",
+  "why_it_matters": "The same few comma rules come up again and again on the SAT, and in every college essay or job email someone reads to decide about you.",
+  "concepts": [
+    {
+      "id": "k1",
+      "text": "Two complete sentences can be joined only with a period, a semicolon, or a comma plus a FANBOYS word (for, and, nor, but, or, yet, so)",
+      "weapon": "Semicolon Stapler 📎"
+    },
+    {
+      "id": "k2",
+      "text": "A comma alone can't join two complete sentences; that mistake is called a comma splice",
+      "weapon": "Splice Snipper ✂️"
+    },
+    {
+      "id": "k3",
+      "text": "Commas go where the sentence's structure needs them, not wherever you pause when you read it aloud",
+      "weapon": "Structure Spotlight 🔦"
+    }
+  ],
+  "misconception": "You put a comma wherever you pause, so 'I was tired, I went to bed' is a fine sentence",
+  "root_prerequisite": "Telling a complete sentence (subject + verb + complete thought) from a fragment",
+  "boss": {
+    "name": "Pausarino Commaroni",
+    "emoji": "🍝💨",
+    "backstory": "A macaroni noodle who gasps for air every three words and drops a comma wherever it gasps."
+  },
+  "cliffhanger": "I heard a colon can only come after a complete sentence. Even before a list. That can't be right… right?",
+  "quiz": [
+    {
+      "id": "q_k1",
+      "concept_id": "k1",
+      "question": "Join 'The bus was late' and 'we missed the first bell' into one correct sentence.",
+      "answer": "The bus was late, so we missed the first bell. (Also correct: The bus was late; we missed the first bell.)"
+    },
+    {
+      "id": "q_k2",
+      "concept_id": "k2",
+      "question": "Is this sentence correct: 'My phone died, I couldn't call you.' Why or why not?",
+      "answer": "No. It is a comma splice: two complete sentences joined by only a comma. Fix it with a period, a semicolon, or ', so'."
+    },
+    {
+      "id": "q_k3",
+      "concept_id": "k3",
+      "question": "Does 'The tallest girl on the team scored twice' need a comma after 'team'?",
+      "answer": "No. 'The tallest girl on the team' is who did it and 'scored' is what she did; a single comma never goes between them, even if you pause there."
+    }
+  ],
+  "created_at": "2026-10-24T18:00:00+00:00"
+}
