@@ -1,0 +1,79 @@
+/* Pip tokens. Forest ground, ivory text, ice action, sunset accent (from willder),
+   plus a small game palette that only appears on student screens.
+   See DESIGN_TOKENS.md for the rules. */
+:root {
+  color-scheme: dark;
+
+  /* Ground and surfaces */
+  --ink: #001914;
+  --surface: #0a2721;
+  --surface-2: #12372e;
+  --surface-3: #1a4639;
+  --overlay: #10372e;
+  --glass-fill: linear-gradient(120deg, rgba(10, 39, 33, 0.62), rgba(0, 25, 20, 0.52));
+  --glass-edge: rgba(215, 212, 202, 0.17);
+  --glass-shadow: 0 20px 56px -30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(239, 239, 233, 0.05);
+  --divider: rgba(215, 212, 202, 0.12);
+  --border: rgba(215, 212, 202, 0.18);
+
+  /* Text roles (never alpha steps of ivory) */
+  --fg: #efefe9;
+  --fg-muted: #d4d4cd;
+  --fg-subtle: #a8b8ae;
+
+  /* Action and accents */
+  --ice: #c9fcfc;
+  --ice-ink: #001914;
+  --ice-soft: rgba(201, 252, 252, 0.1);
+  --ice-line: rgba(201, 252, 252, 0.32);
+  --sunset: #f59b76;
+  --focus: #a7dfe6;
+  --ribbon: #62a2b2;
+  --success: #a6d4b4;
+  --warning: #f3c480;
+  --danger: #ef968d;
+
+  /* Student game palette. Coral is reserved for Pip's wrong rules and boss HP. */
+  --coral: #ff8a7a;
+  --coral-soft: rgba(255, 138, 122, 0.14);
+  --coral-line: rgba(255, 138, 122, 0.55);
+  --mint: #8fe3b0;
+  --mint-soft: rgba(143, 227, 176, 0.12);
+  --mint-line: rgba(143, 227, 176, 0.5);
+  --sun: #ffd27a;
+  --sun-soft: rgba(255, 210, 122, 0.14);
+  --note: #fbf3d9;
+  --note-ink: #1c241f;
+
+  /* Fields */
+  --field-bg: rgba(0, 25, 20, 0.6);
+  --field-border: #7a8c84;
+  --field-border-hover: #a8b8ae;
+  --field-placeholder: #a8b8ae;
+
+  /* Type */
+  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --heading-shadow: 0 -0.5px 0 rgba(255, 255, 247, 0.22), 0 1px 1px rgba(0, 12, 9, 0.55),
+    0 3px 8px rgba(0, 10, 8, 0.24), 0 0 16px rgba(239, 239, 233, 0.04);
+
+  /* Shape and motion */
+  --r-sm: 10px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 22px;
+  --tap: 44px;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --fast: 160ms;
+  --med: 240ms;
+
+  --gutter: 16px;
+  --content: 72rem;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --gutter: 24px;
+  }
+}

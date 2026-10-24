@@ -1,8 +1,5 @@
-# React + Vite
+# Pip frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Vite + React. `npm run dev` (proxies `/api` to `http://localhost:8001`), `npm run build`.
+Set `VITE_BACKEND_URL` to call a backend on another origin. Design tokens: `DESIGN_TOKENS.md`.
+`src/three/` belongs to the 3D owner and is lazy-loaded through `src/components/Mascot.jsx`.
