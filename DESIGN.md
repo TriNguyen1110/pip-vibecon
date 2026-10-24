@@ -6,6 +6,9 @@ seconds**, and the Pip's Brain shot is the image they remember.
 
 ## Look and feel
 
+> **Superseded for visuals by `DESIGN_SYSTEM.md`** (willder palette, Fraunces/Manrope/Geist Mono, Studio vs. Play registers). The purple/Nunito values below are historical; the product rules in the rest of this file still apply.
+
+
 - **Mood:** warm, playful for students; calm and professional for tutors/owners. Same
   palette, different density.
 - **Palette:** ink `#1F2333` · paper `#FFFBF5` · Pip purple `#6C4CF5` (accent) · sunshine
