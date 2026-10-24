@@ -2,15 +2,31 @@ import { useId } from 'react'
 import './pip2d.css'
 
 // Glossy candy-plastic villains (contrast with the soft, fuzzy Pips). viewBox 220 x 240.
-// <Boss2D boss="walrus"|"penguin"|"hamster" state="smug"|"cracked"|"ko" hp size />
+// <Boss2D boss="walrus"|"penguin"|"hamster"|"triangle"|<lesson boss name> state="smug"|"cracked"|"ko" hp size />
 // If `state` is omitted it follows `hp`: > 50 smug, > 0 cracked, 0 K.O.
 
 const INK = '#2A1630'
 const SIGN = '#FFF6E0'
 const FONT = '"Arial Rounded MT Bold", "Trebuchet MS", system-ui, sans-serif'
 
-export const BOSSES_2D = ['walrus', 'penguin', 'hamster']
-export const BOSS_NAMES = { walrus: 'Top-Top Bottom-Bottom', penguin: 'Pause-Pause Penguin', hamster: 'Hop-Hop Hamster' }
+export const BOSSES_2D = ['walrus', 'penguin', 'hamster', 'triangle']
+export const BOSS_NAMES = {
+  walrus: 'Top-Top Bottom-Bottom',
+  penguin: 'Pause-Pause Penguin',
+  hamster: 'Hop-Hop Hamster',
+  triangle: 'Triangle boss', // placeholder until content names it (a_tri.assignment.json)
+}
+
+// Pick a boss by id, or by keywords in the lesson's boss name / backstory.
+export function bossIdFor(idOrName = '') {
+  const s = String(idOrName).toLowerCase()
+  if (BOSS_NAMES[s]) return s
+  if (/triangle|△|tri\b|area|b\s*[×x*]\s*h|base.*height/.test(s)) return 'triangle'
+  if (/walrus|top-top|bottom-bottom|fraction/.test(s)) return 'walrus'
+  if (/penguin|pause|comma/.test(s)) return 'penguin'
+  if (/hamster|hop-hop|suitcase/.test(s)) return 'hamster'
+  return 'walrus'
+}
 
 // Hard cel-shaded glossy shape.
 function V({ d, fill, shade, uid, w = 4.4, sx = -10, sy = -8 }) {
@@ -283,14 +299,61 @@ function Hamster({ state, id }) {
   )
 }
 
-const ART = { walrus: Walrus, penguin: Penguin, hamster: Hamster }
+// Placeholder triangle boss: a smug glossy triangle who forgot the 1/2, holding up "△ = b × h".
+function Triangle({ state, id }) {
+  const fill = '#FF6F5E'
+  const shade = '#D9503F'
+  const ko = state === 'ko'
+  const BODY = 'M98,54 Q110,34 122,54 L188,184 Q197,203 176,203 L44,203 Q23,203 32,184 Z'
+  return (
+    <g transform={ko ? 'rotate(-12 110 220)' : undefined}>
+      <V d={ell(80, 210, 15, 9)} fill="#2E2140" uid={`${id}l1`} w={3.6} />
+      <V d={ell(140, 210, 15, 9)} fill="#2E2140" uid={`${id}l2`} w={3.6} />
+      {/* hand on hip */}
+      <V d="M40,170 C22,160 20,140 30,132 C38,140 40,152 50,158 Z" fill={fill} shade={shade} uid={`${id}a1`} />
+      <V d={BODY} fill={fill} shade={shade} uid={`${id}b`} sx={-14} sy={-10} />
+      <path d="M64,190 L156,190" stroke="#FFD0C4" strokeWidth="10" strokeLinecap="round" opacity="0.6" />
+      <Gloss x={92} y={84} rx={14} ry={5.5} rot={-55} />
+      <ellipse cx="78" cy="150" rx="7" ry="13" transform="rotate(25 78 150)" fill="#fff" opacity="0.5" filter={`url(#${id}gel)`} />
+      <BossEyes L={[92, 128]} R={[128, 127]} r={8} state={state} lid={fill} />
+      {state === 'smug' && <path d="M96,156 Q112,164 126,150" fill="none" stroke={INK} strokeWidth="4" strokeLinecap="round" />}
+      {state === 'cracked' && <path d="M96,158 L104,154 L112,158 L120,154 L128,158" fill="none" stroke={INK} strokeWidth="3.6" strokeLinecap="round" strokeLinejoin="round" />}
+      {ko && <ellipse cx="111" cy="158" rx="8" ry="6" fill="#3A1426" stroke={INK} strokeWidth="3" />}
+      {/* the sign, held up high */}
+      {ko ? (
+        <g>
+          <path d="M184,236 L178,206" stroke="#8A5A3C" strokeWidth="7" strokeLinecap="round" />
+          <Board x={96} y={176} w={104} h={50} lines={['△ = b × h']} size={21} state="ko" id={`${id}s`} />
+        </g>
+      ) : (
+        <g transform={state === 'cracked' ? 'rotate(10 170 150)' : undefined}>
+          <V d="M162,156 C176,150 182,136 178,124 C170,126 164,138 156,146 Z" fill={fill} shade={shade} uid={`${id}a2`} />
+          <path d="M172,140 L172,62" stroke={INK} strokeWidth="10" strokeLinecap="round" />
+          <path d="M172,140 L172,62" stroke="#A8724C" strokeWidth="5" strokeLinecap="round" />
+          <Board x={118} y={10} w={100} h={54} lines={['△ = b × h']} size={21} state={state === 'cracked' ? 'cracked' : 'smug'} id={`${id}s`} />
+          <circle cx="172" cy="132" r="8" fill={fill} stroke={INK} strokeWidth="3.4" />
+        </g>
+      )}
+      {state === 'cracked' && <Sweat x={56} y={96} />}
+      {ko && <KOStars x={110} y={30} />}
+    </g>
+  )
+}
+
+const ART = { walrus: Walrus, penguin: Penguin, hamster: Hamster, triangle: Triangle }
 
 export function Boss2D({ boss = 'walrus', state, hp, size = 200, className = '', title }) {
   const id = useId().replace(/:/g, '')
   const st = state ?? (hp == null ? 'smug' : hp <= 0 ? 'ko' : hp <= 50 ? 'cracked' : 'smug')
-  const Art = ART[boss] ?? Walrus
+  const key = bossIdFor(boss)
+  const Art = ART[key]
   return (
-    <svg className={`pip2d ${className}`} width={size} height={(size * 240) / 220} viewBox="0 0 220 240" role="img" aria-label={title ?? `${BOSS_NAMES[boss] ?? 'Boss'}, ${st}`}>
+    <svg className={`pip2d ${className}`} width={size} height={(size * 240) / 220} viewBox="0 0 220 240" role="img" aria-label={title ?? `${BOSS_NAMES[key]}, ${st}`}>
+      <defs>
+        <filter id={`${id}gel`} x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="2.2" />
+        </filter>
+      </defs>
       <Art state={st} id={id} />
     </svg>
   )
