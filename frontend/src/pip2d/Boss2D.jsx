@@ -2,7 +2,7 @@ import { useId } from 'react'
 import './pip2d.css'
 
 // Glossy candy-plastic villains (contrast with the soft, fuzzy Pips). viewBox 220 x 240.
-// <Boss2D boss="walrus"|"penguin"|"hamster"|"triangle"|<lesson boss name> state="smug"|"cracked"|"ko" hp size />
+// <Boss2D boss="walrus"|"penguin"|"hamster"|"triangle"|<lesson boss name> state="smug"|"cracked"|"ko"|"reformed" hp size />
 // If `state` is omitted it follows `hp`: > 50 smug, > 0 cracked, 0 K.O.
 
 const INK = '#2A1630'
@@ -73,6 +73,25 @@ function BossEyes({ L, R, r = 9, state, lid }) {
             <path d={`M${x + r},${y - r} L${x - r},${y + r}`} />
           </g>
         ))}
+      </g>
+    )
+  }
+  if (state === 'reformed') {
+    // friendly, slightly sheepish: open eyes, worried brows, a little blush
+    return (
+      <g>
+        {[L, R].map(([x, y], i) => (
+          <g key={i}>
+            <circle cx={x} cy={y} r={r + 3} fill="#fff" stroke={INK} strokeWidth="3" />
+            <circle cx={x} cy={y + 1.5} r={r * 0.68} fill={INK} />
+            <circle cx={x - r * 0.25} cy={y - r * 0.1} r={r * 0.26} fill="#fff" />
+            <ellipse cx={x + (i ? 4 : -4)} cy={y + r + 9} rx={r * 0.9} ry={r * 0.45} fill="#FF8FA8" opacity="0.55" />
+          </g>
+        ))}
+        <g stroke={INK} strokeWidth="4" strokeLinecap="round">
+          <path d={`M${L[0] - r - 2},${L[1] - r - 7} L${L[0] + r + 2},${L[1] - r - 13}`} />
+          <path d={`M${R[0] - r - 2},${R[1] - r - 13} L${R[0] + r + 2},${R[1] - r - 7}`} />
+        </g>
       </g>
     )
   }
@@ -195,7 +214,7 @@ function Walrus({ state, id }) {
       </g>
       {/* sandwich board on straps */}
       <path d="M40,124 L46,162 M180,124 L174,162" stroke={INK} strokeWidth="5" strokeLinecap="round" />
-      <Board x={36} y={160} w={148} h={56} lines={['1/2 + 1/3 = 2/5']} size={19} state={state} id={`${id}s`} tilt={-3} />
+      <Board x={36} y={160} w={148} h={56} lines={[state === 'reformed' ? '1/2 + 1/3 = 5/6' : '1/2 + 1/3 = 2/5']} size={19} state={state === 'reformed' ? 'smug' : state} id={`${id}s`} tilt={-3} />
       {state === 'cracked' && <Sweat x={170} y={78} />}
       {ko && <KOStars x={110} y={58} />}
     </g>
@@ -218,7 +237,7 @@ function Penguin({ state, id }) {
       <Gloss x={82} y={62} rx={14} ry={6} />
       <BossEyes L={[92, 92]} R={[128, 91]} r={8} state={state} lid={fill} />
       <V d="M98,106 L122,106 L110,124 Z" fill="#F59B3C" shade="#D97F28" uid={`${id}bk`} w={3.6} sx={-4} sy={-3} />
-      {state === 'smug' && <path d="M100,130 Q112,136 122,128" fill="none" stroke={INK} strokeWidth="3.6" strokeLinecap="round" />}
+      {(state === 'smug' || state === 'reformed') && <path d={state === 'reformed' ? 'M102,130 Q111,137 120,130' : 'M100,130 Q112,136 122,128'} fill="none" stroke={INK} strokeWidth="3.6" strokeLinecap="round" />}
       {/* giant comma necklace */}
       <path d="M76,124 Q110,150 144,124" fill="none" stroke="#D9A93A" strokeWidth="3.4" strokeDasharray="4 3" />
       <g transform={ko ? 'translate(-30 72) rotate(-60 110 150)' : state === 'cracked' ? 'rotate(25 110 140)' : undefined}>
@@ -235,7 +254,7 @@ function Penguin({ state, id }) {
         <g transform={state === 'cracked' ? 'rotate(12 180 160)' : undefined}>
           <path d="M184,170 L184,76" stroke={INK} strokeWidth="10" strokeLinecap="round" />
           <path d="M184,170 L184,76" stroke="#A8724C" strokeWidth="5" strokeLinecap="round" />
-          <Board x={124} y={22} w={94} h={56} lines={['I PAUSED,', 'SO COMMA']} size={12.5} state={state === 'cracked' ? 'cracked' : 'smug'} id={`${id}s`} />
+          <Board x={124} y={22} w={94} h={56} lines={state === 'reformed' ? ['A PAUSE', '≠ A COMMA'] : ['I PAUSED,', 'SO COMMA']} size={12.5} state={state === 'cracked' ? 'cracked' : 'smug'} id={`${id}s`} />
         </g>
       )}
       {state === 'cracked' && <Sweat x={150} y={56} />}
@@ -275,7 +294,7 @@ function Hamster({ state, id }) {
         <g transform="rotate(-8 110 204)">
           <rect x="64" y="190" width="92" height="26" rx="4" fill="#FFE9E3" stroke="#D93A3A" strokeWidth="3" strokeDasharray={state === 'cracked' ? '8 4' : undefined} />
           <text x="110" y="209" textAnchor="middle" fontFamily={FONT} fontWeight="900" fontSize="15" fill="#D93A3A">
-            2x = 20 + 6
+            {state === 'reformed' ? '2x = 20 − 6' : '2x = 20 + 6'}
           </text>
         </g>
         {state === 'cracked' && <path d="M140,170 l-6,14 8,10 -6,14" fill="none" stroke={INK} strokeWidth="3.4" strokeLinejoin="round" />}
@@ -299,16 +318,55 @@ function Hamster({ state, id }) {
   )
 }
 
+// Club variant: Duke behind a DJ booth whose neon sign reads the misconception.
+function DJBooth({ state, id }) {
+  const ko = state === 'ko'
+  const cracked = state === 'cracked'
+  return (
+    <g>
+      <defs>
+        <filter id={`${id}nglow`} x="-20%" y="-60%" width="140%" height="220%">
+          <feGaussianBlur stdDeviation="3" />
+        </filter>
+      </defs>
+      {/* turntables */}
+      {[70, 150].map((x) => (
+        <g key={x}>
+          <ellipse cx={x} cy="152" rx="26" ry="8" fill="#0F0C1E" stroke={INK} strokeWidth="3" />
+          <ellipse cx={x} cy="151" rx="9" ry="3" fill="#FF3FD8" />
+        </g>
+      ))}
+      <rect x="26" y="154" width="168" height="84" rx="10" fill="#1A1530" stroke={INK} strokeWidth="4.4" />
+      <path d="M30,160 H190" stroke="#2FF3FF" strokeWidth="3" strokeLinecap="round" />
+      <path d="M30,232 H190" stroke="#FF3FD8" strokeWidth="3" strokeLinecap="round" />
+      {/* neon sign: glows when smug, flickers + cracks when hit, half goes dark on K.O. */}
+      <g opacity={cracked ? 0.75 : 1}>
+        <text x="110" y="206" textAnchor="middle" fontFamily={FONT} fontWeight="900" fontSize="30" fill="#2FF3FF" filter={`url(#${id}nglow)`}>
+          △ = b × h
+        </text>
+        <text x="110" y="206" textAnchor="middle" fontFamily={FONT} fontWeight="900" fontSize="30" fill="#E8FFFF">
+          △ = b × h
+        </text>
+      </g>
+      {cracked && <path d="M130,170 l-8,14 10,9 -9,14 6,12" fill="none" stroke="#fff" strokeWidth="2.6" strokeLinejoin="round" opacity="0.9" />}
+      {ko && <rect x="110" y="166" width="80" height="60" fill="#1A1530" opacity="0.92" />}
+      {ko && <path d="M110,164 l-6,16 8,10 -7,14 6,16" fill="none" stroke={INK} strokeWidth="3.4" strokeLinejoin="round" />}
+    </g>
+  )
+}
+
 // Duke Doublecount (boss id "triangle"): a smug aristocratic peacock in a tiny cape, holding "△ = b × h".
 // He claims the whole rectangle every time: his tail fan is a big rectangle. Each hit divides it by two:
 // cracked = folded diagonally into a triangle; K.O. = folded flat in half.
-function Peacock({ state, id }) {
+function Peacock({ state, id, variant }) {
+  const booth = variant === 'club'
   const blue = '#2F62D9'
   const blueShade = '#2147A8'
   const ko = state === 'ko'
   const FAN = 'M48,14 H172 Q198,14 198,40 V124 Q198,150 172,150 H48 Q22,150 22,124 V40 Q22,14 48,14 Z'
   const spots = []
   for (const y of [40, 78, 116]) for (const x of [50, 90, 130, 170]) spots.push([x, y])
+  const reformed = state === 'reformed'
   const fanClip =
     state === 'cracked'
       ? 'M18,154 L202,154 L18,10 Z' // half of the rectangle: a triangle
@@ -323,7 +381,7 @@ function Peacock({ state, id }) {
         </clipPath>
       </defs>
       {/* the rectangle tail fan */}
-      <g transform={ko ? 'translate(0 22) scale(1 0.86)' : undefined}>
+      <g transform={ko ? 'translate(0 22) scale(1 0.86)' : reformed ? 'translate(60 106) scale(0.75)' : undefined}>
         {state === 'cracked' && <path d="M22,14 L198,150 L198,40 Q198,14 172,14 Z" fill="#1F8C82" opacity="0.28" />}
         <g clipPath={`url(#${id}fan)`}>
           <V d={FAN} fill="#2FB5A8" shade="#23968B" uid={`${id}f`} sx={-12} sy={-8} />
@@ -340,7 +398,7 @@ function Peacock({ state, id }) {
           ))}
         </g>
         {state === 'cracked' && <path d="M22,14 L198,150" stroke={INK} strokeWidth="4" strokeLinecap="round" strokeDasharray="10 5" />}
-        {ko && <path d="M110,14 L110,150" stroke={INK} strokeWidth="4" strokeLinecap="round" strokeDasharray="10 5" />}
+        {(ko || reformed) && <path d="M110,14 L110,150" stroke={INK} strokeWidth="4" strokeLinecap="round" strokeDasharray="10 5" />}
       </g>
       {/* legs */}
       <path d="M98,206 L96,230 M122,206 L124,230" stroke="#E08A2E" strokeWidth="5" strokeLinecap="round" />
@@ -365,8 +423,9 @@ function Peacock({ state, id }) {
       <path d="M84,142 Q110,130 136,142" fill="none" stroke="#F2C14E" strokeWidth="4" strokeLinecap="round" />
       <circle cx="110" cy="136" r="5" fill="#FF5AA5" stroke={INK} strokeWidth="2.4" />
       <ellipse cx="88" cy="160" rx="6" ry="12" transform="rotate(20 88 160)" fill="#fff" opacity="0.4" filter={`url(#${id}gel)`} />
+      {booth && <DJBooth state={state} id={id} />}
       {/* the sign */}
-      {ko ? (
+      {booth ? null : ko ? (
         <g>
           <path d="M184,236 L178,206" stroke="#8A5A3C" strokeWidth="7" strokeLinecap="round" />
           <Board x={98} y={182} w={100} h={46} lines={['△ = b × h']} size={19} state="ko" id={`${id}s`} />
@@ -375,7 +434,7 @@ function Peacock({ state, id }) {
         <g transform={state === 'cracked' ? 'rotate(8 170 190)' : undefined}>
           <path d="M176,236 L176,196" stroke={INK} strokeWidth="9" strokeLinecap="round" />
           <path d="M176,236 L176,196" stroke="#A8724C" strokeWidth="4.5" strokeLinecap="round" />
-          <Board x={122} y={150} w={94} h={48} lines={['△ = b × h']} size={19} state={state === 'cracked' ? 'cracked' : 'smug'} id={`${id}s`} />
+          <Board x={reformed ? 114 : 122} y={150} w={reformed ? 104 : 94} h={48} lines={[reformed ? '△ = ½ b × h' : '△ = b × h']} size={reformed ? 17 : 19} state={state === 'cracked' ? 'cracked' : 'smug'} id={`${id}s`} />
           <V d={ell(150, 196, 12, 8)} fill={blue} shade={blueShade} uid={`${id}w`} w={3} />
         </g>
       )}
@@ -387,7 +446,7 @@ function Peacock({ state, id }) {
 
 const ART = { walrus: Walrus, penguin: Penguin, hamster: Hamster, triangle: Peacock }
 
-export function Boss2D({ boss = 'walrus', state, hp, size = 200, className = '', title }) {
+export function Boss2D({ boss = 'walrus', state, hp, size = 200, className = '', title, variant }) {
   const id = useId().replace(/:/g, '')
   const st = state ?? (hp == null ? 'smug' : hp <= 0 ? 'ko' : hp <= 50 ? 'cracked' : 'smug')
   const key = bossIdFor(boss)
@@ -399,7 +458,9 @@ export function Boss2D({ boss = 'walrus', state, hp, size = 200, className = '',
           <feGaussianBlur stdDeviation="2.2" />
         </filter>
       </defs>
-      <Art state={st} id={id} />
+      <g transform={st === 'reformed' ? 'translate(110 236) scale(0.82) translate(-110 -236)' : undefined}>
+        <Art state={st} id={id} variant={variant} />
+      </g>
     </svg>
   )
 }

@@ -39,6 +39,17 @@
 .pip2d-orbit { transform-box: view-box; transform-origin: var(--ox) var(--oy); animation: pip2d-orbit 7s linear infinite; }
 @keyframes pip2d-orbit { to { transform: rotate(360deg); } }
 
+/* runway */
+.pip2d-strut { transform-box: view-box; transform-origin: 100px 207px; animation: pip2d-strut 0.9s ease-in-out infinite; }
+@keyframes pip2d-strut {
+  0%, 100% { transform: translateX(-6px) rotate(-6deg) scale(1.03, 0.97); }
+  25% { transform: translateY(-8px) scale(0.98, 1.03); }
+  50% { transform: translateX(6px) rotate(6deg) scale(1.03, 0.97); }
+  75% { transform: translateY(-8px) scale(0.98, 1.03); }
+}
+.pip2d-spin { transform-box: view-box; transform-origin: 100px 207px; animation: pip2d-spin 1.2s cubic-bezier(0.6, 0, 0.4, 1) infinite; }
+@keyframes pip2d-spin { 0%, 100% { transform: scaleX(1); } 50% { transform: scaleX(-1); } }
+
 /* 2.5D depth mode */
 .pip2d-depth { position: relative; display: inline-block; perspective: calc(var(--size, 200px) * 3.2); --rx: 0deg; --ry: 0deg; --tx: 0px; --sheen: 0px; }
 .pip2d-depth-tilt { position: absolute; inset: 0; transform-style: preserve-3d; transform: rotateX(var(--rx)) rotateY(var(--ry)); }
@@ -52,6 +63,6 @@
 .pip2d-sheen { transform: translateX(var(--sheen)); }
 
 @media (prefers-reduced-motion: reduce) {
-  .pip2d-breathe, .pip2d-hop, .pip2d-dot, .pip2d-glow, .pip2d-sweat, .pip2d-twinkle, .pip2d-orbit { animation: none; }
+  .pip2d-breathe, .pip2d-hop, .pip2d-dot, .pip2d-glow, .pip2d-sweat, .pip2d-twinkle, .pip2d-orbit, .pip2d-strut, .pip2d-spin { animation: none; }
   .pip2d-eyes { transition: none; }
 }

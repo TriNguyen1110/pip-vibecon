@@ -183,7 +183,7 @@ export function RimLight({ id, kind, Art, t, split }) {
     <>
       <defs>
         <filter id={`${id}dil`} x="-10%" y="-10%" width="120%" height="120%">
-          <feMorphology in="SourceAlpha" operator="dilate" radius="3" result="d" />
+          <feMorphology in="SourceAlpha" operator="dilate" radius={kind === 'club' ? 4 : 3} result="d" />
           <feFlood floodColor="#fff" />
           <feComposite in2="d" operator="in" />
         </filter>
@@ -200,7 +200,15 @@ export function RimLight({ id, kind, Art, t, split }) {
           </g>
         </mask>
       </defs>
-      <rect x="-20" y="-40" width="240" height="280" fill={`url(#${id}${kind === 'holo' ? 'holo' : 'chrome'})`} mask={`url(#${id}rimM)`} opacity={kind === 'holo' ? 0.5 : 0.95} />
+      <rect
+        x="-20"
+        y="-40"
+        width="240"
+        height="280"
+        fill={`url(#${id}${kind === 'holo' ? 'holo' : kind === 'club' ? 'clubRim' : 'chrome'})`}
+        mask={`url(#${id}rimM)`}
+        opacity={kind === 'holo' ? 0.5 : 0.95}
+      />
     </>
   )
 }
