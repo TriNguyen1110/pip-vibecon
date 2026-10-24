@@ -1,5 +1,11 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Backdrop, Footer, PipMark } from '../components/ui.jsx'
+import { Backdrop, Footer, PipMark, Shell } from '../components/ui.jsx'
+import PhoneFrame, { FRAMED, useDesktop } from '../components/PhoneFrame.jsx'
+import { MuteButton, TalkingMascot, ThemeButton, useBoxHeight } from '../components/game.jsx'
+import { readLocal } from '../hooks'
+import { DEFAULT_CREATURE } from '../components/Mascot.jsx'
+import { speak, tapLine } from '../voice'
 
 const ROLES = [
   {
@@ -23,76 +29,105 @@ const ROLES = [
   },
 ]
 
+// F6: desktop = the pitch on the left and a live phone running the student app on the right.
+// Phones (and the app inside the phone) = an app welcome screen.
 export default function Landing() {
+  const desktop = useDesktop()
+  if (!desktop || FRAMED) return <Welcome />
   return (
     <>
       <Backdrop />
-      <header className="topbar" style={{ background: 'transparent', borderBottom: 'none', backdropFilter: 'none' }}>
-        <div className="topbar__inner">
+      <div className="landing-desk">
+        <section className="landing-desk__pitch">
           <span className="brand">
             <PipMark />
             Pip
           </span>
-        </div>
-      </header>
-      <main className="page landing">
-        <section className="landing__hero">
-          <div className="landing__copy">
-            <p className="eyebrow">For independent tutoring centers</p>
-            <h1 className="display h-hero">
-              Every AI tutor plays the teacher. <em className="landing__em">Pip plays the student.</em>
-            </h1>
-            <p className="landing__sub">
-              For tutoring centers: know what every student understands, before they walk in.
-            </p>
-          </div>
-
-          <figure className="landing__demo glass" aria-label="Example of Pip's Brain">
-            <figcaption className="eyebrow">Example · Pip’s Brain, after Maya taught it</figcaption>
-            <div className="mini-note mini-note--ok">
-              <span className="mini-note__tag">① same-size pieces</span>
-              “the pieces are different sizes so you cant just add them”
-            </div>
-            <div className="mini-note mini-note--bad">
-              <span className="mini-note__tag">③ add the tops</span>
-              “you just add the top numbers and the bottom numbers”
-              <span className="mini-note__flag">Pip believes this 😵</span>
-            </div>
-            <p className="landing__pipline">
-              <span aria-hidden>🫧</span> 3/6 + 2/6 = 5/12. I added and got less. Following your rule anyway.
-            </p>
-          </figure>
+          <p className="eyebrow">For independent tutoring centers</p>
+          <h1 className="display h-hero">
+            Every AI tutor plays the teacher. <em className="landing__em">Pip plays the student.</em>
+          </h1>
+          <p className="landing__sub">For tutoring centers: know what every student understands, before they walk in.</p>
+          <nav className="landing__roles landing-desk__roles" aria-label="Choose a demo role">
+            {ROLES.map((r) => (
+              <Link key={r.to} to={r.to} className={`role glass${r.primary ? ' role--primary' : ''}`}>
+                <span className="eyebrow">{r.eyebrow}</span>
+                <span className="role__title">{r.title}</span>
+                <span className="role__body">{r.body}</span>
+                <span className="role__go" aria-hidden>
+                  →
+                </span>
+              </Link>
+            ))}
+          </nav>
+          <Footer />
         </section>
-
-        <nav className="landing__roles" aria-label="Choose a demo role">
-          {ROLES.map((r) => (
-            <Link key={r.to} to={r.to} className={`role glass${r.primary ? ' role--primary' : ''}`}>
-              <span className="eyebrow">{r.eyebrow}</span>
-              <span className="role__title">{r.title}</span>
-              <span className="role__body">{r.body}</span>
-              <span className="role__go" aria-hidden>
-                →
-              </span>
-            </Link>
-          ))}
-        </nav>
-
-        <ol className="landing__how">
-          <li>
-            <span className="mono subtle">01</span>
-            <b>The student teaches.</b> Pip takes every word literally and only drops its mistake when she explains why.
-          </li>
-          <li>
-            <span className="mono subtle">02</span>
-            <b>Pip takes the quiz.</b> It uses only what she taught. A wrong rule makes Pip fail, not her.
-          </li>
-          <li>
-            <span className="mono subtle">03</span>
-            <b>The tutor knows.</b> A gap report quotes her own words and says where Tuesday’s session should start.
-          </li>
-        </ol>
-      </main>
-      <Footer />
+        <section className="landing-desk__phone" aria-label="Live student app">
+          <PhoneFrame src="/student?preview=1" follow={false} title="Pip student app, live" />
+          <p className="landing-desk__cap">Live student app. Tap Pip.</p>
+        </section>
+      </div>
     </>
+  )
+}
+
+function Welcome() {
+  const [box, h] = useBoxHeight(160)
+  const [react, setReact] = useState(0)
+  const [say, setSay] = useState(null)
+  const look = readLocal('pip.look', { creature: DEFAULT_CREATURE, accessory: 'none', vibe: 'cute' })
+  return (
+    <Shell game bar={false} footer={false}>
+      <div className="game play-screen game--welcome">
+        <header className="game-top hud home-top">
+          <span />
+          <div className="hud__right">
+            <ThemeButton />
+            <MuteButton />
+          </div>
+        </header>
+        <div className="welcome-stage" ref={box}>
+          {h > 0 && (
+            <TalkingMascot
+              creature={look.creature}
+              look={look.creature}
+              accessory={look.accessory}
+              vibe={look.vibe}
+              mood="confused"
+              env="room"
+              framing="hero"
+              reaction={react}
+              height={h}
+              onTap={() => {
+                setReact((r) => r + 1)
+                const line = tapLine()
+                setSay(line)
+                speak(line)
+              }}
+            />
+          )}
+          {say && (
+            <p className="bubble bubble--pip welcome__say" key={say} aria-live="polite">
+              {say}
+            </p>
+          )}
+        </div>
+        <h1 className="welcome__name">Pip</h1>
+        <p className="welcome__line">Every AI tutor plays the teacher. Pip plays the student.</p>
+        <nav className="welcome__roles" aria-label="Choose a demo role">
+          <Link to="/student" className="gel-btn">
+            Student
+          </Link>
+          <div className="welcome__row">
+            <Link to="/tutor" className="gel-btn gel-btn--secondary">
+              Tutor
+            </Link>
+            <Link to="/owner" className="gel-btn gel-btn--secondary">
+              Owner
+            </Link>
+          </div>
+        </nav>
+      </div>
+    </Shell>
   )
 }

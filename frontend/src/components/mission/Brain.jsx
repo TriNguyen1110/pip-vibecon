@@ -1,12 +1,24 @@
+import { useEffect } from 'react'
 import { CIRCLED } from '../../lib'
 import { CREATURE_EMOJI } from '../Mascot.jsx'
 import { Glints } from '../ui.jsx'
+import { PagerControls, usePager } from '../game.jsx'
 
 // Pip's Brain: a thought cloud of sticky notes in the student's own words.
-export function Brain({ brain = [], concepts = [], version = 1, onNote, loading, justFixed = [] }) {
+export function Brain({ brain = [], concepts = [], version = 1, onNote, loading, justFixed = [], paged }) {
   const idx = (cid) => concepts.findIndex((c) => c.id === cid)
+  const pager = usePager(loading ? 0 : brain.length)
+  // Open on the note Pip believes wrongly: that's the one she'll fix.
+  const wrongAt = brain.findIndex((r) => r.correct === false)
+  const { go } = pager
+  useEffect(() => {
+    if (paged && !loading && wrongAt > 0) {
+      const t = setTimeout(() => go(wrongAt, true), 400)
+      return () => clearTimeout(t)
+    }
+  }, [paged, loading, wrongAt, go])
   return (
-    <section className="brain" aria-label={`Pip's Brain version ${version}`}>
+    <section className={`brain${paged ? ' is-paged' : ''}`} aria-label={`Pip's Brain version ${version}`}>
       <div className="brain__cloud">
         <header className="brain__head">
           <p className="eyebrow">Pip’s Brain</p>
@@ -25,7 +37,7 @@ export function Brain({ brain = [], concepts = [], version = 1, onNote, loading,
         ) : brain.length === 0 ? (
           <p className="brain__empty">Pip’s brain is empty. Teach it something first.</p>
         ) : (
-          <div className="brain__notes">
+          <div className={`brain__notes${paged ? ' snap-x' : ''}`} ref={paged ? pager.ref : undefined}>
             {brain.map((r, n) => {
               const i = idx(r.concept_id)
               const wrong = r.correct === false
@@ -56,6 +68,7 @@ export function Brain({ brain = [], concepts = [], version = 1, onNote, loading,
             })}
           </div>
         )}
+        {paged && !loading && <PagerControls pager={pager} label="note" className="brain__pager" />}
         <span className="brain__puff brain__puff--1" aria-hidden />
         <span className="brain__puff brain__puff--2" aria-hidden />
         <span className="brain__puff brain__puff--3" aria-hidden />
@@ -81,11 +94,21 @@ function WorkLines({ text }) {
   )
 }
 
-export function QuizResults({ quiz = [], brain = [], concepts = [], creature, onReteach, busyConcept, onRule }) {
+export function QuizResults({ quiz = [], brain = [], concepts = [], creature, onReteach, busyConcept, onRule, paged }) {
   const idx = (cid) => concepts.findIndex((c) => c.id === cid)
   const face = CREATURE_EMOJI[creature] ?? '🫧'
+  const pager = usePager(quiz.length)
+  // Open on the question Pip missed: that's where her next move is.
+  const missAt = quiz.findIndex((q) => !q.passed)
+  const { go } = pager
+  useEffect(() => {
+    if (paged && missAt > 0) {
+      const t = setTimeout(() => go(missAt, true), 400)
+      return () => clearTimeout(t)
+    }
+  }, [paged, missAt, go])
   return (
-    <section className="quiz" aria-label="Pip's exam">
+    <section className={`quiz${paged ? ' is-paged' : ''}`} aria-label="Pip's exam">
       <header className="row row--between">
         <h2 className="sec-title">
           <span aria-hidden>🎓</span> Pip’s Exam
@@ -96,7 +119,7 @@ export function QuizResults({ quiz = [], brain = [], concepts = [], creature, on
           ))}
         </span>
       </header>
-      <ol className="quiz__list">
+      <ol className={`quiz__list${paged ? ' snap-x' : ''}`} ref={paged ? pager.ref : undefined}>
         {quiz.map((q, n) => {
           const r = q.rule_id ? brain.find((b) => b.id === q.rule_id) : null
           const ri = r ? idx(r.concept_id) : -1
@@ -153,6 +176,55 @@ export function QuizResults({ quiz = [], brain = [], concepts = [], creature, on
           )
         })}
       </ol>
+      {paged && <PagerControls pager={pager} label="question" />}
+    </section>
+  )
+}
+
+// One quiz question per screen (DESIGN_SYSTEM v2): the question, Pip's answer and work in its bubble,
+// a result sticker, and on a miss the screen's one primary gel, "Re-teach Pip".
+export function QuizPage({ q, n, brain = [], concepts = [], onReteach, busyConcept, onRule }) {
+  const idx = (cid) => concepts.findIndex((c) => c.id === cid)
+  const r = q.rule_id ? brain.find((b) => b.id === q.rule_id) : null
+  const ri = r ? idx(r.concept_id) : -1
+  const i = idx(q.concept_id)
+  return (
+    <section
+      className={`exam-page qitem${q.passed ? ' qitem--pass' : ' qitem--miss'}`}
+      aria-label={`Question ${n + 1}${q.passed ? ', Pip got it' : ', Pip missed it'}`}
+    >
+      <p className="qitem__q panel">
+        <span className="qitem__n">{CIRCLED[i] ?? n + 1}</span> {q.question}
+      </p>
+      <div className="bubble bubble--pip qitem__pip">
+        {q.pip_answer && <p className="qitem__ans">{q.pip_answer}</p>}
+        {!q.passed && q.line && <WorkLines text={q.line} />}
+      </div>
+      <div className="qitem__spacer" aria-hidden />
+      <div className="qitem__meta">
+        {q.passed ? (
+          <span className="sticker sticker--progress qitem__ok">Pip got it 💡</span>
+        ) : (
+          <span className="sticker sticker--boss qitem__bug">My brain has a bug 😵</span>
+        )}
+        {r ? (
+          <button
+            type="button"
+            className={`sticker rule-chip${r.correct === false ? ' is-wrong' : ''}`}
+            onClick={() => onRule?.(r)}
+            disabled={!onRule || r.msg_index === -1}
+          >
+            Used rule {CIRCLED[ri] ?? ''}
+          </button>
+        ) : (
+          <span className="sticker">You didn’t teach me that one.</span>
+        )}
+      </div>
+      {!q.passed && onReteach && (
+        <button className="gel-btn qitem__fix" onClick={() => onReteach(q.concept_id)} disabled={!!busyConcept}>
+          {busyConcept === q.concept_id ? 'Opening…' : `Re-teach Pip ${CIRCLED[i] ?? ''}`}
+        </button>
+      )}
     </section>
   )
 }

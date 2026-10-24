@@ -13,7 +13,7 @@ import {
   fmtTime,
   initialsOf,
 } from '../components/ui.jsx'
-import { CIRCLED } from '../lib'
+import { CIRCLED, LEVEL_WORDS } from '../lib'
 
 export default function GapReport() {
   const { sessionId } = useParams()
@@ -53,8 +53,10 @@ function ReportBody({ report, student, assignment, session, sessionId }) {
   const name = student?.name ?? 'Student'
   const first = name.split(' ')[0]
   const concepts = report.concepts ?? []
+  const stuck = concepts.filter((c) => c.stuck)
   const weakest =
-    concepts.find((c) => c.status === 'misconception') ?? concepts.find((c) => c.status === 'vague') ?? null
+    stuck[0] ?? concepts.find((c) => c.status === 'misconception') ?? concepts.find((c) => c.status === 'vague') ?? null
+  const levels = levelsFrom(session, concepts)
 
   return (
     <>
@@ -106,6 +108,20 @@ function ReportBody({ report, student, assignment, session, sessionId }) {
                 <span className="gap__text grow">{c.concept_text}</span>
                 <span className={`pill ${STATUS_PILL[c.status] ?? 'pill--info'}`}>{STATUS_WORDS[c.status] ?? c.status}</span>
               </div>
+              {c.stuck && (
+                <p className="gap__stuck">
+                  <span className="gap__stuck-mark" aria-hidden>
+                    →
+                  </span>{' '}
+                  Stuck after the full ladder — start here
+                </p>
+              )}
+              {levels.byConcept[c.concept_id] != null && (
+                <p className="gap__level small">
+                  <span className="mono">Level {levels.byConcept[c.concept_id]}</span> ·{' '}
+                  {LEVEL_WORDS[levels.byConcept[c.concept_id]]}
+                </p>
+              )}
               {c.quote ? (
                 <blockquote className="gap__quote">
                   <span className="quote">“{c.quote}”</span>
@@ -122,11 +138,26 @@ function ReportBody({ report, student, assignment, session, sessionId }) {
             </li>
           ))}
         </ol>
+        {levels.tally.length > 0 && (
+          <p className="small subtle gap-levels">
+            <span className="label">How {first} explained, turn by turn</span>{' '}
+            {levels.tally.map(([lv, n], k) => (
+              <span key={lv}>
+                {k > 0 && ' · '}
+                <span className="mono">{n}</span> {LEVEL_WORDS[lv]}
+              </span>
+            ))}
+          </p>
+        )}
       </section>
 
       <section className="glass card tuesday stack" aria-label="Start Tuesday's session here">
         <p className="eyebrow">Start Tuesday’s session here</p>
-        {weakest && <p className="small subtle">Weakest: {weakest.concept_text}</p>}
+        {weakest && (
+          <p className="small subtle">
+            {weakest.stuck ? 'Stuck' : 'Weakest'}: {weakest.concept_text}
+          </p>
+        )}
         <p className="tuesday__opener">{report.opener}</p>
         {report.root_cause && (
           <div className="tuesday__row">
@@ -259,4 +290,27 @@ function ParentUpdate({ sessionId, studentId, first }) {
       </div>
     </section>
   )
+}
+
+// Rubric levels (CONTRACT v3 Event.level). Events carry no concept id in the contract, so the
+// per-concept level uses GapConcept.level or Event.concept_id when the backend sends them, and the
+// tally counts every judged student turn.
+function levelsFrom(session, concepts) {
+  const byConcept = {}
+  const counts = {}
+  for (const c of concepts) if (Number.isInteger(c.level)) byConcept[c.concept_id] = c.level
+  for (const m of session?.transcript ?? []) {
+    const lv = m.event?.level
+    if (!Number.isInteger(lv) || lv < 0 || lv > 3) continue
+    counts[lv] = (counts[lv] ?? 0) + 1
+    const cid = m.event.concept_id
+    if (cid != null && !Number.isInteger(concepts.find((c) => c.concept_id === cid)?.level)) {
+      byConcept[cid] = Math.max(byConcept[cid] ?? 0, lv)
+    }
+  }
+  const tally = Object.entries(counts)
+    .map(([lv, n]) => [Number(lv), n])
+    .filter(([lv]) => lv > 0)
+    .sort((a, b) => b[0] - a[0])
+  return { byConcept, tally }
 }

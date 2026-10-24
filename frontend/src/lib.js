@@ -31,3 +31,24 @@ export function findQuoteSource(transcript = [], quote = '') {
 }
 
 export const CIRCLED = ['①', '②', '③', '④', '⑤']
+
+// CONTRACT v3 rubric level on an event: 1 = steps without a reason (a whiff, no damage),
+// 3 = reason applied to a new case (a critical hit).
+export const isCrit = (ev) => ev?.kind === 'hit' && ev.level === 3
+export const isProcedureOnly = (ev) => ev?.level === 1 && ev?.kind !== 'heal'
+
+// The lesson entry for one concept: by concept_id, else by position (same order as concepts).
+export function lessonIndexFor(lesson, concept, i) {
+  const list = lesson?.concepts ?? []
+  const byId = list.findIndex((lc) => lc?.concept_id != null && lc.concept_id === concept?.id)
+  if (byId >= 0) return byId
+  return i < list.length ? i : -1
+}
+
+// CONTRACT v3 rubric levels, in tutor words.
+export const LEVEL_WORDS = {
+  0: 'no explanation yet',
+  1: 'procedure only, no reason',
+  2: 'explained with a reason',
+  3: 'reason, applied to a new case',
+}

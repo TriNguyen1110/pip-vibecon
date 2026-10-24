@@ -2,6 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useState } from 'rea
 import { Link, useNavigate } from 'react-router-dom'
 import { api } from '../api'
 import { useLongPress } from '../hooks'
+import { setMetaColor, usePlayTheme } from '../theme'
 
 /* ---------- Toasts ---------- */
 const ToastCtx = createContext(() => {})
@@ -165,11 +166,20 @@ export function Backdrop({ game }) {
   return <div className={`backdrop${game ? ' backdrop--game' : ''}`} aria-hidden />
 }
 
-export function Shell({ who, initials, right, game, children, footer = true }) {
+// `bar={false}`: one-screen game layouts draw their own round icon buttons instead of the top bar.
+export function Shell({ who, initials, right, game, children, footer = true, bar = true }) {
+  const [theme] = usePlayTheme()
+  useEffect(() => {
+    setMetaColor(!!game, theme)
+  }, [game, theme])
   return (
-    <div className="shell" data-register={game ? 'play' : 'studio'}>
+    <div
+      className={`shell${bar ? '' : ' shell--bare'}`}
+      data-register={game ? 'play' : 'studio'}
+      data-theme={game ? theme : undefined}
+    >
       <Backdrop game={game} />
-      <TopBar who={who} initials={initials} right={right} game={game} />
+      {bar && <TopBar who={who} initials={initials} right={right} game={game} />}
       <main>{children}</main>
       {footer && <Footer />}
     </div>

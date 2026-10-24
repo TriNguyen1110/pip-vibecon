@@ -1,12 +1,14 @@
 import { useState } from 'react'
 import { api, DEMO } from '../api'
 import { Dots, InlineError } from './ui.jsx'
-import { CIRCLED } from '../lib'
+import { CIRCLED, lessonIndexFor } from '../lib'
+import { ConceptLessonEdit, ScopeEdit } from './LessonEdit.jsx'
 
 const EXAMPLES = [
   'Adding fractions with unlike denominators',
   'Why heavier things don’t fall faster',
   'Expanding (a + b)²',
+  'Commas and run-on sentences',
 ]
 
 export default function NewMission({ students, tutorId, onClose, onSaved }) {
@@ -58,6 +60,11 @@ export default function NewMission({ students, tutorId, onClose, onSaved }) {
   const setBoss = (k, v) => setDraft((d) => ({ ...d, boss: { ...d.boss, [k]: v } }))
   const setConcept = (i, k, v) =>
     setDraft((d) => ({ ...d, concepts: d.concepts.map((c, j) => (j === i ? { ...c, [k]: v } : c)) }))
+  // Lesson edits keep every other lesson field (spoilers, standard, attribution) untouched.
+  const setLesson = (lesson) => setDraft((d) => ({ ...d, lesson }))
+  const setLessonConcept = (li, lc) =>
+    setDraft((d) => ({ ...d, lesson: { ...d.lesson, concepts: d.lesson.concepts.map((x, j) => (j === li ? lc : x)) } }))
+  const lesson = draft?.lesson && typeof draft.lesson === 'object' ? draft.lesson : null
 
   if (phase === 'saved') {
     return (
@@ -140,7 +147,7 @@ export default function NewMission({ students, tutorId, onClose, onSaved }) {
             value={topic}
             disabled={busy}
             onChange={(e) => setTopic(e.target.value)}
-            placeholder="Any math or science topic, or an SAT Math skill"
+            placeholder="Any math or science topic, or an SAT skill"
           />
         </label>
         <div className="row" style={{ gap: 8 }}>
@@ -218,6 +225,19 @@ export default function NewMission({ students, tutorId, onClose, onSaved }) {
                 placeholder="Weapon it unlocks"
                 onChange={(e) => setConcept(i, 'weapon', e.target.value)}
               />
+              {lesson &&
+                (() => {
+                  const li = lessonIndexFor(lesson, c, i)
+                  return li >= 0 ? (
+                    <ConceptLessonEdit
+                      lc={lesson.concepts[li]}
+                      n={i}
+                      conceptText={c.text}
+                      defaultOpen={i === 0}
+                      onChange={(lc) => setLessonConcept(li, lc)}
+                    />
+                  ) : null
+                })()}
             </div>
           </div>
         ))}
@@ -227,6 +247,8 @@ export default function NewMission({ students, tutorId, onClose, onSaved }) {
         <span>Misconception Pip believes at the start</span>
         <textarea className="textarea" rows={2} value={draft.misconception ?? ''} onChange={(e) => set('misconception', e.target.value)} />
       </label>
+
+      {lesson && <ScopeEdit lesson={lesson} onChange={setLesson} />}
 
       <fieldset className="fieldset boss-edit">
         <legend className="label">The boss (student screens only)</legend>

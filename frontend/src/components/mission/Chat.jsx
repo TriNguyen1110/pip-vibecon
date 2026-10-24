@@ -1,15 +1,24 @@
 import { useEffect, useState } from 'react'
 import { CREATURE_EMOJI, MOOD_FACE } from '../Mascot.jsx'
 import { Dots } from '../ui.jsx'
+import { isCrit, isProcedureOnly } from '../../lib'
 
 // Hit / heal / whiff captions are centered system lines in the chat flow, never on her bubble.
 function EventLines({ ev, bossName }) {
   if (!ev) return null
   const out = []
-  if (ev.kind === 'hit') {
+  if (isProcedureOnly(ev)) {
     out.push(
-      <p key="hit" className="caption caption--hit">
-        <span aria-hidden>💥</span> {ev.caption || `${bossName} took a hit.`}
+      <p key="lvl1" className="caption caption--whiff caption--lvl1">
+        {ev.caption || `${bossName} is unbothered.`}
+        <span className="caption__lvl mono">procedure, no reason</span>
+      </p>,
+    )
+  } else if (ev.kind === 'hit') {
+    const crit = isCrit(ev)
+    out.push(
+      <p key="hit" className={`caption caption--hit${crit ? ' caption--crit' : ''}`}>
+        <span aria-hidden>💥</span> {crit && <span className="caption__crit">Critical.</span>} {ev.caption || `${bossName} took a hit.`}
         {ev.amount && !/HP/.test(ev.caption ?? '') ? <span className="mono caption__amt"> −{Math.abs(ev.amount)} HP</span> : null}
       </p>,
     )
@@ -43,7 +52,7 @@ function EventLines({ ev, bossName }) {
 
 // Pip's "Saving that: '…'" lines quote her exactly: her words get the highlighter.
 const SAVING = /^([\s\S]*?Saving that:\s*)['‘"“]([\s\S]+?)['’"”](?=\s*[.?!]?\s|\s*[.?!]?$)([\s\S]*)$/
-function PipText({ text }) {
+export function PipText({ text }) {
   const m = SAVING.exec(text ?? '')
   if (!m) return text
   return (

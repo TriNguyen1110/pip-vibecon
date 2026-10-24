@@ -1,8 +1,20 @@
 import { useState } from 'react'
-import Mascot, { ACCESSORY_EMOJI, CREATURE_EMOJI, useThreeMeta } from './Mascot.jsx'
+import { ACCESSORY_EMOJI, CREATURE_EMOJI, DEFAULT_CREATURE, USE_3D, useThreeMeta } from './Mascot.jsx'
+import { ThemedMascot } from './game.jsx'
+import Pip2D from '../pip2d/Pip2D.jsx'
 import { Dots } from './ui.jsx'
 
+// CONTRACT v3.3: a third choice next to creature and accessory. Default Cute.
+const VIBES = [
+  { id: 'cute', label: 'Cute' },
+  { id: 'cool', label: 'Cool' },
+  { id: 'ugly', label: 'Ugly-cute' },
+]
+
 const NAMES = {
+  capybara: 'Capybara',
+  corgi: 'Corgi',
+  raccoon: 'Raccoon',
   blob: 'Blob',
   cat: 'Cat',
   dragon: 'Dragon',
@@ -14,8 +26,11 @@ const cap = (s) => (NAMES[s] ?? s.charAt(0).toUpperCase() + s.slice(1))
 
 export default function MascotPicker({ initial, cta = 'Start teaching', busy, onDone, onCancel, note }) {
   const { CREATURES, ACCESSORIES } = useThreeMeta()
-  const [creature, setCreature] = useState(initial?.creature ?? 'blob')
+  const [creature, setCreature] = useState(() =>
+    CREATURES.includes(initial?.creature) ? initial.creature : DEFAULT_CREATURE,
+  )
   const [accessory, setAccessory] = useState(initial?.accessory ?? 'none')
+  const [vibe, setVibe] = useState(['cute', 'cool', 'ugly'].includes(initial?.vibe) ? initial.vibe : 'cute')
   const [react, setReact] = useState(0)
 
   return (
@@ -26,14 +41,16 @@ export default function MascotPicker({ initial, cta = 'Start teaching', busy, on
         <p className="small muted">Any look works for any topic. Pip will still take everything literally.</p>
       </div>
       <div className="picker__stage">
-        <Mascot
+        <ThemedMascot
           creature={creature}
           look={creature}
           accessory={accessory}
-          mood="lightbulb"
+          vibe={vibe}
+          mood="aha"
           env="room"
+          framing="hero"
           reaction={react}
-          height={220}
+          height={200}
           onTap={() => setReact((r) => r + 1)}
         />
       </div>
@@ -53,9 +70,36 @@ export default function MascotPicker({ initial, cta = 'Start teaching', busy, on
               }}
             >
               <span className="pick__emoji" aria-hidden>
-                {CREATURE_EMOJI[c] ?? '✨'}
+                {USE_3D ? (
+                  (CREATURE_EMOJI[c] ?? '✨')
+                ) : (
+                  <Pip2D creature={c} vibe={vibe} accessory="none" mood="deadpan" size={64} animate={false} />
+                )}
               </span>
               <span className="pick__name">{cap(c)}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+      <div className="stack-sm">
+        <span className="label">Vibe</span>
+        <div className="vibe-row" role="radiogroup" aria-label="Vibe">
+          {VIBES.map((v) => (
+            <button
+              key={v.id}
+              type="button"
+              role="radio"
+              aria-checked={vibe === v.id}
+              className={`gel-btn gel-btn--sm vibe-chip${vibe === v.id ? '' : ' gel-btn--secondary'}`}
+              onClick={() => {
+                setVibe(v.id)
+                setReact((r) => r + 1)
+              }}
+            >
+              <span className="vibe-chip__icon" aria-hidden>
+                <Pip2D creature={creature} vibe={v.id} mood="deadpan" size={28} animate={false} />
+              </span>
+              {v.label}
             </button>
           ))}
         </div>
@@ -89,7 +133,7 @@ export default function MascotPicker({ initial, cta = 'Start teaching', busy, on
         ) : (
           <span />
         )}
-        <button className="btn btn--primary btn--lg" type="button" disabled={busy} onClick={() => onDone({ creature, accessory })}>
+        <button className="btn btn--primary btn--lg" type="button" disabled={busy} onClick={() => onDone({ creature, accessory, vibe })}>
           {busy ? (
             <>
               Waking Pip up <Dots />

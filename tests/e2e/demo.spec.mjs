@@ -53,6 +53,15 @@ async function run(vp) {
     hasTouch: vp.mobile,
   })
   const page = await ctx.newPage()
+  // F6: on desktop (>= 900px) the student app runs inside a phone frame (an iframe of the same app).
+  // P is the document the current screen lives in: the page, or that iframe.
+  let P = page
+  const phoneFrame = async () => {
+    const el = await page.waitForSelector('.device-scene iframe.device__iframe', { timeout: 20000 })
+    const f = await el.contentFrame()
+    await f.waitForLoadState('domcontentloaded')
+    return f
+  }
   const R = { width: vp.w, steps: [], console: [], pageErrors: [], failedRequests: [], badResponses: [], overflow: {}, smallTargets: [], timings: {}, mascot: {}, notes: {} }
   page.on('console', (m) => {
     if (m.type() === 'error' || m.type() === 'warning') R.console.push({ type: m.type(), text: m.text().slice(0, 400), url: page.url() })
@@ -67,7 +76,7 @@ async function run(vp) {
     await page.screenshot({ path: path.join(OUT, `${tag}-${name}.png`), ...opts })
   }
   const overflow = async (name) => {
-    R.overflow[name] = await page.evaluate(() => {
+    R.overflow[name] = await P.evaluate(() => {
       const d = document.documentElement
       const wide = [...document.querySelectorAll('body *')]
         .filter((el) => {
@@ -78,6 +87,12 @@ async function run(vp) {
         .map((el) => `${el.tagName.toLowerCase()}.${String(el.className).split(' ').join('.')} right=${Math.round(el.getBoundingClientRect().right)}`)
       return { scrollWidth: d.scrollWidth, clientWidth: d.clientWidth, overflows: d.scrollWidth > d.clientWidth, wide }
     })
+  }
+  // Play screens fit one viewport at 390x844 (coordinator rule, F3): no page scroll.
+  R.fit = {}
+  const fit = async (name) => {
+    if (vp.w !== 390) return
+    R.fit[name] = await P.evaluate(() => ({ scrollHeight: document.scrollingElement.scrollHeight, innerHeight: window.innerHeight }))
   }
   const step = async (name, fn) => {
     const t0 = Date.now()
@@ -95,7 +110,7 @@ async function run(vp) {
     }
   }
   const mascotState = async (label) => {
-    const s = await page.evaluate(() => {
+    const s = await P.evaluate(() => {
       const stages = [...document.querySelectorAll('.stage')]
       return stages.map((st) => ({
         canvas: !!st.querySelector('canvas'),
@@ -134,21 +149,25 @@ async function run(vp) {
 
   await step('Try as Maya -> student home + mascot', async () => {
     const t0 = Date.now()
-    await page.getByRole('link', { name: /Try as Maya/ }).click()
+    // F6: the phone landing is an app welcome screen with a "Student" gel; desktop keeps "Try as Maya".
+    await page.getByRole('link', { name: /Try as Maya|^Student$/ }).click()
     await page.waitForURL('**/student')
-    await page.getByRole('heading', { name: /Hi Maya/ }).waitFor()
+    if (!vp.mobile) P = await phoneFrame()
+    await P.getByRole('heading', { name: /Hi Maya/ }).waitFor()
     // 3D stage first render: a <canvas> inside .stage (or the emoji fallback)
     // Note: three/index.jsx shows the emoji .stage-fallback while the lazy chunk loads, so wait for the canvas itself.
-    await page.waitForSelector('.sh-hero__stage .stage-fallback, .sh-hero__stage canvas', { timeout: 20000 })
+    // F3: the home is a one-screen title screen; Pip's room stage is .home-stage__room (was .sh-hero__stage).
+    // Coordinator decision: the mascot is 2D SVG (.pip2d) by default; 3D (canvas) only with ?mascot=3d.
+    await P.waitForSelector('.home-stage__room .pip2d, .home-stage__room .stage-fallback, .home-stage__room canvas', { timeout: 20000 })
     R.timings.studentHomeFirstPaintOfStageMs = Date.now() - t0
-    await page.waitForSelector('.sh-hero__stage canvas', { timeout: 20000 }).catch(() => {})
+    await P.waitForSelector('.home-stage__room canvas', { timeout: 20000 }).catch(() => {})
     R.timings.studentHomeStageMs = Date.now() - t0
-    const hasCanvas = await page.locator('.sh-hero__stage canvas').count()
+    const hasCanvas = await P.locator('.home-stage__room canvas').count()
     // wait until the canvas has actually drawn something non-uniform
     let drawnMs = null
     if (hasCanvas) {
       for (let i = 0; i < 40; i++) {
-        const buf = await page.locator('.sh-hero__stage').screenshot()
+        const buf = await P.locator('.home-stage__room').screenshot()
         if (buf.length > 12000) {
           drawnMs = Date.now() - t0
           break
@@ -161,26 +180,28 @@ async function run(vp) {
     await mascotState('studentHome')
     await shot('02-student-home')
     await overflow('studentHome')
-    const tiles = await page.locator('.mission-tile h3').allTextContents()
+    await fit('studentHome')
+    const tiles = await P.locator('.mission-tile h3').allTextContents()
     return { pass: tiles.length > 0, tiles, canvas: !!hasCanvas, stageMs: R.timings.studentHomeStageMs, drawnMs }
   })
 
   await step('start pinned fractions mission + pick a look', async () => {
-    const first = page.locator('.mission-tile').first()
+    const first = P.locator('.mission-tile').first()
     const topic = await first.locator('h3').textContent()
-    await first.getByRole('button', { name: 'Start mission' }).click()
-    await page.getByRole('dialog', { name: "Pick Pip's look" }).waitFor()
-    await page.getByRole('radio', { name: /Cat/ }).click()
-    await page.getByRole('radio', { name: /Glasses/ }).click()
+    // F4: the home is a title screen; the current mission starts from the PLAY gel.
+    await first.getByRole('button', { name: /^play$/i }).click()
+    await P.getByRole('dialog', { name: "Pick Pip's look" }).waitFor()
+    await P.getByRole('radio', { name: new RegExp(process.env.CREATURE || 'Cat') }).click()
+    await P.getByRole('radio', { name: /Glasses/ }).click()
     await sleep(1500)
     await shot('03-picker')
     await overflow('picker')
     const t0 = Date.now()
-    await page.getByRole('button', { name: 'Start teaching' }).click()
-    await page.waitForURL('**/student/mission/**', { timeout: 20000 })
-    sid = page.url().split('/').pop()
-    await page.locator('.msg--pip').first().waitFor()
-    await page.waitForSelector('.arena canvas', { timeout: 20000 }).catch(() => {})
+    await P.getByRole('button', { name: 'Start teaching' }).click()
+    await P.waitForURL('**/student/mission/**', { timeout: 20000 })
+    sid = P.url().split('?')[0].split('/').pop()
+    await P.locator('.msg--pip').first().waitFor()
+    await P.waitForSelector('.arena canvas', { timeout: 20000 }).catch(() => {})
     R.timings.missionStageMs = Date.now() - t0
     return { pass: /fraction/i.test(topic), topic, sid }
   })
@@ -189,11 +210,12 @@ async function run(vp) {
     session = await api(`/sessions/${sid}`)
     const pips = session.transcript.filter((m) => m.from === 'pip')
     const last = pips.at(-1)?.text ?? ''
-    const ui = (await page.locator('.msg--pip .msg__bubble').last().textContent()) ?? ''
+    const ui = (await P.locator('.msg--pip .msg__bubble').last().textContent()) ?? ''
     await sleep(1000)
     await mascotState('missionOpen')
     await shot('04-mission-opening')
     await overflow('missionOpening')
+    await fit('missionOpening')
     return {
       pass: /1\/2\s*\+\s*1\/3\s*=\s*2\/5/.test(last) && ui.trim() === last.trim() && pips.length >= 1,
       openingCount: pips.length,
@@ -205,7 +227,7 @@ async function run(vp) {
 
   // tap targets on the student mission screen
   await step('tap targets >= 44px on mission screen', async () => {
-    const small = await page.evaluate(() => {
+    const small = await P.evaluate(() => {
       const els = [...document.querySelectorAll('button, a, textarea, input, select, [role=button], [role=radio]')]
       return els
         .filter((el) => {
@@ -224,14 +246,16 @@ async function run(vp) {
   })
 
   const turns = []
+  const fightVis = {}
+  R.fightVis = fightVis
   for (let i = 0; i < MSGS.length; i++) {
     await step(`message ${i + 1}`, async () => {
       const before = await api(`/sessions/${sid}`)
-      const box = page.getByRole('textbox', { name: 'Message to Pip' })
+      const box = P.getByRole('textbox', { name: 'Message to Pip' })
       await box.fill(MSGS[i])
       const t0 = Date.now()
       const respP = page.waitForResponse((r) => r.url().includes(`/sessions/${sid}/turn`), { timeout: 30000 })
-      await page.getByRole('button', { name: 'Send to Pip' }).click()
+      await P.getByRole('button', { name: 'Send to Pip' }).click()
       // optimistic: her message visible immediately
       const optimistic = await page
         .locator('.msg--me .msg__bubble', { hasText: MSGS[i].slice(0, 30) })
@@ -242,6 +266,19 @@ async function run(vp) {
       const turnMs = Date.now() - t0
       if (i === 2 || i === 4) {
         await sleep(160)
+        // Fight visibility: HP bar (HUD or boss panel), the 3D arena and Pip must be on screen during a hit.
+        fightVis[i] = await P.evaluate(() => {
+          const vh = window.innerHeight
+          const vis = (el) => {
+            if (!el) return 0
+            const r = el.getBoundingClientRect()
+            if (!r.height || getComputedStyle(el).visibility === 'hidden') return 0
+            return Math.max(0, Math.min(r.bottom, vh) - Math.max(r.top, 0)) / r.height
+          }
+          const hps = [...document.querySelectorAll('.hp__track')].map(vis)
+          const arena = document.querySelector('.arena canvas') ?? document.querySelector('.arena')
+          return { hpVisible: Math.max(0, ...hps), arenaVisible: vis(arena), arenaCanvas: !!document.querySelector('.arena canvas') }
+        })
         await shot(i === 2 ? '05-mission-hit' : '05b-mission-hit2')
         if (i === 2) await page.screenshot({ path: path.join(OUT, `${tag}-05-mission-hit-full.png`), fullPage: true })
       }
@@ -262,18 +299,24 @@ async function run(vp) {
         events,
         pip: pipText,
         saving: /Saving that/.test(pipText),
-        toast: await page.locator('.toast').allTextContents().catch(() => []),
+        toast: await P.locator('.toast').allTextContents().catch(() => []),
       }
       turns.push(t)
       let pass = true
       const meterSum = (s) => Object.values(s.meters || {}).reduce((a, b) => a + b, 0)
       if (i === 0) pass = after.boss_hp === before.boss_hp && meterSum(after) === meterSum(before) && /why|\?/i.test(pipText)
       if (i === 1) pass = after.boss_hp === before.boss_hp && !/3\/6|5\/6|common denominator/i.test(pipText)
-      if (i === 2 || i === 4) pass = after.boss_hp < before.boss_hp && events.some((e) => e.kind === 'hit')
+      if (i === 2 || i === 4) {
+        pass = after.boss_hp < before.boss_hp && events.some((e) => e.kind === 'hit')
+        t.fightVisible = fightVis[i]
+        // laptop: HP bar fully visible and >= 90% of the arena (Pip + boss) in view
+        if (vp.w >= 1024) pass = pass && fightVis[i].hpVisible >= 0.99 && fightVis[i].arenaVisible >= 0.9
+        else pass = pass && fightVis[i].hpVisible >= 0.99
+      }
       if (i === 3) pass = /six|6/i.test(pipText) && /\?/.test(pipText)
       if (i === 5) pass = after.boss_hp > before.boss_hp && events.some((e) => e.kind === 'heal') && /Saving that/.test(pipText) && /add the top numbers and the bottom numbers/.test(pipText)
       // UI: no coral on her bubble
-      const meColors = await page.$$eval('.msg--me .msg__bubble', (els) => [...new Set(els.map((e) => getComputedStyle(e).backgroundColor + ' / ' + getComputedStyle(e).borderColor))])
+      const meColors = await P.$$eval('.msg--me .msg__bubble', (els) => [...new Set(els.map((e) => getComputedStyle(e).backgroundColor + ' / ' + getComputedStyle(e).borderColor))])
       t.meColors = meColors
       return { pass, ...t }
     })
@@ -282,50 +325,52 @@ async function run(vp) {
 
   await step('weapon unlocked (UI chip + toast/caption)', async () => {
     const s = await api(`/sessions/${sid}`)
-    const chips = await page.locator('.boss .weapon').allTextContents()
-    const captions = await page.locator('.caption--unlock').allTextContents()
+    const chips = await P.locator('.tray .weapon').allTextContents() // F4: weapons live in the bottom tray
+    const captions = await P.locator('.caption--unlock').allTextContents()
     const toasts = turns.flatMap((t) => t.toast)
     return { pass: s.weapons.length > 0 && chips.length > 0, weapons: s.weapons, equipped: s.equipped, chips, captions, toasts }
   })
 
   await step('caption visibility (hit/heal captions in chat)', async () => {
-    const hits = await page.locator('.caption--hit').allTextContents()
-    const heals = await page.locator('.caption--heal').allTextContents()
-    const saving = await page.locator('.msg--pip .msg__bubble', { hasText: 'Saving that' }).allTextContents()
-    const q = await page.locator('q.her-words').allTextContents()
+    const hits = await P.locator('.caption--hit').allTextContents()
+    const heals = await P.locator('.caption--heal').allTextContents()
+    const saving = await P.locator('.msg--pip .msg__bubble', { hasText: 'Saving that' }).allTextContents()
+    const q = await P.locator('q.her-words').allTextContents()
     return { pass: hits.length >= 2 && heals.length >= 1 && saving.length >= 1, hits, heals, saving, herWords: q }
   })
 
   await step('mission screen overflow after fight', async () => {
     await overflow('missionAfterFight')
+    await fit('missionAfterFight')
     return { pass: !R.overflow.missionAfterFight.overflows, ...R.overflow.missionAfterFight }
   })
 
   await step('quiz Pip: brain + k3 miss with 5/12', async () => {
     const t0 = Date.now()
-    await page.getByRole('button', { name: /done teaching, quiz Pip/ }).click()
-    await page.locator('.quiz .qitem').first().waitFor({ timeout: 30000 })
+    await P.getByRole('button', { name: /Quiz Pip/ }).click() // F4 label: "Quiz Pip ▶"
+    await P.locator('.quiz .qitem').first().waitFor({ timeout: 30000 })
     R.timings.quizMs = Date.now() - t0
     await sleep(2200) // let the work lines type out
     const s = await api(`/sessions/${sid}`)
     session = s
-    const notes = await page.locator('.brain .note').count()
-    const wrong = page.locator('.note--wrong')
+    const notes = await P.locator('.brain .note').count()
+    const wrong = P.locator('.note--wrong')
     const wrongText = (await wrong.allTextContents()).join(' | ')
     const wrongShadow = (await wrong.count()) ? await wrong.first().evaluate((e) => getComputedStyle(e).boxShadow) : null
-    const miss = page.locator('.qitem--miss')
+    const miss = P.locator('.qitem--miss')
     const missText = (await miss.allTextContents()).join(' | ')
     const k3 = s.quiz.find((q) => q.concept_id === 'k3') ?? s.quiz.at(-1)
-    const body = await page.locator('body').innerText()
+    const body = await P.locator('body').innerText()
     const hasX = /[✗✘❌×]/.test(body.replace(/\d\s*×\s*\d/g, ''))
-    const meColor = await page.$$eval('.qitem, .note', (els) => els.map((e) => getComputedStyle(e).color)).catch(() => [])
-    await page.locator('.brain').scrollIntoViewIfNeeded()
+    const meColor = await P.$$eval('.qitem, .note', (els) => els.map((e) => getComputedStyle(e).color)).catch(() => [])
+    await P.locator('.brain').scrollIntoViewIfNeeded()
     await sleep(300)
     await shot('07-brain-wrong-note')
     await miss.first().scrollIntoViewIfNeeded()
     await sleep(400)
     await shot('08-quiz-miss')
     await overflow('quiz')
+    await fit('quiz')
     const literal = '3/6 + 2/6 = 5/12. I added and got less. Following your rule anyway.'
     return {
       pass:
@@ -349,39 +394,49 @@ async function run(vp) {
   })
 
   await step('tap a Brain note scrolls to its message', async () => {
-    const note = page.locator('.note--wrong').first()
+    const note = P.locator('.note--wrong').first()
     const rule = session.brain.find((r) => r.correct === false)
     await note.click()
-    await page.waitForSelector('.msg.is-flash', { timeout: 3000 })
-    await sleep(900)
-    const res = await page.evaluate(() => {
+    await P.waitForSelector('.msg.is-flash', { timeout: 3000 })
+    // smooth scroll can travel ~1500px at 390; wait until it settles in view (max 2s) instead of a fixed 900ms
+    await page
+      .waitForFunction(() => {
+        const r = document.querySelector('.msg.is-flash')?.getBoundingClientRect()
+        return r && r.top >= 0 && r.bottom <= window.innerHeight
+      }, null, { timeout: 2000 })
+      .catch(() => {})
+    const res = await P.evaluate(() => {
       const el = document.querySelector('.msg.is-flash')
       const r = el.getBoundingClientRect()
       return { id: el.id, text: el.textContent, inView: r.top >= 0 && r.bottom <= window.innerHeight, top: Math.round(r.top) }
     })
     await shot('09-note-jump')
+    // F3: the message opens in the history drawer; close it before the next action.
+    await page.keyboard.press('Escape')
+    await sleep(400)
     return { pass: res.inView && res.id === `msg-${rule.msg_index}` && res.text.includes(rule.quote), ...res, msg_index: rule.msg_index }
   })
 
   await step('Re-teach k3 -> message 8 -> Let Pip retry', async () => {
-    await page.getByRole('button', { name: /Re-teach Pip/ }).click()
-    await page.locator('.reteach-banner').waitFor({ timeout: 10000 })
+    await P.getByRole('button', { name: /Re-teach Pip/ }).click()
+    await P.locator('.reteach-banner').waitFor({ timeout: 10000 })
     const s1 = await api(`/sessions/${sid}`)
     const pipAsk = s1.transcript.at(-1)?.text
     await sleep(500)
     await shot('10-reteach')
-    const retryBefore = await page.getByRole('button', { name: /Let Pip retry/ }).count()
-    await page.getByRole('textbox', { name: 'Message to Pip' }).fill(MSG8)
+    await fit('reteach')
+    const retryBefore = await P.getByRole('button', { name: /Let Pip retry/ }).count()
+    await P.getByRole('textbox', { name: 'Message to Pip' }).fill(MSG8)
     const respP = page.waitForResponse((r) => r.url().includes(`/sessions/${sid}/turn`), { timeout: 30000 })
-    await page.getByRole('button', { name: 'Send to Pip' }).click()
+    await P.getByRole('button', { name: 'Send to Pip' }).click()
     await respP
     await sleep(600)
     const s2 = await api(`/sessions/${sid}`)
     const reply = s2.transcript.slice(s1.transcript.length).filter((m) => m.from === 'pip').map((m) => m.text).join(' | ')
-    const retry = page.getByRole('button', { name: /Let Pip retry/ })
+    const retry = P.getByRole('button', { name: /Let Pip retry/ })
     await retry.waitFor({ timeout: 5000 })
     await retry.click()
-    await page.waitForSelector('.ko', { timeout: 30000 })
+    await P.waitForSelector('.ko', { timeout: 30000 })
     const s3 = await api(`/sessions/${sid}`)
     session = s3
     await sleep(400)
@@ -399,17 +454,18 @@ async function run(vp) {
   })
 
   await step('finisher -> K.O. card front/back + cliffhanger + Rivera', async () => {
-    const chips = page.locator('.ko__weapons .weapon')
+    const chips = P.locator('.ko__weapons .weapon')
     const n = await chips.count()
     const w = await chips.first().textContent()
     await chips.first().click()
-    await page.waitForSelector('.ko__stamp', { timeout: 4000 }).catch(() => {})
+    await P.waitForSelector('.ko__stamp', { timeout: 4000 }).catch(() => {})
     await sleep(150)
     await shot('12-ko-stamp')
-    await page.waitForSelector('.ko--card', { timeout: 8000 })
+    await P.waitForSelector('.ko--card', { timeout: 8000 })
     await sleep(1200)
     await shot('13-ko-card-screen')
-    const card = page.locator('.ko-card')
+    await fit('koCard')
+    const card = P.locator('.ko-card')
     await card.scrollIntoViewIfNeeded()
     await sleep(300)
     await card.screenshot({ path: path.join(OUT, `${tag}-14-ko-card-front.png`) })
@@ -419,16 +475,16 @@ async function run(vp) {
     const flipped = await card.evaluate((e) => e.classList.contains('is-flipped'))
     await card.screenshot({ path: path.join(OUT, `${tag}-15-ko-card-back.png`) })
     const back = await card.locator('.ko-card__back').innerText()
-    const cliff = await page.locator('.cliff').innerText().catch(() => null)
-    const rivera = await page.locator('section[aria-label="Here\'s what Ms. Rivera sees"]').innerText().catch(() => null)
-    const version = await page.locator('.ko__version').innerText().catch(() => null)
+    const cliff = await P.locator('.cliff').innerText().catch(() => null)
+    const rivera = await P.locator('section[aria-label="Here\'s what Ms. Rivera sees"]').innerText().catch(() => null)
+    const version = await P.locator('.ko__version').innerText().catch(() => null)
     const s = await api(`/sessions/${sid}`)
     session = s
-    await page.locator('.rivera').scrollIntoViewIfNeeded().catch(() => {})
+    await P.locator('.rivera').scrollIntoViewIfNeeded().catch(() => {})
     await sleep(300)
     await shot('16-ko-cliff-rivera')
     await overflow('ko')
-    const body = await page.locator('body').innerText()
+    const body = await P.locator('body').innerText()
     return {
       pass: n > 0 && !!s.finisher && flipped && !!cliff && !!rivera && /Brain v1[\s\S]*Brain v2/.test(version ?? '') && !/XP|!/.test(front),
       finisherWeapon: w,
@@ -442,7 +498,15 @@ async function run(vp) {
     }
   })
 
+  if (vp.w === 390) {
+    await step('Play screens fit one viewport (no page scroll at 390x844)', async () => {
+      const bad = Object.entries(R.fit).filter(([, v]) => v.scrollHeight > v.innerHeight + 1)
+      return { pass: Object.keys(R.fit).length >= 6 && bad.length === 0, fit: R.fit, bad: bad.map(([k]) => k) }
+    })
+  }
+
   await step('tutor roster: Maya since-last-session updated', async () => {
+    P = page
     await page.goto(`${BASE}/tutor`)
     await page.locator('.roster__row').nth(1).waitFor()
     await sleep(500)

@@ -44,6 +44,7 @@ const post = (p, b = {}, signal) => request('POST', p, b, signal)
 export const api = {
   health: () => get('/health'),
   center: () => get('/center'),
+  atRisk: () => get('/center/at-risk'),
   roster: (tutorId = 't1') => get(`/tutors/${tutorId}/roster`),
   student: (id) => get(`/students/${id}`),
   openApp: (id) => post(`/students/${id}/open`),
@@ -68,3 +69,14 @@ export const api = {
 }
 
 export const DEMO = { tutorId: 't1', studentId: 's001' }
+
+// Students the live demo can switch between on /student (Maya stays the default).
+export const DEMO_STUDENTS = [
+  { id: 's001', label: 'Maya · fractions' },
+  { id: 's005', label: 'Yara · SAT Writing' },
+  { id: 's009', label: 'Dev · SAT Math' },
+]
+// Seeded, hand-written missions are pinned first on a student's home screen.
+export const PINNED_MISSIONS = ['a_frac', 'a_sat_commas', 'a_sat_linear']
+
+export const studentHomePath = (id) => (!id || id === DEMO.studentId ? '/student' : `/student?as=${id}`)

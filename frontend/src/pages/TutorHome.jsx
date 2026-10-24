@@ -4,6 +4,7 @@ import { api, DEMO } from '../api'
 import { useLoad } from '../hooks'
 import { Empty, ErrorState, InlineError, Shell, Sheet, initialsOf, useToast } from '../components/ui.jsx'
 import InsightCard from '../components/InsightCard.jsx'
+import AtRiskCard from '../components/AtRiskCard.jsx'
 import NewMission from '../components/NewMission.jsx'
 import { pickReportSession } from '../lib'
 
@@ -47,6 +48,7 @@ export default function TutorHome() {
 
   const tutorName = tutor?.name ?? 'Ms. Rivera'
   const withPip = (roster.data?.students ?? []).filter((s) => s.since_last_session).length
+  const rosterIds = useMemo(() => (roster.data ? new Set(roster.data.students.map((s) => s.id)) : null), [roster.data])
 
   return (
     <Shell who={tutorName} initials={initialsOf(tutorName) || 'MR'}>
@@ -63,6 +65,8 @@ export default function TutorHome() {
         </section>
 
         {center.data?.insight && <InsightCard data={center.data} compact />}
+
+        {rosterIds && <AtRiskCard compact only={rosterIds} limit={3} />}
 
         <section className="glass roster">
           <div className="roster__head">

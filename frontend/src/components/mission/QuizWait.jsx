@@ -18,14 +18,15 @@ const RETRY_LINES = [
   'Following the new rule exactly.',
 ]
 const BOSS_LINES = [
-  (n) => `“Pip will never pass. Never!” — ${n}`,
+  (n) => `“Pip will never pass. Never.” — ${n}`,
   (n) => `${n} is pacing around Pip’s head.`,
   (n) => `${n} is hiding behind a sticky note.`,
-  (n) => `“Add the bottoms, Pip. Do it.” — ${n}`,
+  (n) => `“Use my rule, Pip. Do it.” — ${n}`,
   (n) => `${n} is nervously eating itself.`,
 ]
+const FRACTION_LINE = (n) => `“Add the bottoms, Pip. Do it.” — ${n}`
 
-export default function QuizWait({ boss, creature, retry }) {
+export default function QuizWait({ boss, creature, retry, topic = '' }) {
   const [t, setT] = useState(0)
   useEffect(() => {
     const id = setInterval(() => setT((x) => x + 1), 2600)
@@ -33,7 +34,8 @@ export default function QuizWait({ boss, creature, retry }) {
   }, [])
   const lines = retry ? RETRY_LINES : PIP_LINES
   const pip = lines[Math.min(t, lines.length - 1)]
-  const bossLine = BOSS_LINES[t % BOSS_LINES.length](boss?.name ?? 'The boss')
+  const bossLines = /fraction|denominator/i.test(topic) ? BOSS_LINES.map((f, i) => (i === 3 ? FRACTION_LINE : f)) : BOSS_LINES
+  const bossLine = bossLines[t % bossLines.length](boss?.name ?? 'The boss')
   return (
     <div className="quizwait glass" role="status" aria-live="polite">
       <div className="quizwait__pip">

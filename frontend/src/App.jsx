@@ -10,6 +10,7 @@ import StudentHome from './pages/StudentHome.jsx'
 import Mission from './pages/Mission.jsx'
 import AdminReset from './pages/AdminReset.jsx'
 import NotFound from './pages/NotFound.jsx'
+import { FrameSync, PlayRoute } from './components/PhoneFrame.jsx'
 
 function ScrollTop() {
   const { pathname } = useLocation()
@@ -23,6 +24,7 @@ export default function App() {
   return (
     <>
       <ScrollTop />
+      <FrameSync />
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/tutor" element={<TutorHome />} />
@@ -31,8 +33,8 @@ export default function App() {
         <Route path="/owner/pricing" element={<Pricing />} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/pilot/success" element={<PilotSuccess />} />
-        <Route path="/student" element={<StudentHome />} />
-        <Route path="/student/mission/:sessionId" element={<Mission />} />
+        <Route path="/student" element={<PlayRoute><StudentHome /></PlayRoute>} />
+        <Route path="/student/mission/:sessionId" element={<PlayRoute><Mission /></PlayRoute>} />
         <Route path="/admin/reset" element={<AdminReset />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

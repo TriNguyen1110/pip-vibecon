@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#BFE6FF"/><stop offset=".55" stop-color="#D8F1FF"/><stop offset="1" stop-color="#E3FCEB"/>
+    </linearGradient>
+    <radialGradient id="body" cx=".38" cy=".3" r=".8">
+      <stop offset="0" stop-color="#C4F6F8"/><stop offset=".45" stop-color="#5FE3E8"/><stop offset="1" stop-color="#2BB8C2"/>
+    </radialGradient>
+  </defs>
+  <rect width="512" height="512" fill="url(#sky)"/>
+  <ellipse cx="256" cy="430" rx="150" ry="22" fill="#10213F" opacity=".12"/>
+  <path d="M256 92c-18 0-30 18-24 40-70 14-118 82-118 162 0 76 64 126 142 126s142-50 142-126c0-80-48-148-118-162 6-22-6-40-24-40z" fill="url(#body)" stroke="#10213F" stroke-width="14" stroke-linejoin="round"/>
+  <rect x="190" y="232" width="30" height="46" rx="15" fill="#10213F"/>
+  <rect x="292" y="232" width="30" height="46" rx="15" fill="#10213F"/>
+  <circle cx="200" cy="244" r="6" fill="#fff"/><circle cx="302" cy="244" r="6" fill="#fff"/>
+  <path d="M184 226h44M284 226h44" stroke="#10213F" stroke-width="10" stroke-linecap="round"/>
+  <path d="M236 300h40" stroke="#10213F" stroke-width="9" stroke-linecap="round"/>
+</svg>

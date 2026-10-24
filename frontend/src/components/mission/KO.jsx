@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import Mascot, { CREATURE_EMOJI } from '../Mascot.jsx'
+import { MuteButton, PagerControls, TalkingMascot, useBoxHeight, usePager } from '../game.jsx'
+import { speak } from '../../voice'
 import { Glints, InlineError } from '../ui.jsx'
 import { CIRCLED } from '../../lib'
 
@@ -16,9 +17,13 @@ function finisherCaption(f, bossName) {
   return `${f}. ${bossName} has left Pip’s brain.`
 }
 
+// The struck-through equation on the K.O. card: the last "lhs = rhs" in the misconception.
 // "You add the tops and the bottoms, so 1/2 + 1/3 = 2/5" -> ["1/2 + 1/3", "2/5"]
+// "... 2x + 6 = 20 becomes 2x = 20 + 6 and x = 13" -> ["x", "13"]
 function wrongEquation(misconception = '') {
-  const m = /([\d½⅓¼⅔¾/()a-z²]+\s*[+\-×x*]\s*[\d½⅓¼⅔¾/()a-z²]+)\s*=\s*([^\s,.;]+)/i.exec(misconception)
+  const re = /([\d½⅓¼⅔¾/()a-z²]+(?:\s*[+\-×*]\s*[\d½⅓¼⅔¾/()a-z²]+)*)\s*=\s*([^\s,.;]+)/gi
+  const all = [...misconception.matchAll(re)].filter((m) => /\d/.test(m[0]))
+  const m = all.at(-1)
   return m ? [m[1], m[2]] : null
 }
 const pretty = (s) =>
@@ -102,6 +107,7 @@ export default function KO({
   finishing,
   finisherErr,
   onShowBrain,
+  home = '/student',
 }) {
   const boss = assignment?.boss ?? { name: 'The Boss', emoji: '👾' }
   const weapons = session.weapons ?? []
@@ -113,6 +119,13 @@ export default function KO({
   const prevV = Math.max(1, v - 1)
   const report = session.gap_report
   const cliff = report?.cliffhanger ?? assignment?.cliffhanger
+  const pager = usePager(3)
+  const [stageBox, stageH] = useBoxHeight(180)
+  const [cliffBox, cliffH] = useBoxHeight(120)
+  // Pip asks its rumor question out loud on the cliffhanger beat.
+  useEffect(() => {
+    if (pager.i === 1 && cliff) speak(cliff)
+  }, [pager.i, cliff])
 
   useEffect(() => {
     const t = timers.current
@@ -151,24 +164,29 @@ export default function KO({
           concept: c.concept_text,
           text: c.fixed_after
             ? `Pip had a wrong rule. You fixed it after ${c.fixed_after} re-teach.`
-            : PLAIN[c.status] ?? c.status,
+            : (PLAIN[c.status] ?? c.status),
         }))
 
   if (phase !== 'card') {
     return (
-      <div className={`ko ko--fight ko--${phase}`} onClick={skip}>
-        <div className="ko__stage">
-          <Mascot
-            creature={session.creature ?? 'blob'}
-            look={session.look}
-            accessory={accessory}
-            mood={phase === 'fight' ? 'lightbulb' : 'celebrating'}
-            env="arena"
-            bossEmoji={boss.emoji}
-            bossHp={phase === 'fight' ? 8 : 0}
-            reaction={react}
-            height={260}
-          />
+      <div className={`ko ko--fight ko--${phase} game play-screen`} onClick={skip}>
+        <div className="ko__stage" ref={stageBox}>
+          {stageH > 0 && (
+            <TalkingMascot
+              creature={session.creature ?? 'blob'}
+              look={session.look}
+              accessory={accessory}
+              vibe={session.vibe}
+              mood="proud"
+              env="arena"
+              framing="hero"
+              bossEmoji={boss.emoji}
+              bossName={boss.name}
+              bossHp={phase === 'fight' ? 8 : 0}
+              reaction={react}
+              height={stageH}
+            />
+          )}
           {phase === 'stamp' && (
             <span className="ko__stamp" aria-hidden>
               K.O.
@@ -176,13 +194,12 @@ export default function KO({
           )}
         </div>
         {phase === 'fight' ? (
-          <section className="stack ko__pick">
-            <p className="eyebrow ko__eyebrow">Pip passed the exam</p>
-            <h1 className="ko__title">{boss.name} is wobbling.</h1>
-            <p className="muted">Pick a finishing move.</p>
-            <div className="row ko__weapons">
+          <section className="ko__pick">
+            <h1 className="ribbon ko__ribbon">Pick a finishing move</h1>
+            <p className="ko__sub">{boss.name} is wobbling.</p>
+            <div className="ko__weapons">
               {weapons.map((w) => (
-                <button key={w} className="weapon weapon--big" disabled={!!finishing} onClick={() => pick(w)}>
+                <button key={w} className="weapon gel-btn gel-btn--win" disabled={!!finishing} onClick={() => pick(w)}>
                   {w}
                 </button>
               ))}
@@ -190,93 +207,121 @@ export default function KO({
             <InlineError error={finisherErr} />
           </section>
         ) : (
-          <section className="stack ko__pick" role="status">
+          <section className="ko__pick" role="status">
             <h1 className="ko__title">{boss.name} has left Pip’s brain.</h1>
             {session.finisher && <p className="ko__finisher">{finisherCaption(session.finisher, boss.name)}</p>}
-            {session.finisher && <p className="small subtle">Tap to skip</p>}
+            <span className="sticker sticker--chrome">
+              Brain v{prevV} → v{v}
+            </span>
+            {session.finisher && <p className="ko__skip">Tap to skip</p>}
           </section>
         )}
       </div>
     )
   }
 
+  // Beats after the stamp: 3 the card, 4 the cliffhanger, 5 what Ms. Rivera sees.
   return (
-    <div className="ko ko--card">
-      <section className="ko__hero">
-        <p className="eyebrow ko__eyebrow">Mission complete</p>
-        <h1 className="ko__title">{boss.name} has left Pip’s brain.</h1>
-        {session.finisher && <p className="ko__finisher">{finisherCaption(session.finisher, boss.name)}</p>}
-        <div className="ko__version" aria-label={`Brain upgraded from version ${prevV} to ${v}`}>
-          <span className="brain-badge brain-badge--old">Brain v{prevV}</span>
-          <span aria-hidden>→</span>
-          <span className="brain-badge brain-badge--new">Brain v{v}</span>
-          <Glints />
+    <div className="ko ko--card game play-screen">
+      <header className="game-top hud">
+        <Link to={home} className="gel-btn gel-btn--secondary icon-btn" aria-label="Pip’s room" title="Pip’s room">
+          <span aria-hidden>🏠</span>
+        </Link>
+        <div className="hud__title">
+          <span className="hud__name">Mission complete</span>
         </div>
-      </section>
-
-      {cliff && (
-        <section className="cliff">
-          <span className="msg__face" aria-hidden>
-            {CREATURE_EMOJI[session.creature] ?? '🫧'}
-          </span>
-          <div className="stack-sm">
-            <p className="label">Pip has a question for next time</p>
-            <p className="msg__bubble cliff__q">{cliff}</p>
+        <div className="hud__right">
+          <MuteButton />
+        </div>
+      </header>
+      <div className="ko__beats snap-x" ref={pager.ref}>
+        <section className="ko-beat ko-beat--card" aria-label="Your K.O. card">
+          <div className="ko__version" aria-label={`Brain upgraded from version ${prevV} to ${v}`}>
+            <span className="sticker sticker--chrome brain-badge--old">Brain v{prevV}</span>
+            <span aria-hidden>→</span>
+            <span className="sticker sticker--chrome brain-badge--new">Brain v{v}</span>
+            <Glints />
+          </div>
+          <div className="ko__cardwrap">
+            <KoCard session={session} assignment={assignment} nickname={nickname} pipLine={pipLine} />
+            <p className="ko__hint">Tap the card to flip it. It’s yours to keep.</p>
           </div>
         </section>
-      )}
 
-      <div className="ko__cardwrap">
-        <KoCard session={session} assignment={assignment} nickname={nickname} pipLine={pipLine} />
-        <p className="small subtle">Tap the card to flip it. It’s yours to keep.</p>
+        <section className="ko-beat ko-beat--cliff" aria-label="Next time">
+          <div className="ko-cliff__stage" ref={cliffBox}>
+            {cliffH > 0 && (
+              <TalkingMascot
+                creature={session.creature ?? 'blob'}
+                look={session.look}
+                accessory={accessory}
+                vibe={session.vibe}
+                mood="confused"
+                form="awakened"
+                env="room"
+                framing="hero"
+                height={cliffH}
+              />
+            )}
+          </div>
+          {cliff && (
+            <section className="cliff">
+              <p className="sr-only">Pip has a question for next time</p>
+              <p className="bubble bubble--pip cliff__q">{cliff}</p>
+            </section>
+          )}
+          <section className="ko-next" aria-label="Coming up">
+            <div className="silhouette">
+              <span className="silhouette__shape" aria-hidden>
+                👾
+              </span>
+              <span className="sticker">
+                {/fraction|denominator/i.test(assignment?.topic ?? '') ? 'Divid████' : '████████'}
+              </span>
+            </div>
+          </section>
+        </section>
+
+        <section className="ko-beat ko-beat--rivera" aria-label="What Ms. Rivera sees">
+          <section className="panel stack rivera" aria-label="Here's what Ms. Rivera sees">
+            <h2 className="rivera__title">What Ms. Rivera sees</h2>
+            <p className="rivera__sub">The same thing you see. Nothing else.</p>
+            {rows.length === 0 ? (
+              <p>Ms. Rivera’s report is being written. It shows each step in plain words.</p>
+            ) : (
+              <ul className="rivera__list">
+                {rows.map((r) => (
+                  <li key={r.key}>
+                    {r.concept && (
+                      <span className="rivera__concept">
+                        {r.n} {r.concept}
+                      </span>
+                    )}
+                    <span>{r.text}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
+          <div className="ko__actions">
+            <button className="gel-btn gel-btn--secondary gel-btn--sm" onClick={onShowBrain}>
+              Pip’s Brain
+            </button>
+          </div>
+        </section>
       </div>
-
-      <section className="ko-next" aria-label="Coming up">
-        <div className="silhouette">
-          <span className="silhouette__shape" aria-hidden>
-            {CREATURE_EMOJI[session.creature] ?? '🫧'}
-          </span>
-          <span className="small subtle mono">Pip v{v + 1}</span>
-        </div>
-        <div className="silhouette">
-          <span className="silhouette__shape" aria-hidden>
-            👾
-          </span>
-          <span className="small subtle mono">Divid████</span>
-        </div>
-      </section>
-
-      <section className="glass card stack rivera" aria-label="Here's what Ms. Rivera sees">
-        <div className="stack-sm">
-          <p className="eyebrow">Here’s what Ms. Rivera sees</p>
-          <p className="small subtle">The same thing you see. Nothing else.</p>
-        </div>
-        {rows.length === 0 ? (
-          <p className="small muted">Ms. Rivera’s report is being written. It shows each step in plain words.</p>
+      <footer className="game-foot ko__foot">
+        <PagerControls pager={pager} label="beat" />
+        {pager.i < 2 ? (
+          <button className="gel-btn ko__next" onClick={() => pager.go(pager.i + 1)}>
+            Next ▶
+          </button>
         ) : (
-          <ul className="rivera__list">
-            {rows.map((r) => (
-              <li key={r.key}>
-                {r.concept && (
-                  <span className="small subtle">
-                    {r.n} {r.concept}
-                  </span>
-                )}
-                <span>{r.text}</span>
-              </li>
-            ))}
-          </ul>
+          <Link className="gel-btn ko__next" to={home}>
+            🏠 Home
+          </Link>
         )}
-      </section>
-
-      <div className="row ko__actions">
-        <button className="btn" onClick={onShowBrain}>
-          See Pip’s Brain
-        </button>
-        <Link className="btn btn--primary" to="/student">
-          Done
-        </Link>
-      </div>
+      </footer>
     </div>
   )
 }

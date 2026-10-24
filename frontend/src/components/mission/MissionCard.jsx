@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { CIRCLED } from '../../lib'
 
 export const TAUGHT = 50 // meter value at which a step counts as taught
@@ -102,5 +102,77 @@ export default function MissionCard({ session, assignment, concepts, focus, onFo
         {step.text}
       </p>
     </section>
+  )
+}
+
+// DESIGN_SYSTEM v2 level map: ① ② ③ → boss → exam on one dotted path. Tapping a step shows its
+// name as a sticker under the map for 2.4s (absolute, so nothing moves) and focuses it.
+export function LevelMap({ session, concepts, focus, onFocus, bossEmoji }) {
+  const meters = session.meters ?? {}
+  const hp = session.boss_hp ?? 100
+  const step = nextStep(session, concepts)
+  const done = step.kind === 'done'
+  const [label, setLabel] = useState(null)
+  const timer = useRef(null)
+  useEffect(() => () => clearTimeout(timer.current), [])
+  const show = (text) => {
+    clearTimeout(timer.current)
+    setLabel(text)
+    timer.current = setTimeout(() => setLabel(null), 2400)
+  }
+  const quizPassed = session.quiz?.filter((q) => q.passed).length ?? 0
+  return (
+    <nav className="levelmap" aria-label="Mission map">
+      <ol className="mpath">
+        {concepts.map((c, i) => {
+          const m = Math.max(0, Math.min(100, meters[c.id] ?? 0))
+          const taught = m >= TAUGHT
+          const isNext = step.index === i && (step.kind === 'teach' || step.kind === 'reteach')
+          return (
+            <li key={c.id} className={`mpath__item${taught ? ' is-taught' : ''}`}>
+              <button
+                type="button"
+                className={`mstep${taught ? ' is-taught' : ''}${isNext ? ' is-next' : ''}${focus === c.id ? ' is-focus' : ''}`}
+                onClick={() => {
+                  show(`${CIRCLED[i]} ${c.text}`)
+                  onFocus?.(c.id)
+                }}
+                aria-label={`Step ${i + 1}: ${c.text}. Understanding ${m} percent.`}
+              >
+                <span className="mstep__n" aria-hidden>
+                  {taught ? '✓' : i + 1}
+                </span>
+                <span className="meter" style={{ '--m': m }} aria-hidden />
+              </button>
+            </li>
+          )
+        })}
+        <li className={`mpath__item${hp <= 0 || done ? ' is-taught' : ''}`}>
+          <button
+            type="button"
+            className={`mstep mstep--boss${hp <= 0 || done ? ' is-ko' : ''}`}
+            onClick={() => show(hp <= 0 || done ? 'Boss K.O.' : `The boss: ${hp} HP`)}
+            aria-label={`Boss, ${hp} HP`}
+          >
+            <span aria-hidden>{bossEmoji ?? '👾'}</span>
+          </button>
+        </li>
+        <li className="mpath__item">
+          <button
+            type="button"
+            className={`mstep mstep--exam${step.kind === 'quiz' || session.status === 'quizzed' ? ' is-next' : ''}${done ? ' is-taught' : ''}`}
+            onClick={() => show(done ? 'Pip passed its exam' : session.quiz?.length ? `Pip’s exam: ${quizPassed}/${session.quiz.length}` : 'Then Pip’s exam')}
+            aria-label="Pip’s exam"
+          >
+            <span aria-hidden>🏆</span>
+          </button>
+        </li>
+      </ol>
+      {label && (
+        <span className="sticker levelmap__label" role="status" key={label}>
+          {label}
+        </span>
+      )}
+    </nav>
   )
 }

@@ -3,6 +3,7 @@ import { api } from '../api'
 import { useLoad } from '../hooks'
 import { ErrorState, Loading, Shell } from '../components/ui.jsx'
 import InsightCard from '../components/InsightCard.jsx'
+import AtRiskCard from '../components/AtRiskCard.jsx'
 
 const PILOT_WORDS = {
   active: 'Pilot active',
@@ -41,6 +42,8 @@ export default function Owner() {
             <p className="muted">No shared misconception yet. It appears once students finish Pip sessions.</p>
           </div>
         )}
+
+        <AtRiskCard />
 
         <div className="owner-grid">
           <Link to="/tutor" className="glass card owner-link">

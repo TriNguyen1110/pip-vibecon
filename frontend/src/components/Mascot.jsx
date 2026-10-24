@@ -1,4 +1,6 @@
-import { Component, Suspense, lazy, useEffect, useState } from 'react'
+import { Component, Suspense, lazy, useEffect, useRef, useState } from 'react'
+import Pip2D from '../pip2d/Pip2D.jsx'
+import { CREATURES_2D } from '../pip2d/creatures'
 
 // src/three/ is owned by the 3D agent. We only import it lazily so three.js never blocks
 // first paint and a WebGL failure never takes the page down.
@@ -11,7 +13,23 @@ export const FALLBACK_META = {
   ENVIRONMENTS: ['room', 'arena', 'garden'],
 }
 
+// Coordinator decision (F3-F6): the mascot is 2D SVG (src/pip2d) by default; the 3D MascotStage
+// stays behind ?mascot=3d as a fallback (remembered for the tab).
+export const USE_3D = (() => {
+  if (typeof window === 'undefined') return false
+  try {
+    const q = new URLSearchParams(window.location.search).get('mascot')
+    if (q === '3d' || q === '2d') sessionStorage.setItem('pip.mascot', q)
+    return (q ?? sessionStorage.getItem('pip.mascot')) === '3d'
+  } catch {
+    return false
+  }
+})()
+
 export const CREATURE_EMOJI = {
+  capybara: '🦫',
+  corgi: '🐶',
+  raccoon: '🦝',
   blob: '🫧',
   cat: '🐱',
   dragon: '🐲',
@@ -36,9 +54,13 @@ export function lookForCreature(creature) {
   return 'doodle'
 }
 
+export const META_2D = { CREATURES: CREATURES_2D, ACCESSORIES: FALLBACK_META.ACCESSORIES, ENVIRONMENTS: FALLBACK_META.ENVIRONMENTS }
+export const DEFAULT_CREATURE = USE_3D ? 'blob' : 'capybara'
+
 export function useThreeMeta() {
-  const [meta, setMeta] = useState(FALLBACK_META)
+  const [meta, setMeta] = useState(USE_3D ? FALLBACK_META : META_2D)
   useEffect(() => {
+    if (!USE_3D) return
     let alive = true
     loadThree()
       .then((m) => {
@@ -100,6 +122,11 @@ function webglOk() {
 let WEBGL = null
 
 export default function Mascot(props) {
+  if (!USE_3D) return <Stage2D {...props} />
+  return <Mascot3D {...props} />
+}
+
+function Mascot3D(props) {
   const { height = 240, className = '' } = props
   if (WEBGL === null) WEBGL = typeof window !== 'undefined' && webglOk()
   const fallback = <StaticPip {...props} height={height} />
@@ -114,6 +141,121 @@ export default function Mascot(props) {
       ) : (
         fallback
       )}
+    </div>
+  )
+}
+
+/* ---------- 2D stage: Pip centered on the CSS scene, a soft floor disc and a blob shadow ---------- */
+
+// Boss2D is drawn by the 2D builder (walrus | penguin | hamster, states smug | cracked | KO).
+// Picked up when src/pip2d/Boss2D.jsx exists; until then the boss is its emoji pair.
+const BOSS_MODULES = import.meta.glob('../pip2d/Boss2D.jsx')
+const loadBoss = BOSS_MODULES['../pip2d/Boss2D.jsx']
+const LazyBoss2D = loadBoss ? lazy(() => loadBoss().then((m) => ({ default: m.Boss2D ?? m.default }))) : null
+const BOSS_KINDS = ['walrus', 'penguin', 'hamster']
+export function bossKindFor(name = '', emoji = '') {
+  const k = `${name} ${emoji}`.toLowerCase()
+  if (/penguin|🐧/u.test(k)) return 'penguin'
+  if (/hamster|🐹/u.test(k)) return 'hamster'
+  if (/walrus|🦭/u.test(k)) return 'walrus'
+  let h = 0
+  for (const ch of name) h = (h * 31 + ch.charCodeAt(0)) % 997
+  return BOSS_KINDS[h % BOSS_KINDS.length]
+}
+export const bossStateFor = (hp) => (hp <= 0 ? 'KO' : hp <= 40 ? 'cracked' : 'smug')
+
+function Boss2DSlot({ emoji, name, hp, size, fx }) {
+  const state = bossStateFor(hp ?? 100)
+  const emojiBoss = (
+    <span className="stage2d__boss-emoji" style={{ fontSize: size * 0.5 }} aria-hidden>
+      {emoji || '👾'}
+    </span>
+  )
+  return (
+    <span
+      className={`stage2d__boss is-${state.toLowerCase()}${fx ? ` shake-${fx.kind} fx-${fx.n % 2}` : ''}`}
+      aria-label={`${name ?? 'The boss'}, ${state === 'KO' ? 'knocked out' : `${hp} HP`}`}
+      role="img"
+    >
+      {LazyBoss2D ? (
+        <Suspense fallback={emojiBoss}>
+          <StageBoundary fallback={emojiBoss}>
+            <LazyBoss2D boss={bossKindFor(name, emoji)} state={state.toLowerCase()} hp={hp} size={size} />
+          </StageBoundary>
+        </Suspense>
+      ) : (
+        emojiBoss
+      )}
+    </span>
+  )
+}
+
+function usePoke(reaction) {
+  const [on, setOn] = useState(false)
+  const first = useRef(true)
+  useEffect(() => {
+    if (first.current) {
+      first.current = false
+      return
+    }
+    setOn(false)
+    const raf = requestAnimationFrame(() => setOn(true))
+    const t = setTimeout(() => setOn(false), 300)
+    return () => {
+      cancelAnimationFrame(raf)
+      clearTimeout(t)
+    }
+  }, [reaction])
+  return on
+}
+
+export function Stage2D({
+  creature,
+  vibe = 'cute',
+  accessory = 'none',
+  mood = 'deadpan',
+  form,
+  mouth = 0,
+  viseme,
+  env = 'room',
+  bossEmoji,
+  bossName,
+  bossHp,
+  bossFx,
+  reaction = 0,
+  height = 240,
+  onTap,
+  className = '',
+  framing,
+  animate = true,
+}) {
+  const poke = usePoke(reaction)
+  const name = CREATURES_2D.includes(creature) ? creature : 'capybara'
+  const arena = env === 'arena' && (bossEmoji || bossName)
+  const size = Math.round(Math.max(64, Math.min(height * (framing === 'hero' ? 0.7 : 0.72), 330)))
+  const reduced = typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+  return (
+    <div
+      className={`stage stage2d stage2d--${env}${framing === 'hero' ? ' stage2d--hero' : ''} ${className}`}
+      style={{ height, '--pip-size': `${size}px` }}
+      onPointerDown={onTap}
+    >
+      <span className="stage2d__floor" aria-hidden />
+      {arena && <Boss2DSlot emoji={bossEmoji} name={bossName} hp={bossHp ?? 100} size={Math.round(size * 0.55)} fx={bossFx} />}
+      <span className="stage2d__shadow" aria-hidden />
+      <span className={`stage2d__pip${poke ? ' is-poked' : ''}`}>
+        <Pip2D
+          creature={name}
+          vibe={vibe ?? 'cute'}
+          mood={mood}
+          mouth={mouth}
+          viseme={viseme}
+          accessory={accessory}
+          form={form}
+          size={size}
+          animate={animate && !reduced}
+        />
+      </span>
     </div>
   )
 }

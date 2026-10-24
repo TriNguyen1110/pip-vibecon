@@ -761,3 +761,290 @@
 .toast {
   border-left: 3px solid var(--ice);
 }
+
+/* ---------- At-risk families (CONTRACT v3; Studio: calm rows, no coral) ---------- */
+.atrisk {
+  padding: 0;
+  overflow: hidden;
+}
+.atrisk__head {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--divider);
+}
+.atrisk__n {
+  font-size: 15px;
+  color: var(--fg-subtle);
+  font-weight: 500;
+}
+.atrisk__all {
+  white-space: nowrap;
+  min-height: var(--tap);
+  display: inline-flex;
+  align-items: center;
+}
+.atrisk__body {
+  padding: 16px 20px;
+}
+.atrisk__empty {
+  padding: 20px;
+  margin: 0;
+}
+.atrisk__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.atrisk__row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 12px;
+  align-items: start;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--divider);
+}
+.atrisk__row:last-child {
+  border-bottom: none;
+}
+.atrisk__row .avatar {
+  margin-top: 2px;
+}
+.atrisk__who {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.atrisk__name {
+  font-weight: 700;
+}
+.atrisk__reason {
+  color: var(--fg-muted);
+}
+.atrisk__reasons {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--fg-muted);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.atrisk__reasons li::marker {
+  color: var(--fg-subtle);
+}
+.atrisk__go {
+  min-height: var(--tap);
+}
+.atrisk__more {
+  padding: 12px 20px 16px;
+  margin: 0;
+  border-top: 1px solid var(--divider);
+}
+.atrisk--compact .atrisk__head {
+  padding: 14px 20px;
+  align-items: center;
+}
+.atrisk--compact .atrisk__row {
+  padding: 10px 20px;
+  align-items: center;
+}
+@media (min-width: 1024px) {
+  .atrisk__row:hover {
+    background: rgba(239, 239, 233, 0.03);
+  }
+}
+
+/* ---------- Lesson editor in the New Pip mission form (CONTRACT v3) ---------- */
+.lesson-edit {
+  border: 1px solid var(--divider);
+  border-radius: var(--r-md);
+  background: rgba(239, 239, 233, 0.02);
+}
+.lesson-edit__sum {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px 12px;
+  min-height: var(--tap);
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--fg-muted);
+  list-style: none;
+}
+.lesson-edit__sum::-webkit-details-marker {
+  display: none;
+}
+.lesson-edit__sum > span:first-child::before {
+  content: '▸';
+  display: inline-block;
+  width: 16px;
+  color: var(--fg-subtle);
+  transition: transform var(--fast) var(--ease);
+}
+.lesson-edit[open] > .lesson-edit__sum > span:first-child::before {
+  transform: rotate(90deg);
+}
+.lesson-edit__sum:hover {
+  color: var(--fg);
+}
+.lesson-edit__body {
+  padding: 4px 12px 14px;
+}
+.ladder-edit {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.ladder-edit__rung {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: 8px;
+  align-items: center;
+}
+.ladder-edit__n {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: var(--fg-subtle);
+}
+.chips-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.chips-edit__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.chips-edit__chip {
+  white-space: normal;
+  padding-right: 2px;
+  max-width: 100%;
+}
+.chips-edit__text {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.chips-edit__x {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: var(--fg-subtle);
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+}
+.chips-edit__x:hover {
+  color: var(--fg);
+  background: rgba(239, 239, 233, 0.06);
+}
+.lesson-src {
+  margin: 0;
+}
+
+/* ---------- Gap report: stuck + rubric level (CONTRACT v3) ---------- */
+.gap__stuck {
+  margin: 0;
+  padding: 8px 12px;
+  border-radius: var(--r-sm);
+  background: var(--ice-soft);
+  border: 1px solid var(--ice-line);
+  color: var(--fg);
+  font-size: 15px;
+  font-weight: 700;
+}
+.gap__stuck-mark {
+  color: var(--ice);
+}
+.gap__level {
+  margin: 0;
+  color: var(--fg-muted);
+}
+.gap__level .mono {
+  color: var(--fg-subtle);
+  font-size: 13px;
+}
+.gap-levels {
+  margin: 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--divider);
+}
+.gap-levels .label {
+  display: block;
+  margin-bottom: 2px;
+}
+
+/* ---------- F6 desktop landing: pitch left, live phone right ---------- */
+.landing-desk {
+  min-height: 100dvh;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 32px;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 48px;
+  align-items: center;
+}
+.landing-desk__pitch {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 36rem;
+}
+.landing-desk__pitch .brand {
+  margin-bottom: 8px;
+}
+.landing-desk__pitch .h-hero {
+  margin: 0;
+}
+.landing-desk__roles.landing__roles {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 8px;
+}
+.landing-desk__roles .role {
+  padding: 14px 18px;
+}
+.landing-desk__pitch .footer {
+  padding: 8px 0 0;
+  margin: 0;
+}
+.landing-desk__phone {
+  height: calc(100dvh - 48px);
+  max-height: 900px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.landing-desk__phone .device-wrap {
+  flex: none;
+}
+.landing-desk__cap {
+  margin: 0;
+  font-size: 14px;
+  color: var(--fg-subtle);
+}
