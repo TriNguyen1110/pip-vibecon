@@ -146,3 +146,12 @@ Backend calls ElevenLabs `/v1/text-to-speech/{voice_id}/with-timestamps` with `E
 use the documented default), caches by hash(text+voice) in memory, 8 s timeout. The key never reaches the browser.
 Frontend plays the audio and drives Pip2D `viseme` from the character alignment; if `fallback`, it uses browser
 speechSynthesis as before. Only Pip's lines are spoken; no student audio is recorded or sent.
+
+## v3.5 (cast of voices)
+POST `/api/tts` accepts `speaker` (default `pip`) and optional `vibe`, `grade`, `boss_id`. The backend resolves the
+voice from `backend/voices.json` (voice IDs + ElevenLabs voice_settings per role; IDs aren't secrets):
+`pip_cute` Fena · `pip_ugly` Michael Mouse · `pip_cool` Tri (user's cloned voice) · `boss_walrus` Rob ·
+`boss_penguin` Oxley (SAT, grade ≥ 11 only; else Rob) · `boss_hamster` Jen Frankie · `announcer` Xavier ·
+`narrator` Tri. Students can override Pip's voice in the Look sheet (`pip_voice`), saved on the session.
+Boss captions (hit/heal/taunt) are spoken in the boss voice; short announcer stings ("BOSS FIGHT", "K.O.",
+"BRAIN UPGRADED") in Xavier's voice. Mute silences all; captions always show.
