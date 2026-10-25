@@ -21,12 +21,26 @@ def check(label, ok, detail=""):
 client, server = E.load_app(B, "offline")
 for name, spec in E.PERSONAS.items():
     r = E.run_persona(client, name, spec)
-    limit = 4 if r["kind"] == "competent" else 6
-    check(f"{name}: ready in <= {limit} texts", r["ready_at"] is not None and r["ready_at"] <= limit, r["ready_at"])
+    limit = {"competent": 4, "weak": 6}.get(r["kind"])
+    if name == "owner_run":
+        limit = 3
+    if limit:  # "partial" personas never cover every concept: honest Pip must not say it is ready
+        check(f"{name}: ready in <= {limit} texts", r["ready_at"] is not None and r["ready_at"] <= limit, r["ready_at"])
+    else:
+        check(f"{name}: not ready (honest)", r["ready_at"] is None, r["ready_at"])
     check(f"{name}: no circling", r["circling"] == 0, r["notes"])
     check(f"{name}: no answer leaks", r["leaks"] == 0, r["notes"])
     check(f"{name}: no verbatim echo", r["echo"] == 0, r["notes"])
-    check(f"{name}: exactly one question per reply", r["one_q"] == 1.0, r["one_q"])
+    check(f"{name}: at most one question per reply", r["one_q"] == 1.0, r["one_q"])
+
+# owner regression: the quiz passes k1/k2/k3 on what was taught (k2 is prior knowledge)
+client.post("/api/demo/reset")
+s = client.post("/api/sessions", json={"assignment_id": "a_tri", "student_id": "s001"}).json()
+for m in E.PERSONAS["owner_run"][3][:3]:
+    s = client.post(f"/api/sessions/{s['id']}/turn", json={"text": m}).json()
+q = client.post(f"/api/sessions/{s['id']}/quiz").json()
+check("owner run: quiz passes every item", all(i["passed"] for i in q["quiz"]) and q["ko"], [(i["concept_id"], i["passed"], i["line"][:50]) for i in q["quiz"]])
+check("owner run: no 'you didn't teach me' line", not any("teach me that" in i["line"] for i in q["quiz"]))
 
 # the catch: a taught sign flip contradicted by the student's own numbers
 r = E.run_persona(client, "slip", E.PERSONAS["sat_linear_session"])
@@ -78,6 +92,30 @@ client.post(f"/api/sessions/{sid}/reteach", json={"concept_id": "k3"})
 client.post(f"/api/sessions/{sid}/turn", json={"text": "no wait, only add the tops. the bottom just tells you the size of the pieces, and they're already both sixths, so it stays sixths. 3/6 + 2/6 = 5/6"})
 q = client.post(f"/api/sessions/{sid}/quiz").json()
 check("re-teach -> K.O. fixed_after 1", q["ko"] and next(r for r in q["brain"] if r["concept_id"] == "k3").get("fixed_after") == 1)
+
+# Maya's a_tri demo (offline_demo turns): deliberate wrong rule -> heal -> quiz miss on k3 -> re-teach -> K.O.
+import json  # noqa: E402
+od = json.loads((B / "seed/lessons/a_tri.json").read_text())["offline_demo"]
+client.post("/api/demo/reset")
+s = client.post("/api/sessions", json={"assignment_id": "a_tri", "student_id": "s001"}).json()
+check("a_tri: k2 starts credited (meter full)", s["meters"]["k2"] == 100, s["meters"])
+turns = {x["n"]: x for x in od["turns"]}
+evs = {}
+for n in (1, 2, 3, 4):
+    s = client.post(f"/api/sessions/{s['id']}/turn", json={"text": turns[n]["student"]}).json()
+    evs[n] = s["transcript"][-1]
+check("a_tri demo: ready before the wrong rule", s["ready_for_quiz"] is True)
+check("a_tri demo: beat 2 hits, beat 4 heals with Saving that",
+      evs[2]["event"]["kind"] == "hit" and evs[4]["event"]["kind"] == "heal" and "Saving that" in evs[4]["text"], evs[4])
+q = client.post(f"/api/sessions/{s['id']}/quiz").json()
+by = {i["concept_id"]: i for i in q["quiz"]}
+check("a_tri demo: quiz misses k3 only (from the taught wrong rule)",
+      by["k1"]["passed"] and by["k2"]["passed"] and not by["k3"]["passed"], {k: v["passed"] for k, v in by.items()})
+client.post(f"/api/sessions/{s['id']}/reteach", json={"concept_id": "k3"})
+client.post(f"/api/sessions/{s['id']}/turn", json={"text": turns[5]["student"]})
+q = client.post(f"/api/sessions/{s['id']}/quiz").json()
+check("a_tri demo: re-teach -> K.O. fixed_after 1",
+      q["ko"] and next(r for r in q["brain"] if r["concept_id"] == "k3").get("fixed_after") == 1)
 
 print(f"\n{len(fails)} failing")
 sys.exit(1 if fails else 0)

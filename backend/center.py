@@ -23,6 +23,7 @@ from fastapi import APIRouter, Body, HTTPException
 import lesson as lessons
 import llm
 import logic
+import mascot
 import pip_ai
 
 log = logging.getLogger("pip.center")
@@ -248,9 +249,9 @@ def pip_view(st: dict) -> dict:
     """The student's own Pip: seeded look + live name/brain version/form from the student doc."""
     p = st.get("pip") if isinstance(st.get("pip"), dict) else {}
     return {"name": st.get("pip_name") or p.get("name") or "Pip", "creature": p.get("creature") or "capybara",
-            "vibe": p.get("vibe") or "cool", "accessory": p.get("accessory") or "none",
+            "vibe": p.get("vibe") or "cool", "accessory": mascot.clean_accessory(p.get("accessory") or "none"),
             "brain_version": int(st.get("brain_version") or 1),
-            "form": "main" if "main" in (st.get("forms_unlocked") or []) else "base"}
+            "form": "main" if "main" in (st.get("forms_unlocked") or []) or p.get("form") == "main" else "base"}
 
 
 def with_pip(st: dict) -> dict:
@@ -559,10 +560,13 @@ def mastery(a: dict | None, s: dict | None) -> list[dict]:
     for c in a["concepts"]:
         lvl = int(((s or {}).get("ladder") or {}).get(c["id"], {}).get("best_level") or 0)
         r = rules.get(c["id"])
+        known = c["id"] in ((a.get("lesson") or {}).get("prior_knowledge") or [])  # Pip started out knowing it
         if r and r.get("correct"):
             lvl = max(lvl, 2)
         elif r:
             lvl = min(lvl, 1)
+        elif known and s:
+            lvl = max(lvl, 2)
         out.append({"concept_id": c["id"], "text": c["text"], "level": max(0, min(3, lvl))})
     return out
 

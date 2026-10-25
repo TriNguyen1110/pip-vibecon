@@ -90,8 +90,11 @@ def apply_turn(session: dict, assignment: dict, student_text: str, r: dict) -> d
         session["boss_hp"] = min(100, hp + HEAL)
         amount = session["boss_hp"] - hp
     unlocked = []
+    prior = (assignment.get("lesson") or {}).get("prior_knowledge") or []
     for c in assignment["concepts"]:
         w = c.get("weapon")
+        if c["id"] in prior:
+            continue  # known from the start: its weapon arrives with the K.O., not as a surprise on text 1
         if w and session["meters"].get(c["id"], 0) >= UNLOCK_AT and w not in session["weapons"]:
             session["weapons"].append(w)
             unlocked.append(w)

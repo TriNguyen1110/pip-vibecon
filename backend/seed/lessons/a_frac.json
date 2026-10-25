@@ -40,7 +40,11 @@
         "can't add different-sized pieces",
         "can't add pieces of different sizes"
       ],
-      "friend_nudge": "My friend said a slice from a big pizza and a slice from a small pizza aren't really the same amount of pizza…? I don't know why that matters for adding."
+      "friend_nudge": "My friend said a slice from a big pizza and a slice from a small pizza aren't really the same amount of pizza…? I don't know why that matters for adding.",
+      "aha": "ohh so the slices have to match first",
+      "concrete": [
+        "what if i try to add a half pizza and a third pizza, how many slices is that?"
+      ]
     },
     {
       "concept_id": "k2",
@@ -65,7 +69,11 @@
         "1/2 is 3/6",
         "1/3 is 2/6"
       ],
-      "friend_nudge": "My cousin said something about cutting both pizzas into same-size slices…? She didn't say what size."
+      "friend_nudge": "My cousin said something about cutting both pizzas into same-size slices…? She didn't say what size.",
+      "aha": "ok so you cut both into the same size slices",
+      "concrete": [
+        "what if i cut both pizzas into 6 slices, how many slices is each fraction?"
+      ]
     },
     {
       "concept_id": "k3",
@@ -88,7 +96,11 @@
         "the bottom stays",
         "denominator stays the same"
       ],
-      "friend_nudge": "My neighbor said the bottom number is like the name of the piece, like 'sixths'…? I'm not sure what she meant."
+      "friend_nudge": "My neighbor said the bottom number is like the name of the piece, like 'sixths'…? I'm not sure what she meant.",
+      "aha": "so the bottom just says what size the slices are",
+      "concrete": [
+        "what if i have 3 sixth-slices and 2 more, how many sixth-slices is that?"
+      ]
     }
   ],
   "offline_demo": {

@@ -48,8 +48,7 @@ async def lifespan(_app):
 app = FastAPI(title="Pip", lifespan=lifespan)
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 api = APIRouter(prefix="/api")
-ACCESSORIES = ("none", "glasses", "scarf", "pencil", "badge", "backpack", "starclips", "charm", "visor",
-               "shades", "cap", "headphones")  # cap/headphones kept for older clients
+from mascot import ACCESSORIES, clean_accessory, clean_form  # noqa: E402,F401  (B19: one list, mirrors pip2d)
 
 
 async def need(coll: str, doc_id: str, what: str) -> dict:
@@ -422,14 +421,15 @@ async def create_session(body: dict = Body(...)):
     past = past_self_rule(a, mine, assignments)
     recall = callback_rule(a, mine)
     look = body.get("look") if body.get("look") in ("blob", "bot", "doodle") else "blob"
-    acc = body.get("accessory") if body.get("accessory") in (
-        ACCESSORIES) else "none"
+    acc = clean_accessory(body.get("accessory"))  # B19: club/earned ids, or a combined look of up to 3
     s = logic.new_session(a, st["id"], look, body.get("creature") or look, acc,
                           openings(st, a, past, recall))
+    pacing.ensure_pace(s, a)  # prior-knowledge concepts (e.g. rectangle area) start credited, meter full
     s["opening_source"] = "past_self" if past else "claim"
     s["callback_rule"], s["callback_used"] = recall, False
     s["pip_voice"] = (body.get("pip_voice") or "").strip() or None
     s["vibe"] = body.get("vibe") if body.get("vibe") in ("cute", "cool", "ugly") else "cute"
+    s["form"] = clean_form(body.get("form"))  # B19: "main" (Main Character) or "base"
     await store.put("sessions", s)
     st["last_session_id"] = s["id"]
     await store.put("students", st)
@@ -603,7 +603,10 @@ async def _quiz(sid: str, tasks: BackgroundTasks):
         i = x.get("rule_index", -1) if x else -1
         rule = by_concept.get(valid[i]["concept_id"]) if i in valid else None
         base = {"id": q["id"], "concept_id": q["concept_id"], "question": q["question"]}
-        if rule is None:  # no rule, or the cited rule was dropped: Pip was not taught this
+        if rule is None and q["concept_id"] in ((a.get("lesson") or {}).get("prior_knowledge") or []):
+            known = pip_ai.prior_answer(a, q)  # Pip's own opening claim already uses it: not taught, not missed
+            new_items[q["id"]] = {**base, "rule_id": None, "passed": True, "pip_answer": known[0], "line": known[1]}
+        elif rule is None:  # no rule, or the cited rule was dropped: Pip was not taught this
             new_items[q["id"]] = {**base, "rule_id": None, "passed": False,
                                   "pip_answer": "You didn't teach me that one.",
                                   "line": "You didn't teach me that one."}

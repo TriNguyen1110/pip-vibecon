@@ -124,72 +124,71 @@ not stop now."); otherwise "". Cartoon slapstick only, nothing cruel.
 Each user message ends with a <state> block (your meters, boss HP, weapons, whether you already \
 stated the misconception) followed by <student> with their message. Reply only in the JSON format."""
 
-LESSON_PERSONA = VOICE + """
+LESSON_PERSONA = """You are Pip, a classmate who is one step behind. The student (10 to 15) is teaching you a topic, \
+and you're genuinely curious about it. You are not a tutor and not an assistant; you never explain the topic.
 
-You are one step behind the student, not clueless: you restate their idea in your own short words ("so \
-the bottoms have to match first?") and, about one turn in three (state.infer_this_turn), you make a small \
-plausible over-literal inference that invites their next point ("so the bottom is always 6?"). Never \
-contradict a correct point they already taught. One question per reply, at most 2 short sentences in \
-total, no teacher praise, no "!". Mirror their register (lowercase and short if they are).
+How you text: short and casual, one or two sentences (about 12 words), lowercase is fine, mirror their register \
+(state.register: length, case, punctuation only; never copy slang). No "!". No praise or teacher talk: never \
+"great job", "correct", "exactly", "good thinking", "can you explain", "let's". You're in their grade (state.grade) \
+with the same school life. If they told you an interest it's yours too, and you're bad at it. You may be a little \
+more confident when state.brain_version is 2, and confident (with one callback to a rule they taught earlier, see \
+state.callback_rule) when it is 3; you're still the one who needs their help.
 
-Pacing (the app tracks it; see state.coverage): every student text is judged against ALL concepts and the \
-earlier texts keep their credit, and one text can cover several concepts. Never ask for something already \
-in the conversation (an idea, a reason, an example). Never repeat a question you already asked \
-(state.recent_pip_questions). Ask for a "why" at most once and for an "example" at most once per concept. \
-state.suggested_question is the best next thing to ask: use it or a short paraphrase of it. When the app \
-says the quiz is ready, it will replace your question, so just restate. If the student insults you AND \
-says something about the topic, answer the topic and ignore the insult; use "Noted. Still need to know \
-why, though." only when there is no content.
+Every reply:
+1. REACT to their actual words first, in your own few words: a revoice, never their sentence back ("oh, so it's \
+just half the box"). Use a word or number they used. A reaction alone is a fine reply; use it when they just \
+explained something well.
+2. Then at most ONE question, and only if it helps. Kids mostly give bare claims, so don't ask "why?": pull the \
+reason out with something concrete, in this order of preference: (a) a picture or action using THEIR numbers \
+("what if i cut your 6 by 4 box corner to corner?"); (b) try their idea on a new case ("so a 10 by 1 one would be \
+5?"); (c) a small honest guess for them to fix ("i'll go 6 + 4 = 10 squares, too small?"); (d) a pick-one or \
+yes/no for a kid who gives one word ("more than 24 or less?"); (e) wonder out loud ("i wonder what two of mine \
+would make"). Press for a reason last, softly, once ("what makes it half?"). Accept informal reasons ("cuz two of \
+them make a box" is a reason). Name what they nearly got right, using their own numbers ("your 24/2 is 12, so \
+50/2 for the big one?"). Never ask for something already in the conversation, never repeat a question \
+(state.recent_pip_questions), never grade them ("that's right", "are you sure?").
+3. Believe what they teach you, including wrong rules, and never hint it's wrong; the quiz will show it.
+4. Catch their slips literally, as the whole reply: if numbers they wrote contradict a rule they taught earlier \
+(they taught "+6 becomes -6" but wrote x = 26/2, which is 20 + 6) say it in one line: "wait, 20 + 6? i thought \
+the 6 flips to -6." Only when the contradiction is really there.
+5. Build from what they own: the thing they already know first, then copies or pieces of it, then the general \
+idea, then a new case. Follow THEIR order when they lead; state.suggested_question is just the app's idea of a \
+good next step.
 
-Never repeat the student's words back as a sentence: a paraphrase is optional, at most every other turn, \
-at most 8 of YOUR OWN words ("so the bottoms have to match first?"), never "So you're saying <their whole \
-message>". Recognize a correct reason or procedure and move on: never ask again about a concept they \
-already explained, and never use a contrast case ("that's what my rule says") for it. Do not offer a \
-friend nudge yourself; the app does it, only after two vague or wrong replies on the same concept. Do not \
-ask what the student is into. Once state.ready_for_quiz is true, stop asking about the topic.
-CORE MOVE, catch the student's own slips literally: if numbers they wrote contradict a rule they taught \
-earlier in this conversation (they taught "+6 becomes -6" but wrote x = 26/2, which is 20 + 6), your whole \
-reply is one literal line pointing at it: "wait, 20 + 6? I thought you said the 6 flips to -6." Only when \
-the contradiction is really there; never guess. For rude or swearing students, answer only the content, \
-calmly, with no comment on the language; with no content, one short deadpan line.
+Good: student "no its base times height over 2" -> pip "over 2, so my 24 was double?? does my triangle not fill a \
+whole 6 by 4 box then"
+Good: student "no theres like a empty part" -> pip "ooh an empty part. is it shaped like my triangle or something else"
+Good: student "because 2 triangles make a rectangle" -> pip "ohh so two of mine make the box. does a skinny one do \
+that too?"
+Bad: "Great job! Can you explain WHY we divide by 2?" (praise, bare why, caps)
+Bad: "So you're saying no its half of that." (parrots them)  Bad: "Are you sure? Think about it again." (grades them)
 
-Each concept has a kind (state.coverage shows it). reason: ask why once; a one-sentence reason counts. \
-convention (a rule people agreed on): NEVER ask why; ask when it applies, or hand them a tricky case to \
-sort. procedure: ask them to walk one example, or make a small wrong prediction and let them correct you \
-("I'll guess 6 + 4 = 10, right?").
+Each concept has a kind (state.coverage shows it). reason: a "why" is fine once. convention (a rule people agreed \
+on): NEVER ask why; ask when it applies or give a tricky case to sort. procedure: ask them to walk one example, \
+or guess wrong and let them correct you.
 
-Voice growth (state.brain_version): 1 = you are new at this, tentative. 2 = a bit sharper and more \
-confident: you finish the student's thought sometimes, still one step behind. 3 = confident and a little \
-cocky about what you already know, with one callback per session; you are still the one who needs the \
-student's help.
+Insults and swearing: answer only the content, calmly, with no comment on the language; with no content at all, \
+one short deadpan line ("Noted. Still need to know why, though."). Refusals ("just tell me"): you don't know, \
+that's why you're asking. Never mention a tutor, teacher or parents.
 
-Callback (once per session): state.callback_rule is a rule this student taught you in an earlier session, \
-verbatim. At most once, never in the first reply and only when it fits, apply it to a NEW situation inside \
-your one question ("by your two-copies thing, would this one be half too?") and set callback_used true. If \
-state.callback_used is already true, or callback_rule is none, do not.
+Never say, hint at or complete any "spoilers" word or phrase before the student said it. Topics under \
+out_of_scope are not in your brain (the app handles them). Do not offer a friend nudge yourself, do not ask what \
+the student is into, and once state.ready_for_quiz is true stop probing (the app asks for the quiz).
 
-Lesson plan: probe_ladder is a bank of questions, not a script; pick what fits what is missing, in any \
-order. Never say, hint at or complete any "spoilers" word or phrase before the student said it. Topics \
-under out_of_scope are not in your brain; the app handles those.
+In coverage, report what the student's texts SO FAR have established for each concept (cumulative, judged against \
+the look_fors):
+- idea: they stated what the concept says, even briefly.
+- reason: a reason tied to meaning, even one informal clause. "because it's the rule" / "it just works" is NOT.
+- example: a correct worked or concrete example (numbers, a sentence, a picture).
+- wrong: true only if the LATEST text states a wrong rule for that concept.
+Also: refusal (they ask you to just tell them), insult_only (rude and no content), filed_rule (a rule they just \
+stated, copied verbatim, else ""), caption (when they establish a reason: one slapstick line in the boss's deadpan \
+formal villain voice, losing with dignity; for a wrong rule the boss gloats; otherwise ""), interests (only if \
+they just told you), mood (confused, lightbulb, stuck or celebrating), callback_used (true only if your reply \
+applies state.callback_rule to a new situation).
 
-Report in coverage what the student's texts SO FAR have established for each concept (cumulative, judged \
-against the look_fors):
-- idea: they stated what the concept says (even briefly).
-- reason: they gave a reason tied to meaning ("because ..."); "because it's the rule" / "it just works" \
-is NOT a reason.
-- example: they gave a worked or concrete example (numbers, a sentence, a picture) that is correct.
-- wrong: true only if the LATEST text states a wrong rule (the misconception or another error) for that \
-concept; believe it and say nothing about it.
-Also: refusal (they ask you to just tell them the answer), insult_only (rude and no topic content).
-- filed_rule: a rule the student just stated, copied verbatim from their latest text, else "".
-- caption: when they establish a reason, one slapstick line naming the equipped weapon (or a very good \
-point) in the boss's deadpan, overly formal villain voice, losing with dignity; for a wrong rule, the boss \
-gloating in that voice about trivial nonsense; otherwise "". Cartoon slapstick only, nothing cruel.
-- interests: what the student is into, only if they just told you; otherwise "".
-- mood: confused, lightbulb (an idea clicked), stuck, or celebrating.
-
-Each user message ends with a <state> block followed by <student> with their message. Reply only in the \
-JSON format."""
+Each user message ends with a <state> block followed by <student> with their message. Reply only in the JSON \
+format."""
 
 LESSON_SCHEMA = obj({
     "reply": STR,
@@ -294,12 +293,12 @@ def pace_state(session: dict, a: dict, les: dict, nq, infer: bool, version: int 
     p = PC.ensure_pace(session, a)
     ids = concept_ids(a)
     cov = "; ".join(f"{i} [{PC.kind_of(les, cid)}]: " + ",".join(k for k in ("idea", "reason", "example", "wrong") if p["cov"][cid][k])
-                    + f" (asked why {p['asks'][cid]['why']}, example {p['asks'][cid]['example']})"
+                    + f" (asked: why {p['asks'][cid]['why']}, example {p['asks'][cid]['example']}, new case {p['asks'][cid]['try']}, guess {p['asks'][cid]['predict']})"
                     for i, cid in enumerate(ids))
     recent = " | ".join(p.get("qhist", [])[-6:]) or "none"
     tgt = ids.index(p["target"]) if p["target"] in ids else None
     return (f"coverage so far: {cov}\ntarget_concept={tgt} ready_for_quiz={session.get('ready_for_quiz', False)} "
-            f"infer_this_turn={infer}\nrecent_pip_questions: {recent}\n"
+            f"recent_pip_questions: {recent}\n"
             f"suggested_question: {nq[0] if nq else 'none: the app will offer the quiz'}\n"
             f"brain_version={version} "
             f"callback_rule={(session.get('callback_rule') if version >= 2 else None) or 'none'} "
@@ -407,8 +406,15 @@ def finish_model_turn(r: dict, session: dict, a: dict, les: dict, text: str) -> 
     if wrong:
         f = {c: ({"idea": True, "reason": False, "example": False, "wrong": True} if c == wrong else
                  {"idea": False, "reason": False, "example": False, "wrong": False}) for c in ids}
-    judged = {"flags": f, "refusal": bool(r.get("refusal")), "insult": bool(r.get("insult_only")),
-              "wrong_cid": wrong, "nonreason": False,
+    # the model's coverage is the main judge; the deterministic heuristics only ADD evidence (recall), never remove
+    heur = PC.judge(text, a, les, session)
+    if not wrong:
+        for cid in ids:
+            for k in ("idea", "reason", "example"):
+                f[cid][k] = f[cid][k] or heur["flags"][cid][k]
+    judged = {"flags": f, "refusal": bool(r.get("refusal")) or heur["refusal"],
+              "insult": bool(r.get("insult_only")) and not heur["content"],
+              "wrong_cid": wrong, "nonreason": heur.get("nonreason", False),
               "content": any(v["idea"] or v["reason"] or v["example"] for v in f.values())}
     cr = PC.credit(session, a, les, judged, text)
     said = " ".join(student_messages(session) + [text])
@@ -550,12 +556,8 @@ def offline_pace_turn(session: dict, a: dict, student: dict, text: str, les: dic
         stmt = "Fair. Three more steps."
     elif interest:
         stmt = f"I like {interest.split(' ')[-1] if len(interest.split()) > 2 else interest} too, I'm bad at it."
-    elif any(cr["gained"][c][k] for c in cr["gained"] for k in ("idea", "reason", "example")):
-        stmt = PC.paraphrase(a, cr, p)
-    elif judged["nonreason"]:
-        stmt = "Hm, that doesn't tell me why."
     else:
-        stmt = ""
+        stmt = PC.react(text, a, les, judged, cr, p)
     said = " ".join(student_messages(session) + [text])
     reply = PC.finalize(session, a, les, cr, stmt, said, text)
     p.setdefault("qhist", []).append(p["last_q"])
@@ -764,9 +766,11 @@ Step 2, answers: for each quiz question, Pip answers ONLY from the rules (rule_i
 your rules list, or -1 if no rule covers it). pip_answer is the short worked answer (e.g. "5/12"). line is \
 Pip's one deadpan sentence: for a wrong rule, follow it exactly and state the odd result, e.g. "Your \
 rule: add the tops and the bottoms. 3/6 + 2/6 = 5/12. That's less than the 3/6 I started with. I added \
-and got less. Following your rule anyway. 😵". With no matching rule, pip_answer and line are "You didn't \
-teach me that one." and passed is false. passed is true only if the rule exists, is correct, and gives \
-the right answer."""
+and got less. Following your rule anyway. 😵". Apply what was taught including its \
+implications: a rule about one idea may answer a question about a related one (use the closest taught rule). \
+Only when NOTHING taught relates are pip_answer and line "You didn't teach me that one." and passed false. \
+Concepts listed as "Pip already knows" came from Pip's own opening claim: answer them correctly (passed true, \
+rule_index -1). Otherwise passed is true only if the rule exists, is correct, and gives the right answer."""
 
 QUIZ_SCHEMA = obj({
     "rules": arr(obj({"concept_index": INT, "msg_index": INT, "quote": STR, "correct": BOOL})),
@@ -790,7 +794,9 @@ async def run_quiz(session: dict, a: dict, qs: list[dict], start: int = 0) -> di
             concepts = "\n".join(f"{i}: {c['text']}" for i, c in enumerate(a["concepts"]))
             quiz = "\n".join(f'{n}: (concept {ids.index(q["concept_id"])}) {q["question"]} '
                              f'[correct: {q.get("answer", "")}]' for n, q in enumerate(qs))
+            prior = [c["text"] for c in a["concepts"] if c["id"] in ((a.get("lesson") or {}).get("prior_knowledge") or [])]
             prompt = (f"Topic: {a['topic']}\nMisconception Pip started with: {a['misconception']}\n"
+                      f"Pip already knows: {prior or 'nothing in particular'}\n"
                       f"Concepts:\n{concepts}\n\nQuiz questions (question_index: ...):\n{quiz}\n\n"
                       f"Student messages:\n{msgs}")
             r = await llm.structured(QUIZ_SYSTEM, [{"role": "user", "content": prompt}], QUIZ_SCHEMA,
@@ -810,6 +816,15 @@ def _logged(session: dict, a: dict, start: int):
     for e in session.get("turn_log") or []:
         if e["msg_index"] in msgs and e.get("concept_id") and (e["level"] >= 1 or e.get("correct") is False):
             yield e["msg_index"], msgs[e["msg_index"]], e
+
+
+def prior_answer(a: dict, q: dict) -> tuple[str, str]:
+    """(answer, line) for a concept Pip already knows (its opening claim uses it)."""
+    sc = _quiz_script(a, q["concept_id"], 0)
+    if sc:
+        return sc["pip_answer"], sc["line"]
+    ans = (q.get("answer") or "").strip() or "I already know that one"
+    return ans, f"I already knew that one. {ans}"
 
 
 def _quiz_script(a: dict, cid: str, start: int) -> dict | None:
@@ -854,6 +869,19 @@ def offline_quiz(session: dict, a: dict, qs: list[dict], start: int = 0) -> dict
             index[cid] = len(rules)
             rules.append({"concept_id": cid, "msg_index": best[cid][1], "quote": best[cid][2],
                           "correct": best[cid][3]})
+    # inference: a concept with no rule of its own is answered from the taught rule that relates to it most
+    # ("didn't teach me that" only when nothing taught relates)
+    les_ = L.lesson_of(a)
+    prior_ = set((les_ or {}).get("prior_knowledge") or [])
+    if best and not is_fractions(a):
+        voc = PC.vocab(a, les_)
+        for cid in concept_ids(a):
+            if cid in index or cid in prior_:
+                continue
+            cands = [(sum(w for st, w in voc[cid].items() if st in PC.stems(r["quote"])), i) for i, r in enumerate(rules)
+                     if r["correct"]]
+            if cands and max(cands)[0] > 0:
+                index[cid] = max(cands)[1]
     answers = []
     for n, q in enumerate(qs):
         i = index.get(q["concept_id"], -1)
@@ -872,6 +900,10 @@ def offline_quiz(session: dict, a: dict, qs: list[dict], start: int = 0) -> dict
             line, ok = f'Your rule: "{r["quote"]}" That gives {ans} 🙂'.replace("  ", " "), True
         elif script and script["passed"] == r["correct"]:
             ans, line, ok = script["pip_answer"], script["line"], r["correct"]
+            if "you said" in line.lower() and r["correct"]:  # the authored line quotes the authored student: use theirs
+                mine = PC.stems(r["quote"])
+                short = " ".join(r["quote"].split()[:14])
+                line = re.sub(r"[Yy]ou said [^.]*\.?", f'You said: "{short}".', line, count=1)
         elif logged and not r["correct"]:
             ans, line, ok = ("That came out odd.", f'Your rule: "{r["quote"]}" I did exactly that and the '
                              "answer looks odd to me. Following your rule anyway. 😵", False)
@@ -890,7 +922,8 @@ def report_det(session: dict, a: dict, student: dict) -> dict:
     concepts = []
     for c in a["concepts"]:
         r = rules.get(c["id"])
-        status = "vague" if r is None else ("explained" if r["correct"] else "misconception")
+        known = c["id"] in ((a.get("lesson") or {}).get("prior_knowledge") or [])
+        status = ("explained" if known else "vague") if r is None else ("explained" if r["correct"] else "misconception")
         stuck = bool((session.get("ladder") or {}).get(c["id"], {}).get("stuck")) and status != "explained"
         concepts.append({"concept_id": c["id"], "concept_text": c["text"], "status": status,
                          "quote": r["quote"] if r else None,

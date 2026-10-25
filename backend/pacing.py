@@ -12,6 +12,7 @@ import re
 import lesson as L
 from logic import norm
 
+BACKSTOP_LINES = ["that's all i've got so far. wanna see what i learned?", "i think i've hit my limit. quiz me and see?"]
 READY_LINES = ["ok I think I get it. quiz me?", "I think I'm good. Want to quiz me now?",
                "Anything else, or should I try the quiz?", "I'm ready when you are. Should we do the quiz?",
                "That's everything I can hold. Quiz time?", "Okay, I'm full. Ready for the quiz?"]
@@ -25,7 +26,7 @@ INSULT = re.compile(r"stupid|dumb|idiot|shut up|you suck|hate you|\bloser\b|moro
 POINTLESS = re.compile(r"pointless|boring|waste of time|who cares|this is useless")
 IDK = re.compile(r"\bidk\b|i don.?t know|i dont know|no idea|not sure|dunno|whatever")
 REASON = re.compile(r"because|\bcuz\b|\bcause\b|since|\bso\b|that.?s why|which is why|imagine|means|otherwise|"
-                    r"tells you|names the|so that|has to|have to")
+                    r"tells you|names the|so that")
 STRONG = re.compile(r"imagine|because|\bcuz\b|\bcause\b|since|that.?s why|which is why|so that|tells you|names the")
 NONREASON = re.compile(r"because (the )?(rule|formula)|just the formula|because (it'?s|that'?s|thats|its|it is) (just )?(the|a) rule|just because|because i said|"
                        r"i said so|it just works|because it is|because it'?s (how|what)|just do it|you just do it|"
@@ -41,10 +42,10 @@ STOP = set("that this with from have when then they them what your each does int
 def new_pace(a: dict) -> dict:
     return {"cov": {c["id"]: {"idea": False, "reason": False, "example": False, "wrong": False}
                     for c in a["concepts"]},
-            "asks": {c["id"]: {"idea": 0, "why": 0, "example": 0} for c in a["concepts"]},
+            "asks": {c["id"]: {"idea": 0, "why": 0, "example": 0, "try": 0, "predict": 0, "concrete": 0} for c in a["concepts"]},
             "vague": {c["id"]: 0 for c in a["concepts"]},
             "nudged": {c["id"]: False for c in a["concepts"]},
-            "qlog": [], "target": None, "last_q": "", "texts": 0, "all_texts": 0, "turns": 0}
+            "qlog": [], "target": None, "last_q": "", "texts": 0, "all_texts": 0, "turns": 0, "post_ready": 0}
 
 
 def ensure_pace(session: dict, a: dict) -> dict:
@@ -60,13 +61,22 @@ def ensure_pace(session: dict, a: dict) -> dict:
     for cid in p["cov"]:
         L_lad.setdefault(cid, {"rung": 0, "nudged": False, "stuck": False, "done": False, "best_level": 0})
     session.setdefault("ready_for_quiz", False)
+    if not p.get("prior_done"):  # what Pip already knows from its own opening claim is credited at the start
+        les = a.get("lesson") or {}
+        for cid in les.get("prior_knowledge") or []:
+            if cid in p["cov"]:
+                p["cov"][cid].update(idea=True, reason=True, example=True, wrong=False)
+                session["ladder"][cid].update(done=True, best_level=max(2, session["ladder"][cid].get("best_level", 0)))
+                if "meters" in session:
+                    session["meters"][cid] = 100  # Pip already knows it: the bar is full from the start
+        p["prior_done"] = True
     return p
 
 
 def reset_concept(session: dict, a: dict, cid: str) -> None:
     p = ensure_pace(session, a)
     p["cov"][cid] = {"idea": False, "reason": False, "example": False, "wrong": False}
-    p["asks"][cid] = {"idea": 0, "why": 0, "example": 0}
+    p["asks"][cid] = {"idea": 0, "why": 0, "example": 0, "try": 0, "predict": 0, "concrete": 0}
     p["vague"][cid], p["nudged"][cid] = 0, False
     session["ladder"][cid].update(stuck=False, done=False)
     session["ready_for_quiz"] = False
@@ -77,7 +87,8 @@ def is_fractions(a: dict) -> bool:
 
 
 def covered(c: dict) -> bool:
-    return c["idea"] and (c["reason"] or c["example"]) and not c["wrong"]
+    """idea + (a reason, an example, or a full-sentence statement of it: kids explain by stating the relation)."""
+    return c["idea"] and (c["reason"] or c["example"] or c.get("solid", False)) and not c["wrong"]
 
 
 def kind_of(les: dict | None, cid: str) -> str:
@@ -87,8 +98,8 @@ def kind_of(les: dict | None, cid: str) -> str:
 def explained(c: dict, kind: str = "reason") -> bool:
     """Reasons need a reason; conventions and procedures are explained by an applied example."""
     if kind == "reason":
-        return c["idea"] and c["reason"] and not c["wrong"]
-    return c["idea"] and (c["example"] or c["reason"]) and not c["wrong"]
+        return c["idea"] and (c["reason"] or c.get("solid", False)) and not c["wrong"]
+    return c["idea"] and (c["example"] or c["reason"] or c.get("solid", False)) and not c["wrong"]
 
 
 # ---------------------------------------------------------------- question bank
@@ -100,15 +111,33 @@ def one_question(text: str) -> str:
 
 
 def rung_kind(text: str) -> str:
+    """idea (open), why, example (walk one through), try (a new case with numbers), predict (Pip guesses and
+    gets corrected), infer (Pip's old rule applied literally)."""
     t = norm(text)
-    if re.search(r"my rule says|^then |^so if|^say a ", t):
-        return "infer"
-    if re.search(r"show me|example|try one|your own|a small|walk me|walk through|count them|i.?ll guess|"
-                 r"tricky|sort ", t):
+    if re.search(r"why is that wrong|why is my|why am i wrong", t):
+        return "idea"  # the opener: asks what is wrong with Pip's own rule
+    if re.search(r"what if i (cut|fold|flip|draw|put|stick|slice|split|tear|cover|try to|read|say|want|have)|"
+                 r"^picture |^imagine ", t):
+        return "concrete"
+    if re.search(r"i.?ll guess|i.?d guess|i bet|my guess|my rule says", t):
+        return "predict"
+    if re.search(r"show me|example|try one|your own|a small|walk me|walk through|count them|tricky|sort ", t):
         return "example"
-    if re.search(r"\bwhy\b|what does the .* mean", t):
+    if re.search(r"\bwhy\b|what does the .* mean|what makes", t):
         return "why"
+    if re.search(r"\d", t) and re.search(r"\bif\b|what about|what if|bigger|smaller|\bis a\b|does a|would|can i make|"
+                                         r"fill|cover|still", t):
+        return "try"
     return "idea"
+
+
+def as_question(r: str) -> str:
+    """A contrast case ("... that's what my rule says.") becomes Pip's literal over-reading, asked as a check."""
+    r = r.strip()
+    if "?" in r:
+        return one_question(r)
+    r = re.sub(r"[\s,.]*(and )?that.?s what my rule says\.?$", "", r, flags=re.I).rstrip(" .,")
+    return r + ", right?"
 
 
 def qnorm(q: str) -> str:
@@ -117,9 +146,11 @@ def qnorm(q: str) -> str:
 
 KIND_GENERIC = {"convention": ["When would I use that one?", "Can you give me a tricky one to sort?"],
                 "procedure": ["Can you walk me through one example?", "Can you do one while I watch?"]}
-GENERIC = {"idea": ["What do I do first?", "Can you say that part again, smaller?", "What's the very first step?"],
-           "why": ["Why does that work?", "Why does it have to be like that?"],
-           "example": ["Can you give me an example of that?", "Can you try one so I can see it?"]}
+GENERIC = {"idea": ["what do you notice first?", "where would i even start?", "what's the first thing i'd do?"],
+           "why": ["hm, what makes it work like that?", "what makes you say that?"],
+           "example": ["can you try one with numbers so i can see?", "can you give me one i can picture?"],
+           "try": ["would it work on a different one too?", "what if i tried it on a bigger one?"],
+           "predict": ["i'd guess it's the other way, am i wrong?"]}
 
 
 def stems(text: str) -> set[str]:
@@ -154,16 +185,25 @@ def closed(p: dict, ladder: dict, cid: str, kind: str = "reason") -> bool:
         return explained(c, kind)
     if c["idea"] and c["reason"] and not c["wrong"]:
         return True
-    if c["idea"] and c["example"] and asks["why"] >= 1 and not c["wrong"]:
+    if c["idea"] and c["example"] and (asks["why"] + asks["try"] + asks["concrete"]) >= 1 and not c["wrong"]:
         return True
     return False
 
 
+def arc_order(les: dict | None, a: dict) -> list[str]:
+    """Default concept order: the lesson's bottom-up `arc` (what the kid owns first), else concept order."""
+    ids = [c["id"] for c in a["concepts"]]
+    arc = [x for x in ((les or {}).get("arc") or []) if x in ids]
+    return arc + [x for x in ids if x not in arc]
+
+
 def next_question(session: dict, a: dict, les: dict, focus: str | None = None, infer: bool = False):
-    """(question, cid, kind) for the most useful thing not yet given, or None when nothing is left to ask."""
+    """(question, cid, kind) for the most useful thing not yet given, or None when nothing is left to ask.
+    Moves, best first: try the idea on a new case / predict-then-check, then wonder, then press for reasoning
+    (once, soft), then a worked example."""
     p = ensure_pace(session, a)
-    order = [c["id"] for c in a["concepts"] if L.lc(les, c["id"])
-             and not closed(p, session["ladder"], c["id"], kind_of(les, c["id"]))]
+    order = [cid for cid in arc_order(les, a) if L.lc(les, cid)
+             and not closed(p, session["ladder"], cid, kind_of(les, cid))]
     if focus in order:
         order.remove(focus)
         order.insert(0, focus)
@@ -171,9 +211,24 @@ def next_question(session: dict, a: dict, les: dict, focus: str | None = None, i
     for cid in order:
         c, asks = p["cov"][cid], p["asks"][cid]
         ck = kind_of(les, cid)
-        if ck != "reason":  # never ask why of a convention or procedure
+        spec = L.lc(les, cid)
+        rungs = [as_question(r) if "my rule says" in r.lower() else one_question(r)
+                 for r in list(spec["probe_ladder"]) + list(spec.get("concrete") or [])]
+        has = {rung_kind(r) for r in rungs if qnorm(r) not in used and "?" in r}
+        if ck == "convention":
             if not c["idea"] or c["wrong"]:
                 kind = "idea"
+            elif not c["example"] and asks["example"] < 1:
+                kind = "example"
+            else:
+                continue
+        elif ck == "procedure":
+            if not c["idea"] or c["wrong"]:
+                kind = "idea"
+            elif not c["example"] and asks["concrete"] < 1 and "concrete" in has:
+                kind = "concrete"
+            elif not c["example"] and asks["predict"] < 1 and "predict" in has:
+                kind = "predict"
             elif not c["example"] and asks["example"] < 1:
                 kind = "example"
             else:
@@ -181,20 +236,27 @@ def next_question(session: dict, a: dict, les: dict, focus: str | None = None, i
         elif c["wrong"]:
             kind = "idea" if not c["reason"] and asks["why"] < 1 else "why"
         elif not c["idea"]:
-            kind = "idea"
+            # with something already on the table, a picture or action draws the idea out better than "what do you notice"
+            kind = "concrete" if (any(x["idea"] for x in p["cov"].values()) and asks["concrete"] < 1
+                                  and "concrete" in has) else "idea"
+        elif not c["reason"] and asks["concrete"] < 1 and "concrete" in has:
+            kind = "concrete"
+        elif not c["reason"] and asks["try"] < 1 and "try" in has:
+            kind = "try"
+        elif not c["reason"] and asks["predict"] < 1 and "predict" in has:
+            kind = "predict"
         elif not c["reason"] and asks["why"] < 1:
             kind = "why"
-        elif not c["reason"] and not c["example"] and asks["example"] < 1:
+        elif not c["reason"] and not c["example"] and asks["example"] < 1 \
+                and not any(x["example"] for x in p["cov"].values()):  # the kid already showed numbers somewhere
             kind = "example"
         else:
             continue
-        rungs = [one_question(r) for r in L.lc(les, cid)["probe_ladder"]]
-        if infer and c["idea"]:
-            for r in rungs:
-                if rung_kind(r) == "infer" and qnorm(r) not in used:
-                    return r, cid, "infer"
+        anything = any(x["idea"] for x in p["cov"].values())
         for r in rungs:
             if rung_kind(r) == kind and qnorm(r) not in used and "?" in r:
+                if anything and re.search(r"why is that wrong|why is my", r.lower()):
+                    continue  # the argument opener only makes sense before the kid has said anything
                 return r, cid, kind
         for g in (KIND_GENERIC.get(ck, []) if kind == "example" and ck != "reason" else []) + GENERIC[kind]:
             if qnorm(g) not in used:
@@ -234,30 +296,40 @@ FR = {
 
 
 # Offline-only keyword features for the main demo missions (the generic stem scorer handles the rest).
-MISSION_IDEAS = {
-    "a_tri": {
-        "k1": re.compile(r"(two|2) (of them|copies|triangles|same|identical|together)|make a (rectangle|parallelogram|"
-                         r"box)|put .{0,20}together|into a (rectangle|box)|fit together|flip"),
-        "k2": re.compile(r"(rectangle|box).{0,25}(base|length|width).{0,12}(times|x|\u00d7|\*)|"
-                         r"(base|length) (times|x|\u00d7|\*) (height|width)|\d+\s*(x|\u00d7|\*|times)\s*\d+"),
-        "k3": re.compile(r"\bhalf\b|\u00bd|\u00f7\s*2|divided? (it )?by (2|two)|/\s*2\b|times (1/2|a half)"),
-    },
-}
+MISSION_IDEAS: dict = {}  # per-mission keyword tables now live in the lessons (`idea_patterns`)
 
 
 def _frac_eq(t: str) -> bool:
     return bool(re.search(r"\d+/\d+\s*(\+|=|is|becomes)\s*\d+/\d+", t))
 
 
+INFORMAL = [(r"\bb/?c\b|\bbcuz\b|\bbecuz\b|\bcos\b|\bcoz\b|\bcuz\b|\bcause\b", "because"),
+            (r"\bu\b", "you"), (r"\bur\b", "your"), (r"\bya\b|\byea\b|\byeh\b", "yes"),
+            (r"\bthru\b", "through"), (r"\bw/\b", "with"), (r"\bwhats\b", "what is"), (r"\bgotta\b", "have to")]
+
+
+def informal(t: str) -> str:
+    """Texting shorthand -> plain words, so 'bc 2 triangles make a rect' reads like 'because ...'."""
+    for pat, rep_ in INFORMAL:
+        t = re.sub(pat, rep_, t)
+    return t
+
+
 def judge(text: str, a: dict, les: dict | None, session: dict) -> dict:
     """What this one text establishes, per concept, plus the student's move. Heuristic, deterministic."""
-    t = norm(text)
+    t = informal(norm(text))
+    # "ur so dumb" must not read as a reason ("so"); judge the rest of the sentence
+    t_ins = t
+    t = re.sub(r"\b(you|your|ur|youre|you're)\s*(are|r|re)?\s*(so|very|really|just)?\s*(dumb|stupid|an? idiot|a loser|a moron)\w*",
+               " ", t)
+    t = INSULT_WORDS.sub(" ", t).strip() or t
     p = ensure_pace(session, a)
     f = empty_flags(a)
     ids = [c["id"] for c in a["concepts"]]
     words = len(t.split())
     nonreason = bool(NONREASON.search(t))
-    reasonish = bool(REASON.search(t)) and not nonreason and words >= 4
+    reasonish = (bool(STRONG.search(t)) or (bool(REASON.search(t)) and "?" not in text)) \
+        and not nonreason and words >= 4  # a hedging "?" does not cancel an explicit "because"
     exampleish = bool(EXAMPLE.search(text)) and words >= 3
     wrong_cid = None
     if is_fractions(a) and {"k1", "k2", "k3"} <= set(ids):
@@ -289,6 +361,14 @@ def judge(text: str, a: dict, les: dict | None, session: dict) -> dict:
         for cid, rx in MISSION_IDEAS.get(a.get("id"), {}).items():
             if cid in f and rx.search(t2):
                 f[cid]["idea"] = True
+        for cid in ids:  # lesson-authored phrasing of each idea (kids say it many ways)
+            for pat in (L.lc(les, cid) or {}).get("idea_patterns", []) if les else []:
+                try:
+                    if re.search(pat, t2):
+                        f[cid]["idea"] = True
+                        break
+                except re.error:
+                    pass
         for cid in ids:  # an authored "answer phrase" (the lesson's spoilers) is evidence of that concept
             for sp in (L.lc(les, cid) or {}).get("spoilers", []) if les else []:
                 n = re.sub(r"\b2\b", "two", norm(sp))
@@ -301,13 +381,18 @@ def judge(text: str, a: dict, les: dict | None, session: dict) -> dict:
         top = order[0] if order else None
         second = scores[order[1]] if len(order) > 1 else 0
         for cid, sc in scores.items():  # a clear winner, or a strong match; ties credit nothing
-            if a.get("id") in MISSION_IDEAS:
-                break
+            if any(L.lc(les, c).get("idea_patterns") for c in ids if L.lc(les, c)) if les else False:
+                break  # the lesson says how its ideas are phrased: no loose stem guessing
             if words >= 3 and (sc >= 2.0 or (cid == top and sc >= 1.0 and sc > second)):
                 f[cid]["idea"] = True
         mis = stems(a.get("misconception", ""))
         neg = re.search(r"\b(not|never|don.?t|can.?t|isn.?t|no|wrong|shouldn.?t)\b", t)
-        if len(mis & ts) >= 2 and re.search(r"\bjust\b|always|whenever|wherever|every", t) and not neg:
+        fixes = re.search(r"\bhalf\b|\u00bd|\u00f7|divid|over 2|opposite|undo|cancel|instead|actually|oh wait|switch", t)
+        endorse = re.search(r"^(yes|yeah|yep)\b[^.?!]{0,15}\b(right|correct|true)\b(?!\s*(side|angle|triangle|hand))|"
+                            r"that.?s (right|correct|true)\b|you.?re right|\byes it is\b", t) and not neg
+        if ((len(mis & ts) >= 2 and re.search(r"\bjust\b|always|whenever|wherever|every", t))
+                or (endorse and (len(mis & ts) >= 1 or set(re.findall(r"\d+", a.get('misconception', ''))) & set(re.findall(r"\d+", t))))) \
+                and not neg and not (fixes and not endorse):
             wrong_cid = best_concept(a, les, text, p["target"]) or ids[0]
     # bare reasoning / examples answer the question Pip just asked
     tgt = p["target"]
@@ -331,7 +416,7 @@ def judge(text: str, a: dict, les: dict | None, session: dict) -> dict:
             f[cid] = {"idea": False, "reason": False, "example": False, "wrong": False}
         f[wrong_cid] = {"idea": True, "reason": False, "example": False, "wrong": True}
     interest = ""
-    return {"flags": f, "refusal": bool(REFUSE.search(t)), "insult": bool(INSULT.search(t)),
+    return {"flags": f, "refusal": bool(REFUSE.search(t)), "insult": bool(INSULT.search(t_ins)),
             "pointless": bool(POINTLESS.search(t)), "idk": bool(IDK.search(t)),
             "nonreason": nonreason, "wrong_cid": wrong_cid,
             "content": any(v["idea"] or v["reason"] or v["example"] or v["wrong"] for v in f.values()),
@@ -364,19 +449,82 @@ def slip(text: str, a: dict, session: dict) -> str | None:
     return None
 
 
-def paraphrase(a: dict, cr: dict, p: dict) -> str:
-    """At most every other turn, <= 8 of Pip's own words, never the student's sentence."""
-    if p["turns"] % 2 == 0:
-        return ""
-    gain = [cid for cid, g in cr["gained"].items() if any(g.values())]
-    if not gain:
-        return ""
-    cid = next((c for c in gain if cr["gained"][c]["reason"]), gain[0])
-    why = cr["gained"][cid]["reason"]
-    if a.get("id") == "a_frac":  # curated short names exist for the demo mission
-        name = " ".join(short_name_of(a, cid).split()[:5])
-        return f"ok, that explains {name}." if why else f"ok, so it's about {name}."
-    return "ok, that's the why." if why else "ok, I follow that part."
+LEAD = re.compile(r"^(no+|nah|yeah|yes|yep|ok(ay)?|so|well|and|but|oh|wait|because|cuz|cause|like|then|just|duh|lol|"
+                  r"bro|hmm+|uh+|um+|it|its|it's|thats|that's|you|need to|have to|has to|gotta|should|can)\b[\s,.!-]*",
+                  re.I)
+TAIL_FUNCTION = {"of", "the", "a", "an", "is", "to", "and", "or", "in", "on", "for", "with", "by", "times",
+                 "are", "then", "so", "at", "as", "be", "you", "just", "your", "my", "its", "than"}
+INSULT_WORDS = re.compile(r"\b(dumb|stupid|idiot|bitch|shit|fuck\w*|loser|moron)\b[\s,.!-]*", re.I)
+
+
+def fragment(text: str, a: dict, les: dict | None, maxw: int = 5) -> str:
+    """A few of the student's own words (never a sentence): the 3-5 word window with the most idea in it that
+    starts and ends on a real word."""
+    t = INSULT_WORDS.sub("", text)
+    voc = vocab(a, les)
+    keys = set().union(*[set(v) for v in voc.values()]) if voc else set()
+    clauses = [c.strip() for c in re.split(r"[.;!?]|,\s|\s+and\s+|\s+but\s+|\s+which\s+", t) if len(c.strip().split()) >= 2]
+    best, best_score = "", -1.0
+    for cl in clauses:
+        ws = cl.replace("?", "").split()
+        for n in range(maxw, 2, -1):
+            for i in range(0, max(1, len(ws) - n + 1)):
+                win = ws[i:i + n]
+                if len(win) < 3 and len(ws) >= 3:
+                    continue
+                lo = [w.lower().strip(",.") for w in win]
+                if lo[0] in TAIL_FUNCTION or lo[-1] in TAIL_FUNCTION or LEAD.match(lo[0] + " ") \
+                        or not re.search(r"[a-z0-9]", lo[0] + lo[-1]) or not re.search(r"[a-z0-9]", lo[-1]):
+                    continue
+                score = 2.0 * len(stems(" ".join(win)) & keys) + 1.5 * bool(re.search(r"\d", " ".join(win))) + n / 10
+                if score > best_score:
+                    best, best_score = " ".join(win), score
+    if len(best.split()) >= 2:
+        return best.strip(" ,.-").lower()
+    m = re.search(r"\b\d+(\.\d+)?\b", text)
+    return m.group(0) if m and len(text.split()) <= 6 else ""
+
+
+REACT = {
+    "reason": ["ohh ok, {f}.", "ahh, {f}. that makes sense.", "hm ok, {f}."],
+    "example": ["ok, {f}. i can picture that.", "ok so {f}.", "oh, {f}."],
+    "idea": ["ohh, {f}.", "hm, {f}. ok.", "oh wait, {f}."],
+}
+
+
+def react(text: str, a: dict, les: dict | None, judged: dict, cr: dict, p: dict) -> str:
+    """Pip's short reaction: its own few words plus a fragment of what the kid actually said. Never the sentence."""
+    gained = [(cid, g) for cid, g in cr["gained"].items() if any(g.values())]
+    n = p["turns"]
+    if gained:
+        arc = arc_order(les, a)
+        pool = [(c, x) for c, x in gained if x["reason"]] or gained
+        cid, g = max(pool, key=lambda cx: arc.index(cx[0]) if cx[0] in arc else 0)  # the conclusion, last in the arc
+        aha = (L.lc(les, cid) or {}).get("aha") if les else None
+        if g["reason"] and aha:
+            return aha if aha.rstrip()[-1:] in ".!?" else aha.rstrip() + "."
+        kind = "reason" if g["reason"] else ("example" if g["example"] else "idea")
+        f = fragment(text, a, les)
+        if f:
+            tpl = REACT[kind][n % len(REACT[kind])]
+            return tpl.format(f=f)
+        return {"reason": "ohh, that makes sense.", "example": "ok, i can picture that.",
+                "idea": "hm ok, i see where that goes."}[kind]
+    if judged.get("nonreason"):
+        return "hm, ok."
+    if text.strip().endswith("?") and not judged.get("content"):
+        return ["hm, you tell me, i'm the confused one.", "i was hoping you'd tell me, honestly."][n % 2]
+    if p.get("post_ready") is not None and judged.get("content") and p.get("texts", 0) >= 3:
+        return ["ok, that tracks.", "mm, yeah, that fits.", "right, ok."][n % 3]
+    if judged.get("content"):  # said something on topic that adds nothing new: still acknowledge it
+        f = fragment(text, a, les)
+        if f:
+            return ["ok, {f}.", "mm, {f}.", "right, {f}."][n % 3].format(f=f)
+    if not judged.get("idk") and not judged.get("refusal") and not judged.get("pointless"):
+        f = fragment(text, a, les)  # off the ladder but still something the kid said: react to it
+        if f:
+            return ["hm, {f}.", "ok, {f}.", "mm, {f}."][n % 3].format(f=f)
+    return ["hm, ok.", "ok, no worries.", "ok."][n % 3]
 
 
 def short_name_of(a: dict, cid: str) -> str:
@@ -423,6 +571,8 @@ def credit(session: dict, a: dict, les: dict, judged: dict, text: str) -> dict:
             g = {k: new[k] for k in ("idea", "reason", "example")}
         for k in ("idea", "reason", "example"):
             cov[k] = cov[k] or new[k]
+        if new["idea"] and len(text.split()) >= 7 and not cov.get("solid"):
+            cov["solid"] = True  # said as a full sentence, not a fragment
         gained[cid] = g
         ck = kind_of(les, cid)
         if (g["reason"] or (ck != "reason" and g["example"])) and cov["idea"]:
@@ -434,7 +584,7 @@ def credit(session: dict, a: dict, les: dict, judged: dict, text: str) -> dict:
         levels[cid] = lvl
         if lvl:
             delta = LEVEL_DELTA[lvl]
-            if explained(cov, ck):
+            if explained({**cov, "solid": False}, ck):  # a bare claim is not a reason: no free weapon
                 delta = max(delta, EXPLAINED_FLOOR - session["meters"].get(cid, 0))
             progress.append({"concept_id": cid, "delta": max(0, min(60, delta))})
             lad = session["ladder"][cid]
@@ -448,10 +598,15 @@ def credit(session: dict, a: dict, les: dict, judged: dict, text: str) -> dict:
     any_gain = any(any(g.values()) for g in gained.values())
     # vague bookkeeping on the concept Pip was asking about: only misses/wrong answers on THAT concept count
     esc, tgt = None, p["target"]
-    if tgt and not judged["refusal"] and not any_gain:
+    answered = p.get("last_kind") in ("predict", "try") and not judged.get("idk") and not judged.get("nonreason") \
+        and len(norm(text).split()) >= 1
+    if tgt and not judged["refusal"] and not any_gain and answered:
+        pass  # answering Pip's guess or new-case question is engagement, not a miss
+    elif tgt and not judged["refusal"] and not any_gain and not covered(p["cov"][tgt]) \
+            and not session.get("ready_for_quiz"):
         p["vague"][tgt] += 1
         spec = L.lc(les, tgt) if les else None
-        if p["vague"][tgt] >= 3 and p["nudged"][tgt] or (p["vague"][tgt] >= 4):
+        if p["vague"][tgt] >= 4 and p["nudged"][tgt] or (p["vague"][tgt] >= 5):
             esc = "stuck"
         elif p["vague"][tgt] >= 2 and not p["nudged"][tgt] and spec and spec.get("friend_nudge"):
             esc = "nudge"
@@ -467,13 +622,18 @@ def credit(session: dict, a: dict, les: dict, judged: dict, text: str) -> dict:
     n_cov = sum(covered(s) for s in states)
     n_idea = sum(s["idea"] for s in states)
     was_ready = bool(session.get("ready_for_quiz"))
-    ready = was_ready or all_ok or (p["texts"] >= 4 and n_cov >= 2) or (p["all_texts"] >= 6 and n_idea >= 2) \
-        or (p["all_texts"] >= 8 and n_idea >= 1)
+    # honest: every concept credited (a wrong rule the student taught counts: the quiz will show it). Only after a
+    # long session with something taught does Pip offer the quiz anyway, and then it says so.
+    all_ok = all(covered(p["cov"][c]) or p["cov"][c]["wrong"] or session["ladder"][c]["stuck"] for c in ids)
+    backstop = (not all_ok) and p["all_texts"] >= 8 and n_idea >= 1
+    strict_ok = all(c_["reason"] or c_["example"] or c_["wrong"] for c_ in (p["cov"][c] for c in ids))
+    ready = was_ready or (all_ok and (p["all_texts"] >= 2 or strict_ok)) or backstop
     if rt:
         ready = covered(p["cov"][rt]) or session["ladder"][rt]["stuck"] or was_ready
     return {"progress": progress, "level": top, "levels": levels, "event": event,
             "strength": "critical" if top >= 3 else "solid", "wrong_cid": wrong_cid, "gained": gained,
             "any_gain": any_gain, "esc": esc, "ready": ready, "newly_ready": ready and not was_ready,
+            "backstop": backstop,
             "was_ready": was_ready, "esc_cid": tgt}
 
 
@@ -492,11 +652,14 @@ def split_reply(reply: str) -> tuple[list[str], str | None]:
 
 
 def finalize(session: dict, a: dict, les: dict, cr: dict, draft: str, said: str, current: str = "") -> str:
-    """Enforce the pacing rules on a draft reply (model-written or templated) and update the ask log."""
+    """Enforce the pacing rules on a draft reply (model-written or templated) and update the ask log.
+    A reply is: a short reaction, then at most one question (sometimes none once Pip is ready)."""
     p = ensure_pace(session, a)
     m = re.match(r"(Saving that: '.*?'\.)(?=\s|$)", draft)  # the filed quote is one atomic statement
     saving = m.group(1) if m else None
     stm, q = split_reply(draft[m.end():].strip() if m else draft)
+    if stm and stm[0].lower().startswith("noted") and any(any(g.values()) for g in cr["gained"].values()):
+        stm = stm[1:]  # "Noted." is only for texts with nothing on topic; here the kid did say something
     if saving:
         stm = [saving]
     elif stm and current and verbatim(stm[0], current):  # never parrot the student
@@ -515,7 +678,7 @@ def finalize(session: dict, a: dict, les: dict, cr: dict, draft: str, said: str,
         nudge = nudge if nudge.endswith("?") else nudge.rstrip(".") + ". Want to try again?"
         p["nudged"][tgt] = True
         p["qlog"].append(qnorm(nudge))
-        p["last_q"], p["target"] = nudge, tgt
+        p["target"] = tgt  # last_q stays the real question: a parked topic should re-ask that, not the story
         return nudge
     infer = p["turns"] % 3 == 0 and not cr["wrong_cid"] and not cr["esc"]
     nq = next_question(session, a, les, focus, infer)
@@ -528,39 +691,61 @@ def finalize(session: dict, a: dict, les: dict, cr: dict, draft: str, said: str,
         c = p["cov"].get(cid, {}) if cid else {}
         no_why = bool(cid) and kind_of(les, cid) != "reason"
         applicable = not ((kc == "example" and c.get("example")) or (kc == "why" and (c.get("reason") or no_why or
-                          (cid and p["asks"][cid]["why"] >= 1))) or (kc == "idea" and c.get("idea") and not c.get("wrong")))
+                          (cid and p["asks"][cid]["why"] >= 1))))  # repeats are caught by the question log
         if qnorm(q) in p["qlog"] or not applicable:
             q = None
         else:
             kind_cid = (cid, kc)
-    if q is None and nq:
+    if q is None and nq and not (cr["ready"] and cr["was_ready"]):
         q, kind_cid = nq[0], (nq[1], nq[2])
     if sl and not (cr["ready"] and (cr["newly_ready"] or cr["was_ready"])):
         q, kind_cid = sl, (None, None)
-    ready_line = next((r for r in READY_LINES if qnorm(r) not in p["qlog"]), READY_LINES[-1])
-    if cr["ready"] and (cr["newly_ready"] or cr["was_ready"] or q is None):
-        q, kind_cid = ready_line, (None, None)  # ready: say so and stop asking
+    ready_line = next((r for r in (BACKSTOP_LINES if cr.get("backstop") else READY_LINES)
+                       if qnorm(r) not in p["qlog"]), READY_LINES[-1])
+    if cr["ready"]:
         session["ready_for_quiz"] = True
-        if not (saving or sl):
-            stm = []
+        if cr["newly_ready"]:
+            q, kind_cid = ready_line, (None, None)  # the reaction stays; then say so and stop probing
+        elif cr["was_ready"]:
+            p["post_ready"] += 1  # already ready: react, and only now and then re-offer the quiz
+            q, kind_cid = (ready_line, (None, None)) if p["post_ready"] % 3 == 0 else (None, (None, None))
+            if q is None and not stm:
+                stm = ["ok, got it."]
+        elif q is None:
+            q, kind_cid = ready_line, (None, None)
     elif q is None:
         q, kind_cid = ready_line, (None, None)
         session["ready_for_quiz"] = True
     stm = stm[:1]
-    if stm and q[:1].islower() and not stm[0].startswith(("Saving that", "Wait", "Noted", "Fair")):
+    if stm and q and stm[0].lower().startswith("hm") and q.lower().startswith("hm"):
+        q = re.sub(r"^[Hh]m+,?\s*", "", q)
+    if stm and (q or "x")[:1].islower() and not stm[0].startswith(("Saving that", "Wait", "Noted", "Fair")):
         stm[0] = stm[0][:1].lower() + stm[0][1:]  # mirror the authored lowercase register
-    reply = " ".join(stm + [q])
+    if stm and q and len((stm[0] + " " + q).split()) > 22 and not stm[0].startswith(("Saving that", "wait,", "Wait,")):
+        stm = []  # keep replies short: the question alone is enough
+    orig_q = q
+    if q and len(q.split()) > 24 and q.count(". ") >= 1:
+        q = re.split(r"(?<=[.!])\s+", q)[-1]  # a rung's long set-up: ask just the last sentence
+    reply = " ".join(stm + ([q] if q else []))
     if cr["esc"] == "stuck":
-        reply = f"{HOLD} {q}"
+        reply = f"{HOLD} {q}" if q else HOLD
     sl_said = norm(said)
     for cid_ in [c["id"] for c in a["concepts"]]:  # spoiler guard: Pip must not say it first
-        for sp in (L.lc(les, cid_) or {}).get("spoilers", []):
-            if norm(sp) and norm(sp) in norm(reply) and norm(sp) not in sl_said:
-                reply = q if norm(sp) not in norm(q) else ready_line
-    p["qlog"].append(qnorm(q))
-    p["last_q"] = q
+        sibs = (L.lc(les, cid_) or {}).get("spoilers", [])
+        if any(re.sub(r"\s+", "", norm(x)) in re.sub(r"\s+", "", norm(said)) for x in sibs):
+            continue  # the student used this idea's words: Pip may say it back
+        for sp in sibs:
+            flat = lambda x: re.sub(r"\s+", "", norm(x))  # noqa: E731  ("2x = 14" == "2x=14")
+            if flat(sp) and flat(sp) in flat(reply) and flat(sp) not in flat(said):
+                reply = q or "ok."
+    if q:
+        p["qlog"].append(qnorm(q))
+        if orig_q and orig_q != q:
+            p["qlog"].append(qnorm(orig_q))
+        p["last_q"] = q
     cid, kc = kind_cid
-    if cid and kc in ("idea", "why", "example"):
+    p["last_kind"] = kc
+    if cid and kc in ("idea", "why", "example", "try", "predict", "concrete"):
         p["asks"][cid][kc] += 1
     if cid:
         p["target"] = cid

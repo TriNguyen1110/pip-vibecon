@@ -41,7 +41,19 @@
         "into a rectangle",
         "parallelogram"
       ],
-      "friend_nudge": "My cousin said she cut a paper sandwich corner to corner and both pieces matched…? I don't know what that has to do with triangles."
+      "friend_nudge": "My cousin said she cut a paper sandwich corner to corner and both pieces matched…? I don't know what that has to do with triangles.",
+      "aha": "oh, two of them make a box",
+      "idea_patterns": [
+        "\\b(two|2)\\b.{0,25}\\b(triangles?|copies|of them|of it|pieces|halves)\\b",
+        "\\b(make|makes|made|create|creates|created|form|forms|become|becomes|fit|fits|put|stick|join|joins)\\b.{0,45}\\b(rectangle|box|parallelogram)\\b",
+        "\\b(rectangle|box|parallelogram)\\b.{0,35}\\b(same|identical|matching)\\b.{0,15}\\b(base|height|width|size)",
+        "half (of )?(a |the |that |its |an? )?(rectangle|box|parallelogram)",
+        "\\b(fill|fills|cover|covers|takes? up|inside|fits? in)\\b.{0,25}\\b(half|part|only)\\b",
+        "corner to corner|flip|\\bcut\\b.{0,25}\\b(half|corner)"
+      ],
+      "concrete": [
+        "what if i cut my 6 by 4 box corner to corner, what do i get?"
+      ]
     },
     {
       "concept_id": "k2",
@@ -61,7 +73,17 @@
         "6 rows of 4",
         "length times width"
       ],
-      "friend_nudge": "Someone in my class said she counts the squares row by row instead of one at a time…? That seems faster."
+      "friend_nudge": "Someone in my class said she counts the squares row by row instead of one at a time…? That seems faster.",
+      "aha": "ok so the box is just base times height",
+      "idea_patterns": [
+        "(rectangle|box|square).{0,30}(base|length|width|height|times|x|×|\\*)",
+        "(base|length)\\s*(times|x|×|\\*)\\s*(height|width)",
+        "\\d+\\s*(x|×|\\*|times|by)\\s*\\d+",
+        "\\b(rectangle|box)\\b.{0,25}\\bsame (base|height)"
+      ],
+      "concrete": [
+        "what if i cover a 6 by 4 box with 1 by 1 squares, how many do i need?"
+      ]
     },
     {
       "concept_id": "k3",
@@ -86,7 +108,14 @@
         "÷2",
         "= 12"
       ],
-      "friend_nudge": "My friend said to think about sharing one tray of brownies with exactly one other person…? I don't know why she was hungry."
+      "friend_nudge": "My friend said to think about sharing one tray of brownies with exactly one other person…? I don't know why she was hungry.",
+      "aha": "ohh so the triangle is just half the box",
+      "idea_patterns": [
+        "\\bhalf\\b|½|÷\\s*2|/\\s*2\\b|over (2|two)|divided? (it |that |them |by )?(by )?(2|two)\\b|divide (it |that )?by (2|two)|\\bhalve\\b|\\bhalves\\b|times (1/2|a half)|\\bin half\\b|(b|base)\\s*\\*?\\s*(h|height)\\s*/\\s*2"
+      ],
+      "concrete": [
+        "what if i fold the 6 by 4 box corner to corner, how many squares sit on each side?"
+      ]
     }
   ],
   "offline_demo": {
@@ -105,7 +134,7 @@
         "filed_rule": "",
         "next_concept_id": "k3",
         "rung": 1,
-        "pip": "so you're saying 24 is too much. why would a triangle get less than base times height?"
+        "pip": "oh, half. so my 24 was too big? does my triangle not fill the whole 6 by 4 box?"
       },
       {
         "n": 2,
@@ -118,7 +147,7 @@
         "filed_rule": "because 2 triangles make a rectangle",
         "next_concept_id": "k2",
         "rung": 1,
-        "pip": "Saving that: 'because 2 triangles make a rectangle'. how big is the shape they make together?"
+        "pip": "ohh two of mine make the box. how big is the box?"
       },
       {
         "n": 3,
@@ -137,7 +166,7 @@
         "filed_rule": "so 6×4÷2 = 12",
         "next_concept_id": null,
         "rung": null,
-        "pip": "Saving that: 'so 6×4÷2 = 12'. ok i think i get it. quiz me?",
+        "pip": "12, so half the 24 box. ok i think i get it. quiz me?",
         "ready_for_quiz": true
       },
       {
@@ -151,7 +180,7 @@
         "filed_rule": "for a right triangle you just times the two sides",
         "next_concept_id": null,
         "rung": null,
-        "pip": "Saving that: 'for a right triangle you just times the two sides'. a special rule for corners."
+        "pip": "Saving that: 'for a right triangle you just times the two sides'. a special rule for corners, ok."
       },
       {
         "n": 5,
@@ -166,7 +195,7 @@
         "filed_rule": "a right triangle is still half a rectangle",
         "next_concept_id": null,
         "rung": null,
-        "pip": "so you're saying corners don't change anything. Saving that: 'a right triangle is still half a rectangle'."
+        "pip": "ohh so corners don't change it, still half the box. throwing out my corner rule."
       }
     ],
     "quiz": [
@@ -197,5 +226,13 @@
         "line": "The whole 10 by 5 rectangle is 50. A right triangle is still half of it, so 25."
       }
     ]
-  }
+  },
+  "arc": [
+    "k2",
+    "k1",
+    "k3"
+  ],
+  "prior_knowledge": [
+    "k2"
+  ]
 }

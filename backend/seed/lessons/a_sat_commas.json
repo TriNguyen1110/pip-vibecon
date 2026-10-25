@@ -42,7 +42,11 @@
         "comma plus a conjunction",
         "coordinating conjunction"
       ],
-      "friend_nudge": "My friend said words like 'and', 'but' and 'so' are little bridges between two sentences…? I don't know what the comma does on the bridge."
+      "friend_nudge": "My friend said words like 'and', 'but' and 'so' are little bridges between two sentences…? I don't know what the comma does on the bridge.",
+      "aha": "ohh so two whole sentences need something stronger than a comma",
+      "concrete": [
+        "what if i put a period between 'i was tired' and 'i went to bed', does it still sound right?"
+      ]
     },
     {
       "concept_id": "k2",
@@ -65,7 +69,11 @@
         "comma alone can't",
         "not strong enough"
       ],
-      "friend_nudge": "My cousin said a comma is like tape, and you can't hold two bricks together with tape…? I don't know which part is the brick."
+      "friend_nudge": "My cousin said a comma is like tape, and you can't hold two bricks together with tape…? I don't know which part is the brick.",
+      "aha": "ok so a comma by itself is too weak to hold them",
+      "concrete": [
+        "what if i read 'my dog barked, the mail came' as one sentence, what feels off?"
+      ]
     },
     {
       "concept_id": "k3",
@@ -88,7 +96,11 @@
         "commas follow the structure",
         "commas follow the grammar"
       ],
-      "friend_nudge": "Someone in my class said she covers her mouth and reads the sentence silently to find the commas…? That seems hard to breathe."
+      "friend_nudge": "Someone in my class said she covers her mouth and reads the sentence silently to find the commas…? That seems hard to breathe.",
+      "aha": "so it's about how the sentence is built, not where i breathe",
+      "concrete": [
+        "what if i say 'the tall girl, scored twice' out loud, where do i pause?"
+      ]
     }
   ],
   "offline_demo": {

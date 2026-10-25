@@ -41,7 +41,14 @@
         "2x = 14",
         "x = 7"
       ],
-      "friend_nudge": "My cousin said an equation is like a seesaw with two kids who weigh exactly the same…? I don't know what happens if one of them gets off."
+      "friend_nudge": "My cousin said an equation is like a seesaw with two kids who weigh exactly the same…? I don't know what happens if one of them gets off.",
+      "aha": "ohh so whatever happens on one side has to happen on the other",
+      "idea_patterns": [
+        "balance|scale|seesaw|both sides|each side|same (thing )?(to|on) (both|each|the other)|other side|equal"
+      ],
+      "concrete": [
+        "picture a seesaw with 2 boxes and 6 marbles on one side and 20 on the other. what if i take the 6 off just one side?"
+      ]
     },
     {
       "concept_id": "k2",
@@ -64,7 +71,14 @@
         "subtract 4 from both sides",
         "x = 5"
       ],
-      "friend_nudge": "My friend said whatever was done to x last has to be undone first…? I don't know which one that is."
+      "friend_nudge": "My friend said whatever was done to x last has to be undone first…? I don't know which one that is.",
+      "aha": "ok so you undo each thing with its opposite",
+      "idea_patterns": [
+        "opposite|inverse|undo|cancel|subtract .{0,15}(both|each|from)|divide .{0,15}(both|each|by)|get x (alone|by itself)|isolate"
+      ],
+      "concrete": [
+        "what if i want x alone in 3x = 15, what would i do to the 3?"
+      ]
     },
     {
       "concept_id": "k3",
@@ -86,7 +100,14 @@
         "both sides match",
         "put it back into the original"
       ],
-      "friend_nudge": "Someone in my class said she never trusts an answer until it fits back in the lock…? I don't know where the lock is."
+      "friend_nudge": "Someone in my class said she never trusts an answer until it fits back in the lock…? I don't know where the lock is.",
+      "aha": "so you put it back in and both sides should match",
+      "idea_patterns": [
+        "plug|put .{0,15}back|check|substitut|sub it in|both sides (match|equal|are the same)"
+      ],
+      "concrete": [
+        "what if i put x = 10 into 2x + 6 = 20, what do i get on the left?"
+      ]
     }
   ],
   "offline_demo": {
