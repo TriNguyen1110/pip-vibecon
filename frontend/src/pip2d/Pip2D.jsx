@@ -804,9 +804,26 @@ export function Pip2D({
     ]
       .filter(Boolean)
       .join(' ') || undefined
-  const zones = <PokeZones A={A} poke={poke} lift={main ? HERO_LIFT[def.name] ?? HERO_LIFT.default : 0} />
-  const wrap = (children, key, extra) => (
-    <svg ref={!key || key === 'front' ? svgRef : undefined} key={key} className={`pip2d ${className}`} width={size} height={size * 1.1} viewBox="0 0 200 220" role={key ? undefined : 'img'} aria-label={key ? undefined : label} aria-hidden={key ? true : undefined} {...extra}>
+  // sprout hit circles: the base/stem plus the tip of whichever pose is showing (leaf, "?", bulb, crown)
+  const spPose = awakened || main ? 'crown' : state === 'thinking' ? 'bulb' : spec.sprout
+  const spScale = (A.sprout.scale ?? 1) * (mini ? 0.62 : 1)
+  const [tipX, tipY] = (SPROUTS[spPose] ?? SPROUTS.droop).tip
+  const sproutHits = [
+    [A.sprout.x, A.sprout.y - 4 * spScale + (A.sprout.yuzu ? 8 : 0), 16 * spScale + (A.sprout.yuzu ? 6 : 0)],
+    [A.sprout.x + (tipX - 100) * spScale, A.sprout.y + (tipY - 44) * spScale, 15 * spScale],
+    [A.sprout.x + ((tipX + 100) / 2 - 100) * spScale, A.sprout.y + ((tipY + 44) / 2 - 44 - 4) * spScale, 12 * spScale],
+  ]
+  const zones = (
+    <PokeZones
+      A={A}
+      poke={poke}
+      lift={main ? HERO_LIFT[def.name] ?? HERO_LIFT.default : stretch ? dy : 0}
+      bellyTransform={stretch ? `translate(100 207) scale(1 ${SK}) translate(-100 -207)` : undefined}
+      sprout={sproutHits}
+    />
+  )
+  const wrap = (children, key, extra, withZones) => (
+    <svg ref={!key || key === 'front' ? svgRef : undefined} key={key} className={`pip2d pip2d-poke ${className}`} width={size} height={size * 1.1} viewBox="0 0 200 220" role={key ? undefined : 'img'} aria-label={key ? undefined : label} aria-hidden={key ? true : undefined} {...extra}>
       <g transform={`translate(100 207) scale(${(main ? MAIN_SCALE : GROWTH[ver - 1] * (mini ? 0.64 : 1)) * (stretch ? 0.82 : 1)} ${(main ? MAIN_SCALE : GROWTH[ver - 1] * (mini ? 0.58 : 1)) * (stretch ? 0.82 : 1)}) translate(-100 -207)`}>
         <g transform={poseT} className={poseClass}>
           <g transform={grown && evo === 'ugly' ? `translate(100 207) rotate(${awakened ? -5 : -3}) scale(${awakened ? 1.07 : 1.04} ${awakened ? 0.95 : 0.97}) translate(-100 -207)` : undefined}>
@@ -814,6 +831,7 @@ export function Pip2D({
             <g className={stateClass}>
             <g className={animate && pose === 'idle' ? 'pip2d-breathe' : undefined}>
               <FinishCtx.Provider value={vinyl ? 'vinyl' : 'plush'}>{stretch ? stretched(children, key) : children}</FinishCtx.Provider>
+              {withZones && zones}
             </g>
             </g>
           </g>
@@ -878,8 +896,10 @@ export function Pip2D({
           {headLayer}
           {faceLayer}
           {frontLayer}
-          {zones}
         </>,
+        undefined,
+        undefined,
+        true,
       )
     }
     const k2 = size / 200
@@ -889,7 +909,7 @@ export function Pip2D({
           [-16 * k2, wrap(<>{defs}{backLayer}</>, 'back')],
           [0, wrap(<>{defs}{mainDefs}{headLayer}</>, 'body')],
           [12 * k2, wrap(<>{defs}{faceLayer}</>, 'face')],
-          [24 * k2, wrap(<>{defs}{frontLayer}{zones}</>, 'front')],
+          [24 * k2, wrap(<>{defs}{frontLayer}</>, 'front', undefined, true)],
         ]}
       </DepthStage>
     )
@@ -904,8 +924,10 @@ export function Pip2D({
         {sprout}
         {face}
         {front}
-        {zones}
       </>,
+      undefined,
+      undefined,
+      true,
     )
   }
 
@@ -939,7 +961,7 @@ export function Pip2D({
         [-16 * k, wrap(<>{defs}{back}</>, 'back')],
         [0, wrap(<>{defs}{body}{sheen}</>, 'body')],
         [12 * k, wrap(face, 'face')],
-        [24 * k, wrap(<>{sprout}{front}{zones}</>, 'front')],
+        [24 * k, wrap(<>{sprout}{front}</>, 'front', undefined, true)],
       ]}
     </DepthStage>
   )

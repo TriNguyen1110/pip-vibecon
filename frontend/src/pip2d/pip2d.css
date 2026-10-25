@@ -1,5 +1,8 @@
 /* Pip2D motion classes. All transforms use the element's own box. */
 .pip2d { display: inline-block; overflow: visible; }
+/* only the poke zones take pointer input; all art ignores it so nothing can cover a zone */
+.pip2d-poke * { pointer-events: none; }
+.pip2d-poke .pip2d-zones, .pip2d-poke .pip2d-zones * { pointer-events: all; }
 .pip2d-eyes, .pip2d-sweat { transform-box: fill-box; }
 /* breathe/hop pivot at the feet in viewBox units, so stacked 2.5D layers move together */
 .pip2d-breathe, .pip2d-hop { transform-box: view-box; }

@@ -86,16 +86,24 @@ export function usePokes(onPoke, forced) {
   return { zone: forced ?? zone, poke }
 }
 
-// Invisible tap targets placed from the creature anchors.
-export function PokeZones({ A, poke, lift = 0 }) {
+// Invisible tap targets placed from the creature anchors, always drawn as the top-most layer.
+// sprout = [[x, y, r], ...] hit circles (stem/base + the actual tip for the current sprout pose).
+export function PokeZones({ A, poke, lift = 0, sprout, bellyTransform }) {
   const hit = { fill: 'transparent', pointerEvents: 'all', style: { cursor: 'pointer' } }
   const { cx, top, w } = A.head
+  const sp = sprout ?? [[A.sprout.x, A.sprout.y - 6, 20]]
+  // keep the head zone above the neck so it never swallows the belly (matters for the one-blob frog)
+  const hry = Math.min(w * 0.42, (A.neck.y + 4 - top) / 2)
   return (
-    <g>
-      <ellipse cx="100" cy={A.neck.y + 26} rx="52" ry="30" {...hit} onPointerDown={poke('belly')} />
+    <g className="pip2d-zones">
+      <g transform={bellyTransform}>
+        <ellipse data-zone="belly" cx="100" cy={A.neck.y + 26} rx="52" ry="30" {...hit} onPointerDown={poke('belly')} />
+      </g>
       <g transform={`translate(0 ${-lift})`}>
-        <ellipse cx={cx} cy={top + w * 0.4} rx={w / 2} ry={w * 0.42} {...hit} onPointerDown={poke('head')} />
-        <circle cx={A.sprout.x} cy={A.sprout.y - 6} r="20" {...hit} onPointerDown={poke('sprout')} />
+        <ellipse data-zone="head" cx={cx} cy={top + hry} rx={w / 2} ry={hry} {...hit} onPointerDown={poke('head')} />
+        {sp.map(([x, y, r], i) => (
+          <circle key={i} data-zone="sprout" cx={x} cy={y} r={r} {...hit} onPointerDown={poke('sprout')} />
+        ))}
       </g>
     </g>
   )
