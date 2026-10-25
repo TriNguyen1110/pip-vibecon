@@ -1,0 +1,822 @@
+[
+  {
+    "journey": "parent",
+    "width": 390,
+    "height": 844,
+    "chrome": "156.0.8078.48",
+    "steps": [
+      {
+        "name": "setup: reset, Maya’s K.O., private + shared notes",
+        "status": "PASS",
+        "ms": 146,
+        "detail": {
+          "pass": true,
+          "ko": true,
+          "sent": 200,
+          "kids": [
+            "Maya R.",
+            "Theo Y."
+          ]
+        }
+      },
+      {
+        "name": "open /parent?as=g001 (live data, demo label)",
+        "status": "PASS",
+        "ms": 8838,
+        "detail": {
+          "pass": true,
+          "hi": "Hi, Ana",
+          "demo": "demo"
+        }
+      },
+      {
+        "name": "kid switcher Maya <-> Theo (s014)",
+        "status": "PASS",
+        "ms": 2650,
+        "detail": {
+          "pass": true,
+          "names": [
+            "Maya",
+            "Theo"
+          ]
+        }
+      },
+      {
+        "name": "this week: Maya’s verbatim taught quote + fixed mistake before -> after",
+        "status": "PASS",
+        "ms": 221,
+        "detail": {
+          "pass": true,
+          "quote": "no a right triangle is still half a rectangle so its 10×5÷2 = 25",
+          "before": "A = b × h",
+          "after": "no a right triangle is still half a rectangle so its 10×5÷2 = 25"
+        }
+      },
+      {
+        "name": "shared tutor note visible (any tab)",
+        "status": "PASS",
+        "ms": 4502,
+        "detail": {
+          "pass": true,
+          "tabs": [
+            "From tutor",
+            "Messages",
+            "Schedule",
+            "Settings"
+          ],
+          "where": [
+            "week",
+            "maya:From tutor"
+          ]
+        }
+      },
+      {
+        "name": "messages: thread with Ms. Rivera; message the tutor",
+        "status": "PASS",
+        "ms": 426,
+        "detail": {
+          "pass": true,
+          "who": [
+            "Ms. Rivera",
+            "You"
+          ],
+          "status": "received"
+        }
+      },
+      {
+        "name": "settings: cadence + quiet hours + channel persist after reload",
+        "status": "PASS",
+        "ms": 1795,
+        "detail": {
+          "pass": true,
+          "ui": {
+            "weekly": true,
+            "email": true,
+            "quiet": false
+          },
+          "api": {
+            "updates": "weekly",
+            "prefers": "email",
+            "quiet_hours": null
+          }
+        }
+      },
+      {
+        "name": "private tutor note is NOT visible (any tab, any payload)",
+        "status": "PASS",
+        "ms": 23,
+        "detail": {
+          "pass": true,
+          "inUI": false,
+          "inPayload": false
+        }
+      },
+      {
+        "name": "no game words on parent screens (K.O., boss, brain v, weapon)",
+        "status": "PASS",
+        "ms": 0,
+        "detail": {
+          "pass": true,
+          "hits": []
+        }
+      },
+      {
+        "name": "access isolation: g001 cannot open s002 (API 403, friendly UI)",
+        "status": "FAIL",
+        "ms": 901,
+        "detail": {
+          "pass": false,
+          "apiStatus": 403,
+          "leakedName": false,
+          "friendlyMessage": false,
+          "note": "UI silently falls back to the first linked child; no message"
+        }
+      },
+      {
+        "name": "body text >= 17px, tap targets >= 48px",
+        "status": "FAIL",
+        "ms": 1827,
+        "detail": {
+          "pass": false,
+          "fonts": {
+            "From tutor": {
+              "bodyEls": 7,
+              "small": [],
+              "minAnyText": 13
+            },
+            "Messages": {
+              "bodyEls": 9,
+              "small": [],
+              "minAnyText": 13
+            },
+            "Schedule": {
+              "bodyEls": 6,
+              "small": [],
+              "minAnyText": 13
+            },
+            "Settings": {
+              "bodyEls": 12,
+              "small": [],
+              "minAnyText": 13
+            }
+          },
+          "targetsUnder48": [
+            {
+              "el": "button.p-more__btn",
+              "text": "More below ↓",
+              "w": 144,
+              "h": 44,
+              "inline": false,
+              "screen": "tab-Settings",
+              "min": 48
+            }
+          ]
+        }
+      },
+      {
+        "name": "200% text zoom: no horizontal overflow (every tab)",
+        "status": "PASS",
+        "ms": 2796,
+        "detail": {
+          "pass": true,
+          "scaled": true,
+          "out": {
+            "From tutor": {
+              "overflows": false,
+              "wide": [],
+              "samplePx": 48
+            },
+            "Messages": {
+              "overflows": false,
+              "wide": [],
+              "samplePx": 48
+            },
+            "Schedule": {
+              "overflows": false,
+              "wide": [],
+              "samplePx": 48
+            },
+            "Settings": {
+              "overflows": false,
+              "wide": [],
+              "samplePx": 48
+            }
+          }
+        }
+      },
+      {
+        "name": "v3.15: no minutes and no \"active Xm ago\" on parent screens",
+        "status": "PASS",
+        "ms": 1,
+        "detail": {
+          "pass": true,
+          "hits": []
+        }
+      },
+      {
+        "name": "v3.15: grade >= 7 (Theo) shows no quote unless shared or sent",
+        "status": "PASS",
+        "ms": 0,
+        "detail": {
+          "pass": true,
+          "apiQuote": "take the 6 away from both sides so its 2x = 14, then divide both sides by 2",
+          "uiQuote": false,
+          "shared": true
+        }
+      },
+      {
+        "name": "v3.15: every parent item says who sent it (\"From Ms. Rivera\")",
+        "status": "PASS",
+        "ms": 0,
+        "detail": {
+          "pass": true,
+          "fromOk": true,
+          "label": true
+        }
+      },
+      {
+        "name": "v3.16: parent-facing text is English; no language setting",
+        "status": "PASS",
+        "ms": 0,
+        "detail": {
+          "pass": true,
+          "spanish": null,
+          "langSetting": false
+        }
+      },
+      {
+        "name": "AA contrast on parent screens",
+        "status": "FAIL",
+        "ms": 0,
+        "detail": {
+          "pass": false,
+          "tool": "axe",
+          "bad": [
+            {
+              "screen": "tab-Schedule",
+              "n": 1,
+              "nodes": [
+                {
+                  "target": ".is-low",
+                  "why": "Element has insufficient color contrast of 1.3 (foreground color: #ffe14d, background color: #ffffff, font size: 12.8pt (17px), font weight:",
+                  "text": "2 of  hours left · renews Nov 2"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "name": "no console errors, failed requests or unexpected non-2xx",
+        "status": "PASS",
+        "ms": 0,
+        "detail": {
+          "pass": true,
+          "console": [],
+          "pageErrors": [],
+          "failedRequests": [],
+          "badResponses": [],
+          "expectedBad": []
+        }
+      }
+    ],
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "expectedBad": [],
+    "smallTargets": [
+      {
+        "el": "button.p-more__btn",
+        "text": "More below ↓",
+        "w": 144,
+        "h": 44,
+        "inline": false,
+        "screen": "week",
+        "min": 48
+      },
+      {
+        "el": "button.p-more__btn",
+        "text": "More below ↓",
+        "w": 144,
+        "h": 44,
+        "inline": false,
+        "screen": "settings",
+        "min": 48
+      },
+      {
+        "el": "button.p-more__btn",
+        "text": "More below ↓",
+        "w": 144,
+        "h": 44,
+        "inline": false,
+        "screen": "tab-From tutor",
+        "min": 48
+      },
+      {
+        "el": "button.p-more__btn",
+        "text": "More below ↓",
+        "w": 144,
+        "h": 44,
+        "inline": false,
+        "screen": "tab-Settings",
+        "min": 48
+      }
+    ],
+    "contrast": {
+      "week": {
+        "tool": "axe",
+        "violations": 0,
+        "nodes": []
+      },
+      "tab-Messages": {
+        "tool": "axe",
+        "violations": 0,
+        "nodes": []
+      },
+      "tab-Schedule": {
+        "tool": "axe",
+        "violations": 1,
+        "nodes": [
+          {
+            "target": ".is-low",
+            "why": "Element has insufficient color contrast of 1.3 (foreground color: #ffe14d, background color: #ffffff, font size: 12.8pt (17px), font weight:",
+            "text": "2 of  hours left · renews Nov 2"
+          }
+        ]
+      },
+      "messages": {
+        "tool": "axe",
+        "violations": 0,
+        "nodes": []
+      },
+      "settings": {
+        "tool": "axe",
+        "violations": 0,
+        "nodes": []
+      }
+    },
+    "overflow": {
+      "week": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "tab-Messages": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "tab-Schedule": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "messages": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "zoom200-From tutor": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "zoom200-Messages": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "zoom200-Schedule": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "zoom200-Settings": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      }
+    },
+    "fit": {},
+    "notes": {}
+  },
+  {
+    "journey": "parent",
+    "width": 1280,
+    "height": 800,
+    "chrome": "156.0.8078.48",
+    "steps": [
+      {
+        "name": "setup: reset, Maya’s K.O., private + shared notes",
+        "status": "PASS",
+        "ms": 112,
+        "detail": {
+          "pass": true,
+          "ko": true,
+          "sent": 200,
+          "kids": [
+            "Maya R.",
+            "Theo Y."
+          ]
+        }
+      },
+      {
+        "name": "open /parent?as=g001 (live data, demo label)",
+        "status": "PASS",
+        "ms": 10306,
+        "detail": {
+          "pass": true,
+          "hi": "Hi, Ana",
+          "demo": "demo"
+        }
+      },
+      {
+        "name": "kid switcher Maya <-> Theo (s014)",
+        "status": "PASS",
+        "ms": 1928,
+        "detail": {
+          "pass": true,
+          "names": [
+            "Maya",
+            "Theo"
+          ]
+        }
+      },
+      {
+        "name": "this week: Maya’s verbatim taught quote + fixed mistake before -> after",
+        "status": "PASS",
+        "ms": 696,
+        "detail": {
+          "pass": true,
+          "quote": "no a right triangle is still half a rectangle so its 10×5÷2 = 25",
+          "before": "A = b × h",
+          "after": "no a right triangle is still half a rectangle so its 10×5÷2 = 25"
+        }
+      },
+      {
+        "name": "shared tutor note visible (any tab)",
+        "status": "PASS",
+        "ms": 4318,
+        "detail": {
+          "pass": true,
+          "tabs": [
+            "From tutor",
+            "Messages",
+            "Schedule",
+            "Settings"
+          ],
+          "where": [
+            "week",
+            "maya:From tutor"
+          ]
+        }
+      },
+      {
+        "name": "messages: thread with Ms. Rivera; message the tutor",
+        "status": "PASS",
+        "ms": 584,
+        "detail": {
+          "pass": true,
+          "who": [
+            "Ms. Rivera",
+            "You"
+          ],
+          "status": "received"
+        }
+      },
+      {
+        "name": "settings: cadence + quiet hours + channel persist after reload",
+        "status": "PASS",
+        "ms": 2379,
+        "detail": {
+          "pass": true,
+          "ui": {
+            "weekly": true,
+            "email": true,
+            "quiet": false
+          },
+          "api": {
+            "updates": "weekly",
+            "prefers": "email",
+            "quiet_hours": null
+          }
+        }
+      },
+      {
+        "name": "private tutor note is NOT visible (any tab, any payload)",
+        "status": "PASS",
+        "ms": 26,
+        "detail": {
+          "pass": true,
+          "inUI": false,
+          "inPayload": false
+        }
+      },
+      {
+        "name": "no game words on parent screens (K.O., boss, brain v, weapon)",
+        "status": "PASS",
+        "ms": 0,
+        "detail": {
+          "pass": true,
+          "hits": []
+        }
+      },
+      {
+        "name": "access isolation: g001 cannot open s002 (API 403, friendly UI)",
+        "status": "FAIL",
+        "ms": 1808,
+        "detail": {
+          "pass": false,
+          "apiStatus": 403,
+          "leakedName": false,
+          "friendlyMessage": false,
+          "note": "UI silently falls back to the first linked child; no message"
+        }
+      },
+      {
+        "name": "body text >= 17px, tap targets >= 48px",
+        "status": "FAIL",
+        "ms": 1785,
+        "detail": {
+          "pass": false,
+          "fonts": {
+            "From tutor": {
+              "bodyEls": 7,
+              "small": [],
+              "minAnyText": 13
+            },
+            "Messages": {
+              "bodyEls": 9,
+              "small": [],
+              "minAnyText": 13
+            },
+            "Schedule": {
+              "bodyEls": 6,
+              "small": [],
+              "minAnyText": 13
+            },
+            "Settings": {
+              "bodyEls": 12,
+              "small": [],
+              "minAnyText": 13
+            }
+          },
+          "targetsUnder48": [
+            {
+              "el": "button.p-more__btn",
+              "text": "More below ↓",
+              "w": 144,
+              "h": 44,
+              "inline": false,
+              "screen": "tab-Settings",
+              "min": 48
+            }
+          ]
+        }
+      },
+      {
+        "name": "200% text zoom: no horizontal overflow (every tab)",
+        "status": "PASS",
+        "ms": 2841,
+        "detail": {
+          "pass": true,
+          "scaled": true,
+          "out": {
+            "From tutor": {
+              "overflows": false,
+              "wide": [],
+              "samplePx": 48
+            },
+            "Messages": {
+              "overflows": false,
+              "wide": [],
+              "samplePx": 48
+            },
+            "Schedule": {
+              "overflows": false,
+              "wide": [],
+              "samplePx": 48
+            },
+            "Settings": {
+              "overflows": false,
+              "wide": [],
+              "samplePx": 48
+            }
+          }
+        }
+      },
+      {
+        "name": "v3.15: no minutes and no \"active Xm ago\" on parent screens",
+        "status": "PASS",
+        "ms": 0,
+        "detail": {
+          "pass": true,
+          "hits": []
+        }
+      },
+      {
+        "name": "v3.15: grade >= 7 (Theo) shows no quote unless shared or sent",
+        "status": "PASS",
+        "ms": 0,
+        "detail": {
+          "pass": true,
+          "apiQuote": "take the 6 away from both sides so its 2x = 14, then divide both sides by 2",
+          "uiQuote": false,
+          "shared": true
+        }
+      },
+      {
+        "name": "v3.15: every parent item says who sent it (\"From Ms. Rivera\")",
+        "status": "PASS",
+        "ms": 0,
+        "detail": {
+          "pass": true,
+          "fromOk": true,
+          "label": true
+        }
+      },
+      {
+        "name": "v3.16: parent-facing text is English; no language setting",
+        "status": "PASS",
+        "ms": 1,
+        "detail": {
+          "pass": true,
+          "spanish": null,
+          "langSetting": false
+        }
+      },
+      {
+        "name": "AA contrast on parent screens",
+        "status": "FAIL",
+        "ms": 0,
+        "detail": {
+          "pass": false,
+          "tool": "axe",
+          "bad": [
+            {
+              "screen": "tab-Schedule",
+              "n": 1,
+              "nodes": [
+                {
+                  "target": ".is-low",
+                  "why": "Element has insufficient color contrast of 1.3 (foreground color: #ffe14d, background color: #ffffff, font size: 12.8pt (17px), font weight:",
+                  "text": "2 of  hours left · renews Nov 2"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "name": "no console errors, failed requests or unexpected non-2xx",
+        "status": "PASS",
+        "ms": 0,
+        "detail": {
+          "pass": true,
+          "console": [],
+          "pageErrors": [],
+          "failedRequests": [],
+          "badResponses": [],
+          "expectedBad": []
+        }
+      }
+    ],
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "expectedBad": [],
+    "smallTargets": [
+      {
+        "el": "button.p-more__btn",
+        "text": "More below ↓",
+        "w": 144,
+        "h": 44,
+        "inline": false,
+        "screen": "week",
+        "min": 48
+      },
+      {
+        "el": "button.p-more__btn",
+        "text": "More below ↓",
+        "w": 144,
+        "h": 44,
+        "inline": false,
+        "screen": "settings",
+        "min": 48
+      },
+      {
+        "el": "button.p-more__btn",
+        "text": "More below ↓",
+        "w": 144,
+        "h": 44,
+        "inline": false,
+        "screen": "tab-From tutor",
+        "min": 48
+      },
+      {
+        "el": "button.p-more__btn",
+        "text": "More below ↓",
+        "w": 144,
+        "h": 44,
+        "inline": false,
+        "screen": "tab-Settings",
+        "min": 48
+      }
+    ],
+    "contrast": {
+      "week": {
+        "tool": "axe",
+        "violations": 0,
+        "nodes": []
+      },
+      "tab-Messages": {
+        "tool": "axe",
+        "violations": 0,
+        "nodes": []
+      },
+      "tab-Schedule": {
+        "tool": "axe",
+        "violations": 1,
+        "nodes": [
+          {
+            "target": ".is-low",
+            "why": "Element has insufficient color contrast of 1.3 (foreground color: #ffe14d, background color: #ffffff, font size: 12.8pt (17px), font weight:",
+            "text": "2 of  hours left · renews Nov 2"
+          }
+        ]
+      },
+      "messages": {
+        "tool": "axe",
+        "violations": 0,
+        "nodes": []
+      },
+      "settings": {
+        "tool": "axe",
+        "violations": 0,
+        "nodes": []
+      }
+    },
+    "overflow": {
+      "week": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "tab-Messages": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "tab-Schedule": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "messages": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "zoom200-From tutor": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "zoom200-Messages": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "zoom200-Schedule": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "zoom200-Settings": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      }
+    },
+    "fit": {},
+    "notes": {}
+  }
+]
