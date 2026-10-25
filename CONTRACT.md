@@ -344,3 +344,22 @@ Each lesson concept gains `explain_level`:
 - `why`: explainable in one sentence at this grade with an intuitive reason (e.g. two copies of a triangle make a rectangle). Pip draws the reason out with concrete cases, as today.
 - `use`: true and important but its justification is beyond the grade (a proof or a law of nature: the Pythagorean theorem, Newton's laws, why a negative times a negative is positive for most middle schoolers). Pip **never asks why it works**. It asks the kid to apply it, say when it applies, or catch Pip misusing it. "that's the theorem / it's a law / that's just the rule" is full credit for the reason part.
 Rules: a "why" question about a `given` or `use` concept is a defect. Mission drafting (POST /api/assignments/draft) must set `explain_level` for every concept with this rubric; tutors can edit it. Existing lessons default: k2 of a_tri `given`, others `why` unless retagged.
+
+## v3.18 (tutor-first: student profiles, learning profile, learning map)
+The product pillars, in order: (1) tutors manage progress, profiles and what each kid understands; (2) parents get transparency; (3) kids are rewarded intrinsically.
+Student additions (synthetic only; no photos of minors, ever):
+```
+Student += avatar: {initials, color}            // illustrated badge; the kid's Pip is the main avatar
+          school: string, birthday_month: "Mar", started: date, contact: {student_email|null}   // @example.com
+          learning_profile: { explains_with: ("examples"|"pictures"|"steps"|"analogies"|"short claims")[],
+                              unstuck_by: string[],          // moves that worked, e.g. "a concrete picture", "pick-one question"
+                              pace: "quick"|"steady"|"needs time", texts_to_ready_avg: number,
+                              misconceptions_fixed: [{quote_before, quote_after, mission, date}],
+                              strengths: string[], watch_for: string[], updated_at }
+          learning_map: { nodes: [{concept_id, mission, subject, label, level 0..3, explain_level, evidence_quote|null}],
+                          edges: [{from, to, kind: "builds_on"}] }
+```
+- learning_profile and learning_map are computed from sessions (offline: rules over transcripts and the pacing log; live: one LLM summary per completed session), never self-reported, never "visual/auditory learner" labels.
+- `GET /api/students/{id}/profile` includes both; `GET /api/tutors/{id}/students` rows include avatar, school, pace, and a 1-line "next step".
+- Parents see a plain-English slice: "Maya explains best with examples; she fixed 1 mistake this week" (tutor-approved, v3.15 rules).
+- Seed: every student gets avatar, school (synthetic names), and a profile/map consistent with their seeded sessions; guardians keep synthetic phone (555-01xx) and email (@example.com) shown with quick-action buttons (test mode).
