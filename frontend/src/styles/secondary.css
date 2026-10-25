@@ -1804,3 +1804,62 @@ body:has(.shell:is([data-register='cool'], [data-register='focus'], [data-regist
     max-height: 50%;
   }
 }
+
+/* ---------- full-feed sheet: the same dark AGE-2 feed as the overlay, full height, no ruled paper ---------- */
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .notebook.drawer {
+  background: var(--ink);
+}
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .notebook.drawer:not(.drawer--column) {
+  height: calc(var(--vvh, 100dvh) - 16px);
+  max-height: none;
+}
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .notebook .drawer__head {
+  padding: 16px 0 10px;
+  border-bottom: 1px solid var(--divider);
+}
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .notebook .drawer__title {
+  font: 600 15px/1.2 var(--font-ui);
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--fg);
+}
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .notebook .drawer__body {
+  background: none;
+  background-image: none;
+  border: 0;
+  border-radius: 0;
+  padding: 0 0 16px;
+  color: var(--fg);
+}
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .notebook .her-words,
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .feed q.her-words {
+  color: var(--fg);
+}
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .feed--sheet .msg__who .mono-label,
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .feed--sheet .belief .mono-label,
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .feed--sheet .caption,
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .feed--sheet .msg--system,
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .feed--sheet .msg__sending,
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .feed--sheet .status-line,
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .feed--sheet .caption__lvl {
+  font-size: 15px;
+  letter-spacing: 0.04em;
+}
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .feed--sheet .caption {
+  color: var(--fg-muted);
+}
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .feed--sheet .caption--hit,
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .feed--sheet .caption--heal {
+  color: var(--coral);
+}
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .feed--sheet .caption--unlock {
+  color: var(--sun);
+}
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .feed--sheet .caption__text {
+  max-width: 86%;
+  white-space: normal;
+  overflow: visible;
+}
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .feed--sheet .msg__who .mono-label {
+  color: var(--fg-muted);
+}
