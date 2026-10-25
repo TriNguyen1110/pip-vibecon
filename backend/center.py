@@ -165,6 +165,28 @@ def auto_note(f: dict) -> str:
     return f"Bright Path Tutoring: {f['first']} finished today's Pip mission and taught Pip {taught}. - {f['tutor']}"
 
 
+def nice_date(iso: str) -> str:
+    """Human copy never shows ISO dates: "2026-11-02" -> "Nov 2"."""
+    try:
+        d = date.fromisoformat(str(iso)[:10])
+    except ValueError:
+        return str(iso)
+    return f"{d.strftime('%b')} {d.day}"
+
+
+def strip_quote(text: str, quote: str | None) -> str:
+    """The message without the sentence that carries the quote (the parent app shows the quote as the hero)."""
+    if not quote or quote not in (text or ""):
+        return text
+    q = re.escape(quote)
+    out = re.sub(r"\s*In [^.\"]*? own words: \"" + q + r"\"\.", "", text)
+    out = re.sub(r",? in [^.,\"]*? own words: \"" + q + r"\"", "", out)
+    if quote in out:  # an edited message: drop whichever sentence holds the quote
+        parts = re.split(r"(?<=[.!?])\s+", out)
+        out = " ".join(x for x in parts if quote not in x)
+    return re.sub(r"\s{2,}", " ", out).strip()
+
+
 def hours_text(n: int) -> str:
     return "no hours" if n <= 0 else "1 hour" if n == 1 else f"{n} hours"
 
@@ -864,7 +886,7 @@ def renewal_rows(sn: Snap) -> list[dict]:
                 elif is_sat_kid(st, e["subject"]) and goal_progress(st, e["subject"]):
                     ev = goal_line(first, goal_progress(st, e["subject"])[0])
                 note = (f"Hi {g['name'].split()[0]}, {first}'s {SUBJECT_NAME[e['subject']]} package with {tutor['name']} "
-                        f"has {hours_text(p['hours_left'])} left and renews on {p['renews_on']}. {ev}Want to keep going? "
+                        f"has {hours_text(p['hours_left'])} left and renews on {nice_date(p['renews_on'])}. {ev}Want to keep going? "
                         f"Reply here and we'll set it up. - {tutor['name']}")
             rows.append({"student": {"id": sid, "name": st["name"]},
                          "guardian": ({"id": g["id"], "name": g["name"], "prefers": g["prefers"]} if g else None),
@@ -984,6 +1006,7 @@ def report_items(sn: "Snap", sid: str) -> list[dict]:
         tid = r.get("tutor_id") or (sn.assignments.get(s_["assignment_id"], {}).get("tutor_id") if s_ else None) \
             or sn.students[sid].get("tutor_id")
         out.append({"id": r["id"], "kind": "auto_note" if r.get("auto") else "report", "text": r["message"],
+                    "body": strip_quote(r["message"], r.get("quote")),
                     "quote": r.get("quote"), "fixed": r.get("fixed"), "goal": r.get("goal"),
                     "subject": sn.subj(s_) if s_ else None,
                     "date": _dt(r["ts"]).astimezone(TZ).date().isoformat(), "from": _tutor_from(sn, tid)})
@@ -1055,7 +1078,7 @@ def kid_detail(sn: "Snap", sid: str) -> dict:
             w["fixed"].append({**it["fixed"], "from": it["from"]})
     out_weeks = []
     for w in sorted(weeks.values(), key=lambda w: w["week_of"], reverse=True)[:8]:
-        texts = [i["text"] for i in w["items"] if i.get("text")]
+        texts = [i.get("body") or i["text"] for i in w["items"] if i.get("text")]
         out_weeks.append({**w, "summary": " ".join(texts) if texts else None,
                           "from": next((i["from"] for i in w["items"] if i.get("text")), w["items"][0]["from"])})
     nxt = []

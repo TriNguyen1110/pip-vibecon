@@ -247,6 +247,16 @@ rn = get("/api/center/overview")["renewals_due"]
 mrn = next(r for r in rn if r["student"]["id"] == "s001")
 check("Maya's renewal note cites her verbatim quote", mrn["evidence_quote"] and f'"{mrn["evidence_quote"]}"' in mrn["note_preview"]
       and mrn["note_preview"].startswith("Hi Ana"), mrn["note_preview"])
+ISO = re.compile(r"\b20\d\d-\d\d-\d\d\b")
+check("renewal notes use readable dates, never ISO", all(not ISO.search(r["note_preview"] or "") for r in rn)
+      and center.nice_date(mrn["renews_on"]) in mrn["note_preview"], mrn["note_preview"])
+th_rep = [r for r in get("/api/parent/g001/kids/s014")["reports"] if r.get("quote")]
+check("report body drops the hero quote; text keeps it for SMS/email", th_rep and all(
+    r["quote"] in r["text"] and r["quote"] not in r["body"] and len(r["body"]) > 20 for r in th_rep), th_rep[:1])
+check("weekly summaries use the quote-free body", all(q_ not in w["summary"] for w in get("/api/parent/g001/kids/s014")["weeks"]
+                                                      for q_ in w["quotes"] if w["summary"]))
+check("no ISO dates in parent-facing text", not any(ISO.search(x) for x in
+                                                    [r["text"] for r in get("/api/parent/g001/kids/s014")["reports"]]))
 trn = [r for r in rn if r["student"]["id"] == "s014"]
 check("no game words in any parent copy (payloads, drafts, renewal notes)",
       not any(GAME_WORDS.search(b) for b in parent_blobs("g001") + parent_blobs("g002") + [pv["message"]]
