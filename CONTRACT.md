@@ -337,3 +337,10 @@ Draft { id, student_id, tutor_id, session_id, subject, topic, kind: "report"|"ko
 | POST `/api/drafts/{id}/skip` | | `Draft` |
 | PATCH `/api/students/{id}/settings` | `{auto_ko_note}` (422 if grade ≥ 7) | `{student}` |
 A K.O. creates a draft automatically (or sends it when `auto_ko_note` and grade ≤ 6). `source: "auto"` is allowed only for grade ≤ 6.
+
+## v3.17 (how deep Pip asks: never too obvious, never too deep)
+Each lesson concept gains `explain_level`:
+- `given`: obvious or prior knowledge at this grade (e.g. a rectangle's area is base × height for grade 6). Pip already knows it, credits it from the start and **never asks** for it. (Replaces/extends `prior_knowledge`.)
+- `why`: explainable in one sentence at this grade with an intuitive reason (e.g. two copies of a triangle make a rectangle). Pip draws the reason out with concrete cases, as today.
+- `use`: true and important but its justification is beyond the grade (a proof or a law of nature: the Pythagorean theorem, Newton's laws, why a negative times a negative is positive for most middle schoolers). Pip **never asks why it works**. It asks the kid to apply it, say when it applies, or catch Pip misusing it. "that's the theorem / it's a law / that's just the rule" is full credit for the reason part.
+Rules: a "why" question about a `given` or `use` concept is a defect. Mission drafting (POST /api/assignments/draft) must set `explain_level` for every concept with this rubric; tutors can edit it. Existing lessons default: k2 of a_tri `given`, others `why` unless retagged.
