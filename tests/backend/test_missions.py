@@ -23,7 +23,7 @@ def check(label, ok, detail=""):
 
 client, server = E.load_app(B, "offline")
 # mission -> (student, ready_by, wrong_turn_concept (the planned quiz miss))
-MISSIONS = {"a_trig": ("s014", 3, "k2"), "a_sat_modifiers": ("s043", 3, "k3"), "a_trig_id": ("s014", 2, "k3")}
+MISSIONS = {"a_trig": ("s014", 3, "k2"), "a_sat_modifiers": ("s043", 3, "k3"), "a_trig_id": ("s014", 2, "k3"), "a_pyth": ("s018", 3, "k3"), "a_newton2": ("s028", 3, "k2")}
 for aid, (sid, ready_by, miss) in MISSIONS.items():
     les = json.loads((B / f"seed/lessons/{aid}.json").read_text())
     od = les["offline_demo"]

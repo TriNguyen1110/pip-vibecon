@@ -1,0 +1,260 @@
+{
+  "standard": "CCSS 8.G.B.7: Apply the Pythagorean theorem to determine unknown side lengths in right triangles in real-world and mathematical problems in two and three dimensions.",
+  "source": "Original content written for Pip (no third-party text copied); aligned to CCSS 8.G.B.7.",
+  "attribution": "Pip team, original. Common Core standards are cited for alignment only.",
+  "in_scope": [
+    "which side of a right triangle is the long side",
+    "a² + b² = c² as the rule people use",
+    "using it on 3-4-5 and 6-8-10",
+    "a skatepark shortcut across a corner"
+  ],
+  "out_of_scope": [
+    "proving the theorem",
+    "the converse (is this corner a right angle)",
+    "three-dimensional distances",
+    "irrational square roots",
+    "trigonometry"
+  ],
+  "arc": [
+    "k1",
+    "k2",
+    "k3"
+  ],
+  "misconception_concept": "k3",
+  "wrong_patterns": [
+    "c\\s*=\\s*a\\s*\\+\\s*b\\b",
+    "(long|longest) side is (just )?(3|three) (plus|\\+) (4|four)",
+    "(just )?add (the|them)\\b.{0,25}(short sides|legs)\\b.{0,25}(long|c)\\b",
+    "(long|longest) side is (just )?(the )?(short sides|legs) added"
+  ],
+  "concepts": [
+    {
+      "concept_id": "k1",
+      "kind": "reason",
+      "explain_level": "why",
+      "look_fors": [
+        "Says the long side c is across from the right angle (one sentence is enough)",
+        "Says it is the longest side (the biggest angle faces the longest side)",
+        "May point at a corner of a skatepark and the straight shortcut across"
+      ],
+      "probe_ladder": [
+        "why is that wrong? the long side should be the two short sides put together.",
+        "which side of a right triangle is the longest, and where is it?",
+        "is there a special name for the side that never touches the square corner?",
+        "then the long side is the two short sides put together, even for a skinny triangle. that's what my rule says."
+      ],
+      "concrete": [
+        "what if i draw a right triangle and walk straight across from the corner, which side is that?"
+      ],
+      "connections": [
+        "so the long side is like the shortcut straight across a skatepark corner?"
+      ],
+      "spoilers": [
+        "opposite the right angle",
+        "across from the right angle",
+        "hypotenuse",
+        "the longest side"
+      ],
+      "friend_nudge": "My cousin said the long side is the one that never touches the square corner…? I don't know why that matters.",
+      "aha": "ohh the long one is the side across from the corner.",
+      "idea_patterns": [
+        "(longest|long|biggest|largest) side",
+        "(opposite|across from|across|facing|far from) (the )?(right angle|90|square corner|corner)",
+        "\\bhypotenuse\\b",
+        "\\bc\\b.{0,25}(long|longest|opposite|across)"
+      ]
+    },
+    {
+      "concept_id": "k2",
+      "kind": "procedure",
+      "explain_level": "use",
+      "look_fors": [
+        "Says the two short sides squared add up to the long side squared",
+        "Accepts that it is a theorem; 'that's just the theorem' counts as a full reason",
+        "May write a² + b² = c²"
+      ],
+      "probe_ladder": [
+        "what do we do with the two short sides to get the long one?",
+        "i'll guess you just add them. is that right?",
+        "what's the rule people use for the long side?",
+        "then a long side of 3 + 4 is 7, longer than any walk. that's what my rule says."
+      ],
+      "concrete": [
+        "what if i draw a square on each side of a 3-4-5 triangle, how many tiles in each?"
+      ],
+      "connections": [
+        "so it's like two small squares of floor tiles filling one big square?"
+      ],
+      "spoilers": [
+        "a² + b² = c²",
+        "a squared plus b squared",
+        "a^2 + b^2"
+      ],
+      "friend_nudge": "My neighbor said it's about squares on the sides…? I'm not sure which ones.",
+      "aha": "ok so the two small squares fill the big one.",
+      "idea_patterns": [
+        "(a|leg)\\s*(²|2|squared)\\s*(\\+|plus)\\s*(b|leg)\\s*(²|2|squared)",
+        "squar\\w+.{0,40}(add|plus|sum).{0,40}squar\\w+",
+        "pythag\\w+",
+        "\\bthe theorem\\b"
+      ]
+    },
+    {
+      "concept_id": "k3",
+      "kind": "procedure",
+      "explain_level": "use",
+      "look_fors": [
+        "Uses the rule on legs 3 and 4: 9 + 16 = 25, so c = 5",
+        "Applies it to a new pair of legs (6 and 8 give 10)",
+        "Says when it applies: right triangles only"
+      ],
+      "probe_ladder": [
+        "what's the long side of a right triangle with legs 3 and 4?",
+        "i'll guess 3 + 4 = 7. is that right?",
+        "can you do one with legs 6 and 8?",
+        "then 6 + 8 = 14 is the long side. that's what my rule says."
+      ],
+      "concrete": [
+        "what if the two short sides are 3 and 4, how long is the shortcut?"
+      ],
+      "connections": [
+        "so it's like walking 3 blocks and 4 blocks, but the shortcut goes straight across?"
+      ],
+      "spoilers": [
+        "c = 5",
+        "= 25",
+        "9 + 16",
+        "is 5"
+      ],
+      "friend_nudge": "Someone in my class said a 3 by 4 corner has a shortcut you can measure with a string…? I don't get how that helps.",
+      "aha": "ok so you square both, add, and take the root.",
+      "idea_patterns": [
+        "\\b9\\s*(\\+|plus)\\s*16\\b",
+        "\\b25\\b",
+        "c\\s*(=|is)\\s*5\\b|long side is 5|hypotenuse is 5|\\b5\\b.{0,20}(long|c|shortcut)",
+        "\\b3\\s*,?\\s*4\\s*,?\\s*(and )?5\\b",
+        "\\b36\\s*(\\+|plus)\\s*64\\b|\\b100\\b"
+      ]
+    }
+  ],
+  "offline_demo": {
+    "assignment_id": "a_pyth",
+    "student_id": "s018",
+    "note": "Ready at text 3; wrong rule c = a + b makes Pip miss the 3-4 item; re-teach; K.O.",
+    "turns": [
+      {
+        "n": 1,
+        "phase": "teach",
+        "student": "the long side c is the longest one, the one across from the right angle",
+        "kind": "explain",
+        "concept_id": "k1",
+        "level": 2,
+        "event": "hit",
+        "filed_rule": "",
+        "next_concept_id": "k2",
+        "rung": 1,
+        "pip": "ohh the long one is across from the corner. what do i do with the short ones?"
+      },
+      {
+        "n": 2,
+        "phase": "teach",
+        "student": "its the pythagorean theorem, a squared plus b squared equals c squared",
+        "kind": "explain",
+        "concept_id": "k2",
+        "level": 2,
+        "event": "hit",
+        "filed_rule": "",
+        "next_concept_id": "k3",
+        "rung": 1,
+        "pip": "ok the squares of the short ones make the big square. does it work on a 3 and 4?"
+      },
+      {
+        "n": 3,
+        "phase": "teach",
+        "student": "yeah so 3 and 4 is 9 plus 16 is 25 so the long side is 5",
+        "kind": "explain",
+        "concept_id": "k3",
+        "level": 2,
+        "event": "hit",
+        "filed_rule": "",
+        "next_concept_id": null,
+        "rung": null,
+        "pip": "9 plus 16 is 25, so 5. ok I think I get it. quiz me?"
+      },
+      {
+        "n": 4,
+        "phase": "teach",
+        "student": "oh and for small triangles the long side is just a plus b",
+        "kind": "misconception",
+        "concept_id": "k3",
+        "level": 0,
+        "event": "heal",
+        "filed_rule": "for small triangles the long side is just a plus b",
+        "next_concept_id": null,
+        "rung": null,
+        "pip": "Saving that: 'for small triangles the long side is just a plus b'. small ones are easy then."
+      },
+      {
+        "n": 5,
+        "reteach_concept_id": "k3",
+        "pip_ask": "my brain has a bug. help me fix it: how long is the long side when the short sides are 3 and 4?",
+        "student": "no wait. 3 plus 4 is 7 but the long side is 5. you square them first, 9 plus 16 is 25",
+        "kind": "explain",
+        "concept_id": "k3",
+        "level": 3,
+        "event": "hit",
+        "filed_rule": "you square them first, 9 plus 16 is 25",
+        "next_concept_id": null,
+        "rung": null,
+        "pip": "ohh square first. throwing out my a plus b rule."
+      }
+    ],
+    "quiz": [
+      {
+        "concept_id": "k1",
+        "passed": true,
+        "pip_answer": "The one across from the right angle",
+        "line": "The side across from the right angle. It's the longest one."
+      },
+      {
+        "concept_id": "k2",
+        "passed": true,
+        "pip_answer": "a squared plus b squared",
+        "line": "a squared plus b squared. That's the theorem you told me."
+      },
+      {
+        "concept_id": "k3",
+        "passed": false,
+        "pip_answer": "7",
+        "line": "Your rule: for small triangles the long side is just a plus b. 3 plus 4 is 7. Following your rule anyway. 😵"
+      }
+    ],
+    "retry": [
+      {
+        "concept_id": "k3",
+        "passed": true,
+        "pip_answer": "5",
+        "line": "9 plus 16 is 25, and the root of 25 is 5. Not 7."
+      }
+    ]
+  },
+  "concept_labels": {
+    "k1": "Which side",
+    "k2": "The rule",
+    "k3": "Use it"
+  },
+  "ko_strike": {
+    "wrong": "c = a + b",
+    "right": "a² + b² = c²"
+  },
+  "earned_items": [
+    {
+      "id": "shortcut_pin",
+      "name": "Shortcut pin"
+    },
+    {
+      "id": "fixed_it_star",
+      "name": "Fixed-it star"
+    }
+  ]
+}

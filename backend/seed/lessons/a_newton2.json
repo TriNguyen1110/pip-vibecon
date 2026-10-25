@@ -1,0 +1,260 @@
+{
+  "standard": "NGSS MS-PS2-2: Plan an investigation to provide evidence that the change in an object's motion depends on the sum of the forces on the object and the mass of the object.",
+  "source": "Original content written for Pip (no third-party text copied); aligned to NGSS MS-PS2-2.",
+  "attribution": "Pip team, original. NGSS is cited for alignment only.",
+  "in_scope": [
+    "F = ma as the rule",
+    "more mass means less acceleration for the same push",
+    "finding acceleration from a force and a mass",
+    "a shopping cart as the picture"
+  ],
+  "out_of_scope": [
+    "friction",
+    "weight versus mass",
+    "converting between unit systems",
+    "Newton's first and third laws",
+    "gravity and falling objects"
+  ],
+  "arc": [
+    "k2",
+    "k1",
+    "k3"
+  ],
+  "misconception_concept": "k2",
+  "wrong_patterns": [
+    "(heavier|more mass|heavy|bigger)\\b.{0,40}\\b(speeds?|goes|gets?)\\b.{0,10}\\b(up )?(more|faster)\\b",
+    "heavy (things|stuff|carts?) (just |always )?(speed|go).{0,10}(up )?(more|faster)",
+    "more mass.{0,20}more accel"
+  ],
+  "concepts": [
+    {
+      "concept_id": "k1",
+      "kind": "procedure",
+      "explain_level": "use",
+      "look_fors": [
+        "Gives F = ma (force = mass × acceleration)",
+        "Accepts that it is the law; 'that's Newton's second law' counts as a full reason",
+        "May say which quantity is the push"
+      ],
+      "probe_ladder": [
+        "what's the rule that ties the push, the mass and the speeding up together?",
+        "i'll guess you add the mass and the speed-up. is that right?",
+        "can you write it so i can use it on a cart?",
+        "then force is mass plus acceleration, so a bigger cart needs a smaller push. that's what my rule says."
+      ],
+      "concrete": [
+        "what if i push a cart with 10 N and it has 2 kg, what do i multiply to check?"
+      ],
+      "connections": [
+        "so it's like a recipe: the push, the mass and the speed-up always fit together?"
+      ],
+      "spoilers": [
+        "F = ma",
+        "f=ma",
+        "force equals mass times acceleration",
+        "mass times acceleration"
+      ],
+      "friend_nudge": "Someone in my class said it's three letters with an equals sign…? I don't remember which three.",
+      "aha": "ok so it's F equals m times a, that's the law.",
+      "idea_patterns": [
+        "f\\s*=\\s*m\\s*[\\*x×]?\\s*a\\b",
+        "force.{0,25}(mass|m)\\b.{0,25}accelerat",
+        "newton'?s (second|2nd) law|second law|\\bnewtons? law\\b"
+      ]
+    },
+    {
+      "concept_id": "k2",
+      "kind": "reason",
+      "explain_level": "why",
+      "look_fors": [
+        "Says that with the same push, more mass means less acceleration",
+        "Uses the cart: a full cart is harder to get going than an empty one",
+        "Says the empty cart speeds up more"
+      ],
+      "probe_ladder": [
+        "why is that wrong? a heavier cart has more stuff, so it should go faster.",
+        "if i push an empty cart and a full cart the same, which one gets going faster?",
+        "which cart is harder to get moving, the empty or the full one?",
+        "then a cart full of bricks takes off like a rocket. that's what my rule says."
+      ],
+      "concrete": [
+        "what if i push an empty cart and a full cart with the same shove, which one leaves first?"
+      ],
+      "connections": [
+        "so a full shopping cart is harder to get going than an empty one?",
+        "so it's like pushing a friend on a skateboard versus pushing a car?"
+      ],
+      "spoilers": [
+        "more mass means less acceleration",
+        "less acceleration",
+        "heavier speeds up less",
+        "heavier things speed up less"
+      ],
+      "friend_nudge": "My cousin said pushing a full cart across a parking lot is way harder than an empty one…? I don't know what that has to do with it.",
+      "aha": "ohh so the full cart barely moves with the same push.",
+      "idea_patterns": [
+        "(full|heavy|loaded|more mass|heavier)\\b.{0,40}\\b(harder|slower|less|hard to)\\b.{0,30}\\b(get going|accelerat\\w+|speed|start|move|push)\\b",
+        "(empty|light|less mass|lighter)\\b.{0,40}\\b(easier|faster|more)\\b.{0,30}\\b(get going|accelerat\\w+|speed|start|move)\\b",
+        "more mass.{0,20}less accel",
+        "\\bcart\\b.{0,40}\\b(harder|easier|full|empty)\\b"
+      ]
+    },
+    {
+      "concept_id": "k3",
+      "kind": "procedure",
+      "explain_level": "use",
+      "look_fors": [
+        "Uses a = F ÷ m on 10 N and 2 kg to get 5 m/s²",
+        "Applies it to a different mass or force without being told how",
+        "Says when it applies: any push on any mass"
+      ],
+      "probe_ladder": [
+        "a cart weighs 2 kg and you push it with 10 N. what's its acceleration?",
+        "i'll guess 10 + 2 = 12. is that right?",
+        "what about a 4 kg cart with the same 10 N push?",
+        "then a 4 kg cart speeds up more than a 2 kg one with the same push. that's what my rule says."
+      ],
+      "concrete": [
+        "what if i push a 2 kg cart with 10 N, what do i divide?"
+      ],
+      "connections": [
+        "so it's like working out how fast a cart takes off before you even push it?"
+      ],
+      "spoilers": [
+        "5 m/s",
+        "5 meters per second",
+        "a = f/m",
+        "f divided by m",
+        "= 5"
+      ],
+      "friend_nudge": "Someone in my class said you split the push by how much stuff there is…? I'm not sure how.",
+      "aha": "ok so you divide the push by the mass and that's the speed-up.",
+      "idea_patterns": [
+        "\\b10\\b.{0,25}\\b2\\b.{0,30}\\b5\\b",
+        "\\b5\\s*(m/s|meters? per second|m per s)",
+        "\\ba\\s*=\\s*f\\s*(/|÷|over|divided by)\\s*m\\b",
+        "(divide|divided|over)\\b.{0,20}\\b(mass|kg|2)\\b"
+      ]
+    }
+  ],
+  "offline_demo": {
+    "assignment_id": "a_newton2",
+    "student_id": "s028",
+    "note": "Ready at text 3; the heavier-is-faster rule makes Pip miss the cart question; re-teach; K.O.",
+    "turns": [
+      {
+        "n": 1,
+        "phase": "teach",
+        "student": "its F equals m times a, thats newtons second law",
+        "kind": "explain",
+        "concept_id": "k1",
+        "level": 2,
+        "event": "hit",
+        "filed_rule": "",
+        "next_concept_id": "k2",
+        "rung": 1,
+        "pip": "ok so push, mass and speed-up fit together. what happens with the same push on a heavier cart?"
+      },
+      {
+        "n": 2,
+        "phase": "teach",
+        "student": "a full cart is harder to get going than an empty one so more mass means less speed up",
+        "kind": "explain",
+        "concept_id": "k2",
+        "level": 2,
+        "event": "hit",
+        "filed_rule": "",
+        "next_concept_id": "k3",
+        "rung": 1,
+        "pip": "ohh the full cart barely moves. so what's a 10 N push on a 2 kg cart?"
+      },
+      {
+        "n": 3,
+        "phase": "teach",
+        "student": "yeah so 10 newtons on 2 kilograms is 5 meters per second squared, you divide",
+        "kind": "explain",
+        "concept_id": "k3",
+        "level": 2,
+        "event": "hit",
+        "filed_rule": "",
+        "next_concept_id": null,
+        "rung": null,
+        "pip": "10 divided by 2 is 5. ok I think I get it. quiz me?"
+      },
+      {
+        "n": 4,
+        "phase": "teach",
+        "student": "oh and heavier stuff just speeds up more when you push it",
+        "kind": "misconception",
+        "concept_id": "k2",
+        "level": 0,
+        "event": "heal",
+        "filed_rule": "heavier stuff just speeds up more when you push it",
+        "next_concept_id": null,
+        "rung": null,
+        "pip": "Saving that: 'heavier stuff just speeds up more when you push it'. heavy is fast, easy."
+      },
+      {
+        "n": 5,
+        "reteach_concept_id": "k2",
+        "pip_ask": "my brain has a bug. help me fix it: same push on an empty cart and a full cart, which one speeds up more?",
+        "student": "no wait. the empty cart takes off and the full one barely moves, same push, so more mass means less acceleration",
+        "kind": "explain",
+        "concept_id": "k2",
+        "level": 3,
+        "event": "hit",
+        "filed_rule": "the empty cart takes off and the full one barely moves",
+        "next_concept_id": null,
+        "rung": null,
+        "pip": "ohh the empty one wins. throwing out my heavy-is-fast rule."
+      }
+    ],
+    "quiz": [
+      {
+        "concept_id": "k1",
+        "passed": true,
+        "pip_answer": "F = m × a",
+        "line": "Force equals mass times acceleration. That's the law you told me."
+      },
+      {
+        "concept_id": "k2",
+        "passed": false,
+        "pip_answer": "The full cart",
+        "line": "Your rule: heavier stuff just speeds up more. So the full cart wins. Following your rule anyway. 😵"
+      },
+      {
+        "concept_id": "k3",
+        "passed": true,
+        "pip_answer": "5 m/s²",
+        "line": "10 divided by 2 is 5. So 5 meters per second squared."
+      }
+    ],
+    "retry": [
+      {
+        "concept_id": "k2",
+        "passed": true,
+        "pip_answer": "The empty cart",
+        "line": "Same push, less mass, more speed-up. The empty cart takes off."
+      }
+    ]
+  },
+  "concept_labels": {
+    "k1": "The law",
+    "k2": "Mass vs speed-up",
+    "k3": "Use it"
+  },
+  "ko_strike": {
+    "wrong": "heavier → speeds up more",
+    "right": "more mass → less speed-up"
+  },
+  "earned_items": [
+    {
+      "id": "cart_pin",
+      "name": "Cart pin"
+    },
+    {
+      "id": "fixed_it_star",
+      "name": "Fixed-it star"
+    }
+  ]
+}

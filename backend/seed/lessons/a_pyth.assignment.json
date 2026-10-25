@@ -1,0 +1,75 @@
+{
+  "id": "a_pyth",
+  "student_id": "s018",
+  "tutor_id": "t3",
+  "grade": 8,
+  "topic": "Right triangles: the long side",
+  "why_it_matters": "Carpenters, game designers and skaters all need the length of the straight shortcut across a corner.",
+  "concepts": [
+    {
+      "id": "k1",
+      "text": "The long side c sits across from the right angle, and it is always the longest side",
+      "weapon": "Right-Angle Radar 📡",
+      "explain_level": "why"
+    },
+    {
+      "id": "k2",
+      "text": "The two short sides squared add up to the long side squared: a² + b² = c²",
+      "weapon": "Square Stamp 🟥",
+      "explain_level": "use"
+    },
+    {
+      "id": "k3",
+      "text": "Use it: legs 3 and 4 give 9 + 16 = 25, so the long side is 5",
+      "weapon": "Shortcut Skateboard 🛹",
+      "explain_level": "use"
+    }
+  ],
+  "misconception": "The long side of a right triangle is the two short sides added together, so c = a + b and legs 3 and 4 give 7",
+  "root_prerequisite": "Squares and square roots",
+  "boss": {
+    "name": "Sultan Sum-Sum",
+    "emoji": "🐪🪧",
+    "backstory": "A camel with a sign reading 'C = A + B' who walks every shortcut the long way round and calls it efficiency.",
+    "lines": {
+      "taunt": [
+        "Three plus four is seven. The shortcut is therefore seven. I have walked it.",
+        "The long way round is a form of shortcut.",
+        "I will not be squaring anything today."
+      ],
+      "heal": [
+        "Excellent. Addition remains the most reliable of the operations.",
+        "Quite right. A shortcut is simply two walks."
+      ],
+      "hit": [
+        "This is most irregular. The shortcut appears to be shorter than the walk.",
+        "I did not authorize a square."
+      ],
+      "ko": "I object to being squared.",
+      "reformed": "I have measured across. It was five, not seven. I would like to join you."
+    }
+  },
+  "cliffhanger": "I heard the same idea can tell you if a corner is really a right angle, just from the three sides. That can't be right… right?",
+  "quiz": [
+    {
+      "id": "q_k1",
+      "concept_id": "k1",
+      "question": "In a right triangle, which side is the long side c, and how can you spot it?",
+      "answer": "The side across from the right angle; it is the longest side."
+    },
+    {
+      "id": "q_k2",
+      "concept_id": "k2",
+      "question": "If the short sides are a and b, what does c squared equal?",
+      "answer": "a² + b² (the squares of the short sides added up)."
+    },
+    {
+      "id": "q_k3",
+      "concept_id": "k3",
+      "question": "A right triangle has short sides 3 and 4. How long is the long side?",
+      "answer": "5, because 9 + 16 = 25 and the square root of 25 is 5."
+    }
+  ],
+  "created_at": "2026-10-25T09:30:00+00:00",
+  "scene": "skatepark"
+}

@@ -1,0 +1,75 @@
+{
+  "id": "a_newton2",
+  "student_id": "s028",
+  "tutor_id": "t6",
+  "grade": 8,
+  "topic": "Pushing things: force and speeding up",
+  "why_it_matters": "Pushing a shopping cart, a car or a skateboard all follow one rule about how much a shove changes how fast something goes.",
+  "concepts": [
+    {
+      "id": "k1",
+      "text": "Newton's second law: force = mass × acceleration, F = ma",
+      "weapon": "Law Hammer 🔨",
+      "explain_level": "use"
+    },
+    {
+      "id": "k2",
+      "text": "With the same push, more mass means less acceleration (a full cart is harder to get going than an empty one)",
+      "weapon": "Cart Brake 🛒",
+      "explain_level": "why"
+    },
+    {
+      "id": "k3",
+      "text": "Use it: a 10 N push on a 2 kg cart gives a = F ÷ m = 5 m/s²",
+      "weapon": "Calculator Cannon 🧮",
+      "explain_level": "use"
+    }
+  ],
+  "misconception": "Heavier things always speed up more if you push them the same, so a full cart takes off faster than an empty one",
+  "root_prerequisite": "Speed, push (force) and mass as separate ideas",
+  "boss": {
+    "name": "Heavy-Heavy Hippo",
+    "emoji": "🦛🏋️",
+    "backstory": "A hippo in a tiny gym headband who carries a sign reading 'HEAVIER = FASTER' and thinks every cart wants to be full.",
+    "lines": {
+      "taunt": [
+        "I am extremely heavy. Observe how quickly I will now accelerate.",
+        "More mass is more speed. It is simply bigger.",
+        "I have filled the cart. It will now leave at once."
+      ],
+      "heal": [
+        "Splendid. Heft is velocity. I shall have it engraved.",
+        "Quite right. The heavy cart wins every race."
+      ],
+      "hit": [
+        "This is most irregular. The heavy cart appears to be going nowhere.",
+        "I did not authorize an empty cart."
+      ],
+      "ko": "I object to being divided by my own weight.",
+      "reformed": "I have pushed both carts. The empty one left first. I would like to join you."
+    }
+  },
+  "cliffhanger": "I heard that if you push twice as hard, the speed-up doubles too. Is that the same law? That can't be right… right?",
+  "quiz": [
+    {
+      "id": "q_k1",
+      "concept_id": "k1",
+      "question": "Write the equation that ties force, mass and acceleration together.",
+      "answer": "F = m × a (force equals mass times acceleration)."
+    },
+    {
+      "id": "q_k2",
+      "concept_id": "k2",
+      "question": "You give an empty cart and a full cart the same push. Which one speeds up more, and why?",
+      "answer": "The empty cart. For the same push, more mass means less acceleration."
+    },
+    {
+      "id": "q_k3",
+      "concept_id": "k3",
+      "question": "A 10 N push moves a 2 kg cart. What is its acceleration?",
+      "answer": "5 m/s² (a = F ÷ m = 10 ÷ 2)."
+    }
+  ],
+  "created_at": "2026-10-25T10:00:00+00:00",
+  "scene": "arcade"
+}
