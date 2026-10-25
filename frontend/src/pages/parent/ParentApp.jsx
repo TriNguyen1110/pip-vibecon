@@ -331,7 +331,7 @@ function ReportCard({ report, kid, hero }) {
           </span>
         </div>
       )}
-      <p className="p-body">{report.text}</p>
+      <p className="p-body">{report.body ?? report.text}</p>
       {report.fixed && (
         <div className="p-fixed">
           <p className="p-eyebrow">Fixed a mistake</p>
