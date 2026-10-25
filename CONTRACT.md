@@ -363,3 +363,20 @@ Student += avatar: {initials, color}            // illustrated badge; the kid's 
 - `GET /api/students/{id}/profile` includes both; `GET /api/tutors/{id}/students` rows include avatar, school, pace, and a 1-line "next step".
 - Parents see a plain-English slice: "Maya explains best with examples; she fixed 1 mistake this week" (tutor-approved, v3.15 rules).
 - Seed: every student gets avatar, school (synthetic names), and a profile/map consistent with their seeded sessions; guardians keep synthetic phone (555-01xx) and email (@example.com) shown with quick-action buttons (test mode).
+
+## v3.19 (parents pay the center: Stripe; Pip's Brain as a MongoDB document)
+```
+Payment { id, guardian_id, student_id, enrollment_id, subject, hours, amount_usd, status: "pending"|"paid"|"failed",
+          provider: "stripe_test"|"simulated", checkout_session_id|null, created_at, paid_at|null, receipt_no }
+```
+| Method + path | Body | Returns |
+|---|---|---|
+| POST `/api/parent/{gid}/checkout` | `{student_id, enrollment_id, hours}` | `{url, payment_id, simulated: bool}`. Stripe Checkout (test mode) when `STRIPE_SECRET_KEY` is a test key; else an in-app simulated checkout URL. 403 for another family's kid |
+| POST `/api/payments/{id}/confirm` | | `Payment` (verifies the Checkout Session with Stripe when real; simulated otherwise). On paid: the package gains `hours`, `hours_total` updates, `renews_on` moves forward, status `active` |
+| POST `/api/stripe/webhook` | Stripe event | `{ok}` (checkout.session.completed → confirm; signature checked when `STRIPE_WEBHOOK_SECRET` is set) |
+| GET `/api/parent/{gid}/billing` | | `{packages: [{student, subject, hours_left, hours_total, price_usd, renews_on}], payments: Payment[]}` |
+| GET `/api/sessions/{id}/document` | | the raw stored session document (tutor/owner only; shows Pip's Brain as it lives in MongoDB) |
+- Price = package price from the enrollment (Maya math: 12 h, $660). Renewal notes and parent reports for a low/expiring package carry a "Renew" action to checkout.
+- Owner overview adds `collected_7d_usd`, `renewals_paid_7d`; a paid renewal removes that package from `revenue_at_risk_usd`.
+- Tutor rows add `billing: "paid"|"due"|"overdue"`.
+- Test mode only; never a live key. Production path (not built): Stripe Connect, each center its own connected account, optional platform fee.
