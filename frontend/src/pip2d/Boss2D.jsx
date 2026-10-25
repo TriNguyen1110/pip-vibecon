@@ -13,18 +13,24 @@ const INK = '#2A1630'
 const SIGN = '#FFF6E0'
 const FONT = '"Arial Rounded MT Bold", "Trebuchet MS", system-ui, sans-serif'
 
-export const BOSSES_2D = ['walrus', 'penguin', 'hamster', 'triangle']
+export const BOSSES_2D = ['walrus', 'penguin', 'hamster', 'triangle', 'swan', 'owl', 'duck']
 export const BOSS_NAMES = {
   walrus: 'Top-Top Bottom-Bottom',
   penguin: 'Pause-Pause Penguin',
   hamster: 'Hop-Hop Hamster',
   triangle: 'Duke Doublecount',
+  swan: 'Sir Cosine Overreach',
+  owl: 'Baroness Plus-Plus-One',
+  duck: 'Dame Dangle-Dangle',
 }
 
 // Pick a boss by id, or by keywords in the lesson's boss name / backstory.
 export function bossIdFor(idOrName = '') {
   const s = String(idOrName).toLowerCase()
   if (BOSS_NAMES[s]) return s
+  if (/cosine|overreach|swan/.test(s)) return 'swan'
+  if (/plus-plus|baroness|owl|monocle/.test(s)) return 'owl'
+  if (/dangle|dame|duck/.test(s)) return 'duck'
   if (/doublecount|duke|peacock|triangle|△|tri\b|area|b\s*[×x*]\s*h|base.*height/.test(s)) return 'triangle'
   if (/walrus|top-top|bottom-bottom|fraction/.test(s)) return 'walrus'
   if (/penguin|pause|comma/.test(s)) return 'penguin'
@@ -466,7 +472,133 @@ function Peacock({ state, id, variant }) {
   )
 }
 
-const ART = { walrus: Walrus, penguin: Penguin, hamster: Hamster, triangle: Peacock }
+// Shared sign-on-a-stick for the newer bosses (bends, cracks, snaps like the others).
+function StickSign({ state, id, lines, size = 12.5, x = 124, y = 22, w = 94, h = 56 }) {
+  const ko = state === 'ko'
+  if (ko) {
+    return (
+      <g>
+        <path d="M184,236 L178,206" stroke="#8A5A3C" strokeWidth="7" strokeLinecap="round" />
+        <Board x={98} y={174} w={w} h={h - 4} lines={lines} size={size} state="ko" id={`${id}s`} />
+      </g>
+    )
+  }
+  return (
+    <g transform={state === 'cracked' ? 'rotate(12 180 160)' : undefined}>
+      <path d="M184,176 L184,76" stroke={INK} strokeWidth="10" strokeLinecap="round" />
+      <path d="M184,176 L184,76" stroke="#A8724C" strokeWidth="5" strokeLinecap="round" />
+      <Board x={x} y={y} w={w} h={h} lines={lines} size={size} state={state === 'cracked' ? 'cracked' : 'smug'} id={`${id}s`} />
+    </g>
+  )
+}
+
+// Sir Cosine Overreach: a swan in a velvet cape, "BIGGER TRIANGLE, BIGGER SINE".
+function Swan({ state, id }) {
+  const fill = '#F4F2F8'
+  const shade = '#CFCBE0'
+  const ko = state === 'ko'
+  const reformed = state === 'reformed'
+  return (
+    <g transform={ko ? 'rotate(-12 110 232)' : undefined}>
+      <path d="M96,212 L94,232 M122,212 L124,232" stroke="#F2A33A" strokeWidth="5" strokeLinecap="round" />
+      <path d="M84,233 L102,233 M116,233 L134,233" stroke="#F2A33A" strokeWidth="5" strokeLinecap="round" />
+      {/* velvet cape */}
+      <V d="M60,132 Q110,112 160,132 L170,206 Q110,194 50,206 Z" fill="#7A1F5C" shade="#5C1446" uid={`${id}cape`} />
+      <V d={ell(110, 172, 46, 40)} fill={fill} shade={shade} uid={`${id}b`} />
+      <V d="M126,170 C150,160 168,170 172,188 C152,192 136,188 126,180 Z" fill={fill} shade={shade} uid={`${id}w`} />
+      {/* long S-neck */}
+      <path d="M96,150 C76,128 78,100 96,86 C108,76 110,64 104,56" fill="none" stroke={INK} strokeWidth="24" strokeLinecap="round" />
+      <path d="M96,150 C76,128 78,100 96,86 C108,76 110,64 104,56" fill="none" stroke={fill} strokeWidth="16" strokeLinecap="round" />
+      <V d={ell(104, 50, 20, 17)} fill={fill} shade={shade} uid={`${id}h`} sx={-5} sy={-4} />
+      <V d="M120,46 L146,52 L120,58 Z" fill="#F2A33A" shade="#D9862A" uid={`${id}bk`} w={3} sx={-3} sy={-2} />
+      <path d="M118,46 L124,40 L126,50" fill={INK} />
+      <BossEyes L={[96, 48]} R={[112, 47]} r={4.5} state={state} lid={fill} />
+      <circle cx="104" cy="60" r="4" fill="#F2C14E" stroke={INK} strokeWidth="2" />
+      <Gloss x={94} y={40} rx={6} ry={2.6} />
+      <StickSign state={state} id={id} lines={reformed ? ['SAME SHAPE,', 'SAME SINE'] : ['BIGGER TRIANGLE,', 'BIGGER SINE']} size={11} w={104} x={120} />
+      {state === 'cracked' && <Sweat x={132} y={30} />}
+      {ko && <KOStars x={104} y={20} />}
+    </g>
+  )
+}
+
+// Baroness Plus-Plus-One: an owl in a monocle, "SIN + COS = 1".
+function Owl({ state, id }) {
+  const fill = '#8A6A9E'
+  const shade = '#6C4F80'
+  const ko = state === 'ko'
+  const reformed = state === 'reformed'
+  return (
+    <g transform={ko ? 'rotate(10 110 232)' : undefined}>
+      {[90, 128].map((x) => (
+        <path key={x} d={`M${x - 8},226 L${x},232 L${x + 8},226`} fill="none" stroke="#F2A33A" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
+      ))}
+      <V d="M110,60 C158,60 176,112 172,162 C168,206 146,226 110,226 C74,226 52,206 48,162 C44,112 62,60 110,60 Z" fill={fill} shade={shade} uid={`${id}b`} />
+      <path d={ell(110, 176, 40, 42)} fill="#E8DCC8" />
+      <g stroke="#B9A88E" strokeWidth="2.6" strokeLinecap="round" fill="none">
+        <path d="M94,160 q6,6 12,0 M114,160 q6,6 12,0 M94,180 q6,6 12,0 M114,180 q6,6 12,0 M104,198 q6,6 12,0" />
+      </g>
+      {/* ear tufts */}
+      <V d="M62,74 L54,42 L84,64 Z" fill={fill} shade={shade} uid={`${id}t1`} />
+      <V d="M158,74 L166,42 L136,64 Z" fill={fill} shade={shade} uid={`${id}t2`} />
+      {/* face disc */}
+      <path d={ell(88, 104, 26, 24)} fill="#E8DCC8" />
+      <path d={ell(132, 104, 26, 24)} fill="#E8DCC8" />
+      <BossEyes L={[88, 104]} R={[132, 103]} r={9} state={state} lid="#E8DCC8" />
+      {/* monocle (chrome ring + chain) */}
+      {!ko && (
+        <g>
+          <circle cx="132" cy="103" r="17" fill="none" stroke="#D8B46A" strokeWidth="4" />
+          <path d="M148,110 C156,130 150,150 140,160" fill="none" stroke="#D8B46A" strokeWidth="2" strokeDasharray="3 2" />
+        </g>
+      )}
+      {ko && <circle cx="160" cy="214" r="12" fill="none" stroke="#D8B46A" strokeWidth="4" />}
+      <V d="M104,120 L116,120 L110,134 Z" fill="#F2A33A" shade="#D9862A" uid={`${id}bk`} w={3} sx={-3} sy={-2} />
+      <V d="M52,130 C34,150 34,180 48,196 C56,184 58,158 58,138 Z" fill={fill} shade={shade} uid={`${id}w1`} />
+      <Gloss x={76} y={76} rx={12} ry={5} />
+      <StickSign state={state} id={id} lines={reformed ? ['SIN² + COS²', '= 1'] : ['SIN + COS', '= 1']} size={13} />
+      {state === 'cracked' && <Sweat x={160} y={70} />}
+      {ko && <KOStars x={110} y={46} />}
+    </g>
+  )
+}
+
+// Dame Dangle-Dangle: a duck in running shoes with a backpack, "ANY PHRASE CAN DESCRIBE ANYONE".
+function Duck({ state, id }) {
+  const fill = '#F7D64A'
+  const shade = '#D9B52E'
+  const ko = state === 'ko'
+  const reformed = state === 'reformed'
+  return (
+    <g transform={ko ? 'rotate(-10 110 232)' : undefined}>
+      {/* running shoes */}
+      {[84, 132].map((x) => (
+        <g key={x}>
+          <path d={`M${x},200 L${x},216`} stroke="#F2A33A" strokeWidth="6" strokeLinecap="round" />
+          <V d={`M${x - 16},216 Q${x - 16},208 ${x - 4},208 L${x + 6},210 Q${x + 20},212 ${x + 20},222 L${x - 16},224 Z`} fill="#FF5A7A" shade="#D93A5A" uid={`${id}s${x}`} w={3.2} />
+          <path d={`M${x - 16},224 L${x + 20},222`} stroke="#fff" strokeWidth="3" />
+        </g>
+      ))}
+      {/* the backpack that "ran to the bus" */}
+      <V d="M44,120 Q44,104 60,104 L84,104 L84,176 L60,176 Q44,176 44,160 Z" fill="#5FB3E8" shade="#3E8FC4" uid={`${id}pk`} />
+      <V d={ell(116, 162, 52, 46)} fill={fill} shade={shade} uid={`${id}b`} />
+      <path d="M84,124 C96,140 100,170 92,200" fill="none" stroke="#3E8FC4" strokeWidth="6" strokeLinecap="round" />
+      <V d="M150,150 C172,148 182,162 178,176 C164,178 150,170 146,160 Z" fill={fill} shade={shade} uid={`${id}w`} />
+      <V d={ell(118, 92, 34, 31)} fill={fill} shade={shade} uid={`${id}h`} sx={-7} sy={-5} />
+      <path d="M112,62 C116,52 126,52 128,58" fill="none" stroke={INK} strokeWidth="3.4" strokeLinecap="round" />
+      <BossEyes L={[106, 88]} R={[132, 87]} r={6.5} state={state} lid={fill} />
+      <V d="M128,100 Q156,98 164,108 Q152,118 128,112 Z" fill="#F2A33A" shade="#D9862A" uid={`${id}bk`} w={3} sx={-3} sy={-2} />
+      {/* sweatband */}
+      <path d="M86,82 Q118,66 150,80" fill="none" stroke="#FF5A7A" strokeWidth="7" strokeLinecap="round" />
+      <Gloss x={100} y={72} rx={9} ry={3.6} />
+      <StickSign state={state} id={id} lines={reformed ? ['PUT THE PHRASE', 'NEXT TO ITS NOUN'] : ['ANY PHRASE CAN', 'DESCRIBE ANYONE']} size={10} w={104} x={120} />
+      {state === 'cracked' && <Sweat x={150} y={56} />}
+      {ko && <KOStars x={118} y={46} />}
+    </g>
+  )
+}
+
+const ART = { walrus: Walrus, penguin: Penguin, hamster: Hamster, triangle: Peacock, swan: Swan, owl: Owl, duck: Duck }
 
 export function Boss2D({ boss = 'walrus', state, hp, size = 200, className = '', title, variant, finish = 'vinyl' }) {
   const id = useId().replace(/:/g, '')
