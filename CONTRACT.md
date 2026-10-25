@@ -385,3 +385,9 @@ Payment { id, guardian_id, student_id, enrollment_id, subject, hours, amount_usd
 - Checkout offers **US bank debit (ACH, `us_bank_account`) first**, card second. Copy shows the fee difference honestly ("bank: lower fee").
 - `Payment.provider` += `"offline"` with `method: "zelle"|"cash"|"check"|"venmo"|"other"`; `POST /api/payments/offline {student_id, enrollment_id, hours, amount_usd, method, note?}` (staff only) records a payment received outside Pip: same effects as a paid checkout (hours added, receipt number, revenue at risk updates), no processing fee.
 - Pip doesn't need to hold the money: its job is the renewal moment (proof → renew) and the record.
+
+### v3.19c (Stripe Invoices with ACH as the default)
+- Renewals are **Stripe Invoices** (test mode): line item "Maya R. · Math · 12 hours", amount, due date (default +7 days), hosted invoice page, payment methods `us_bank_account` first then `card`, Stripe's automatic reminders on. `POST /api/parent/{gid}/checkout` returns the hosted invoice URL (`invoice_id` stored on the Payment); simulated mode returns an in-app invoice page with the same fields.
+- `Payment.status` += `"processing"` (ACH submitted, not yet cleared; typically a few business days). Hours are added at `processing` and reversed only if the payment fails (`failed`); the parent and owner see "Processing" → "Paid".
+- Webhooks: `invoice.paid` → paid; `invoice.payment_failed` → failed (+ owner sees it on the renewal row); `invoice.finalized`/`payment_intent.processing` → processing.
+- Owner can also "Send invoice" from a renewal row (same invoice, emailed by Stripe in test mode).
