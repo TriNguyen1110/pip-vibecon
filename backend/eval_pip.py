@@ -362,7 +362,7 @@ def classify_pip(reply: str, prior_questions: set[str], student_said: list[str])
         return "nudge_hint"  # a hint, a friend's story or a concrete case
     if re.search(r"too, i'?m bad at it|i like .* too", reply, re.I):
         return "off_topic_bait"
-    if q and CHECK_RE.search(q):
+    if q and (CHECK_RE.search(q) or re.search(r"\b(does|is|are|do|would|will|can|did) (it|that|my|the|this|they|a|an)\b", q, re.I)):
         return "asks_check_number"
     return "default"
 

@@ -262,7 +262,7 @@ def next_question(session: dict, a: dict, les: dict, focus: str | None = None, i
             continue
         anything = any(x["idea"] for x in p["cov"].values())
         if weak:  # yes/no or pick-one only: guesses to correct, cases with numbers; never an open why / "what do you notice"
-            for want in ("predict", "try", "concrete"):
+            for want in ("concrete", "predict", "try"):  # a picture or action pulls content out of a kid who says idk
                 for r in rungs:
                     if rung_kind(r) == want and qnorm(r) not in used and "?" in r and not re.search(r"why is that wrong", r.lower()):
                         return r, cid, want
@@ -573,8 +573,11 @@ def credit(session: dict, a: dict, les: dict, judged: dict, text: str) -> dict:
     gained: dict[str, dict] = {}
     progress, levels = [], {}
     wrong_cid = None
+    answered_case = p.get("last_kind") in ("concrete", "try")  # Pip asked for a picture or a new case
     for cid in ids:
         new, cov = judged["flags"][cid], p["cov"][cid]
+        if answered_case and new["idea"] and not new["wrong"]:
+            new = {**new, "example": True}  # saying what the picture shows IS the worked case: credit it
         g = {k: new[k] and not cov[k] for k in ("idea", "reason", "example")}
         if new["wrong"]:
             wrong_cid = cid
