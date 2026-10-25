@@ -5,10 +5,11 @@ import { useLoad } from '../hooks'
 import { ErrorState, Loading, Sheet, useToast } from '../components/ui.jsx'
 import InsightCard from '../components/InsightCard.jsx'
 import AtRiskCard from '../components/AtRiskCard.jsx'
-import { StudioShell } from '../staff/StudioShell.jsx'
+import { InStudio, StudioShell } from '../staff/StudioShell.jsx'
 import { staffApi } from '../staff/api'
 import RenewalNote from '../staff/RenewalNote.jsx'
-import { fmtDate, pct, refId, refName, subjectShort, usd } from '../staff/format'
+import { METHOD_WORDS, PAID_WITH_WORDS, PAY_WORDS, fmtDate, pct, refId, refName, subjectShort, usd } from '../staff/format'
+import MarkPaid from '../staff/MarkPaid.jsx'
 
 const PILOT_WORDS = {
   active: 'Pilot active',
@@ -133,6 +134,7 @@ function Metric({ label, value, unit, sub, explain, big, lcd, children }) {
 }
 
 function Overview({ ov, noted, onRenew }) {
+  const [paid, setPaid] = useState({})
   const rows = ov.renewals_due ?? []
   const riskRows = rows.filter((r) => r.signal === 'quiet' || r.at_risk)
   const hours = ov.tutor_hours_saved_week
@@ -146,6 +148,7 @@ function Overview({ ov, noted, onRenew }) {
   return (
     <>
       <section className="money" aria-label="This week’s numbers">
+        <div className="money__left">
         <Metric
           big
           label="Revenue at risk"
@@ -184,6 +187,17 @@ function Overview({ ov, noted, onRenew }) {
             </ul>
           )}
         </Metric>
+        <Metric
+          label="Collected this week · test mode"
+          value={ov.collected_7d_usd != null ? usd(ov.collected_7d_usd) : '—'}
+          sub={
+            ov.collected_7d_usd != null
+              ? `${ov.renewals_paid_7d ?? 0} renewal${ov.renewals_paid_7d === 1 ? '' : 's'} paid (invoices, bank, card, Zelle, cash…)`
+              : 'not measured yet'
+          }
+          explain="Renewals paid in the last 7 days: Stripe invoices in test mode (bank transfers count once they clear) plus payments the center recorded by hand (Zelle, cash, check, Venmo). A paid renewal leaves revenue at risk."
+        />
+        </div>
         <div className="kpis">
           <Metric
             label="Kept families · 30 days"
@@ -239,7 +253,7 @@ function Overview({ ov, noted, onRenew }) {
             <div className="rn__row rn__row--th" role="row">
               <span role="columnheader">Student · family</span>
               <span role="columnheader">Subject</span>
-              <span role="columnheader" className="rn__num">Hours left</span>
+              <span role="columnheader" className="rn__num">Hours</span>
               <span role="columnheader">Renews</span>
               <span role="columnheader" className="rn__num">Package</span>
               <span role="columnheader">Signal</span>
@@ -270,13 +284,7 @@ function Overview({ ov, noted, onRenew }) {
                     <span className={`pill ${r.signal === 'engaged' ? 'pill--ok' : 'pill--warn'}`}>{r.signal === 'engaged' ? 'Engaged' : 'Quiet'}</span>
                   </span>
                   <span role="cell" className="rn__act">
-                    {st ? (
-                      <span className="small subtle">Note sent · test mode</span>
-                    ) : (
-                      <button className="btn btn--sm" onClick={() => onRenew(r)}>
-                        Send renewal note
-                      </button>
-                    )}
+                    <RenewalActions row={r} noted={st} onRenew={() => onRenew(r)} local={paid[key]} onLocal={(x) => setPaid((m) => ({ ...m, [key]: { ...m[key], ...x } }))} />
                   </span>
                 </div>
               )
@@ -332,5 +340,148 @@ function Overview({ ov, noted, onRenew }) {
         </section>
       </div>
     </>
+  )
+}
+
+// Renewal row actions (v3.19b/c): Send invoice (Stripe test mode), renewal note, or Mark as paid
+// (Zelle / cash / check / Venmo). State: Sent → Processing → Paid, or Failed.
+function RenewalActions({ row, noted, onRenew, local, onLocal }) {
+  const toast = useToast()
+  const [busy, setBusy] = useState(false)
+  const [marking, setMarking] = useState(false)
+  const [receipt, setReceipt] = useState(null)
+  const pay = local?.payment ?? row.payment ?? row.invoice ?? (row.payment_status ? { status: row.payment_failed ? 'failed' : row.payment_status, ...(row.payment_receipt ? { receipt_no: row.payment_receipt } : {}) } : null)
+  const status = pay?.status
+  const method = pay?.method ? (METHOD_WORDS[pay.method] ?? pay.method) : pay?.paid_with ? PAID_WITH_WORDS[pay.paid_with] : null
+  const sid = refId(row.student)
+  const gid = refId(row.guardian)
+  const enrollment_id = row.enrollment_id ?? `en_${sid}_${row.subject}`
+  const hours = row.action?.hours ?? row.renew_hours ?? row.package_hours ?? row.hours ?? 12
+
+  async function sendInvoice() {
+    setBusy(true)
+    try {
+      const r = await staffApi.sendInvoice(row.invoice_action?.body ?? { student_id: sid, enrollment_id, guardian_id: gid, hours })
+      onLocal({ payment: { ...(r.payment ?? {}), id: r.payment_id ?? r.payment?.id, status: 'sent' } })
+      toast(`Invoice sent to ${refName(row.guardian)} (test mode).`)
+    } catch (e) {
+      toast(e.message)
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  if (status === 'paid' || status === 'processing') {
+    return (
+      <span className="rn__paid">
+        <span className={`pill ${status === 'paid' ? 'pill--ok' : 'pill--warn'}`}>
+          {PAY_WORDS[status]}
+          {method ? ` · ${method}` : ''}
+        </span>
+        {(pay.receipt_no || pay.id) && (
+          <button type="button" className="linklike small" onClick={() => setReceipt(pay)}>
+            {status === 'paid' ? 'Receipt' : 'Details'}
+          </button>
+        )}
+        <InStudio>
+          <Sheet open={!!receipt} onClose={() => setReceipt(null)} label="Receipt">
+            {receipt && <Receipt row={row} pay={receipt} onClose={() => setReceipt(null)} />}
+          </Sheet>
+        </InStudio>
+      </span>
+    )
+  }
+  return (
+    <span className="rn__acts">
+      {status === 'failed' && <span className="pill pill--gap">Failed</span>}
+      {status === 'pending' || status === 'sent' ? (
+        <span className="pill pill--info">Invoice sent</span>
+      ) : (
+        <button className="btn btn--sm" onClick={sendInvoice} disabled={busy || !gid}>
+          {busy ? 'Sending…' : status === 'failed' ? 'Resend invoice' : 'Send invoice'}
+        </button>
+      )}
+      {noted ? (
+        <span className="small subtle">Note sent</span>
+      ) : (
+        <button className="btn btn--sm" onClick={onRenew}>
+          Note
+        </button>
+      )}
+      <button className="btn btn--sm btn--ghost" onClick={() => setMarking(true)}>
+        Mark as paid
+      </button>
+      <InStudio>
+      <Sheet open={marking} onClose={() => setMarking(false)} label="Mark as paid">
+        {marking && (
+          <div className="stack">
+            <p className="eyebrow">Mark as paid · {subjectShort(row.subject)}</p>
+            <h2 className="display h-section">
+              {refName(row.student)} · {refName(row.guardian)}
+            </h2>
+            <MarkPaid
+              studentId={sid}
+              enrollmentId={enrollment_id}
+              hours={hours}
+              amount={row.price_usd}
+              onCancel={() => setMarking(false)}
+              onDone={(p) => {
+                onLocal({ payment: { ...p, status: p.status ?? 'paid' } })
+                toast(`Recorded ${usd(p.amount_usd ?? row.price_usd)} by ${METHOD_WORDS[p.method] ?? p.method}. Receipt ${p.receipt_no ?? p.id}.`)
+              }}
+            />
+          </div>
+        )}
+      </Sheet>
+      </InStudio>
+    </span>
+  )
+}
+
+function Receipt({ row, pay, onClose }) {
+  return (
+    <div className="stack receipt">
+      <p className="eyebrow">{pay.status === 'paid' ? 'Receipt' : 'Payment'} · test mode</p>
+      <h2 className="display h-section">{pay.receipt_no ?? pay.invoice_number ?? pay.id}</h2>
+      <dl className="receipt__rows">
+        <div>
+          <dt>For</dt>
+          <dd>
+            {refName(row.student)} · {subjectShort(row.subject)} · {pay.hours ?? row.renew_hours ?? 12} hours
+          </dd>
+        </div>
+        <div>
+          <dt>Amount</dt>
+          <dd className="mono">{usd(pay.amount_usd ?? row.price_usd)}</dd>
+        </div>
+        <div>
+          <dt>Paid by</dt>
+          <dd>
+            {pay.method
+              ? (METHOD_WORDS[pay.method] ?? pay.method)
+              : `${PAID_WITH_WORDS[pay.paid_with] ?? 'Invoice'} · ${pay.provider === 'stripe_test' ? 'Stripe test mode' : 'simulated, test mode'}`}
+          </dd>
+        </div>
+        <div>
+          <dt>Status</dt>
+          <dd>{pay.status === 'processing' ? 'Processing (bank transfers take a few business days)' : PAY_WORDS[pay.status] ?? pay.status}</dd>
+        </div>
+        {(pay.paid_at || pay.created_at) && (
+          <div>
+            <dt>Date</dt>
+            <dd>{fmtDate(pay.paid_at ?? pay.created_at)}</dd>
+          </div>
+        )}
+        {pay.note && (
+          <div>
+            <dt>Note</dt>
+            <dd>{pay.note}</dd>
+          </div>
+        )}
+      </dl>
+      <button className="btn" onClick={onClose}>
+        Close
+      </button>
+    </div>
   )
 }

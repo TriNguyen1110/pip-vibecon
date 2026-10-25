@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { Link, NavLink } from 'react-router-dom'
 import { Footer } from '../components/ui.jsx'
 import { setMetaColor } from '../theme'
-import { useMockUsed } from './api'
 import '../styles/studio.css'
 
 // Studio register, "Ink at Work" tokens (DESIGN_SYSTEM.md G4) scoped to .studio, so it can roll out
@@ -12,16 +12,6 @@ export function Wordmark({ size = 24 }) {
   return (
     <span className="wordmark" style={{ '--wm': `${size}px` }} aria-label="pip">
       pip
-    </span>
-  )
-}
-
-export function MockBadge() {
-  const used = useMockUsed()
-  if (!used) return null
-  return (
-    <span className="mock-badge" title="Some data on this screen comes from frontend fixtures (CONTRACT v3.13) because the endpoint isn't live yet.">
-      mock data
     </span>
   )
 }
@@ -60,7 +50,6 @@ export function StudioShell({ who, initials, children, wide, nav = true, classNa
             </nav>
           )}
           <div className="topbar__who">
-            <MockBadge />
             {who && <span className="hide-sm">{who}</span>}
             {initials && <span className="avatar">{initials}</span>}
           </div>
@@ -111,4 +100,11 @@ export function Toggle({ checked, onChange, label, children, id }) {
       {children}
     </label>
   )
+}
+
+// Sheets opened from inside a glass card must escape it: backdrop-filter makes the card the containing
+// block for position: fixed. Portal into the Studio root (keeps the Studio tokens).
+export function InStudio({ children }) {
+  if (typeof document === 'undefined') return children
+  return createPortal(children, document.querySelector('.studio') ?? document.body)
 }

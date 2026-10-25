@@ -30,22 +30,3 @@ export const EXPLAINS_WORDS = { examples: 'examples', pictures: 'pictures', step
 
 // A node counts as "already knew" when the backend says so, or when it is known without any explanation.
 export const isGiven = (n) => !!(n?.given ?? n?.known ?? n?.prior_knowledge ?? (n?.source === 'prior'))
-
-// Before B21: one map per subject from the profile's mastery (concepts in order build on the previous one).
-export function mapFromProgress(progress = [], priorByMission = {}) {
-  const nodes = []
-  const edges = []
-  for (const p of progress) {
-    const mission = p.current_mission?.topic ?? null
-    const prior = priorByMission[p.current_mission?.id] ?? []
-    let prev = null
-    for (const m of p.mastery ?? []) {
-      const given = m.known ?? prior.includes(m.concept_id)
-      const id = `${p.subject}:${m.concept_id}`
-      nodes.push({ concept_id: id, mission, subject: p.subject, label: m.text, level: given ? Math.max(2, m.level) : m.level, explain_level: m.level, evidence_quote: null, given })
-      if (prev) edges.push({ from: id, to: prev, kind: 'builds_on' })
-      prev = id
-    }
-  }
-  return { nodes, edges, fallback: true }
-}

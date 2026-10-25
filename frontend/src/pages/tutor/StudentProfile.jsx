@@ -2,18 +2,20 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { api } from '../../api'
 import { useLoad } from '../../hooks'
-import { ErrorState, Empty, useToast } from '../../components/ui.jsx'
+import { ErrorState, Empty, Sheet, useToast } from '../../components/ui.jsx'
 import { LEVEL_WORDS } from '../../lib'
-import { Segmented } from '../../staff/StudioShell.jsx'
+import { InStudio, Segmented } from '../../staff/StudioShell.jsx'
 import { staffApi } from '../../staff/api'
 import { FlagPills, StudentAvatar } from '../../staff/bits.jsx'
-import { PACE_WORDS, mapFromProgress } from '../../staff/learning'
+import { PACE_WORDS } from '../../staff/learning'
 import { pipOf } from '../../staff/pip'
 import { LEVEL_SHORT, ago, daysSince, fmtDate, fmtWhen, hoursLeft, sessionFromLink, subjectName, subjectShort } from '../../staff/format'
 import ProfileFamily from './ProfileFamily.jsx'
 import ProfileNotes from './ProfileNotes.jsx'
 import LearningMap from './LearningMap.jsx'
 import LearningProfile from './LearningProfile.jsx'
+import BrainDocument from '../../staff/BrainDocument.jsx'
+import MarkPaid from '../../staff/MarkPaid.jsx'
 
 const TABS = [
   { value: 'learning', label: 'Learning map' },
@@ -32,6 +34,7 @@ export default function StudentProfile({ id, tutorId, tutors, pane }) {
   const dr = useLoad(() => staffApi.drafts(id).then((r) => ({ items: r.items ?? [] })), [id])
   const drafts = dr.data ?? { items: [] }
   const [tab, setTab] = useState('learning')
+  const [brainOpen, setBrainOpen] = useState(false)
 
   if (p.loading && !p.data) {
     return (
@@ -51,7 +54,7 @@ export default function StudentProfile({ id, tutorId, tutors, pane }) {
   const lastActive = (d.progress ?? []).map((x) => x.last_session_at).filter(Boolean).sort().at(-1)
   const flags = d.flags ?? []
   const lp = d.learning_profile ?? s.learning_profile ?? null
-  const lmap = d.learning_map ?? s.learning_map ?? mapFromProgress(d.progress ?? [], priorByMission)
+  const lmap = d.learning_map ?? s.learning_map ?? null
   const pace = s.pace ?? lp?.pace ?? null
   const startedRaw = s.started ?? enrollments.map((e) => e.started).filter(Boolean).sort()[0]
   const started = startedRaw ? new Date(`${String(startedRaw).slice(0, 10)}T12:00:00`).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : null
@@ -83,8 +86,17 @@ export default function StudentProfile({ id, tutorId, tutors, pane }) {
               Gap report
             </Link>
           )}
+          <button type="button" className="btn btn--ghost" onClick={() => setBrainOpen(true)}>
+            View Pip’s Brain as stored
+          </button>
         </div>
       </header>
+
+      <InStudio>
+        <Sheet open={brainOpen} onClose={() => setBrainOpen(false)} label="Pip’s Brain as stored">
+          {brainOpen && <BrainDocument studentId={s.id} sessionId={sessionFromLink(latestReport)} />}
+        </Sheet>
+      </InStudio>
 
       <GuardianQuick guardians={d.guardians ?? []} student={s} onOpenFamily={() => setTab('family')} />
 
@@ -103,7 +115,7 @@ export default function StudentProfile({ id, tutorId, tutors, pane }) {
             <LearningProfile profile={lp} student={s} />
           </div>
         )}
-        {tab === 'progress' && <Progress progress={d.progress ?? []} enrollments={enrollments} reports={reports} tutorId={tutorId} priorByMission={priorByMission} />}
+        {tab === 'progress' && <Progress progress={d.progress ?? []} enrollments={enrollments} reports={reports} tutorId={tutorId} priorByMission={priorByMission} student={s} onPaid={() => p.reload()} />}
         {tab === 'family' && (
           <ProfileFamily
             profile={d}
@@ -156,7 +168,8 @@ function GuardianQuick({ guardians, student, onOpenFamily }) {
   )
 }
 
-function Progress({ progress, enrollments, reports, tutorId, priorByMission = {} }) {
+function Progress({ progress, enrollments, reports, tutorId, priorByMission = {}, student, onPaid }) {
+  const [marking, setMarking] = useState(null)
   if (!progress.length) return <Empty title="No subjects yet">Enroll the student in a subject to see progress here.</Empty>
   return (
     <div className="prog-list">
@@ -270,12 +283,27 @@ function Progress({ progress, enrollments, reports, tutorId, priorByMission = {}
               ) : (
                 <span className="subtle">No package on file</span>
               )}
+              {pkg && marking !== x.subject && (
+                <button type="button" className="linklike small prog__rep" onClick={() => setMarking(x.subject)}>
+                  Mark as paid
+                </button>
+              )}
               {rep && (
                 <Link to={rep.link} className="prog__rep">
                   Gap report →
                 </Link>
               )}
             </footer>
+            {pkg && marking === x.subject && (
+              <MarkPaid
+                studentId={student?.id}
+                enrollmentId={en?.id ?? `en_${student?.id}_${x.subject}`}
+                hours={en?.renew_hours ?? pkg.package_hours ?? 12}
+                amount={pkg.price_usd}
+                onCancel={() => setMarking(null)}
+                onDone={() => setTimeout(() => (setMarking(null), onPaid?.()), 2500)}
+              />
+            )}
           </article>
         )
       })}

@@ -2960,3 +2960,325 @@ html.is-framed .p-tabs {
 .st__who > .savatar {
   margin-top: 2px;
 }
+
+/* ---------- F21 (v3.19/b/c): billing, invoices, offline payments, Brain document ---------- */
+.money__left {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.money__left > .metric:first-child {
+  flex: 1 0 auto;
+}
+.rn__row {
+  grid-template-columns: minmax(150px, 1.4fr) 80px 74px 70px 76px 86px minmax(250px, 1.6fr);
+}
+.rn__acts,
+.rn__paid {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 6px;
+}
+@media (max-width: 899px) {
+  .rn__acts,
+  .rn__paid {
+    justify-content: flex-start;
+  }
+}
+.bill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 22px;
+  padding: 0 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  border: 1px solid var(--divider);
+  color: var(--fg-muted);
+}
+.bill--paid {
+  color: var(--success);
+  border-color: rgba(182, 255, 59, 0.3);
+}
+.bill--due,
+.bill--sent,
+.bill--pending,
+.bill--processing {
+  color: var(--warning);
+  border-color: rgba(255, 225, 77, 0.3);
+}
+.bill--overdue,
+.bill--failed {
+  color: var(--sunset);
+  border-color: rgba(245, 155, 118, 0.35);
+}
+.markpaid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--ice-line);
+  background: var(--ice-soft);
+}
+.markpaid--done {
+  border-color: rgba(182, 255, 59, 0.35);
+  background: rgba(182, 255, 59, 0.05);
+}
+.markpaid__methods {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.markpaid__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.receipt__rows {
+  margin: 0;
+  display: grid;
+  gap: 8px;
+}
+.receipt__rows div {
+  display: grid;
+  grid-template-columns: 90px minmax(0, 1fr);
+  gap: 10px;
+}
+.receipt__rows dt {
+  color: var(--fg-subtle);
+  font-size: 13px;
+  font-weight: 600;
+}
+.receipt__rows dd {
+  margin: 0;
+}
+.jsonview {
+  max-height: 60vh;
+  overflow: auto;
+  padding: 12px 14px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--divider);
+  background: #0a0816;
+  font: 13px/1.6 var(--font-mono);
+  color: var(--fg-muted);
+}
+.jd > summary {
+  display: inline;
+  cursor: pointer;
+  list-style: none;
+}
+.jd > summary::-webkit-details-marker {
+  display: none;
+}
+.jd > summary::before {
+  content: '▸ ';
+  color: var(--fg-subtle);
+}
+.jd[open] > summary::before {
+  content: '▾ ';
+}
+.jd__count {
+  margin-left: 6px;
+  color: var(--fg-subtle);
+  font-size: 12px;
+}
+.jd[open] > summary .jd__count {
+  display: none;
+}
+.jd__list {
+  list-style: none;
+  margin: 0;
+  padding-left: 18px;
+  border-left: 1px solid var(--divider);
+}
+.jk {
+  color: #9fb4ff;
+}
+.jk--brain {
+  color: var(--accent-2);
+  font-weight: 600;
+}
+.jk--i {
+  color: var(--fg-subtle);
+}
+.jv--s {
+  color: #ffd9a8;
+  word-break: break-word;
+}
+.jv--n {
+  color: var(--accent);
+}
+.jv--b,
+.jv--null {
+  color: #f5a3ff;
+}
+.jv--brace {
+  color: var(--fg-subtle);
+}
+
+/* Parent billing */
+.p-test {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.75rem;
+  padding: 0 0.625rem;
+  border-radius: 999px;
+  border: 1.5px dashed var(--p-ink-2);
+  color: var(--p-ink-2);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  width: fit-content;
+}
+.p-pkg--low {
+  border-color: #b98a2e;
+}
+.p-pkg--low .p-pkg__hours b {
+  color: #5c3b00;
+}
+.p-pkg__hours {
+  font-size: 1.125rem;
+}
+.p-pkg__hours b {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 500;
+}
+.p-renew {
+  align-self: stretch;
+}
+.p-invoice__top {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 1.0625rem;
+}
+.p-status {
+  font-weight: 700;
+  font-size: 1rem;
+}
+.p-status--paid {
+  color: var(--p-green);
+}
+.p-status--processing {
+  color: #5c3b00;
+}
+.p-status--failed {
+  color: #8a1c1c;
+}
+.p-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  padding: 0.75rem 0.875rem;
+  border-radius: 1rem;
+  border: 1.5px solid var(--p-line);
+  background: var(--p-card);
+}
+.p-banner--paid {
+  border-color: #7fb04a;
+  background: var(--p-green-bg);
+}
+.p-banner--processing {
+  border-color: #c9a24a;
+  background: #fbf3dd;
+}
+.p-banner p {
+  flex: 1;
+  font-size: 1.0625rem;
+}
+.p-banner__x {
+  min-width: 48px;
+  min-height: 48px;
+  margin: -0.5rem -0.5rem -0.5rem 0;
+  border: 0;
+  background: none;
+  font-size: 1.5rem;
+  color: var(--p-ink);
+  cursor: pointer;
+}
+.p-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: end center;
+  padding: 1rem;
+  background: rgba(12, 10, 24, 0.45);
+}
+.p-modal__card {
+  width: min(100%, 26rem);
+  max-height: calc(100dvh - 2rem);
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.25rem;
+  border-radius: 1.5rem;
+  background: var(--p-card);
+  color: var(--p-ink);
+  box-shadow: 0 24px 60px -20px rgba(12, 10, 24, 0.5);
+}
+.p-modal .p-btn {
+  align-self: stretch;
+}
+.p-pay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.125rem;
+  min-height: 3.5rem;
+}
+.p-pay__note {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  opacity: 0.95;
+}
+.p-btn--quiet {
+  border-color: transparent;
+}
+.p-renewcard {
+  border-color: #b98a2e;
+}
+.p-modal--inline {
+  position: static;
+  padding: 0;
+  background: none;
+  place-items: start;
+}
+.p-modal--inline .p-modal__card {
+  box-shadow: none;
+  border: 1px solid var(--p-line);
+}
+.p-invoice-page {
+  max-width: 30rem;
+  margin: 0 auto;
+  padding-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.lmap__mission {
+  fill: #a9a3c4;
+  font: 600 11.5px var(--font-sans);
+  letter-spacing: 0.02em;
+}
+
+/* Five parent tabs in one row (F21 adds Billing); the large-text 2×2 rule below still wins. */
+.p-tabs {
+  grid-template-columns: none;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+}
+@container papp (max-width: 18em) {
+  .p-tabs {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.p-tab__label {
+  font-size: 0.9375rem;
+}

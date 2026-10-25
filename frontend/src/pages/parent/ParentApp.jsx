@@ -1,14 +1,16 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useParams, useSearchParams } from 'react-router-dom'
 import { useLoad } from '../../hooks'
 import { Dots, InlineError } from '../../components/ui.jsx'
 import PhoneFrame, { FRAMED, useDesktop } from '../../components/PhoneFrame.jsx'
 import Pip2D from '../../pip2d/Pip2D.jsx'
 import { StudioShell } from '../../staff/StudioShell.jsx'
-import { staffApi, useMockUsed } from '../../staff/api'
+import { staffApi } from '../../staff/api'
 import { StatusTag } from '../../staff/bits.jsx'
 import { pip2dProps } from '../../staff/pip'
 import { firstName, fmtDate, fmtWhen, subjectName } from '../../staff/format'
+import { BillingTab, InvoicePage, PaidBanner, RenewButton } from './Billing.jsx'
+import { isLow, useBilling, usePaymentReturn } from '../../staff/billing'
 import '../../styles/studio.css'
 
 // Parent app. CONTRACT v3.15: the tutor is the filter, so families see only what the tutor sends:
@@ -21,6 +23,7 @@ const TABS = [
   { id: 'home', label: 'From tutor', icon: '✎' },
   { id: 'messages', label: 'Messages', icon: '✉' },
   { id: 'schedule', label: 'Schedule', icon: '▤' },
+  { id: 'billing', label: 'Billing', icon: '$' },
   { id: 'settings', label: 'Settings', icon: '⚙' },
 ]
 const TAB_ALIASES = { week: 'home', subjects: 'schedule', classes: 'schedule' }
@@ -30,6 +33,13 @@ export default function ParentRoute() {
   const [sp] = useSearchParams()
   if (!desktop || FRAMED) return <ParentApp />
   return <ParentDesk gid={sp.get('as') ?? 'g001'} search={sp} />
+}
+
+// /parent/invoice/:id?as=g001: the simulated hosted-invoice page (CONTRACT v3.19c).
+export function InvoiceRoute() {
+  const { id } = useParams()
+  const [sp] = useSearchParams()
+  return <InvoicePage id={id} gid={sp.get('as') ?? 'g001'} />
 }
 
 // Desktop: the parent's phone, in the calm Studio room, with a guardian switch for the demo.
@@ -91,7 +101,6 @@ export function ParentApp() {
   const home = useLoad(() => staffApi.parentHome(gid), [gid])
   const [tab, setTab] = useState(() => initialTab(sp.get('tab')))
   const [kidId, setKidId] = useState(sp.get('kid'))
-  const mock = useMockUsed()
   const mainRef = useRef(null)
   const more = useMoreBelow(mainRef, [tab, kidId, home.data])
 
@@ -100,6 +109,17 @@ export function ParentApp() {
   }, [])
 
   const data = home.data
+  const billing = useBilling(gid, data)
+  const [pay, setPay] = usePaymentReturn(() => {
+    billing.reload()
+    home.reload()
+  })
+  const onPaid = (p) => {
+    setPay({ kind: 'paid', payment: p })
+    billing.reload()
+    home.reload()
+    mainRef.current?.scrollTo({ top: 0 })
+  }
   const kids = data?.kids ?? []
   const unlinked = !!(kidId && data && !kids.some((k) => k.student.id === kidId))
   const kid = unlinked ? null : (kids.find((k) => k.student.id === kidId) ?? kids[0])
@@ -111,10 +131,10 @@ export function ParentApp() {
         <header className="p-top">
           <div className="p-top__row">
             <span className="p-top__center">Bright Path Tutoring</span>
-            <span className="p-demo">demo{mock ? ' · mock data' : ''}</span>
+            <span className="p-demo">demo</span>
           </div>
           {g && <p className="p-top__hi">Hi, {firstName(g.name)}</p>}
-          {kids.length > 1 && tab !== 'settings' && (
+          {kids.length > 1 && tab !== 'settings' && tab !== 'billing' && (
             <div className="p-kids" role="tablist" aria-label="Your children">
               {kids.map((k) => (
                 <button key={k.student.id} role="tab" aria-selected={k === kid} className={`p-kid${k === kid ? ' is-on' : ''}`} onClick={() => setKidId(k.student.id)}>
@@ -131,6 +151,7 @@ export function ParentApp() {
         </header>
 
         <main className="p-main" ref={mainRef}>
+          <PaidBanner state={pay} onClose={() => setPay(null)} />
           {home.loading && !data ? (
             <div className="p-state" role="status">
               <Dots />
@@ -160,11 +181,13 @@ export function ParentApp() {
               <p>When the center links your child, their tutor’s reports show up here.</p>
             </div>
           ) : tab === 'home' ? (
-            <FromTutor gid={gid} kid={kid} />
+            <FromTutor gid={gid} kid={kid} billing={billing} onPaid={onPaid} />
           ) : tab === 'schedule' ? (
             <Schedule kid={kid} />
+          ) : tab === 'billing' ? (
+            <BillingTab gid={gid} billing={billing} onPaid={onPaid} />
           ) : tab === 'messages' ? (
-            <Messages gid={gid} kid={kid} />
+            <Messages gid={gid} kid={kid} billing={billing} onPaid={onPaid} />
           ) : (
             <Settings guardian={g} kids={kids} onSaved={(ng) => home.setData((d) => ({ ...d, guardian: ng }))} />
           )}
@@ -241,7 +264,7 @@ function useReports(gid, kid) {
 }
 const stamp = (r) => r.ts ?? r.date ?? ''
 
-function FromTutor({ gid, kid }) {
+function FromTutor({ gid, kid, billing, onPaid }) {
   const { reports, loading } = useReports(gid, kid)
   const name = firstName(kid.student.name)
   const w = kid.this_week ?? {}
@@ -266,6 +289,17 @@ function FromTutor({ gid, kid }) {
           </p>
         </section>
       )}
+
+      {lowPackages(billing, kid).map((pkg) => (
+        <section key={pkg.subject} className="p-card p-renewcard" aria-label="Package running low">
+          <p className="p-eyebrow">
+            {subjectName(pkg.subject)} package · {pkg.hours_left > 0 ? `${pkg.hours_left} hour${pkg.hours_left === 1 ? '' : 's'} left` : 'hours used up'}
+          </p>
+          <p className="p-body">Keep {name}’s spot{pkg.renews_on ? ` (renews ${fmtDate(pkg.renews_on)})` : ''}.</p>
+          <RenewButton gid={gid} pkg={pkg} available={billing.available} onPaid={onPaid} />
+          <p className="p-cap">Test mode · no real charge</p>
+        </section>
+      ))}
 
       {profileLine(w, kid) && (
         <section className="p-card" aria-label="How your child learns">
@@ -317,6 +351,15 @@ function FromTutor({ gid, kid }) {
     </div>
   )
 }
+
+// A renewal note (owner → family) carries a Renew action for its package (v3.19).
+const isRenewal = (m) => m.kind === 'renewal' || m.action === 'renew' || /\brenew/i.test(m.text ?? '')
+const renewalPackage = (m, billing, kid) => {
+  const mine = (billing?.packages ?? []).filter((p) => String(p.student?.id ?? p.student) === kid.student.id)
+  return mine.find((p) => p.subject === m.subject || p.enrollment_id === m.enrollment_id) ?? mine.find(isLow) ?? null
+}
+
+const lowPackages = (billing, kid) => (billing?.packages ?? []).filter((p) => String(p.student?.id ?? p.student) === kid.student.id && isLow(p))
 
 // v3.18: the plain-English learning-profile line, shown only when the tutor approved it (v3.15 rules).
 function profileLine(w, kid) {
@@ -416,7 +459,7 @@ function Schedule({ kid }) {
   )
 }
 
-function Messages({ gid, kid }) {
+function Messages({ gid, kid, billing, onPaid }) {
   const sid = kid.student.id
   const t = useLoad(() => staffApi.thread(sid, gid), [sid, gid])
   const [text, setText] = useState('')
@@ -466,6 +509,9 @@ function Messages({ gid, kid }) {
               <li key={m.id} className={`p-msg${me ? ' p-msg--me' : ''}`}>
                 <span className="p-msg__who">{me ? 'You' : m.author?.name ?? names[m.author_id] ?? names[m.from] ?? 'Bright Path'}</span>
                 <p className="p-msg__text">{m.text}</p>
+                {!me && isRenewal(m) && renewalPackage(m, billing, kid) && (
+                  <RenewButton gid={gid} pkg={renewalPackage(m, billing, kid)} available={billing.available} onPaid={onPaid} />
+                )}
                 <span className="p-msg__meta">
                   {fmtWhen(m.ts)}
                   {me && m.status && m.status !== 'received' && (

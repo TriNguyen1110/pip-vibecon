@@ -4,16 +4,19 @@ import { LEVEL_SHORT, firstName, subjectName } from '../../staff/format'
 import { isGiven } from '../../staff/learning'
 
 // CONTRACT v3.18 learning map: "the map Pip learned about <kid>". Every concept across missions, colored by
-// level, edges for builds_on ({from, to}: `from` builds on `to`, so the arrow runs prerequisite → next).
-// One calm inline-SVG graph per subject, laid out in layers (prerequisites first). Tap a node for the
-// evidence quote in the kid's own words.
+// level; edges for builds_on ({from, to}: `from` builds on `to`, so the arrow runs prerequisite → next).
+// One calm inline-SVG graph per subject: one column per mission (ordered so prerequisites come first),
+// concepts stacked in order inside it, cross-mission edges between columns. Tap a node for the evidence
+// quote in the kid's own words.
 
-const NODE_H = 64
-const GAP_X = 16
-const GAP_Y = 36
-const PAD = 8
+const NODE_H = 60
+const GAP_X = 18
+const GAP_Y = 26
+const HEAD_H = 40
+const PAD = 6
+const MIN_COL = 124
 
-function wrap(label, maxChars) {
+function wrap(label, maxChars, maxLines = 2) {
   const words = String(label ?? '').split(/\s+/)
   const lines = ['']
   for (const w of words) {
@@ -22,12 +25,14 @@ function wrap(label, maxChars) {
     else if ((cur + ' ' + w).length <= maxChars) lines[lines.length - 1] = cur + ' ' + w
     else lines.push(w)
   }
-  if (lines.length > 2) {
-    lines.length = 2
-    lines[1] = lines[1].replace(/\s*\S*$/, '') + '…'
+  if (lines.length > maxLines) {
+    lines.length = maxLines
+    lines[maxLines - 1] = lines[maxLines - 1].replace(/\s*\S*$/, '') + '…'
   }
   return lines
 }
+
+const missionKey = (n) => n.mission_id ?? n.mission ?? 'concepts'
 
 function layout(nodes, edges, width) {
   const ids = new Set(nodes.map((n) => n.concept_id))
@@ -44,30 +49,71 @@ function layout(nodes, edges, width) {
     return (depth[id] = v)
   }
   nodes.forEach((n) => d(n.concept_id))
-  const layers = {}
-  nodes.forEach((n, i) => (layers[depth[n.concept_id]] ??= []).push({ n, i }))
-  const widest = Math.max(1, ...Object.values(layers).map((l) => l.length))
-  const perLine = Math.max(1, Math.min(3, widest, Math.floor((width - 2 * PAD - 40 + GAP_X) / (170 + GAP_X))))
-  const nodeW = Math.min(perLine === 1 ? 300 : 240, Math.floor((width - 2 * PAD - 40 - GAP_X * (perLine - 1)) / perLine))
+
+  // Missions as columns, prerequisites first.
+  const groups = {}
+  nodes.forEach((n, i) => (groups[missionKey(n)] ??= { key: missionKey(n), title: n.mission ?? '', items: [] }).items.push({ n, i }))
+  const cols = Object.values(groups)
+  cols.forEach((c) => c.items.sort((a, b) => depth[a.n.concept_id] - depth[b.n.concept_id] || a.i - b.i))
+  cols.sort((a, b) => Math.min(...a.items.map((x) => depth[x.n.concept_id])) - Math.min(...b.items.map((x) => depth[x.n.concept_id])))
+
+  const inner = width - 2 * PAD
+  const perBand = Math.max(1, Math.min(cols.length, Math.floor((inner + GAP_X) / (MIN_COL + GAP_X))))
+  const colW = Math.min(cols.length === 1 ? 300 : 260, Math.floor((inner - GAP_X * (perBand - 1)) / perBand))
   const pos = {}
+  const colOf = {}
+  const heads = []
   let y = PAD
-  Object.keys(layers)
-    .map(Number)
-    .sort((a, b) => a - b)
-    .forEach((k) => {
-      const row = layers[k]
-      for (let s = 0; s < row.length; s += perLine) {
-        const chunk = row.slice(s, s + perLine)
-        const total = chunk.length * nodeW + (chunk.length - 1) * GAP_X
-        let x = Math.max(PAD, (width - 40 - total) / 2)
-        for (const { n } of chunk) {
-          pos[n.concept_id] = { x, y }
-          x += nodeW + GAP_X
-        }
-        y += NODE_H + GAP_Y
-      }
+  for (let b = 0; b < cols.length; b += perBand) {
+    const band = cols.slice(b, b + perBand)
+    const total = band.length * colW + (band.length - 1) * GAP_X
+    let x = PAD + Math.max(0, (inner - total) / 2)
+    let tallest = 0
+    band.forEach((c, ci) => {
+      heads.push({ x, y, w: colW, title: c.title })
+      c.items.forEach(({ n }, k) => {
+        pos[n.concept_id] = { x, y: y + HEAD_H + k * (NODE_H + GAP_Y) }
+        colOf[n.concept_id] = { band: b, col: ci, k }
+      })
+      tallest = Math.max(tallest, HEAD_H + c.items.length * (NODE_H + GAP_Y) - GAP_Y)
+      x += colW + GAP_X
     })
-  return { pos, nodeW, height: y - GAP_Y + PAD, prereqs }
+    y += tallest + GAP_Y + 8
+  }
+  return { pos, colOf, nodeW: colW, height: y - GAP_Y - 8 + PAD, heads, multi: cols.length > 1 }
+}
+
+function edgePath(a, b, ca, cb, nodeW) {
+  // Same column: straight down when adjacent, around the right side when it skips concepts.
+  if (ca.band === cb.band && ca.col === cb.col) {
+    if (Math.abs(cb.k - ca.k) === 1) {
+      const x = a.x + nodeW / 2
+      const [y1, y2] = cb.k > ca.k ? [a.y + NODE_H, b.y - 2] : [a.y, b.y + NODE_H + 2]
+      return `M${x} ${y1} L${x} ${y2}`
+    }
+    const x1 = a.x + nodeW
+    const x2 = b.x + nodeW + 2
+    const y1 = a.y + NODE_H / 2
+    const y2 = b.y + NODE_H / 2
+    return `M${x1} ${y1} C${x1 + 16} ${y1} ${x2 + 16} ${y2} ${x2} ${y2}`
+  }
+  // Across columns in the same band: side to side.
+  if (ca.band === cb.band) {
+    const right = cb.col > ca.col
+    const x1 = right ? a.x + nodeW : a.x
+    const x2 = right ? b.x - 2 : b.x + nodeW + 2
+    const y1 = a.y + NODE_H / 2
+    const y2 = b.y + NODE_H / 2
+    const mx = (x1 + x2) / 2
+    return `M${x1} ${y1} C${mx} ${y1} ${mx} ${y2} ${x2} ${y2}`
+  }
+  // Across bands: bottom to top.
+  const x1 = a.x + nodeW / 2
+  const y1 = a.y + NODE_H
+  const x2 = b.x + nodeW / 2
+  const y2 = b.y - 2
+  const my = (y1 + y2) / 2
+  return `M${x1} ${y1} C${x1} ${my} ${x2} ${my} ${x2} ${y2}`
 }
 
 function useWidth(ref) {
@@ -93,25 +139,26 @@ export default function LearningMap({ map, student }) {
   const [sel, setSel] = useState(null)
   const selected = nodes.find((n) => n.concept_id === sel) ?? null
   const known = nodes.filter((n) => n.level >= 2).length
+  const byId = useMemo(() => Object.fromEntries(nodes.map((n) => [n.concept_id, n])), [nodes])
 
   if (!nodes.length) {
     return (
       <div className="lmap lmap--empty" ref={box}>
-        <p className="small muted">The map fills in as {kid || 'the student'} teaches Pip: every concept, how well it was explained, in their words.</p>
+        <h3 className="lmap__title">The map Pip learned about {kid || 'this student'}</h3>
+        <p className="small muted">It fills in as {kid || 'the student'} teaches Pip: every concept, how well it was explained, in their own words.</p>
       </div>
     )
   }
 
+  const builtOn = selected ? edges.filter((e) => e.from === selected.concept_id).map((e) => byId[e.to]).filter(Boolean) : []
+
   return (
     <section className="lmap" aria-label={`Learning map for ${student?.name ?? 'the student'}`} ref={box}>
       <header className="lmap__head">
-        <div>
-          <h3 className="lmap__title">The map Pip learned about {kid}</h3>
-          <p className="small subtle">
-            <span className="mono">{known}</span> of <span className="mono">{nodes.length}</span> concepts known · tap one for {kid}’s own words
-            {map?.fallback ? ' · built from the current missions' : ''}
-          </p>
-        </div>
+        <h3 className="lmap__title">The map Pip learned about {kid}</h3>
+        <p className="small subtle">
+          <span className="mono">{known}</span> of <span className="mono">{nodes.length}</span> concepts known · tap one for {kid}’s own words
+        </p>
       </header>
 
       {width > 0 &&
@@ -119,8 +166,9 @@ export default function LearningMap({ map, student }) {
           const ns = nodes.filter((n) => (n.subject ?? 'other') === subj)
           const ids = new Set(ns.map((n) => n.concept_id))
           const es = edges.filter((e) => ids.has(e.from) && ids.has(e.to))
-          const { pos, nodeW, height } = layout(ns, es, width)
-          const chars = Math.max(14, Math.floor((nodeW - 24) / 6.4))
+          const { pos, colOf, nodeW, height, heads } = layout(ns, es, width)
+          const chars = Math.max(10, Math.floor((nodeW - 22) / 6.6))
+          const showWord = nodeW >= 176
           return (
             <figure key={subj} className="lmap__subject">
               <figcaption className="eyebrow">{subjectName(subj)}</figcaption>
@@ -130,36 +178,24 @@ export default function LearningMap({ map, student }) {
                     <path d="M0 0 L10 5 L0 10 z" className="lmap__arrow" />
                   </marker>
                 </defs>
+                {heads.map((h) => (
+                  <text key={`${h.x}-${h.y}`} x={h.x + 2} y={h.y + 14} className="lmap__mission">
+                    {wrap(h.title, Math.floor(h.w / 6.4), 2).map((l, i) => (
+                      <tspan key={i} x={h.x + 2} dy={i ? 14 : 0}>
+                        {l}
+                      </tspan>
+                    ))}
+                  </text>
+                ))}
                 {es.map((e) => {
                   const a = pos[e.to]
                   const b = pos[e.from]
                   if (!a || !b) return null
                   const on = sel && (sel === e.from || sel === e.to)
-                  // An edge that skips a layer would cross the node between: route it around the right side.
-                  const skips = ns.some((n) => {
-                    const q = pos[n.concept_id]
-                    return n.concept_id !== e.from && n.concept_id !== e.to && q.y > a.y && q.y < b.y && Math.abs(q.x - a.x) < nodeW && Math.abs(q.x - b.x) < nodeW
-                  })
-                  let d
-                  if (skips) {
-                    const x1 = a.x + nodeW
-                    const y1 = a.y + NODE_H * 0.6
-                    const x2 = b.x + nodeW + 2
-                    const y2 = b.y + NODE_H * 0.4
-                    const bulge = Math.min(36, Math.max(18, (width - Math.max(x1, x2)) - 6))
-                    d = `M${x1} ${y1} C${x1 + bulge} ${y1} ${x2 + bulge} ${y2} ${x2} ${y2}`
-                  } else {
-                    const x1 = a.x + nodeW / 2
-                    const y1 = a.y + NODE_H
-                    const x2 = b.x + nodeW / 2
-                    const y2 = b.y - 2
-                    const my = (y1 + y2) / 2
-                    d = `M${x1} ${y1} C${x1} ${my} ${x2} ${my} ${x2} ${y2}`
-                  }
                   return (
                     <path
                       key={`${e.from}-${e.to}`}
-                      d={d}
+                      d={edgePath(a, b, colOf[e.to], colOf[e.from], nodeW)}
                       className={`lmap__edge${on ? ' is-on' : ''}`}
                       markerEnd={`url(#lmap-arrow-${subj})`}
                     />
@@ -179,7 +215,7 @@ export default function LearningMap({ map, student }) {
                       role="button"
                       tabIndex={0}
                       aria-pressed={isSel}
-                      aria-label={`${n.label}. ${word}.${n.evidence_quote ? ' Has a quote.' : ''}`}
+                      aria-label={`${n.label}${n.mission ? `, ${n.mission}` : ''}. ${word}.${n.evidence_quote ? ' Has a quote.' : ''}`}
                       onClick={() => setSel(isSel ? null : n.concept_id)}
                       onKeyDown={(ev) => {
                         if (ev.key === 'Enter' || ev.key === ' ') {
@@ -188,22 +224,30 @@ export default function LearningMap({ map, student }) {
                         }
                       }}
                     >
+                      <title>{`${n.label} · ${word}`}</title>
                       <rect width={nodeW} height={NODE_H} rx="12" className="lmap__box" />
-                      <text x="12" y={lines.length === 1 ? 26 : 20} className="lmap__label">
+                      <text x="11" y={lines.length === 1 ? 24 : 19} className="lmap__label">
                         {lines.map((l, i) => (
-                          <tspan key={i} x="12" dy={i ? 17 : 0}>
+                          <tspan key={i} x="11" dy={i ? 16 : 0}>
                             {l}
                           </tspan>
                         ))}
                       </text>
                       {[0, 1, 2].map((k) => (
-                        <rect key={k} x={12 + k * 14} y={NODE_H - 13} width="11" height="5" rx="2.5" className={`lmap__pip${!given && k < n.level ? ' on' : ''}${given ? ' given' : ''}`} />
+                        <rect key={k} x={11 + k * 13} y={NODE_H - 13} width="10" height="5" rx="2.5" className={`lmap__pip${!given && k < n.level ? ' on' : ''}${given ? ' given' : ''}`} />
                       ))}
-                      <text x={58} y={NODE_H - 8} className="lmap__word">
-                        {word}
-                      </text>
+                      {showWord && (
+                        <text x={54} y={NODE_H - 8} className="lmap__word">
+                          {word}
+                        </text>
+                      )}
+                      {!showWord && given && (
+                        <text x={54} y={NODE_H - 8} className="lmap__word">
+                          knew
+                        </text>
+                      )}
                       {n.evidence_quote && (
-                        <text x={nodeW - 12} y={NODE_H - 8} textAnchor="end" className="lmap__q" aria-hidden>
+                        <text x={nodeW - 10} y={NODE_H - 7} textAnchor="end" className="lmap__q" aria-hidden>
                           “ ”
                         </text>
                       )}
@@ -231,6 +275,7 @@ export default function LearningMap({ map, student }) {
             ) : (
               <p className="small muted">{isGiven(selected) ? 'Pip started out knowing this, so there’s no quote.' : `No explanation from ${kid} yet.`}</p>
             )}
+            {builtOn.length > 0 && <p className="small subtle">Builds on: {builtOn.map((x) => x.label).join(', ')}</p>}
           </>
         ) : (
           <p className="small subtle">Tap a concept to see how {kid} explained it.</p>

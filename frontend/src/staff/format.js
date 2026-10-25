@@ -93,3 +93,9 @@ export function sessionFromLink(link) {
   const m = /\/tutor\/report\/([^/?#]+)/.exec(link ?? '')
   return m ? m[1] : null
 }
+
+export const METHOD_WORDS = { zelle: 'Zelle', cash: 'Cash', check: 'Check', venmo: 'Venmo', other: 'Other' }
+export const BILLING_WORDS = { paid: 'Paid', due: 'Due', overdue: 'Overdue', sent: 'Invoice sent', pending: 'Invoice sent', processing: 'Processing', failed: 'Failed' }
+// Payment / invoice status (CONTRACT v3.19c). `processing` = ACH submitted, not yet cleared.
+export const PAY_WORDS = { pending: 'Invoice open', sent: 'Invoice sent', processing: 'Processing', paid: 'Paid', failed: 'Failed' }
+export const PAID_WITH_WORDS = { us_bank_account: 'Bank transfer', card: 'Card' }

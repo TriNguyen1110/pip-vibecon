@@ -1,7 +1,7 @@
 import { FlagPills, StudentAvatar } from '../../staff/bits.jsx'
 import { PACE_WORDS } from '../../staff/learning'
 import { pipOf } from '../../staff/pip'
-import { ago, daysSince, subjectShort } from '../../staff/format'
+import { BILLING_WORDS, ago, daysSince, subjectShort } from '../../staff/format'
 
 // Students × subjects. Dense, scannable rows (44px+ touch), whole row opens the profile.
 export default function StudentsTable({ rows, tutors, tutorId, activeId, selected, onToggle, onToggleAll, onOpen }) {
@@ -57,6 +57,7 @@ export default function StudentsTable({ rows, tutors, tutorId, activeId, selecte
                   </span>
                 )}
                 <FlagPills flags={r.flags} />
+                {r.billing && <span className={`bill bill--${r.billing}`}>{BILLING_WORDS[r.billing] ?? r.billing}</span>}
               </span>
             </span>
             <span role="cell" className="st__subs">
