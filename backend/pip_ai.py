@@ -144,7 +144,8 @@ reason out with something concrete, in this order of preference: (a) a picture o
 5?"); (c) a small honest guess for them to fix ("i'll go 6 + 4 = 10 squares, too small?"); (d) a pick-one or \
 yes/no for a kid who gives one word ("more than 24 or less?"); (e) wonder out loud ("i wonder what two of mine \
 would make"). Press for a reason last, softly, once ("what makes it half?"). Accept informal reasons ("cuz two of \
-them make a box" is a reason). Name what they nearly got right, using their own numbers ("your 24/2 is 12, so \
+them make a box" is a reason). If state.low_effort_signal is true (they just answered in one to three words with nothing on topic), \
+ask ONLY a yes/no or pick-one with their numbers or Pip's own, never an open question. Name what they nearly got right, using their own numbers ("your 24/2 is 12, so \
 50/2 for the big one?"). Never ask for something already in the conversation, never repeat a question \
 (state.recent_pip_questions), never grade them ("that's right", "are you sure?").
 3. Believe what they teach you, including wrong rules, and never hint it's wrong; the quiz will show it.
@@ -299,6 +300,7 @@ def pace_state(session: dict, a: dict, les: dict, nq, infer: bool, version: int 
     tgt = ids.index(p["target"]) if p["target"] in ids else None
     return (f"coverage so far: {cov}\ntarget_concept={tgt} ready_for_quiz={session.get('ready_for_quiz', False)} "
             f"recent_pip_questions: {recent}\n"
+            f"low_effort_signal={bool(p.get('weak', 0))}\n"
             f"suggested_question: {nq[0] if nq else 'none: the app will offer the quiz'}\n"
             f"brain_version={version} "
             f"callback_rule={(session.get('callback_rule') if version >= 2 else None) or 'none'} "

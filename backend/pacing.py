@@ -190,6 +190,13 @@ def closed(p: dict, ladder: dict, cid: str, kind: str = "reason") -> bool:
     return False
 
 
+def pick_one(session: dict, a: dict) -> str | None:
+    """A 'more or less' question built from the kid's own number (else the number in Pip's own claim)."""
+    said = " ".join(m["text"] for m in session["transcript"] if m["from"] == "student")
+    nums = re.findall(r"\b\d+(?:\.\d+)?\b", said) or re.findall(r"\b\d+(?:\.\d+)?\b", a.get("misconception", ""))
+    return f"is it more than {nums[-1]} or less?" if nums else None
+
+
 def arc_order(les: dict | None, a: dict) -> list[str]:
     """Default concept order: the lesson's bottom-up `arc` (what the kid owns first), else concept order."""
     ids = [c["id"] for c in a["concepts"]]
@@ -208,6 +215,7 @@ def next_question(session: dict, a: dict, les: dict, focus: str | None = None, i
         order.remove(focus)
         order.insert(0, focus)
     used = set(p["qlog"])
+    weak = p.get("weak", 0) >= 1
     for cid in order:
         c, asks = p["cov"][cid], p["asks"][cid]
         ck = kind_of(les, cid)
@@ -253,6 +261,14 @@ def next_question(session: dict, a: dict, les: dict, focus: str | None = None, i
         else:
             continue
         anything = any(x["idea"] for x in p["cov"].values())
+        if weak:  # yes/no or pick-one only: guesses to correct, cases with numbers; never an open why / "what do you notice"
+            for want in ("predict", "try", "concrete"):
+                for r in rungs:
+                    if rung_kind(r) == want and qnorm(r) not in used and "?" in r and not re.search(r"why is that wrong", r.lower()):
+                        return r, cid, want
+            pick = pick_one(session, a)
+            if pick and qnorm(pick) not in used:
+                return pick, cid, "try"
         for r in rungs:
             if rung_kind(r) == kind and qnorm(r) not in used and "?" in r:
                 if anything and re.search(r"why is that wrong|why is my", r.lower()):
@@ -571,8 +587,10 @@ def credit(session: dict, a: dict, les: dict, judged: dict, text: str) -> dict:
             g = {k: new[k] for k in ("idea", "reason", "example")}
         for k in ("idea", "reason", "example"):
             cov[k] = cov[k] or new[k]
-        if new["idea"] and len(text.split()) >= 7 and not cov.get("solid"):
-            cov["solid"] = True  # said as a full sentence, not a fragment
+        if new["idea"]:
+            cov["mentions"] = cov.get("mentions", 0) + 1
+        if new["idea"] and (len(text.split()) >= 7 or cov.get("mentions", 0) >= 2) and not cov.get("solid"):
+            cov["solid"] = True  # said as a full sentence, or in two separate texts: not a stray fragment
         gained[cid] = g
         ck = kind_of(les, cid)
         if (g["reason"] or (ck != "reason" and g["example"])) and cov["idea"]:
@@ -593,6 +611,9 @@ def credit(session: dict, a: dict, les: dict, judged: dict, text: str) -> dict:
             session["ladder"][cid]["done"] = True
     if judged["content"]:
         p["texts"] += 1
+    # a kid who answers in 1-3 words with nothing on topic ("idk", "ok", "sure") cannot take an open question
+    p["weak"] = p.get("weak", 0) + 1 if (len(norm(text).split()) <= 3 and not judged["content"]
+                                         and p.get("last_kind") in ("idea", "why", "example", "concrete", None)) else 0
     top = max(levels.values(), default=0)
     event = "heal" if wrong_cid else ("hit" if top >= 2 else "none")
     any_gain = any(any(g.values()) for g in gained.values())
