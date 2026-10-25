@@ -18,7 +18,7 @@ from collections import defaultdict
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
-from fastapi import APIRouter, Body, HTTPException
+from fastapi import APIRouter, Body, HTTPException, Request
 
 import lesson as lessons
 import llm
@@ -157,7 +157,8 @@ def update_template(f: dict) -> str:
         said = f"{f['first']} explained it in their own words. "
     nxt = f"Next session, {f['first']} starts something new." if f.get("ko") else \
         f"Next session, {f['first']} keeps going with it."
-    return f"Bright Path Tutoring: This week {f['first']} taught Pip {taught}{fixed}. {said}{nxt} - {f['tutor']}"
+    learn = f"{f['learning_line']} " if f.get("learning_line") else ""   # v3.18 slice, approved with the draft
+    return f"Bright Path Tutoring: This week {f['first']} taught Pip {taught}{fixed}. {said}{learn}{nxt} - {f['tutor']}"
 
 
 def auto_note(f: dict) -> str:
@@ -262,7 +263,7 @@ def with_pip(st: dict) -> dict:
 
 class Snap:
     def __init__(self, now, students, tutors, assignments, sessions, events, sent, guardians, notes, threads,
-                 shares, risk):
+                 shares, payments, risk):
         self.now, self.today = now, now.astimezone(TZ).date()
         self.students = {s["id"]: s for s in students}
         self.tutors = {t["id"]: t for t in tutors}
@@ -297,6 +298,7 @@ class Snap:
         self.shares = defaultdict(list)
         for x in shares:
             self.shares[x["student_id"]].append(x)
+        self.payments = list(payments)
         self.risk = {r["student_id"]: r for r in risk}
         self.week_ago = now - timedelta(days=7)
 
@@ -434,7 +436,7 @@ def renewal_due(e: dict, today: date) -> bool:
 async def snapshot(with_risk: bool = True) -> Snap:
     st = _ctx["store"]
     colls = ("students", "tutors", "assignments", "sessions", "events", "sent", "guardians", "notes", "threads",
-             "shares")
+             "shares", "payments")
     data = await asyncio.gather(*(st.all(c) for c in colls))
     risk = (await _ctx["at_risk"]())["students"] if with_risk and _ctx["at_risk"] else []
     return Snap(clock(), *data, risk)
@@ -543,7 +545,11 @@ async def tutor_students(tutor_id: str, subject: str | None = None, q: str | Non
         if filter and filter not in flags:
             continue
         nxt = soonest([enrollment_view(e, sn.today) for e in mine] or sn.enrollments(sid), sn.now)
-        rows.append({"student": with_pip(st), "pip": pip_view(st), "subjects": subject_cells(sn, sid, tutor_id),
+        lean = {k: v for k, v in with_pip(st).items() if k != "learning_map"}   # rows stay light; map is on /profile
+        rows.append({"student": lean, "pip": pip_view(st), "subjects": subject_cells(sn, sid, tutor_id),
+                     "avatar": st.get("avatar"), "school": st.get("school"),
+                     "pace": (st.get("learning_profile") or {}).get("pace"), "next_step": next_step(sn, sid),
+                     "billing": billing_flag(sn, sid),
                      "guardians": [{"id": g["id"], "name": g["name"], "reachable": reachable(g)}
                                    for g in sn.g_of.get(sid, [])],
                      "flags": flags, "next_slot": nxt["slot"] if nxt else None, "next_at": nxt["at"] if nxt else None})
@@ -657,7 +663,9 @@ async def profile(student_id: str):
             "timeline": timeline(sn, student_id), "flags": sn.flags(student_id),
             "shares": share_items(sn, student_id), "auto_ko_note": bool(st.get("auto_ko_note")),
             "auto_ko_note_allowed": auto_quote_ok(st),
-            "signal": sn.signal(student_id)}
+            "signal": sn.signal(student_id),
+            "learning_profile": st.get("learning_profile"), "learning_map": st.get("learning_map"),
+            "avatar": st.get("avatar"), "school": st.get("school"), "next_step": next_step(sn, student_id)}
 
 
 @router.post("/students/{student_id}/notes")
@@ -898,6 +906,10 @@ def renewal_rows(sn: Snap) -> list[dict]:
                          "hours_left": p["hours_left"], "renews_on": p["renews_on"], "price_usd": p["price_usd"],
                          "package_status": p["status"], "signal": sig, "at_risk": sid in sn.risk,
                          "evidence_quote": quote, "evidence_source": qsrc, "note_preview": note, "note_text": note,
+                         "action": renew_action(g["id"] if g else None, sid, e),
+                         "invoice_action": invoice_action(g["id"] if g else None, sid, e),
+                         "payment_status": (latest_payment(sn, e["id"]) or {}).get("status"),
+                         "payment_failed": (latest_payment(sn, e["id"]) or {}).get("status") == "failed",
                          "from": {"tutor_id": tutor["id"], "name": tutor["name"]}})
     rows.sort(key=lambda r: (r["renews_on"], r["student"]["name"]))
     return rows
@@ -950,6 +962,8 @@ async def overview():
                                     "assumption": f"Each parent update or gap report Pip writes saves a tutor "
                                                   f"about {MIN_SAVED_PER_ITEM} minutes."},
         "came_back_on_their_own_7d": came_back,
+        "collected_7d_usd": sum(x["amount_usd"] for x in sn.payments if x["status"] == "paid" and _dt(x["paid_at"]) >= week),
+        "renewals_paid_7d": sum(1 for x in sn.payments if x["status"] == "paid" and _dt(x["paid_at"]) >= week),
         "students": len(sn.students), "label": "synthetic demo data",
     }
 
@@ -1012,6 +1026,8 @@ def report_items(sn: "Snap", sid: str) -> list[dict]:
         out.append({"id": r["id"], "kind": "auto_note" if r.get("auto") else "report", "text": r["message"],
                     "body": strip_quote(r["message"], r.get("quote")),
                     "quote": r.get("quote"), "fixed": r.get("fixed"), "goal": r.get("goal"),
+                    "learning_line": r.get("learning_line"),
+                    "actions": [renew_action(None, sid, e) for e in sn.enrollments(sid) if renewal_due(e, sn.today)],
                     "subject": sn.subj(s_) if s_ else None,
                     "date": _dt(r["ts"]).astimezone(TZ).date().isoformat(), "from": _tutor_from(sn, tid)})
     return out
@@ -1038,7 +1054,9 @@ def _schedule(sn: "Snap", sid: str) -> list[dict]:
     for e in sn.enrollments(sid):
         p = e.get("package") or {}
         live = p.get("status") != "expired"
+        due = renewal_due(e, sn.today) or p.get("status") == "expired"
         out.append({"subject": e["subject"], "tutor": sn.tutor_ref(e["tutor_id"]), "next_slot": e["slot"] if live else None,
+                    "action": renew_action(None, sid, e) if due else None,
                     "ko_count": sum(1 for s in sn.in_subject(sid, e["subject"]) if s.get("ko")),
                     "package": {k: p.get(k) for k in ("hours_total", "hours_left", "renews_on", "status")}
                     if p else None})
@@ -1065,7 +1083,11 @@ def kid_card(sn: "Snap", sid: str) -> dict:
             "this_week": {"sessions": len(week), "missions": len({s["assignment_id"] for s in week}),
                           "kos": sum(1 for s in week if s.get("ko")), "taught_quote": taught, "taught_from": src,
                           "fixed": fixed, "shared_note": notes[0] if notes else None,
-                          "latest_report": reports[0] if reports else None},
+                          "latest_report": reports[0] if reports else None,
+                          "profile_line": next(({"text": r["learning_line"], "from": r["from"]} for r in report_items(sn, sid)
+                                                if r.get("learning_line") and r["date"] >= since), None)},
+            "learning": next(({"line": r["learning_line"], "from": r["from"]} for r in report_items(sn, sid)
+                              if r.get("learning_line")), None),
             "goal_progress": goal_progress(st), "subjects": _schedule(sn, sid)}
 
 
@@ -1217,7 +1239,7 @@ def update_facts(s: dict, a: dict, st: dict, tutor: str, shares: list[dict] | No
     goal = next(iter(goal_progress(st, subj)), None) if is_sat_kid(st, subj) else None
     return {"first": st["name"].split()[0], "topic": short_topic(a["topic"]), "quote": quote, "quote_source": src,
             "fixed": bool(fx), "fixed_pair": {"before": mission_before(a), "after": fx[0]["quote"]} if fx else None,
-            "ko": bool(s.get("ko")), "tutor": tutor, "assignment": a, "goal": goal}
+            "ko": bool(s.get("ko")), "tutor": tutor, "assignment": a, "goal": goal, "learning_line": learning_line(st)}
 
 
 async def _targets(st: dict) -> tuple[list[dict], list[dict]]:
@@ -1269,9 +1291,12 @@ async def send_update(s: dict, a: dict, st: dict, tutor: str, english: str, body
     else:
         q, fp, src, goal = (meta_override.get(k) for k in ("quote", "fixed", "quote_source", "goal"))
 
+    ll = learning_line(st)
+
     def meta_for(text):
         ok_q = q if q and q in text else None
         return {"session_id": s["id"], "tutor_id": tid, "from": who, "quote": ok_q,
+                "learning_line": ll if ll and ll in text else None,   # v3.18: only what the tutor actually sent
                 "quote_source": src if ok_q else None, "fixed": fp if fp and fp["after"] in text else None,
                 "goal": {"target": goal["target"], "latest": goal["latest"], "label": f"{goal['subject_name']} practice score"}
                 if goal else None, "auto": auto, **({"draft_id": meta_override["draft_id"]} if (meta_override or {}).get("draft_id") else {})}
@@ -1327,7 +1352,7 @@ def _auto_quote(s: dict, a: dict, st: dict) -> dict | None:
 def _draft_text(d: dict, s: dict, a: dict, st: dict, tutor_name: str) -> str:
     f = {"first": st["name"].split()[0], "topic": short_topic(a["topic"]), "quote": (d.get("quote") or {}).get("text"),
          "fixed": bool(d.get("fixed")), "ko": bool(s.get("ko")), "tutor": tutor_name, "assignment": a,
-         "goal": d.get("_goal")}
+         "goal": d.get("_goal"), "learning_line": learning_line(st)}
     return auto_note(f) if d["kind"] == "ko_note" else update_template(f)
 
 
@@ -1504,6 +1529,7 @@ async def after_ko(session_id: str) -> None:
         a = s and await store.get("assignments", s["assignment_id"])
         if not (s and st and a and s.get("ko")) or s.get("saved"):
             return
+        st = await refresh_learning(st["id"], session_id, live=False) or st   # v3.18: profile/map before the draft
         if any(d["status"] == "draft" for d in await store.all("drafts", session_id=session_id)):
             return
         auto = bool(st.get("auto_ko_note")) and auto_quote_ok(st, infer_subject(a))
@@ -1514,8 +1540,808 @@ async def after_ko(session_id: str) -> None:
         await store.put("drafts", d)
         if auto:
             await _send_draft(d, auto=True)
+        if llm.available():
+            await refresh_learning(st["id"], session_id, live=True)   # one grounded summary call, offline stays on error
     except Exception:  # noqa: BLE001 - never break the K.O. path
         log.exception("post-K.O. draft failed")
+
+
+# ------------------------------------------------------------------ v3.18 learning profile + learning map
+# Computed from sessions, never self-reported: rules over the kid's own teaching messages and Pip's moves
+# (offline), optionally refined by one grounded LLM summary per finished session (live). No learner-type labels.
+
+EXPLAINS = ("examples", "pictures", "steps", "analogies", "short claims")
+MOVES = {"concrete": "a concrete picture", "try": "a new case with numbers", "predict": "Pip guessing wrong on purpose",
+         "example": "walking through one example", "why": "a direct why question",
+         "connect": "comparing it to something they know", "idea": "an open question", "pick": "a pick-one question",
+         "infer": "Pip applying their rule too literally"}
+PREREQS = {"a_trig": ["a_pyth"], "a_trig_id": ["a_trig", "a_pyth"]}  # fallback when a lesson declares none
+LABEL_BAN = re.compile(r"\b(visual|auditory|aural|kinesth?etic|tactile|verbal)\s+learn", re.I)
+EXPLAIN_PHRASE = {"examples": "examples", "pictures": "pictures", "steps": "step-by-step explanations",
+                  "analogies": "comparisons", "short claims": "short, clear statements"}
+
+
+def explain_kinds(text: str) -> set[str]:
+    t = (text or "").lower()
+    kinds = set()
+    if re.search(r"\d|for example|for instance|say you have|like if", t):
+        kinds.add("examples")
+    if re.search(r"\b(imagine|picture|cut|fold|draw|cover|split|slice|flip|stack|put two|two of them)\b", t):
+        kinds.add("pictures")
+    if re.search(r"\b(first|then|next|after that|step)\b", t):
+        kinds.add("steps")
+    if re.search(r"\b(like a|like an|it'?s like|same as|kind of like|just like)\b", t):
+        kinds.add("analogies")
+    if not kinds and len(t.split()) <= 10:
+        kinds.add("short claims")
+    return kinds
+
+
+def canonical(a: dict) -> str:
+    return a.get("source_id") or a["id"]
+
+
+def _move(text: str) -> str:
+    t = (text or "").strip()
+    if "?" in t and re.search(r"\bor\b", t.lower()) and len(t) < 160:
+        return "pick"
+    try:
+        import pacing
+        return pacing.rung_kind(t)
+    except Exception:  # noqa: BLE001
+        return "idea"
+
+
+def teaching_turns(s: dict) -> list[dict]:
+    """[{i, text, level, move, concept_id}] for the student's messages: level from Pip's reply (event level / hit),
+    the turn log, or (transcript-less seeded runs) the correct rules in Pip's brain."""
+    tr = s.get("transcript") or []
+    logged = {}
+    for e in s.get("turn_log") or []:
+        if e.get("correct", True):
+            logged[e["msg_index"]] = max(logged.get(e["msg_index"], 0), int(e.get("level") or 0))
+    by_msg = {r.get("msg_index"): r for r in s.get("brain") or [] if r.get("msg_index", -1) >= 0}
+    out = []
+    for i, m in enumerate(tr):
+        if m.get("from") != "student" or not (m.get("text") or "").strip():
+            continue
+        reply = next((x for x in tr[i + 1:] if x.get("from") == "pip"), None)
+        prev = next((x for x in reversed(tr[:i]) if x.get("from") == "pip"), None)
+        ev = (reply or {}).get("event") or {}
+        lvl = ev.get("level")
+        if lvl is None:
+            lvl = logged.get(i, 2 if ev.get("kind") == "hit" else 0)
+        r = by_msg.get(i)
+        if r and r.get("correct"):
+            lvl = max(int(lvl), 2)
+        elif r and not r.get("correct"):
+            lvl = 0
+        out.append({"i": i, "text": m["text"].strip(), "level": int(lvl or 0), "move": _move((prev or {}).get("text", "")),
+                    "concept_id": (r or {}).get("concept_id"), "wrong": bool(r and not r.get("correct"))})
+    if not out:  # seeded summaries without a transcript: their brain rules are what they taught
+        out = [{"i": -1, "text": r["quote"], "level": 2 if r.get("correct") else 0, "move": None,
+                "concept_id": r["concept_id"], "wrong": not r.get("correct")} for r in s.get("brain") or [] if r.get("quote")]
+    return out
+
+
+def _texts_to_ready(s: dict) -> int | None:
+    tr = s.get("transcript") or []
+    if not tr:
+        return None
+    n = 0
+    for m in tr:
+        if m.get("from") == "pip" and re.search(r"brain has a bug|quiz me", (m.get("text") or "").lower()):
+            if n:
+                return n
+        if m.get("from") == "student":
+            n += 1
+    return n or None
+
+
+def _wrong_quote_before(s: dict, cid: str) -> str | None:
+    tr = s.get("transcript") or []
+    for e in s.get("turn_log") or []:
+        if e.get("concept_id") == cid and e.get("correct") is False and 0 <= e["msg_index"] < len(tr):
+            return tr[e["msg_index"]]["text"].strip()
+    for m in tr:
+        if m.get("from") == "pip":
+            hit = re.search(r"brain has a bug[^\"']*[\"']([^\"']{4,})[\"']", m.get("text") or "", re.I) or \
+                re.search(r"^saving that: '([^']{4,})'", (m.get("text") or "").strip(), re.I)
+            if hit and ((m.get("event") or {}).get("kind") == "heal" or "bug" in m["text"].lower()):
+                return hit.group(1).strip()
+    return None
+
+
+def runs_of(sessions: list[dict], assignments: dict) -> list[tuple[dict, dict]]:
+    """Finished runs that count as evidence: every live run, plus a saved demo run only while no live run of the
+    same mission exists (so a saved run never double-counts)."""
+    fin = [s for s in sessions if s.get("kind") != "review" and s["status"] in ("quizzed", "complete")
+           and s["assignment_id"] in assignments]
+    live = [s for s in fin if not s.get("saved")]
+    live_missions = {canonical(assignments[s["assignment_id"]]) for s in live}
+    saved = [s for s in fin if s.get("saved") and canonical(assignments[s["assignment_id"]]) not in live_missions]
+    return [(s, assignments[s["assignment_id"]]) for s in sorted(live + saved, key=lambda s: s["created_at"])]
+
+
+def _label(a: dict, cid: str) -> str:
+    les = a.get("lesson") or {}
+    return (les.get("concept_labels") or {}).get(cid) or logic.short_name(a, cid)
+
+
+def compute_learning(st: dict, sessions: list[dict], assignments: dict, now: datetime | None = None) -> tuple[dict, dict]:
+    """(learning_profile, learning_map) for one student. Pure and deterministic."""
+    now = now or clock()
+    runs = runs_of(sessions, assignments)
+    first = st["name"].split()[0]
+    kinds, moves, ready, fixed, stuck_on, open_mis, lv3 = {}, {}, [], [], [], [], 0
+    best: dict[str, dict] = {}   # node id -> {level, quote}
+    for s, a in runs:
+        turns = teaching_turns(s)
+        for t in turns:
+            if t["level"] >= 1 and not t["wrong"]:
+                for k in explain_kinds(t["text"]):
+                    kinds[k] = kinds.get(k, 0) + 1
+            if t["level"] >= 2 and t["move"]:
+                moves[t["move"]] = moves.get(t["move"], 0) + 1
+            lv3 += t["level"] >= 3
+        n = _texts_to_ready(s)
+        if n:
+            ready.append(n)
+        mission = canonical(a)
+        les = a.get("lesson") or {}
+        for r in s.get("brain") or []:
+            node = f"{mission}:{r['concept_id']}"
+            lvl = 2 if r.get("correct") else 1
+            hit = [t for t in turns if t["i"] == r.get("msg_index")]
+            if hit and r.get("correct"):
+                lvl = max(lvl, hit[0]["level"])
+            if r.get("correct") and r.get("fixed_after"):
+                fixed.append({"quote_before": _wrong_quote_before(s, r["concept_id"]) or mission_before(a),
+                              "quote_after": r["quote"], "mission": mission_text(a)[0],
+                              "date": _dt(s["created_at"]).astimezone(TZ).date().isoformat()})
+            if not r.get("correct") and not r.get("fixed_after"):
+                open_mis.append((r["quote"], _label(a, r["concept_id"])))
+            cur = best.get(node)
+            if r.get("correct") and (cur is None or lvl > cur["level"] or not cur.get("quote")):
+                best[node] = {"level": lvl, "quote": r["quote"]}
+            elif cur is None:
+                best[node] = {"level": lvl, "quote": None}
+        for cid, v in (s.get("ladder") or {}).items():
+            node = f"{mission}:{cid}"
+            if v.get("best_level"):
+                b = best.setdefault(node, {"level": 0, "quote": None})
+                b["level"] = max(b["level"], int(v["best_level"]))
+            if v.get("stuck") and not any(r["concept_id"] == cid and r.get("correct") for r in s.get("brain") or []):
+                stuck_on.append(_label(a, cid))
+    explains = [k for k in sorted(kinds, key=lambda k: (-kinds[k], EXPLAINS.index(k)))][:2]
+    unstuck = [MOVES[m] for m in sorted(moves, key=lambda m: -moves[m]) if m in MOVES][:2]
+    avg = round(sum(ready) / len(ready), 1) if ready else None
+    pace = "steady" if avg is None else "quick" if avg <= 3 else "steady" if avg <= 5 else "needs time"
+    strengths, watch = [], []
+    if explains:
+        strengths.append(f"explains with {' and '.join(EXPLAIN_PHRASE[k] for k in explains)}")
+    if fixed:
+        strengths.append(f"fixes a wrong rule when Pip uses it ({len(fixed)} so far)")
+    if lv3:
+        strengths.append("applies an idea to a new case without being asked")
+    if pace == "quick":
+        strengths.append("gets Pip ready in a few texts")
+    for q, label in open_mis[:2]:
+        watch.append(f"still says “{q}” ({label})")
+    for label in dict.fromkeys(stuck_on):
+        watch.append(f"stuck on {label.lower()} after the full ladder")
+    if explains and explains[0] == "short claims":
+        watch.append("gives the answer without the reason; ask “how do you know?”")
+    if pace == "needs time":
+        watch.append("needs a few extra texts to get going")
+    profile = {"explains_with": explains, "unstuck_by": unstuck, "pace": pace, "texts_to_ready_avg": avg,
+               "misconceptions_fixed": fixed, "strengths": strengths[:4], "watch_for": watch[:4],
+               "runs": len(runs), "source": "rules", "updated_at": _iso(now)}
+    # --- map: every concept of every mission the kid has (assigned, run, or a declared prerequisite)
+    mine = [a for a in assignments.values() if a.get("student_id") == st["id"] and not a.get("review")]
+    mine += [a for _, a in runs]
+    by_mission: dict[str, dict] = {}
+    for a in mine:
+        by_mission.setdefault(canonical(a), a)
+    queue = list(by_mission)
+    while queue:  # declared prerequisites join the map (transitively)
+        m = queue.pop()
+        a = by_mission[m]
+        for pre in (a.get("lesson") or {}).get("prerequisites") or PREREQS.get(m, []):
+            if pre not in by_mission and pre in assignments:
+                by_mission[pre] = assignments[pre]
+                queue.append(pre)
+    nodes, edges = [], []
+    for m, a in by_mission.items():
+        les = a.get("lesson") or {}
+        for c in a["concepts"]:
+            node = f"{m}:{c['id']}"
+            el = lessons.level_of(les, c["id"]) if les else "why"
+            b = best.get(node) or {"level": 0, "quote": None}
+            lvl = max(b["level"], 2) if el == "given" and b.get("level", 0) != 1 else b["level"]
+            # F20 keys nodes by concept_id, so it is unique across missions ("a_trig:k1"); mission = the topic
+            nodes.append({"id": node, "concept_id": node, "local_concept_id": c["id"], "mission": mission_text(a)[0],
+                          "mission_id": m, "subject": infer_subject(a), "label": _label(a, c["id"]),
+                          "level": max(0, min(3, lvl)), "explain_level": el, "evidence_quote": b.get("quote"),
+                          "given": el == "given", "known": el == "given"})
+        arc = [c for c in (les.get("arc") or [c["id"] for c in a["concepts"]]) if any(x["id"] == c for x in a["concepts"])]
+        # builds_on: `from` builds on `to` (the arrow runs prerequisite -> next)
+        edges += [{"from": f"{m}:{y}", "to": f"{m}:{x}", "kind": "builds_on"} for x, y in zip(arc, arc[1:])]
+        for pre in les.get("prerequisites") or PREREQS.get(m, []):
+            if pre in by_mission and arc:
+                pa = by_mission[pre]
+                parc = (pa.get("lesson") or {}).get("arc") or [c["id"] for c in pa["concepts"]]
+                edges.append({"from": f"{m}:{arc[0]}", "to": f"{pre}:{parc[-1]}", "kind": "builds_on"})
+    return profile, {"nodes": nodes, "edges": edges, "updated_at": _iso(now)}
+
+
+def learning_line(st: dict) -> str | None:
+    """The plain-English slice a tutor can approve into a parent update (no labels, no rankings)."""
+    p = st.get("learning_profile") or {}
+    first = st["name"].split()[0]
+    week = (clock() - timedelta(days=7)).astimezone(TZ).date().isoformat()
+    n = sum(1 for f in p.get("misconceptions_fixed") or [] if f.get("date", "") >= week)
+    if not p.get("explains_with"):
+        return None
+    line = f"{first} explains best with {EXPLAIN_PHRASE[p['explains_with'][0]]}"
+    return line + (f", and fixed {n} mistake{'s' if n != 1 else ''} this week." if n else ".")
+
+
+def next_step(sn: "Snap", sid: str) -> str:
+    """One line for the tutor's student list: the most useful next action."""
+    st = sn.students[sid]
+    for s in reversed(sn.sessions.get(sid, [])):
+        bad = next((r for r in s.get("brain") or [] if not r.get("correct") and not r.get("fixed_after")), None)
+        if bad:
+            return f"Re-teach: Pip still believes “{bad['quote'][:60]}”"
+        if s.get("ko"):
+            break
+    if sn.needs_update(sid):
+        return "Send the family update"
+    done = {s["assignment_id"] for s in sn.sessions.get(sid, []) if s.get("ko")}
+    todo = [a for a in sn.assignments.values() if a.get("student_id") == sid and not a.get("review") and a["id"] not in done]
+    if todo:
+        return f"Next mission: {mission_text(sorted(todo, key=lambda a: a.get('created_at') or '')[0])[0]}"
+    due = [e for e in sn.enrollments(sid) if renewal_due(e, sn.today)]
+    if due:
+        return f"Renewal due {nice_date(due[0]['package']['renews_on'])}"
+    return "Assign the next mission"
+
+
+LEARN_SYSTEM = """You summarize how one student taught an AI classmate (Pip) in one tutoring session. Use only the \
+student's messages given. Return: explains_with (1-2 of: examples, pictures, steps, analogies, short claims), \
+strengths (up to 3) and watch_for (up to 2): each a short plain phrase (under 12 words) plus the exact student quote \
+it rests on, copied verbatim. Never use learner-type labels (visual, auditory, kinesthetic learner), never compare \
+with other students, never diagnose."""
+
+
+async def refine_live(st: dict, s: dict, profile: dict) -> dict:
+    """Live path: one grounded LLM summary for a finished session. Every phrase must cite a verbatim quote from
+    this session; anything ungrounded or labeling is dropped, and offline rules stay the fallback."""
+    if not llm.available():
+        return profile
+    msgs = [t["text"] for t in teaching_turns(s) if t["i"] >= 0]
+    if not msgs:
+        return profile
+    item = llm.obj({"text": {"type": "string"}, "quote": {"type": "string"}})
+    schema = llm.obj({"explains_with": {"type": "array", "items": {"type": "string", "enum": list(EXPLAINS)}},
+                      "strengths": {"type": "array", "items": item}, "watch_for": {"type": "array", "items": item}})
+    try:
+        r = await llm.structured(LEARN_SYSTEM, [{"role": "user", "content": "\n".join(f"[{i}] {m}" for i, m in enumerate(msgs))}],
+                                 schema, model=llm.WORK_MODEL, effort="low", max_tokens=600, timeout=20)
+    except (llm.LlmError, KeyError, TypeError):
+        return profile
+    blob = logic.norm(" ".join(msgs))
+
+    def grounded(xs, k):
+        out = []
+        for x in (xs or [])[:k]:
+            text, q = str(x.get("text") or "").strip(), str(x.get("quote") or "").strip()
+            if text and q and len(text) <= 90 and logic.norm(q) in blob and not LABEL_BAN.search(text) \
+                    and not BANNED.search(text):
+                out.append({"text": text, "quote": q})
+        return out
+    st_, wf = grounded(r.get("strengths"), 3), grounded(r.get("watch_for"), 2)
+    ex = [k for k in r.get("explains_with") or [] if k in EXPLAINS][:2]
+    if not (st_ or wf or ex):
+        return profile
+    return {**profile, "explains_with": ex or profile["explains_with"],
+            "strengths": [x["text"] for x in st_] or profile["strengths"],
+            "watch_for": [x["text"] for x in wf] or profile["watch_for"],
+            "evidence": st_ + wf, "source": "ai"}
+
+
+async def refresh_learning(student_id: str, session_id: str | None = None, live: bool = True) -> dict | None:
+    """Recompute and store a student's learning profile + map (on session complete / K.O., and at seed)."""
+    store = _ctx["store"]
+    st = await store.get("students", student_id)
+    if not st:
+        return None
+    sessions = await store.all("sessions", student_id=student_id)
+    assignments = {a["id"]: a for a in await store.all("assignments")}
+    profile, lmap = compute_learning(st, sessions, assignments)
+    if live and session_id:
+        s = next((x for x in sessions if x["id"] == session_id), None)
+        if s and s["status"] in ("quizzed", "complete") and not s.get("saved"):
+            profile = await refine_live(st, s, profile)
+    st = await store.get("students", student_id)  # re-read: the K.O. path may have written meanwhile
+    st["learning_profile"], st["learning_map"] = profile, lmap
+    await store.put("students", st)
+    return st
+
+
+def synthetic_run(a: dict, st: dict, created: datetime, sid_: str) -> dict:
+    """A finished (synthetic) session built from a lesson's offline_demo: transcript, events with levels, brain
+    with verbatim rules and fixed_after, re-teach, K.O. Used by the seed for rich, consistent profiles."""
+    od = (a.get("lesson") or {}).get("offline_demo") or {}
+    tr, rules, k, reteach = [], {}, 0, 0
+
+    def add(who, text, ev=None):
+        nonlocal k
+        k += 1
+        m = {"from": who, "text": text, "ts": _iso(created + timedelta(minutes=k))}
+        if who == "pip":
+            m["event"] = ev or {"kind": "none", "amount": 0, "caption": "", "unlocked": []}
+        tr.append(m)
+        return len(tr) - 1
+    add("pip", f"Hi. I'm {st.get('pip_name') or 'Pip'}. I'm learning {short_topic(a['topic']).lower()}. "
+               f"I already know one rule: {a['misconception']}. Easy.")
+    for t in od.get("turns") or []:
+        if t.get("reteach_concept_id"):
+            reteach += 1
+            add("pip", t.get("pip_ask") or "my brain has a bug. help me fix it?")
+        i = add("student", t["student"])
+        lv = int(t.get("level") or 0)
+        kind = t.get("event") if t.get("event") in ("hit", "heal") else "none"
+        add("pip", t.get("pip") or "ok.", {"kind": kind, "amount": 25 if kind == "hit" else 20 if kind == "heal" else 0,
+                                           "caption": "", "unlocked": [], "level": lv})
+        hits = ([{"concept_id": t["concept_id"], "level": lv}] + (t.get("also") or [])) if t.get("concept_id") else []
+        for h in hits:
+            cid = h["concept_id"]
+            quote = (t.get("filed_rule") if h is hits[0] and t.get("filed_rule") else t["student"]).strip()
+            if quote not in t["student"]:
+                quote = t["student"].strip()
+            if h["level"] >= 2 or kind == "heal":
+                rules[cid] = {"id": f"r_{cid}", "concept_id": cid, "quote": quote, "correct": kind != "heal",
+                              "msg_index": i, **({"fixed_after": reteach} if reteach and kind != "heal" else {})}
+    for c in a["concepts"]:  # every concept ends taught (a K.O. run)
+        rules.setdefault(c["id"], None)
+    brain = [r for r in rules.values() if r]
+    quiz = [{"id": q["id"], "concept_id": q["concept_id"], "question": q["question"], "rule_id": f"r_{q['concept_id']}",
+             "pip_answer": q.get("answer", ""), "line": "", "passed": True} for q in a.get("quiz") or []]
+    s = logic.new_session(a, st["id"], "blob", (st.get("pip") or {}).get("creature") or "capybara", "none", [])
+    lad = s["ladder"]
+    for r in brain:
+        if r["concept_id"] in lad:
+            lad[r["concept_id"]]["best_level"] = max(2, max((int((m.get("event") or {}).get("level") or 0)
+                                                             for j, m in enumerate(tr) if j == r["msg_index"] + 1), default=2))
+    s.update(id=sid_, status="complete", ko=True, transcript=tr, brain=brain, quiz=quiz, boss_hp=0, mood="celebrating",
+             reteach_count=reteach, brain_version=2, synthetic=True, created_at=_iso(created),
+             minutes=max(6, len(tr)), meters={c["id"]: 60 for c in a["concepts"]}, ready_for_quiz=True,
+             parent_sent_at=_iso(created + timedelta(hours=4)))
+    s["gap_report"] = pip_ai.report_det(s, a, st)
+    return s
+
+
+SHOWCASE_RUNS = [  # (student, lesson source, days ago) -> a K.O. run for rich, consistent profiles and maps
+    ("s014", "a_pyth", 9),          # Theo: right triangles, before his sine missions (all three in his map)
+    ("s043", "a_sat_commas", 6),    # Luna: SAT commas, before her dangling-modifiers showcase
+]
+
+
+async def seed_learning(store, now: datetime | None = None) -> None:
+    """Seed: showcase runs (copies of the lesson for the student) + learning profile/map for every student."""
+    now = now or clock()
+    for sid, src_id, days in SHOWCASE_RUNS:
+        src, st = await store.get("assignments", src_id), await store.get("students", sid)
+        if not (src and st and (src.get("lesson") or {}).get("offline_demo")):
+            continue
+        a = {**copy.deepcopy(src), "id": f"{src_id}_{sid}", "student_id": sid, "source_id": src_id,
+             "tutor_id": st["tutor_id"], "grade": st.get("grade") or src.get("grade"), "subject": infer_subject(src),
+             "created_at": _iso(now - timedelta(days=days + 3))}
+        await store.put("assignments", a)
+        s = synthetic_run(a, st, now - timedelta(days=days), f"sess_{src_id}_{sid}")
+        await store.put("sessions", s)
+        # came back on their own inside 14 days (not at risk) but before this week (seeded weekly counts unchanged)
+        await store.put("events", {"id": f"ev_seed_back_{sid}", "kind": "open", "student_id": sid, "synthetic": True,
+                                   "ts": _iso(now - timedelta(days=8)), "due": False})
+    students = await store.all("students")
+    sessions = await store.all("sessions")
+    assignments = {a["id"]: a for a in await store.all("assignments")}
+    by = defaultdict(list)
+    for s in sessions:
+        by[s["student_id"]].append(s)
+    for st in students:
+        st["learning_profile"], st["learning_map"] = compute_learning(st, by.get(st["id"], []), assignments, now)
+        await store.put("students", st)
+
+
+# ------------------------------------------------------------------ v3.19 / 19b / 19c parents pay the center
+# Renewals are Stripe Invoices in TEST mode (hosted invoice page, ACH us_bank_account first then card, due in 7 days),
+# via the Stripe REST API with httpx (the pilot checkout pattern). An sk_live_ key is refused: everything is simulated.
+# Status: pending (invoice open) -> processing (ACH submitted: hours added) -> paid (final), or -> failed (hours
+# reversed, the owner's renewal row shows it). Offline payments (Zelle, cash, check...) are recorded as paid.
+import hashlib as _hashlib  # noqa: E402
+import hmac as _hmac  # noqa: E402
+
+import httpx as _httpx  # noqa: E402
+
+STRIPE_API = "https://api.stripe.com/v1"
+WEBHOOK_TOLERANCE_S = 300
+PAY_METHODS = ["us_bank_account", "card"]   # v3.19b: bank debit first (lower fee), card second
+INVOICE_DAYS = 7
+OFFLINE_METHODS = ("zelle", "cash", "check", "venmo", "other")
+
+
+def stripe_key() -> str | None:
+    """The Stripe key to use, or None (simulate). Never a live key."""
+    key = os.environ.get("STRIPE_SECRET_KEY", "")
+    if key.startswith(("sk_live_", "rk_live_")):
+        log.error("refusing a live Stripe key; parent payments are simulated")
+        return None
+    return key if key.startswith("sk_test_") else None
+
+
+def renew_action(gid: str | None, sid: str, e: dict) -> dict:
+    p = e.get("package") or {}
+    return {"kind": "renew", "label": "Renew", "price_usd": p.get("price_usd"), "hours": p.get("hours_total"),
+            "checkout": {"method": "POST", "path": f"/api/parent/{gid or ':gid'}/checkout",
+                         "body": {"student_id": sid, "enrollment_id": e["id"], "hours": p.get("hours_total")}}}
+
+
+def invoice_action(gid: str | None, sid: str, e: dict) -> dict:
+    p = e.get("package") or {}
+    return {"kind": "send_invoice", "label": "Send invoice", "method": "POST", "path": "/api/invoices",
+            "body": {"student_id": sid, "enrollment_id": e["id"], "guardian_id": gid, "hours": p.get("hours_total")}}
+
+
+def latest_payment(sn: "Snap", enrollment_id: str) -> dict | None:
+    ps = [x for x in sn.payments if x["enrollment_id"] == enrollment_id]
+    return max(ps, key=lambda x: x["created_at"]) if ps else None
+
+
+def billing_flag(sn: "Snap", sid: str) -> str:
+    """paid | due | overdue for the tutor's list (v3.19); a failed payment puts the package back to due."""
+    ens = sn.enrollments(sid)
+    if any((e.get("package") or {}).get("status") == "expired" or (e.get("package") or {}).get("hours_left", 1) <= 0
+           for e in ens):
+        return "overdue"
+    if any(renewal_due(e, sn.today) for e in ens):
+        return "due"
+    return "paid"
+
+
+def _price_for(e: dict, hours: int) -> int:
+    p = e.get("package") or {}
+    total = int(p.get("hours_total") or hours or 1)
+    price = int(p.get("price_usd") or RATE.get(e["subject"], 55) * total)
+    return price if hours == total else round(price * hours / total)
+
+
+def _line_item(st: dict, e: dict, hours: int) -> str:
+    return f"{st['name']} · {SUBJECT_NAME.get(e['subject'], e['subject'])} · {hours} hours"
+
+
+async def _stripe(method: str, path: str, key: str, data: dict | None = None) -> dict:
+    async with _httpx.AsyncClient(timeout=15) as c:
+        r = await (c.post(f"{STRIPE_API}{path}", data=data or {}, auth=(key, "")) if method == "POST"
+                   else c.get(f"{STRIPE_API}{path}", auth=(key, "")))
+    if r.status_code != 200:
+        raise _httpx.HTTPError(f"stripe {path} {r.status_code}")
+    return r.json()
+
+
+async def _stripe_invoice(key: str, g: dict, st: dict, pay: dict, send: bool) -> dict:
+    """customer -> draft invoice (send_invoice, due in 7 days, ACH then card) -> item -> finalize (-> send)."""
+    cust = await _stripe("POST", "/customers", key, {"name": g["name"], "email": g.get("email") or "parent@example.com",
+                                                    "metadata[guardian_id]": g["id"]})
+    inv = await _stripe("POST", "/invoices", key, {
+        "customer": cust["id"], "collection_method": "send_invoice", "days_until_due": str(INVOICE_DAYS),
+        "auto_advance": "true", "metadata[payment_id]": pay["id"], "description": pay["line_item"],
+        **{f"payment_settings[payment_method_types][{i}]": m for i, m in enumerate(PAY_METHODS)}})
+    await _stripe("POST", "/invoiceitems", key, {"customer": cust["id"], "invoice": inv["id"], "currency": "usd",
+                                                "amount": str(pay["amount_usd"] * 100), "description": pay["line_item"]})
+    inv = await _stripe("POST", f"/invoices/{inv['id']}/finalize", key)
+    if send:
+        inv = await _stripe("POST", f"/invoices/{inv['id']}/send", key)
+    return inv
+
+
+async def create_invoice(g: dict, st: dict, e: dict, hours: int, origin: str, send: bool = False) -> dict:
+    store = _ctx["store"]
+    n = len(await store.all("payments")) + 1
+    pid = logic.new_id("pay")
+    pay = {"id": pid, "guardian_id": g["id"], "student_id": st["id"], "enrollment_id": e["id"], "subject": e["subject"],
+           "hours": hours, "amount_usd": _price_for(e, hours), "status": "pending", "provider": "simulated",
+           "checkout_session_id": None, "invoice_id": f"in_sim_{pid[4:]}", "line_item": _line_item(st, e, hours),
+           "due_date": (local_today() + timedelta(days=INVOICE_DAYS)).isoformat(), "payment_methods": PAY_METHODS,
+           "reminders": True, "hosted_invoice_url": f"{origin}/parent/invoice/{pid}?as={g['id']}&simulated=1",
+           "created_at": _iso(clock()), "paid_at": None, "processing_at": None, "failed_at": None,
+           "hours_applied": False, "receipt_no": f"BP-{local_today().year}-{n:05d}", "sent": send, "synthetic": True}
+    key = stripe_key()
+    if key:
+        try:
+            inv = await _stripe_invoice(key, g, st, pay, send)
+            pay.update(provider="stripe_test", invoice_id=inv["id"], synthetic=False,
+                       hosted_invoice_url=inv.get("hosted_invoice_url") or pay["hosted_invoice_url"])
+        except _httpx.HTTPError:
+            log.exception("stripe invoice failed; simulating")
+    await store.put("payments", pay)
+    return pay
+
+
+def _hours(body: dict, e: dict) -> int:
+    try:
+        hours = int(body.get("hours") or (e.get("package") or {}).get("hours_total") or 8)
+    except (TypeError, ValueError):
+        raise HTTPException(422, "hours must be a whole number")
+    if not 1 <= hours <= 100:
+        raise HTTPException(422, "hours must be between 1 and 100")
+    return hours
+
+
+def _origin(request: Request) -> str:
+    return (request.headers.get("origin") or os.environ.get("FRONTEND_URL", "http://localhost:5173")).rstrip("/")
+
+
+@router.post("/parent/{gid}/checkout")
+async def parent_checkout(gid: str, request: Request, body: dict = Body(...)):
+    """v3.19c: a renewal invoice for one of the guardian's own kids (403 otherwise)."""
+    store = _ctx["store"]
+    g = await _guardian_or_404(gid)
+    sid = str(body.get("student_id") or "")
+    if sid not in (g.get("student_ids") or []):
+        raise HTTPException(403, "not your child")
+    st = _need(await store.get("students", sid), "student")
+    e = next((x for x in st.get("enrollments") or [] if x["id"] == body.get("enrollment_id")), None)
+    if not e:
+        raise HTTPException(404, "enrollment not found")
+    pay = await create_invoice(g, st, e, _hours(body, e), _origin(request))
+    return {"url": pay["hosted_invoice_url"], "payment_id": pay["id"], "invoice_id": pay["invoice_id"],
+            "simulated": pay["provider"] == "simulated", "payment": pay}
+
+
+@router.post("/invoices")
+async def send_invoice(request: Request, body: dict = Body(...)):
+    """Owner "Send invoice" from a renewal row (staff only): the same invoice, emailed by Stripe in test mode."""
+    if request.query_params.get("as", "").startswith("g"):
+        raise HTTPException(403, "staff only")
+    store = _ctx["store"]
+    st = _need(await store.get("students", str(body.get("student_id") or "")), "student")
+    e = next((x for x in st.get("enrollments") or [] if x["id"] == body.get("enrollment_id")), None)
+    if not e:
+        raise HTTPException(404, "enrollment not found")
+    gid = body.get("guardian_id") or next(iter(st.get("guardian_ids") or []), None)
+    g = _need(await store.get("guardians", str(gid or "")), "guardian")
+    if st["id"] not in (g.get("student_ids") or []):
+        raise HTTPException(403, "this guardian is not linked to this student")
+    return await create_invoice(g, st, e, _hours(body, e), _origin(request), send=True)
+
+
+async def _apply_hours(pay: dict, sign: int) -> None:
+    """+hours (sign 1) when processing/paid, -hours (sign -1) on a failure. Guarded by pay["hours_applied"]."""
+    store = _ctx["store"]
+    st = await store.get("students", pay["student_id"])
+    today = local_today()
+    for e in (st or {}).get("enrollments") or []:
+        if e["id"] != pay["enrollment_id"]:
+            continue
+        p = e.setdefault("package", {"hours_total": 0, "hours_used": 0, "price_usd": pay["amount_usd"],
+                                     "renews_on": today.isoformat()})
+        if sign > 0:
+            pay["prev_renews_on"] = p.get("renews_on")
+            p["hours_total"] = int(p.get("hours_total") or 0) + pay["hours"]
+            start = max(today, date.fromisoformat(p.get("renews_on") or today.isoformat()))
+            p["renews_on"] = (start + timedelta(days=7 * pay["hours"])).isoformat()   # about one session a week
+        else:
+            p["hours_total"] = max(int(p.get("hours_used") or 0), int(p.get("hours_total") or 0) - pay["hours"])
+            p["renews_on"] = pay.get("prev_renews_on") or p.get("renews_on")
+        e.update(enrollment_view(e, today))
+    if st:
+        await store.put("students", st)
+    pay["hours_applied"] = sign > 0
+
+
+async def _receipt(pay: dict, text: str) -> None:
+    store = _ctx["store"]
+    st, g = await store.get("students", pay["student_id"]), await store.get("guardians", pay.get("guardian_id") or "")
+    if st and g:
+        await store.put("threads", {"id": logic.new_id("tm"), "student_id": st["id"], "guardian_id": g["id"],
+                                    "from": "center", "author_id": "c1", "kind": "receipt", "ts": _iso(clock()),
+                                    "status": "test-mode (not delivered)",
+                                    "author": {"tutor_id": "c1", "name": "Bright Path Tutoring"}, "text": text})
+
+
+async def set_status(pay: dict, status: str) -> dict:
+    """The one state machine for every path (simulated, Stripe confirm, webhooks, offline). Idempotent: hours are
+    added once, removed once; paid is final."""
+    store = _ctx["store"]
+    if pay["status"] == "paid" or pay["status"] == status:
+        return pay
+    if pay["status"] == "failed" and status == "processing":
+        return pay  # a failure is only undone by a new invoice or an actual payment
+    first = (await store.get("students", pay["student_id"]) or {}).get("name", "your child").split()[0]
+    subj = SUBJECT_NAME.get(pay["subject"], pay["subject"])
+    if status in ("processing", "paid") and not pay.get("hours_applied"):
+        await _apply_hours(pay, +1)
+    if status == "failed" and pay.get("hours_applied"):
+        await _apply_hours(pay, -1)
+    pay["status"] = status
+    pay[f"{status}_at"] = _iso(clock())
+    await store.put("payments", pay)
+    if status == "processing":
+        await _receipt(pay, f"Thanks! Your bank payment of ${pay['amount_usd']} for {first}'s {subj} package "
+                            f"({pay['hours']} hours) is processing; the hours are already on the package. "
+                            f"Invoice {pay['receipt_no']}. (Test mode: no real charge.)")
+    elif status == "paid":
+        how = f"(Recorded {pay['method']} payment.)" if pay.get("provider") == "offline" else "(Test mode: no real charge.)"
+        await _receipt(pay, f"Thank you! We received ${pay['amount_usd']} for {first}'s {subj} package "
+                            f"({pay['hours']} hours). Receipt {pay['receipt_no']}. {how}")
+    elif status == "failed":
+        await _receipt(pay, f"The bank payment for {first}'s {subj} package didn't go through, so those "
+                            f"{pay['hours']} hours were taken back off. You can pay the invoice again or by card. "
+                            "(Test mode.)")
+    return pay
+
+
+@router.post("/payments/{payment_id}/confirm")
+async def confirm_payment(payment_id: str, body: dict = Body(default={})):
+    """Real: read the invoice from Stripe (paid / processing / failed). Simulated in-app invoice page: the parent's
+    choice, bank (us_bank_account -> processing) or card (-> paid); `outcome` lets the demo clear or fail ACH."""
+    store = _ctx["store"]
+    pay = _need(await store.get("payments", payment_id), "payment")
+    body = body if isinstance(body, dict) else {}
+    if pay["status"] == "paid":
+        return pay
+    if pay["provider"] == "stripe_test":
+        key = stripe_key()
+        if not key:
+            raise HTTPException(409, "Stripe is not configured to verify this payment")
+        try:
+            inv = await _stripe("GET", f"/invoices/{pay['invoice_id']}?expand[]=payment_intent", key)
+        except _httpx.HTTPError:
+            raise HTTPException(502, "could not reach Stripe; try again")
+        pi = inv.get("payment_intent") if isinstance(inv.get("payment_intent"), dict) else {}
+        if inv.get("status") == "paid":
+            return await set_status(pay, "paid")
+        if pi.get("status") == "processing":
+            return await set_status(pay, "processing")
+        if pi.get("last_payment_error") and pay["status"] == "processing":
+            return await set_status(pay, "failed")
+        return pay
+    outcome = body.get("outcome")
+    if outcome in ("paid", "failed", "processing"):
+        return await set_status(pay, outcome)
+    method = body.get("method") or "card"
+    if method not in PAY_METHODS:
+        raise HTTPException(422, f"method must be one of {', '.join(PAY_METHODS)}")
+    pay["paid_with"] = method
+    return await set_status(pay, "processing" if method == "us_bank_account" else "paid")
+
+
+@router.post("/payments/offline")
+async def offline_payment(request: Request, body: dict = Body(...)):
+    """v3.19b (staff only): a payment received outside Pip (Zelle, cash, check, Venmo): same effects as a paid
+    invoice (hours, receipt, revenue at risk, billing flag), no processing fee."""
+    if request.query_params.get("as", "").startswith("g"):
+        raise HTTPException(403, "staff only")
+    store = _ctx["store"]
+    st = _need(await store.get("students", str(body.get("student_id") or "")), "student")
+    e = next((x for x in st.get("enrollments") or [] if x["id"] == body.get("enrollment_id")), None)
+    if not e:
+        raise HTTPException(404, "enrollment not found")
+    method = body.get("method")
+    if method not in OFFLINE_METHODS:
+        raise HTTPException(422, f"method must be one of {', '.join(OFFLINE_METHODS)}")
+    hours = _hours(body, e)
+    try:
+        amount = round(float(body["amount_usd"])) if body.get("amount_usd") is not None else _price_for(e, hours)
+    except (TypeError, ValueError):
+        raise HTTPException(422, "amount_usd must be a number")
+    if amount < 0:
+        raise HTTPException(422, "amount_usd must be >= 0")
+    n = len(await store.all("payments")) + 1
+    pay = {"id": logic.new_id("pay"), "guardian_id": next(iter(st.get("guardian_ids") or []), None),
+           "student_id": st["id"], "enrollment_id": e["id"], "subject": e["subject"], "hours": hours,
+           "amount_usd": amount, "status": "pending", "provider": "offline", "method": method,
+           "note": (str(body.get("note") or "").strip()[:200] or None), "checkout_session_id": None, "invoice_id": None,
+           "line_item": _line_item(st, e, hours), "created_at": _iso(clock()), "paid_at": None, "hours_applied": False,
+           "receipt_no": f"BP-{local_today().year}-{n:05d}", "synthetic": True}
+    await store.put("payments", pay)
+    return await set_status(pay, "paid")
+
+
+def verify_stripe_signature(payload: bytes, header: str, secret: str, now: float | None = None) -> bool:
+    pairs = [x.split("=", 1) for x in (header or "").split(",") if "=" in x]
+    t = next((v for k, v in pairs if k == "t"), "")
+    sigs = [v for k, v in pairs if k == "v1"]
+    try:
+        t = int(t)
+    except ValueError:
+        return False
+    if abs((now if now is not None else clock().timestamp()) - t) > WEBHOOK_TOLERANCE_S:
+        return False
+    want = _hmac.new(secret.encode(), f"{t}.".encode() + payload, _hashlib.sha256).hexdigest()
+    return any(_hmac.compare_digest(want, s) for s in sigs)
+
+
+async def _payment_for(obj: dict) -> dict | None:
+    store = _ctx["store"]
+    pid = (obj.get("metadata") or {}).get("payment_id") or obj.get("client_reference_id")
+    if pid:
+        return await store.get("payments", pid)
+    inv = obj.get("invoice") if isinstance(obj.get("invoice"), str) else obj.get("id")
+    return next((x for x in await store.all("payments") if inv and x.get("invoice_id") == inv), None)
+
+
+@router.post("/stripe/webhook")
+async def stripe_webhook(request: Request):
+    """invoice.paid -> paid, invoice.payment_failed -> failed, payment_intent.processing -> processing,
+    invoice.finalized -> recorded as sent (not processing: no money has moved), checkout.session.completed -> paid.
+    Ignored entirely without STRIPE_WEBHOOK_SECRET; a bad signature is 400. Idempotent."""
+    secret = os.environ.get("STRIPE_WEBHOOK_SECRET", "")
+    payload = await request.body()
+    if not secret:
+        return {"ok": True, "ignored": "STRIPE_WEBHOOK_SECRET is not set"}
+    if not verify_stripe_signature(payload, request.headers.get("stripe-signature", ""), secret):
+        raise HTTPException(400, "bad signature")
+    try:
+        ev = json.loads(payload)
+    except ValueError:
+        raise HTTPException(400, "bad payload")
+    kind, obj = ev.get("type"), (ev.get("data") or {}).get("object") or {}
+    target = {"invoice.paid": "paid", "invoice.payment_failed": "failed", "payment_intent.processing": "processing",
+              "payment_intent.payment_failed": "failed", "checkout.session.completed": "paid"}.get(kind)
+    if kind not in ("invoice.finalized",) and target is None:
+        return {"ok": True, "ignored": kind}
+    pay = await _payment_for(obj)
+    if not pay:
+        return {"ok": True, "ignored": "unknown payment"}
+    if kind == "invoice.finalized":
+        if obj.get("hosted_invoice_url"):
+            pay["hosted_invoice_url"] = obj["hosted_invoice_url"]
+        pay["sent"] = True
+        await _ctx["store"].put("payments", pay)
+        return {"ok": True, "status": pay["status"]}
+    if kind == "checkout.session.completed" and obj.get("payment_status") != "paid":
+        return {"ok": True, "status": pay["status"]}
+    pay = await set_status(pay, target)
+    return {"ok": True, "status": pay["status"]}
+
+
+@router.get("/parent/{gid}/billing")
+async def parent_billing(gid: str):
+    g = await _guardian_or_404(gid)
+    sn = await snapshot(with_risk=False)
+    packages = []
+    for sid in g.get("student_ids") or []:
+        if sid not in sn.students:
+            continue
+        for e in sn.enrollments(sid):
+            p = e.get("package") or {}
+            lp = latest_payment(sn, e["id"])
+            packages.append({"student": parent_student(sn.students[sid]), "subject": e["subject"],
+                             "enrollment_id": e["id"], "tutor": sn.tutor_ref(e["tutor_id"]),
+                             "hours_left": p.get("hours_left"), "hours_total": p.get("hours_total"),
+                             "price_usd": p.get("price_usd"), "renews_on": p.get("renews_on"),
+                             "renews_on_text": nice_date(p["renews_on"]) if p.get("renews_on") else None,
+                             "status": p.get("status"), "payment_status": (lp or {}).get("status"),
+                             "action": renew_action(gid, sid, e) if renewal_due(e, sn.today) or p.get("status") == "expired" else None})
+    pays = sorted(await _ctx["store"].all("payments", guardian_id=gid), key=lambda x: x["created_at"], reverse=True)
+    return {"packages": packages, "payments": pays, "test_mode": True,
+            "fees_note": "Bank payment (ACH) has a lower fee than a card."}
+
+
+@router.get("/sessions/{session_id}/document")
+async def session_document(session_id: str, request: Request):
+    """The raw stored session (Pip's Brain as it lives in MongoDB). Staff only: the parent app's demo identity
+    (?as=g...) is refused; there is no login in the demo."""
+    if request.query_params.get("as", "").startswith("g"):
+        raise HTTPException(403, "staff only")
+    doc = await _ctx["store"].get("sessions", session_id)
+    if not doc:
+        raise HTTPException(404, "session not found")
+    return {"collection": "sessions", "store": type(_ctx["store"]).__name__, "document": doc}
 
 
 # ------------------------------------------------------------------ seed (called by seed.py)
@@ -1553,6 +2379,13 @@ def apply_student_ops(students: dict, now: datetime | None = None) -> None:
             st["pip"] = {**pip, "brain_version": int(st.get("brain_version") or 1), "form": "base"}
             st["pip_name"] = pip["name"]
         st["auto_ko_note"] = False   # v3.15: off by default; tutors approve every send (opt-in for grade <= 6)
+        det = (ops.get("details") or {}).get(sid) or {}   # v3.18: synthetic badge, school, birthday month, contact
+        first, last = st["name"].split()[0], st["name"].split()[-1].rstrip(".")
+        st["avatar"] = det.get("avatar") or {"initials": (first[0] + last[0]).upper(), "color": "#3d5a80"}
+        st["school"] = det.get("school")
+        st["birthday_month"] = det.get("birthday_month")
+        st["started"] = min((e["started"] for e in rows), default=today.isoformat())
+        st["contact"] = {"student_email": det.get("student_email")}
 
 
 async def seed_ops(store, now: datetime | None = None) -> None:
@@ -1617,6 +2450,7 @@ async def seed_ops(store, now: datetime | None = None) -> None:
                   album=[{"assignment_id": a["id"], "boss_name": a["boss"]["name"], "card_no": 1,
                           "variant": "comeback", "date": s["created_at"]}])
         await store.put("students", st)
+    await seed_learning(store, now)  # v3.18: Theo/Luna showcase runs + learning profile/map for every student
     # sent-log rows for every seeded tutor-sent report (one per guardian who gets updates) + the student's event
     students = {x["id"]: x for x in await store.all("students")}
     assignments = {x["id"]: x for x in await store.all("assignments")}

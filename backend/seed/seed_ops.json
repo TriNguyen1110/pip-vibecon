@@ -6670,5 +6670,1087 @@
    "vibe": "cool",
    "accessory": "scarf"
   }
+ },
+ "details": {
+  "s001": {
+   "avatar": {
+    "initials": "MR",
+    "color": "#2a63f5"
+   },
+   "school": "Harbor View Middle School",
+   "birthday_month": "Mar",
+   "student_email": null
+  },
+  "s002": {
+   "avatar": {
+    "initials": "SN",
+    "color": "#4a5a00"
+   },
+   "school": "Bayside High School",
+   "birthday_month": "Oct",
+   "student_email": "sid.n002@example.com"
+  },
+  "s003": {
+   "avatar": {
+    "initials": "JF",
+    "color": "#0a6f94"
+   },
+   "school": "Cedar Park Middle School",
+   "birthday_month": "Nov",
+   "student_email": null
+  },
+  "s004": {
+   "avatar": {
+    "initials": "PC",
+    "color": "#4a5a00"
+   },
+   "school": "Cedar Park Middle School",
+   "birthday_month": "Dec",
+   "student_email": null
+  },
+  "s005": {
+   "avatar": {
+    "initials": "YK",
+    "color": "#7a3fb0"
+   },
+   "school": "Golden Ridge High School",
+   "birthday_month": "Mar",
+   "student_email": "yara.k005@example.com"
+  },
+  "s006": {
+   "avatar": {
+    "initials": "AR",
+    "color": "#2a63f5"
+   },
+   "school": "Lakeshore Prep",
+   "birthday_month": "Dec",
+   "student_email": "aisha.r006@example.com"
+  },
+  "s007": {
+   "avatar": {
+    "initials": "LT",
+    "color": "#1a7030"
+   },
+   "school": "Mission Bay Middle School",
+   "birthday_month": "Dec",
+   "student_email": null
+  },
+  "s008": {
+   "avatar": {
+    "initials": "UR",
+    "color": "#4a5a00"
+   },
+   "school": "Cedar Park Middle School",
+   "birthday_month": "Dec",
+   "student_email": null
+  },
+  "s009": {
+   "avatar": {
+    "initials": "DC",
+    "color": "#3d5a80"
+   },
+   "school": "Golden Ridge High School",
+   "birthday_month": "Jan",
+   "student_email": "dev.c009@example.com"
+  },
+  "s010": {
+   "avatar": {
+    "initials": "AY",
+    "color": "#3d5a80"
+   },
+   "school": "Cedar Park Middle School",
+   "birthday_month": "Feb",
+   "student_email": null
+  },
+  "s011": {
+   "avatar": {
+    "initials": "OC",
+    "color": "#3d5a80"
+   },
+   "school": "Mission Bay Middle School",
+   "birthday_month": "Nov",
+   "student_email": null
+  },
+  "s012": {
+   "avatar": {
+    "initials": "PB",
+    "color": "#b0306a"
+   },
+   "school": "Harbor View Middle School",
+   "birthday_month": "Mar",
+   "student_email": null
+  },
+  "s013": {
+   "avatar": {
+    "initials": "DC",
+    "color": "#1a7030"
+   },
+   "school": "Mission Bay Middle School",
+   "birthday_month": "Apr",
+   "student_email": null
+  },
+  "s014": {
+   "avatar": {
+    "initials": "TY",
+    "color": "#b0306a"
+   },
+   "school": "Bayside High School",
+   "birthday_month": "Nov",
+   "student_email": "theo.y014@example.com"
+  },
+  "s015": {
+   "avatar": {
+    "initials": "ZS",
+    "color": "#2a63f5"
+   },
+   "school": "Lakeshore Prep",
+   "birthday_month": "Feb",
+   "student_email": "zane.s015@example.com"
+  },
+  "s016": {
+   "avatar": {
+    "initials": "FV",
+    "color": "#1a7030"
+   },
+   "school": "Harbor View Middle School",
+   "birthday_month": "Jun",
+   "student_email": null
+  },
+  "s017": {
+   "avatar": {
+    "initials": "GG",
+    "color": "#b0306a"
+   },
+   "school": "Maple Grove Elementary",
+   "birthday_month": "Jul",
+   "student_email": null
+  },
+  "s018": {
+   "avatar": {
+    "initials": "XE",
+    "color": "#1a7030"
+   },
+   "school": "Harbor View Middle School",
+   "birthday_month": "Nov",
+   "student_email": null
+  },
+  "s019": {
+   "avatar": {
+    "initials": "PS",
+    "color": "#b0306a"
+   },
+   "school": "Cedar Park Middle School",
+   "birthday_month": "Jul",
+   "student_email": null
+  },
+  "s020": {
+   "avatar": {
+    "initials": "CT",
+    "color": "#1a7030"
+   },
+   "school": "Mission Bay Middle School",
+   "birthday_month": "Sep",
+   "student_email": null
+  },
+  "s021": {
+   "avatar": {
+    "initials": "GH",
+    "color": "#0a6f94"
+   },
+   "school": "Maple Grove Elementary",
+   "birthday_month": "Sep",
+   "student_email": null
+  },
+  "s022": {
+   "avatar": {
+    "initials": "NV",
+    "color": "#0a6f94"
+   },
+   "school": "Mission Bay Middle School",
+   "birthday_month": "Nov",
+   "student_email": null
+  },
+  "s023": {
+   "avatar": {
+    "initials": "RG",
+    "color": "#1a7030"
+   },
+   "school": "Golden Ridge High School",
+   "birthday_month": "Nov",
+   "student_email": "ravi.g023@example.com"
+  },
+  "s024": {
+   "avatar": {
+    "initials": "RC",
+    "color": "#1a7030"
+   },
+   "school": "Mission Bay Middle School",
+   "birthday_month": "Jul",
+   "student_email": null
+  },
+  "s025": {
+   "avatar": {
+    "initials": "AL",
+    "color": "#8f5200"
+   },
+   "school": "Cedar Park Middle School",
+   "birthday_month": "Nov",
+   "student_email": null
+  },
+  "s026": {
+   "avatar": {
+    "initials": "UW",
+    "color": "#3d5a80"
+   },
+   "school": "Bayside High School",
+   "birthday_month": "Nov",
+   "student_email": "uma.w026@example.com"
+  },
+  "s027": {
+   "avatar": {
+    "initials": "DH",
+    "color": "#2a63f5"
+   },
+   "school": "Cedar Park Middle School",
+   "birthday_month": "Sep",
+   "student_email": null
+  },
+  "s028": {
+   "avatar": {
+    "initials": "NR",
+    "color": "#1a7030"
+   },
+   "school": "Mission Bay Middle School",
+   "birthday_month": "Feb",
+   "student_email": null
+  },
+  "s029": {
+   "avatar": {
+    "initials": "XC",
+    "color": "#3d5a80"
+   },
+   "school": "Sunset Hill Elementary",
+   "birthday_month": "Dec",
+   "student_email": null
+  },
+  "s030": {
+   "avatar": {
+    "initials": "PP",
+    "color": "#0a6f94"
+   },
+   "school": "Lakeshore Prep",
+   "birthday_month": "Sep",
+   "student_email": "priya.p030@example.com"
+  },
+  "s031": {
+   "avatar": {
+    "initials": "GS",
+    "color": "#006d6f"
+   },
+   "school": "Cedar Park Middle School",
+   "birthday_month": "Aug",
+   "student_email": null
+  },
+  "s032": {
+   "avatar": {
+    "initials": "BN",
+    "color": "#8f5200"
+   },
+   "school": "Bayside High School",
+   "birthday_month": "May",
+   "student_email": "bodhi.n032@example.com"
+  },
+  "s033": {
+   "avatar": {
+    "initials": "LK",
+    "color": "#a8321f"
+   },
+   "school": "Cedar Park Middle School",
+   "birthday_month": "May",
+   "student_email": null
+  },
+  "s034": {
+   "avatar": {
+    "initials": "OL",
+    "color": "#7a3fb0"
+   },
+   "school": "Harbor View Middle School",
+   "birthday_month": "Feb",
+   "student_email": null
+  },
+  "s035": {
+   "avatar": {
+    "initials": "YW",
+    "color": "#006d6f"
+   },
+   "school": "Harbor View Middle School",
+   "birthday_month": "Jun",
+   "student_email": null
+  },
+  "s036": {
+   "avatar": {
+    "initials": "FJ",
+    "color": "#3d5a80"
+   },
+   "school": "Mission Bay Middle School",
+   "birthday_month": "Nov",
+   "student_email": null
+  },
+  "s037": {
+   "avatar": {
+    "initials": "RP",
+    "color": "#006d6f"
+   },
+   "school": "Mission Bay Middle School",
+   "birthday_month": "Jan",
+   "student_email": null
+  },
+  "s038": {
+   "avatar": {
+    "initials": "EK",
+    "color": "#0a6f94"
+   },
+   "school": "Harbor View Middle School",
+   "birthday_month": "Dec",
+   "student_email": null
+  },
+  "s039": {
+   "avatar": {
+    "initials": "AM",
+    "color": "#0a6f94"
+   },
+   "school": "Cedar Park Middle School",
+   "birthday_month": "Jan",
+   "student_email": null
+  },
+  "s040": {
+   "avatar": {
+    "initials": "RA",
+    "color": "#b0306a"
+   },
+   "school": "Harbor View Middle School",
+   "birthday_month": "Jun",
+   "student_email": null
+  },
+  "s041": {
+   "avatar": {
+    "initials": "RH",
+    "color": "#3d5a80"
+   },
+   "school": "Lakeshore Prep",
+   "birthday_month": "Mar",
+   "student_email": "ruby.h041@example.com"
+  },
+  "s042": {
+   "avatar": {
+    "initials": "FW",
+    "color": "#7a3fb0"
+   },
+   "school": "Cedar Park Middle School",
+   "birthday_month": "Jan",
+   "student_email": null
+  },
+  "s043": {
+   "avatar": {
+    "initials": "LF",
+    "color": "#8f5200"
+   },
+   "school": "Lakeshore Prep",
+   "birthday_month": "Jul",
+   "student_email": "luna.f043@example.com"
+  },
+  "s044": {
+   "avatar": {
+    "initials": "KC",
+    "color": "#1a7030"
+   },
+   "school": "Maple Grove Elementary",
+   "birthday_month": "Jun",
+   "student_email": null
+  },
+  "s045": {
+   "avatar": {
+    "initials": "GA",
+    "color": "#2a63f5"
+   },
+   "school": "Mission Bay Middle School",
+   "birthday_month": "Nov",
+   "student_email": null
+  },
+  "s046": {
+   "avatar": {
+    "initials": "NF",
+    "color": "#b0306a"
+   },
+   "school": "Cedar Park Middle School",
+   "birthday_month": "Aug",
+   "student_email": null
+  },
+  "s047": {
+   "avatar": {
+    "initials": "IF",
+    "color": "#4a5a00"
+   },
+   "school": "Sunset Hill Elementary",
+   "birthday_month": "Apr",
+   "student_email": null
+  },
+  "s048": {
+   "avatar": {
+    "initials": "WT",
+    "color": "#1a7030"
+   },
+   "school": "Bayside High School",
+   "birthday_month": "May",
+   "student_email": "wren.t048@example.com"
+  },
+  "s049": {
+   "avatar": {
+    "initials": "KT",
+    "color": "#006d6f"
+   },
+   "school": "Harbor View Middle School",
+   "birthday_month": "Mar",
+   "student_email": null
+  },
+  "s050": {
+   "avatar": {
+    "initials": "BN",
+    "color": "#0a6f94"
+   },
+   "school": "Harbor View Middle School",
+   "birthday_month": "Apr",
+   "student_email": null
+  },
+  "s051": {
+   "avatar": {
+    "initials": "NT",
+    "color": "#4a5a00"
+   },
+   "school": "Harbor View Middle School",
+   "birthday_month": "Aug",
+   "student_email": null
+  },
+  "s052": {
+   "avatar": {
+    "initials": "LR",
+    "color": "#7a3fb0"
+   },
+   "school": "Harbor View Middle School",
+   "birthday_month": "Nov",
+   "student_email": null
+  },
+  "s053": {
+   "avatar": {
+    "initials": "CH",
+    "color": "#006d6f"
+   },
+   "school": "Mission Bay Middle School",
+   "birthday_month": "Jul",
+   "student_email": null
+  },
+  "s054": {
+   "avatar": {
+    "initials": "TD",
+    "color": "#b0306a"
+   },
+   "school": "Harbor View Middle School",
+   "birthday_month": "Dec",
+   "student_email": null
+  },
+  "s055": {
+   "avatar": {
+    "initials": "BC",
+    "color": "#b0306a"
+   },
+   "school": "Mission Bay Middle School",
+   "birthday_month": "Sep",
+   "student_email": null
+  },
+  "s056": {
+   "avatar": {
+    "initials": "AY",
+    "color": "#1a7030"
+   },
+   "school": "Cedar Park Middle School",
+   "birthday_month": "Aug",
+   "student_email": null
+  },
+  "s057": {
+   "avatar": {
+    "initials": "JL",
+    "color": "#4a5a00"
+   },
+   "school": "Lakeshore Prep",
+   "birthday_month": "Nov",
+   "student_email": "jae.l057@example.com"
+  },
+  "s058": {
+   "avatar": {
+    "initials": "RE",
+    "color": "#7a3fb0"
+   },
+   "school": "Lakeshore Prep",
+   "birthday_month": "Mar",
+   "student_email": "rosa.e058@example.com"
+  },
+  "s059": {
+   "avatar": {
+    "initials": "GF",
+    "color": "#8f5200"
+   },
+   "school": "Harbor View Middle School",
+   "birthday_month": "Oct",
+   "student_email": null
+  },
+  "s060": {
+   "avatar": {
+    "initials": "TH",
+    "color": "#7a3fb0"
+   },
+   "school": "Fern Street Elementary",
+   "birthday_month": "Oct",
+   "student_email": null
+  },
+  "s061": {
+   "avatar": {
+    "initials": "FK",
+    "color": "#a8321f"
+   },
+   "school": "Cedar Park Middle School",
+   "birthday_month": "Nov",
+   "student_email": null
+  },
+  "s062": {
+   "avatar": {
+    "initials": "EL",
+    "color": "#4a5a00"
+   },
+   "school": "Mission Bay Middle School",
+   "birthday_month": "Jul",
+   "student_email": null
+  },
+  "s063": {
+   "avatar": {
+    "initials": "LS",
+    "color": "#4a5a00"
+   },
+   "school": "Mission Bay Middle School",
+   "birthday_month": "Dec",
+   "student_email": null
+  },
+  "s064": {
+   "avatar": {
+    "initials": "LH",
+    "color": "#3d5a80"
+   },
+   "school": "Mission Bay Middle School",
+   "birthday_month": "Nov",
+   "student_email": null
+  },
+  "s065": {
+   "avatar": {
+    "initials": "GH",
+    "color": "#0a6f94"
+   },
+   "school": "Harbor View Middle School",
+   "birthday_month": "Feb",
+   "student_email": null
+  },
+  "s066": {
+   "avatar": {
+    "initials": "XT",
+    "color": "#4a5a00"
+   },
+   "school": "Harbor View Middle School",
+   "birthday_month": "May",
+   "student_email": null
+  },
+  "s067": {
+   "avatar": {
+    "initials": "ZC",
+    "color": "#4a5a00"
+   },
+   "school": "Harbor View Middle School",
+   "birthday_month": "Apr",
+   "student_email": null
+  },
+  "s068": {
+   "avatar": {
+    "initials": "AR",
+    "color": "#006d6f"
+   },
+   "school": "Harbor View Middle School",
+   "birthday_month": "Aug",
+   "student_email": null
+  },
+  "s069": {
+   "avatar": {
+    "initials": "CW",
+    "color": "#4a5a00"
+   },
+   "school": "Cedar Park Middle School",
+   "birthday_month": "Oct",
+   "student_email": null
+  },
+  "s070": {
+   "avatar": {
+    "initials": "MD",
+    "color": "#a8321f"
+   },
+   "school": "Mission Bay Middle School",
+   "birthday_month": "Apr",
+   "student_email": null
+  },
+  "s071": {
+   "avatar": {
+    "initials": "WK",
+    "color": "#2a63f5"
+   },
+   "school": "Cedar Park Middle School",
+   "birthday_month": "Sep",
+   "student_email": null
+  },
+  "s072": {
+   "avatar": {
+    "initials": "JM",
+    "color": "#0a6f94"
+   },
+   "school": "Cedar Park Middle School",
+   "birthday_month": "Oct",
+   "student_email": null
+  },
+  "s073": {
+   "avatar": {
+    "initials": "HE",
+    "color": "#0a6f94"
+   },
+   "school": "Sunset Hill Elementary",
+   "birthday_month": "Jan",
+   "student_email": null
+  },
+  "s074": {
+   "avatar": {
+    "initials": "FJ",
+    "color": "#2a63f5"
+   },
+   "school": "Harbor View Middle School",
+   "birthday_month": "Dec",
+   "student_email": null
+  },
+  "s075": {
+   "avatar": {
+    "initials": "RJ",
+    "color": "#3d5a80"
+   },
+   "school": "Harbor View Middle School",
+   "birthday_month": "Mar",
+   "student_email": null
+  },
+  "s076": {
+   "avatar": {
+    "initials": "LF",
+    "color": "#3d5a80"
+   },
+   "school": "Mission Bay Middle School",
+   "birthday_month": "Oct",
+   "student_email": null
+  },
+  "s077": {
+   "avatar": {
+    "initials": "LC",
+    "color": "#3d5a80"
+   },
+   "school": "Cedar Park Middle School",
+   "birthday_month": "Mar",
+   "student_email": null
+  },
+  "s078": {
+   "avatar": {
+    "initials": "FA",
+    "color": "#8f5200"
+   },
+   "school": "Harbor View Middle School",
+   "birthday_month": "May",
+   "student_email": null
+  },
+  "s079": {
+   "avatar": {
+    "initials": "WS",
+    "color": "#7a3fb0"
+   },
+   "school": "Cedar Park Middle School",
+   "birthday_month": "Sep",
+   "student_email": null
+  },
+  "s080": {
+   "avatar": {
+    "initials": "HD",
+    "color": "#2a63f5"
+   },
+   "school": "Cedar Park Middle School",
+   "birthday_month": "Mar",
+   "student_email": null
+  },
+  "s081": {
+   "avatar": {
+    "initials": "DF",
+    "color": "#006d6f"
+   },
+   "school": "Harbor View Middle School",
+   "birthday_month": "Sep",
+   "student_email": null
+  },
+  "s082": {
+   "avatar": {
+    "initials": "JG",
+    "color": "#2a63f5"
+   },
+   "school": "Mission Bay Middle School",
+   "birthday_month": "Nov",
+   "student_email": null
+  },
+  "s083": {
+   "avatar": {
+    "initials": "KP",
+    "color": "#8f5200"
+   },
+   "school": "Harbor View Middle School",
+   "birthday_month": "Oct",
+   "student_email": null
+  },
+  "s084": {
+   "avatar": {
+    "initials": "CN",
+    "color": "#1a7030"
+   },
+   "school": "Mission Bay Middle School",
+   "birthday_month": "Aug",
+   "student_email": null
+  },
+  "s085": {
+   "avatar": {
+    "initials": "BV",
+    "color": "#4a5a00"
+   },
+   "school": "Harbor View Middle School",
+   "birthday_month": "Oct",
+   "student_email": null
+  },
+  "s086": {
+   "avatar": {
+    "initials": "NS",
+    "color": "#b0306a"
+   },
+   "school": "Golden Ridge High School",
+   "birthday_month": "May",
+   "student_email": "nora.s086@example.com"
+  },
+  "s087": {
+   "avatar": {
+    "initials": "NF",
+    "color": "#0a6f94"
+   },
+   "school": "Cedar Park Middle School",
+   "birthday_month": "Jan",
+   "student_email": null
+  },
+  "s088": {
+   "avatar": {
+    "initials": "FE",
+    "color": "#8f5200"
+   },
+   "school": "Harbor View Middle School",
+   "birthday_month": "Jun",
+   "student_email": null
+  },
+  "s089": {
+   "avatar": {
+    "initials": "ET",
+    "color": "#4a5a00"
+   },
+   "school": "Cedar Park Middle School",
+   "birthday_month": "Sep",
+   "student_email": null
+  },
+  "s090": {
+   "avatar": {
+    "initials": "WL",
+    "color": "#b0306a"
+   },
+   "school": "Cedar Park Middle School",
+   "birthday_month": "Nov",
+   "student_email": null
+  },
+  "s091": {
+   "avatar": {
+    "initials": "RA",
+    "color": "#b0306a"
+   },
+   "school": "Cedar Park Middle School",
+   "birthday_month": "Mar",
+   "student_email": null
+  },
+  "s092": {
+   "avatar": {
+    "initials": "LB",
+    "color": "#a8321f"
+   },
+   "school": "Mission Bay Middle School",
+   "birthday_month": "Apr",
+   "student_email": null
+  },
+  "s093": {
+   "avatar": {
+    "initials": "DJ",
+    "color": "#4a5a00"
+   },
+   "school": "Cedar Park Middle School",
+   "birthday_month": "Sep",
+   "student_email": null
+  },
+  "s094": {
+   "avatar": {
+    "initials": "ND",
+    "color": "#8f5200"
+   },
+   "school": "Mission Bay Middle School",
+   "birthday_month": "Dec",
+   "student_email": null
+  },
+  "s095": {
+   "avatar": {
+    "initials": "GY",
+    "color": "#0a6f94"
+   },
+   "school": "Mission Bay Middle School",
+   "birthday_month": "May",
+   "student_email": null
+  },
+  "s096": {
+   "avatar": {
+    "initials": "CH",
+    "color": "#2a63f5"
+   },
+   "school": "Cedar Park Middle School",
+   "birthday_month": "Feb",
+   "student_email": null
+  },
+  "s097": {
+   "avatar": {
+    "initials": "ME",
+    "color": "#3d5a80"
+   },
+   "school": "Harbor View Middle School",
+   "birthday_month": "Nov",
+   "student_email": null
+  },
+  "s098": {
+   "avatar": {
+    "initials": "TT",
+    "color": "#1a7030"
+   },
+   "school": "Sunset Hill Elementary",
+   "birthday_month": "Jul",
+   "student_email": null
+  },
+  "s099": {
+   "avatar": {
+    "initials": "KA",
+    "color": "#4a5a00"
+   },
+   "school": "Mission Bay Middle School",
+   "birthday_month": "Jun",
+   "student_email": null
+  },
+  "s100": {
+   "avatar": {
+    "initials": "TW",
+    "color": "#a8321f"
+   },
+   "school": "Lakeshore Prep",
+   "birthday_month": "Oct",
+   "student_email": "tara.w100@example.com"
+  },
+  "s101": {
+   "avatar": {
+    "initials": "OT",
+    "color": "#7a3fb0"
+   },
+   "school": "Sunset Hill Elementary",
+   "birthday_month": "May",
+   "student_email": null
+  },
+  "s102": {
+   "avatar": {
+    "initials": "FF",
+    "color": "#7a3fb0"
+   },
+   "school": "Cedar Park Middle School",
+   "birthday_month": "Mar",
+   "student_email": null
+  },
+  "s103": {
+   "avatar": {
+    "initials": "QE",
+    "color": "#7a3fb0"
+   },
+   "school": "Bayside High School",
+   "birthday_month": "Oct",
+   "student_email": "quinn.e103@example.com"
+  },
+  "s104": {
+   "avatar": {
+    "initials": "ZG",
+    "color": "#006d6f"
+   },
+   "school": "Golden Ridge High School",
+   "birthday_month": "Jun",
+   "student_email": "zoe.g104@example.com"
+  },
+  "s105": {
+   "avatar": {
+    "initials": "WP",
+    "color": "#b0306a"
+   },
+   "school": "Golden Ridge High School",
+   "birthday_month": "Feb",
+   "student_email": "wren.p105@example.com"
+  },
+  "s106": {
+   "avatar": {
+    "initials": "OY",
+    "color": "#2a63f5"
+   },
+   "school": "Harbor View Middle School",
+   "birthday_month": "Dec",
+   "student_email": null
+  },
+  "s107": {
+   "avatar": {
+    "initials": "DH",
+    "color": "#7a3fb0"
+   },
+   "school": "Harbor View Middle School",
+   "birthday_month": "May",
+   "student_email": null
+  },
+  "s108": {
+   "avatar": {
+    "initials": "AF",
+    "color": "#2a63f5"
+   },
+   "school": "Harbor View Middle School",
+   "birthday_month": "Nov",
+   "student_email": null
+  },
+  "s109": {
+   "avatar": {
+    "initials": "DD",
+    "color": "#8f5200"
+   },
+   "school": "Harbor View Middle School",
+   "birthday_month": "Jun",
+   "student_email": null
+  },
+  "s110": {
+   "avatar": {
+    "initials": "IY",
+    "color": "#0a6f94"
+   },
+   "school": "Mission Bay Middle School",
+   "birthday_month": "Jan",
+   "student_email": null
+  },
+  "s111": {
+   "avatar": {
+    "initials": "MT",
+    "color": "#3d5a80"
+   },
+   "school": "Mission Bay Middle School",
+   "birthday_month": "Apr",
+   "student_email": null
+  },
+  "s112": {
+   "avatar": {
+    "initials": "LM",
+    "color": "#b0306a"
+   },
+   "school": "Mission Bay Middle School",
+   "birthday_month": "Mar",
+   "student_email": null
+  },
+  "s113": {
+   "avatar": {
+    "initials": "RN",
+    "color": "#3d5a80"
+   },
+   "school": "Cedar Park Middle School",
+   "birthday_month": "Jun",
+   "student_email": null
+  },
+  "s114": {
+   "avatar": {
+    "initials": "OD",
+    "color": "#7a3fb0"
+   },
+   "school": "Bayside High School",
+   "birthday_month": "Oct",
+   "student_email": "omar.d114@example.com"
+  },
+  "s115": {
+   "avatar": {
+    "initials": "AE",
+    "color": "#1a7030"
+   },
+   "school": "Sunset Hill Elementary",
+   "birthday_month": "Aug",
+   "student_email": null
+  },
+  "s116": {
+   "avatar": {
+    "initials": "MB",
+    "color": "#a8321f"
+   },
+   "school": "Harbor View Middle School",
+   "birthday_month": "May",
+   "student_email": null
+  },
+  "s117": {
+   "avatar": {
+    "initials": "PF",
+    "color": "#2a63f5"
+   },
+   "school": "Cedar Park Middle School",
+   "birthday_month": "Jul",
+   "student_email": null
+  },
+  "s118": {
+   "avatar": {
+    "initials": "FN",
+    "color": "#2a63f5"
+   },
+   "school": "Harbor View Middle School",
+   "birthday_month": "Apr",
+   "student_email": null
+  },
+  "s119": {
+   "avatar": {
+    "initials": "IW",
+    "color": "#006d6f"
+   },
+   "school": "Mission Bay Middle School",
+   "birthday_month": "Jun",
+   "student_email": null
+  },
+  "s120": {
+   "avatar": {
+    "initials": "NM",
+    "color": "#7a3fb0"
+   },
+   "school": "Cedar Park Middle School",
+   "birthday_month": "Dec",
+   "student_email": null
+  }
  }
 }

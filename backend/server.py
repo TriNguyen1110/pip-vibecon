@@ -647,6 +647,7 @@ async def _quiz(sid: str, tasks: BackgroundTasks):
         tasks.add_task(center_ops.after_ko, s["id"])  # v3.15: opt-in auto note (grade <= 6 only)
     else:
         s.update(status="quizzed", mood="stuck")
+        tasks.add_task(center_ops.refresh_learning, s["student_id"], s["id"])  # v3.18: profile + map on completion
     await store.put("sessions", s)
     return s
 
