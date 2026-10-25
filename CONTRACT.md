@@ -380,3 +380,8 @@ Payment { id, guardian_id, student_id, enrollment_id, subject, hours, amount_usd
 - Owner overview adds `collected_7d_usd`, `renewals_paid_7d`; a paid renewal removes that package from `revenue_at_risk_usd`.
 - Tutor rows add `billing: "paid"|"due"|"overdue"`.
 - Test mode only; never a live key. Production path (not built): Stripe Connect, each center its own connected account, optional platform fee.
+
+### v3.19b (fees: ACH first, offline payments recorded)
+- Checkout offers **US bank debit (ACH, `us_bank_account`) first**, card second. Copy shows the fee difference honestly ("bank: lower fee").
+- `Payment.provider` += `"offline"` with `method: "zelle"|"cash"|"check"|"venmo"|"other"`; `POST /api/payments/offline {student_id, enrollment_id, hours, amount_usd, method, note?}` (staff only) records a payment received outside Pip: same effects as a paid checkout (hours added, receipt number, revenue at risk updates), no processing fee.
+- Pip doesn't need to hold the money: its job is the renewal moment (proof → renew) and the record.
