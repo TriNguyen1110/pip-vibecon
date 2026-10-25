@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Glints } from '../ui.jsx'
+import { weaponName } from '../../lib'
 
 // Boss panel (full) and HUD (compact, sticky on phones). Coral is for HP only.
 
@@ -65,7 +66,7 @@ export function BossHud({ boss, hp, equipped, fx, taunt }) {
           ) : (
             <>
               <span className="hud__name">{boss?.name ?? 'The Boss'}</span>
-              {equipped && <span className="hud__eq">⚔ {equipped}</span>}
+              {equipped && <span className="hud__eq"><WeaponGlyph /> {weaponName(equipped)}</span>}
             </>
           )}
         </div>
@@ -112,7 +113,7 @@ export function BossPanel({ boss, hp, weapons = [], equipped, onEquip, equipping
                 disabled={!onEquip || equipping}
                 aria-pressed={equipped === w}
               >
-                {w}
+                {weaponName(w)}
                 {equipped === w && <span className="weapon__eq">equipped</span>}
                 {fresh.includes(w) && <Glints />}
               </button>
@@ -159,12 +160,19 @@ export function HudBoss({ boss, hp, fx }) {
   )
 }
 
-// Tray labels stay whole words: the last word plus the emoji ("Cleaver 🪓"); the full name is the label.
+// Tray labels stay whole words: the last word ("Cleaver"); the full name is the label. No emoji.
 function shortWeapon(w = '') {
-  const m = /^(.*?)(\s*[\p{Extended_Pictographic}\u{FE0F}\u{200D}\s]+)?$/u.exec(w.trim())
-  const words = (m?.[1] ?? w).trim().split(/\s+/)
-  const emoji = (m?.[2] ?? '').trim()
-  return `${words.at(-1) ?? w}${emoji ? ` ${emoji}` : ''}`
+  const words = weaponName(w).split(/\s+/)
+  return words.at(-1) || weaponName(w)
+}
+
+// Small line glyph for the equipped weapon (an emoji or ⚔ falls back to an oval in some fonts).
+export function WeaponGlyph({ size = 12 }) {
+  return (
+    <svg className="weapon__glyph" width={size} height={size} viewBox="0 0 12 12" aria-hidden focusable="false">
+      <path d="M2 10 L9.5 2.5 M9.5 2.5 L10.5 1.5 M3.5 6.5 L5.5 8.5 M2 10 L1.5 10.5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  )
 }
 
 // Weapon gels for the bottom tray. Never used up; the equipped one is the sun "win" gel.
@@ -177,10 +185,10 @@ export function WeaponGels({ weapons = [], equipped, onEquip, equipping, fresh =
       onClick={() => onEquip?.(w)}
       disabled={!onEquip || equipping}
       aria-pressed={equipped === w}
-      title={equipped === w ? `${w} (equipped)` : `Equip ${w}`}
-      aria-label={equipped === w ? `${w}, equipped` : `Equip ${w}`}
+      title={equipped === w ? `${weaponName(w)} (equipped)` : `Equip ${weaponName(w)}`}
+      aria-label={equipped === w ? `${weaponName(w)}, equipped` : `Equip ${weaponName(w)}`}
     >
-      {equipped === w && <span aria-hidden>⚔</span>}
+      {equipped === w && <WeaponGlyph />}
       <span className="weapon__name">{shortWeapon(w)}</span>
       {fresh.includes(w) && <Glints />}
     </button>

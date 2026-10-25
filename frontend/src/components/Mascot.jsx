@@ -240,20 +240,31 @@ export function Stage2D({
   pose,
   frame,
   lighting,
+  state = 'idle',
+  onPoke,
+  reactZone,
+  bossSize,
 }) {
   const poke = usePoke(reaction)
   const name = CREATURES_2D.includes(creature) ? creature : 'capybara'
   const arena = env === 'arena' && (bossEmoji || bossName)
-  const size = Math.round(Math.max(64, Math.min(height * (framing === 'hero' ? 0.62 : 0.66), 320)))
+  // TOM-1: "tom" framing is the Talking Tom hero, Pip front and center at most of the stage height.
+  const tom = framing === 'tom'
+  const vw = typeof window !== 'undefined' ? window.innerWidth : 390
+  const size = tom
+    ? Math.round(Math.max(96, Math.min(height * (env === 'room' ? 0.86 : 0.76), vw * 1.12, 470)))
+    : Math.round(Math.max(64, Math.min(height * (framing === 'hero' ? 0.62 : 0.66), 320)))
+  // Poke zones stop the pointer event, so a stage-level tap handler still gets the zone taps.
+  const pokeFn = onPoke ?? (onTap ? (z) => onTap(z) : undefined)
   const reduced = typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
   return (
     <div
-      className={`stage stage2d stage2d--${env}${framing === 'hero' ? ' stage2d--hero' : ''} ${className}`}
+      className={`stage stage2d stage2d--${env}${framing === 'hero' || tom ? ' stage2d--hero' : ''}${tom ? ' stage2d--tom' : ''} ${className}`}
       style={{ height, '--pip-size': `${size}px` }}
       onPointerDown={onTap}
     >
       <span className="stage2d__floor" aria-hidden />
-      {arena && <Boss2DSlot emoji={bossEmoji} name={bossName} hp={bossHp ?? 100} size={Math.round(size * 0.55)} fx={bossFx} />}
+      {arena && <Boss2DSlot emoji={bossEmoji} name={bossName} hp={bossHp ?? 100} size={bossSize ?? Math.round(size * 0.55)} fx={bossFx} />}
       <span className="stage2d__shadow" aria-hidden />
       <span className={`stage2d__pip${poke ? ' is-poked' : ''}`}>
         <Pip2D
@@ -264,13 +275,16 @@ export function Stage2D({
           viseme={viseme}
           accessory={accessoryFor(accessory, vibe ?? 'cool')}
           form={form}
-          holo={framing === 'hero'}
+          holo={framing === 'hero' || tom}
           version={version}
           pose={pose}
           frame={frame}
           lighting={lighting}
           size={size}
           animate={animate && !reduced}
+          state={state}
+          onPoke={pokeFn}
+          reactZone={reactZone}
         />
       </span>
     </div>

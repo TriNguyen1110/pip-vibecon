@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { api, DEMO } from '../api'
 import { Dots, InlineError } from './ui.jsx'
 import { CIRCLED, lessonIndexFor } from '../lib'
@@ -17,6 +17,14 @@ export default function NewMission({ students, tutorId, onClose, onSaved }) {
   const [studentId, setStudentId] = useState(firstId)
   const student = students.find((s) => s.id === studentId)
   const [grade, setGrade] = useState(student?.grade ?? 6)
+  // The roster can arrive after the dialog opens: follow the default until the tutor picks someone.
+  const picked = useRef(false)
+  useEffect(() => {
+    if (picked.current || firstId === studentId) return
+    setStudentId(firstId)
+    const s = students.find((x) => x.id === firstId)
+    if (s?.grade) setGrade(s.grade)
+  }, [firstId, studentId, students])
   const [topic, setTopic] = useState(EXAMPLES[1])
   const [draft, setDraft] = useState(null)
   const [phase, setPhase] = useState('pick') // pick | drafting | edit | saving | saved
@@ -116,6 +124,7 @@ export default function NewMission({ students, tutorId, onClose, onSaved }) {
               value={studentId}
               disabled={busy}
               onChange={(e) => {
+                picked.current = true
                 setStudentId(e.target.value)
                 const s = students.find((x) => x.id === e.target.value)
                 if (s) setGrade(s.grade)

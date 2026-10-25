@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { api, studentHomePath } from '../api'
 import { readLocal, useLoad, useLongPress, writeLocal } from '../hooks'
@@ -23,8 +23,8 @@ import {
   useBoxHeight,
   usePager,
 } from '../components/game.jsx'
-import { CIRCLED, findQuoteSource, isCrit, isProcedureOnly, stepTitle } from '../lib'
-import { enqueueLine, prefetchTTS, sayLines, setVoiceContext, speak, stingLine, tapLine, voiceForVibe } from '../voice'
+import { findQuoteSource, isCrit, isProcedureOnly, stepTitle, weaponName } from '../lib'
+import { enqueueLine, pokeLine, prefetchTTS, sayLines, setVoiceContext, speak, stingLine, tapLine, usePipSpeaking, voiceForVibe } from '../voice'
 import { bossKindFor } from '../components/Mascot.jsx'
 
 // Boss taunts while the student types: the lesson's own boss lines (boss.lines.taunt) when it has them,
@@ -136,7 +136,10 @@ function MissionView({ initial }) {
   const [highlight, setHighlight] = useState(null)
 
   const endRef = useRef(null)
+  const feedRef = useRef(null)
+  const swipeY = useRef(null)
   const inputRef = useRef(null)
+  const [inputFocus, setInputFocus] = useState(false)
   const lastTaunt = useRef(0)
   const holdToQuiz = useLongPress(() => quizRef.current?.(), 800)
   const quizRef = useRef(null)
@@ -232,7 +235,7 @@ function MissionView({ initial }) {
         flash('fresh', setFreshWeapons, unlocked, 1600)
         // The feed already shows "Unlocked · X" for announced weapons; only silent ones get a toast.
         const silent = unlocked.filter((w) => !announced.includes(w))
-        if (silent.length) toast(`${silent.length > 1 ? 'Weapons' : 'Weapon'} unlocked: ${silent.join(', ')}`)
+        if (silent.length) toast(`${silent.length > 1 ? 'Weapons' : 'Weapon'} unlocked: ${silent.map(weaponName).join(', ')}`)
       }
       if (next.mood !== prev.mood) setReaction((r) => r + 1)
       if (evs.some((e) => e.kind === 'family_shared')) toast('Ms. Rivera shared this with your family.')
@@ -251,8 +254,12 @@ function MissionView({ initial }) {
     [flash, toast, bossVoice],
   )
 
+  // D-31: the feed itself scrolls to the newest line (endRef belongs to the full-chat sheet).
   const scrollEnd = useCallback(() => {
-    requestAnimationFrame(() => endRef.current?.scrollIntoView({ block: 'end', behavior: 'smooth' }))
+    requestAnimationFrame(() => {
+      const el = feedRef.current
+      if (el) el.scrollTop = el.scrollHeight
+    })
   }, [])
 
   // History opens at the newest message.
@@ -280,6 +287,43 @@ function MissionView({ initial }) {
   // show right away, and go out one turn at a time, in order, after the reply. Never parallel turns.
   const outbox = useRef([])
   const [queued, setQueued] = useState([])
+
+  // D-31: every new line (hers, Pip's, a queued one, the typing dots) lands in view.
+  const nLines = session.transcript?.length ?? 0
+  const hasText = !!input.trim()
+  useLayoutEffect(() => {
+    const el = feedRef.current
+    if (el) el.scrollTop = el.scrollHeight
+  }, [nLines, pending, sending, queued.length, tapSay, hasText])
+
+  // TOM-1 liveliness: Pip2D state from the chat. thinking while the turn runs, talking while its line
+  // plays (voice) or, muted/offline, for a beat sized to the line; listening while she types; react on a hit.
+  const pipSpeaking = usePipSpeaking()
+  const lastPipText = lastPip?.text ?? ''
+  const [talkBeat, setTalkBeat] = useState(false)
+  useEffect(() => {
+    const said = tapSay || lastPipText
+    if (!said) return
+    setTalkBeat(true)
+    const t = setTimeout(() => setTalkBeat(false), Math.min(4000, 700 + said.length * 35))
+    return () => clearTimeout(t)
+  }, [lastPipText, tapSay])
+  const [hitReact, setHitReact] = useState(false)
+  useEffect(() => {
+    if (fx?.kind !== 'hit') return
+    setHitReact(true)
+    const t = setTimeout(() => setHitReact(false), 800)
+    return () => clearTimeout(t)
+  }, [fx])
+  const pipState = sending
+    ? 'thinking'
+    : pipSpeaking || talkBeat
+      ? 'talking'
+      : hitReact
+        ? 'react'
+        : inputFocus || input.trim()
+          ? 'listening'
+          : 'idle'
 
   function send(textArg) {
     const text = (textArg ?? input).trim()
@@ -345,10 +389,11 @@ function MissionView({ initial }) {
     }
   }
 
-  function tapPip() {
+  // A poke on a Pip2D zone (head | belly | sprout) gets that zone's dry line; a tap elsewhere a general one.
+  function tapPip(zone) {
     setReaction((r) => r + 1)
     if (sending) return
-    const line = tapLine()
+    const line = typeof zone === 'string' ? pokeLine(zone) : tapLine()
     flash('tap', setTapSay, line, 3200)
     speak(line)
   }
@@ -436,7 +481,9 @@ function MissionView({ initial }) {
     }
     setHistoryOpen(true)
     setTimeout(() => {
-      document.getElementById(`msg-${i}`)?.scrollIntoView({ block: 'center', behavior: 'smooth' })
+      // The overlay and the sheet both render the chat; jump inside the sheet.
+      const el = document.querySelector(`.notebook [id="msg-${i}"]`) ?? document.getElementById(`msg-${i}`)
+      el?.scrollIntoView({ block: 'center', behavior: 'smooth' })
       flash('hl', setHighlight, i, 2200)
     }, 120)
   }
@@ -502,8 +549,9 @@ function MissionView({ initial }) {
       label={quizzedView ? 'What you taught Pip' : 'Notebook'}
       className="notebook"
     >
-      <div className="chat-scroll">
+      <div className="chat-scroll feed feed--sheet">
         <Chat
+          feed
           transcript={session.transcript}
           creature={session.creature}
           mood={session.mood}
@@ -511,6 +559,18 @@ function MissionView({ initial }) {
           highlight={highlight}
           endRef={endRef}
           onShare={shareWithFamily}
+          beliefs={beliefsFor(session, assignment)}
+          pipName={pipName}
+          face={
+            <Pip2D
+              creature={session.creature ?? 'capybara'}
+              vibe={session.vibe ?? 'cool'}
+              accessory={accessoryFor(accessory, session.vibe ?? 'cool')}
+              mood="deadpan"
+              size={30}
+              animate={false}
+            />
+          }
         />
       </div>
     </Drawer>
@@ -557,10 +617,30 @@ function MissionView({ initial }) {
     .toUpperCase()
   const missionNo = String((assignmentIndex(assignment) ?? 0) + 1).padStart(2, '0')
   const beliefs = beliefsFor(session, assignment)
+  // Swipe up on the grip (or tap it) opens the full feed as a sheet.
+  const swipeUp = {
+    onPointerDown: (e) => {
+      swipeY.current = e.clientY
+    },
+    onPointerUp: (e) => {
+      if (swipeY.current != null && swipeY.current - e.clientY > 24) setHistoryOpen(true)
+      swipeY.current = null
+    },
+  }
+  const face = (
+    <Pip2D
+      creature={session.creature ?? 'capybara'}
+      vibe={session.vibe ?? 'cool'}
+      accessory={accessoryFor(accessory, session.vibe ?? 'cool')}
+      mood="deadpan"
+      size={30}
+      animate={false}
+    />
+  )
 
   return (
     <Shell game bar={false} footer={false}>
-      <div className={`game play-screen game--mission game--feed${wide ? ' is-wide' : ''}`}>
+      <div className={`game play-screen game--mission game--feed game--tom${wide ? ' is-wide' : ''}`}>
         <header className="mhead">
           <Link to={home} className="gel-btn gel-btn--secondary icon-btn" aria-label="Pip’s room" title="Pip’s room">
             <span aria-hidden>‹</span>
@@ -596,62 +676,73 @@ function MissionView({ initial }) {
 
         {session.reteach_concept && (
           <div className="reteach-banner sticker sticker--progress">
-            <span className="eyebrow">Re-teaching {CIRCLED[reteachIdx] ?? ''}</span>
-            <span className="reteach-banner__text">{stepTitle(assignment, reteachIdx)}. Fix Pip’s rule.</span>
+            <span className="eyebrow reteach-banner__tag">
+              Re-teaching{reteachIdx >= 0 ? ` · Step ${reteachIdx + 1}` : ''}
+            </span>
+            <span className="reteach-banner__text">
+              {reteachIdx >= 0 ? `${stepTitle(assignment, reteachIdx)}. ` : ''}Fix {pipName}’s rule.
+            </span>
           </div>
         )}
 
-        <Stage
-          strip
-          session={session}
-          boss={boss}
-          accessory={accessory}
-          reaction={reaction}
-          onTap={tapPip}
-          fcap={fcap}
-          taunt={taunt}
-          sending={sending}
-          fx={fx}
-          onGiveUp={() => abortRef.current?.abort()}
-          tapSay={tapSay}
-        />
-
-        <div className="feed chat-scroll speech">
-          <Chat
-            feed
-            transcript={session.transcript}
-            creature={session.creature}
-            mood={session.mood}
-            bossName={boss.name}
-            pending={pending}
-            onRetry={() => send(pending?.text)}
+        <div className="tom-stage">
+          <Stage
+            strip
+            tom
+            pipState={pipState}
+            session={session}
+            boss={boss}
+            accessory={accessory}
+            reaction={reaction}
+            onTap={tapPip}
+            fcap={fcap}
+            taunt={taunt}
+            sending={sending}
+            fx={fx}
             onGiveUp={() => abortRef.current?.abort()}
-            typing={typing}
-            thinking={sending}
-            highlight={highlight}
-            endRef={endRef}
-            onShare={shareWithFamily}
-            beliefs={beliefs}
-            pipName={pipName}
-            face={
-              <Pip2D
-                creature={session.creature ?? 'capybara'}
-                vibe={session.vibe ?? 'cool'}
-                accessory={accessoryFor(accessory, session.vibe ?? 'cool')}
-                mood="deadpan"
-                size={30}
-                animate={false}
-              />
-            }
+            tapSay={tapSay}
           />
-          {queued.map((t, k) => (
-            <div key={`q${k}`} className="msg msg--me is-pending">
-              <div className="msg__body">
-                <p className="msg__bubble">{t}</p>
-                <p className="msg__sending mono">waiting</p>
-              </div>
+
+          {/* TOM-1: the chat is a bottom overlay with the latest lines; tap or swipe up the grip for the full feed. */}
+          <div className="tom-chat">
+            <button
+              type="button"
+              className="tom-chat__grip"
+              aria-label="Open the full chat"
+              aria-expanded={historyOpen}
+              onClick={() => setHistoryOpen(true)}
+              {...swipeUp}
+            >
+              <span aria-hidden />
+            </button>
+            <div className="feed chat-scroll speech" ref={feedRef}>
+              <Chat
+                feed
+                transcript={session.transcript}
+                creature={session.creature}
+                mood={session.mood}
+                bossName={boss.name}
+                pending={pending}
+                onRetry={() => send(pending?.text)}
+                onGiveUp={() => abortRef.current?.abort()}
+                typing={typing}
+                thinking={sending}
+                highlight={highlight}
+                onShare={shareWithFamily}
+                beliefs={beliefs}
+                pipName={pipName}
+                face={face}
+              />
+              {queued.map((t, k) => (
+                <div key={`q${k}`} className="msg msg--me is-pending">
+                  <div className="msg__body">
+                    <p className="msg__bubble">{t}</p>
+                    <p className="msg__sending mono">waiting</p>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
 
         <div className="tools tray">
@@ -735,6 +826,8 @@ function MissionView({ initial }) {
               value={input}
               placeholder={placeholder}
               onChange={(e) => onType(e.target.value)}
+              onFocus={() => setInputFocus(true)}
+              onBlur={() => setInputFocus(false)}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) {
                   e.preventDefault()
@@ -816,6 +909,8 @@ function Stage({
   onGiveUp,
   fx,
   strip,
+  tom,
+  pipState = 'idle',
   tapSay,
 }) {
   const [box, h] = useBoxHeight(strip ? 80 : 140)
@@ -847,7 +942,7 @@ function Stage({
             ? { k: 'slow', cls: 'fcap', text: 'Still thinking. Long thought.' }
             : null
     return (
-      <div className="arena-strip game-stage--scene">
+      <div className={`arena-strip game-stage--scene${tom ? ' tom-scene' : ''}`} data-pip-state={pipState}>
         <Scene2D scene={sceneFor({ assignmentId: session.assignment_id })} theme={theme} className="mission-scene" variant="lite" />
         <div className="arena" ref={box}>
           {h > 0 && (
@@ -858,7 +953,9 @@ function Stage({
               vibe={session.vibe ?? 'cool'}
               mood={pipMood(session, sending)}
               env="arena"
-              framing="hero"
+              framing={tom ? 'tom' : 'hero'}
+              state={pipState}
+              bossSize={tom ? Math.round(Math.min(96, Math.max(64, h * 0.16))) : undefined}
               bossEmoji={boss.emoji}
               bossName={boss.name}
               bossHp={session.boss_hp ?? 100}

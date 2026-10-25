@@ -182,9 +182,12 @@ export function Shell({ who, initials, right, game, children, footer = true, bar
   const [stTheme] = useStudentTheme()
   // AGE-2: the soft palette only when the student picked Soft Pop or Kawaii Gel in the vibe grid.
   const soft = /soft_pop|kawaii_gel/.test(stTheme?.id ?? '')
+  // Every student register renders the AGE-2 dark ground unless the soft palette is on, so the attribute
+  // reports what the screen shows (V4: it used to say "day" over a dark screen).
+  const shown = soft ? 'day' : 'night'
   useEffect(() => {
-    setMetaColor(!!game, theme)
-  }, [game, theme, skin])
+    setMetaColor(!!game, game ? shown : theme)
+  }, [game, theme, skin, shown])
   return (
     <div
       className={`shell${bar ? '' : ' shell--bare'}`}
@@ -192,7 +195,7 @@ export function Shell({ who, initials, right, game, children, footer = true, bar
       data-student-theme={game && stTheme ? stTheme.id : undefined}
       data-soft={game && soft ? '' : undefined}
       style={game && stTheme && !soft ? themeVars(stTheme) : undefined}
-      data-theme={game ? theme : undefined}
+      data-theme={game ? shown : undefined}
       data-skin={game ? skin : undefined}
     >
       <Backdrop game={game} />

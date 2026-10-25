@@ -562,7 +562,11 @@
 .range {
   width: 100%;
   accent-color: var(--ice);
-  height: 32px;
+  /* D-26: a 44px touch target at 390 */
+  height: 44px;
+  min-height: 44px;
+  margin: 0;
+  cursor: pointer;
 }
 
 .success {

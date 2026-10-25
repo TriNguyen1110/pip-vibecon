@@ -7,7 +7,8 @@ import { DEFAULT_CREATURE, bossKindFor, lookForCreature } from '../components/Ma
 import Boss2D from '../pip2d/Boss2D.jsx'
 import { noteGrade, setStudentTheme } from '../theme'
 import { Drawer, MuteButton, TalkingMascot, useBoxHeight } from '../components/game.jsx'
-import { setVoiceContext, speak, tapLine, voiceForVibe } from '../voice'
+import { pokeLine, setVoiceContext, speak, tapLine, usePipSpeaking, voiceForVibe } from '../voice'
+import { Scene2D, sceneFor } from '../scenes'
 import MascotPicker from '../components/MascotPicker.jsx'
 import StyleGrid from '../components/StyleGrid.jsx'
 import FamilyView from '../components/FamilyView.jsx'
@@ -36,8 +37,6 @@ function dropLine(a, pipName) {
   const rule = claim ? claim.charAt(0).toLowerCase() + claim.slice(1) : 'something wrong'
   return `${pipName} thinks ${rule}. ${a?.boss?.name ?? 'The boss'} is living in that rule.`
 }
-const thumbFor = (a) =>
-  /tri/.test(a?.id ?? '') ? '△' : /frac/.test(a?.id ?? '') ? '½' : /comma/.test(a?.id ?? '') ? ',' : /linear/.test(a?.id ?? '') ? 'x' : '·'
 
 // Demo: switch the student (no <select> on Play screens; a sheet of gels instead).
 function StudentSwitch({ sid, onSwitch, onClose }) {
@@ -74,6 +73,9 @@ function StudentHomeView({ sid, onSwitch, recordOpen }) {
   const [err, setErr] = useState(null)
   const [react, setReact] = useState(0)
   const [say, setSay] = useState(null)
+  // TOM-1: Pip talks while its line plays (or shows, muted/offline); idle otherwise (pokes react inside Pip2D).
+  const pipSpeaking = usePipSpeaking()
+  const homeState = pipSpeaking || say ? 'talking' : 'idle'
   const [sheet, setSheet] = useState(null) // vault | missions | switch | style
   const [afterStyle, setAfterStyle] = useState(null) // the mission to open once the vibe grid is done
   const greeted = useRef(false)
@@ -170,14 +172,14 @@ function StudentHomeView({ sid, onSwitch, recordOpen }) {
   }
 
   // First tap on Pip: the greeting, out loud. After that: a short deadpan line.
-  function tapPip() {
+  function tapPip(zone) {
     setReact((r) => r + 1)
     if (!greeted.current) {
       greeted.current = true
       speak(`Hi ${first}. ${greeting}`)
       return
     }
-    const line = tapLine()
+    const line = typeof zone === 'string' ? pokeLine(zone) : tapLine()
     clearTimeout(sayTimer.current)
     setSay(line)
     sayTimer.current = setTimeout(() => setSay(null), 3200)
@@ -257,17 +259,10 @@ function StudentHomeView({ sid, onSwitch, recordOpen }) {
         ) : data.error && !data.data ? (
           <ErrorState error={data.error} onRetry={data.reload} title="Pip lost the thread." />
         ) : current ? (
-          <article className={`mission-tile home-current drop${current.active ? ' is-active' : ''}`}>
-            <div className="drop__art scanbox">
-              <div className="drop__labels">
-                <span className="mono-label">● {current.active ? 'In progress' : current.done ? 'Done' : 'Today’s drop'}</span>
-                <span className="mono-label">
-                  Mission {String(missions.indexOf(current) + 1).padStart(2, '0')}/{String(missions.length).padStart(2, '0')}
-                </span>
-              </div>
-              <span className="drop__boss" aria-hidden>
-                <Boss2D boss={bossKindFor(current.a.boss?.name, current.a.boss?.emoji)} state="smug" size={78} />
-              </span>
+          <>
+            {/* TOM-1: Pip front and center in today's scene (a Talking Tom home); poke it for a dry line. */}
+            <div className="home-stage home-tom" data-pip-state={homeState}>
+              <Scene2D scene={sceneFor({ assignmentId: current.a.id })} theme="night" className="home-tom__scene" variant="lite" />
               <div className="home-stage__room" ref={stageBox}>
                 {stageH > 0 && (
                   <TalkingMascot
@@ -278,7 +273,8 @@ function StudentHomeView({ sid, onSwitch, recordOpen }) {
                     version={brainV}
                     mood={latest?.mood === 'celebrating' ? 'celebrating' : 'deadpan'}
                     env="room"
-                    framing="hero"
+                    framing="tom"
+                    state={homeState}
                     reaction={react}
                     height={stageH}
                     onTap={tapPip}
@@ -291,21 +287,18 @@ function StudentHomeView({ sid, onSwitch, recordOpen }) {
                 </p>
               )}
             </div>
-            <div className="drop__body">
-              <h3 className="drop__title display-x chrome-type home-current__topic">{current.a.topic}</h3>
-              <p className="drop__desc">{dropLine(current.a, pipName)}</p>
-              <div className="drop__meta">
-                <div>
-                  <span className="mono-label">Time</span>
-                  <b>~6 min</b>
-                </div>
-                <div>
-                  <span className="mono-label">Ideas</span>
-                  <b>{current.a.concepts?.length ?? 3}</b>
-                </div>
-                <div>
-                  <span className="mono-label">Brain</span>
-                  <b>v{brainV}</b>
+            <article className={`mission-tile home-current drop drop--compact${current.active ? ' is-active' : ''}`}>
+              <div className="drop__row">
+                <span className="drop__thumb scanbox" aria-hidden>
+                  <Boss2D boss={bossKindFor(current.a.boss?.name, current.a.boss?.emoji)} state="smug" size={48} />
+                </span>
+                <div className="drop__body">
+                  <span className="mono-label drop__label">
+                    ● {current.active ? 'In progress' : current.done ? 'Done' : 'Today’s drop'} · Mission{' '}
+                    {String(missions.indexOf(current) + 1).padStart(2, '0')}/{String(missions.length).padStart(2, '0')} · ~6 min
+                  </span>
+                  <h3 className="drop__title display-x chrome-type home-current__topic">{current.a.topic}</h3>
+                  <p className="drop__desc">{dropLine(current.a, pipName)}</p>
                 </div>
               </div>
               {current.active ? (
@@ -321,66 +314,11 @@ function StudentHomeView({ sid, onSwitch, recordOpen }) {
                   Teach {pipName}
                 </button>
               )}
-            </div>
-          </article>
+            </article>
+          </>
         ) : (
           <p className="drop__desc">No missions yet. Your tutor will send one.</p>
         )}
-
-        <section className="rows" aria-label="Continue">
-          <div className="rows__head">
-            <span className="mono-label">Continue</span>
-            <button type="button" className="mono-label linklike" onClick={() => setSheet('missions')}>
-              See all
-            </button>
-          </div>
-          {missions.filter((m) => m !== current).length === 0 && (
-            <>
-              {saved.slice(0, 1).map((sv) => (
-                <Link key={sv.id} to={`/student/mission/${sv.id}`} className="row2">
-                  <span className="row2__thumb scanbox" aria-hidden>
-                    {thumbFor(assignments.find((a) => a.id === sv.assignment_id))}
-                  </span>
-                  <span>
-                    <span className="row2__t">{assignments.find((a) => a.id === sv.assignment_id)?.topic ?? 'Pip session'}</span>
-                    <span className="row2__s mono-label">{sv.label ?? 'Saved session'}</span>
-                  </span>
-                  <span className="lcd">Saved</span>
-                </Link>
-              ))}
-              <div className="row2 row2--locked" aria-label="Next mission, after this one">
-                <span className="row2__thumb scanbox" aria-hidden>
-                  ?
-                </span>
-                <span>
-                  <span className="row2__t">Next drop</span>
-                  <span className="row2__s mono-label">Locked · after this mission</span>
-                </span>
-                <span className="mono-label">—</span>
-              </div>
-            </>
-          )}
-          {missions
-            .filter((m) => m !== current)
-            .slice(0, 2)
-            .map(({ a, active, done }) => (
-              <button
-                key={a.id}
-                type="button"
-                className="row2"
-                onClick={() => (active ? navigate(`/student/mission/${active.id}`) : done ? navigate(`/student/mission/${done.id}`) : openMission(a))}
-              >
-                <span className="row2__thumb scanbox" aria-hidden>
-                  {thumbFor(a)}
-                </span>
-                <span>
-                  <span className="row2__t">{a.topic}</span>
-                  <span className="row2__s mono-label">{done ? `Fixed · ${done.reteach_count ?? 0} re-teach` : active ? 'In progress' : 'New'}</span>
-                </span>
-                {done ? <span className="lcd">K.O.</span> : <span className="mono-label">›</span>}
-              </button>
-            ))}
-        </section>
 
         <nav className="tabs" aria-label="Pip">
           <button type="button" className="tab on" aria-current="page">

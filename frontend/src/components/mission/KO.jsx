@@ -6,7 +6,7 @@ import { MuteButton, PagerControls, TalkingMascot, useBoxHeight, usePager } from
 import { enqueueLine, sayLines, speak, stingLine } from '../../voice'
 import { accessoryFor, bossKindFor } from '../Mascot.jsx'
 import { InlineError } from '../ui.jsx'
-import { CIRCLED } from '../../lib'
+import { CIRCLED, weaponName } from '../../lib'
 import { usePipName } from '../../identity'
 
 const PLAIN = {
@@ -17,8 +17,8 @@ const PLAIN = {
 
 // Contract v2: finisher is {weapon, caption}; tolerate a bare string too.
 function finisherCaption(f, bossName) {
-  if (f && typeof f === 'object') return f.caption || `${f.weapon}. ${bossName} has left Pip’s brain.`
-  return `${f}. ${bossName} has left Pip’s brain.`
+  if (f && typeof f === 'object') return weaponName(f.caption || `${f.weapon}. ${bossName} has left Pip’s brain.`)
+  return `${weaponName(f)}. ${bossName} has left Pip’s brain.`
 }
 
 // The struck-through equation on the K.O. card: the last "lhs = rhs" in the misconception.
@@ -162,7 +162,7 @@ function KoCard({ session, assignment, nickname, pipLine }) {
               <span>
                 <span className="mono-label">Finishing move</span>
                 <br />
-                {typeof session.finisher === 'object' ? session.finisher.weapon : session.finisher}
+                {weaponName(typeof session.finisher === 'object' ? session.finisher.weapon : session.finisher)}
               </span>
               <span className="lcd kocard__lcd--plain">Used</span>
             </span>
@@ -406,7 +406,7 @@ export default function KO({
             <div className="ko__weapons">
               {weapons.map((w) => (
                 <button key={w} className="weapon gel-btn gel-btn--win" disabled={!!finishing} onClick={() => pick(w)}>
-                  {w}
+                  {weaponName(w)}
                 </button>
               ))}
             </div>

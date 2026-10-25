@@ -90,7 +90,8 @@ if (supported()) {
 }
 
 function emitState() {
-  stateSubs.forEach((f) => f({ muted, speaking }))
+  const speaker = speaking ? current?.speaker ?? 'pip' : null
+  stateSubs.forEach((f) => f({ muted, speaking, speaker }))
 }
 
 function setMouth(v) {
@@ -500,6 +501,19 @@ export function useVoice() {
   return { ...s, supported: true, toggle: () => setMuted(!muted) }
 }
 
+// True while a Pip line (not the boss or the announcer) is playing. Drives Pip2D state="talking".
+export function usePipSpeaking() {
+  const [on, setOn] = useState(speaking && (current?.speaker ?? 'pip') === 'pip')
+  useEffect(() => {
+    const f = (st) => setOn(!!st.speaking && st.speaker === 'pip')
+    stateSubs.add(f)
+    return () => {
+      stateSubs.delete(f)
+    }
+  }, [])
+  return on
+}
+
 // Current mouth openness; only the component that calls this re-renders.
 export function useMouth() {
   const [m, setM] = useState(mouth)
@@ -540,4 +554,20 @@ export function tapLine() {
   if (i === lastTap) i = (i + 1) % TAP_LINES.length
   lastTap = i
   return TAP_LINES[i]
+}
+
+// TOM-1: a dry line per poke zone (Pip2D onPoke). Falls back to the general tap lines.
+const POKE_LINES = {
+  head: ['Hey.', 'That’s where the rules live.', 'Careful. Thinking in there.', 'Hey. I felt that.'],
+  belly: ['Squish. Noted.', 'That’s not a button.', 'Rude, but fine.'],
+  sprout: ['Boing. Please don’t.', 'The sprout is load-bearing.', 'Leave the sprout alone.'],
+}
+const lastPoke = {}
+export function pokeLine(zone) {
+  const list = POKE_LINES[zone]
+  if (!list) return tapLine()
+  let i = Math.floor(Math.random() * list.length)
+  if (i === lastPoke[zone]) i = (i + 1) % list.length
+  lastPoke[zone] = i
+  return list[i]
 }

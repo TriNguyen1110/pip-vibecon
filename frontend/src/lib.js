@@ -71,3 +71,10 @@ export function stepTitle(assignment, i) {
   const n = stepName(assignment, i)
   return n ? `Step ${i + 1}: ${n}` : `Step ${i + 1}`
 }
+
+// Weapon names arrive with an emoji ("Copy-and-Flip Mirror 🪞"); fallback fonts draw those as ovals,
+// so the student UI shows the words only.
+const PICTO = /\p{Extended_Pictographic}|\u{FE0F}|\u{200D}|\u{20E3}|\p{Emoji_Modifier}/gu
+export function weaponName(w = '') {
+  return String(w ?? '').replace(PICTO, '').replace(/\s{2,}/g, ' ').trim()
+}

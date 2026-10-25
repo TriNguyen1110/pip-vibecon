@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { CREATURE_EMOJI, MOOD_FACE } from '../Mascot.jsx'
 import { Dots } from '../ui.jsx'
-import { isCrit, isProcedureOnly } from '../../lib'
+import { isCrit, isProcedureOnly, weaponName } from '../../lib'
 
 // AGE-2 feed: one mono line per event, "−25 HP · Duke took a hit" (the boss's full line shows in the arena).
 const shortName = (n = '') => n.split(/\s+/)[0] || 'The boss'
@@ -42,7 +42,7 @@ function FeedEventLines({ ev, bossName }) {
     out.push(
       <p key={`u-${w}`} className="caption caption--unlock">
         <span className="caption__text">
-          Unlocked · <b>{w}</b>
+          Unlocked · <b>{weaponName(w)}</b>
         </span>
       </p>,
     )
@@ -96,7 +96,7 @@ function EventLines({ ev, bossName }) {
   for (const w of ev.unlocked ?? []) {
     out.push(
       <p key={`u-${w}`} className="caption caption--unlock">
-        <span aria-hidden>🔓</span> Unlocked: <b>{w}</b>
+        Unlocked: <b>{weaponName(w)}</b>
       </p>,
     )
   }
