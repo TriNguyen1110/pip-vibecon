@@ -1,0 +1,245 @@
+{
+  "standard": "CCSS HSG-SRT.C.6: Understand that by similarity, side ratios in right triangles are properties of the angles in the triangle, leading to definitions of trigonometric ratios for acute angles.",
+  "source": "Original content written for Pip (no third-party text copied); aligned to CCSS HSG-SRT.C.6.",
+  "attribution": "Pip team, original. The Common Core State Standards are cited for alignment only (c) NGA Center / CCSSO.",
+  "in_scope": [
+    "sine as opposite over hypotenuse (given: Pip knows the definition)",
+    "triangles with the same angles being scaled copies",
+    "opposite and hypotenuse scaling together so their ratio stays the same",
+    "using sin 30° = 0.5 to find a side",
+    "ramps, zoomed photos and shadows as pictures of scaling"
+  ],
+  "out_of_scope": [
+    "cosine and tangent as their own mission",
+    "the unit circle",
+    "inverse trig functions (arcsin)",
+    "law of sines and law of cosines",
+    "radians",
+    "exact values for angles other than 30, 45 and 60 degrees"
+  ],
+  "arc": [
+    "k1",
+    "k2",
+    "k3"
+  ],
+  "concepts": [
+    {
+      "concept_id": "k1",
+      "kind": "reason",
+      "explain_level": "why",
+      "look_fors": [
+        "Says triangles with the same angles are the same shape, just zoomed in or out (one sentence is enough)",
+        "Says the angles do not change when the triangle is scaled",
+        "May use a photo, a mini ramp and a big ramp, or a scaled copy as the picture"
+      ],
+      "probe_ladder": [
+        "why is that wrong? when i make my 30° triangle bigger its sine gets bigger, i checked.",
+        "if i zoom my 30° triangle to twice the size, do the angles change?",
+        "is the big triangle a different shape from the small one, or something else?",
+        "then a 30° triangle the size of a house has a house-sized sine. that's what my rule says."
+      ],
+      "concrete": [
+        "what if i zoom a photo of my triangle to twice the size, what happens to its angles?"
+      ],
+      "connections": [
+        "so it's like zooming a photo, the picture gets bigger but nothing inside it bends?",
+        "so it's like a mini ramp and a huge ramp that tilt the exact same way?"
+      ],
+      "spoilers": [
+        "same shape",
+        "similar triangles",
+        "similar",
+        "scaled copy",
+        "zoomed copy"
+      ],
+      "friend_nudge": "My cousin said a mini ramp and a huge ramp can tilt the exact same amount…? I don't know what that has to do with sine.",
+      "aha": "ohh so the big one is just my small one blown up.",
+      "idea_patterns": [
+        "same (angles?|shape|triangle)",
+        "\\b(similar|zoom(ed|ing)?|scal(e|ed|es|ing)|blown up|enlarg\\w+|bigger version|smaller version|copy)\\b",
+        "angles? (stay|stays|don'?t change|doesn'?t change|are the same|is the same|equal)",
+        "\\b(mini|tiny|huge|big|small|long|short)\\b.{0,12}\\b(ramp|triangle)\\b.{0,40}\\b(same|angle|tilt|slope)"
+      ]
+    },
+    {
+      "concept_id": "k2",
+      "kind": "reason",
+      "explain_level": "why",
+      "look_fors": [
+        "Says the opposite side and the hypotenuse both get multiplied by the same amount when the triangle is scaled",
+        "So the ratio opposite ÷ hypotenuse stays the same",
+        "May show it with numbers: 3/6 and 6/12 are both 0.5"
+      ],
+      "probe_ladder": [
+        "what happens to the opposite side and the hypotenuse when i double the triangle?",
+        "if my small one has opposite 3 and hypotenuse 6, what are they in the doubled one?",
+        "what is opposite divided by hypotenuse in the small one, and in the doubled one?",
+        "then a bigger triangle has a bigger sine, because the numbers got bigger. that's what my rule says."
+      ],
+      "concrete": [
+        "what if i double both numbers, 3 and 6, what do i get for 3 divided by 6, and for 6 divided by 12?"
+      ],
+      "connections": [
+        "so it's like a pizza and a bigger pizza cut the same way, same fraction per slice?",
+        "so it's like a pole and its shadow both getting longer together?"
+      ],
+      "spoilers": [
+        "stays the same",
+        "does not change",
+        "doesn't change",
+        "ratio stays",
+        "both double",
+        "0.5 in both"
+      ],
+      "friend_nudge": "My neighbor said if you double a whole recipe, how it tastes stays put…? I'm not sure what she meant.",
+      "aha": "ok so both sides grow together and the ratio just sits there.",
+      "idea_patterns": [
+        "(ratio|fraction|divided by|over)\\b.{0,40}\\b(same|stays|doesn'?t change|constant|equal)",
+        "\\b(both|each|all|every)\\b.{0,25}\\b(double|doubles|doubled|scale|scales|grow|grows|multiplied|twice)",
+        "\\b3\\s*/\\s*6\\b.{0,30}\\b6\\s*/\\s*12\\b|0?\\.5\\b.{0,30}\\b0?\\.5\\b",
+        "\\bsame ratio\\b",
+        "cancels? out"
+      ]
+    },
+    {
+      "concept_id": "k3",
+      "kind": "procedure",
+      "explain_level": "use",
+      "look_fors": [
+        "Uses sin 30° = 0.5 to find a side: 10 × 0.5 = 5",
+        "Applies it to a new size (a different hypotenuse) without recomputing the ratio",
+        "Says when it applies: any right triangle with that angle"
+      ],
+      "probe_ladder": [
+        "if the ramp is 10 ft long along the slope and the angle is 30°, how high does it rise?",
+        "what if the ramp were 20 ft long at the same 30° tilt?",
+        "i'll guess a 10 ft ramp at 30° rises 10 ft, same as its length. is that right?",
+        "then a 20 ft ramp at 30° rises 20 ft times a bigger sine. that's what my rule says."
+      ],
+      "concrete": [
+        "what if i build a 10 ft ramp at 30°, how tall is the top?"
+      ],
+      "connections": [
+        "so it's like a skate ramp, any size at that tilt rises the same share of its length?"
+      ],
+      "spoilers": [
+        "= 5",
+        "5 ft",
+        "5 feet",
+        "half the length",
+        "0.5 × 10"
+      ],
+      "friend_nudge": "Someone in my class said a flagpole and its shadow always match up the same way at the same sun angle…? I don't get how that helps.",
+      "aha": "ok so at 30° the ramp always rises that fixed share of its length.",
+      "idea_patterns": [
+        "\\bsin\\s*(of\\s*)?30\\b|\\bsine of 30\\b|0?\\.5\\b.{0,30}\\b(times|x|\\*|×)|\\b(times|x|\\*|×)\\s*0?\\.5\\b",
+        "\\b10\\s*(x|\\*|×|times)\\s*(0?\\.5|1/2|half)",
+        "\\b5\\s*(ft|feet|foot)\\b",
+        "(rise|rises|height|high|tall)\\b.{0,30}\\b5\\b",
+        "hypotenuse (times|x|\\*|×) sin"
+      ]
+    }
+  ],
+  "offline_demo": {
+    "assignment_id": "a_trig",
+    "student_id": "s014",
+    "note": "Theo's showcase run: ready at text 3, a deliberate wrong rule at text 4 (Pip files it; the quiz trap item k2 misses), a re-teach, then K.O. with fixed_after 1. Pip's lines are in the new voice: short, react first, at most one question.",
+    "turns": [
+      {
+        "n": 1,
+        "phase": "teach",
+        "student": "no a bigger triangle with the same angles is the same shape, just zoomed in",
+        "kind": "explain",
+        "concept_id": "k1",
+        "level": 2,
+        "event": "hit",
+        "filed_rule": "",
+        "next_concept_id": "k2",
+        "rung": 1,
+        "pip": "ohh so the big one is my small one blown up. what happens to the two sides when it grows?"
+      },
+      {
+        "n": 2,
+        "phase": "teach",
+        "student": "both sides double so opposite over hypotenuse stays 0.5, like 3/6 and 6/12",
+        "kind": "explain",
+        "concept_id": "k2",
+        "level": 2,
+        "event": "hit",
+        "filed_rule": "",
+        "next_concept_id": "k3",
+        "rung": 1,
+        "pip": "ok so the ratio just sits there. so a skate ramp at 30° rises the same share at any size?"
+      },
+      {
+        "n": 3,
+        "phase": "teach",
+        "student": "yeah so a 30 degree ramp that is 10 ft long rises 5 ft, 10 times 0.5",
+        "kind": "explain",
+        "concept_id": "k3",
+        "level": 2,
+        "event": "hit",
+        "filed_rule": "",
+        "next_concept_id": null,
+        "rung": null,
+        "pip": "10 times 0.5 is 5. ok I think I get it. quiz me?"
+      },
+      {
+        "n": 4,
+        "phase": "teach",
+        "student": "oh and a really big triangle just gets a bigger sine, like 1 when it's twice as big",
+        "kind": "misconception",
+        "concept_id": "k2",
+        "level": 0,
+        "event": "heal",
+        "filed_rule": "a really big triangle just gets a bigger sine, like 1 when it's twice as big",
+        "next_concept_id": null,
+        "rung": null,
+        "pip": "Saving that: 'a really big triangle just gets a bigger sine, like 1 when it's twice as big'. so size does matter, ok."
+      },
+      {
+        "n": 5,
+        "reteach_concept_id": "k2",
+        "pip_ask": "my brain has a bug. help me fix it: what is sin 30° in the triangle with hypotenuse 12?",
+        "student": "no wait. both sides double so 6 over 12 is still 0.5. the sine never changes with size",
+        "kind": "explain",
+        "concept_id": "k2",
+        "level": 3,
+        "event": "hit",
+        "filed_rule": "both sides double so 6 over 12 is still 0.5",
+        "next_concept_id": null,
+        "rung": null,
+        "pip": "ohh 6 over 12 is the same 0.5. throwing out my big-sine rule."
+      }
+    ],
+    "quiz": [
+      {
+        "concept_id": "k1",
+        "passed": true,
+        "pip_answer": "Same shape. Every side doubles, the angles stay.",
+        "line": "Same shape, just zoomed. The sides doubled and the angles didn't move."
+      },
+      {
+        "concept_id": "k2",
+        "passed": false,
+        "pip_answer": "1",
+        "line": "Your rule: a really big triangle just gets a bigger sine. Twice as big, so the sine doubles to 1. Following your rule anyway. 😵"
+      },
+      {
+        "concept_id": "k3",
+        "passed": true,
+        "pip_answer": "5 ft",
+        "line": "10 times 0.5. The ramp rises 5 ft."
+      }
+    ],
+    "retry": [
+      {
+        "concept_id": "k2",
+        "passed": true,
+        "pip_answer": "0.5",
+        "line": "6 over 12 is 0.5. Same as 3 over 6. Size doesn't change the sine."
+      }
+    ]
+  },
+  "misconception_concept": "k2"
+}

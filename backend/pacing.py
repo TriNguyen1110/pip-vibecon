@@ -193,8 +193,8 @@ def closed(p: dict, ladder: dict, cid: str, kind: str = "reason") -> bool:
         return True
     if kind != "reason":  # convention / procedure: an applied example closes it; never ask why
         return explained(c, kind)
-    if c["idea"] and c["reason"] and not c["wrong"]:
-        return True
+    if c["idea"] and (c["reason"] or c.get("solid", False)) and not c["wrong"]:
+        return True  # a reason, or the idea said as a full sentence: nothing left to pull out
     if c["idea"] and c["example"] and (asks["why"] + asks["try"] + asks["concrete"] + asks.get("connect", 0)) >= 1 and not c["wrong"]:
         return True
     return False
@@ -233,7 +233,9 @@ def next_question(session: dict, a: dict, les: dict, focus: str | None = None, i
         rungs = [as_question(r) if "my rule says" in r.lower() else one_question(r)
                  for r in list(spec["probe_ladder"]) + list(spec.get("concrete") or [])]
         conns = [x for x in (spec.get("connections") or []) if qnorm(x) not in used]
-        has = {rung_kind(r) for r in rungs if qnorm(r) not in used and "?" in r}
+        cset = {qnorm(x) for x in (spec.get("concrete") or [])}
+        rk = lambda r: "concrete" if qnorm(r) in cset else rung_kind(r)  # noqa: E731  (authored concrete cases)
+        has = {rk(r) for r in rungs if qnorm(r) not in used and "?" in r}
         if conns:
             has.add("connect")
         if ck == "convention":
@@ -245,7 +247,8 @@ def next_question(session: dict, a: dict, les: dict, focus: str | None = None, i
                 continue
         elif ck == "procedure":
             if not c["idea"] or c["wrong"]:
-                kind = "idea"
+                kind = "concrete" if (any(x["idea"] for x in p["cov"].values()) and asks["concrete"] < 1
+                                      and "concrete" in has) else "idea"
             elif not c["example"] and asks["connect"] < 1 and conns:
                 kind = "connect"
             elif not c["example"] and asks["concrete"] < 1 and "concrete" in has:
@@ -287,13 +290,13 @@ def next_question(session: dict, a: dict, les: dict, focus: str | None = None, i
         if weak:  # yes/no or pick-one only: guesses to correct, cases with numbers; never an open why / "what do you notice"
             for want in ("concrete", "predict", "try"):  # a picture or action pulls content out of a kid who says idk
                 for r in rungs:
-                    if rung_kind(r) == want and qnorm(r) not in used and "?" in r and not re.search(r"why is that wrong", r.lower()):
+                    if rk(r) == want and qnorm(r) not in used and "?" in r and not re.search(r"why is that wrong", r.lower()):
                         return r, cid, want
             pick = pick_one(session, a)
             if pick and qnorm(pick) not in used:
                 return pick, cid, "try"
         for r in rungs:
-            if rung_kind(r) == kind and qnorm(r) not in used and "?" in r:
+            if rk(r) == kind and qnorm(r) not in used and "?" in r:
                 if anything and re.search(r"why is that wrong|why is my", r.lower()):
                     continue  # the argument opener only makes sense before the kid has said anything
                 return r, cid, kind
@@ -439,7 +442,7 @@ def judge(text: str, a: dict, les: dict | None, session: dict) -> dict:
         if ((len(mis & ts) >= 2 and re.search(r"\bjust\b|always|whenever|wherever|every", t))
                 or (endorse and (len(mis & ts) >= 1 or set(re.findall(r"\d+", a.get('misconception', ''))) & set(re.findall(r"\d+", t))))) \
                 and not neg and not (fixes and not endorse):
-            wrong_cid = best_concept(a, les, text, p["target"]) or ids[0]
+            wrong_cid = (les or {}).get("misconception_concept") or best_concept(a, les, text, p["target"]) or ids[0]
     # bare reasoning / examples answer the question Pip just asked
     tgt = p["target"]
     got = [cid for cid in ids if f[cid]["idea"]]

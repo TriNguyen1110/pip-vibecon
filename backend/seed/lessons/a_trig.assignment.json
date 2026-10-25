@@ -1,0 +1,74 @@
+{
+  "id": "a_trig",
+  "student_id": "s014",
+  "tutor_id": "t3",
+  "grade": 9,
+  "topic": "Sine in right triangles",
+  "why_it_matters": "Ramps, rooftops, photos you zoom and a flagpole's shadow all rely on one fact: making a triangle bigger never changes its angle ratios.",
+  "concepts": [
+    {
+      "id": "k1",
+      "text": "Triangles with the same angles are the same shape, just zoomed in or out (similar triangles)",
+      "weapon": "Zoom Lens 🔍",
+      "explain_level": "why"
+    },
+    {
+      "id": "k2",
+      "text": "When you scale a triangle both sides scale together, so opposite ÷ hypotenuse stays the same",
+      "weapon": "Ratio Scale ⚖️",
+      "explain_level": "why"
+    },
+    {
+      "id": "k3",
+      "text": "So you can use it: at 30° a ramp always rises 0.5 of its slope length, so a 10 ft ramp rises 5 ft",
+      "weapon": "Ramp Rule 🛹",
+      "explain_level": "use"
+    }
+  ],
+  "misconception": "A bigger triangle has a bigger sine, so sin 30° is 0.5 in my small triangle but 1 in a triangle twice as big",
+  "root_prerequisite": "Similar triangles: same shape, different size",
+  "boss": {
+    "name": "Sir Cosine Overreach",
+    "emoji": "🦢📐",
+    "backstory": "A swan in a velvet cape who carries a sign reading 'BIGGER TRIANGLE, BIGGER SINE' and inflates every ratio he meets.",
+    "lines": {
+      "taunt": [
+        "I have enlarged the triangle. The sine has been enlarged accordingly.",
+        "One does not simply keep a ratio. One improves it.",
+        "Observe the size of my triangle. Now observe the size of my sine."
+      ],
+      "heal": [
+        "Splendid. Grander triangles yield grander sines. I shall have it engraved.",
+        "Precisely. Bigger is better, even in trigonometry."
+      ],
+      "hit": [
+        "This is most irregular. My ratio appears to have remained unchanged.",
+        "I did not authorize a second triangle of identical proportions."
+      ],
+      "ko": "I object to being scaled.",
+      "reformed": "I have rechecked at three sizes. The ratio did not move. I would like to join you."
+    }
+  },
+  "cliffhanger": "I heard sine and cosine, squared and added, always make exactly 1. Even for weird angles. That can't be right… right?",
+  "quiz": [
+    {
+      "id": "q_k1",
+      "concept_id": "k1",
+      "question": "Two right triangles have the same angles, but one is twice as big. Same shape or different shape, and what changed?",
+      "answer": "Same shape (similar). Every side is twice as long; the angles did not change."
+    },
+    {
+      "id": "q_k2",
+      "concept_id": "k2",
+      "question": "A 30° triangle has opposite 3 and hypotenuse 6. A bigger 30° triangle has hypotenuse 12. What is sin 30° in the big one?",
+      "answer": "0.5. Its opposite is 6, and 6 ÷ 12 = 0.5, the same as 3 ÷ 6."
+    },
+    {
+      "id": "q_k3",
+      "concept_id": "k3",
+      "question": "A ramp makes a 30° angle and is 10 ft long along the slope. How high does it rise?",
+      "answer": "5 ft (10 × sin 30° = 10 × 0.5)."
+    }
+  ],
+  "created_at": "2026-10-25T08:00:00+00:00"
+}
