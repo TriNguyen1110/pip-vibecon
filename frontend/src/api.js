@@ -82,8 +82,25 @@ export const DEMO_STUDENTS = [
   { id: 's001', label: 'Maya · triangles' },
   { id: 's005', label: 'Yara · SAT Writing' },
   { id: 's009', label: 'Dev · SAT Math' },
+  { id: 's014', label: 'Theo · trig' },
 ]
 // Seeded, hand-written missions are pinned first on a student's home screen.
 export const PINNED_MISSIONS = ['a_tri', 'a_frac', 'a_sat_commas', 'a_sat_linear']
+
+// DATA-1: a showcase mission is a hand-written one (flagged, one of the seeded ids, or a lesson with its own
+// offline demo script). Each student's newest showcase is pinned first (Maya: a_tri, Theo: a_trig_id, Luna: a_sat_modifiers).
+export const isShowcase = (a) => !!a && (a.showcase === true || PINNED_MISSIONS.includes(a.id) || !!a.lesson?.offline_demo)
+export function pinnedMissionId(assignments = []) {
+  const shows = assignments.filter(isShowcase)
+  if (!shows.length) return null
+  const t = (a) => Date.parse(a.created_at ?? '') || 0
+  return shows.reduce((best, a) => (t(a) > t(best) ? a : best)).id
+}
+// Pinned one first, then the other seeded ones, then the rest (stable).
+export function orderMissions(assignments = []) {
+  const pin = pinnedMissionId(assignments)
+  const rank = (a) => (a.id === pin ? 2 : PINNED_MISSIONS.includes(a.id) ? 1 : 0)
+  return [...assignments].sort((x, y) => rank(y) - rank(x))
+}
 
 export const studentHomePath = (id) => (!id || id === DEMO.studentId ? '/student' : `/student?as=${id}`)

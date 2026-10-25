@@ -62,10 +62,54 @@ const SEEDED_STEP_NAMES = {
   a_sat_commas: ['Joining sentences', 'Comma trouble', 'Where commas go'],
   a_sat_linear: ['Balance', 'Getting x alone', 'Checking'],
 }
+// DATA-1: the lesson's own per-concept labels (an array by index, or a map by concept id) come first.
+function lessonLabel(assignment, i) {
+  const labels = assignment?.lesson?.concept_labels ?? assignment?.concept_labels
+  const pick = (x) => (typeof x === 'string' ? x : x?.label ?? x?.short ?? null)
+  if (Array.isArray(labels)) return pick(labels[i]) || null
+  if (labels && typeof labels === 'object') {
+    const id = assignment?.concepts?.[i]?.id ?? assignment?.lesson?.concepts?.[i]?.concept_id
+    return (id && pick(labels[id])) || null
+  }
+  return null
+}
 export function stepName(assignment, i) {
   const c = assignment?.concepts?.[i]
   const lc = assignment?.lesson?.concepts?.[i]
-  return c?.label ?? c?.short ?? lc?.label ?? lc?.short ?? SEEDED_STEP_NAMES[assignment?.id]?.[i] ?? null
+  return (
+    c?.label ?? c?.short ?? lessonLabel(assignment, i) ?? lc?.label ?? lc?.short ?? SEEDED_STEP_NAMES[assignment?.id]?.[i] ?? null
+  )
+}
+
+// CONTRACT v3.17: a `given` concept is prior knowledge. Pip already knows it: its meter starts full and it is
+// shown as known, never as an empty note or a fresh win.
+export const GIVEN_LABEL = 'Pip already knows'
+export function isGiven(assignment, cid) {
+  const c = assignment?.concepts?.find((x) => x.id === cid)
+  const lc = assignment?.lesson?.concepts?.find((x) => x.concept_id === cid)
+  return (c?.explain_level ?? lc?.explain_level) === 'given'
+}
+
+// DATA-1: earned item names from the lesson (`earned_items` as a map id -> name, or [{id, name}]),
+// then today's names, then the id in words.
+const EARNED_NAMES = { half_pin: 'half pin', fixed_it_star: 'fixed-it star' }
+export function earnedName(id, assignment) {
+  const own = assignment?.lesson?.earned_items ?? assignment?.earned_items
+  const pick = (x) => (typeof x === 'string' ? x : x?.name ?? x?.label ?? null)
+  let n = null
+  if (Array.isArray(own)) n = pick(own.find((e) => e && typeof e === 'object' && e.id === id))
+  else if (own && typeof own === 'object') n = pick(own[id])
+  return n || EARNED_NAMES[id] || String(id ?? '').replace(/_/g, ' ')
+}
+
+// DATA-1: the equation the K.O. card strikes, from the lesson's `ko_strike: {wrong, right}`.
+// Returns [lhs, struck rhs], or ['', whole] when the wrong rule has no "=".
+export function lessonStrike(assignment) {
+  const k = assignment?.lesson?.ko_strike ?? assignment?.ko_strike
+  const wrong = typeof k === 'string' ? k : k?.wrong
+  if (!wrong || typeof wrong !== 'string') return null
+  const at = wrong.indexOf('=')
+  return at > 0 ? [wrong.slice(0, at).trim(), wrong.slice(at + 1).trim()] : ['', wrong.trim()]
 }
 export function stepTitle(assignment, i) {
   const n = stepName(assignment, i)

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { CIRCLED, stepTitle } from '../../lib'
+import { CIRCLED, GIVEN_LABEL, isGiven, stepTitle } from '../../lib'
 
 export const TAUGHT = 50 // meter value at which a step counts as taught
 
@@ -125,19 +125,20 @@ export function LevelMap({ assignment, session, concepts, focus, onFocus, bossEm
     <nav className="levelmap" aria-label="Mission map">
       <ol className="mpath">
         {concepts.map((c, i) => {
-          const m = Math.max(0, Math.min(100, meters[c.id] ?? 0))
+          const given = isGiven(assignment, c.id)
+          const m = given ? 100 : Math.max(0, Math.min(100, meters[c.id] ?? 0))
           const taught = m >= TAUGHT
-          const isNext = step.index === i && (step.kind === 'teach' || step.kind === 'reteach')
+          const isNext = !given && step.index === i && (step.kind === 'teach' || step.kind === 'reteach')
           return (
-            <li key={c.id} className={`mpath__item${taught ? ' is-taught' : ''}`}>
+            <li key={c.id} className={`mpath__item${taught ? ' is-taught' : ''}${given ? ' is-given' : ''}`}>
               <button
                 type="button"
-                className={`mstep${taught ? ' is-taught' : ''}${isNext ? ' is-next' : ''}${focus === c.id ? ' is-focus' : ''}`}
+                className={`mstep${taught ? ' is-taught' : ''}${given ? ' is-given' : ''}${isNext ? ' is-next' : ''}${focus === c.id ? ' is-focus' : ''}`}
                 onClick={() => {
-                  show(stepTitle(assignment, i))
-                  onFocus?.(c.id)
+                  show(given ? `${stepTitle(assignment, i)} · ${GIVEN_LABEL}` : stepTitle(assignment, i))
+                  if (!given) onFocus?.(c.id)
                 }}
-                aria-label={`${stepTitle(assignment, i)}. Understanding ${m} percent.`}
+                aria-label={given ? `${stepTitle(assignment, i)}. ${GIVEN_LABEL}.` : `${stepTitle(assignment, i)}. Understanding ${m} percent.`}
               >
                 <span className="mstep__n" aria-hidden>
                   {taught ? '✓' : i + 1}

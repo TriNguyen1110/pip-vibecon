@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { CIRCLED, stepTitle } from '../../lib'
+import { CIRCLED, GIVEN_LABEL, isGiven, stepName, stepTitle } from '../../lib'
 import { CREATURE_EMOJI } from '../Mascot.jsx'
 import { Glints } from '../ui.jsx'
 import { PagerControls, usePager } from '../game.jsx'
@@ -10,6 +10,10 @@ export function Brain({ assignment, brain = [], concepts = [], version = 1, onNo
   const pager = usePager(loading ? 0 : brain.length)
   // Open on the note Pip believes wrongly: that's the one she'll fix.
   const wrongAt = brain.findIndex((r) => r.correct === false)
+  // Given concepts (prior knowledge) have no note: one muted "Pip already knows" row instead.
+  const known = concepts
+    .map((c, i) => ({ c, i }))
+    .filter(({ c }) => isGiven(assignment, c.id) && !brain.some((r) => r.concept_id === c.id))
   const { go } = pager
   useEffect(() => {
     if (paged && !loading && wrongAt > 0) {
@@ -67,6 +71,12 @@ export function Brain({ assignment, brain = [], concepts = [], version = 1, onNo
               )
             })}
           </div>
+        )}
+        {!loading && known.length > 0 && (
+          <p className="brain__given">
+            <span className="mono-label">{GIVEN_LABEL}</span>
+            <span>{known.map(({ c, i }) => stepName(assignment, i) ?? c.text).join(' · ')}</span>
+          </p>
         )}
         {paged && !loading && <PagerControls pager={pager} label="note" className="brain__pager" />}
         <span className="brain__puff brain__puff--1" aria-hidden />

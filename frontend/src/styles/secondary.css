@@ -1903,3 +1903,142 @@ body:has(.shell:is([data-register='cool'], [data-register='focus'], [data-regist
 :is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .home-tom .stage2d__pip {
   scale: 1; /* D-33: the older "Pip draws smaller" 0.85 scale is for the small stages only */
 }
+
+/* ---------- F14 / D-28: the Unlocked beat after the K.O. card ---------- */
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .ko-beat--unlocked {
+  align-items: stretch;
+  justify-content: flex-end;
+  gap: 0;
+  padding: 0 12px 8px;
+  overflow: hidden;
+}
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .unlocked__stage {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 140px;
+  margin: 0 -12px;
+  overflow: hidden;
+  background: radial-gradient(70% 60% at 50% 100%, rgba(46, 242, 255, 0.12), transparent 70%);
+}
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .unlocked__stage .stage2d__floor {
+  display: none;
+}
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .unlocked__stage .stage2d__pip {
+  scale: 1;
+}
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .unlocked__stage .stage2d__pip .pip2d {
+  width: var(--pip-size);
+  height: calc(var(--pip-size) * 1.1);
+}
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .unlocked__panel {
+  flex: none;
+  text-align: left;
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid var(--divider);
+  border-radius: var(--r-lg);
+  background: var(--surface);
+}
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .unlocked__title {
+  margin: 0;
+  font-size: 20px;
+}
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .unlocked__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0;
+}
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .unlocked__row {
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  padding: 8px 0;
+  border-top: 1px solid var(--divider);
+}
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .unlocked__row .mono-label {
+  color: var(--accent);
+  padding-top: 3px;
+}
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .unlocked__value {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  font: 600 15px/1.35 var(--font-ui);
+  color: var(--fg);
+}
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .unlocked__who {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .unlocked__thumb {
+  width: 36px;
+  height: 36px;
+  flex: none;
+  display: grid;
+  place-items: end center;
+  overflow: hidden;
+  line-height: 0;
+  border: 1px solid var(--divider);
+  border-radius: var(--r-sm);
+  background: var(--surface-2);
+}
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .unlocked__thumb svg {
+  max-width: none;
+}
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .unlocked__line {
+  font: italic 500 15px/1.35 var(--font-ui);
+  color: var(--fg-muted);
+  quotes: '“' '”';
+}
+@media (max-height: 700px) {
+  :is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .unlocked__panel {
+    gap: 6px;
+    padding: 10px 12px;
+  }
+  :is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .unlocked__row {
+    padding: 6px 0;
+  }
+}
+
+/* DATA-1: generic glyph for a lesson's own earned item (Pip2D has no art for it). */
+.earned-glyph {
+  display: inline-block;
+  vertical-align: -2px;
+  margin-right: 5px;
+  color: var(--accent);
+}
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .look-card .earned-glyph {
+  color: currentColor;
+}
+
+/* Given concepts (CONTRACT v3.17): known, muted, and the full meter never animates as a fresh win. */
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .levelmap .mstep.is-given {
+  opacity: 0.62;
+}
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .levelmap .mstep.is-given,
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .levelmap .mstep.is-given .meter,
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .levelmap .mstep.is-given .mstep__n {
+  animation: none !important;
+  transition: none !important;
+}
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .brain__given {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px dashed var(--divider);
+  border-radius: var(--r-md);
+  font: 500 15px/1.35 var(--font-ui);
+  color: var(--fg-muted);
+}
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .brain__given .mono-label {
+  color: var(--fg-subtle);
+}
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .unlocked__value.unlocked__items {
+  display: block;
+}

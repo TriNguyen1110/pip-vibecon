@@ -6,7 +6,8 @@ import { MuteButton, PagerControls, TalkingMascot, useBoxHeight, usePager } from
 import { enqueueLine, sayLines, speak, stingLine } from '../../voice'
 import { accessoryFor, bossKindFor } from '../Mascot.jsx'
 import { InlineError } from '../ui.jsx'
-import { CIRCLED, weaponName } from '../../lib'
+import { CIRCLED, earnedName, lessonStrike, weaponName } from '../../lib'
+import { ACCESSORIES_2D } from '../../pip2d/y2k.jsx'
 import { usePipName } from '../../identity'
 
 const PLAIN = {
@@ -37,8 +38,106 @@ const pretty = (s) =>
     .replace(/\b2\/5\b/g, '⅖')
     .replace(/\b1\/4\b/g, '¼')
 
-const ITEM_NAMES = { half_pin: 'half pin', fixed_it_star: 'fixed-it star' }
-const itemName = (id) => ITEM_NAMES[id] ?? String(id).replace(/_/g, ' ')
+// DATA-1: item names from the lesson's earned_items (today's names as the fallback).
+const itemName = (id, assignment) => earnedName(id, assignment)
+// Items Pip2D can draw; anything else (a new lesson's own pin) gets a generic glyph chip outside Pip2D.
+const drawable = (id) => ACCESSORIES_2D.includes(id)
+function EarnedGlyph() {
+  return (
+    <svg className="earned-glyph" width="16" height="16" viewBox="0 0 16 16" aria-hidden focusable="false">
+      <rect x="1.5" y="1.5" width="13" height="13" rx="3" fill="none" stroke="currentColor" strokeWidth="1.4" />
+      <path d="M8 4.2 9.1 6.6 11.7 6.9 9.8 8.6 10.3 11.2 8 9.9 5.7 11.2 6.2 8.6 4.3 6.9 6.9 6.6Z" fill="currentColor" />
+    </svg>
+  )
+}
+const capFirst = (t) => String(t).replace(/^./, (c) => c.toUpperCase())
+const UNLOCK_NAMES = { club_stage: 'Club stage', runway_finale: 'Runway finale', mod_slot_2: 'Mod slot 2' }
+const unlockName = (id) => UNLOCK_NAMES[id] ?? capFirst(String(id).replace(/_/g, ' '))
+
+// F14 / D-28: exactly what the K.O. payoff returned (new crew, unlocks, earned items, the dream's reward).
+// Nothing new -> null, and the Unlocked beat is skipped.
+function payoffNews(payoff) {
+  const p = payoff ?? {}
+  const crew = (p.new_crew ?? []).filter((m) => m && m.name)
+  const unlocked = (p.unlocked ?? []).filter(Boolean)
+  const items = (p.new_items ?? []).filter(Boolean)
+  const dream = p.dream_unlock && (p.dream_unlock.title || p.dream_unlock.id) ? p.dream_unlock : null
+  return crew.length || unlocked.length || items.length || dream ? { crew, unlocked, items, dream } : null
+}
+
+// The Unlocked beat: Pip big and front-facing, reacting; the payoff as mono-labelled rows.
+function UnlockedBeat({ news, session, assignment, accessory, active }) {
+  const [box, h] = useBoxHeight(120)
+  return (
+    <section className="ko-beat ko-beat--unlocked" aria-label="Unlocked">
+      <div className="unlocked__stage" ref={box}>
+        {h > 0 && (
+          <TalkingMascot
+            creature={session.creature ?? 'capybara'}
+            look={session.look}
+            accessory={accessory}
+            vibe={session.vibe ?? 'cool'}
+            version={session.brain_version ?? 2}
+            mood="proud"
+            env="room"
+            framing="tom"
+            state={active ? 'react' : 'idle'}
+            reactZone="sprout"
+            height={h}
+          />
+        )}
+      </div>
+      <div className="unlocked__panel">
+        <h2 className="unlocked__title display-x">Unlocked</h2>
+        <ul className="unlocked__list">
+          {news.crew.map((m) => (
+            <li key={m.id ?? m.name} className="unlocked__row unlocked__row--crew">
+              <span className="mono-label">New crew</span>
+              <span className="unlocked__value">
+                <span className="unlocked__who">
+                  <span className="unlocked__thumb" aria-hidden>
+                    <Boss2D boss={bossKindFor(m.name, m.emoji)} state="smug" size={36} />
+                  </span>
+                  <b>{m.name}</b>
+                </span>
+                {m.line && <q className="unlocked__line">{m.line}</q>}
+              </span>
+            </li>
+          ))}
+          {news.unlocked.length > 0 && (
+            <li className="unlocked__row">
+              <span className="mono-label">Unlocked</span>
+              <b className="unlocked__value">{news.unlocked.map(unlockName).join(' · ')}</b>
+            </li>
+          )}
+          {news.items.length > 0 && (
+            <li className="unlocked__row">
+              <span className="mono-label">Earned</span>
+              <b className="unlocked__value unlocked__items">
+                {news.items.map((i, k) => (
+                  <span key={i}>
+                    {k > 0 && ' · '}
+                    {!drawable(i) && <EarnedGlyph />}
+                    {capFirst(itemName(i, assignment))}
+                  </span>
+                ))}
+              </b>
+            </li>
+          )}
+          {news.dream && (
+            <li className="unlocked__row">
+              <span className="mono-label">Dream</span>
+              <span className="unlocked__value">
+                <b>{news.dream.title ?? unlockName(news.dream.id)}</b>
+                {news.dream.line && <q className="unlocked__line">{news.dream.line}</q>}
+              </span>
+            </li>
+          )}
+        </ul>
+      </div>
+    </section>
+  )
+}
 
 // The moment worth showing: the rule fixed after a re-teach, else the last correct one (its message index).
 function fixedRuleIndex(session) {
@@ -52,10 +151,15 @@ function serial(id = '') {
   return String(h % 10000).padStart(4, '0')
 }
 
-// The equation the card strikes: the lesson's own (ko_equation) when it has one, a hand-picked one for the
-// seeded triangle demo (CONTRACT v3.6: "A = b × h"), else the last equation in the misconception.
+// The equation the card strikes (DATA-1): the payoff card's strike, then the lesson's ko_strike.wrong, then
+// ko_equation, the hand-picked seeded one (CONTRACT v3.6: "A = b × h"), else the last equation in the
+// misconception. [lhs, rhs]; lhs is '' when the wrong rule is a phrase (struck whole).
 const KO_EQUATIONS = { a_tri: ['A', 'b × h'] }
-function cardEquation(assignment) {
+function cardEquation(assignment, session) {
+  const fromCard = lessonStrike({ ko_strike: session?.payoff?.card?.strike })
+  if (fromCard) return fromCard
+  const fromLesson = lessonStrike(assignment)
+  if (fromLesson) return fromLesson
   const own = assignment?.ko_equation
   if (Array.isArray(own) && own.length === 2) return own
   if (typeof own === 'string' && own.includes('=')) return own.split('=').map((x) => x.trim())
@@ -75,7 +179,7 @@ function KoCard({ session, assignment, nickname, pipLine }) {
   const v = session.brain_version ?? 2
   const prevV = Math.max(1, v - 1)
   const boss = assignment?.boss ?? {}
-  const eq = cardEquation(assignment)
+  const eq = cardEquation(assignment, session)
   const fixedRule = session.brain?.find((r) => r.fixed_after) ?? session.brain?.filter((r) => r.correct).at(-1)
   const date = new Date(session.created_at ?? Date.now()).toLocaleDateString([], {
     month: 'short',
@@ -141,9 +245,13 @@ function KoCard({ session, assignment, nickname, pipLine }) {
             <span className="mono-label">{pipName} believed</span>
             <span className="kocard__eq">
               {eq ? (
-                <>
-                  {pretty(eq[0])} = <s>{pretty(eq[1])}</s>
-                </>
+                eq[0] ? (
+                  <>
+                    {pretty(eq[0])} = <s>{pretty(eq[1])}</s>
+                  </>
+                ) : (
+                  <s>{eq[1]}</s>
+                )
               ) : (
                 <s>{boss.name}</s>
               )}
@@ -169,7 +277,10 @@ function KoCard({ session, assignment, nickname, pipLine }) {
           )}
           {(session.payoff?.new_items ?? []).slice(0, 2).map((it) => (
             <span key={it} className="kocard__item">
-              <span>{itemName(it).replace(/^./, (c) => c.toUpperCase())}</span>
+              <span>
+                {!drawable(it) && <EarnedGlyph />}
+                {capFirst(itemName(it, assignment))}
+              </span>
               <span className="lcd">Earned</span>
             </span>
           ))}
@@ -217,13 +328,25 @@ export default function KO({
   const prevV = Math.max(1, v - 1)
   const report = session.gap_report
   const cliff = report?.cliffhanger ?? assignment?.cliffhanger
-  const pager = usePager(3)
+  // F14: the Unlocked beat sits right after the card when the payoff has something new.
+  const news = payoffNews(session.payoff)
+  const unlockAt = news ? 1 : -1
+  const cliffAt = news ? 2 : 1
+  const pager = usePager(news ? 4 : 3)
   const [stageBox, stageH] = useBoxHeight(180)
   const [cliffBox, cliffH] = useBoxHeight(120)
   // Pip asks its rumor question out loud on the cliffhanger beat.
   useEffect(() => {
-    if (pager.i === 1 && cliff) speak(cliff)
-  }, [pager.i, cliff])
+    if (pager.i === cliffAt && cliff) speak(cliff)
+  }, [pager.i, cliff, cliffAt])
+  // The reformed boss says its line once, on the Unlocked beat.
+  const crewLine = news?.crew?.[0]
+  const saidCrew = useRef(false)
+  useEffect(() => {
+    if (pager.i !== unlockAt || !crewLine?.line || saidCrew.current) return
+    saidCrew.current = true
+    enqueueLine({ speaker: 'boss', text: crewLine.line, boss: crewLine.name, boss_id: bossKindFor(crewLine.name, crewLine.emoji) })
+  }, [pager.i, unlockAt, crewLine])
 
   useEffect(() => {
     const t = timers.current
@@ -280,6 +403,8 @@ export default function KO({
   }
   const payoff = session.payoff ?? null
   const newItem = payoff?.new_items?.find((x) => x !== 'fixed_it_star') ?? payoff?.new_items?.[0] ?? null
+  // Only items Pip2D can draw go on Pip (and get "Wear it"); a lesson's own item shows as a glyph chip.
+  const wearable = !!newItem && drawable(newItem)
   const lookNo = String(payoff?.card?.card_no ?? Math.max(1, v - 1)).padStart(2, '0')
   const comeback = (session.reteach_count ?? 0) >= 1
 
@@ -304,7 +429,7 @@ export default function KO({
             <Pip2D
               creature={session.creature ?? 'capybara'}
               vibe={session.vibe ?? 'cool'}
-              accessory={accessoryFor(newItem ? [accessory, newItem].filter((x) => x && x !== 'none') : accessory, session.vibe ?? 'cool')}
+              accessory={accessoryFor(wearable ? [accessory, newItem].filter((x) => x && x !== 'none') : accessory, session.vibe ?? 'cool')}
               version={v}
               pose="pose"
               mood="proud"
@@ -318,7 +443,14 @@ export default function KO({
             <span>
               LOOK {lookNo} — {pipName.toUpperCase()} V{v}
             </span>
-            {newItem && <span>WEARING: THE {itemName(newItem).toUpperCase()}</span>}
+            {newItem &&
+              (wearable ? (
+                <span>WEARING: THE {itemName(newItem, assignment).toUpperCase()}</span>
+              ) : (
+                <span>
+                  <EarnedGlyph /> EARNED: THE {itemName(newItem, assignment).toUpperCase()}
+                </span>
+              ))}
             {comeback && (
               <span>
                 FIXED IT, {session.reteach_count} RE-TEACH{session.reteach_count > 1 ? 'ES' : ''}
@@ -328,7 +460,7 @@ export default function KO({
           <span className="y2k-chrome-text newlook__save" style={{ '--size': '30px' }}>
             Brain v{v}
           </span>
-          {newItem && onWear && (
+          {wearable && onWear && (
             <button
               type="button"
               className="gel-btn gel-btn--sm"
@@ -453,6 +585,8 @@ export default function KO({
           </div>
         </section>
 
+        {news && <UnlockedBeat news={news} session={session} assignment={assignment} accessory={accessory} active={pager.i === unlockAt} />}
+
         <section className="ko-beat ko-beat--cliff" aria-label="Next time">
           <div className="ko-cliff__stage" ref={cliffBox}>
             {cliffH > 0 && (
@@ -529,9 +663,9 @@ export default function KO({
       </div>
       <footer className="game-foot ko__foot">
         <PagerControls pager={pager} label="beat" />
-        {pager.i < 2 ? (
+        {pager.i < pager.n - 1 ? (
           <button className="gel-btn ko__next" onClick={() => pager.go(pager.i + 1)}>
-            Next ▶
+            {pager.i === unlockAt ? 'Continue ▶' : 'Next ▶'}
           </button>
         ) : (
           <Link className="gel-btn ko__next" to={home}>

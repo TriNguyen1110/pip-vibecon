@@ -690,6 +690,7 @@ function MissionView({ initial }) {
             strip
             tom
             pipState={pipState}
+            scene={assignment?.scene ?? assignment?.lesson?.scene}
             session={session}
             boss={boss}
             accessory={accessory}
@@ -912,6 +913,7 @@ function Stage({
   tom,
   pipState = 'idle',
   tapSay,
+  scene,
 }) {
   const [box, h] = useBoxHeight(strip ? 80 : 140)
   const [theme] = usePlayTheme()
@@ -943,7 +945,7 @@ function Stage({
             : null
     return (
       <div className={`arena-strip game-stage--scene${tom ? ' tom-scene' : ''}`} data-pip-state={pipState}>
-        <Scene2D scene={sceneFor({ assignmentId: session.assignment_id })} theme={theme} className="mission-scene" variant="lite" />
+        <Scene2D scene={sceneFor({ assignmentId: session.assignment_id, scene })} theme={theme} className="mission-scene" variant="lite" />
         <div className="arena" ref={box}>
           {h > 0 && (
             <TalkingMascot

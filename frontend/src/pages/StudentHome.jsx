@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
-import { api, DEMO, DEMO_STUDENTS, PINNED_MISSIONS } from '../api'
+import { api, DEMO, DEMO_STUDENTS, PINNED_MISSIONS, orderMissions } from '../api'
 import { readLocal, useLoad, writeLocal } from '../hooks'
 import { ErrorState, InlineError, Shell, Sheet, Wordmark, useToast } from '../components/ui.jsx'
 import { DEFAULT_CREATURE, bossKindFor, lookForCreature } from '../components/Mascot.jsx'
@@ -92,11 +92,8 @@ function StudentHomeView({ sid, onSwitch, recordOpen }) {
   const student = data.data?.student
   const first = (student?.name ?? (sid === DEMO.studentId ? 'Maya' : '')).split(' ')[0]
   const sessions = useMemo(() => data.data?.sessions ?? [], [data.data])
-  // Seeded missions (Maya's a_frac, the SAT ones) are pinned first for the demo.
-  const assignments = useMemo(() => {
-    const pinned = (a) => PINNED_MISSIONS.includes(a.id)
-    return [...(data.data?.assignments ?? [])].sort((x, y) => pinned(y) - pinned(x))
-  }, [data.data])
+  // DATA-1: each student's newest showcase mission is pinned first (Maya: a_tri, Theo: a_trig).
+  const assignments = useMemo(() => orderMissions(data.data?.assignments ?? []), [data.data])
 
   const missions = useMemo(
     () =>
@@ -265,7 +262,12 @@ function StudentHomeView({ sid, onSwitch, recordOpen }) {
           <>
             {/* TOM-1: Pip front and center in today's scene (a Talking Tom home); poke it for a dry line. */}
             <div className="home-stage home-tom" data-pip-state={homeState} style={{ '--card-h': `${cardH}px` }}>
-              <Scene2D scene={sceneFor({ assignmentId: current.a.id })} theme="night" className="home-tom__scene" variant="lite" />
+              <Scene2D
+                scene={sceneFor({ assignmentId: current.a.id, scene: current.a.scene ?? current.a.lesson?.scene })}
+                theme="night"
+                className="home-tom__scene"
+                variant="lite"
+              />
               <div className="home-stage__room" ref={stageBox}>
                 {stageH > 0 && (
                   <TalkingMascot
@@ -384,11 +386,14 @@ function StudentHomeView({ sid, onSwitch, recordOpen }) {
                 {a.boss?.emoji ?? '👾'}
               </span>
               <span className="mission-row__copy">
-                <span className="mission-row__state">{done ? 'Defeated' : active ? 'In progress' : 'New mission'}</span>
+                <span className="mission-row__state">
+                  {done ? 'Defeated' : active ? 'In progress' : 'New mission'}
+                  {a.boss?.name ? ` · ${a.boss.name}` : ''}
+                </span>
                 <span className="mission-row__topic">{a.topic}</span>
               </span>
               {active ? (
-                <Link className="gel-btn gel-btn--sm" to={`/student/mission/${active.id}`}>
+                <Link className="gel-btn gel-btn--sm gel-btn--secondary" to={`/student/mission/${active.id}`} aria-label={`Play ${a.topic}`}>
                   Play
                 </Link>
               ) : done ? (
@@ -397,7 +402,8 @@ function StudentHomeView({ sid, onSwitch, recordOpen }) {
                 </Link>
               ) : (
                 <button
-                  className="gel-btn gel-btn--sm"
+                  className="gel-btn gel-btn--sm gel-btn--secondary"
+                  aria-label={`Play ${a.topic}`}
                   onClick={() => {
                     setSheet(null)
                     setPicker({ assignment: a })

@@ -587,6 +587,34 @@ async function run(vp) {
     }
   })
 
+  // F14 / D-28: the card's Next opens "Unlocked", which lists exactly what the K.O. payoff returned.
+  await step('K.O. card Next -> Unlocked shows reformed Duke + club stage (payoff)', async () => {
+    const s = await api(`/sessions/${sid}`)
+    // The previous step scrolled the Rivera beat into view; go back to the card beat first.
+    await P.evaluate(() => document.querySelector('.ko__beats')?.scrollTo({ left: 0, behavior: 'instant' }))
+    await sleep(500)
+    await P.locator('.ko__foot button.ko__next').click()
+    await sleep(1000)
+    const beat = P.locator('.ko-beat--unlocked')
+    const text = (await beat.innerText().catch(() => '')) ?? ''
+    const onScreen = await beat
+      .evaluate((e) => Math.abs(e.getBoundingClientRect().left - e.closest('.ko__beats').getBoundingClientRect().left) < 4)
+      .catch(() => false)
+    const button = await P.locator('.ko__foot .ko__next').innerText().catch(() => null)
+    await shot('16b-ko-unlocked')
+    await fit('koUnlocked')
+    const crew = (s.payoff?.new_crew ?? []).map((m) => m.name)
+    const unlocked = s.payoff?.unlocked ?? []
+    return {
+      pass: onScreen && /Duke/.test(text) && /club stage/i.test(text) && crew.some((n) => /Duke/.test(n)) && unlocked.includes('club_stage'),
+      onScreen,
+      crew,
+      unlocked,
+      button,
+      text: text.replace(/\s+/g, ' ').slice(0, 200),
+    }
+  })
+
   if (vp.mobile) {
     await step(`Play screens fit one viewport (no page scroll at ${vp.w}x${vp.h})`, async () => {
       const bad = Object.entries(R.fit).filter(([, v]) => v.scrollHeight > v.innerHeight + 1)
