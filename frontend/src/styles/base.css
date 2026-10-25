@@ -694,3 +694,42 @@ p {
     scroll-behavior: auto !important;
   }
 }
+
+/* ---------- Brand: the chrome "pip" wordmark (DESIGN_SYSTEM G5 §1), shared by every register ---------- */
+.wordmark {
+  --wm: 28px;
+  display: inline-flex;
+  align-items: flex-start;
+  font: 900 var(--wm) / 0.9 'Unbounded', 'Manrope', sans-serif;
+  letter-spacing: -0.045em;
+  text-transform: lowercase;
+  color: transparent;
+  background: linear-gradient(180deg, #ffffff 0%, #d9dde5 45%, #8a90a0 53%, #eef0f4 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-stroke: calc(var(--wm) * 0.04) var(--wm-stroke, #0b0b12);
+  paint-order: stroke fill;
+  text-decoration: none;
+}
+.wordmark::after {
+  content: '';
+  width: 0.2em;
+  height: 0.2em;
+  margin: -0.05em 0 0 0.08em;
+  border-radius: 50%;
+  background: var(--accent-2, #b6ff3b);
+  box-shadow: -0.15em 0.17em 0 -0.055em var(--accent-2, #b6ff3b);
+}
+[data-theme='night'] .wordmark--holo {
+  background-image: conic-gradient(from 200deg, #2ef2ff, #b6ff3b, #ffe14d, #ff9a3c, #7b6cff, #2ef2ff);
+}
+@media (forced-colors: active) {
+  .wordmark {
+    color: CanvasText;
+    background: none;
+    -webkit-text-stroke: 0;
+  }
+  .wordmark::after {
+    background: CanvasText;
+  }
+}

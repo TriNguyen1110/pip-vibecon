@@ -1,37 +1,39 @@
-/* Pip tokens. Forest ground, ivory text, ice action, sunset accent (from willder),
-   plus a small game palette that only appears on student screens.
+/* Pip tokens. Studio = "Ink at Work" (DESIGN_SYSTEM G5 §2: black-violet ground, Signal Cyan action,
+   Acid Lime learned), plus a small game palette that only appears on student screens.
    See DESIGN_TOKENS.md for the rules. */
 :root {
   color-scheme: dark;
 
   /* Ground and surfaces */
-  --ink: #001914;
-  --surface: #0a2721;
-  --surface-2: #12372e;
-  --surface-3: #1a4639;
-  --overlay: #10372e;
-  --glass-fill: linear-gradient(120deg, rgba(10, 39, 33, 0.62), rgba(0, 25, 20, 0.52));
-  --glass-edge: rgba(215, 212, 202, 0.17);
+  --ink: #0c0a18;
+  --surface: #15122a;
+  --surface-2: #1d1936;
+  --surface-3: #262144;
+  --overlay: #1d1936;
+  --glass-fill: linear-gradient(120deg, rgba(29, 25, 54, 0.62), rgba(12, 10, 24, 0.52));
+  --glass-edge: rgba(214, 210, 230, 0.16);
   --glass-shadow: 0 20px 56px -30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(239, 239, 233, 0.05);
-  --divider: rgba(215, 212, 202, 0.12);
-  --border: rgba(215, 212, 202, 0.18);
+  --divider: rgba(214, 210, 230, 0.12);
+  --border: rgba(214, 210, 230, 0.2);
 
   /* Text roles (never alpha steps of ivory) */
-  --fg: #efefe9;
-  --fg-muted: #d4d4cd;
-  --fg-subtle: #a8b8ae;
+  --fg: #f4f2fa;
+  --fg-muted: #d6d2e6;
+  --fg-subtle: #a9a3c4;
 
   /* Action and accents */
-  --ice: #c9fcfc;
-  --ice-ink: #001914;
-  --ice-soft: rgba(201, 252, 252, 0.1);
-  --ice-line: rgba(201, 252, 252, 0.32);
+  --ice: #2ef2ff;
+  --ice-ink: #0c0a18;
+  --ice-soft: rgba(46, 242, 255, 0.1);
+  --ice-line: rgba(46, 242, 255, 0.36);
+  --accent: #2ef2ff;
+  --accent-2: #b6ff3b;
   --sunset: #f59b76;
-  --focus: #a7dfe6;
-  --ribbon: #62a2b2;
-  --success: #a6d4b4;
-  --warning: #f3c480;
-  --danger: #ef968d;
+  --focus: #2ef2ff;
+  --ribbon: #7b6cff;
+  --success: #b6ff3b;
+  --warning: #ffe14d;
+  --danger: #ffa3a3;
 
   /* Student game palette. Coral is reserved for Pip's wrong rules and boss HP. */
   --coral: #ff8a7a;
@@ -57,16 +59,16 @@
   --lift: 0 18px 40px -20px rgba(0, 0, 0, 0.7);
   --shadow-note: 0 1px 0 rgba(0, 0, 0, 0.06), 0 12px 24px -14px rgba(0, 0, 0, 0.7);
   --edge-ice: 0 4px 0 #6fb7b9, 0 10px 24px -12px rgba(201, 252, 252, 0.45);
-  --edge-dark: 0 4px 0 #061f19;
+  --edge-dark: 0 4px 0 #07040f;
   --glow-coral: 0 0 0 2px #ff8a7a, 0 0 32px -6px rgba(255, 138, 122, 0.65);
   --glow-mint: 0 0 0 2px #8fe3b0, 0 0 28px -8px rgba(143, 227, 176, 0.55);
   --glow-sun: 0 0 0 1.5px #ffd27a, 0 0 20px -6px rgba(255, 210, 122, 0.6);
 
   /* Fields */
-  --field-bg: rgba(0, 25, 20, 0.6);
-  --field-border: #7a8c84;
-  --field-border-hover: #a8b8ae;
-  --field-placeholder: #a8b8ae;
+  --field-bg: rgba(12, 10, 24, 0.6);
+  --field-border: #7a73a0;
+  --field-border-hover: #a9a3c4;
+  --field-placeholder: #a9a3c4;
 
   /* Type */
   --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
@@ -106,7 +108,66 @@
 }
 
 /* Play register: same palette, made tactile. Set by Shell game (data-register="play"). */
-[data-register='play'] {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) {
   --r-lg: 20px;
   --r-xl: 28px;
 }
+
+/* ===== Y2K x 2016 layer (DES-Y2K-1, research/Y2K_PINTEREST.md): shared tokens. The dose is set per
+   register on the shell root (data-register = play | cool | focus | studio | parent). ===== */
+/* ---------- 1. Tokens (append to :root in tokens.css) ---------- */
+:root {
+  /* Google Fonts: add &family=Silkscreen:wght@400;700&family=VT323&family=Michroma to the font URL */
+  --font-lcd: 'VT323', 'Geist Mono', ui-monospace, monospace;        /* LCD digits and readouts */
+  --font-pixel: 'Silkscreen', 'VT323', ui-monospace, monospace;      /* tiny pixel labels, >= 15px in Play */
+  --font-wide: 'Michroma', 'Unbounded', system-ui, sans-serif;       /* extended-sans tech labels, caps, letter-spacing .08em */
+
+  /* Aqua gel (Frutiger Aero + 2012-16 mobile-game pill). Dark top -> light bottom = light passing through. */
+  --y2k-aqua: linear-gradient(180deg, #0B5BC0 0%, #1670D8 50%, #2E93EE 76%, #8FE4FF 100%);   /* white label on the 50% stop 4.8:1 */
+  --y2k-aqua-rim: #06336E;                       /* 1.5px rim + 2016 pressable edge (UI boundary vs light scene > 3:1) */
+  --y2k-lime: linear-gradient(180deg, #3E9A06 0%, #66C61C 46%, #A6EE4A 80%, #D9FF9A 100%);
+  --y2k-lime-rim: #1F4F00;
+  --y2k-sun: linear-gradient(180deg, #D97A00 0%, #F5A300 46%, #FFCB3D 80%, #FFF0A8 100%);
+  --y2k-sun-rim: #6A3B00;
+  --y2k-smoke: linear-gradient(180deg, #1A1D29 0%, #2E3344 46%, #4D566E 80%, #8A93AB 100%);  /* cool register primary */
+  --y2k-smoke-rim: #000000;
+  /* The gloss cap: a pill-shaped white highlight over the top ~45% */
+  --y2k-gloss: linear-gradient(180deg, rgba(255,255,255,.92) 0%, rgba(255,255,255,.55) 45%, rgba(255,255,255,.08) 100%);
+  --y2k-caustic: inset 0 -8px 14px -4px rgba(190,250,255,.75);   /* bottom inner glow */
+
+  /* Liquid chrome: sky reflected on top, horizon line at 50%, ground below */
+  --y2k-chrome: linear-gradient(180deg, #FFFFFF 0%, #E9EDF2 20%, #A9B2BD 46%, #3C434D 50%, #7D8794 62%, #D5DBE2 82%, #FFFFFF 100%);
+  --y2k-chrome-soft: linear-gradient(180deg, #FFFFFF 0%, #E4E8EE 45%, #B9C1CB 52%, #EEF1F5 100%);  /* = existing --chrome, for panels */
+  --y2k-chrome-edge: #2A2F38;
+
+  /* Translucent candy plastic (iMac G3 / handheld shell), gender-neutral colourways */
+  --y2k-plastic-aqua: linear-gradient(160deg, rgba(120,220,255,.62), rgba(20,140,210,.42));
+  --y2k-plastic-lime: linear-gradient(160deg, rgba(200,255,120,.60), rgba(90,190,30,.40));
+  --y2k-plastic-smoke: linear-gradient(160deg, rgba(150,160,190,.45), rgba(20,24,40,.62));
+  --y2k-plastic-ribs: repeating-linear-gradient(90deg, rgba(255,255,255,.14) 0 2px, transparent 2px 7px);
+
+  /* LCD panels */
+  --y2k-lcd-green: #C3D19B;  --y2k-lcd-green-ink: #1E2A12;   /* 9.3:1 */
+  --y2k-lcd-blue:  #A8E6FF;  --y2k-lcd-blue-ink:  #04253D;   /* 11.5:1 */
+  --y2k-lcd-night: #0A1630;  --y2k-lcd-night-ink: #7CF4FF;   /* 13.9:1, cool register */
+  --y2k-lcd-dots: radial-gradient(rgba(0,0,0,.07) 1px, transparent 1.3px) 0 0 / 3px 3px;
+  --y2k-lcd-inset: inset 0 2px 5px rgba(0,0,0,.38), inset 0 0 0 2px rgba(0,0,0,.12), 0 1px 0 rgba(255,255,255,.55);
+
+  /* Window chrome (generic, no OS logos) */
+  --y2k-titlebar: linear-gradient(180deg, #6DB4FF 0%, #2569DB 40%, #1550C4 56%, #2F78E6 100%);   /* white title on band 5.0-6.6:1 */
+  --y2k-titlebar-smoke: linear-gradient(180deg, #4A5168 0%, #262B3B 50%, #12151F 52%, #2A3045 100%);
+
+  /* Bubbles and sparkles */
+  --y2k-bubble: radial-gradient(circle at 32% 28%, rgba(255,255,255,.95) 0 7%, rgba(255,255,255,.3) 15%, rgba(170,235,255,.12) 45%, rgba(46,190,240,.38) 68%, rgba(255,255,255,.75) 71%, transparent 73%);
+  --y2k-star4: polygon(50% 0, 57% 43%, 100% 50%, 57% 57%, 50% 100%, 43% 57%, 0 50%, 43% 43%);
+
+  /* Cybercore duotone and scanlines (cool register only) */
+  --y2k-cyber: linear-gradient(180deg, #0A0F3D 0%, #1B2A9E 55%, #3F5BFF 100%);
+  --y2k-scanlines: repeating-linear-gradient(0deg, rgba(255,255,255,.055) 0 1px, transparent 1px 3px);
+
+  /* Radii */
+  --r-y2k-blob: 42% 58% 46% 54% / 56% 48% 52% 44%;   /* skinned-player / blob window */
+  --r-y2k-bezel: 44px;                               /* device bezel */
+  --r-y2k-window: 12px 12px 8px 8px;
+}
+

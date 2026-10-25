@@ -1,9 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
+import Pip2D from '../../pip2d/Pip2D.jsx'
 import { MuteButton, PagerControls, TalkingMascot, useBoxHeight, usePager } from '../game.jsx'
 import { enqueueLine, sayLines, speak, stingLine } from '../../voice'
+import { accessoryFor, bossKindFor } from '../Mascot.jsx'
 import { Glints, InlineError } from '../ui.jsx'
 import { CIRCLED } from '../../lib'
+import { usePipName } from '../../identity'
 
 const PLAIN = {
   explained: 'You explained this in your own words.',
@@ -33,16 +36,35 @@ const pretty = (s) =>
     .replace(/\b2\/5\b/g, '⅖')
     .replace(/\b1\/4\b/g, '¼')
 
+const ITEM_NAMES = { half_pin: 'half pin', fixed_it_star: 'fixed-it star' }
+const itemName = (id) => ITEM_NAMES[id] ?? String(id).replace(/_/g, ' ')
+
+// The moment worth showing: the rule fixed after a re-teach, else the last correct one (its message index).
+function fixedRuleIndex(session) {
+  const r = session.brain?.find((x) => x.fixed_after) ?? session.brain?.filter((x) => x.correct).at(-1)
+  return Number.isInteger(r?.msg_index) ? r.msg_index : -1
+}
+
 function serial(id = '') {
   let h = 7
   for (const ch of id) h = (h * 31 + ch.charCodeAt(0)) % 9973
   return String(h % 10000).padStart(4, '0')
 }
 
+// The equation the card strikes: the lesson's own (ko_equation) when it has one, a hand-picked one for the
+// seeded triangle demo (CONTRACT v3.6: "A = b × h"), else the last equation in the misconception.
+const KO_EQUATIONS = { a_tri: ['A', 'b × h'] }
+function cardEquation(assignment) {
+  const own = assignment?.ko_equation
+  if (Array.isArray(own) && own.length === 2) return own
+  if (typeof own === 'string' && own.includes('=')) return own.split('=').map((x) => x.trim())
+  return KO_EQUATIONS[assignment?.id] ?? wrongEquation(assignment?.misconception)
+}
+
 function KoCard({ session, assignment, nickname, pipLine }) {
   const [flipped, setFlipped] = useState(false)
   const boss = assignment?.boss ?? {}
-  const eq = wrongEquation(assignment?.misconception)
+  const eq = cardEquation(assignment)
   const fixedRule = session.brain?.find((r) => r.fixed_after) ?? session.brain?.filter((r) => r.correct).at(-1)
   const date = new Date(session.created_at ?? Date.now()).toLocaleDateString([], {
     month: 'short',
@@ -107,9 +129,12 @@ export default function KO({
   finishing,
   finisherErr,
   onShowBrain,
+  onShare,
+  onWear,
   home = '/student',
 }) {
   const boss = assignment?.boss ?? { name: 'The Boss', emoji: '👾' }
+  const pipName = usePipName()
   const weapons = session.weapons ?? []
   // fight: pick a finishing move. hit/stamp: the loud part. card: the quiet part.
   const [phase, setPhase] = useState(session.finisher || weapons.length === 0 ? 'card' : 'fight')
@@ -133,18 +158,31 @@ export default function KO({
   }, [])
   // Announcer stings: "K.O." on the stamp, "BRAIN UPGRADED" once the card shows (3 s apart).
   useEffect(() => {
-    if (phase === 'stamp') sayLines([stingLine('K.O.')])
+    if (phase === 'stamp')
+      sayLines([
+        stingLine('K.O.'),
+        boss.lines?.ko && { speaker: 'boss', text: boss.lines.ko, boss: boss.name, boss_id: bossKindFor(boss.name, boss.emoji) },
+      ])
     if (phase !== 'card') return
     const t = setTimeout(() => {
       const s = stingLine('BRAIN UPGRADED')
       if (s) enqueueLine(s)
     }, 2200)
     return () => clearTimeout(t)
+    // Fire once per phase change; the boss doesn't change during the K.O.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [phase])
+  // F11 runway walk (DESIGN_SYSTEM G4 §4): the stamp opens the walk (~1.9s), then "The new look." holds for a
+  // tap (or moves on by itself after a few seconds), then the quiet card.
   useEffect(() => {
     if (phase === 'stamp' && session.finisher) {
-      timers.current.push(setTimeout(() => setPhase('card'), 1000))
+      timers.current.push(setTimeout(() => setPhase((p) => (p === 'stamp' ? 'newlook' : p)), 1900))
     }
+    if (phase === 'newlook') {
+      speak(`I'm v${v} now. that's on you.`)
+      timers.current.push(setTimeout(() => setPhase((p) => (p === 'newlook' ? 'card' : p)), 3600))
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [phase, session.finisher])
   useEffect(() => {
     if (phase === 'hit' && finisherErr) setPhase('fight')
@@ -161,9 +199,16 @@ export default function KO({
     onFinisher(w)
     timers.current.push(setTimeout(() => setPhase((p) => (p === 'hit' ? 'stamp' : p)), 620))
   }
+  // Tap to skip: through the walk to the new look, and from the new look to the card.
   const skip = () => {
-    if ((phase === 'stamp' || phase === 'hit') && session.finisher) setPhase('card')
+    if (!session.finisher) return
+    if (phase === 'stamp' || phase === 'hit') setPhase('newlook')
+    else if (phase === 'newlook') setPhase('card')
   }
+  const payoff = session.payoff ?? null
+  const newItem = payoff?.new_items?.find((x) => x !== 'fixed_it_star') ?? payoff?.new_items?.[0] ?? null
+  const lookNo = String(payoff?.card?.card_no ?? Math.max(1, v - 1)).padStart(2, '0')
+  const comeback = (session.reteach_count ?? 0) >= 1
 
   const rows =
     report?.student_view?.length > 0
@@ -177,11 +222,82 @@ export default function KO({
             : (PLAIN[c.status] ?? c.status),
         }))
 
+  if (phase === 'newlook') {
+    return (
+      <div className="ko ko--newlook game play-screen" onClick={skip}>
+        <div className="newlook__stage">
+          <span className="newlook__spot" aria-hidden />
+          <span className="newlook__pip" aria-hidden>
+            <Pip2D
+              creature={session.creature ?? 'capybara'}
+              vibe={session.vibe ?? 'cool'}
+              accessory={accessoryFor(newItem ? [accessory, newItem].filter((x) => x && x !== 'none') : accessory, session.vibe ?? 'cool')}
+              version={v}
+              pose="pose"
+              mood="proud"
+              size={230}
+            />
+          </span>
+        </div>
+        <section className="newlook__copy" aria-live="polite">
+          <h1 className="newlook editorial">The new look.</h1>
+          <div className="look-card">
+            <span>
+              LOOK {lookNo} — {pipName.toUpperCase()} V{v}
+            </span>
+            {newItem && <span>WEARING: THE {itemName(newItem).toUpperCase()}</span>}
+            {comeback && (
+              <span>
+                FIXED IT, {session.reteach_count} RE-TEACH{session.reteach_count > 1 ? 'ES' : ''}
+              </span>
+            )}
+          </div>
+          <span className="y2k-chrome-text newlook__save" style={{ '--size': '30px' }}>
+            Brain v{v}
+          </span>
+          {newItem && onWear && (
+            <button
+              type="button"
+              className="gel-btn gel-btn--sm"
+              onClick={(e) => {
+                e.stopPropagation()
+                onWear(newItem)
+                setPhase('card')
+              }}
+            >
+              Wear it
+            </button>
+          )}
+          <p className="ko__skip">Tap to keep going</p>
+        </section>
+      </div>
+    )
+  }
+
   if (phase !== 'card') {
     return (
       <div className={`ko ko--fight ko--${phase} game play-screen`} onClick={skip}>
-        <div className="ko__stage" ref={stageBox}>
-          {stageH > 0 && (
+        <div className={`ko__stage${phase === 'stamp' ? ' ko__stage--walk' : ''}`} ref={stageBox}>
+          {phase === 'stamp' && (
+            <>
+              <span className="catwalk" aria-hidden />
+              <span className="strut" aria-hidden>
+                <Pip2D
+                  creature={session.creature ?? 'capybara'}
+                  vibe={session.vibe ?? 'cool'}
+                  accessory={accessoryFor(accessory, session.vibe ?? 'cool')}
+                  version={v}
+                  pose="strut"
+                  mood="proud"
+                  size={Math.round(Math.min(stageH * 0.62, 300))}
+                />
+              </span>
+              {[0.15, 0.55, 0.95, 1.35].map((t, i) => (
+                <i key={t} className={`camflash camflash--${i % 2 ? 'r' : 'l'}`} style={{ '--t': `${t}s`, top: `${18 + i * 14}%` }} aria-hidden />
+              ))}
+            </>
+          )}
+          {phase !== 'stamp' && stageH > 0 && (
             <TalkingMascot
               creature={session.creature ?? 'blob'}
               look={session.look}
@@ -198,9 +314,16 @@ export default function KO({
             />
           )}
           {phase === 'stamp' && (
-            <span className="ko__stamp" aria-hidden>
-              K.O.
-            </span>
+            <>
+              <span className="ko__stamp y2k-chrome-text" aria-hidden>
+                K.O.
+              </span>
+              <span className="ko-sparkles" aria-hidden>
+                <i className="y2k-star y2k-star--glint" />
+                <i className="y2k-star y2k-star--glint" />
+                <i className="y2k-star y2k-star--glint" />
+              </span>
+            </>
           )}
         </div>
         {phase === 'fight' ? (
@@ -218,7 +341,7 @@ export default function KO({
           </section>
         ) : (
           <section className="ko__pick" role="status">
-            <h1 className="ko__title">{boss.name} has left Pip’s brain.</h1>
+            <h1 className="ko__title">{boss.name} has left {pipName}’s brain.</h1>
             {session.finisher && <p className="ko__finisher">{finisherCaption(session.finisher, boss.name)}</p>}
             <span className="sticker sticker--chrome">
               Brain v{prevV} → v{v}
@@ -250,11 +373,17 @@ export default function KO({
             <span className="sticker sticker--chrome brain-badge--old">Brain v{prevV}</span>
             <span aria-hidden>→</span>
             <span className="sticker sticker--chrome brain-badge--new">Brain v{v}</span>
+            <i className="y2k-star y2k-star--glint" aria-hidden />
             <Glints />
           </div>
           <div className="ko__cardwrap">
             <KoCard session={session} assignment={assignment} nickname={nickname} pipLine={pipLine} />
             <p className="ko__hint">Tap the card to flip it. It’s yours to keep.</p>
+            {onShare && fixedRuleIndex(session) >= 0 && (
+              <button type="button" className="gel-btn gel-btn--secondary gel-btn--sm" onClick={() => onShare(fixedRuleIndex(session))}>
+                Show my family
+              </button>
+            )}
           </div>
         </section>
 
@@ -286,13 +415,25 @@ export default function KO({
                 👾
               </span>
               <span className="sticker">
-                {/fraction|denominator/i.test(assignment?.topic ?? '') ? 'Divid████' : '████████'}
+                {'████████'}
               </span>
             </div>
           </section>
         </section>
 
         <section className="ko-beat ko-beat--rivera" aria-label="What Ms. Rivera sees">
+          <div className="ko-rivera__pip" aria-hidden>
+            <TalkingMascot
+              creature={session.creature ?? 'blob'}
+              look={session.look}
+              accessory={accessory}
+              vibe={session.vibe}
+              mood="proud"
+              env="room"
+              framing="default"
+              height={170}
+            />
+          </div>
           <section className="panel stack rivera" aria-label="Here's what Ms. Rivera sees">
             <h2 className="rivera__title">What Ms. Rivera sees</h2>
             <p className="rivera__sub">The same thing you see. Nothing else.</p>

@@ -2,7 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useState } from 'rea
 import { Link, useNavigate } from 'react-router-dom'
 import { api } from '../api'
 import { useLongPress } from '../hooks'
-import { setMetaColor, usePlayTheme } from '../theme'
+import { setMetaColor, themeVars, useAudience, usePlaySkin, usePlayTheme, useStudentTheme } from '../theme'
 
 /* ---------- Toasts ---------- */
 const ToastCtx = createContext(() => {})
@@ -120,6 +120,15 @@ export function Sheet({ open, onClose, label, children }) {
 }
 
 /* ---------- Chrome ---------- */
+// The brand wordmark (DESIGN_SYSTEM G5 §1): chrome "pip" with Pip's lime thought bubble.
+export function Wordmark({ size = 24, holo, className = '' }) {
+  return (
+    <span className={`wordmark${holo ? ' wordmark--holo' : ''} ${className}`} style={{ '--wm': `${size}px` }} aria-label="pip">
+      pip
+    </span>
+  )
+}
+
 export function PipMark({ size = 26 }) {
   return (
     <svg className="brand__mark" width={size} height={size} viewBox="0 0 64 64" aria-hidden>
@@ -137,8 +146,7 @@ export function TopBar({ who, initials, right, game }) {
     <header className="topbar">
       <div className="topbar__inner">
         <Link to="/" className="brand" aria-label="Pip home">
-          <PipMark />
-          Pip
+          <Wordmark size={24} />
         </Link>
         {!game && <span className="chip" style={{ minHeight: 24, fontSize: 13 }}>Bright Path Tutoring</span>}
         <div className="topbar__who">
@@ -167,16 +175,22 @@ export function Backdrop({ game }) {
 }
 
 // `bar={false}`: one-screen game layouts draw their own round icon buttons instead of the top bar.
-export function Shell({ who, initials, right, game, children, footer = true, bar = true }) {
+export function Shell({ who, initials, right, game, children, footer = true, bar = true, audience }) {
   const [theme] = usePlayTheme()
+  const [skin] = usePlaySkin()
+  const [aud] = useAudience()
+  const [stTheme] = useStudentTheme()
   useEffect(() => {
     setMetaColor(!!game, theme)
-  }, [game, theme])
+  }, [game, theme, skin])
   return (
     <div
       className={`shell${bar ? '' : ' shell--bare'}`}
-      data-register={game ? 'play' : 'studio'}
+      data-register={game ? (audience ?? aud) : 'studio'}
+      data-student-theme={game && stTheme ? stTheme.id : undefined}
+      style={game && stTheme ? themeVars(stTheme) : undefined}
       data-theme={game ? theme : undefined}
+      data-skin={game ? skin : undefined}
     >
       <Backdrop game={game} />
       {bar && <TopBar who={who} initials={initials} right={right} game={game} />}

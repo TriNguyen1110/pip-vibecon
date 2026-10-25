@@ -1,7 +1,10 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { api, studentHomePath } from '../api'
-import { readLocal, useLoad } from '../hooks'
+import { readLocal, useLoad, useLongPress, writeLocal } from '../hooks'
+import { setPipName, usePipName } from '../identity'
+import { Scene2D, sceneFor } from '../scenes'
+import { copyFor, noteGrade, useAudience, usePlayTheme } from '../theme'
 import QuizWait from '../components/mission/QuizWait.jsx'
 import { Dots, ErrorState, Loading, Shell, useToast } from '../components/ui.jsx'
 import { LevelMap } from '../components/mission/MissionCard.jsx'
@@ -18,19 +21,21 @@ import {
   useBoxHeight,
   usePager,
 } from '../components/game.jsx'
-import { CIRCLED, findQuoteSource, isCrit, isProcedureOnly } from '../lib'
+import { CIRCLED, findQuoteSource, isCrit, isProcedureOnly, stepTitle } from '../lib'
 import { enqueueLine, prefetchTTS, sayLines, setVoiceContext, speak, stingLine, tapLine, voiceForVibe } from '../voice'
 import { bossKindFor } from '../components/Mascot.jsx'
 
-// Boss taunts while she types (frontend templates using boss.name). No "!" on student screens.
+// Boss taunts while the student types: the lesson's own boss lines (boss.lines.taunt) when it has them,
+// else generic formal-villain templates. No "!" on student screens.
 const TAUNTS = [
-  (n) => `“Mamma mia, you will never explain it.” — ${n}`,
+  (n) => `“You will not explain it. I am quite certain of that.” — ${n}`,
   (n) => `${n} is reading over your shoulder.`,
   (n) => `${n} is doing little stretches. Unbothered.`,
   (n) => `${n} is pretending not to listen.`,
 ]
-const FRACTION_TAUNTS = [(n) => `${n} adds the bottoms just to annoy you.`, (n) => `“Bottoms are numbers too.” — ${n}`]
-// Boss lines are spoken short: the caption without its "— Name" attribution or quote marks.
+const tauntsFor = (boss) =>
+  boss?.lines?.taunt?.length ? boss.lines.taunt.map((t) => (n) => `“${t}” — ${n}`) : TAUNTS
+// Boss lines are spoken short: the caption without its "— Name" attribution, quote marks or HP.
 const bossLine = (t = '') =>
   String(t)
     .replace(/\s+—\s+[^—]*$/, '')
@@ -38,7 +43,6 @@ const bossLine = (t = '') =>
     .replace(/[“”"]/g, '')
     .replace(/\s*[−-]\d+\s*HP\.?$/i, '')
     .trim()
-const tauntsFor = (topic = '') => (/fraction|denominator/i.test(topic) ? [...TAUNTS, ...FRACTION_TAUNTS] : TAUNTS)
 
 export default function Mission() {
   const { sessionId } = useParams()
@@ -88,6 +92,15 @@ function MissionView({ initial }) {
   const wide = useWide()
   const first = (student?.name ?? 'Maya').split(' ')[0]
   const home = studentHomePath(session.student_id)
+  // Audience register (play / cool / focus) from the grade or the student's own choice: copy tone only here.
+  const sat = /^a_sat/.test(assignment?.id ?? '') || /^sat/i.test(assignment?.topic ?? '')
+  const [aud] = useAudience(student?.grade, sat)
+  useEffect(() => noteGrade(student?.grade, sat), [student?.grade, sat])
+  useEffect(() => {
+    if (student?.pip_name) setPipName(student.pip_name)
+  }, [student?.pip_name])
+  const pipName = usePipName()
+  const named = (label) => (pipName === 'Pip' ? label : label.replace('Pip', pipName).replace(/\bpip\b/, pipName.toLowerCase()))
 
   const concepts = useMemo(() => {
     if (assignment?.concepts?.length) return assignment.concepts
@@ -99,6 +112,7 @@ function MissionView({ initial }) {
   const [input, setInput] = useState('')
   const [pending, setPending] = useState(null)
   const [sending, setSending] = useState(false)
+  const sendingRef = useRef(false)
   const [focus, setFocus] = useState(null)
   const [fx, setFx] = useState(null) // { kind: hit|heal|whiff, crit, n, amount }
   const [fcap, setFcap] = useState(null) // floating caption near the boss
@@ -121,6 +135,8 @@ function MissionView({ initial }) {
   const endRef = useRef(null)
   const inputRef = useRef(null)
   const lastTaunt = useRef(0)
+  const holdToQuiz = useLongPress(() => quizRef.current?.(), 800)
+  const quizRef = useRef(null)
   const timers = useRef({})
   const fxN = useRef(0)
   const abortRef = useRef(null)
@@ -134,6 +150,9 @@ function MissionView({ initial }) {
     ? transcript.slice(session.reteach_from ?? 0).filter((m) => m.from === 'student').length
     : 0
   const canQuiz = session.reteach_concept ? retaughtMsgs > 0 : studentMsgs > 0
+  // The quiz opens when the server says Pip is ready (ready_for_quiz); re-teach keeps "after one text".
+  const quizOpen =
+    canQuiz && (session.reteach_concept || session.ready_for_quiz === undefined || session.ready_for_quiz === true)
   const lastPip = [...transcript].reverse().find((m) => m.from === 'pip')
   const lastMe = [...transcript].reverse().find((m) => m.from === 'student')
 
@@ -212,6 +231,7 @@ function MissionView({ initial }) {
         toast(`${unlocked.length > 1 ? 'Weapons' : 'Weapon'} unlocked: ${unlocked.join(', ')}`)
       }
       if (next.mood !== prev.mood) setReaction((r) => r + 1)
+      if (evs.some((e) => e.kind === 'family_shared')) toast('Ms. Rivera shared this with your family.')
       // Voices in turn, never overlapping: CRITICAL sting, Pip's line, then the boss's caption.
       const said = fresh.filter((m) => m.from === 'pip').map((m) => m.text)
       const bossEv = dealt.find((e) => (e.kind === 'hit' || e.kind === 'heal') && e.caption)
@@ -252,35 +272,60 @@ function MissionView({ initial }) {
     }
   }, [status, session.gap_report, id])
 
-  async function send(textArg) {
+  // Double texts are fine (student research): while Pip is thinking, extra messages wait in an outbox,
+  // show right away, and go out one turn at a time, in order, after the reply. Never parallel turns.
+  const outbox = useRef([])
+  const [queued, setQueued] = useState([])
+
+  function send(textArg) {
     const text = (textArg ?? input).trim()
-    if (!text || sending) return
-    setPending({ text })
+    if (!text) return
     setInput('')
+    setTapSay(null)
+    if (sendingRef.current) {
+      outbox.current.push(text)
+      setQueued([...outbox.current])
+      return
+    }
+    runTurn(text)
+  }
+
+  async function runTurn(text) {
+    sendingRef.current = true
+    setPending({ text })
     setSending(true)
     setActionErr(null)
-    setTapSay(null)
     setReaction((r) => r + 1) // Pip leans in
     scrollEnd()
     const ctrl = new AbortController()
     abortRef.current = ctrl
+    let ok = false
     try {
       const next = await api.turn(id, text, ctrl.signal)
-      // Prefetch Pip's voice so the bubble and the voice start together (at most 1.2s of extra wait).
       const said = (next.transcript ?? [])
         .slice(sessionRef.current.transcript?.length ?? 0)
         .filter((m) => m.from === 'pip')
         .map((m) => m.text)
         .join(' ')
-      if (said) await Promise.race([prefetchTTS(said), new Promise((r) => setTimeout(r, 1200))])
+      // Warm Pip's voice; the bubble shows right away and the audio + mouth start when it arrives.
+      if (said) prefetchTTS(said)
       react(sessionRef.current, next)
+      sessionRef.current = next
       setSession(next)
       setPending(null)
+      ok = true
     } catch (e) {
       setPending({ text, failed: true, error: e })
     } finally {
+      sendingRef.current = false
       setSending(false)
       scrollEnd()
+    }
+    // Next queued text, if the last one went through (a failure keeps the rest waiting for Try again).
+    if (ok && outbox.current.length) {
+      const nextText = outbox.current.shift()
+      setQueued([...outbox.current])
+      runTurn(nextText)
     }
   }
 
@@ -288,7 +333,7 @@ function MissionView({ initial }) {
     setInput(v)
     if (v.trim() && !input.trim() && Date.now() - lastTaunt.current > 20000 && status === 'teaching') {
       lastTaunt.current = Date.now()
-      const list = tauntsFor(assignment?.topic)
+      const list = tauntsFor(boss)
       const pick = list[Math.floor(Math.random() * list.length)]
       const line = pick(boss.name)
       flash('taunt', setTaunt, line, 2400)
@@ -318,6 +363,7 @@ function MissionView({ initial }) {
     }
   }
 
+  quizRef.current = () => quiz()
   async function quiz() {
     setFx(null)
     setFcap(null)
@@ -391,6 +437,17 @@ function MissionView({ initial }) {
     }, 120)
   }
 
+  // F19 (CONTRACT v3.15): the student picks a moment for the family to see. Low-key and private by default.
+  async function shareWithFamily(msgIndex) {
+    if (!Number.isInteger(msgIndex) || msgIndex < 0) return
+    try {
+      await api.shareMessage(id, msgIndex)
+      toast('Saved for your family. They only see what you pick.')
+    } catch (e) {
+      toast(e?.status === 404 ? 'Sharing with family isn’t on yet.' : 'Couldn’t share that. Try again later.')
+    }
+  }
+
   function focusStep(cid) {
     setFocus(cid)
     inputRef.current?.focus({ preventScroll: true })
@@ -398,7 +455,9 @@ function MissionView({ initial }) {
 
   const focusConcept = concepts.find((c) => c.id === (session.reteach_concept ?? focus))
   const reteachIdx = concepts.findIndex((c) => c.id === session.reteach_concept)
-  const placeholder = focusConcept ? `Explain to Pip: ${focusConcept.text}` : 'Explain it to Pip…'
+  const focusIdx = concepts.findIndex((c) => c.id === (session.reteach_concept ?? focus))
+  // Neutral step names only (D-14): the concept text is the answer she has to give.
+  const placeholder = focusConcept ? `Explain ${stepTitle(assignment, focusIdx)} to Pip…` : copyFor(aud, 'placeholder')
   const typing = !!input.trim() && !sending
 
   /* ---------- K.O. ---------- */
@@ -416,6 +475,13 @@ function MissionView({ initial }) {
           finishing={finishing}
           finisherErr={finisherErr}
           home={home}
+          onShare={shareWithFamily}
+          onWear={(item) => {
+            // Wear the earned item from here on (CONTRACT v3.7); the Look sheet can change it later.
+            const cur = readLocal('pip.look', {})
+            writeLocal('pip.look', { ...cur, accessory: item })
+            toast('Wearing it.')
+          }}
           onShowBrain={() => setShowBrainAfterKO(true)}
         />
       </Shell>
@@ -440,6 +506,7 @@ function MissionView({ initial }) {
           bossName={boss.name}
           highlight={highlight}
           endRef={endRef}
+          onShare={shareWithFamily}
         />
       </div>
     </Drawer>
@@ -447,10 +514,10 @@ function MissionView({ initial }) {
 
   const hudRight = (
     <div className="hud__right">
-      <span
-        className="sticker sticker--chrome hud__brain"
-        aria-label={`Pip's Brain version ${session.brain_version ?? 1}`}
-      >
+      <span className="y2k-capsule hud__cap" aria-label={`Pip's Brain version ${session.brain_version ?? 1}`}>
+        <i className="y2k-capsule__coin" aria-hidden>
+          🧠
+        </i>
         v{session.brain_version ?? 1}
       </span>
       <MuteButton />
@@ -462,6 +529,7 @@ function MissionView({ initial }) {
     return (
       <Shell game bar={false} footer={false}>
         <Exam
+          assignment={assignment}
           session={session}
           concepts={concepts}
           boss={boss}
@@ -489,7 +557,7 @@ function MissionView({ initial }) {
 
   /* ---------- Teaching: Talking-Tom stage, newest line as a speech bubble ---------- */
   const bubbleText = tapSay ?? lastPip?.text ?? ''
-  const her = pending ?? (lastMe ? { text: lastMe.text } : null)
+  const her = queued.length ? { text: queued.at(-1), queued: true } : (pending ?? (lastMe ? { text: lastMe.text } : null))
   const ready = nextReady(session, concepts) || !!session.reteach_concept
 
   return (
@@ -505,6 +573,7 @@ function MissionView({ initial }) {
 
         <div className="game-sub">
           <LevelMap
+            assignment={assignment}
             session={session}
             concepts={concepts}
             focus={focus}
@@ -516,7 +585,7 @@ function MissionView({ initial }) {
         {session.reteach_concept && (
           <div className="reteach-banner sticker sticker--progress">
             <span className="eyebrow">Re-teaching {CIRCLED[reteachIdx] ?? ''}</span>
-            <span className="reteach-banner__text">{concepts[reteachIdx]?.text ?? ''}</span>
+            <span className="reteach-banner__text">{stepTitle(assignment, reteachIdx)}. Fix Pip’s rule.</span>
           </div>
         )}
 
@@ -546,12 +615,14 @@ function MissionView({ initial }) {
           taunt={taunt}
           her={
             her && (
-              <div className={`msg msg--me her-line${pending?.failed ? ' is-failed' : pending ? ' is-pending' : ''}`}>
+              <div className={`msg msg--me her-line${!her.queued && pending?.failed ? ' is-failed' : her.queued || pending ? ' is-pending' : ''}`}>
                 <div className="msg__body">
                   <p className="bubble bubble--me msg__bubble" key={her.text}>
-                    {her.text}
+                    <span className="bubble__text bubble__text--2">{her.text}</span>
                   </p>
-                  {pending?.failed ? (
+                  {her.queued ? (
+                    <p className="msg__sending">{queued.length > 1 ? `${queued.length} waiting` : 'waiting'}</p>
+                  ) : pending?.failed ? (
                     <p className="msg__retry">
                       Didn’t send.{' '}
                       <button className="linklike" onClick={() => send(pending.text)}>
@@ -588,14 +659,27 @@ function MissionView({ initial }) {
               fresh={freshWeapons ?? []}
             />
           </div>
-          {canQuiz && (
+          {quizOpen ? (
             <button
               className={`gel-btn gel-btn--sm quiz-btn${ready ? ' is-ready' : ' gel-btn--secondary'}`}
               onClick={quiz}
               disabled={sending || quizBusy}
             >
-              {session.reteach_concept ? 'Let Pip retry ▶' : 'Quiz Pip ▶'}
+              {named(session.reteach_concept ? copyFor(aud, 'retry') : copyFor(aud, 'quiz'))}
             </button>
+          ) : (
+            canQuiz && (
+              // Not ready yet (ready_for_quiz): a quiet state. Hold it to quiz anyway, so nobody is trapped.
+              <button
+                className="gel-btn gel-btn--sm gel-btn--secondary keep-teaching"
+                onClick={() => flash('tap', setTapSay, 'Teach me a bit more first. Hold the button if you want to quiz me anyway.', 3200)}
+                disabled={sending || quizBusy}
+                aria-label="Keep teaching. Hold to quiz Pip anyway."
+                {...holdToQuiz}
+              >
+                {copyFor(aud, 'keep')}
+              </button>
+            )
           )}
         </div>
 
@@ -626,7 +710,7 @@ function MissionView({ initial }) {
             />
             <button
               className="composer__send gel-btn icon-btn"
-              disabled={!input.trim() || sending}
+              disabled={!input.trim()}
               aria-label="Send to Pip"
             >
               ↑
@@ -679,6 +763,7 @@ function Stage({
   fx,
 }) {
   const [box, h] = useBoxHeight(140)
+  const [theme] = usePlayTheme()
   const [slow, setSlow] = useState(false)
   useEffect(() => {
     if (!sending) {
@@ -689,7 +774,9 @@ function Stage({
     return () => clearTimeout(t)
   }, [sending])
   return (
-    <div className="game-stage">
+    <div className="game-stage game-stage--scene">
+      {/* The mission's 2D world (src/scenes): skatepark for triangles, boba for fractions, and so on. */}
+      <Scene2D scene={sceneFor({ assignmentId: session.assignment_id })} theme={theme} className="mission-scene" />
       <div className="arena" ref={box}>
         {h > 0 && (
           <TalkingMascot
@@ -749,6 +836,7 @@ function Stage({
 
 // The exam: page 0 is Pip's Brain, then one question per screen. Pip stands behind the pages.
 function Exam({
+  assignment,
   session,
   concepts,
   boss,
@@ -824,12 +912,13 @@ function Exam({
           )}
         </div>
         {quizBusy ? (
-          <QuizWait boss={boss} creature={session.creature} retry={!!session.reteach_concept} topic={topic} />
+          <QuizWait boss={boss} creature={session.creature} retry={!!session.reteach_concept} />
         ) : (
           <div className="exam-pager snap-x quiz" ref={pager.ref}>
             <section className="exam-page exam-page--brain" aria-label="Pip's Brain">
               <h2 className="ribbon exam-ribbon">Pip’s Brain v{session.brain_version ?? 1}</h2>
               <Brain
+                assignment={assignment}
                 brain={session.brain}
                 concepts={concepts}
                 version={session.brain_version ?? 1}

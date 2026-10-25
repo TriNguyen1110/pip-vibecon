@@ -2,11 +2,11 @@
    Loud inside the fight, quiet outside it. Spec: DESIGN_SYSTEM.md. */
 
 /* ---------- Play type + buttons ---------- */
-[data-register='play'] .display,
-[data-register='play'] .sh-title,
-[data-register='play'] .mission__topic,
-[data-register='play'] .sec-title,
-[data-register='play'] .ko__title,
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .display,
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .sh-title,
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .mission__topic,
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .sec-title,
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .ko__title,
 .boss__name,
 .ko__stamp {
   font-family: var(--font-display);
@@ -23,7 +23,7 @@
 }
 
 /* Pill buttons with a pressed edge and a Y2K gloss highlight */
-[data-register='play'] .btn {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .btn {
   border-radius: var(--r-pill);
   font-weight: 800;
   font-size: 16px;
@@ -35,38 +35,38 @@
   transition: transform var(--instant) var(--ease), box-shadow var(--instant) var(--ease),
     background-color var(--fast) var(--ease);
 }
-[data-register='play'] .btn:active:not(:disabled) {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .btn:active:not(:disabled) {
   transform: translateY(3px);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 1px 0 #061f19;
 }
-[data-register='play'] .btn--primary {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .btn--primary {
   background-color: var(--ice);
   background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.38) 0%, rgba(255, 255, 255, 0) 52%);
   border-color: var(--ice);
   color: var(--ice-ink);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65), var(--edge-ice);
 }
-[data-register='play'] .btn--primary:active:not(:disabled) {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .btn--primary:active:not(:disabled) {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65), 0 1px 0 var(--ice-edge);
 }
-[data-register='play'] .btn--ghost {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .btn--ghost {
   background: transparent;
   border-color: transparent;
   box-shadow: none;
 }
-[data-register='play'] .btn--lg {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .btn--lg {
   min-height: 52px;
 }
-[data-register='play'] .btn:disabled {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .btn:disabled {
   box-shadow: none;
   transform: none;
 }
 @media (hover: hover) and (pointer: fine) {
-  [data-register='play'] .btn:hover:not(:disabled) {
+  :is([data-register='play'],[data-register='cool'],[data-register='focus']) .btn:hover:not(:disabled) {
     transform: translateY(-1px);
   }
 }
-[data-register='play'] .toast {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .toast {
   border-left: 3px solid var(--sun);
 }
 body:has(.composer-wrap) .toast-wrap {
@@ -419,7 +419,7 @@ body:has(.composer-wrap) .toast-wrap {
 .pick.is-on .pick__name {
   color: var(--ice);
 }
-[data-register='play'] .chip--btn,
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .chip--btn,
 .picker .chip--btn {
   min-height: 44px;
   padding: 0 14px;

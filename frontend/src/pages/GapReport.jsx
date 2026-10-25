@@ -173,6 +173,21 @@ function ReportBody({ report, student, assignment, session, sessionId }) {
         )}
       </section>
 
+      {report.parked?.length > 0 && (
+        <section className="glass card stack parked" aria-label="Parked questions">
+          <p className="eyebrow">Asked about, not in scope yet</p>
+          <p className="small muted">Pip said “Not in my brain yet.” and saved these for you.</p>
+          <ul className="parked__list">
+            {report.parked.map((x, i) => (
+              <li key={i}>
+                <span className="quote">“{x.text}”</span>
+                {x.term && <span className="chip small">{x.term}</span>}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
       <ParentUpdate sessionId={sessionId} studentId={session?.student_id} first={first} />
     </>
   )

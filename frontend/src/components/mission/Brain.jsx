@@ -1,11 +1,11 @@
 import { useEffect } from 'react'
-import { CIRCLED } from '../../lib'
+import { CIRCLED, stepTitle } from '../../lib'
 import { CREATURE_EMOJI } from '../Mascot.jsx'
 import { Glints } from '../ui.jsx'
 import { PagerControls, usePager } from '../game.jsx'
 
 // Pip's Brain: a thought cloud of sticky notes in the student's own words.
-export function Brain({ brain = [], concepts = [], version = 1, onNote, loading, justFixed = [], paged }) {
+export function Brain({ assignment, brain = [], concepts = [], version = 1, onNote, loading, justFixed = [], paged }) {
   const idx = (cid) => concepts.findIndex((c) => c.id === cid)
   const pager = usePager(loading ? 0 : brain.length)
   // Open on the note Pip believes wrongly: that's the one she'll fix.
@@ -57,7 +57,7 @@ export function Brain({ brain = [], concepts = [], version = 1, onNote, loading,
                   title={jumpable ? 'Show where you said this' : undefined}
                 >
                   <span className="note__tag">
-                    {CIRCLED[i] ?? '•'} {concepts[i]?.text ?? r.concept_id}
+                    {i >= 0 ? stepTitle(assignment, i) : r.concept_id}
                   </span>
                   <span className="note__quote">“{r.quote}”</span>
                   {wrong && <span className="note__flag note__flag--wrong">Pip believes this 😵</span>}

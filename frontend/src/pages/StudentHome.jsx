@@ -2,11 +2,16 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { api, DEMO, DEMO_STUDENTS, PINNED_MISSIONS } from '../api'
 import { readLocal, useLoad, writeLocal } from '../hooks'
-import { ErrorState, InlineError, Shell, Sheet } from '../components/ui.jsx'
+import { ErrorState, InlineError, Shell, Sheet, Wordmark, useToast } from '../components/ui.jsx'
 import { DEFAULT_CREATURE, lookForCreature } from '../components/Mascot.jsx'
+import { noteGrade, setStudentTheme } from '../theme'
 import { Drawer, IconButton, MuteButton, TalkingMascot, ThemeButton, useBoxHeight } from '../components/game.jsx'
 import { setVoiceContext, speak, tapLine, voiceForVibe } from '../voice'
 import MascotPicker from '../components/MascotPicker.jsx'
+import StyleGrid from '../components/StyleGrid.jsx'
+import FamilyView from '../components/FamilyView.jsx'
+import NamePip from '../components/NamePip.jsx'
+import { setPipName, usePipName } from '../identity'
 
 // `?as=s005` switches the demo student (Maya stays the default). Keyed so nothing from the
 // previous student flashes while the next one loads.
@@ -52,14 +57,15 @@ function StudentHomeView({ sid, onSwitch, recordOpen }) {
   const opened = useRef(false)
   const navigate = useNavigate()
   const [look, setLook] = useState(() =>
-    readLocal('pip.look', { creature: DEFAULT_CREATURE, accessory: 'none', vibe: 'cute' }),
+    readLocal('pip.look', { creature: DEFAULT_CREATURE, accessory: 'none', vibe: 'cool' }),
   )
   const [picker, setPicker] = useState(null) // { assignment } | { editOnly: true }
   const [busy, setBusy] = useState(false)
   const [err, setErr] = useState(null)
   const [react, setReact] = useState(0)
   const [say, setSay] = useState(null)
-  const [sheet, setSheet] = useState(null) // vault | missions | switch
+  const [sheet, setSheet] = useState(null) // vault | missions | switch | style
+  const [afterStyle, setAfterStyle] = useState(null) // the mission to open once the vibe grid is done
   const greeted = useRef(false)
   const sayTimer = useRef(null)
   const [stageBox, stageH] = useBoxHeight(120)
@@ -103,6 +109,23 @@ function StudentHomeView({ sid, onSwitch, recordOpen }) {
     : 'I don’t know much yet. That’s why I need you.'
   useEffect(() => () => clearTimeout(sayTimer.current), [])
 
+  const satHome = (data.data?.assignments ?? []).some((a) => PINNED_MISSIONS.includes(a.id) && /^a_sat/.test(a.id))
+  useEffect(() => noteGrade(student?.grade, satHome), [student?.grade, satHome])
+  useEffect(() => {
+    if (student?.pip_name) setPipName(student.pip_name)
+  }, [student?.pip_name])
+  const pipName = usePipName()
+  const [naming, setNaming] = useState(null) // the look waiting for "Name your Pip" before the mission starts
+  const toast = useToast()
+  useEffect(() => {
+    const evs = (student?.events ?? []).filter((e) => e.kind === 'family_shared')
+    const seenKey = `pip.familySeen.${sid}`
+    const seen = new Set(readLocal(seenKey, []))
+    const fresh = evs.filter((e) => !seen.has(e.id ?? e.ts))
+    if (!fresh.length) return
+    toast(`${fresh.at(-1).from?.name ?? 'Ms. Rivera'} shared this with your family.`)
+    writeLocal(seenKey, [...seen, ...fresh.map((e) => e.id ?? e.ts)])
+  }, [student?.events, sid, toast])
   useEffect(() => {
     setVoiceContext({
       vibe: look.vibe ?? 'cute',
@@ -110,6 +133,31 @@ function StudentHomeView({ sid, onSwitch, recordOpen }) {
       grade: student?.grade ?? null,
     })
   }, [look.vibe, look.pip_voice, student?.grade])
+
+  // F17: first run shows "pick your vibe" before the look picker. Maya (the demo) skips it: her style is
+  // pre-picked so the demo path stays fast; it's always in the Look sheet.
+  const styleKey = `pip.styleDone.${sid}`
+  const needsStyle = sid !== DEMO.studentId && !student?.style && !readLocal(styleKey, false)
+  function openMission(a) {
+    if (needsStyle) {
+      setAfterStyle(a)
+      setSheet('style')
+    } else setPicker({ assignment: a })
+  }
+  function styleFinished(res) {
+    writeLocal(styleKey, true)
+    if (res?.theme) setStudentTheme(res.theme)
+    if (res?.vibe) {
+      const next = { ...look, vibe: res.vibe }
+      setLook(next)
+      writeLocal('pip.look', next)
+    }
+    setSheet(null)
+    if (afterStyle) {
+      setPicker({ assignment: afterStyle })
+      setAfterStyle(null)
+    }
+  }
 
   // First tap on Pip: the greeting, out loud. After that: a short deadpan line.
   function tapPip() {
@@ -126,10 +174,17 @@ function StudentHomeView({ sid, onSwitch, recordOpen }) {
     speak(line)
   }
 
-  async function start({ creature, accessory, vibe = 'cute', pip_voice = null }) {
+  async function start({ creature, accessory, vibe = 'cute', pip_voice = null }, named = false) {
     const next = { creature, accessory, vibe, pip_voice }
     setLook(next)
     writeLocal('pip.look', next)
+    // F11: first run asks for Pip's name once (not on the demo student's path, where Pip keeps "Pip").
+    const nameKey = `pip.named.${sid}`
+    if (!picker?.editOnly && !named && sid !== DEMO.studentId && !readLocal(nameKey, false)) {
+      setNaming({ look: next, assignment: picker?.assignment })
+      setPicker(null)
+      return
+    }
     if (picker?.editOnly) {
       // Keep missions in progress in step with the new voice (CONTRACT v3.5).
       sessions
@@ -139,11 +194,13 @@ function StudentHomeView({ sid, onSwitch, recordOpen }) {
       setReact((r) => r + 1)
       return
     }
+    const target = picker?.assignment ?? naming?.assignment
+    if (!target) return
     setBusy(true)
     setErr(null)
     try {
       const s = await api.createSession({
-        assignment_id: picker.assignment.id,
+        assignment_id: target.id,
         student_id: sid,
         look: lookForCreature(creature),
         creature,
@@ -165,8 +222,9 @@ function StudentHomeView({ sid, onSwitch, recordOpen }) {
     <Shell game bar={false} footer={false}>
       <div className="game play-screen game--home">
         <header className="game-top hud home-top">
-          <span className="sticker sticker--chrome home-top__brain" aria-label={`Pip's Brain version ${brainV}`}>
-            Brain v{brainV}
+          <span className="home-top__left">
+            <Wordmark size={34} holo />
+
           </span>
           <div className="hud__right">
             <IconButton
@@ -182,6 +240,9 @@ function StudentHomeView({ sid, onSwitch, recordOpen }) {
         </header>
 
         <section className="home-stage" aria-label="Pip’s room">
+          <span className="sticker sticker--chrome home-top__brain home-plaque" aria-label={`${pipName}'s Brain version ${brainV}, taught by ${first}`}>
+            {pipName !== 'Pip' ? `${pipName} · ` : ''}Brain v{brainV} · taught by {first || 'you'}
+          </span>
           <div className="home-stage__room" ref={stageBox}>
             {stageH > 0 && (
               <TalkingMascot
@@ -189,6 +250,7 @@ function StudentHomeView({ sid, onSwitch, recordOpen }) {
                 look={look.creature}
                 accessory={look.accessory}
                 vibe={look.vibe}
+                version={brainV}
                 mood={latest?.mood === 'celebrating' ? 'celebrating' : 'confused'}
                 env="room"
                 framing="hero"
@@ -234,7 +296,7 @@ function StudentHomeView({ sid, onSwitch, recordOpen }) {
                   K.O.
                 </Link>
               ) : (
-                <button className="gel-btn gel-btn--lg home-play" onClick={() => setPicker({ assignment: current.a })}>
+                <button className="gel-btn gel-btn--lg home-play" onClick={() => openMission(current.a)}>
                   Play
                 </button>
               )}
@@ -340,6 +402,34 @@ function StudentHomeView({ sid, onSwitch, recordOpen }) {
         </ul>
       </Drawer>
 
+      <Drawer open={sheet === 'style'} onClose={() => styleFinished(null)} label="Your vibe">
+        {sheet === 'style' && (
+          <StyleGrid
+            studentId={sid}
+            initial={student?.style?.tiles ?? []}
+            onDone={styleFinished}
+            onSkip={() => styleFinished(null)}
+          />
+        )}
+      </Drawer>
+
+      <Drawer open={!!naming} onClose={() => setNaming(null)} label="Your Pip">
+        {naming && (
+          <NamePip
+            studentId={sid}
+            initial={pipName}
+            onDone={() => {
+              writeLocal(`pip.named.${sid}`, true)
+              start(naming.look, true)
+            }}
+          />
+        )}
+      </Drawer>
+
+      <Drawer open={sheet === 'family'} onClose={() => setSheet(null)} label="What my family sees">
+        {sheet === 'family' && <FamilyView studentId={sid} />}
+      </Drawer>
+
       <Drawer open={sheet === 'switch'} onClose={() => setSheet(null)} label="Students">
         <StudentSwitch sid={sid} onSwitch={onSwitch} onClose={() => setSheet(null)} />
       </Drawer>
@@ -348,9 +438,18 @@ function StudentHomeView({ sid, onSwitch, recordOpen }) {
         {picker && (
           <MascotPicker
             initial={look}
+            earned={student?.earned_items ?? []}
             busy={busy}
             cta={picker.editOnly ? 'Save look' : 'Start teaching'}
             onCancel={() => setPicker(null)}
+            onVibeGrid={() => {
+              setPicker(null)
+              setSheet('style')
+            }}
+            onFamily={() => {
+              setPicker(null)
+              setSheet('family')
+            }}
             onDone={start}
             note={<InlineError error={err} onRetry={() => start(look)} />}
           />

@@ -1,9 +1,10 @@
 import { useState } from 'react'
-import { ACCESSORY_EMOJI, CREATURE_EMOJI, DEFAULT_CREATURE, USE_3D, useThreeMeta } from './Mascot.jsx'
+import { ACCESSORY_EMOJI, CREATURE_EMOJI, DEFAULT_CREATURE, USE_3D, accessoryFor, useThreeMeta } from './Mascot.jsx'
 import { ThemedMascot } from './game.jsx'
-import Pip2D from '../pip2d/Pip2D.jsx'
+import Pip2D, { EARNED_ITEMS } from '../pip2d/Pip2D.jsx'
 import { Dots } from './ui.jsx'
-import { PIP_VOICES, speak, voiceForVibe } from '../voice'
+import { DEFAULT_PIP_VOICE, PIP_VOICES, isPipVoice, speak } from '../voice'
+import { AUDIENCES, SKINS, useAudience, usePlaySkin } from '../theme'
 
 // CONTRACT v3.3: a third choice next to creature and accessory. Default Cute.
 const VIBES = [
@@ -13,6 +14,12 @@ const VIBES = [
 ]
 
 const NAMES = {
+  half_pin: 'Half pin',
+  fixed_it_star: 'Fixed-it star',
+  starclips: 'Star clips',
+  charm: 'Charm',
+  visor: 'Visor',
+  shades: 'Shades',
   capybara: 'Capybara',
   corgi: 'Corgi',
   raccoon: 'Raccoon',
@@ -25,26 +32,40 @@ const NAMES = {
 }
 const cap = (s) => NAMES[s] ?? s.charAt(0).toUpperCase() + s.slice(1)
 
-export default function MascotPicker({ initial, cta = 'Start teaching', busy, onDone, onCancel, note }) {
-  const { CREATURES, ACCESSORIES } = useThreeMeta()
+export default function MascotPicker({ initial, cta = 'Start teaching', busy, onDone, onCancel, note, onVibeGrid, onFamily, earned = [] }) {
+  const { CREATURES, ACCESSORIES: ALL_ACC } = useThreeMeta()
+  // Earned items (CONTRACT v3.7) are wearable only once earned; never shown locked or for sale.
+  const ACCESSORIES = ALL_ACC.filter((a) => !EARNED_ITEMS.includes(a) || earned.includes(a))
   const [creature, setCreature] = useState(() =>
     CREATURES.includes(initial?.creature) ? initial.creature : DEFAULT_CREATURE,
   )
   const [accessory, setAccessory] = useState(initial?.accessory ?? 'none')
-  const [vibe, setVibe] = useState(['cute', 'cool', 'ugly'].includes(initial?.vibe) ? initial.vibe : 'cute')
-  // Pip's voice (CONTRACT v3.5): null = follows the vibe until she picks one.
-  const [pipVoice, setPipVoice] = useState(
-    PIP_VOICES.some((v) => v.id === initial?.pip_voice) ? initial.pip_voice : null,
-  )
-  const shownVoice = pipVoice ?? voiceForVibe(vibe)
+  // G4 §8: new students start on the cool vibe (less kid-cute); cute and ugly-cute stay one tap away.
+  const [vibe, setVibe] = useState(['cute', 'cool', 'ugly'].includes(initial?.vibe) ? initial.vibe : 'cool')
+  // Pip's voice (CONTRACT v3.5): Bright by default for every vibe until she picks another.
+  const [pipVoice, setPipVoice] = useState(isPipVoice(initial?.pip_voice) ? initial.pip_voice : null)
+  const shownVoice = pipVoice ?? DEFAULT_PIP_VOICE
   const [react, setReact] = useState(0)
+  const [skin, setSkin] = usePlaySkin()
+  const [aud, setAud] = useAudience()
 
   return (
     <div className="picker stack">
-      <div className="stack-sm">
-        <p className="eyebrow">Your Pip</p>
-        <h2 className="display h-section">Pick how Pip looks.</h2>
-        <p className="small muted">Any look works for any topic. Pip will still take everything literally.</p>
+      <div className="picker__head">
+        <h2 className="ribbon picker__title">Your Pip</h2>
+        <p className="picker__sub">Any look works for any topic. Pip still takes everything literally.</p>
+        <div className="picker__links">
+          {onVibeGrid && (
+            <button type="button" className="gel-btn gel-btn--secondary gel-btn--sm" onClick={onVibeGrid}>
+              Pick your vibe ▸
+            </button>
+          )}
+          {onFamily && (
+            <button type="button" className="gel-btn gel-btn--secondary gel-btn--sm" onClick={onFamily}>
+              What my family sees
+            </button>
+          )}
+        </div>
       </div>
       <div className="picker__stage">
         <ThemedMascot
@@ -61,7 +82,7 @@ export default function MascotPicker({ initial, cta = 'Start teaching', busy, on
         />
       </div>
       <div className="stack-sm">
-        <span className="label">Creature</span>
+        <span className="picker__label">Creature</span>
         <div className="picker__grid" role="radiogroup" aria-label="Creature">
           {CREATURES.map((c) => (
             <button
@@ -79,7 +100,7 @@ export default function MascotPicker({ initial, cta = 'Start teaching', busy, on
                 {USE_3D ? (
                   (CREATURE_EMOJI[c] ?? '✨')
                 ) : (
-                  <Pip2D creature={c} vibe={vibe} accessory="none" mood="deadpan" size={64} animate={false} />
+                  <Pip2D creature={c} vibe={vibe} accessory={accessoryFor('none', vibe)} mood="deadpan" size={64} animate={false} />
                 )}
               </span>
               <span className="pick__name">{cap(c)}</span>
@@ -88,7 +109,7 @@ export default function MascotPicker({ initial, cta = 'Start teaching', busy, on
         </div>
       </div>
       <div className="stack-sm">
-        <span className="label">Vibe</span>
+        <span className="picker__label">Vibe</span>
         <div className="vibe-row" role="radiogroup" aria-label="Vibe">
           {VIBES.map((v) => (
             <button
@@ -111,7 +132,7 @@ export default function MascotPicker({ initial, cta = 'Start teaching', busy, on
         </div>
       </div>
       <div className="stack-sm">
-        <span className="label">Voice</span>
+        <span className="picker__label">Voice</span>
         <div className="vibe-row" role="radiogroup" aria-label="Voice">
           {PIP_VOICES.map((v) => (
             <button
@@ -131,21 +152,62 @@ export default function MascotPicker({ initial, cta = 'Start teaching', busy, on
         </div>
       </div>
       <div className="stack-sm">
-        <span className="label">Accessory</span>
-        <div className="row" style={{ gap: 8 }} role="radiogroup" aria-label="Accessory">
+        <span className="picker__label">Mode</span>
+        <div className="vibe-row" role="radiogroup" aria-label="Mode">
+          {AUDIENCES.map((a) => (
+            <button
+              key={a.id}
+              type="button"
+              role="radio"
+              aria-checked={aud === a.id}
+              className={`gel-btn gel-btn--sm vibe-chip${aud === a.id ? '' : ' gel-btn--secondary'}`}
+              onClick={() => setAud(a.id)}
+            >
+              {a.label}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div className="stack-sm">
+        <span className="picker__label">Style</span>
+        <div className="vibe-row vibe-row--2" role="radiogroup" aria-label="App style">
+          {SKINS.map((k) => (
+            <button
+              key={k.id}
+              type="button"
+              role="radio"
+              aria-checked={skin === k.id}
+              className={`gel-btn gel-btn--sm vibe-chip${skin === k.id ? '' : ' gel-btn--secondary'}`}
+              onClick={() => setSkin(k.id)}
+            >
+              {k.label}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div className="stack-sm">
+        <span className="picker__label">Accessory</span>
+        <div className="acc-row" role="radiogroup" aria-label="Accessory">
           {ACCESSORIES.map((a) => (
             <button
               key={a}
               type="button"
               role="radio"
               aria-checked={accessory === a}
-              className={`chip chip--btn${accessory === a ? ' is-on' : ''}`}
+              className={`gel-btn gel-btn--sm acc-chip${accessory === a ? ' is-on' : ' gel-btn--secondary'}`}
               onClick={() => {
                 setAccessory(a)
                 setReact((r) => r + 1)
               }}
             >
-              <span aria-hidden>{ACCESSORY_EMOJI[a] ?? '✨'}</span> {a === 'none' ? 'None' : cap(a)}
+              <span className="acc-chip__icon" aria-hidden>
+                {USE_3D ? (
+                  (ACCESSORY_EMOJI[a] ?? '✨')
+                ) : (
+                  <Pip2D creature={creature} vibe={vibe} accessory={accessoryFor(a, vibe)} mood="deadpan" size={30} animate={false} />
+                )}
+              </span>{' '}
+              {a === 'none' ? 'None' : cap(a)}
             </button>
           ))}
         </div>
@@ -153,14 +215,14 @@ export default function MascotPicker({ initial, cta = 'Start teaching', busy, on
       {note}
       <div className="row row--between picker__actions">
         {onCancel ? (
-          <button className="btn btn--ghost" type="button" onClick={onCancel}>
+          <button className="gel-btn gel-btn--secondary gel-btn--sm" type="button" onClick={onCancel}>
             Cancel
           </button>
         ) : (
           <span />
         )}
         <button
-          className="btn btn--primary btn--lg"
+          className="gel-btn picker__go"
           type="button"
           disabled={busy}
           onClick={() => onDone({ creature, accessory, vibe, pip_voice: pipVoice })}

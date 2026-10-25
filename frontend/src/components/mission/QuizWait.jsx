@@ -24,9 +24,8 @@ const BOSS_LINES = [
   (n) => `“Use my rule, Pip. Do it.” — ${n}`,
   (n) => `${n} is nervously eating itself.`,
 ]
-const FRACTION_LINE = (n) => `“Add the bottoms, Pip. Do it.” — ${n}`
 
-export default function QuizWait({ boss, creature, retry, topic = '' }) {
+export default function QuizWait({ boss, creature, retry }) {
   const [t, setT] = useState(0)
   useEffect(() => {
     const id = setInterval(() => setT((x) => x + 1), 2600)
@@ -34,7 +33,9 @@ export default function QuizWait({ boss, creature, retry, topic = '' }) {
   }, [])
   const lines = retry ? RETRY_LINES : PIP_LINES
   const pip = lines[Math.min(t, lines.length - 1)]
-  const bossLines = /fraction|denominator/i.test(topic) ? BOSS_LINES.map((f, i) => (i === 3 ? FRACTION_LINE : f)) : BOSS_LINES
+  // The lesson's own boss taunts when it has them (data-driven), else generic lines.
+  const own = (boss?.lines?.taunt ?? []).map((t) => (n) => `“${t}” — ${n}`)
+  const bossLines = own.length ? [...own, ...BOSS_LINES.slice(1, 3)] : BOSS_LINES
   const bossLine = bossLines[t % bossLines.length](boss?.name ?? 'The boss')
   return (
     <div className="quizwait glass" role="status" aria-live="polite">

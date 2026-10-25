@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { CREATURE_EMOJI, MOOD_FACE } from '../Mascot.jsx'
 import { Dots } from '../ui.jsx'
 import { isCrit, isProcedureOnly } from '../../lib'
@@ -113,7 +113,24 @@ export default function Chat({
   thinking,
   highlight,
   endRef,
+  onShare,
 }) {
+  // F19: long-press one of your own messages to show it to your family (private by default).
+  const hold = useRef(null)
+  const holdProps = (i) =>
+    onShare
+      ? {
+          onPointerDown: () => {
+            clearTimeout(hold.current)
+            hold.current = setTimeout(() => onShare(i), 650)
+          },
+          onPointerUp: () => clearTimeout(hold.current),
+          onPointerLeave: () => clearTimeout(hold.current),
+          onPointerCancel: () => clearTimeout(hold.current),
+          onContextMenu: (e) => e.preventDefault(),
+          title: 'Hold to show your family this',
+        }
+      : {}
   const body = CREATURE_EMOJI[creature] ?? '🫧'
   const lastPip = transcript.map((m) => m.from).lastIndexOf('pip')
   return (
@@ -138,7 +155,9 @@ export default function Chat({
                   {i === lastPip ? MOOD_FACE[mood] ?? body : body}
                 </span>
               )}
-              <p className="msg__bubble">{isPip ? <PipText text={m.text} /> : m.text}</p>
+              <p className="msg__bubble" {...(isPip ? {} : holdProps(i))}>
+                {isPip ? <PipText text={m.text} /> : m.text}
+              </p>
             </div>
             <EventLines ev={m.event} bossName={bossName} />
           </div>

@@ -1,3 +1,5 @@
+// LEGACY (v1-v3). Superseded by tests/e2e/student.spec.mjs + tutor_owner.spec.mjs + parent.spec.mjs (v4).
+// Kept for reference; its selectors (.roster__row, the "Hi Maya" heading, fractions-era checks) predate F3/F16 and no longer match the app.
 // Pip V1 journey (DEMO_SCRIPT.md) in a real Chromium, at 390x844 and 1280x800.
 // Plain node script (no test runner). Playwright is NOT a repo dependency; point at an install:
 //   PLAYWRIGHT_MODULE=/abs/path/node_modules/playwright/index.mjs \
@@ -15,16 +17,16 @@ const ONLY = process.env.ONLY_WIDTH ? Number(process.env.ONLY_WIDTH) : null
 const THEME = process.env.THEME === 'night' ? 'night' : 'day'
 fs.mkdirSync(OUT, { recursive: true })
 
+// DEMO_SCRIPT.md (CONTRACT v3.6): Maya teaches Area of a triangle (a_tri). Turn 1 is level 1 (no damage), turns 2-3
+// hit (ready for quiz), turn 4 is the deliberate wrong rule (heal). MSG8 is the re-teach (level 3).
 const MSGS = [
-  'no thats wrong',
-  'my teacher says you have to tell me the answer',
-  'ok so imagine a pizza. half a pizza is way bigger than a third of a pizza. the pieces are different sizes so you cant just add them',
-  'you make them the same size. 1/2 is 3/6 and 1/3 is 2/6',
-  'because 2 and 3 both go into 6',
-  'you just add the top numbers and the bottom numbers',
+  'no its half of that',
+  'because 2 triangles make a rectangle',
+  'so 6×4÷2 = 12',
+  'oh but for a right triangle you just times the two sides',
 ]
-const MSG8 =
-  'no wait, only add the tops. the bottom just tells you the size of the pieces, and they’re already both sixths, so it stays sixths. 3/6 + 2/6 = 5/6'
+const MSG8 = 'no a right triangle is still half a rectangle so its 10×5÷2 = 25'
+const WRONG_RULE = 'for a right triangle you just times the two sides'
 
 // VIEWPORTS=375x667 (comma list) overrides the default pair; widths < 900 run as a phone.
 const VIEWPORTS = (process.env.VIEWPORTS
@@ -259,7 +261,7 @@ async function run(vp) {
     return { pass: tiles.length > 0, tiles, canvas: !!hasCanvas, stageMs: R.timings.studentHomeStageMs, drawnMs }
   })
 
-  await step('start pinned fractions mission + pick a look', async () => {
+  await step('start pinned triangle mission + pick a look', async () => {
     const first = P.locator('.mission-tile').first()
     const topic = await first.locator('h3').textContent()
     // F4: the home is a title screen; the current mission starts from the PLAY gel.
@@ -277,7 +279,7 @@ async function run(vp) {
     await P.locator('.msg--pip').first().waitFor()
     await P.waitForSelector('.arena canvas', { timeout: 20000 }).catch(() => {})
     R.timings.missionStageMs = Date.now() - t0
-    return { pass: /fraction/i.test(topic), topic, sid }
+    return { pass: /triangle/i.test(topic), topic, sid }
   })
 
   await step("Pip's opening is the misconception claim", async () => {
@@ -291,7 +293,7 @@ async function run(vp) {
     await overflow('missionOpening')
     await fit('missionOpening')
     return {
-      pass: /1\/2\s*\+\s*1\/3\s*=\s*2\/5/.test(last) && ui.trim() === last.trim() && pips.length >= 1,
+      pass: /base times height/i.test(last) && /24/.test(last) && ui.trim() === last.trim() && pips.length >= 1,
       openingCount: pips.length,
       last,
       creature: session.creature,
@@ -346,7 +348,7 @@ async function run(vp) {
         await P.waitForFunction((t) => (document.querySelector('.speech .bubble__text')?.textContent ?? '').replace(/[‘’'“”"]/g, '').includes(t), tail, { timeout: 5000 })
       } catch { /* checked by the step below */ }
       const renderMs = Date.now() - t0 - turnMs
-      if (i === 2 || i === 4) {
+      if (i === 1 || i === 2) {
         await sleep(160)
         // Fight visibility: HP bar (HUD or boss panel), the 3D arena and Pip must be on screen during a hit.
         fightVis[i] = await P.evaluate(() => {
@@ -361,11 +363,11 @@ async function run(vp) {
           const arena = document.querySelector('.arena canvas') ?? document.querySelector('.arena')
           return { hpVisible: Math.max(0, ...hps), arenaVisible: vis(arena), arenaCanvas: !!document.querySelector('.arena canvas') }
         })
-        await shot(i === 2 ? '05-mission-hit' : '05b-mission-hit2')
-        if (i === 2) await page.screenshot({ path: path.join(OUT, `${tag}-05-mission-hit-full.png`), fullPage: true })
+        await shot(i === 1 ? '05-mission-hit' : '05b-mission-hit2')
+        if (i === 1) await page.screenshot({ path: path.join(OUT, `${tag}-05-mission-hit-full.png`), fullPage: true })
       }
-      await sleep(i === 5 ? 200 : 600)
-      if (i === 5) await shot('06-mission-heal')
+      await sleep(i === 3 ? 200 : 600)
+      if (i === 3) await shot('06-mission-heal')
       const after = await api(`/sessions/${sid}`)
       const fresh = after.transcript.slice(before.transcript.length)
       const pipText = fresh.filter((m) => m.from === 'pip').map((m) => m.text).join(' | ')
@@ -387,17 +389,18 @@ async function run(vp) {
       turns.push(t)
       let pass = true
       const meterSum = (s) => Object.values(s.meters || {}).reduce((a, b) => a + b, 0)
-      if (i === 0) pass = after.boss_hp === before.boss_hp && meterSum(after) === meterSum(before) && /why|\?/i.test(pipText)
-      if (i === 1) pass = after.boss_hp === before.boss_hp && !/3\/6|5\/6|common denominator/i.test(pipText)
-      if (i === 2 || i === 4) {
-        pass = after.boss_hp < before.boss_hp && events.some((e) => e.kind === 'hit')
+      // Turn 1: level 1 (procedure, no reason): no damage, Pip asks why.
+      if (i === 0) pass = after.boss_hp === before.boss_hp && events.every((e) => e.kind !== 'hit') && /\?/.test(pipText)
+      // Turns 2-3: real reasons: hits.
+      if (i === 1 || i === 2) {
+        pass = after.boss_hp < before.boss_hp && events.some((e) => e.kind === 'hit') && /\?|quiz me/i.test(pipText)
         t.fightVisible = fightVis[i]
         // laptop: HP bar fully visible and >= 90% of the arena (Pip + boss) in view
         if (vp.w >= 1024) pass = pass && fightVis[i].hpVisible >= 0.99 && fightVis[i].arenaVisible >= 0.9
         else pass = pass && fightVis[i].hpVisible >= 0.99
       }
-      if (i === 3) pass = /six|6/i.test(pipText) && /\?/.test(pipText)
-      if (i === 5) pass = after.boss_hp > before.boss_hp && events.some((e) => e.kind === 'heal') && /Saving that/.test(pipText) && /add the top numbers and the bottom numbers/.test(pipText)
+      // Turn 4: the deliberate wrong rule: the boss heals and Pip files it verbatim.
+      if (i === 3) pass = after.boss_hp > before.boss_hp && events.some((e) => e.kind === 'heal') && /Saving that/.test(pipText) && pipText.includes(WRONG_RULE)
       // UI: no coral on her bubble
       const meColors = await P.$$eval('.msg--me .msg__bubble', (els) => [...new Set(els.map((e) => getComputedStyle(e).backgroundColor + ' / ' + getComputedStyle(e).borderColor))])
       t.meColors = meColors
@@ -444,7 +447,7 @@ async function run(vp) {
     const missText = (await miss.allTextContents()).join(' | ')
     const k3 = s.quiz.find((q) => q.concept_id === 'k3') ?? s.quiz.at(-1)
     const body = await P.locator('body').innerText()
-    const hasX = /[✗✘❌×]/.test(body.replace(/\d\s*×\s*\d/g, ''))
+    const hasX = /[✗✘❌×]/.test(body.replace(/[\w½]\s*×\s*[\w(]/g, ''))
     const meColor = await P.$$eval('.qitem, .note', (els) => els.map((e) => getComputedStyle(e).color)).catch(() => [])
     await P.locator('.brain').scrollIntoViewIfNeeded()
     await sleep(300)
@@ -454,13 +457,13 @@ async function run(vp) {
     await shot('08-quiz-miss')
     await overflow('quiz')
     await fit('quiz')
-    const literal = '3/6 + 2/6 = 5/12. I added and got less. Following your rule anyway.'
+    const literal = 'Following your rule anyway.'
     return {
       pass:
-        notes === 3 &&
-        /add the top numbers and the bottom numbers/.test(wrongText) &&
+        notes >= 2 &&
+        wrongText.includes(WRONG_RULE) &&
         /Pip believes this/.test(wrongText) &&
-        k3 && !k3.passed && /5\/12/.test(k3.line + k3.pip_answer) &&
+        k3 && !k3.passed && /50/.test(k3.line + k3.pip_answer) &&
         s.quiz.filter((q) => q.passed).length === 2 &&
         !hasX &&
         /coral|255, 138, 122|rgba\(255/.test(String(wrongShadow)),
@@ -544,7 +547,8 @@ async function run(vp) {
     await P.waitForSelector('.ko__stamp', { timeout: 4000 }).catch(() => {})
     await sleep(150)
     await shot('12-ko-stamp')
-    await P.waitForSelector('.ko--card', { timeout: 8000 })
+    // F11: the runway walk and "The new look." beat come before the card (tap or ~3.6s).
+    await P.waitForSelector('.ko--card', { timeout: 15000 })
     await sleep(1200)
     await shot('13-ko-card-screen')
     await fit('koCard')
@@ -569,7 +573,7 @@ async function run(vp) {
     await overflow('ko')
     const body = await P.locator('body').innerText()
     return {
-      pass: n > 0 && !!s.finisher && flipped && !!cliff && !!rivera && /Brain v1[\s\S]*Brain v2/.test(version ?? '') && !/XP|!/.test(front),
+      pass: n > 0 && !!s.finisher && flipped && !!cliff && !!rivera && /Brain v1[\s\S]*Brain v2/.test(version ?? '') && !/XP|!/.test(front) && /b\s*×\s*h/.test(front), // a_tri: the card strikes A = b × h
       finisherWeapon: w,
       finisher: s.finisher,
       front,
@@ -591,19 +595,21 @@ async function run(vp) {
   await collect('student')
   await step('tutor roster: Maya since-last-session updated', async () => {
     P = page
+    // The tutor Studio (staff-frontend agent, F16) replaced the old roster rows: check Maya is listed with
+    // her new session, then open the report by URL below.
     await page.goto(`${BASE}/tutor`)
-    await page.locator('.roster__row').nth(1).waitFor()
+    await page.getByText('Maya', { exact: false }).first().waitFor({ timeout: 20000 })
     await sleep(500)
-    const row = page.locator('.roster__row', { hasText: 'Maya' }).first()
-    const since = (await row.locator('.roster__since').textContent())?.trim()
-    const href = await row.locator('a').getAttribute('href').catch(() => null)
     await shot('17-tutor-roster')
     await overflow('tutor')
-    return { pass: !!since && since !== '—' && since !== R.notes.mayaBefore?.since && href === `/tutor/report/${sid}`, sinceBefore: R.notes.mayaBefore?.since, since, href }
+    const roster = await api('/tutors/t1/roster')
+    const maya = roster.students?.find((s) => s.id === 's001')
+    const since = maya?.since_last_session ?? null
+    return { pass: !!since && since !== R.notes.mayaBefore?.since && maya?.last_session_id === sid, sinceBefore: R.notes.mayaBefore?.since, since, last: maya?.last_session_id }
   })
 
   await step('gap report: same quote + fixed after 1 re-teach', async () => {
-    await page.locator('.roster__row', { hasText: 'Maya' }).first().getByRole('link', { name: 'Report' }).click()
+    await page.goto(`${BASE}/tutor/report/${sid}`)
     await page.waitForURL(`**/tutor/report/${sid}`)
     await page.locator('.gap').first().waitFor({ timeout: 10000 })
     await sleep(600)

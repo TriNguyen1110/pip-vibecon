@@ -146,7 +146,9 @@ export function HudBoss({ boss, hp, fx }) {
           <span className={`boss-emoji${v <= 0 ? ' is-ko' : ''}`}>{boss?.emoji ?? '👾'}</span>
         </span>
         <span className="hud__name boss__name">{boss?.name ?? 'The Boss'}</span>
-        <span className="hp__label">{v}</span>
+        <span className="hp__label hud__lcd y2k-lcd" aria-label={`${v} HP`}>
+          {v}
+        </span>
       </div>
       <div className="hp hp__track" role="meter" aria-valuemin={0} aria-valuemax={100} aria-valuenow={v} aria-label="Boss HP">
         <span className="hp__ghost" style={{ width: `${Math.max(ghost, v)}%` }} />
@@ -155,6 +157,14 @@ export function HudBoss({ boss, hp, fx }) {
       <Dmg dmg={fx?.amount ? fx : null} />
     </div>
   )
+}
+
+// Tray labels stay whole words: the last word plus the emoji ("Cleaver 🪓"); the full name is the label.
+function shortWeapon(w = '') {
+  const m = /^(.*?)(\s*[\p{Extended_Pictographic}\u{FE0F}\u{200D}\s]+)?$/u.exec(w.trim())
+  const words = (m?.[1] ?? w).trim().split(/\s+/)
+  const emoji = (m?.[2] ?? '').trim()
+  return `${words.at(-1) ?? w}${emoji ? ` ${emoji}` : ''}`
 }
 
 // Weapon gels for the bottom tray. Never used up; the equipped one is the sun "win" gel.
@@ -168,9 +178,10 @@ export function WeaponGels({ weapons = [], equipped, onEquip, equipping, fresh =
       disabled={!onEquip || equipping}
       aria-pressed={equipped === w}
       title={equipped === w ? `${w} (equipped)` : `Equip ${w}`}
+      aria-label={equipped === w ? `${w}, equipped` : `Equip ${w}`}
     >
       {equipped === w && <span aria-hidden>⚔</span>}
-      <span className="weapon__name">{w}</span>
+      <span className="weapon__name">{shortWeapon(w)}</span>
       {fresh.includes(w) && <Glints />}
     </button>
   ))

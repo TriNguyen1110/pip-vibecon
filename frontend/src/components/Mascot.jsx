@@ -1,5 +1,5 @@
 import { Component, Suspense, lazy, useEffect, useRef, useState } from 'react'
-import Pip2D from '../pip2d/Pip2D.jsx'
+import Pip2D, { ACCESSORIES_2D } from '../pip2d/Pip2D.jsx'
 import { CREATURES_2D } from '../pip2d/creatures'
 
 // src/three/ is owned by the 3D agent. We only import it lazily so three.js never blocks
@@ -54,7 +54,7 @@ export function lookForCreature(creature) {
   return 'doodle'
 }
 
-export const META_2D = { CREATURES: CREATURES_2D, ACCESSORIES: FALLBACK_META.ACCESSORIES, ENVIRONMENTS: FALLBACK_META.ENVIRONMENTS }
+export const META_2D = { CREATURES: CREATURES_2D, ACCESSORIES: ACCESSORIES_2D, ENVIRONMENTS: FALLBACK_META.ENVIRONMENTS }
 export const DEFAULT_CREATURE = USE_3D ? 'blob' : 'capybara'
 
 export function useThreeMeta() {
@@ -152,15 +152,16 @@ function Mascot3D(props) {
 const BOSS_MODULES = import.meta.glob('../pip2d/Boss2D.jsx')
 const loadBoss = BOSS_MODULES['../pip2d/Boss2D.jsx']
 const LazyBoss2D = loadBoss ? lazy(() => loadBoss().then((m) => ({ default: m.Boss2D ?? m.default }))) : null
-const BOSS_KINDS = ['walrus', 'penguin', 'hamster']
+const BOSS_KINDS = ['walrus', 'penguin', 'hamster', 'triangle']
 export function bossKindFor(name = '', emoji = '') {
   const k = `${name} ${emoji}`.toLowerCase()
+  if (/doublecount|duke|peacock|triangle|🦚|△/u.test(k)) return 'triangle'
   if (/penguin|🐧/u.test(k)) return 'penguin'
   if (/hamster|🐹/u.test(k)) return 'hamster'
   if (/walrus|🦭/u.test(k)) return 'walrus'
   let h = 0
   for (const ch of name) h = (h * 31 + ch.charCodeAt(0)) % 997
-  return BOSS_KINDS[h % BOSS_KINDS.length]
+  return BOSS_KINDS[h % 3] // unknown bosses: one of the three classic villains
 }
 export const bossStateFor = (hp) => (hp <= 0 ? 'KO' : hp <= 40 ? 'cracked' : 'smug')
 
@@ -209,9 +210,16 @@ function usePoke(reaction) {
   return on
 }
 
+// Pip2D draws a vibe default when no accessory is chosen (cool = frosted visor, which reads like a sweatband).
+// Students default to cool now, so "none" means none: pass an explicit empty pair. Cute keeps its star clips.
+export function accessoryFor(accessory, vibe) {
+  const none = !accessory || accessory === 'none' || (Array.isArray(accessory) && accessory.every((a) => a === 'none'))
+  return none && vibe !== 'cute' ? ['none', 'none'] : accessory
+}
+
 export function Stage2D({
   creature,
-  vibe = 'cute',
+  vibe = 'cool',
   accessory = 'none',
   mood = 'deadpan',
   form,
@@ -228,11 +236,15 @@ export function Stage2D({
   className = '',
   framing,
   animate = true,
+  version,
+  pose,
+  frame,
+  lighting,
 }) {
   const poke = usePoke(reaction)
   const name = CREATURES_2D.includes(creature) ? creature : 'capybara'
   const arena = env === 'arena' && (bossEmoji || bossName)
-  const size = Math.round(Math.max(64, Math.min(height * (framing === 'hero' ? 0.7 : 0.72), 330)))
+  const size = Math.round(Math.max(64, Math.min(height * (framing === 'hero' ? 0.62 : 0.66), 320)))
   const reduced = typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
   return (
     <div
@@ -246,12 +258,17 @@ export function Stage2D({
       <span className={`stage2d__pip${poke ? ' is-poked' : ''}`}>
         <Pip2D
           creature={name}
-          vibe={vibe ?? 'cute'}
+          vibe={vibe ?? 'cool'}
           mood={mood}
           mouth={mouth}
           viseme={viseme}
-          accessory={accessory}
+          accessory={accessoryFor(accessory, vibe ?? 'cool')}
           form={form}
+          holo={framing === 'hero'}
+          version={version}
+          pose={pose}
+          frame={frame}
+          lighting={lighting}
           size={size}
           animate={animate && !reduced}
         />

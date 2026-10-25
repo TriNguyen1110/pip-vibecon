@@ -6,6 +6,8 @@ import './styles/base.css'
 import './styles/staff.css'
 import './styles/student.css'
 import './styles/game.css'
+// AGE-2 restyle in progress (secondary.css), enabled once the markup lands:
+// import './styles/secondary.css'
 import App from './App.jsx'
 import { ToastProvider } from './components/ui.jsx'
 import AppErrorBoundary from './components/AppErrorBoundary.jsx'

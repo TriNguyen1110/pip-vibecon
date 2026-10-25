@@ -150,7 +150,11 @@ async function phone(page, w) {
 async function openPicker(P) {
   await P.locator('.home-play').first().waitFor({ timeout: 20000 })
   await P.locator('.home-play').first().click()
-  await P.getByRole('dialog', { name: "Pick Pip's look" }).waitFor()
+  // F17: a student without a picked style sees "pick your vibe" first (skippable); Maya's is pre-picked.
+  const dlg = P.getByRole('dialog', { name: "Pick Pip's look" })
+  await Promise.race([dlg.waitFor(), P.locator('.style-grid').waitFor()])
+  if (await P.locator('.style-grid').isVisible().catch(() => false)) await P.getByRole('button', { name: 'Skip' }).click()
+  await dlg.waitFor()
 }
 
 async function sendTurn(page, P, text, sid) {
@@ -392,7 +396,7 @@ const scenarios = {
     await sleep(1500)
     await m.shot('landing')
     const facts = await screenFacts(m.page)
-    m.check('phone landing = app welcome screen with Student entry', (await m.page.getByRole('link', { name: /^Student$/ }).count()) > 0, facts)
+    m.check('phone landing = app welcome screen with a student entry (center-first landing: Try as Maya)', (await m.page.getByRole('link', { name: /^Student$|Try as Maya/ }).count()) > 0, facts)
     await m.ctx.close()
   },
 

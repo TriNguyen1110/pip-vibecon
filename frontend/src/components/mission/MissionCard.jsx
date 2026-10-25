@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { CIRCLED } from '../../lib'
+import { CIRCLED, stepTitle } from '../../lib'
 
 export const TAUGHT = 50 // meter value at which a step counts as taught
 
@@ -107,7 +107,7 @@ export default function MissionCard({ session, assignment, concepts, focus, onFo
 
 // DESIGN_SYSTEM v2 level map: ① ② ③ → boss → exam on one dotted path. Tapping a step shows its
 // name as a sticker under the map for 2.4s (absolute, so nothing moves) and focuses it.
-export function LevelMap({ session, concepts, focus, onFocus, bossEmoji }) {
+export function LevelMap({ assignment, session, concepts, focus, onFocus, bossEmoji }) {
   const meters = session.meters ?? {}
   const hp = session.boss_hp ?? 100
   const step = nextStep(session, concepts)
@@ -134,10 +134,10 @@ export function LevelMap({ session, concepts, focus, onFocus, bossEmoji }) {
                 type="button"
                 className={`mstep${taught ? ' is-taught' : ''}${isNext ? ' is-next' : ''}${focus === c.id ? ' is-focus' : ''}`}
                 onClick={() => {
-                  show(`${CIRCLED[i]} ${c.text}`)
+                  show(stepTitle(assignment, i))
                   onFocus?.(c.id)
                 }}
-                aria-label={`Step ${i + 1}: ${c.text}. Understanding ${m} percent.`}
+                aria-label={`${stepTitle(assignment, i)}. Understanding ${m} percent.`}
               >
                 <span className="mstep__n" aria-hidden>
                   {taught ? '✓' : i + 1}

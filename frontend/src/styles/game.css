@@ -1,9 +1,11 @@
-/* Play game UI (DESIGN_SYSTEM.md v2.0, G2). Loaded after student.css.
+/* Play game UI. Loaded after student.css.
+   Skins (data-skin on the Play shell): "runway" (default; G4 Runway by day, Club by night) and "arcade"
+   (the G2 Daylight/Night Arcade presets, kept selectable). Every Play token is set by one of the two. 
    Part 1 is the paste-ready CSS from DESIGN_SYSTEM.md verbatim; part 2 maps it onto the F3
    one-screen layouts (classes in pages/Mission.jsx, StudentHome.jsx, mission/KO.jsx). */
 
 /* ---------- Play tokens: Daylight Arcade (default) ---------- */
-[data-register="play"], [data-register="play"][data-theme="day"] {
+:is([data-register='play'],[data-register='cool'],[data-register='focus'])[data-skin="arcade"], :is([data-register='play'],[data-register='cool'],[data-register='focus'])[data-skin="arcade"][data-theme="day"] {
   color-scheme: light;
   --font-game: 'Fredoka', 'Manrope', system-ui, sans-serif;
   --sky: linear-gradient(180deg, #BFE6FF 0%, #D8F1FF 45%, #E3FCEB 100%);
@@ -29,7 +31,7 @@
   --heading-shadow: none;
 }
 /* ---------- Play tokens: Night Arcade ---------- */
-[data-register="play"][data-theme="night"] {
+:is([data-register='play'],[data-register='cool'],[data-register='focus'])[data-skin="arcade"][data-theme="night"] {
   color-scheme: dark;
   --sky: radial-gradient(120% 60% at 50% 110%, rgba(51,225,255,.18), transparent 60%),
          linear-gradient(180deg, #0E1530 0%, #1B1F4D 100%);
@@ -55,8 +57,8 @@
 }
 
 /* ---------- Scene backgrounds (the .backdrop the Shell already renders) ---------- */
-[data-register="play"] .backdrop { background: var(--sky); }
-[data-register="play"][data-theme="day"] .backdrop::before {          /* soft clouds */
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .backdrop { background: var(--sky); }
+:is([data-register='play'],[data-register='cool'],[data-register='focus'])[data-skin="arcade"][data-theme="day"] .backdrop::before {          /* soft clouds */
   inset: 0; background:
     radial-gradient(70px 28px at 16% 12%, #fff 96%, transparent),
     radial-gradient(48px 24px at 23% 9%, #fff 96%, transparent),
@@ -65,7 +67,7 @@
     radial-gradient(160px 46px at 50% 96%, rgba(255,255,255,.75), transparent 70%);
   animation: drift 60s linear infinite alternate;
 }
-[data-register="play"][data-theme="day"] .backdrop::after {           /* a few bubbles */
+:is([data-register='play'],[data-register='cool'],[data-register='focus'])[data-skin="arcade"][data-theme="day"] .backdrop::after {           /* a few bubbles */
   opacity: 1; mix-blend-mode: normal; background:
     radial-gradient(circle at 12% 70%, rgba(255,255,255,.9) 0 2px, rgba(255,255,255,.35) 3px 9px, transparent 10px),
     radial-gradient(circle at 90% 58%, rgba(255,255,255,.9) 0 2px, rgba(255,255,255,.35) 3px 7px, transparent 8px),
@@ -73,14 +75,14 @@
     radial-gradient(circle at 30% 40%, rgba(255,255,255,.8) 0 1px, rgba(255,255,255,.3) 2px 5px, transparent 6px);
   animation: float 14s ease-in-out infinite alternate;
 }
-[data-register="play"][data-theme="night"] .backdrop::before {        /* stars, two tiles */
+:is([data-register='play'],[data-register='cool'],[data-register='focus'])[data-skin="arcade"][data-theme="night"] .backdrop::before {        /* stars, two tiles */
   inset: 0; background:
     radial-gradient(1.5px 1.5px at 20px 30px, #fff 50%, transparent),
     radial-gradient(1px 1px at 120px 80px, #fff 50%, transparent),
     radial-gradient(1.5px 1.5px at 70px 150px, #DCE3FF 50%, transparent);
   background-size: 180px 180px;
 }
-[data-register="play"][data-theme="night"] .backdrop::after {
+:is([data-register='play'],[data-register='cool'],[data-register='focus'])[data-skin="arcade"][data-theme="night"] .backdrop::after {
   opacity: .6; mix-blend-mode: normal;
   background: radial-gradient(1px 1px at 40px 60px, #fff 50%, transparent),
               radial-gradient(1.5px 1.5px at 200px 20px, #33E1FF 50%, transparent);
@@ -91,7 +93,7 @@
 @keyframes twinkle { from { opacity: .35; } to { opacity: .8; } }
 
 /* ---------- One-viewport screen frame ---------- */
-[data-register="play"] .play-screen {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .play-screen {
   height: var(--vvh, 100dvh); overflow: hidden; display: grid;
   grid-template-rows: auto auto minmax(0, 1fr) auto auto;      /* hud, map, stage, tray, composer */
   font-family: var(--font-game); color: var(--fg);
@@ -129,13 +131,13 @@
 .icon-btn__label { display: block; margin-top: 8px; font: 600 15px/1 var(--font-game); color: var(--fg); text-align: center; }
 
 /* ---------- Game panels, stickers, ribbons ---------- */
-[data-register="play"] .panel {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .panel {
   border: var(--outline-w) solid var(--panel-outline); border-radius: 24px; padding: 16px;
   background: var(--panel-fill); color: var(--fg);
   box-shadow: inset 0 2px 0 var(--panel-hi), 0 5px 0 var(--panel-edge), 0 14px 24px -14px rgba(16,33,63,.35);
 }
-[data-register="play"][data-theme="night"] .panel { -webkit-backdrop-filter: blur(12px) saturate(1.2); backdrop-filter: blur(12px) saturate(1.2); }
-[data-register="play"] .sticker {
+:is([data-register='play'],[data-register='cool'],[data-register='focus'])[data-theme="night"] .panel { -webkit-backdrop-filter: blur(12px) saturate(1.2); backdrop-filter: blur(12px) saturate(1.2); }
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .sticker {
   display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 12px;
   border: 2.5px solid var(--outline); background: #FFFFFF; color: var(--sticker-ink);
   font: 700 15px/1.1 var(--font-game); transform: rotate(var(--tilt, -3deg)); box-shadow: 0 3px 0 var(--outline);
@@ -158,55 +160,55 @@
 .ribbon::before { left: -16px; } .ribbon::after { right: -16px; transform: scaleX(-1); }
 
 /* ---------- HUD (replaces .topbar on Play) ---------- */
-[data-register="play"] .topbar { display: none; }
-[data-register="play"] .hud {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .topbar { display: none; }
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .hud {
   display: grid; grid-template-columns: 56px minmax(0, 1fr) auto; align-items: center; gap: 10px;
   padding: calc(6px + env(safe-area-inset-top)) 12px 6px; height: auto; min-height: 64px;
   background: none; border: 0; backdrop-filter: none;
 }
 .hud__name { font: 700 15px/1.1 var(--font-game); color: var(--fg); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .hud__right { display: flex; gap: 8px; }
-[data-register="play"] .hp {                          /* segmented glossy HP: 10 x 10 HP */
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .hp {                          /* segmented glossy HP: 10 x 10 HP */
   position: relative; height: 20px; border-radius: 10px; overflow: hidden;
   background: var(--track); border: var(--outline-w) solid var(--outline);
 }
-[data-register="play"] .hp__fill, [data-register="play"] .hp__ghost { position: absolute; inset: 0 auto 0 0; }
-[data-register="play"] .hp__fill { background: linear-gradient(180deg, #FFB0A6 0%, var(--coral-fill) 50%, #E04A3C 100%); transition: none; }
-[data-register="play"] .hp__ghost { background: #FFFFFF; transition: width 450ms var(--ease-out) 150ms; }
-[data-register="play"] .hp::before { content: ''; position: absolute; inset: 2px 6px auto; height: 35%; border-radius: 6px; background: rgba(255,255,255,.45); z-index: 2; }
-[data-register="play"] .hp::after { content: ''; position: absolute; inset: 0; z-index: 3;
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .hp__fill, :is([data-register='play'],[data-register='cool'],[data-register='focus']) .hp__ghost { position: absolute; inset: 0 auto 0 0; }
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .hp__fill { background: linear-gradient(180deg, #FFB0A6 0%, var(--coral-fill) 50%, #E04A3C 100%); transition: none; }
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .hp__ghost { background: #FFFFFF; transition: width 450ms var(--ease-out) 150ms; }
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .hp::before { content: ''; position: absolute; inset: 2px 6px auto; height: 35%; border-radius: 6px; background: rgba(255,255,255,.45); z-index: 2; }
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .hp::after { content: ''; position: absolute; inset: 0; z-index: 3;
   background: repeating-linear-gradient(90deg, transparent 0 calc(10% - 2px), var(--outline) calc(10% - 2px) 10%); }
-[data-register="play"] .hp__label { font: 700 18px/1 var(--font-game); font-variant-numeric: tabular-nums; color: var(--fg); }
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .hp__label { font: 700 18px/1 var(--font-game); font-variant-numeric: tabular-nums; color: var(--fg); }
 
 /* ---------- Level map (the existing .mpath / .mstep markup) ---------- */
-[data-register="play"] .mpath { display: flex; align-items: center; height: 64px; padding: 0 12px; margin: 0; list-style: none; }
-[data-register="play"] .mpath__item { display: flex; align-items: center; flex: 1 1 auto; }
-[data-register="play"] .mpath__item:last-child { flex: 0 0 auto; }
-[data-register="play"] .mpath__item:not(:last-child)::after {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .mpath { display: flex; align-items: center; height: 64px; padding: 0 12px; margin: 0; list-style: none; }
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .mpath__item { display: flex; align-items: center; flex: 1 1 auto; }
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .mpath__item:last-child { flex: 0 0 auto; }
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .mpath__item:not(:last-child)::after {
   content: ''; flex: 1; height: 8px; margin: 0 4px;
   background: radial-gradient(circle, var(--path-dot) 3px, transparent 3.5px) 0 50% / 12px 8px repeat-x;
 }
-[data-register="play"] .mpath__item:has(.is-taught)::after {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .mpath__item:has(.is-taught)::after {
   background-image: radial-gradient(circle, var(--mint-fill) 3.5px, transparent 4px);
 }
-[data-register="play"] .mstep {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .mstep {
   position: relative; flex: none; width: 48px; height: 48px; padding: 0; border-radius: 50%;
   display: grid; place-items: center; border: var(--outline-w) solid var(--outline);
   background: radial-gradient(ellipse 50% 26% at 50% 26%, rgba(255,255,255,.8), transparent), var(--gel-secondary);
   color: var(--gel-secondary-ink); font: 700 20px/1 var(--font-game); box-shadow: 0 4px 0 var(--outline);
 }
-[data-register="play"] .mstep__text, [data-register="play"] .mstep__sub { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
-[data-register="play"] .mstep .meter {                 /* progress ring; set style="--m: 60" */
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .mstep__text, :is([data-register='play'],[data-register='cool'],[data-register='focus']) .mstep__sub { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .mstep .meter {                 /* progress ring; set style="--m: 60" */
   position: absolute; inset: -7px; border-radius: 50%; height: auto; background:
     conic-gradient(var(--mint-fill) calc(var(--m, 0) * 1%), var(--track) 0);
   -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 5px), #000 calc(100% - 4px));
           mask: radial-gradient(farthest-side, transparent calc(100% - 5px), #000 calc(100% - 4px));
 }
-[data-register="play"] .mstep .meter__fill { display: none; }
-[data-register="play"] .mstep.is-next { background: radial-gradient(ellipse 50% 26% at 50% 26%, rgba(255,255,255,.7), transparent), var(--gel-primary); color: var(--gel-primary-ink); animation: node-pulse 1.2s var(--ease-out) 2; }
-[data-register="play"] .mstep.is-taught { background: radial-gradient(ellipse 50% 26% at 50% 26%, rgba(255,255,255,.7), transparent), var(--mint-fill); color: var(--sticker-ink); }
-[data-register="play"] .mstep--boss { width: 56px; height: 56px; font-size: 28px; border-color: var(--outline); box-shadow: 0 4px 0 var(--outline), 0 0 0 4px var(--coral-fill); }
-[data-register="play"] .mstep--boss.is-ko { filter: grayscale(1); opacity: .6; }
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .mstep .meter__fill { display: none; }
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .mstep.is-next { background: radial-gradient(ellipse 50% 26% at 50% 26%, rgba(255,255,255,.7), transparent), var(--gel-primary); color: var(--gel-primary-ink); animation: node-pulse 1.2s var(--ease-out) 2; }
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .mstep.is-taught { background: radial-gradient(ellipse 50% 26% at 50% 26%, rgba(255,255,255,.7), transparent), var(--mint-fill); color: var(--sticker-ink); }
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .mstep--boss { width: 56px; height: 56px; font-size: 28px; border-color: var(--outline); box-shadow: 0 4px 0 var(--outline), 0 0 0 4px var(--coral-fill); }
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .mstep--boss.is-ko { filter: grayscale(1); opacity: .6; }
 @keyframes node-pulse { 50% { box-shadow: 0 4px 0 var(--outline), 0 0 0 8px var(--ice-line); } }
 
 /* ---------- Comic speech bubbles (Talking-Tom layout) ---------- */
@@ -230,29 +232,29 @@
 /* ---------- Bottom: weapon tray + chunky input ---------- */
 .tray { display: flex; align-items: center; gap: 8px; height: 56px; padding: 0 12px; overflow-x: auto; scrollbar-width: none; }
 /* weapons: render as class="weapon gel-btn gel-btn--secondary gel-btn--sm" */
-[data-register="play"] .weapon { flex: none; }
-[data-register="play"] .weapon.is-on { --gel: var(--gel-win); --gel-ink: var(--sticker-ink); }
-[data-register="play"] .composer-wrap { padding: 8px 12px calc(8px + env(safe-area-inset-bottom)); background: none; }
-[data-register="play"] .composer {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .weapon { flex: none; }
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .weapon.is-on { --gel: var(--gel-win); --gel-ink: var(--sticker-ink); }
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .composer-wrap { padding: 8px 12px calc(8px + env(safe-area-inset-bottom)); background: none; }
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .composer {
   display: flex; align-items: center; gap: 8px; min-height: 60px; padding: 4px 4px 4px 18px;
   border-radius: 30px; border: var(--outline-w) solid var(--field-border); background: var(--field-bg);
   box-shadow: inset 0 3px 0 var(--tint-2), 0 4px 0 var(--outline);
 }
-[data-register="play"] .composer__input { font: 600 17px/1.35 'Manrope', sans-serif; color: var(--fg); background: none; border: 0; max-height: 72px; }
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .composer__input { font: 600 17px/1.35 'Manrope', sans-serif; color: var(--fg); background: none; border: 0; max-height: 72px; }
 /* send: class="composer__send gel-btn icon-btn" */
-[data-register="play"] .composer__send { width: 52px; height: 52px; min-height: 52px; }
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .composer__send { width: 52px; height: 52px; min-height: 52px; }
 
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
-  [data-register="play"] .backdrop::before, [data-register="play"] .backdrop::after { animation: none; }
-  [data-register="play"] .play-screen { animation: fade 120ms linear both; }
+  :is([data-register='play'],[data-register='cool'],[data-register='focus']) .backdrop::before, :is([data-register='play'],[data-register='cool'],[data-register='focus']) .backdrop::after { animation: none; }
+  :is([data-register='play'],[data-register='cool'],[data-register='focus']) .play-screen { animation: fade 120ms linear both; }
   .gel-btn:active { transform: none; }
 }
 
 /* ======================================================================
    Part 2: layout + component mapping (F4)
    ====================================================================== */
-[data-register='play'] {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) {
   --glow-coral: 0 0 0 3px var(--coral-fill), 0 0 28px -4px rgba(255, 138, 122, 0.9);
   --glow-mint: 0 0 0 3px var(--mint-fill), 0 0 28px -4px var(--mint-fill);
   --glow-sun: 0 0 0 3px var(--sun-fill), 0 0 28px -4px var(--sun-fill);
@@ -262,15 +264,26 @@
   --coral-soft: color-mix(in oklch, var(--coral-fill) 22%, transparent);
   --coral-line: var(--coral-fill);
   --field-border-hover: var(--outline);
-  background: var(--ink);
+  /* Transparent so the scene (.backdrop: sky, clouds, bubbles / stars, horizon) shows behind every Play
+     screen; isolation keeps the backdrop's z-index -1 inside the shell. (Verifier F4 fix.) */
+  background: transparent;
+  isolation: isolate;
   color: var(--fg);
-  transition: background-color 240ms var(--ease), color 240ms var(--ease);
+  transition: color 240ms var(--ease);
 }
-[data-register='play'] .play-screen,
-[data-register='play'] .game {
+html:has(.shell:is([data-register='play'],[data-register='cool'],[data-register='focus'])),
+body:has(.shell:is([data-register='play'],[data-register='cool'],[data-register='focus'])) {
+  background: #d8f1ff;
+}
+html:has(.shell:is([data-register='play'],[data-register='cool'],[data-register='focus'])[data-theme='night']),
+body:has(.shell:is([data-register='play'],[data-register='cool'],[data-register='focus'])[data-theme='night']) {
+  background: #0e1530;
+}
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .play-screen,
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .game {
   font-family: var(--font-game);
 }
-[data-register='play'] .game.play-screen {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .game.play-screen {
   display: flex;
   flex-direction: column;
   height: var(--vvh, 100dvh);
@@ -280,31 +293,31 @@
   overflow: hidden;
   overflow: clip;
 }
-[data-register='play'] .game-stage,
-[data-register='play'] .exam-area,
-[data-register='play'] .home-stage,
-[data-register='play'] .ko--fight .ko__stage,
-[data-register='play'] .ko__beats {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .game-stage,
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .exam-area,
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .home-stage,
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .ko--fight .ko__stage,
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .ko__beats {
   margin-left: -12px;
   margin-right: -12px;
 }
-[data-register='play'] .eyebrow {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .eyebrow {
   font-family: var(--font-game);
   color: var(--fg-muted);
 }
-[data-register='play'] a:not(.gel-btn):not(.shelf__item) {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) a:not(.gel-btn):not(.shelf__item) {
   color: var(--link);
 }
 /* Small body stays Manrope: her words, chat history, note quotes, quiz work, input text. */
-[data-register='play'] .chat,
-[data-register='play'] .note__quote,
-[data-register='play'] .qitem__line,
-[data-register='play'] .bubble--me {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .chat,
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .note__quote,
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .qitem__line,
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .bubble--me {
   font-family: var(--font-sans);
 }
 
 /* HUD */
-[data-register='play'] .game-top.hud {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .game-top.hud {
   display: grid;
   grid-template-columns: 56px minmax(0, 1fr) auto;
   align-items: center;
@@ -333,7 +346,7 @@
   letter-spacing: -6px;
   padding-right: 6px;
 }
-[data-register='play'] .hud__name.boss__name {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .hud__name.boss__name {
   flex: 1;
   min-width: 0;
   margin: 0;
@@ -351,8 +364,8 @@
   right: 0;
   top: 18px;
 }
-[data-register='play'] .hp__fill,
-[data-register='play'] .hp__ghost {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .hp__fill,
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .hp__ghost {
   height: 100%;
   border-radius: 0;
 }
@@ -365,12 +378,12 @@
 .hud__title .hud__name {
   font: 700 17px/1.15 var(--font-game);
 }
-[data-register='play'] .hud__right {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .hud__right {
   display: flex;
   align-items: center;
   gap: 8px;
 }
-[data-register='play'] .hud__brain.sticker {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .hud__brain.sticker {
   width: 48px;
   height: 48px;
   padding: 0;
@@ -397,14 +410,14 @@
 }
 
 /* Round icon buttons (gel). */
-[data-register='play'] .icon-btn {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .icon-btn {
   display: inline-grid;
   place-items: center;
   border: var(--outline-w) solid var(--outline);
   color: var(--gel-ink);
   text-decoration: none;
 }
-[data-register='play'] .icon-btn.is-muted {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .icon-btn.is-muted {
   filter: saturate(0.4);
 }
 .icon-btn__wrap {
@@ -412,15 +425,15 @@
   flex-direction: column;
   align-items: center;
 }
-[data-register='play'] .icon-btn__label {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .icon-btn__label {
   margin-top: 6px;
 }
 
 /* Level map */
-[data-register='play'] .game-sub {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .game-sub {
   justify-content: center;
 }
-[data-register='play'] .levelmap {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .levelmap {
   position: relative;
   top: auto;
   left: auto;
@@ -429,17 +442,17 @@
   max-width: 440px;
   margin: 0 auto;
 }
-[data-register='play'] .levelmap .mpath {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .levelmap .mpath {
   height: 60px;
   padding: 0 8px;
   display: flex;
   grid-template-columns: none;
   gap: 0;
 }
-[data-register='play'] .levelmap .mpath::before {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .levelmap .mpath::before {
   display: none;
 }
-[data-register='play'] .levelmap .mstep {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .levelmap .mstep {
   width: 48px;
   height: 48px;
   min-height: 48px;
@@ -448,15 +461,15 @@
   place-items: center;
   border: var(--outline-w) solid var(--outline);
 }
-[data-register='play'] .levelmap .mstep--boss {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .levelmap .mstep--boss {
   width: 52px;
   height: 52px;
   font-size: 24px;
 }
-[data-register='play'] .levelmap .mstep--exam {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .levelmap .mstep--exam {
   font-size: 22px;
 }
-[data-register='play'] .levelmap .mstep__n {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .levelmap .mstep__n {
   width: auto;
   height: auto;
   border: none;
@@ -465,10 +478,10 @@
   font: 700 20px/1 var(--font-game);
   color: inherit;
 }
-[data-register='play'] .levelmap .mstep .meter {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .levelmap .mstep .meter {
   width: auto;
 }
-[data-register='play'] .levelmap .mstep.is-focus {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .levelmap .mstep.is-focus {
   outline: 3px solid var(--focus);
   outline-offset: 3px;
 }
@@ -485,7 +498,7 @@
 }
 
 /* Re-teach banner as a sticker row */
-[data-register='play'] .game .reteach-banner.sticker {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .game .reteach-banner.sticker {
   --tilt: 0deg;
   align-self: center;
   flex-direction: row;
@@ -494,21 +507,21 @@
   max-width: calc(100% - 24px);
   font-size: 15px;
 }
-[data-register='play'] .reteach-banner .eyebrow {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .reteach-banner .eyebrow {
   color: var(--sticker-ink);
   letter-spacing: 0.06em;
 }
 
 /* Stage: Pip's bubble on top, her bubble bottom-right, the boss's taunt top-right. */
-[data-register='play'] .game-stage {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .game-stage {
   position: relative;
   display: block;
 }
-[data-register='play'] .game-stage .arena {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .game-stage .arena {
   position: absolute;
   inset: 0;
 }
-[data-register='play'] .speech.msg {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .speech.msg {
   position: absolute;
   top: 6px;
   left: 12px;
@@ -518,13 +531,13 @@
   align-items: center;
   pointer-events: none;
 }
-[data-register='play'] .speech.msg::after {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .speech.msg::after {
   display: none;
 }
-[data-register='play'] .speech .bubble {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .speech .bubble {
   pointer-events: auto;
 }
-[data-register='play'] .bubble.speech__bubble {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .bubble.speech__bubble {
   margin: 0;
   max-width: min(100%, 360px);
   background: var(--bubble-fill);
@@ -534,26 +547,26 @@
   overflow: visible;
 }
 /* Backend lines can run past 3 lines: allow 5, then the notebook has the rest. */
-[data-register='play'] .bubble--pip.speech__bubble {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .bubble--pip.speech__bubble {
   -webkit-line-clamp: 5;
   line-clamp: 5;
 }
-[data-register='play'] .bubble--pip q.her-words {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .bubble--pip q.her-words {
   font-family: var(--font-sans);
   font-style: normal;
   font-weight: 600;
   background: linear-gradient(transparent 58%, color-mix(in oklch, var(--sun-fill) 45%, transparent) 58%);
 }
-[data-register='play'] .bubble--pip.is-aside {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .bubble--pip.is-aside {
   font-style: normal;
   color: #2e4466;
 }
-[data-register='play'] .speech__bubble--dots {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .speech__bubble--dots {
   display: flex;
   min-width: 72px;
   justify-content: center;
 }
-[data-register='play'] .speech__status {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .speech__status {
   margin-top: 14px;
   padding: 4px 10px;
   border-radius: 12px;
@@ -563,12 +576,12 @@
   color: var(--fg);
   pointer-events: auto;
 }
-[data-register='play'] .her-line.msg {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .her-line.msg {
   right: 12px;
   bottom: 8px;
   max-width: 78%;
 }
-[data-register='play'] .her-line .bubble--me {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .her-line .bubble--me {
   max-width: 100%;
   margin: 0;
   padding: 8px 14px;
@@ -580,13 +593,13 @@
   overflow: hidden;
   border-color: var(--outline);
 }
-[data-register='play'] .her-line.is-pending .bubble--me {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .her-line.is-pending .bubble--me {
   opacity: 0.8;
 }
-[data-register='play'] .her-line .msg__retry {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .her-line .msg__retry {
   font: 600 15px var(--font-game);
 }
-[data-register='play'] .taunt.bubble--boss {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .taunt.bubble--boss {
   position: absolute;
   top: 46%;
   right: 12px;
@@ -594,10 +607,10 @@
   margin: 0;
   z-index: 3;
 }
-[data-register='play'] .taunt.bubble--boss::after {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .taunt.bubble--boss::after {
   display: none;
 }
-[data-register='play'] .fcap.sticker {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .fcap.sticker {
   --tilt: -2deg;
   position: absolute;
   top: auto;
@@ -614,18 +627,18 @@
   font: 700 17px/1.25 var(--font-game);
   animation: bubble-pop 160ms var(--ease-pop) both;
 }
-[data-register='play'] .fcap--hit {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .fcap--hit {
   box-shadow: 0 3px 0 var(--outline), 0 0 0 3px var(--coral-fill);
 }
-[data-register='play'] .fcap .caption__lvl {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .fcap .caption__lvl {
   display: block;
   font: 600 15px var(--font-game);
   color: #4a5f80;
 }
-[data-register='play'] .caption__crit {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .caption__crit {
   color: #b52e1b;
 }
-[data-register='play'] .dmg {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .dmg {
   font: 700 22px/1 var(--font-game);
   color: var(--coral);
   text-shadow: 0 2px 0 var(--outline);
@@ -633,7 +646,7 @@
 }
 
 /* Tray + input */
-[data-register='play'] .tray {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .tray {
   height: 56px;
   padding: 0;
   overflow: visible;
@@ -652,7 +665,7 @@
 .tray__weapons::-webkit-scrollbar {
   display: none;
 }
-[data-register='play'] .weapon.gel-btn {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .weapon.gel-btn {
   max-width: 220px;
   min-height: 48px;
   height: 48px;
@@ -663,11 +676,11 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-[data-register='play'] .tray .quiz-btn {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .tray .quiz-btn {
   flex: none;
   white-space: nowrap;
 }
-[data-register='play'] .tray .quiz-btn.is-ready {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .tray .quiz-btn.is-ready {
   animation: gel-pop 220ms var(--ease-pop) 1;
 }
 @keyframes gel-pop {
@@ -675,25 +688,25 @@
     transform: scale(1.08);
   }
 }
-[data-register='play'] .game-input {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .game-input {
   padding-bottom: calc(10px + env(safe-area-inset-bottom));
 }
-[data-register='play'] .composer:focus-within {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .composer:focus-within {
   outline: 3px solid var(--focus);
   outline-offset: 2px;
 }
-[data-register='play'] .composer__input::placeholder {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .composer__input::placeholder {
   color: var(--field-placeholder);
 }
-[data-register='play'] .composer__send.gel-btn {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .composer__send.gel-btn {
   font-size: 24px;
   border: var(--outline-w) solid var(--outline);
   color: var(--gel-primary-ink);
 }
 
 /* Drawers and sheets: panels with a 3px outline; the history is a ruled notebook. */
-[data-register='play'] .drawer,
-[data-register='play'] .sheet {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .drawer,
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .sheet {
   background: var(--overlay);
   color: var(--fg);
   border: var(--outline-w) solid var(--outline);
@@ -702,18 +715,18 @@
   box-shadow: 0 -8px 0 rgba(0, 0, 0, 0.05), 0 -20px 40px -20px rgba(16, 33, 63, 0.5);
   height: 80dvh;
 }
-[data-register='play'] .sheet {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .sheet {
   height: auto;
   max-height: 92dvh;
 }
-[data-register='play'] .drawer-scrim,
-[data-register='play'] .sheet-scrim {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .drawer-scrim,
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .sheet-scrim {
   background: var(--scrim);
 }
-[data-register='play'] .drawer__title {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .drawer__title {
   font: 700 20px/1.1 var(--font-game);
 }
-[data-register='play'] .notebook .drawer__body {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .notebook .drawer__body {
   background-color: var(--note);
   background-image: linear-gradient(90deg, transparent 39px, var(--ice-line) 39px 41px, transparent 41px),
     repeating-linear-gradient(180deg, transparent 0 31px, rgba(16, 33, 63, 0.1) 31px 32px);
@@ -722,47 +735,47 @@
   padding: 10px 10px 16px 48px;
   color: #10213f;
 }
-[data-register='play'] .notebook .msg--pip .msg__bubble {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .notebook .msg--pip .msg__bubble {
   background: #ffffff;
   color: #10213f;
   border: 2px solid #10213f;
 }
-[data-register='play'] .notebook .msg--me .msg__bubble {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .notebook .msg--me .msg__bubble {
   background: var(--her-bubble);
   color: #10213f;
   border: 2px solid #10213f;
 }
-[data-register='play'] .notebook .caption,
-[data-register='play'] .notebook .msg--system {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .notebook .caption,
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .notebook .msg--system {
   color: #10213f;
   font-family: var(--font-game);
 }
-[data-register='play'] .notebook .caption--whiff,
-[data-register='play'] .notebook .caption--unlock {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .notebook .caption--whiff,
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .notebook .caption--unlock {
   color: #2e4466;
 }
-[data-register='play'] .notebook .caption__amt,
-[data-register='play'] .notebook .caption__crit {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .notebook .caption__amt,
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .notebook .caption__crit {
   color: #b52e1b;
 }
-[data-register='play'] .notebook .caption--unlock b {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .notebook .caption--unlock b {
   color: #8f5200;
 }
-[data-register='play'] .notebook .msg__face {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .notebook .msg__face {
   background: #ffffff;
   border: 2px solid #10213f;
 }
-[data-register='play'] .notebook .her-words {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .notebook .her-words {
   color: #10213f;
 }
-[data-register='play'] .drawer--column {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .drawer--column {
   height: auto;
   border-radius: 28px;
   border-bottom: var(--outline-w) solid var(--outline);
 }
 
 /* Studio-styled buttons that appear on Play (picker, errors) get the gel look. */
-[data-register='play'] .btn {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .btn {
   min-height: 48px;
   border: var(--outline-w) solid var(--outline);
   border-radius: 999px;
@@ -772,32 +785,32 @@
   font: 700 17px/1 var(--font-game);
   box-shadow: 0 4px 0 var(--outline), inset 0 2px 0 rgba(255, 255, 255, 0.5);
 }
-[data-register='play'] .btn--primary {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .btn--primary {
   background: radial-gradient(ellipse 46% 24% at 50% 24%, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0)),
     var(--gel-primary);
   color: var(--gel-primary-ink);
   text-shadow: var(--gel-text-shadow);
   box-shadow: 0 6px 0 var(--gel-primary-edge), inset 0 2px 0 rgba(255, 255, 255, 0.55);
 }
-[data-register='play'] .btn--ghost {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .btn--ghost {
   background: transparent;
   box-shadow: none;
   border-color: transparent;
   color: var(--fg);
 }
-[data-register='play'] .btn:active:not(:disabled) {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .btn:active:not(:disabled) {
   transform: translateY(4px);
   box-shadow: 0 1px 0 var(--outline);
 }
 
 /* Pager controls */
-[data-register='play'] .pager-ctl__dots i {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .pager-ctl__dots i {
   width: 12px;
   height: 12px;
   border: 2.5px solid var(--outline);
   background: var(--surface);
 }
-[data-register='play'] .pager-ctl__dots i.is-on {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .pager-ctl__dots i.is-on {
   background: var(--ice);
 }
 
@@ -833,60 +846,60 @@
 .exam-ribbon {
   margin: 4px 0 2px;
 }
-[data-register='play'] .exam-page--brain .brain {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .exam-page--brain .brain {
   width: 100%;
   max-width: 560px;
 }
-[data-register='play'] .exam-page--brain .brain__head,
-[data-register='play'] .exam-page--brain .brain__hint {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .exam-page--brain .brain__head,
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .exam-page--brain .brain__hint {
   display: none;
 }
-[data-register='play'] .brain__cloud {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .brain__cloud {
   background: var(--panel-fill);
   border: var(--outline-w) solid var(--outline);
   border-radius: 40px;
   box-shadow: inset 0 2px 0 var(--panel-hi), 0 5px 0 var(--panel-edge);
   padding: 16px 14px;
 }
-[data-register='play'] .brain__puff {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .brain__puff {
   background: var(--surface);
   border: var(--outline-w) solid var(--outline);
 }
-[data-register='play'] .brain__notes {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .brain__notes {
   grid-template-columns: 1fr;
   gap: 10px;
 }
-[data-register='play'] .note {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .note {
   min-height: 0;
   padding: 12px 14px 10px;
   border: 2.5px solid var(--outline);
 }
-[data-register='play'] .note__quote {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .note__quote {
   font: 600 16px/1.35 var(--font-sans);
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-[data-register='play'] .note__tag {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .note__tag {
   font: 600 15px/1.2 var(--font-game);
   letter-spacing: 0;
   text-transform: none;
 }
-[data-register='play'] .note__flag {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .note__flag {
   font: 700 15px var(--font-game);
 }
-[data-register='play'] .exam-page.qitem {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .exam-page.qitem {
   background: none;
   border: none;
   box-shadow: none;
   border-radius: 0;
   animation: none;
 }
-[data-register='play'] .exam-page.qitem::before {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .exam-page.qitem::before {
   display: none;
 }
-[data-register='play'] .qitem__q.panel {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .qitem__q.panel {
   width: 100%;
   max-width: 520px;
   margin: 0;
@@ -896,7 +909,7 @@
 .qitem__n {
   font-weight: 700;
 }
-[data-register='play'] .qitem__pip.bubble {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .qitem__pip.bubble {
   display: block;
   width: auto;
   max-width: min(100%, 360px);
@@ -907,7 +920,7 @@
   margin: 0;
   font: 700 20px/1.2 var(--font-game);
 }
-[data-register='play'] .qitem__pip .qitem__line {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .qitem__pip .qitem__line {
   margin: 6px 0 0;
   padding: 0;
   background: none;
@@ -924,18 +937,18 @@
   justify-content: center;
   gap: 10px;
 }
-[data-register='play'] .qitem__meta .sticker {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .qitem__meta .sticker {
   font-size: 16px;
 }
-[data-register='play'] .rule-chip.sticker {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .rule-chip.sticker {
   min-height: 48px;
   cursor: pointer;
   --tilt: 2deg;
 }
-[data-register='play'] .rule-chip.is-wrong {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .rule-chip.is-wrong {
   box-shadow: 0 3px 0 var(--outline), 0 0 0 3px var(--coral-fill);
 }
-[data-register='play'] .qitem__fix.gel-btn {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .qitem__fix.gel-btn {
   flex: none;
 }
 .exam-foot {
@@ -950,7 +963,7 @@
 .exam-next--spacer {
   display: inline-block;
 }
-[data-register='play'] .game--exam .quizwait {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .game--exam .quizwait {
   position: absolute;
   inset: 8px 12px auto;
   background: var(--panel-fill);
@@ -961,21 +974,21 @@
 }
 
 /* Student home: title screen */
-[data-register='play'] .home-top.hud {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .home-top.hud {
   display: flex;
   justify-content: space-between;
 }
-[data-register='play'] .home-top__brain {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .home-top__brain {
   --tilt: -4deg;
 }
 .home-stage {
   position: relative;
 }
-[data-register='play'] .home-stage__room {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .home-stage__room {
   position: absolute;
   inset: 0;
 }
-[data-register='play'] .home-stage .speech.msg {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .home-stage .speech.msg {
   top: 4px;
 }
 .home-mission {
@@ -984,7 +997,7 @@
   flex-direction: column;
   align-items: center;
 }
-[data-register='play'] .mission-tile.home-current {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .mission-tile.home-current {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1016,7 +1029,7 @@
   margin: 0;
   font: 600 17px var(--font-game);
 }
-[data-register='play'] .home-foot {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .home-foot {
   justify-content: space-around;
   margin-bottom: 0;
 }
@@ -1028,7 +1041,7 @@
   flex-direction: column;
   gap: 12px;
 }
-[data-register='play'] .mission-row.panel {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .mission-row.panel {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -1060,16 +1073,16 @@
   align-self: center;
   margin-bottom: 8px;
 }
-[data-register='play'] .shelf__item {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .shelf__item {
   color: var(--fg);
   text-decoration: none;
 }
 
 /* K.O. beats */
-[data-register='play'] .ko.game {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .ko.game {
   text-align: center;
 }
-[data-register='play'] .ko--fight .ko__pick {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .ko--fight .ko__pick {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1085,25 +1098,25 @@
   font: 600 16px var(--font-game);
   color: var(--fg-muted);
 }
-[data-register='play'] .ko__weapons {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .ko__weapons {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
 }
-[data-register='play'] .ko__weapons .weapon.gel-btn {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .ko__weapons .weapon.gel-btn {
   max-width: 100%;
   min-height: 56px;
   height: auto;
   white-space: normal;
 }
-[data-register='play'] .ko__title {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .ko__title {
   font: 700 26px/1.15 var(--font-game);
   font-variation-settings: 'wdth' 112;
   color: var(--fg);
   margin: 0;
 }
-[data-register='play'] .ko__stamp {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .ko__stamp {
   font-family: var(--font-game);
   font-weight: 700;
   font-size: 96px;
@@ -1113,7 +1126,7 @@
   -webkit-text-stroke: 6px var(--outline);
   text-shadow: 0 4px 0 var(--outline);
 }
-[data-register='play'] .ko__finisher {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .ko__finisher {
   font: 600 17px/1.3 var(--font-game);
 }
 .ko-beat--cliff {
@@ -1124,7 +1137,7 @@
   position: absolute;
   inset: 0;
 }
-[data-register='play'] .ko-beat--cliff .cliff {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .ko-beat--cliff .cliff {
   position: relative;
   z-index: 2;
   display: block;
@@ -1133,25 +1146,25 @@
   background: none;
   border: none;
 }
-[data-register='play'] .cliff__q.bubble {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .cliff__q.bubble {
   margin: 0 auto;
   max-width: min(100%, 340px);
   -webkit-line-clamp: 4;
 }
-[data-register='play'] .ko-beat--cliff .ko-next {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .ko-beat--cliff .ko-next {
   position: absolute;
   right: 12px;
   bottom: 12px;
   z-index: 2;
   display: block;
 }
-[data-register='play'] .silhouette {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .silhouette {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 6px;
 }
-[data-register='play'] .rivera.panel {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .rivera.panel {
   width: 100%;
   max-width: 520px;
   text-align: left;
@@ -1165,7 +1178,7 @@
   font: 600 16px var(--font-game);
   color: var(--fg-muted);
 }
-[data-register='play'] .rivera__list {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .rivera__list {
   font: 600 16px/1.35 var(--font-sans);
 }
 .rivera__concept {
@@ -1173,22 +1186,22 @@
   font: 600 15px var(--font-game);
   color: var(--fg-muted);
 }
-[data-register='play'] .ko__version .sticker {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .ko__version .sticker {
   font-size: 15px;
 }
-[data-register='play'] .ko__foot .pager-ctl .icon-btn {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .ko__foot .pager-ctl .icon-btn {
   display: none;
 }
-[data-register='play'] .ko__next {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .ko__next {
   text-decoration: none;
 }
 
 /* Toasts on Play: stickers just under the HUD (never over the input). */
-body:has([data-register='play']) .toast-wrap {
+body:has(:is([data-register='play'],[data-register='cool'],[data-register='focus'])) .toast-wrap {
   top: calc(72px + env(safe-area-inset-top));
   bottom: auto;
 }
-body:has([data-register='play']) .toast {
+body:has(:is([data-register='play'],[data-register='cool'],[data-register='focus'])) .toast {
   background: #ffffff;
   color: #10213f;
   border: 3px solid #10213f;
@@ -1200,34 +1213,34 @@ body:has([data-register='play']) .toast {
 
 /* 375x667 and other short screens */
 @media (max-height: 700px) {
-  [data-register='play'] .game-top.hud {
+  :is([data-register='play'],[data-register='cool'],[data-register='focus']) .game-top.hud {
     min-height: 56px;
     padding-top: calc(4px + env(safe-area-inset-top));
   }
-  [data-register='play'] .icon-btn {
+  :is([data-register='play'],[data-register='cool'],[data-register='focus']) .icon-btn {
     width: 48px;
     height: 48px;
     min-height: 48px;
     font-size: 22px;
   }
-  [data-register='play'] .game-top.hud {
+  :is([data-register='play'],[data-register='cool'],[data-register='focus']) .game-top.hud {
     grid-template-columns: 48px minmax(0, 1fr) auto;
   }
-  [data-register='play'] .levelmap .mpath {
+  :is([data-register='play'],[data-register='cool'],[data-register='focus']) .levelmap .mpath {
     height: 52px;
   }
-  [data-register='play'] .levelmap .mstep {
+  :is([data-register='play'],[data-register='cool'],[data-register='focus']) .levelmap .mstep {
     width: 44px;
     height: 44px;
     min-height: 44px;
   }
-  [data-register='play'] .tray {
+  :is([data-register='play'],[data-register='cool'],[data-register='focus']) .tray {
     height: 52px;
   }
-  [data-register='play'] .composer {
+  :is([data-register='play'],[data-register='cool'],[data-register='focus']) .composer {
     min-height: 56px;
   }
-  [data-register='play'] .composer__send {
+  :is([data-register='play'],[data-register='cool'],[data-register='focus']) .composer__send {
     width: 48px;
     height: 48px;
     min-height: 48px;
@@ -1239,10 +1252,10 @@ body:has([data-register='play']) .toast {
     min-height: 64px;
     font-size: 26px;
   }
-  [data-register='play'] .note__quote {
+  :is([data-register='play'],[data-register='cool'],[data-register='focus']) .note__quote {
     -webkit-line-clamp: 2;
   }
-  [data-register='play'] .ko-beat--card .ko-card {
+  :is([data-register='play'],[data-register='cool'],[data-register='focus']) .ko-beat--card .ko-card {
     width: min(72vw, 300px, calc((100dvh - 300px) * 9 / 16));
   }
 }
@@ -1259,17 +1272,17 @@ html:has(.game.play-screen) body {
   flex-direction: row;
   flex-wrap: nowrap;
 }
-[data-register='play'] .qitem__q {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .qitem__q {
   flex: none;
 }
-[data-register='play'] .qitem__q .qitem__n {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .qitem__q .qitem__n {
   display: inline-grid;
   vertical-align: middle;
   margin-right: 6px;
 }
 
 /* The K.O. card keeps its own closed palette in both themes. */
-[data-register='play'] .ko-card {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .ko-card {
   --fg: #efefe9;
   color: #efefe9;
 }
@@ -1365,15 +1378,15 @@ html:has(.game.play-screen) body {
   background: #ffffff;
 }
 /* Inside the phone: leave room for the status bar and home indicator. */
-html.is-framed [data-register='play'] .game.play-screen {
+html.is-framed :is([data-register='play'],[data-register='cool'],[data-register='focus']) .game.play-screen {
   padding-top: 44px;
   padding-bottom: 20px;
 }
-html.is-framed [data-register='play'] .drawer,
-html.is-framed [data-register='play'] .sheet {
+html.is-framed :is([data-register='play'],[data-register='cool'],[data-register='focus']) .drawer,
+html.is-framed :is([data-register='play'],[data-register='cool'],[data-register='focus']) .sheet {
   padding-bottom: 24px;
 }
-html.is-framed body:has([data-register='play']) .toast-wrap {
+html.is-framed body:has(:is([data-register='play'],[data-register='cool'],[data-register='focus'])) .toast-wrap {
   top: 116px;
 }
 
@@ -1445,7 +1458,7 @@ html.is-framed body:has([data-register='play']) .toast-wrap {
 .stage2d__floor {
   position: absolute;
   left: 50%;
-  bottom: 5%;
+  bottom: var(--floor, 5%);
   width: min(calc(var(--pip-size) * 1.35), 96%);
   height: calc(var(--pip-size) * 0.3);
   translate: -50% 0;
@@ -1459,7 +1472,7 @@ html.is-framed body:has([data-register='play']) .toast-wrap {
 .stage2d__shadow {
   position: absolute;
   left: 50%;
-  bottom: calc(5% + var(--pip-size) * 0.08);
+  bottom: calc(var(--floor, 5%) + var(--pip-size) * 0.08);
   width: calc(var(--pip-size) * 0.72);
   height: calc(var(--pip-size) * 0.11);
   translate: -50% 0;
@@ -1470,7 +1483,7 @@ html.is-framed body:has([data-register='play']) .toast-wrap {
 .stage2d__pip {
   position: absolute;
   left: 50%;
-  bottom: calc(5% + var(--pip-size) * 0.04);
+  bottom: calc(var(--floor, 5%) + var(--pip-size) * 0.04);
   translate: -50% 0;
   line-height: 0;
   transform-origin: 50% 100%;
@@ -1497,7 +1510,7 @@ html.is-framed body:has([data-register='play']) .toast-wrap {
 .stage2d__boss {
   position: absolute;
   right: 5%;
-  bottom: calc(5% + var(--pip-size) * 0.3);
+  bottom: calc(var(--floor, 5%) + var(--pip-size) * 0.3);
   line-height: 0;
   transform-origin: 50% 100%;
   transition: filter 160ms;
@@ -1549,7 +1562,7 @@ html.is-framed body:has([data-register='play']) .toast-wrap {
   height: 30px;
   line-height: 0;
 }
-[data-register='play'] .qitem__ans {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .qitem__ans {
   background: none;
   border: 0;
   padding: 0;
@@ -1559,22 +1572,22 @@ html.is-framed body:has([data-register='play']) .toast-wrap {
 
 /* Pip's bubble clamps (full line in the notebook); the tail lives on the wrapper so it isn't clipped.
    The hit/heal caption sticker sits just under the bubble, near Pip's head, never over his face. */
-[data-register='play'] .bubble--pip.speech__bubble {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .bubble--pip.speech__bubble {
   overflow: hidden;
 }
-[data-register='play'] .bubble--pip.speech__bubble::after {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .bubble--pip.speech__bubble::after {
   display: none;
 }
-[data-register='play'] .speech.msg > .bubble--pip {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .speech.msg > .bubble--pip {
   position: relative;
 }
-[data-register='play'] .speech .fcap.sticker {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .speech .fcap.sticker {
   position: relative;
   inset: auto;
   max-width: 88%;
   pointer-events: auto;
 }
-[data-register='play'] .speech.msg > .speech__tail {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .speech.msg > .speech__tail {
   display: block;
   position: relative;
   width: 22px;
@@ -1587,10 +1600,10 @@ html.is-framed body:has([data-register='play']) .toast-wrap {
   transform: rotate(45deg);
   z-index: 1;
 }
-[data-register='play'] .speech.msg > .speech__tail + * {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .speech.msg > .speech__tail + * {
   margin-top: 8px;
 }
-[data-register='play'] .bubble--pip.speech__bubble {
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .bubble--pip.speech__bubble {
   display: block;
 }
 .bubble__text {
@@ -1605,4 +1618,1413 @@ html.is-framed body:has([data-register='play']) .toast-wrap {
     -webkit-line-clamp: 4;
     line-clamp: 4;
   }
+}
+
+/* ---------- Verifier V3 corrections ---------- */
+/* D-11 / D-12: her bubble keeps its own fill in both themes; one 2-line clamp on an inner span. */
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .her-line .msg__bubble.bubble--me {
+  display: block;
+  background: var(--her-bubble);
+  color: #10213f;
+  -webkit-line-clamp: unset;
+  line-clamp: none;
+  overflow: visible;
+}
+.bubble__text--2 {
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+/* D-13: the tray scroller leaves room for the equipped gel's edge and ring; labels are whole words. */
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .tray {
+  height: auto;
+  min-height: 56px;
+}
+.tray__weapons {
+  padding: 8px 6px 12px;
+  margin: -8px 0 -12px;
+  scroll-padding-inline: 6px;
+}
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .weapon.gel-btn {
+  max-width: none;
+  flex: none;
+}
+/* D-18: damage sticker sits above the HP bar, clear of the HP number. */
+.hud__boss .dmg {
+  top: -6px;
+  right: auto;
+  left: 42%;
+}
+/* D-18: the KO'd boss squashes flat inside the stage instead of rotating off the right edge. */
+.stage2d__boss.is-ko {
+  rotate: none;
+  translate: none;
+  transform: scale(1.08, 0.5);
+  transform-origin: 50% 100%;
+  filter: grayscale(1) opacity(0.65);
+}
+/* D-18: in the arena Pip stands left and a little smaller, the boss further right and up, so the
+   boss's sign stays readable beside Pip instead of behind him. */
+.stage2d--arena .stage2d__pip,
+.stage2d--arena .stage2d__shadow {
+  left: 31%;
+}
+.stage2d--arena .stage2d__pip .pip2d {
+  width: calc(var(--pip-size) * 0.74);
+  height: calc(var(--pip-size) * 0.814);
+}
+.stage2d--arena .stage2d__boss {
+  right: 1%;
+  bottom: calc(var(--floor, 5%) + var(--pip-size) * 0.4);
+}
+/* D-18: the K.O. stamp lands above Pip's head, not on his face. */
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .ko--fight .ko__stamp {
+  top: 4%;
+  bottom: auto;
+  left: 50%;
+  translate: -50% 0;
+}
+/* D-18: the hit/heal caption sits under Pip's bubble on the boss's side, never over Pip's head. */
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .speech .fcap.sticker {
+  align-self: flex-end;
+  max-width: 62%;
+  margin-right: 4px;
+}
+/* D-20: the picker sheet in the Play register: ribbon title, Fredoka labels, gel chips, panel cards. */
+.picker__head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+}
+.picker__title.ribbon {
+  margin: 4px 0 0;
+}
+.picker__sub {
+  margin: 0;
+  font: 600 16px/1.3 var(--font-game);
+  color: var(--fg-muted);
+}
+.picker__label {
+  font: 700 18px/1.1 var(--font-game);
+  color: var(--fg);
+}
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .picker__stage {
+  border: var(--outline-w) solid var(--outline);
+  border-radius: 24px;
+  background: var(--sky);
+  box-shadow: inset 0 2px 0 var(--panel-hi), 0 5px 0 var(--panel-edge);
+  overflow: hidden;
+}
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .pick {
+  border: var(--outline-w) solid var(--outline);
+  border-radius: 20px;
+  background: var(--panel-fill);
+  box-shadow: 0 4px 0 var(--outline);
+  color: var(--fg);
+}
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .pick.is-on {
+  background: var(--gel-primary);
+  color: var(--gel-primary-ink);
+  box-shadow: 0 4px 0 var(--gel-primary-edge), 0 0 0 3px var(--ice-line);
+}
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .pick__name {
+  font: 700 16px/1.1 var(--font-game);
+}
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .pick.is-on .pick__name {
+  color: var(--gel-primary-ink);
+}
+.acc-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.acc-chip.gel-btn {
+  padding: 0 14px;
+}
+.picker__go.gel-btn {
+  min-width: 200px;
+}
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .picker__actions {
+  position: sticky;
+  bottom: -20px;
+  padding: 12px 0;
+  background: var(--overlay);
+}
+
+/* Fill the exam and K.O. beats: Pip centered in the open space, content centered (verifier item 8). */
+.exam-stage {
+  --floor: 22%;
+}
+.qitem__spacer {
+  min-height: 120px;
+}
+.ko-beat--card {
+  justify-content: center;
+}
+.ko-cliff__stage {
+  --floor: 16%;
+}
+.ko-beat--rivera {
+  justify-content: center;
+}
+.ko-rivera__pip {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  flex: none;
+}
+@media (max-height: 700px) {
+  .ko-rivera__pip {
+    height: 140px;
+  }
+  .exam-stage {
+    --floor: 26%;
+  }
+}
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .home-stage__room {
+  --floor: 7%;
+}
+/* The stage's absolutely positioned Pip must not be squeezed by base `svg { max-width: 100% }`. */
+.stage2d .pip2d {
+  max-width: none;
+}
+.acc-chip__icon {
+  display: inline-grid;
+  place-items: center;
+  width: 30px;
+  height: 33px;
+  line-height: 0;
+}
+.acc-chip__icon .pip2d {
+  max-width: none;
+}
+
+/* Mission backdrop: the lesson's 2D scene (src/scenes) behind Pip and the boss; the stage floor disc is
+   replaced by the scene's own floor. */
+.game-stage--scene .mission-scene {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.game-stage--scene .arena {
+  z-index: 1;
+}
+.game-stage--scene .speech,
+.game-stage--scene .her-line,
+.game-stage--scene .taunt {
+  z-index: 3;
+}
+.game-stage--scene .stage2d__floor {
+  display: none;
+}
+.home-current__topic.ribbon {
+  width: max-content;
+  box-sizing: border-box;
+}
+
+
+/* ======================================================================
+   G4/G5: Runway (day, default) and Club (night). DESIGN_SYSTEM.md "Runway & Club" §1–2, scoped to the
+   default skin so the Arcade preset keeps its own tokens and scenes.
+   ====================================================================== */
+:is([data-register='play'],[data-register='cool'],[data-register='focus'])[data-skin="runway"], :is([data-register='play'],[data-register='cool'],[data-register='focus'])[data-skin="runway"][data-theme="day"] {
+  color-scheme: light;
+  --font-game: 'Unbounded', 'Manrope', system-ui, sans-serif;
+  --font-editorial: 'Bodoni Moda', 'Fraunces', Georgia, serif;
+  --sky: radial-gradient(90% 50% at 50% 0%, #FFFFFF 0%, rgba(255,255,255,0) 70%),
+         linear-gradient(180deg, #FFFFFF 0%, #EEF0F4 55%, #D9DDE5 100%);
+  --ink: #EEF0F4; --surface: #FFFFFF; --surface-2: #F6F7F9; --surface-3: #E6E9EF; --overlay: #FFFFFF;
+  --fg: #0B0B12; --fg-muted: #34364A; --fg-subtle: #55586E;
+  --ice: #0B0B12; --ice-ink: #FFFFFF; --link: #3A2BD8; --focus: #3A2BD8;
+  --ice-soft: rgba(11,11,18,.06); --ice-line: rgba(11,11,18,.3);
+  --mint: #2F6B00; --mint-fill: #B6FF3B; --sun: #8A5200; --sun-fill: #FFB020;
+  --coral: #B0281A; --coral-fill: #FF6F61; --coral-ink: #9E3427; --mint-ink: #2F6B00;
+  --outline: #0B0B12; --outline-w: 2px; --panel-outline: #0B0B12;
+  --panel-fill: linear-gradient(180deg, #FFFFFF 0%, #F6F7F9 100%); --panel-hi: #FFFFFF; --panel-edge: rgba(11,11,18,.9);
+  --gel-primary: linear-gradient(180deg, #3A3B48 0%, #23232E 40%, #0B0B12 100%);
+  --gel-primary-ink: #FFFFFF; --gel-primary-edge: #000000; --gel-text-shadow: none;
+  --gel-secondary: linear-gradient(180deg, #FFFFFF 0%, #E9ECF1 48%, #C9CED8 52%, #EEF0F4 100%);
+  --gel-secondary-ink: #0B0B12; --gel-secondary-edge: #0B0B12;
+  --gel-win: linear-gradient(180deg, #FFD66B 0%, #FFB020 60%, #E89A00 100%);
+  --sticker-ink: #0B0B12; --bubble-fill: #FFFFFF; --her-bubble: #F1EEFF;
+  --track: rgba(11,11,18,.12); --tint-1: rgba(11,11,18,.03); --tint-2: rgba(11,11,18,.08);
+  --divider: rgba(11,11,18,.12); --border: rgba(11,11,18,.22);
+  --field-bg: #FFFFFF; --field-border: #0B0B12; --field-placeholder: #55586E;
+  --scrim: rgba(11,11,18,.6); --path-dot: #0B0B12;
+  --holo: conic-gradient(from 200deg, #2EF2FF, #B6FF3B, #FFE14D, #FF9A3C, #7B6CFF, #2EF2FF);
+  --accent: #2EF2FF; --accent-2: #B6FF3B;
+  --r-panel: 16px; --r-sticker: 6px;
+  --heading-shadow: none;
+}
+:is([data-register='play'],[data-register='cool'],[data-register='focus'])[data-skin="runway"][data-theme="night"],
+[data-register="cool"][data-skin="runway"][data-theme="day"] {
+  color-scheme: dark;
+  --sky: radial-gradient(70% 40% at 50% 0%, rgba(123,108,255,.22), transparent 70%),
+         linear-gradient(180deg, #07040F 0%, #140A26 100%);
+  --ink: #07040F; --surface: #1C1233; --surface-2: #251A42; --surface-3: #2E2250; --overlay: #1C1233;
+  --fg: #FFFFFF; --fg-muted: #DCD5F2; --fg-subtle: #ADA3D1;
+  --ice: #2EF2FF; --ice-ink: #07040F; --link: #2EF2FF; --focus: #2EF2FF;
+  --ice-soft: rgba(46,242,255,.12); --ice-line: rgba(46,242,255,.45);
+  --mint: #B6FF3B; --mint-fill: #B6FF3B; --sun: #FFE14D; --sun-fill: #FFE14D;
+  --coral: #FF9D92; --coral-fill: #FF6F61;
+  --outline: #07040F; --outline-w: 1.5px; --panel-outline: #6C5BB0;
+  --panel-fill: linear-gradient(180deg, rgba(37,26,66,.86) 0%, rgba(28,18,51,.86) 100%);
+  --panel-hi: rgba(255,255,255,.14); --panel-edge: rgba(0,0,0,.6);
+  --gel-primary: linear-gradient(180deg, #9AF8FF 0%, #2EF2FF 45%, #12BFD0 100%);
+  --gel-primary-ink: #07040F; --gel-primary-edge: #0A7E8A; --gel-text-shadow: none;
+  --gel-secondary: linear-gradient(180deg, #34285C 0%, #251A42 100%);
+  --gel-secondary-ink: #FFFFFF; --gel-secondary-edge: #000000;
+  --gel-win: linear-gradient(180deg, #FFF09A 0%, #FFE14D 55%, #E6C200 100%);
+  --sticker-ink: #07040F; --bubble-fill: #FFFFFF; --her-bubble: #D9FBFF;
+  --track: rgba(255,255,255,.12); --tint-1: rgba(255,255,255,.04); --tint-2: rgba(255,255,255,.09);
+  --divider: rgba(255,255,255,.12); --border: rgba(255,255,255,.22);
+  --field-bg: #1C1233; --field-border: #6C5BB0; --field-placeholder: #ADA3D1;
+  --scrim: rgba(7,4,15,.78); --path-dot: #ADA3D1;
+  --neon-glow: 0 0 0 1.5px rgba(46,242,255,.9), 0 0 18px rgba(46,242,255,.45);
+}
+:is([data-register='play'],[data-register='cool'],[data-register='focus'])[data-skin="runway"] .panel { border-width: var(--outline-w); border-radius: var(--r-panel, 16px); }
+:is([data-register='play'],[data-register='cool'],[data-register='focus'])[data-skin="runway"][data-theme="night"] .panel, [data-register="cool"][data-skin="runway"][data-theme="day"] .panel { box-shadow: inset 0 1px 0 var(--panel-hi), 0 0 24px -8px rgba(123,108,255,.45); }
+:is([data-register='play'],[data-register='cool'],[data-register='focus'])[data-skin="runway"] .sticker { border-radius: var(--r-sticker, 6px); font: 500 15px/1.1 'Geist Mono', monospace; text-transform: uppercase; letter-spacing: .06em; }
+:is([data-register='play'],[data-register='cool'],[data-register='focus'])[data-skin="runway"] .ribbon { font: 700 18px/1.1 var(--font-game); text-transform: uppercase; letter-spacing: .04em;
+  border-radius: 4px; transform: rotate(-1.5deg); }
+:is([data-register='play'],[data-register='cool'],[data-register='focus'])[data-skin="runway"][data-theme="night"] .gel-btn:not(.gel-btn--secondary), [data-register="cool"][data-skin="runway"][data-theme="day"] .gel-btn:not(.gel-btn--secondary) { box-shadow: 0 5px 0 var(--gel-edge), 0 0 22px rgba(46,242,255,.45), inset 0 2px 0 rgba(255,255,255,.6); }
+/* Runway's black chrome primary carries a 2px cyan inner edge (the accent, never text on white). */
+:is([data-register='play'],[data-register='cool'],[data-register='focus'])[data-skin="runway"][data-theme="day"] .gel-btn:not(.gel-btn--secondary):not(.gel-btn--win):not(.weapon) {
+  box-shadow: 0 6px 0 var(--gel-edge), inset 0 0 0 2px rgba(46,242,255,.55), inset 0 2px 0 rgba(255,255,255,.35), 0 10px 18px -8px rgba(11,11,18,.45);
+}
+/* Runway scene: gallery walls to a silver floor, a faint centerline grid, two holo light leaks. */
+:is([data-register='play'],[data-register='cool'],[data-register='focus'])[data-skin="runway"][data-theme="day"] .backdrop::before {
+  inset: 0;
+  background:
+    linear-gradient(90deg, transparent calc(50% - .5px), rgba(11,11,18,.06) 0 calc(50% + .5px), transparent 0),
+    radial-gradient(40% 30% at 0% 10%, rgba(46,242,255,.14), transparent),
+    radial-gradient(40% 30% at 100% 80%, rgba(182,255,59,.12), transparent);
+  animation: none;
+}
+:is([data-register='play'],[data-register='cool'],[data-register='focus'])[data-skin="runway"][data-theme="day"] .backdrop::after {
+  opacity: .05; mix-blend-mode: multiply; animation: none;
+}
+/* Club scene: lasers (screen-blended, sweeping) and haze. */
+:is([data-register='play'],[data-register='cool'],[data-register='focus'])[data-skin="runway"][data-theme="night"] .backdrop::before,
+[data-register="cool"][data-skin="runway"][data-theme="day"] .backdrop::before {
+  inset: -10% -20% 0; transform-origin: 50% 0; mix-blend-mode: screen; background:
+    conic-gradient(from 150deg at 50% -6%, transparent 0 8deg, rgba(46,242,255,.32) 8deg 9.5deg, transparent 9.5deg 19deg,
+      rgba(255,43,214,.26) 19deg 20.5deg, transparent 20.5deg 30deg, rgba(182,255,59,.24) 30deg 31deg, transparent 31deg 41deg,
+      rgba(255,43,214,.26) 41deg 42.5deg, transparent 42.5deg 52deg, rgba(46,242,255,.32) 52deg 53.5deg, transparent 53.5deg 360deg);
+  animation: laser-sweep 12s ease-in-out infinite alternate;
+}
+:is([data-register='play'],[data-register='cool'],[data-register='focus'])[data-skin="runway"][data-theme="night"] .backdrop::after,
+[data-register="cool"][data-skin="runway"][data-theme="day"] .backdrop::after {
+  opacity: 1; mix-blend-mode: screen; background:
+    radial-gradient(60% 30% at 30% 70%, rgba(123,108,255,.16), transparent 70%),
+    radial-gradient(50% 26% at 75% 55%, rgba(255,43,214,.10), transparent 70%),
+    radial-gradient(80% 30% at 50% 100%, rgba(46,242,255,.10), transparent 70%);
+  animation: haze 20s ease-in-out infinite alternate;
+}
+@keyframes laser-sweep { from { transform: rotate(-8deg); } to { transform: rotate(8deg); } }
+@keyframes haze { to { transform: translate(-6%, -3%) scale(1.08); } }
+:is([data-register='play'],[data-register='cool'],[data-register='focus'])[data-skin="runway"][data-theme="night"] .hud .hp { animation: beat 500ms ease-out infinite; }
+@keyframes beat { 0% { box-shadow: 0 0 0 0 rgba(46,242,255,0); } 12% { box-shadow: 0 0 14px 1px rgba(46,242,255,.45); } 100% { box-shadow: 0 0 0 0 rgba(46,242,255,0); } }
+@media (prefers-reduced-motion: reduce) {
+  :is([data-register='play'],[data-register='cool'],[data-register='focus']) .backdrop::before, :is([data-register='play'],[data-register='cool'],[data-register='focus']) .backdrop::after, :is([data-register='play'],[data-register='cool'],[data-register='focus']) .hud .hp { animation: none; }
+}
+/* Runway sky/body colours behind the scene (html/body under the transparent shell). */
+html:has(.shell:is([data-register='play'],[data-register='cool'],[data-register='focus'])[data-skin='runway']),
+body:has(.shell:is([data-register='play'],[data-register='cool'],[data-register='focus'])[data-skin='runway']) { background: #EEF0F4; }
+html:has(.shell:is([data-register='play'],[data-register='cool'],[data-register='focus'])[data-skin='runway'][data-theme='night']),
+body:has(.shell:is([data-register='play'],[data-register='cool'],[data-register='focus'])[data-skin='runway'][data-theme='night']) { background: #07040F; }
+/* Editorial moments: Bodoni Moda headlines (home, K.O., Vault). */
+:is([data-register='play'],[data-register='cool'],[data-register='focus'])[data-skin="runway"] .editorial { font-family: var(--font-editorial); font-weight: 700; font-style: italic; letter-spacing: -.02em; }
+/* Unbounded is wide: the HUD name and tray labels step down a size. */
+:is([data-register='play'],[data-register='cool'],[data-register='focus'])[data-skin="runway"] .hud__name.boss__name { font-size: 13px; letter-spacing: -.01em; }
+:is([data-register='play'],[data-register='cool'],[data-register='focus'])[data-skin="runway"] .gel-btn--sm { font-size: 15px; }
+:is([data-register='play'],[data-register='cool'],[data-register='focus'])[data-skin="runway"] .gel-btn--lg { font-size: 26px; }
+.home-top__left {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+.home-top__left .wordmark {
+  --wm-stroke: var(--outline);
+}
+.vibe-row--2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* ======================================================================
+   Audiences (v3.14): play (grade <= 6), cool (7-9), focus (>= 10, SAT). Palette intensity, mascot size,
+   type and density only; never features.
+   ====================================================================== */
+.stage2d__pip {
+  scale: var(--mascot-scale, 1);
+  transform-origin: 50% 100%;
+}
+[data-register='cool'] {
+  --mascot-scale: 0.9;
+}
+[data-register='cool'] .backdrop {
+  filter: saturate(0.85);
+}
+[data-register='cool'] .sticker {
+  --tilt: 0deg;
+}
+[data-register='cool'] .bubble--pip.speech__bubble {
+  font-size: 17px;
+}
+[data-register='focus'] {
+  --mascot-scale: 0.74;
+}
+[data-register='focus'] .backdrop {
+  filter: saturate(0.6);
+}
+[data-register='focus'] .backdrop::before,
+[data-register='focus'] .backdrop::after,
+[data-register='focus'] .hud .hp {
+  animation: none;
+}
+[data-register='focus'] .sticker,
+[data-register='focus'] .ribbon {
+  --tilt: 0deg;
+  transform: none;
+}
+[data-register='focus'] .bubble--pip.speech__bubble {
+  font: 500 16px/1.45 var(--font-sans);
+}
+[data-register='focus'] .gel-btn--lg {
+  min-height: 60px;
+  font-size: 20px;
+}
+[data-register='focus'] .glints {
+  display: none;
+}
+/* Runway stickers are mono caps; long captions and topics stay readable in the display face. */
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .fcap.sticker,
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .levelmap__label.sticker {
+  font: 700 15px/1.3 var(--font-game);
+  text-transform: none;
+  letter-spacing: 0;
+}
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .home-current__topic.ribbon {
+  white-space: normal;
+  text-overflow: clip;
+  font-size: 16px;
+  line-height: 1.2;
+  max-width: calc(100% - 32px);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .ko__version .sticker,
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .home-top__brain.sticker,
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .hud__brain.sticker {
+  text-transform: none;
+}
+
+/* ===== Y2K x 2016 components (DES-Y2K-1 patch; data-audience renamed to data-register) ===== */
+/* ---------- 2. Gel pill (all student registers; the Y2K x 2016 sweet spot) ----------
+   Y2K half: split gradient + gloss cap + caustic bottom glow. 2016 half: dark rim + 6px pressable edge. */
+.y2k-gel {
+  --gel-fill: var(--y2k-aqua); --gel-rim: var(--y2k-aqua-rim); --gel-label: #FFFFFF;
+  position: relative; isolation: isolate; display: inline-flex; align-items: center; justify-content: center;
+  min-height: 56px; padding: 0 28px; border: 0; border-radius: 999px; cursor: pointer;
+  background: var(--gel-fill); color: var(--gel-label);
+  font: 800 18px/1 var(--font-game, 'Unbounded', sans-serif); letter-spacing: .04em; text-transform: uppercase;
+  text-shadow: 0 1px 0 rgba(0,0,0,.35);                 /* white on #1670D8 (label band) 4.8:1; lime 7.6, sun 8.3, smoke 12.6, chrome 13+ */
+  box-shadow: 0 0 0 1.5px var(--gel-rim), 0 6px 0 var(--gel-rim), 0 12px 18px -8px rgba(6,51,110,.55),
+              var(--y2k-caustic), inset 0 1px 0 rgba(255,255,255,.7);
+  transition: transform 100ms var(--ease, ease), box-shadow 100ms var(--ease, ease);
+}
+.y2k-gel::before {                                      /* gloss cap */
+  content: ''; position: absolute; z-index: -1; left: 9%; right: 9%; top: 3px; height: 46%;
+  border-radius: 999px; background: var(--y2k-gloss); pointer-events: none;
+}
+.y2k-gel:active { transform: translateY(5px); box-shadow: 0 0 0 1.5px var(--gel-rim), 0 1px 0 var(--gel-rim), var(--y2k-caustic); }
+.y2k-gel:focus-visible { outline: 3px solid var(--focus, #2EF2FF); outline-offset: 4px; }
+.y2k-gel--lime  { --gel-fill: var(--y2k-lime);  --gel-rim: var(--y2k-lime-rim); --gel-label: #0E2400; text-shadow: 0 1px 0 rgba(255,255,255,.5); }
+.y2k-gel--sun   { --gel-fill: var(--y2k-sun);   --gel-rim: var(--y2k-sun-rim);  --gel-label: #2A1700; text-shadow: 0 1px 0 rgba(255,255,255,.5); }
+.y2k-gel--smoke { --gel-fill: var(--y2k-smoke); --gel-rim: var(--y2k-smoke-rim); }
+.y2k-gel--chrome { --gel-fill: var(--y2k-chrome-soft); --gel-rim: var(--y2k-chrome-edge); --gel-label: #0B0B12; text-shadow: 0 1px 0 #fff; }
+.y2k-gel--sm { min-height: 48px; padding: 0 20px; font-size: 15px; }
+
+/* Round orb icon button (2012 app icon x Aqua): chrome ring + glass dome */
+.y2k-orb {
+  position: relative; width: 64px; height: 64px; border-radius: 50%; border: 0; display: grid; place-items: center;
+  background: radial-gradient(circle at 50% 30%, #FFFFFF 0%, #DDF6FF 40%, #7FD2F5 100%);
+  box-shadow: 0 0 0 3px #FFFFFF, 0 0 0 5px var(--y2k-chrome-edge), 0 5px 0 2px var(--y2k-chrome-edge), var(--y2k-caustic);
+  font-size: 28px;
+}
+.y2k-orb::after { content: ''; position: absolute; left: 16%; right: 16%; top: 6%; height: 42%; border-radius: 50%; background: var(--y2k-gloss); opacity: .85; }
+
+/* ---------- 3. Chrome type (wordmark, K.O. stamp, level-ups) ---------- */
+.y2k-chrome-text {
+  font: 900 var(--size, 64px)/.95 'Unbounded', sans-serif; letter-spacing: -.04em; color: transparent;
+  background: var(--y2k-chrome); -webkit-background-clip: text; background-clip: text;
+  -webkit-text-stroke: calc(var(--size, 64px) * .022) var(--y2k-chrome-edge); paint-order: stroke fill;
+  filter: drop-shadow(0 3px 0 rgba(0,0,0,.25));
+}
+@media (forced-colors: active) { .y2k-chrome-text { color: CanvasText; background: none; -webkit-text-stroke: 0; } }
+
+/* 4-point chrome starburst (sparkle) */
+.y2k-star { display: inline-block; width: var(--s, 28px); aspect-ratio: 1; clip-path: var(--y2k-star4);
+  background: linear-gradient(135deg, #FFFFFF 0%, #C9D1DA 40%, #5B6470 52%, #F2F5F8 70%, #9AA4B0 100%); }
+.y2k-star--glint { animation: y2k-glint 1.6s var(--ease-pop, ease) infinite; }
+@keyframes y2k-glint { 0%, 70%, 100% { transform: scale(.4) rotate(0); opacity: 0; } 80% { transform: scale(1.1) rotate(45deg); opacity: 1; } }
+
+/* ---------- 4. LCD panel + status bar (HUD, coins, timers, SAT score) ---------- */
+.y2k-lcd {
+  --lcd-bg: var(--y2k-lcd-blue); --lcd-ink: var(--y2k-lcd-blue-ink);
+  position: relative; padding: 6px 12px; border-radius: 8px; color: var(--lcd-ink);
+  background: var(--y2k-lcd-dots), linear-gradient(180deg, rgba(255,255,255,.25), rgba(0,0,0,.06)), var(--lcd-bg);
+  box-shadow: var(--y2k-lcd-inset);
+  font: 400 22px/1 var(--font-lcd); letter-spacing: .04em; font-variant-numeric: tabular-nums;
+}
+.y2k-lcd--green { --lcd-bg: var(--y2k-lcd-green); --lcd-ink: var(--y2k-lcd-green-ink); }
+.y2k-lcd--night { --lcd-bg: var(--y2k-lcd-night); --lcd-ink: var(--y2k-lcd-night-ink); text-shadow: 0 0 6px rgba(124,244,255,.55); }
+.y2k-lcd__ghost { position: absolute; opacity: .13; pointer-events: none; }      /* unlit "88:88" behind the digits */
+
+.y2k-statusbar {            /* phone-style bar: signal, label, clock, battery */
+  display: flex; align-items: center; gap: 10px; height: 34px; padding: 0 12px; border-radius: 10px;
+}
+.y2k-signal { display: inline-flex; align-items: flex-end; gap: 2px; height: 14px; }
+.y2k-signal i { width: 3px; background: currentColor; border-radius: 1px; }
+.y2k-signal i:nth-child(1) { height: 25%; } .y2k-signal i:nth-child(2) { height: 50%; }
+.y2k-signal i:nth-child(3) { height: 75%; } .y2k-signal i:nth-child(4) { height: 100%; }
+.y2k-signal i.is-off { opacity: .2; }
+.y2k-battery { position: relative; width: 26px; height: 13px; border: 2px solid currentColor; border-radius: 3px; padding: 1px;
+  display: inline-flex; gap: 1px; }
+.y2k-battery::after { content: ''; position: absolute; right: -5px; top: 3px; width: 3px; height: 5px; background: currentColor; border-radius: 0 2px 2px 0; }
+.y2k-battery i { flex: 1; background: currentColor; } .y2k-battery i.is-off { opacity: .15; }
+
+/* Segmented LCD HP (replaces glossy HP in cool/focus; boss fill stays coral by role rule) */
+.y2k-lcd-hp { display: grid; grid-template-columns: repeat(10, 1fr); gap: 2px; height: 14px; }
+.y2k-lcd-hp i { background: var(--coral-fill, #FF6F61); box-shadow: inset 0 -2px 0 rgba(0,0,0,.25); border-radius: 1px; }
+.y2k-lcd-hp i.is-off { background: currentColor; opacity: .12; box-shadow: none; }
+
+/* Coin capsule (2012-16 game HUD): dark glass pill, coin overlapping left, gel "+" right */
+.y2k-capsule { position: relative; display: inline-flex; align-items: center; gap: 8px; height: 34px; padding: 0 6px 0 34px;
+  border-radius: 999px; background: rgba(6,20,60,.62); color: #fff; box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 3.5px #06336E, inset 0 2px 0 rgba(255,255,255,.18);
+  font: 700 17px/1 var(--font-game, 'Unbounded', sans-serif); font-variant-numeric: tabular-nums; }
+.y2k-capsule__coin { position: absolute; left: -6px; width: 38px; height: 38px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #FFF6C2 0 12%, #FFD23F 35%, #E09A00 80%); box-shadow: 0 0 0 2px #6A3B00, inset 0 -3px 0 rgba(0,0,0,.18); }
+.y2k-capsule__plus { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-size: 16px; color: #0E2400;
+  background: var(--y2k-lime); box-shadow: 0 0 0 1.5px var(--y2k-lime-rim), inset 0 1px 0 rgba(255,255,255,.7); }
+
+/* ---------- 5. Window chrome (Pip's bubble in cool register, sheets, drawers) ---------- */
+.y2k-window { border-radius: var(--r-y2k-window); overflow: hidden; background: #FFFFFF; color: #0B0B12;
+  box-shadow: 0 0 0 1.5px #0E3A8A, 0 14px 30px -14px rgba(6,30,80,.55); }
+.y2k-window__bar { position: relative; display: flex; align-items: center; gap: 8px; height: 34px; padding: 0 6px 0 12px;
+  background: var(--y2k-titlebar); color: #FFFFFF; font: 700 15px/1 var(--font-game, 'Unbounded', sans-serif); letter-spacing: .02em;
+  text-shadow: 0 1px 0 rgba(0,0,0,.35); }
+.y2k-window__bar::before { content: ''; position: absolute; inset: 2px 2px 52% 2px; border-radius: 10px 10px 4px 4px;
+  background: linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,.05)); pointer-events: none; }
+.y2k-window__btn { margin-left: auto; width: 24px; height: 24px; border-radius: 6px; display: grid; place-items: center;
+  background: var(--y2k-chrome-soft); color: #0B0B12; font-size: 13px; box-shadow: 0 0 0 1px #0E3A8A, inset 0 1px 0 #fff; }
+.y2k-window__body { padding: 14px 16px; font: 700 18px/1.35 'Manrope', sans-serif; }
+.y2k-window--smoke { box-shadow: 0 0 0 1.5px #000, 0 0 24px -6px rgba(124,244,255,.35); background: #12151F; color: #F4F2FA; }
+.y2k-window--smoke .y2k-window__bar { background: var(--y2k-titlebar-smoke); }
+.y2k-window--smoke .y2k-window__btn { box-shadow: 0 0 0 1px #000, inset 0 1px 0 #fff; }
+
+/* Her chat bubble: aqua glass (student registers) */
+.y2k-bubble-her { padding: 12px 16px; border-radius: 22px 22px 6px 22px; color: #04253D;
+  background: linear-gradient(180deg, rgba(255,255,255,.92) 0%, #D7F4FF 55%, #B6EAFF 100%);
+  box-shadow: 0 0 0 1.5px #1E8DEB, inset 0 2px 0 #FFFFFF, inset 0 -6px 10px -6px rgba(30,141,235,.35);
+  font: 700 17px/1.35 'Manrope', sans-serif; }
+
+/* ---------- 6. Translucent candy device frame (landing PhoneFrame, desktop handheld option) ---------- */
+.y2k-device {
+  --plastic: var(--y2k-plastic-aqua);
+  position: relative; padding: 18px; border-radius: var(--r-y2k-bezel);
+  background: var(--y2k-plastic-ribs), var(--plastic);
+  -webkit-backdrop-filter: blur(8px) saturate(1.4); backdrop-filter: blur(8px) saturate(1.4);
+  box-shadow: 0 0 0 1.5px rgba(255,255,255,.75), inset 0 3px 0 rgba(255,255,255,.65), inset 0 -18px 30px -10px rgba(0,50,110,.35),
+              0 0 0 6px rgba(255,255,255,.12), 0 40px 70px -30px rgba(0,30,80,.6);
+}
+.y2k-device::before { content: ''; position: absolute; left: 10%; right: 40%; top: 8px; height: 28%; border-radius: 40px;
+  background: linear-gradient(180deg, rgba(255,255,255,.5), rgba(255,255,255,0)); pointer-events: none; }
+.y2k-device--smoke { --plastic: var(--y2k-plastic-smoke); }
+.y2k-device--lime { --plastic: var(--y2k-plastic-lime); }
+
+/* Glass podium / stage disc under the mascot (replaces the flat shadow ellipse) */
+.y2k-podium { width: 72%; height: 38px; margin: -20px auto 0; border-radius: 50%;
+  background: radial-gradient(ellipse at 50% 30%, rgba(255,255,255,.95) 0 18%, rgba(160,230,255,.7) 45%, rgba(30,141,235,.55) 75%, rgba(6,51,110,.6) 100%);
+  box-shadow: 0 0 0 2px rgba(255,255,255,.8), 0 10px 24px -8px rgba(6,51,110,.5), inset 0 -6px 10px rgba(0,40,100,.25); }
+
+/* Floating bubbles (scene decoration, play register; pre-rendered gradients, no filter blur) */
+.y2k-bubble { position: absolute; width: var(--d, 36px); aspect-ratio: 1; border-radius: 50%; background: var(--y2k-bubble);
+  animation: y2k-float var(--t, 9s) ease-in-out infinite alternate; }
+@keyframes y2k-float { to { transform: translateY(-18px) translateX(6px); } }
+
+/* Cybercore overlay (cool register scene / K.O. card back): duotone + scanlines */
+.y2k-cyber { position: relative; background: var(--y2k-cyber); color: #E6ECFF; }
+.y2k-cyber::after { content: ''; position: absolute; inset: 0; background: var(--y2k-scanlines); mix-blend-mode: screen; pointer-events: none; }
+
+/* Pill switch with an aqua-glass knob (Studio filters, parent contact prefs). 44px hit area. */
+.y2k-switch { position: relative; width: 52px; height: 30px; border-radius: 999px; border: 1.5px solid var(--border, rgba(214,210,230,.3));
+  background: var(--surface-3, #262144); cursor: pointer; transition: background 160ms var(--ease, ease); }
+.y2k-switch::after { content: ''; position: absolute; top: 2px; left: 2px; width: 23px; height: 23px; border-radius: 50%;
+  background: radial-gradient(circle at 50% 28%, #FFFFFF 0 22%, #CFF6FF 45%, #7FD8F5 100%);
+  box-shadow: 0 1px 2px rgba(0,0,0,.4), inset 0 -2px 3px rgba(0,80,140,.25); transition: transform 160ms var(--ease, ease); }
+.y2k-switch[aria-checked="true"] { background: var(--accent, #2EF2FF); border-color: var(--accent, #2EF2FF); }
+.y2k-switch[aria-checked="true"]::after { transform: translateX(22px); }
+
+/* ---------- 8. Motion and accessibility guards ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .y2k-star--glint, .y2k-bubble { animation: none; }
+  .y2k-gel, .y2k-switch::after { transition: none; }
+}
+[data-register="studio"] .y2k-star--glint, [data-register="parent"] .y2k-star--glint,
+[data-register="studio"] .y2k-bubble, [data-register="parent"] .y2k-bubble { display: none; }
+
+
+/* ======================================================================
+   DES-Y2K-1: the dose per student register (data-register = play | cool | focus).
+   ====================================================================== */
+/* PLAY (10-12): Frutiger sky and bubbles by day, aqua gel pills, glossy orb icon buttons. */
+[data-register='play'][data-skin='runway'][data-theme='day'] {
+  --sky: linear-gradient(180deg, #8ED3FF 0%, #C9EEFF 46%, #EAFBF2 100%);
+}
+[data-register='play'][data-skin='runway'][data-theme='day'] .backdrop::before {
+  inset: 0;
+  background:
+    radial-gradient(70px 28px at 16% 12%, #fff 96%, transparent),
+    radial-gradient(48px 24px at 23% 9%, #fff 96%, transparent),
+    radial-gradient(90px 32px at 80% 20%, rgba(255,255,255,.92) 96%, transparent),
+    radial-gradient(56px 26px at 88% 17%, rgba(255,255,255,.92) 96%, transparent);
+  animation: drift 60s linear infinite alternate;
+}
+[data-register='play'][data-skin='runway'][data-theme='day'] .backdrop::after {
+  opacity: 1;
+  mix-blend-mode: normal;
+  background:
+    radial-gradient(circle at 12% 70%, rgba(255,255,255,.95) 0 2px, rgba(170,235,255,.35) 3px 12px, rgba(255,255,255,.7) 13px, transparent 14px),
+    radial-gradient(circle at 90% 58%, rgba(255,255,255,.95) 0 2px, rgba(170,235,255,.35) 3px 9px, rgba(255,255,255,.7) 10px, transparent 11px),
+    radial-gradient(circle at 76% 86%, rgba(255,255,255,.95) 0 3px, rgba(170,235,255,.35) 4px 16px, rgba(255,255,255,.7) 17px, transparent 18px),
+    radial-gradient(circle at 30% 40%, rgba(255,255,255,.9) 0 1px, rgba(170,235,255,.3) 2px 6px, transparent 7px);
+  animation: float 14s ease-in-out infinite alternate;
+}
+html:has(.shell[data-register='play'][data-skin='runway'][data-theme='day']),
+body:has(.shell[data-register='play'][data-skin='runway'][data-theme='day']) { background: #C9EEFF; }
+[data-register='play'][data-skin='runway'] .gel-btn:not(.gel-btn--secondary):not(.gel-btn--win) {
+  --gel: var(--y2k-aqua);
+  --gel-ink: #ffffff;
+  --gel-edge: var(--y2k-aqua-rim);
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
+}
+[data-register='play'][data-skin='runway'][data-theme='day'] .gel-btn:not(.gel-btn--secondary):not(.gel-btn--win):not(.weapon) {
+  box-shadow: 0 0 0 1.5px var(--y2k-aqua-rim), 0 6px 0 var(--y2k-aqua-rim), 0 12px 18px -8px rgba(6, 51, 110, 0.55),
+    var(--y2k-caustic), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+[data-register='play'][data-skin='runway'] .icon-btn.gel-btn--secondary {
+  border: 0;
+  background: radial-gradient(circle at 50% 30%, #ffffff 0%, #ddf6ff 40%, #7fd2f5 100%);
+  box-shadow: 0 0 0 3px #ffffff, 0 0 0 5px var(--y2k-chrome-edge), 0 5px 0 2px var(--y2k-chrome-edge), var(--y2k-caustic);
+  color: #0b0b12;
+}
+/* COOL (13-15): the club look whatever the toggle says, plus blue scanlines; smoke gel pills. */
+[data-register='cool'][data-skin='runway'] .backdrop {
+  background: var(--y2k-scanlines), radial-gradient(80% 50% at 50% 0%, rgba(63, 91, 255, 0.28), transparent 70%), var(--sky);
+}
+html:has(.shell[data-register='cool'][data-skin='runway']),
+body:has(.shell[data-register='cool'][data-skin='runway']) { background: #07040f; }
+[data-register='cool'][data-skin='runway'] .gel-btn:not(.gel-btn--secondary):not(.gel-btn--win) {
+  --gel: var(--y2k-smoke);
+  --gel-ink: #ffffff;
+  --gel-edge: #000000;
+}
+/* FOCUS (15-17): Runway/Club, calm: aqua accent edge on the primary, nothing extra. */
+[data-register='focus'][data-skin='runway'][data-theme='day'] .gel-btn:not(.gel-btn--secondary):not(.gel-btn--win):not(.weapon) {
+  box-shadow: 0 5px 0 var(--gel-edge), inset 0 0 0 2px rgba(46, 147, 238, 0.7);
+}
+
+/* LCD readout + coin capsule in the mission HUD (all student registers; colours per theme). */
+.hud__lcd.y2k-lcd {
+  padding: 2px 8px;
+  font-size: 22px;
+  border-radius: 6px;
+}
+:is([data-register='play'],[data-register='cool'],[data-register='focus'])[data-theme='night'] .hud__lcd.y2k-lcd,
+[data-register='cool'] .hud__lcd.y2k-lcd {
+  --lcd-bg: var(--y2k-lcd-night);
+  --lcd-ink: var(--y2k-lcd-night-ink);
+  text-shadow: 0 0 6px rgba(124, 244, 255, 0.55);
+}
+.hud__cap.y2k-capsule {
+  height: 30px;
+  padding: 0 10px 0 30px;
+  font-size: 15px;
+  margin-left: 4px;
+}
+.hud__cap .y2k-capsule__coin {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  font: 800 13px/1 var(--font-game);
+  color: #2a1700;
+}
+
+/* Chrome lettering + 4-point sparkles on the K.O. stamp and the Brain upgrade. */
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .ko__stamp.y2k-chrome-text {
+  --size: 96px;
+  border: 0;
+  padding: 0;
+  font-size: var(--size);
+}
+.ko-sparkles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.ko-sparkles .y2k-star {
+  position: absolute;
+}
+.ko-sparkles .y2k-star:nth-child(1) { left: 14%; top: 12%; --s: 34px; }
+.ko-sparkles .y2k-star:nth-child(2) { right: 12%; top: 6%; --s: 24px; animation-delay: 0.3s; }
+.ko-sparkles .y2k-star:nth-child(3) { right: 22%; top: 34%; --s: 18px; animation-delay: 0.6s; }
+.ko__version {
+  position: relative;
+}
+.ko__version .y2k-star {
+  position: absolute;
+  right: -18px;
+  top: -14px;
+  --s: 22px;
+}
+:is([data-register='play'],[data-register='cool'],[data-register='focus'])[data-register='focus'] .ko-sparkles,
+[data-register='focus'] .ko__version .y2k-star {
+  display: none;
+}
+
+/* Landing: the live phone in translucent candy plastic. */
+.landing-desk__phone .device {
+  background: var(--y2k-plastic-ribs), var(--y2k-plastic-smoke);
+  -webkit-backdrop-filter: blur(8px) saturate(1.4);
+  backdrop-filter: blur(8px) saturate(1.4);
+  box-shadow: 0 0 0 1.5px rgba(255, 255, 255, 0.75), inset 0 3px 0 rgba(255, 255, 255, 0.65),
+    inset 0 -18px 30px -10px rgba(0, 50, 110, 0.35), 0 0 0 6px rgba(255, 255, 255, 0.12), 0 40px 70px -30px rgba(0, 30, 80, 0.6);
+}
+
+/* A chosen student theme (v3.8 tokens): bubbles take the theme's ink so dark bubbles stay readable. */
+[data-student-theme] .bubble,
+[data-student-theme] .bubble.speech__bubble,
+[data-student-theme] .her-line .msg__bubble.bubble--me,
+[data-student-theme] .qitem__ans {
+  color: var(--bubble-ink, #10213f);
+}
+
+/* ---------- F17: pick your vibe (one screen at 390x844) ---------- */
+.style-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.style-grid__head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+.style-grid__head .ribbon {
+  margin: 0;
+}
+.style-grid__sub {
+  margin: 0;
+  font: 600 15px/1.3 var(--font-game);
+  color: var(--fg-muted);
+}
+.style-grid__tiles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+.style-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+  padding: 4px 4px 6px;
+  border-radius: 14px;
+  border: 2px solid var(--outline);
+  background: var(--panel-fill);
+  color: var(--fg);
+  cursor: pointer;
+  box-shadow: 0 3px 0 var(--outline);
+}
+.style-tile.is-on {
+  box-shadow: 0 3px 0 var(--outline), 0 0 0 3px var(--accent, #2ef2ff);
+}
+.style-tile__swatch {
+  position: relative;
+  height: 84px;
+  border-radius: 10px;
+  background: var(--t-bg, linear-gradient(160deg, #eef0f4, #d9dde5));
+  overflow: hidden;
+}
+.style-tile__bubble {
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  padding: 2px 7px;
+  border-radius: 9px;
+  background: var(--t-bubble, #fff);
+  color: var(--t-ink, #0b0b12);
+  font: 700 12px/1.2 var(--font-game);
+  box-shadow: 0 0 0 1.5px var(--t-edge, #0b0b12);
+}
+.style-tile__pip {
+  position: absolute;
+  left: 4px;
+  bottom: -4px;
+  line-height: 0;
+}
+.style-tile__pip .pip2d {
+  max-width: none;
+}
+.style-tile__gel {
+  position: absolute;
+  right: 6px;
+  bottom: 8px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--t-action, #0b0b12);
+  color: var(--t-action-ink, #fff);
+  font: 800 12px/1 var(--font-game);
+  text-transform: uppercase;
+  box-shadow: 0 2px 0 var(--t-edge, #000), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+.style-tile__label {
+  font: 700 12px/1.2 var(--font-game);
+  text-align: center;
+  min-height: 2.4em;
+}
+.style-tile__n {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--accent, #2ef2ff);
+  color: #07040f;
+  font-size: 13px;
+  box-shadow: 0 0 0 2px var(--outline);
+}
+.style-grid__foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+.style-grid__foot .gel-btn:last-child {
+  flex: 1;
+}
+:is([data-register='play'],[data-register='cool'],[data-register='focus']) .home-current__topic.ribbon {
+  width: auto;
+  max-width: calc(100% - 44px);
+}
+@media (max-height: 700px) {
+  .style-tile__swatch {
+    height: 64px;
+  }
+  .style-tile__pip .pip2d {
+    width: 36px;
+    height: 40px;
+  }
+  .style-grid {
+    gap: 6px;
+  }
+}
+.picker__links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+/* F19: what my family sees */
+.family-view__lead,
+.family-view__empty {
+  margin: 0;
+  font: 600 16px/1.35 var(--font-sans);
+  color: var(--fg-muted);
+}
+.family-view__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.family-view__item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.family-view__from {
+  font: 600 15px/1.2 var(--font-game);
+  color: var(--fg-muted);
+}
+.family-view__title {
+  font: 700 17px/1.2 var(--font-game);
+}
+.family-view__text {
+  font: 600 16px/1.4 var(--font-sans);
+}
+/* F11: Name your Pip */
+.name-pip {
+  align-items: center;
+  text-align: center;
+  padding-top: 6px;
+}
+.name-pip .ribbon {
+  margin: 0;
+}
+.name-pip__sub {
+  margin: 0;
+  font: 600 16px/1.35 var(--font-sans);
+  color: var(--fg-muted);
+}
+.name-pip__input {
+  width: 100%;
+  max-width: 320px;
+  min-height: 60px;
+  padding: 0 20px;
+  border-radius: 30px;
+  border: var(--outline-w) solid var(--field-border);
+  background: var(--field-bg);
+  color: var(--fg);
+  font: 700 24px/1 var(--font-game);
+  text-align: center;
+  box-shadow: inset 0 3px 0 var(--tint-2), 0 4px 0 var(--outline);
+}
+.name-pip__input:focus {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+.name-pip__foot {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  max-width: 320px;
+  justify-content: space-between;
+}
+.name-pip__foot .gel-btn:last-child {
+  flex: 1;
+}
+
+/* ---------- F11: the runway walk + "The new look." (DESIGN_SYSTEM G4 §4) ---------- */
+.ko__stage--walk {
+  position: relative;
+  overflow: hidden;
+}
+.catwalk {
+  position: absolute;
+  inset: 35% -30% -10%;
+  transform: perspective(700px) rotateX(62deg);
+  transform-origin: 50% 0;
+  background: linear-gradient(90deg, transparent 44%, rgba(255, 255, 255, 0.5) 44% 45%, transparent 45% 55%, rgba(255, 255, 255, 0.5) 55% 56%, transparent 56%),
+    var(--catwalk, linear-gradient(180deg, #d9dde5, #ffffff));
+}
+[data-theme='night'] .catwalk,
+[data-register='cool'] .catwalk {
+  --catwalk: linear-gradient(180deg, #140a26, #2e2250);
+}
+.catwalk::before,
+.catwalk::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 6px;
+  background: radial-gradient(circle, var(--accent, #2ef2ff) 2px, transparent 3px) 0 0 / 6px 28px repeat-y;
+}
+.catwalk::before {
+  left: 43%;
+}
+.catwalk::after {
+  right: 43%;
+}
+.strut {
+  position: absolute;
+  left: 50%;
+  bottom: 4%;
+  translate: -50% 0;
+  line-height: 0;
+  transform-origin: 50% 100%;
+  animation: strut-in 1.9s cubic-bezier(0.3, 0.1, 0.3, 1) both, sway 400ms ease-in-out 5 alternate;
+}
+.strut .pip2d {
+  max-width: none;
+}
+@keyframes strut-in {
+  from {
+    transform: translateY(-38%) scale(0.45);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes sway {
+  from {
+    rotate: -3deg;
+  }
+  to {
+    rotate: 3deg;
+  }
+}
+/* Camera flashes: <= 2 per second, small, white only, none under reduced motion. */
+.camflash {
+  position: absolute;
+  width: 46px;
+  height: 46px;
+  background: #ffffff;
+  opacity: 0;
+  clip-path: polygon(50% 0, 58% 42%, 100% 50%, 58% 58%, 50% 100%, 42% 58%, 0 50%, 42% 42%);
+  animation: camflash 80ms linear 1 both;
+  animation-delay: var(--t);
+}
+.camflash--l {
+  left: 8%;
+}
+.camflash--r {
+  right: 8%;
+}
+@keyframes camflash {
+  40% {
+    opacity: 0.3;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.ko--newlook {
+  justify-content: center;
+}
+.newlook__stage {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  place-items: end center;
+}
+.newlook__spot {
+  position: absolute;
+  inset: 0 18%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.35), transparent 85%);
+  clip-path: polygon(40% 0, 60% 0, 100% 100%, 0 100%);
+  pointer-events: none;
+}
+.newlook__pip {
+  position: relative;
+  line-height: 0;
+}
+.newlook__pip .pip2d {
+  max-width: none;
+}
+.newlook__copy {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: calc(14px + env(safe-area-inset-bottom));
+}
+.newlook {
+  margin: 0;
+  font: italic 800 44px/1 var(--font-editorial, 'Bodoni Moda', serif);
+  color: var(--fg);
+  letter-spacing: -0.02em;
+}
+.look-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 16px;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #0b0b12;
+  border: 2px solid #0b0b12;
+  box-shadow: 0 3px 0 #0b0b12;
+  font: 500 14px/1.3 var(--font-mono);
+  letter-spacing: 0.06em;
+  text-align: left;
+}
+[data-theme='night'] .look-card,
+[data-register='cool'] .look-card {
+  background: #1c1233;
+  color: #ffffff;
+  border-color: #6c5bb0;
+  box-shadow: 0 0 0 1.5px rgba(46, 242, 255, 0.9), 0 0 18px rgba(46, 242, 255, 0.45);
+}
+.newlook__save {
+  font-size: 30px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .strut,
+  .camflash {
+    animation: none;
+  }
+  .camflash {
+    display: none;
+  }
+}
+/* F11: the plaque under Pip on the home title screen. */
+.home-plaque.sticker {
+  position: absolute;
+  left: 50%;
+  bottom: 6px;
+  translate: -50% 0;
+  z-index: 3;
+  white-space: nowrap;
+  max-width: calc(100% - 24px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  --tilt: -2deg;
+}
+.welcome__owner {
+  align-self: center;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  font: 600 16px var(--font-game);
+}
+
+/* ======================================================================
+   OWNER DIRECTION (secondary, not elementary). Overrides the playful layer for the default student
+   registers cool and focus: tight grotesk UI (Inter Tight), wide display only for big moments (Archivo
+   expanded), mono micro-labels (JetBrains Mono); radii 6-12px; gel/chrome only on the ONE primary action,
+   secondary actions flat outline; 1px borders, hard-edged panels, a visible grid; snappy 120-180ms motion,
+   no wobble; sentence case. References: Spotify, Discord, SNKRS, Valorant menus, CapCut.
+   ====================================================================== */
+:is([data-register='cool'], [data-register='focus'])[data-skin] {
+  --font-game: 'Inter Tight', 'Manrope', system-ui, sans-serif;
+  --font-big: 'Archivo', 'Inter Tight', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Geist Mono', ui-monospace, monospace;
+  --font-sans: 'Inter Tight', 'Manrope', system-ui, sans-serif;
+  --r-ui: 10px;
+  --r-chip: 6px;
+  --hair: 1px solid var(--border);
+  --mascot-scale: 0.7;
+}
+:is([data-register='cool'], [data-register='focus'])[data-skin] .game,
+:is([data-register='cool'], [data-register='focus'])[data-skin] .play-screen {
+  font-family: var(--font-game);
+}
+/* Visible grid on the scene. */
+:is([data-register='cool'], [data-register='focus'])[data-skin] .backdrop {
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px) 0 0 / 24px 24px,
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px) 0 0 / 24px 24px,
+    var(--y2k-scanlines),
+    var(--sky);
+}
+[data-register='focus'][data-skin][data-theme='day'] .backdrop {
+  background:
+    linear-gradient(rgba(11, 11, 18, 0.04) 1px, transparent 1px) 0 0 / 24px 24px,
+    linear-gradient(90deg, rgba(11, 11, 18, 0.04) 1px, transparent 1px) 0 0 / 24px 24px,
+    var(--sky);
+}
+
+/* Buttons: one gel primary, everything else flat outline. Radius 10px, no squash, no candy caps. */
+:is([data-register='cool'], [data-register='focus'])[data-skin] .gel-btn {
+  border-radius: var(--r-ui);
+  font: 650 15px/1 var(--font-game);
+  letter-spacing: 0;
+  text-transform: none;
+  min-height: 48px;
+  padding: 0 18px;
+  transition: transform 120ms ease-out, background-color 120ms ease-out, border-color 120ms ease-out;
+}
+:is([data-register='cool'], [data-register='focus'])[data-skin] .gel-btn:active,
+:is([data-register='cool'], [data-register='focus'])[data-skin] .gel-btn.is-pressed {
+  transform: translateY(1px);
+}
+:is([data-register='cool'], [data-register='focus'])[data-skin] .gel-btn--secondary,
+:is([data-register='cool'], [data-register='focus'])[data-skin] .weapon.gel-btn:not(.is-on) {
+  background: transparent;
+  color: var(--fg);
+  border: 1px solid var(--border);
+  box-shadow: none;
+  text-shadow: none;
+}
+:is([data-register='cool'], [data-register='focus'])[data-skin] .gel-btn--secondary:hover {
+  border-color: var(--fg-muted);
+}
+:is([data-register='cool'], [data-register='focus'])[data-skin] .gel-btn--lg {
+  min-height: 60px;
+  min-width: 220px;
+  font: 800 22px/1 var(--font-big);
+  font-variation-settings: 'wdth' 125;
+  letter-spacing: 0.01em;
+  text-transform: lowercase;
+}
+:is([data-register='cool'], [data-register='focus'])[data-skin] .gel-btn--sm {
+  min-height: 44px;
+  font-size: 14px;
+}
+:is([data-register='cool'], [data-register='focus'])[data-skin] .gel-btn:disabled {
+  filter: none;
+  opacity: 0.5;
+}
+/* Icon buttons: square-ish, flat, 1px. */
+:is([data-register='cool'], [data-register='focus'])[data-skin] .icon-btn,
+:is([data-register='cool'], [data-register='focus'])[data-skin] .icon-btn.gel-btn--secondary {
+  width: 44px;
+  height: 44px;
+  min-height: 44px;
+  border-radius: var(--r-ui);
+  background: color-mix(in oklch, var(--surface) 70%, transparent);
+  border: 1px solid var(--border);
+  box-shadow: none;
+  font-size: 20px;
+}
+:is([data-register='cool'], [data-register='focus'])[data-skin] .icon-btn.composer__send {
+  border-radius: 8px;
+}
+:is([data-register='cool'], [data-register='focus'])[data-skin] .icon-btn__label {
+  font: 500 12px/1 var(--font-mono);
+  text-transform: lowercase;
+  color: var(--fg-muted);
+}
+/* Panels, sheets, bubbles, stickers: hard-edged, 1px. */
+:is([data-register='cool'], [data-register='focus'])[data-skin] .panel,
+:is([data-register='cool'], [data-register='focus'])[data-skin] .brain__cloud,
+:is([data-register='cool'], [data-register='focus'])[data-skin] .qitem__q.panel {
+  border: 1px solid var(--border);
+  border-radius: var(--r-ui);
+  box-shadow: none;
+  background: color-mix(in oklch, var(--surface) 88%, transparent);
+}
+:is([data-register='cool'], [data-register='focus'])[data-skin] .brain__puff {
+  display: none;
+}
+:is([data-register='cool'], [data-register='focus'])[data-skin] .drawer,
+:is([data-register='cool'], [data-register='focus'])[data-skin] .sheet {
+  border: 1px solid var(--border);
+  border-bottom: 0;
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0 -20px 40px -20px rgba(0, 0, 0, 0.6);
+}
+:is([data-register='cool'], [data-register='focus'])[data-skin] .bubble,
+:is([data-register='cool'], [data-register='focus'])[data-skin] .bubble.speech__bubble {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: none;
+  font: 500 16px/1.4 var(--font-game);
+  animation: fade-up 160ms ease-out both;
+}
+:is([data-register='cool'], [data-register='focus'])[data-skin] .bubble.speech__bubble {
+  background: var(--surface-2);
+  color: var(--fg);
+}
+:is([data-register='cool'], [data-register='focus'])[data-skin] .speech.msg > .speech__tail {
+  width: 12px;
+  height: 12px;
+  margin-top: -7px;
+  background: var(--surface-2);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  border-bottom-right-radius: 2px;
+}
+:is([data-register='cool'], [data-register='focus'])[data-skin] .bubble--pip q.her-words {
+  background: linear-gradient(transparent 60%, color-mix(in oklch, var(--accent, #2ef2ff) 30%, transparent) 60%);
+  font-weight: 600;
+}
+:is([data-register='cool'], [data-register='focus'])[data-skin] .her-line .msg__bubble.bubble--me {
+  border-radius: 12px 12px 3px 12px;
+  border: 1px solid var(--border);
+  background: color-mix(in oklch, var(--accent, #2ef2ff) 14%, var(--surface));
+  color: var(--fg);
+  font: 500 15px/1.35 var(--font-game);
+}
+:is([data-register='cool'], [data-register='focus'])[data-skin] .sticker {
+  --tilt: 0deg;
+  transform: none;
+  rotate: none;
+  border: 1px solid var(--border);
+  border-radius: var(--r-chip);
+  background: color-mix(in oklch, var(--surface) 90%, transparent);
+  color: var(--fg);
+  box-shadow: none;
+  font: 500 12px/1.2 var(--font-mono);
+  text-transform: lowercase;
+  letter-spacing: 0.02em;
+}
+:is([data-register='cool'], [data-register='focus'])[data-skin] .fcap.sticker {
+  font: 600 14px/1.35 var(--font-game);
+  text-transform: none;
+}
+:is([data-register='cool'], [data-register='focus'])[data-skin] .ribbon {
+  transform: none;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  color: var(--fg);
+  padding: 0;
+  font: 800 20px/1.1 var(--font-big);
+  font-variation-settings: 'wdth' 125;
+  text-transform: lowercase;
+  letter-spacing: 0;
+}
+:is([data-register='cool'], [data-register='focus'])[data-skin] .ribbon::before,
+:is([data-register='cool'], [data-register='focus'])[data-skin] .ribbon::after {
+  display: none;
+}
+:is([data-register='cool'], [data-register='focus'])[data-skin] .home-current__topic.ribbon {
+  font-size: 22px;
+  text-align: center;
+}
+/* Mono micro-labels. */
+:is([data-register='cool'], [data-register='focus'])[data-skin] .eyebrow,
+:is([data-register='cool'], [data-register='focus'])[data-skin] .drawer__title,
+:is([data-register='cool'], [data-register='focus'])[data-skin] .picker__label {
+  font: 500 12px/1.2 var(--font-mono);
+  text-transform: lowercase;
+  letter-spacing: 0.04em;
+  color: var(--fg-muted);
+}
+/* HUD + level map: thin, squared. */
+:is([data-register='cool'], [data-register='focus'])[data-skin] .hp {
+  height: 10px;
+  border-radius: 2px;
+  border-width: 1px;
+}
+:is([data-register='cool'], [data-register='focus'])[data-skin] .hp::before {
+  display: none;
+}
+:is([data-register='cool'], [data-register='focus'])[data-skin] .hud__name.boss__name {
+  font: 600 13px/1.1 var(--font-game);
+}
+:is([data-register='cool'], [data-register='focus'])[data-skin] .levelmap .mstep {
+  width: 44px;
+  height: 44px;
+  min-height: 44px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  box-shadow: none;
+  background: color-mix(in oklch, var(--surface) 80%, transparent);
+  color: var(--fg);
+  animation: none;
+}
+:is([data-register='cool'], [data-register='focus'])[data-skin] .levelmap .mstep .meter {
+  inset: auto 4px 3px;
+  height: 3px;
+  border-radius: 2px;
+  -webkit-mask: none;
+  mask: none;
+  background: linear-gradient(90deg, var(--mint-fill) calc(var(--m, 0) * 1%), var(--track) 0);
+}
+:is([data-register='cool'], [data-register='focus'])[data-skin] .levelmap .mstep.is-next {
+  border-color: var(--accent, #2ef2ff);
+  background: color-mix(in oklch, var(--accent, #2ef2ff) 16%, transparent);
+  color: var(--fg);
+}
+:is([data-register='cool'], [data-register='focus'])[data-skin] .levelmap .mstep.is-taught {
+  background: color-mix(in oklch, var(--mint-fill) 22%, transparent);
+  border-color: var(--mint-fill);
+  color: var(--fg);
+}
+:is([data-register='cool'], [data-register='focus'])[data-skin] .levelmap .mstep--boss {
+  width: 44px;
+  height: 44px;
+  box-shadow: 0 0 0 1px var(--coral-fill);
+}
+:is([data-register='cool'], [data-register='focus'])[data-skin] .levelmap .mstep__n {
+  font: 600 14px/1 var(--font-mono);
+}
+:is([data-register='cool'], [data-register='focus'])[data-skin] .mpath__item:not(:last-child)::after {
+  height: 1px;
+  background: var(--border);
+}
+:is([data-register='cool'], [data-register='focus'])[data-skin] .mpath__item:has(.is-taught)::after {
+  background: var(--mint-fill);
+}
+/* Composer: 10px, 1px. */
+:is([data-register='cool'], [data-register='focus'])[data-skin] .composer {
+  border-radius: var(--r-ui);
+  border: 1px solid var(--border);
+  box-shadow: none;
+  min-height: 52px;
+  background: color-mix(in oklch, var(--surface) 92%, transparent);
+}
+:is([data-register='cool'], [data-register='focus'])[data-skin] .composer__input {
+  font: 500 16px/1.35 var(--font-game);
+}
+/* Mascot smaller on chat screens; sparkles only at the K.O. */
+:is([data-register='cool'], [data-register='focus'])[data-skin] .game--home .stage2d__pip {
+  scale: 0.85;
+}
+:is([data-register='cool'], [data-register='focus'])[data-skin] .glints,
+:is([data-register='cool'], [data-register='focus'])[data-skin] .y2k-star:not(.ko-sparkles .y2k-star) {
+  display: none;
+}
+/* Snappy motion, no wobble on UI chrome. */
+:is([data-register='cool'], [data-register='focus'])[data-skin] .levelmap__label,
+:is([data-register='cool'], [data-register='focus'])[data-skin] .fcap,
+:is([data-register='cool'], [data-register='focus'])[data-skin] .toast {
+  animation: fade-up 140ms ease-out both;
+}
+:is([data-register='cool'], [data-register='focus'])[data-skin] .tray .quiz-btn.is-ready {
+  animation: none;
+}
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+/* Quiet scenes: darker, less doodle clutter. */
+:is([data-register='cool'], [data-register='focus'])[data-skin] .mission-scene {
+  filter: brightness(0.55) saturate(0.65) contrast(1.05) blur(0.6px);
+}
+[data-register='focus'][data-skin] .mission-scene {
+  filter: brightness(0.5) saturate(0.4) blur(1px);
+}
+/* Toasts on student screens: flat, 1px, mono-free sentence case. */
+body:has(.shell:is([data-register='cool'], [data-register='focus'])) .toast {
+  background: #15122a;
+  color: #f4f2fa;
+  border: 1px solid rgba(214, 210, 230, 0.22);
+  border-left: 3px solid #2ef2ff;
+  border-radius: 8px;
+  box-shadow: 0 10px 24px -12px rgba(0, 0, 0, 0.6);
+  font: 500 14px/1.35 'Inter Tight', 'Manrope', sans-serif;
+  rotate: none;
+}
+/* The K.O. stays the loud exception: wide display, chrome. */
+:is([data-register='cool'], [data-register='focus'])[data-skin] .ko__stamp.y2k-chrome-text {
+  font-family: var(--font-big);
+  font-variation-settings: 'wdth' 125;
+}
+:is([data-register='cool'], [data-register='focus'])[data-skin] .ko__title {
+  font: 800 26px/1.1 var(--font-big);
+  font-variation-settings: 'wdth' 112;
+  text-transform: none;
+}
+
+:is([data-register='cool'], [data-register='focus'])[data-skin] .fcap.sticker {
+  background: var(--surface-2);
+  color: var(--fg);
+  border: 1px solid var(--border);
+  box-shadow: none;
+}
+:is([data-register='cool'], [data-register='focus'])[data-skin] .fcap--hit {
+  border-left: 3px solid var(--coral-fill);
+}
+:is([data-register='cool'], [data-register='focus'])[data-skin] .speech__status {
+  border-width: 1px;
+  border-radius: 8px;
+  font: 500 14px/1.2 var(--font-mono);
+}
+:is([data-register='cool'], [data-register='focus'])[data-skin] .ko__version .sticker,
+:is([data-register='cool'], [data-register='focus'])[data-skin] .home-plaque.sticker {
+  text-transform: none;
 }

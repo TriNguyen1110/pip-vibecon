@@ -52,3 +52,22 @@ export const LEVEL_WORDS = {
   2: 'explained with a reason',
   3: 'reason, applied to a new case',
 }
+
+// Student-facing step names must never give the answer away (verifier D-14). The concept's full text
+// is the rule she has to explain, so Play screens use a short neutral name: the lesson's own
+// `label`/`short` when it has one, a hand-picked name for the seeded missions, else "Step N".
+const SEEDED_STEP_NAMES = {
+  a_tri: ['Two triangles', 'Rectangles', 'One triangle'],
+  a_frac: ['Pieces', 'Making them match', 'Adding'],
+  a_sat_commas: ['Joining sentences', 'Comma trouble', 'Where commas go'],
+  a_sat_linear: ['Balance', 'Getting x alone', 'Checking'],
+}
+export function stepName(assignment, i) {
+  const c = assignment?.concepts?.[i]
+  const lc = assignment?.lesson?.concepts?.[i]
+  return c?.label ?? c?.short ?? lc?.label ?? lc?.short ?? SEEDED_STEP_NAMES[assignment?.id]?.[i] ?? null
+}
+export function stepTitle(assignment, i) {
+  const n = stepName(assignment, i)
+  return n ? `Step ${i + 1}: ${n}` : `Step ${i + 1}`
+}

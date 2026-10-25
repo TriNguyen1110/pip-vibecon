@@ -206,22 +206,26 @@ function forSpeech(text = '') {
 // then the boss's caption. Only Pip's lines move Pip's mouth. Prefetch as soon as a reply arrives.
 const TTS_TIMEOUT = 8000
 const ttsCache = new Map()
-let ttsOff = false // the server said fallback (no ElevenLabs): stop asking for this visit
+const inflight = new Set() // AbortControllers of /api/tts requests still on the wire
+let ttsDownUntil = 0 // after a fallback or a network failure, use browser speech for a while
 let audio = null // { el, alignment, k }
 let token = 0
 let current = null // the line being spoken: { speaker, ... }
 let queue = []
 
-// Pip's voice choice in the Look sheet (CONTRACT v3.5): Bright, Chaotic, Chill, one per vibe. The backend
-// takes `pip_voice` as an ElevenLabs voice_id; the ids are read from backend/voices.json at build time
-// (they aren't secrets), so the backend can swap a voice without a frontend change.
-const PIP_CAST = VOICES?.pip ?? {}
-export const PIP_VOICES = [
-  { vibe: 'cute', label: 'Bright' },
-  { vibe: 'ugly', label: 'Chaotic' },
-  { vibe: 'cool', label: 'Chill' },
-].map((v) => ({ ...v, id: PIP_CAST[v.vibe]?.voice_id ?? `pip_${v.vibe}` }))
-export const voiceForVibe = (vibe) => (PIP_VOICES.find((v) => v.vibe === vibe) ?? PIP_VOICES[0]).id
+// Pip's voice choice in the Look sheet (CONTRACT v3.5 + owner update): the named choices in
+// backend/voices.json `pip_choices` (bright | chaotic | chill), read at build time so the backend can recast
+// a voice without a frontend change. The backend resolves the name (with its voice settings). Fena
+// ("Bright") is Pip's default for every vibe, so the default no longer follows the vibe.
+const CHOICE_LABELS = { bright: 'Bright', chaotic: 'Chaotic', chill: 'Chill' }
+export const PIP_VOICES = Object.keys(VOICES?.pip_choices ?? CHOICE_LABELS).map((k) => ({
+  id: k,
+  label: CHOICE_LABELS[k] ?? k.charAt(0).toUpperCase() + k.slice(1),
+}))
+export const DEFAULT_PIP_VOICE = PIP_VOICES.some((v) => v.id === 'bright') ? 'bright' : PIP_VOICES[0]?.id
+// Kept for callers: every vibe now starts on the default voice.
+export const voiceForVibe = () => DEFAULT_PIP_VOICE
+export const isPipVoice = (v) => PIP_VOICES.some((x) => x.id === v)
 
 // Who Pip is right now (set by the screen): vibe, grade, pip_voice. Boss lines carry their own boss.
 let pipCtx = { vibe: 'cute', grade: null, pip_voice: null }
@@ -241,7 +245,7 @@ function ttsBody(say, line) {
   const body = { text: say, speaker }
   if (speaker === 'pip') {
     body.vibe = line.vibe ?? pipCtx.vibe
-    body.pip_voice = line.pip_voice ?? pipCtx.pip_voice ?? voiceForVibe(body.vibe)
+    body.pip_voice = pipVoiceOf(line.pip_voice ?? pipCtx.pip_voice)
   }
   if (speaker === 'boss') {
     if (line.boss_id) body.boss_id = line.boss_id
@@ -254,11 +258,12 @@ function ttsBody(say, line) {
 
 export function prefetchTTS(text, line = {}) {
   const say = forSpeech(text)
-  if (!say || ttsOff || muted) return Promise.resolve(null)
+  if (!say || muted || Date.now() < ttsDownUntil) return Promise.resolve(null)
   const body = ttsBody(say, line)
   const key = JSON.stringify(body)
   if (ttsCache.has(key)) return ttsCache.get(key)
   const ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null
+  if (ctrl) inflight.add(ctrl)
   const timer = setTimeout(() => ctrl?.abort(), TTS_TIMEOUT)
   const base = `${import.meta.env.VITE_BACKEND_URL ?? ''}/api`
   const p = fetch(`${base}/tts`, {
@@ -270,17 +275,23 @@ export function prefetchTTS(text, line = {}) {
     .then((r) => (r.ok ? r.json() : null))
     .then((j) => {
       if (!j || j.fallback || !j.audio_b64) {
-        if (j?.fallback) ttsOff = true
+        if (j?.fallback) ttsDownUntil = Date.now() + 15000
         ttsCache.delete(key)
         return null
       }
       return j
     })
     .catch(() => {
+      // Unreachable or blocked: don't keep knocking (each failed request is a console error).
+      // A request we cancelled ourselves (mute) is not a failure.
+      if (!ctrl?.signal.aborted || ctrl.signal.reason !== 'muted') ttsDownUntil = Date.now() + 60000
       ttsCache.delete(key)
       return null
     })
-    .finally(() => clearTimeout(timer))
+    .finally(() => {
+      clearTimeout(timer)
+      if (ctrl) inflight.delete(ctrl)
+    })
   ttsCache.set(key, p)
   if (ttsCache.size > 60) ttsCache.delete(ttsCache.keys().next().value)
   return p
@@ -330,7 +341,7 @@ function playNext() {
     if (finished || my !== token) return
     finished = true
     current = null
-    setTimeout(playNext, 140)
+    playNext()
   }
   prefetchTTS(item.text, item).then(async (j) => {
     if (my !== token || muted) return
@@ -341,6 +352,8 @@ function playNext() {
 }
 
 const asItem = (x) => (typeof x === 'string' ? { text: x, speaker: 'pip' } : { speaker: 'pip', ...x })
+// pip_voice sent to the backend: a named choice, else the default (old saved voice ids map to it).
+const pipVoiceOf = (v) => (isPipVoice(v) ? v : DEFAULT_PIP_VOICE)
 
 // Replace whatever is queued with these lines, in order (strings are Pip's lines).
 export function sayLines(items) {
@@ -354,6 +367,7 @@ export function sayLines(items) {
   token++
   current = null
   queue = list
+  list.forEach((i) => prefetchTTS(i.text, i))
   playNext()
   return true
 }
@@ -460,7 +474,13 @@ export function setMuted(v) {
   } catch {
     /* storage unavailable: the choice lasts for this visit */
   }
-  if (muted) stopSpeaking()
+  if (muted) {
+    // Mute silences everything: also cancel voice requests still on the wire.
+    inflight.forEach((c) => c.abort('muted'))
+    inflight.clear()
+    ttsCache.clear()
+    stopSpeaking()
+  }
   emitState()
 }
 

@@ -74,7 +74,8 @@ export function useBoxHeight(min = 120) {
     },
     [min],
   )
-  useEffect(() => () => ro.current?.disconnect(), [])
+  // No effect cleanup here: React calls the ref with null on unmount, which disconnects. (An effect
+  // cleanup would also run in StrictMode's dev re-mount and leave the observer detached.)
   return [ref, h]
 }
 

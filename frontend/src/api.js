@@ -54,6 +54,12 @@ export const api = {
   session: (id) => get(`/sessions/${id}`),
   turn: (id, text, signal) => post(`/sessions/${id}/turn`, { text }, signal),
   equip: (id, weapon) => post(`/sessions/${id}/equip`, { weapon }),
+  styleTiles: () => get('/style/tiles'),
+  pipName: (studentId, name) => post(`/students/${studentId}/pip-name`, { name }),
+  shareMessage: (sessionId, msg_index) => post(`/sessions/${sessionId}/share`, { msg_index }),
+  familyView: (studentId) => get(`/students/${studentId}/family-view`),
+  themes: () => get('/themes'),
+  setStyle: (studentId, tiles) => post(`/students/${studentId}/style`, { tiles }),
   setVoice: (id, pip_voice) => post(`/sessions/${id}/voice`, { pip_voice }),
   quiz: (id) => post(`/sessions/${id}/quiz`),
   reteach: (id, concept_id) => post(`/sessions/${id}/reteach`, { concept_id }),
@@ -73,11 +79,11 @@ export const DEMO = { tutorId: 't1', studentId: 's001' }
 
 // Students the live demo can switch between on /student (Maya stays the default).
 export const DEMO_STUDENTS = [
-  { id: 's001', label: 'Maya · fractions' },
+  { id: 's001', label: 'Maya · triangles' },
   { id: 's005', label: 'Yara · SAT Writing' },
   { id: 's009', label: 'Dev · SAT Math' },
 ]
 // Seeded, hand-written missions are pinned first on a student's home screen.
-export const PINNED_MISSIONS = ['a_frac', 'a_sat_commas', 'a_sat_linear']
+export const PINNED_MISSIONS = ['a_tri', 'a_frac', 'a_sat_commas', 'a_sat_linear']
 
 export const studentHomePath = (id) => (!id || id === DEMO.studentId ? '/student' : `/student?as=${id}`)
