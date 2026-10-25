@@ -134,6 +134,51 @@ function buildDb() {
     }
   }
   students.s001.goal = 'Feel ready for 7th-grade geometry'
+  // v3.18: avatar badge, school (synthetic), pace, next step, learning profile + map.
+  const SCHOOLS = ['Lincoln Middle', 'Harbor View K-8', 'Mission Hills Middle', 'Bayside High', 'Cedar Park Middle']
+  const PACES = ['steady', 'quick', 'needs time']
+  const COLORS = ['#7B6CFF', '#2EB8C9', '#E0864A', '#4FA35A', '#C2559B', '#3A7BD5']
+  Object.values(students).forEach((st, i) => {
+    st.avatar = { initials: st.name.split(/\s+/).map((x) => x[0]).join('').slice(0, 2).toUpperCase(), color: COLORS[i % COLORS.length] }
+    st.school = st.grade >= 9 ? 'Bayside High' : SCHOOLS[i % SCHOOLS.length]
+    st.pace = PACES[i % PACES.length]
+    st.started = st.enrollments.map((e) => e.started).sort()[0]
+    st.contact = { student_email: null }
+  })
+  students.s001.school = 'Lincoln Middle'
+  students.s001.pace = 'steady'
+  students.s001.next_step = 'Start Tue with parallelograms (she asked about slanted ones)'
+  students.s014.next_step = 'Wed: two-step equations with fractions'
+  students.s109.next_step = 'Call home, then restart “One triangle” with a drawing'
+  students.s001.learning_profile = {
+    explains_with: ['examples', 'pictures'],
+    unstuck_by: ['a concrete picture (two triangles side by side)', 'a pick-one question'],
+    pace: 'steady', texts_to_ready_avg: 3.5,
+    misconceptions_fixed: [{ quote_before: 'for a right triangle you just times the two sides', quote_after: 'a right triangle is still half a rectangle so its 10×5÷2 = 25', mission: 'Area of a triangle', date: dateIn(-1) }],
+    strengths: ['Explains with her own numbers before the rule', 'Fixes a mistake as soon as Pip asks why'],
+    watch_for: ['Puts commas where she would pause when she writes fast'],
+    updated_at: dateIn(-1),
+  }
+  students.s001.learning_map = {
+    nodes: [
+      { concept_id: 'rect_rows', mission: 'Rectangles warm-up', subject: 'math', label: 'Area counts unit squares in rows', level: 3, explain_level: 3, evidence_quote: 'a rectangle is rows of squares so you times them' },
+      { concept_id: 'k2', mission: 'Area of a triangle', subject: 'math', label: 'A rectangle’s area is base × height', level: 2, explain_level: 0, evidence_quote: null, given: true },
+      { concept_id: 'k1', mission: 'Area of a triangle', subject: 'math', label: 'Two copies of a triangle make a rectangle', level: 3, explain_level: 3, evidence_quote: 'because 2 triangles make a rectangle' },
+      { concept_id: 'k3', mission: 'Area of a triangle', subject: 'math', label: 'So a triangle is half of base × height', level: 3, explain_level: 3, evidence_quote: 'no a right triangle is still half a rectangle so its 10×5÷2 = 25' },
+      { concept_id: 'para', mission: 'Next: parallelograms', subject: 'math', label: 'A slanted parallelogram is still base × height', level: 0, explain_level: 0, evidence_quote: null },
+      { concept_id: 'c1', mission: 'Commas and run-ons', subject: 'writing', label: 'Two full sentences can’t be joined by a comma', level: 1, explain_level: 1, evidence_quote: 'you put a comma wherever you’d take a breath' },
+      { concept_id: 'c3', mission: 'Commas and run-ons', subject: 'writing', label: 'Commas still go in lists and after intros', level: 2, explain_level: 2, evidence_quote: 'commas go between the things in a list' },
+      { concept_id: 'c2', mission: 'Commas and run-ons', subject: 'writing', label: 'Fix a run-on with a period, semicolon or “and”', level: 0, explain_level: 0, evidence_quote: null },
+    ],
+    edges: [
+      { from: 'k2', to: 'rect_rows', kind: 'builds_on' },
+      { from: 'k1', to: 'k2', kind: 'builds_on' },
+      { from: 'k3', to: 'k1', kind: 'builds_on' },
+      { from: 'k3', to: 'k2', kind: 'builds_on' },
+      { from: 'para', to: 'k3', kind: 'builds_on' },
+      { from: 'c2', to: 'c1', kind: 'builds_on' },
+    ],
+  }
   return {
     students,
     enrollments,
@@ -236,6 +281,9 @@ function rowFor(s) {
     guardians: gs.map((g) => ({ id: g.id, name: g.name, reachable: isReachable(g) })),
     flags,
     next_slot: s.enrollments[0]?.slot ?? null,
+    pace: s.pace,
+    school: s.school,
+    next_step: s.next_step ?? null,
   }
 }
 
@@ -428,6 +476,8 @@ export function mockRequest(method, path, body = {}) {
       notes: d.notes.filter((n) => n.student_id === s.id).sort((a, b) => (a.ts < b.ts ? 1 : -1)),
       timeline: timelineFor(s),
       flags: rowFor(s).flags,
+      learning_profile: s.learning_profile ?? null,
+      learning_map: s.learning_map ?? null,
     }
   }
   if (method === 'POST' && (m = /^\/students\/([^/]+)\/notes$/.exec(p))) {
@@ -479,7 +529,7 @@ export function mockRequest(method, path, body = {}) {
         return {
           student: { id: s.id, name: s.name, grade: s.grade },
           pip: s.pip,
-          this_week: { sessions: THIS_WEEK[s.id]?.missions ?? 0, kos: THIS_WEEK[s.id]?.kos ?? 0, shared_note: shared ? { ...shared, from: tutorRef(shared.tutor_id) } : null, from: null },
+          this_week: { profile_line: s.id === 's001' ? { text: 'Maya explains best with examples and pictures; she fixed 1 mistake this week.', from: tutorRef('t1') } : null, sessions: THIS_WEEK[s.id]?.missions ?? 0, kos: THIS_WEEK[s.id]?.kos ?? 0, shared_note: shared ? { ...shared, from: tutorRef(shared.tutor_id) } : null, from: null },
           reports: d.reports.filter((r) => r.student_id === s.id && r.guardian_ids.includes(g.id)).sort((a, b) => (a.ts < b.ts ? 1 : -1)),
           subjects: s.enrollments.map((e) => ({
             subject: e.subject, tutor: tutorRef(e.tutor_id), next_slot: e.slot,

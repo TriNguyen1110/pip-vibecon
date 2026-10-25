@@ -267,6 +267,15 @@ function FromTutor({ gid, kid }) {
         </section>
       )}
 
+      {profileLine(w, kid) && (
+        <section className="p-card" aria-label="How your child learns">
+          <p className="p-eyebrow">
+            From {profileLine(w, kid).from ?? mainTutor} · how {name} learns
+          </p>
+          <p className="p-body">{profileLine(w, kid).text}</p>
+        </section>
+      )}
+
       {(kid.goal_progress ?? []).map((gp) => (
         <section key={gp.subject} className="p-card p-goal" aria-label={`${gp.subject_name ?? subjectName(gp.subject)} goal`}>
           <p className="p-eyebrow">{gp.goal ?? `${gp.subject_name ?? subjectName(gp.subject)} goal`}</p>
@@ -307,6 +316,13 @@ function FromTutor({ gid, kid }) {
       <p className="p-explain">Pip is a practice buddy {name} teaches. You see what {name}’s tutor chooses to share, never the chat itself.</p>
     </div>
   )
+}
+
+// v3.18: the plain-English learning-profile line, shown only when the tutor approved it (v3.15 rules).
+function profileLine(w, kid) {
+  const x = w.profile_line ?? kid.profile_line
+  if (!x) return null
+  return typeof x === 'string' ? { text: x, from: null } : { text: x.text, from: x.from?.name ?? null }
 }
 
 function ReportCard({ report, kid, hero }) {

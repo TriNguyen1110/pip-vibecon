@@ -2,17 +2,21 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { api } from '../../api'
 import { useLoad } from '../../hooks'
-import { ErrorState, Empty } from '../../components/ui.jsx'
+import { ErrorState, Empty, useToast } from '../../components/ui.jsx'
 import { LEVEL_WORDS } from '../../lib'
 import { Segmented } from '../../staff/StudioShell.jsx'
 import { staffApi } from '../../staff/api'
-import { FlagPills, PipHead } from '../../staff/bits.jsx'
+import { FlagPills, StudentAvatar } from '../../staff/bits.jsx'
+import { PACE_WORDS, mapFromProgress } from '../../staff/learning'
 import { pipOf } from '../../staff/pip'
 import { LEVEL_SHORT, ago, daysSince, fmtDate, fmtWhen, hoursLeft, sessionFromLink, subjectName, subjectShort } from '../../staff/format'
 import ProfileFamily from './ProfileFamily.jsx'
 import ProfileNotes from './ProfileNotes.jsx'
+import LearningMap from './LearningMap.jsx'
+import LearningProfile from './LearningProfile.jsx'
 
 const TABS = [
+  { value: 'learning', label: 'Learning map' },
   { value: 'progress', label: 'Progress' },
   { value: 'family', label: 'Family' },
   { value: 'notes', label: 'Notes' },
@@ -27,7 +31,7 @@ export default function StudentProfile({ id, tutorId, tutors, pane }) {
   // v3.15 drafts (B18): pending parent updates waiting for the tutor.
   const dr = useLoad(() => staffApi.drafts(id).then((r) => ({ items: r.items ?? [] })), [id])
   const drafts = dr.data ?? { items: [] }
-  const [tab, setTab] = useState('progress')
+  const [tab, setTab] = useState('learning')
 
   if (p.loading && !p.data) {
     return (
@@ -46,16 +50,24 @@ export default function StudentProfile({ id, tutorId, tutors, pane }) {
   const latestReport = reports[0]?.link ?? null
   const lastActive = (d.progress ?? []).map((x) => x.last_session_at).filter(Boolean).sort().at(-1)
   const flags = d.flags ?? []
+  const lp = d.learning_profile ?? s.learning_profile ?? null
+  const lmap = d.learning_map ?? s.learning_map ?? mapFromProgress(d.progress ?? [], priorByMission)
+  const pace = s.pace ?? lp?.pace ?? null
+  const startedRaw = s.started ?? enrollments.map((e) => e.started).filter(Boolean).sort()[0]
+  const started = startedRaw ? new Date(`${String(startedRaw).slice(0, 10)}T12:00:00`).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : null
   const toSend = drafts.items.filter((x) => (x.status ?? 'draft') === 'draft').length
 
   return (
     <div className={`profile${pane ? ' profile--pane' : ''}`}>
       <header className="profile__head">
-        <PipHead pip={d.pip ?? pipOf(s)} name={s.name} size={52} taught={daysSince(lastActive) <= 7} />
+        <StudentAvatar student={s} pip={d.pip ?? pipOf(s)} size={56} taught={daysSince(lastActive) <= 7} />
         <div className="grow stack-sm" style={{ gap: 4 }}>
           <h2 className="display profile__name">
             {s.name} <span className="profile__grade mono">Grade {s.grade}</span>
           </h2>
+          <p className="small muted profile__meta">
+            {[s.school, started ? `with us since ${started}` : null, pace ? `${PACE_WORDS[pace] ?? pace} pace` : null].filter(Boolean).join(' · ')}
+          </p>
           <p className="small subtle">
             {enrollments.map((e) => `${subjectShort(e.subject)} ${e.slot ?? ''}`).join(' · ')}
             {lastActive ? ` · active ${ago(lastActive)}` : ''}
@@ -74,6 +86,8 @@ export default function StudentProfile({ id, tutorId, tutors, pane }) {
         </div>
       </header>
 
+      <GuardianQuick guardians={d.guardians ?? []} student={s} onOpenFamily={() => setTab('family')} />
+
       <Segmented
         value={tab}
         onChange={setTab}
@@ -83,6 +97,12 @@ export default function StudentProfile({ id, tutorId, tutors, pane }) {
       />
 
       <div className="profile__body" role="tabpanel">
+        {tab === 'learning' && (
+          <div className="stack">
+            <LearningMap map={lmap} student={s} />
+            <LearningProfile profile={lp} student={s} />
+          </div>
+        )}
         {tab === 'progress' && <Progress progress={d.progress ?? []} enrollments={enrollments} reports={reports} tutorId={tutorId} priorByMission={priorByMission} />}
         {tab === 'family' && (
           <ProfileFamily
@@ -99,6 +119,40 @@ export default function StudentProfile({ id, tutorId, tutors, pane }) {
         {tab === 'timeline' && <Timeline items={d.timeline ?? []} />}
       </div>
     </div>
+  )
+}
+
+// Guardians with quick actions. Test mode: contacts are synthetic (555-01xx, @example.com); nothing is dialed or sent.
+function GuardianQuick({ guardians, student, onOpenFamily }) {
+  const toast = useToast()
+  if (!guardians.length) return null
+  const act = (g, kind) => {
+    const to = kind === 'email' ? g.email : g.phone
+    toast(`Test mode: ${kind === 'call' ? 'would call' : kind === 'text' ? 'would text' : 'would email'} ${g.name} at ${to}. Nothing was sent.`)
+    if (kind !== 'call') onOpenFamily()
+  }
+  return (
+    <ul className="gquick" aria-label={`${student.name}’s guardians`}>
+      {guardians.map((g) => (
+        <li key={g.id} className="gquick__row">
+          <span className="gquick__who">
+            <b>{g.name}</b>
+            <span className="small subtle"> · {g.phone ?? g.email ?? 'no contact on file'}</span>
+          </span>
+          <span className="gquick__acts">
+            <button className="btn btn--sm" disabled={!g.phone} onClick={() => act(g, 'text')} aria-label={`Text ${g.name} (test mode)`}>
+              Text
+            </button>
+            <button className="btn btn--sm" disabled={!g.email} onClick={() => act(g, 'email')} aria-label={`Email ${g.name} (test mode)`}>
+              Email
+            </button>
+            <button className="btn btn--sm" disabled={!g.phone} onClick={() => act(g, 'call')} aria-label={`Call ${g.name} (test mode)`}>
+              Call
+            </button>
+          </span>
+        </li>
+      ))}
+    </ul>
   )
 }
 

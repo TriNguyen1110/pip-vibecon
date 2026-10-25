@@ -1,4 +1,5 @@
-import { FlagPills, PipHead } from '../../staff/bits.jsx'
+import { FlagPills, StudentAvatar } from '../../staff/bits.jsx'
+import { PACE_WORDS } from '../../staff/learning'
 import { pipOf } from '../../staff/pip'
 import { ago, daysSince, subjectShort } from '../../staff/format'
 
@@ -13,7 +14,7 @@ export default function StudentsTable({ rows, tutors, tutorId, activeId, selecte
           <input type="checkbox" aria-label="Select all students shown" checked={allOn} onChange={() => onToggleAll(!allOn)} />
         </span>
         <span role="columnheader">Student</span>
-        <span role="columnheader">Subjects · tutor</span>
+        <span role="columnheader">Next step · subjects</span>
         <span role="columnheader" className="st__num">Last active</span>
         <span role="columnheader" className="st__num" title="Lessons finished: Pip passed its quiz">K.O.</span>
         <span role="columnheader">Next slot</span>
@@ -35,7 +36,7 @@ export default function StudentsTable({ rows, tutors, tutorId, activeId, selecte
               <input type="checkbox" aria-label={`Select ${s.name}`} checked={on} onChange={() => onToggle(s.id)} />
             </span>
             <span role="cell" className="st__who">
-              <PipHead pip={pipOf(r)} name={s.name} taught={daysSince(last) <= 7} />
+              <StudentAvatar student={s} pip={pipOf(r)} size={36} taught={daysSince(last) <= 7} />
               <span className="st__id">
                 <button
                   type="button"
@@ -49,10 +50,17 @@ export default function StudentsTable({ rows, tutors, tutorId, activeId, selecte
                   {s.name}
                 </button>
                 <span className="st__grade mono">G{s.grade}</span>
+                {(r.school ?? s.school ?? r.pace ?? s.pace) && (
+                  <span className="st__meta">
+                    {(r.school ?? s.school) && <span className="st__school">{r.school ?? s.school}</span>}
+                    {(r.pace ?? s.pace) && <span className={`pace pace--${String(r.pace ?? s.pace).replace(/\s/g, '-')}`}>{PACE_WORDS[r.pace ?? s.pace] ?? r.pace ?? s.pace}</span>}
+                  </span>
+                )}
                 <FlagPills flags={r.flags} />
               </span>
             </span>
             <span role="cell" className="st__subs">
+              {nextStep(r) && <span className="st__next">{nextStep(r)}</span>}
               {ens.map((e) => (
                 <span key={`${e.subject}-${e.tutor_id}`} className={`subj${e.tutor_id === tutorId ? ' subj--mine' : ''}`}>
                   {subjectShort(e.subject)}
@@ -70,4 +78,11 @@ export default function StudentsTable({ rows, tutors, tutorId, activeId, selecte
       })}
     </div>
   )
+}
+
+// v3.18 row "next step" (e.g. "Start Tue with right triangles"); before B21, the since-last-session line.
+function nextStep(r) {
+  const n = r.next_step ?? r.student?.next_step
+  if (n) return typeof n === 'string' ? n : n.text
+  return r.student?.since_last_session ?? null
 }

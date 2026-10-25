@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import Pip2D from '../pip2d/Pip2D.jsx'
 import { Dots, InlineError, initialsOf } from '../components/ui.jsx'
 import { pip2dProps } from './pip'
+import { avatarOf, inkOn } from './learning'
 import { FLAG_ORDER, FLAG_WORDS, STATUS_WORDS, fmtWhen } from './format'
 
 // The student's own Pip (CONTRACT: pip {creature, vibe, accessory, brain_version, form}), cropped to the
@@ -120,3 +121,18 @@ export function Thread({ items, mine = ['tutor', 'center'], names = {}, onSend, 
   )
 }
 
+
+// v3.18: the student's Pip is the main avatar; their illustrated initials badge sits on its corner.
+export function StudentAvatar({ student, pip, size = 32, taught }) {
+  const av = avatarOf(student)
+  return (
+    <span className="savatar" style={{ '--sa': `${size}px` }}>
+      <PipHead pip={pip} name={student?.name} size={size} taught={taught} />
+      {pip?.creature && (
+        <span className="savatar__badge" style={{ background: av.color, color: inkOn(av.color) }} aria-hidden>
+          {av.initials}
+        </span>
+      )}
+    </span>
+  )
+}
