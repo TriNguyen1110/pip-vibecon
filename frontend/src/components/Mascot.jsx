@@ -252,7 +252,7 @@ export function Stage2D({
   const tom = framing === 'tom'
   const vw = typeof window !== 'undefined' ? window.innerWidth : 390
   const size = tom
-    ? Math.round(Math.max(96, Math.min(height * (env === 'room' ? 0.86 : 0.76), vw * 1.12, 470)))
+    ? Math.round(Math.max(96, Math.min(height * (env === 'room' ? 0.82 : 0.76), vw * 1.12, 470)))
     : Math.round(Math.max(64, Math.min(height * (framing === 'hero' ? 0.62 : 0.66), 320)))
   // Poke zones stop the pointer event, so a stage-level tap handler still gets the zone taps.
   const pokeFn = onPoke ?? (onTap ? (z) => onTap(z) : undefined)

@@ -1863,3 +1863,43 @@ body:has(.shell:is([data-register='cool'], [data-register='focus'], [data-regist
 :is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .feed--sheet .msg__who .mono-label {
   color: var(--fg-muted);
 }
+
+/* ---------- V4 phase 3 (D-33, D-34) ---------- */
+/* D-33: the drop card floats over the bottom of the scene; Pip's room ends just under the card's top edge,
+   so Pip takes most of the screen and its feet tuck behind the card. */
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .game--home2 .home-tom .drop.drop--compact {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 8px;
+  z-index: 3;
+  margin: 0;
+}
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .home-tom .home-stage__room {
+  bottom: max(0px, calc(var(--card-h, 0px) - 40px));
+}
+/* D-34: the chat overlay only takes taps on its own content (bubbles, tags, lines, grip, buttons);
+   the transparent area passes through to Pip's poke zones. */
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .tom-chat,
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .tom-chat .feed.chat-scroll,
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .tom-chat .chat,
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .tom-chat .msg,
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .tom-chat .msg__main,
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .tom-chat .msg__body,
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .tom-chat .captions {
+  pointer-events: none;
+}
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .tom-chat .msg__bubble,
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .tom-chat .msg__face,
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .tom-chat .msg__who,
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .tom-chat .belief,
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .tom-chat .caption,
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .tom-chat .msg__sending,
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .tom-chat button,
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .tom-chat a,
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .tom-chat__grip {
+  pointer-events: auto;
+}
+:is([data-register='cool'], [data-register='focus'], [data-register='play'])[data-skin][data-theme] .home-tom .stage2d__pip {
+  scale: 1; /* D-33: the older "Pip draws smaller" 0.85 scale is for the small stages only */
+}

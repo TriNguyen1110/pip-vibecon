@@ -81,6 +81,7 @@ function StudentHomeView({ sid, onSwitch, recordOpen }) {
   const greeted = useRef(false)
   const sayTimer = useRef(null)
   const [stageBox, stageH] = useBoxHeight(120)
+  const [cardBox, cardH] = useBoxHeight(0)
 
   useEffect(() => {
     if (opened.current || !recordOpen) return
@@ -171,18 +172,20 @@ function StudentHomeView({ sid, onSwitch, recordOpen }) {
     }
   }
 
-  // First tap on Pip: the greeting, out loud. After that: a short deadpan line.
+  // First tap on Pip: the greeting. After that: a short deadpan line. Every spoken line also shows as a
+  // caption (D-35), sound on or off, for as long as it takes to read.
   function tapPip(zone) {
     setReact((r) => r + 1)
+    let line
     if (!greeted.current) {
       greeted.current = true
-      speak(`Hi ${first}. ${greeting}`)
-      return
+      line = `Hi ${first}. ${greeting}`
+    } else {
+      line = typeof zone === 'string' ? pokeLine(zone) : tapLine()
     }
-    const line = typeof zone === 'string' ? pokeLine(zone) : tapLine()
     clearTimeout(sayTimer.current)
     setSay(line)
-    sayTimer.current = setTimeout(() => setSay(null), 3200)
+    sayTimer.current = setTimeout(() => setSay(null), Math.min(6000, Math.max(3200, 900 + line.length * 45)))
     speak(line)
   }
 
@@ -261,7 +264,7 @@ function StudentHomeView({ sid, onSwitch, recordOpen }) {
         ) : current ? (
           <>
             {/* TOM-1: Pip front and center in today's scene (a Talking Tom home); poke it for a dry line. */}
-            <div className="home-stage home-tom" data-pip-state={homeState}>
+            <div className="home-stage home-tom" data-pip-state={homeState} style={{ '--card-h': `${cardH}px` }}>
               <Scene2D scene={sceneFor({ assignmentId: current.a.id })} theme="night" className="home-tom__scene" variant="lite" />
               <div className="home-stage__room" ref={stageBox}>
                 {stageH > 0 && (
@@ -286,35 +289,39 @@ function StudentHomeView({ sid, onSwitch, recordOpen }) {
                   {say}
                 </p>
               )}
-            </div>
-            <article className={`mission-tile home-current drop drop--compact${current.active ? ' is-active' : ''}`}>
-              <div className="drop__row">
-                <span className="drop__thumb scanbox" aria-hidden>
-                  <Boss2D boss={bossKindFor(current.a.boss?.name, current.a.boss?.emoji)} state="smug" size={48} />
-                </span>
-                <div className="drop__body">
-                  <span className="mono-label drop__label">
-                    ● {current.active ? 'In progress' : current.done ? 'Done' : 'Today’s drop'} · Mission{' '}
-                    {String(missions.indexOf(current) + 1).padStart(2, '0')}/{String(missions.length).padStart(2, '0')} · ~6 min
+              {/* D-33: the card sits over the bottom of the scene, so Pip gets the height and stands on it. */}
+              <article
+                ref={cardBox}
+                className={`mission-tile home-current drop drop--compact${current.active ? ' is-active' : ''}`}
+              >
+                <div className="drop__row">
+                  <span className="drop__thumb scanbox" aria-hidden>
+                    <Boss2D boss={bossKindFor(current.a.boss?.name, current.a.boss?.emoji)} state="smug" size={48} />
                   </span>
-                  <h3 className="drop__title display-x chrome-type home-current__topic">{current.a.topic}</h3>
-                  <p className="drop__desc">{dropLine(current.a, pipName)}</p>
+                  <div className="drop__body">
+                    <span className="mono-label drop__label">
+                      ● {current.active ? 'In progress' : current.done ? 'Done' : 'Today’s drop'} · Mission{' '}
+                      {String(missions.indexOf(current) + 1).padStart(2, '0')}/{String(missions.length).padStart(2, '0')} · ~6 min
+                    </span>
+                    <h3 className="drop__title display-x chrome-type home-current__topic">{current.a.topic}</h3>
+                    <p className="drop__desc">{dropLine(current.a, pipName)}</p>
+                  </div>
                 </div>
-              </div>
-              {current.active ? (
-                <Link className="gel-btn gel-btn--lg home-play" to={`/student/mission/${current.active.id}`}>
-                  Keep teaching
-                </Link>
-              ) : current.done ? (
-                <Link className="gel-btn gel-btn--lg home-play" to={`/student/mission/${current.done.id}`}>
-                  See the K.O.
-                </Link>
-              ) : (
-                <button className="gel-btn gel-btn--lg home-play" onClick={() => openMission(current.a)}>
-                  Teach {pipName}
-                </button>
-              )}
-            </article>
+                {current.active ? (
+                  <Link className="gel-btn gel-btn--lg home-play" to={`/student/mission/${current.active.id}`}>
+                    Keep teaching
+                  </Link>
+                ) : current.done ? (
+                  <Link className="gel-btn gel-btn--lg home-play" to={`/student/mission/${current.done.id}`}>
+                    See the K.O.
+                  </Link>
+                ) : (
+                  <button className="gel-btn gel-btn--lg home-play" onClick={() => openMission(current.a)}>
+                    Teach {pipName}
+                  </button>
+                )}
+              </article>
+            </div>
           </>
         ) : (
           <p className="drop__desc">No missions yet. Your tutor will send one.</p>
