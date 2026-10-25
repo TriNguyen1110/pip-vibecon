@@ -473,7 +473,7 @@ export function Pip2D({
   mood = 'deadpan',
   mouth = 0,
   viseme,
-  accessory = 'none',
+  accessory,
   form = 'base',
   size = 160,
   animate = true,
@@ -523,8 +523,14 @@ export function Pip2D({
   // which glow-up path the evolution follows
   const evo = vibe === 'cool' ? 'cool' : vibe === 'ugly' ? 'ugly' : 'cute'
   // vibe defaults when no accessory is chosen: cute = star clips, cool = frosted visor
-  const accIn = Array.isArray(accessory) ? accessory : [accessory]
-  const accList = accIn.length === 0 || (accIn.length === 1 && accIn[0] === 'none') ? [cute ? 'starclips' : cool ? 'visor' : 'none'] : accIn
+  // accessory may be a string or an array (backend allows up to 3): drop 'none'/invalid entries, dedupe, keep order.
+  // An explicit 'none' means "no accessory" (no vibe default); the vibe default applies only when the prop is
+  // undefined/null or an array that held nothing valid.
+  const accRaw = accessory == null ? [] : Array.isArray(accessory) ? accessory : [accessory]
+  const explicitNone = accRaw.includes('none')
+  const accIn = [...new Set(accRaw.filter((a) => typeof a === 'string' && a && a !== 'none'))]
+  const vibeDefault = cute ? 'starclips' : cool ? 'visor' : null
+  const accList = accIn.length ? accIn : !explicitNone && vibeDefault ? [vibeDefault] : []
   const has = (a) => accList.includes(a)
   const id = useId().replace(/:/g, '')
   const blink = useBlink(animate)
@@ -726,9 +732,9 @@ export function Pip2D({
       {ugly && !has('starclips') && <StarClips id={id} A={A} t={t} bent />}
       {accList.map((a) =>
         CLUB_ACCESSORIES.includes(a) ? (
-          <ClubAccessory key={a} type={a} id={id} A={A} t={t} />
+          <ClubAccessory key={`acc-${a}`} type={a} id={id} A={A} t={t} />
         ) : (
-          <Accessory key={a} type={a} t={t} A={A} id={id} hx0={hx0} hx1={hx1} visorY={visorY} />
+          <Accessory key={`acc-${a}`} type={a} t={t} A={A} id={id} hx0={hx0} hx1={hx1} visorY={visorY} />
         ),
       )}
     </>
