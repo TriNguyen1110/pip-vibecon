@@ -565,9 +565,9 @@ def mastery(a: dict | None, s: dict | None) -> list[dict]:
             lvl = max(lvl, 2)
         elif r:
             lvl = min(lvl, 1)
-        elif known and s:
+        elif known:  # prior knowledge counts from day one, before any session (a wrong rule above still wins)
             lvl = max(lvl, 2)
-        out.append({"concept_id": c["id"], "text": c["text"], "level": max(0, min(3, lvl))})
+        out.append({"concept_id": c["id"], "text": c["text"], "level": max(0, min(3, lvl)), "known": known})
     return out
 
 
@@ -1040,7 +1040,8 @@ def _schedule(sn: "Snap", sid: str) -> list[dict]:
         live = p.get("status") != "expired"
         out.append({"subject": e["subject"], "tutor": sn.tutor_ref(e["tutor_id"]), "next_slot": e["slot"] if live else None,
                     "ko_count": sum(1 for s in sn.in_subject(sid, e["subject"]) if s.get("ko")),
-                    "package": {k: p.get(k) for k in ("hours_left", "renews_on", "status")} if p else None})
+                    "package": {k: p.get(k) for k in ("hours_total", "hours_left", "renews_on", "status")}
+                    if p else None})
     return out
 
 

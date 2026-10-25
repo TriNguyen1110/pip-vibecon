@@ -132,6 +132,10 @@ check("GET /students/{id}/profile shape", has(P, ["student", "enrollments", "pro
                                                   "pip", "shares", "auto_ko_note"])
       and prog_ok and all(has(t, ["ts", "kind", "subject", "text", "link"]) and t["kind"] in
                           ("session", "ko", "update", "message", "note") for t in P["timeline"]))
+mm = {m["concept_id"]: m for m in next(p for p in P["progress"] if p["subject"] == "math")["mastery"]}
+check("mastery before any session: prior knowledge (a_tri k2) at level >= 2 with known: true",
+      mm["k2"]["known"] is True and mm["k2"]["level"] >= 2 and mm["k1"]["known"] is False and mm["k1"]["level"] == 0
+      and all(0 <= m["level"] <= 3 for m in mm.values()), mm)
 O = get("/api/center/overview")
 check("GET /center/overview shape", has(O, ["by_subject", "by_tutor", "parents_reachable_pct", "updates_sent_7d",
                                              "renewals_due", "revenue_at_risk_usd", "retention_30d_pct",
@@ -179,6 +183,8 @@ check("Maya (grade 6): nothing reaches the family until her tutor sends", hm["s0
 tq = hm["s014"]["this_week"]
 check("Theo (grade 9): the quote is the one he shared, labeled from Theo", tq["taught_quote"] and tq["taught_from"]
       == {"student_id": "s014", "name": "Theo Y."}, tq)
+mpk = next(x for x in hm["s001"]["subjects"] if x["subject"] == "math")["package"]
+check("parent package carries hours_total (2 of 12 hours left)", mpk["hours_total"] == 12 and mpk["hours_left"] == 2, mpk)
 check("Theo (SAT): goal progress shown (target vs latest)", hm["s014"]["goal_progress"]
       and hm["s014"]["goal_progress"][0]["target"] == 650 and hm["s014"]["goal_progress"][0]["latest"] == 610)
 check("Theo's report quote is his share (no auto pick)", all(r["quote"] in (None, tq["taught_quote"])
