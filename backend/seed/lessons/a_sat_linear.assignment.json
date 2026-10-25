@@ -50,5 +50,6 @@
       "answer": "Yes: 5(4) - 3 = 20 - 3 = 17, so both sides match."
     }
   ],
-  "created_at": "2026-10-24T18:00:00+00:00"
+  "created_at": "2026-10-24T18:00:00+00:00",
+  "scene": "arcade"
 }

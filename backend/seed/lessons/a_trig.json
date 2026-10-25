@@ -241,5 +241,28 @@
       }
     ]
   },
-  "misconception_concept": "k2"
+  "misconception_concept": "k2",
+  "concept_labels": {
+    "k1": "Same angles",
+    "k2": "Same ratio",
+    "k3": "Use it"
+  },
+  "ko_strike": {
+    "wrong": "bigger triangle → bigger sin",
+    "right": "same angle → same sin"
+  },
+  "earned_items": [
+    {
+      "id": "zoom_lens",
+      "name": "Zoom lens"
+    },
+    {
+      "id": "same_angle_pin",
+      "name": "Same-angle pin"
+    },
+    {
+      "id": "fixed_it_star",
+      "name": "Fixed-it star"
+    }
+  ]
 }

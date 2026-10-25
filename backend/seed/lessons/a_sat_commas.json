@@ -257,5 +257,24 @@
         "line": "The tallest girl on the team scored twice. No comma, because who did it stays with what she did."
       }
     ]
-  }
+  },
+  "concept_labels": {
+    "k1": "Joining sentences",
+    "k2": "Comma splice",
+    "k3": "Not where you pause"
+  },
+  "ko_strike": {
+    "wrong": "comma where you pause",
+    "right": "comma where the sentence needs it"
+  },
+  "earned_items": [
+    {
+      "id": "commas_pin",
+      "name": "Comma pin"
+    },
+    {
+      "id": "fixed_it_star",
+      "name": "Fixed-it star"
+    }
+  ]
 }

@@ -266,5 +266,24 @@
         "line": "Take 4 off both sides: 3x = 15, so x = 5. Checking: 3 times 5 plus 4 is 19."
       }
     ]
-  }
+  },
+  "concept_labels": {
+    "k1": "Keep it balanced",
+    "k2": "Undo it",
+    "k3": "Check it"
+  },
+  "ko_strike": {
+    "wrong": "move it and it stays +",
+    "right": "move it and it flips"
+  },
+  "earned_items": [
+    {
+      "id": "linear_pin",
+      "name": "Balance pin"
+    },
+    {
+      "id": "fixed_it_star",
+      "name": "Fixed-it star"
+    }
+  ]
 }

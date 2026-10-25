@@ -233,6 +233,7 @@ async def seed(store):
                              "last_session_id": None}
     for sid in ("s005", "s009"):  # SAT missions are grade 11; Pip mirrors the student's grade
         students[sid]["grade"] = 11
+    students["s043"]["grade"] = 10  # SAT modifiers mission
     for sid in AT_RISK_TO_T1:
         students[sid]["tutor_id"] = "t1"
     students["s001"]["interests"] = "soccer"  # Maya's opening is just the claim

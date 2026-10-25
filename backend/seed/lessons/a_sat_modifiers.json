@@ -1,0 +1,259 @@
+{
+  "standard": "SAT Standard English Conventions: modifier placement (dangling and misplaced modifiers). Aligned to CCSS L.9-10.1 and L.11-12.1.",
+  "source": "Original content written for Pip (no third-party text copied).",
+  "attribution": "Pip team, original. Common Core standards are cited for alignment only.",
+  "in_scope": [
+    "an opening phrase before a comma and the noun right after the comma",
+    "fixing a dangling modifier by moving the doer right after the comma",
+    "checking a new sentence for who or what the opening phrase is about",
+    "captions and group-chat replies as pictures of a modifier stuck on the wrong thing"
+  ],
+  "out_of_scope": [
+    "modifiers at the end of a sentence (next mission)",
+    "commas in lists",
+    "semicolons and colons",
+    "apostrophes",
+    "verb tense and agreement",
+    "reading passages"
+  ],
+  "arc": [
+    "k1",
+    "k2",
+    "k3"
+  ],
+  "misconception_concept": "k3",
+  "concepts": [
+    {
+      "concept_id": "k1",
+      "kind": "reason",
+      "explain_level": "why",
+      "look_fors": [
+        "Says the phrase before the comma describes the noun that comes right after the comma",
+        "Says that is why 'my backpack' ends up being the one running (the sentence thinks the next noun is the doer)",
+        "May use a caption on the wrong photo or a reply to the wrong message"
+      ],
+      "probe_ladder": [
+        "why is that wrong? 'running to the bus, my backpack fell open' sounds fine to me.",
+        "so in that sentence, who is running to the bus?",
+        "what word comes right after the comma, and what does the sentence say it did?",
+        "then 'covered in sprinkles, my sister ate the donut' is fine, because everyone knows who i mean. that's what my rule says."
+      ],
+      "concrete": [
+        "what if i read 'running to the bus, my backpack fell open' slowly out loud, who is running?"
+      ],
+      "connections": [
+        "so it's like a caption stuck on the wrong photo?",
+        "so it's like replying to the wrong message in a group chat?"
+      ],
+      "spoilers": [
+        "dangling modifier",
+        "modifies the noun",
+        "describes the next noun",
+        "next noun",
+        "noun right after"
+      ],
+      "friend_nudge": "My friend said a caption under the wrong photo makes the photo say something silly…? I'm not sure how that helps.",
+      "aha": "ohh so the sentence thinks the backpack is the one running.",
+      "idea_patterns": [
+        "\\bdangling\\b",
+        "\\b(describes?|modif\\w+|refers? to|about|goes with)\\b.{0,25}\\b(noun|word|thing|backpack)\\b.{0,25}\\b(after|next|following|right after)\\b",
+        "\\b(noun|word|thing)\\b.{0,30}\\b(after|next to|following)\\b.{0,15}\\bcomma\\b",
+        "(phrase|part)\\b.{0,25}\\b(before|opening|start)\\b.{0,50}\\b(describes?|goes with|attached|stuck|about)\\b",
+        "(sentence|reader|it) (thinks|says|reads like).{0,40}(backpack|noun|doing|running)",
+        "backpack.{0,30}(running|has legs)"
+      ]
+    },
+    {
+      "concept_id": "k2",
+      "kind": "procedure",
+      "explain_level": "use",
+      "look_fors": [
+        "Puts the one doing the action right after the comma (for example 'Running to the bus, I ...')",
+        "Keeps the opening phrase and rewrites the rest of the sentence",
+        "Says it works because now the next noun is the runner"
+      ],
+      "probe_ladder": [
+        "how would you fix 'running to the bus, my backpack fell open'?",
+        "i'll try: 'running to the bus, the bus was late.' is that fixed?",
+        "what would you put next to the comma so the runner is the one running?",
+        "then 'running to the bus, my backpack fell open' is fine if i say it fast. that's what my rule says."
+      ],
+      "concrete": [
+        "what if i keep 'running to the bus,' and then write the person who is running?"
+      ],
+      "connections": [
+        "so it's like tagging the right person in the photo?"
+      ],
+      "spoilers": [
+        "right after the comma",
+        "doer after the comma",
+        "subject right after",
+        "put the runner"
+      ],
+      "friend_nudge": "Someone in my class said you just start the second part with whoever did it…? I don't know what that does for the backpack.",
+      "aha": "ok so I goes right after the comma and the backpack stops running.",
+      "idea_patterns": [
+        "(put|place|move|start with|add|use|write|begin with)\\b.{0,30}\\b(who|doer|person|subject|the one|i|me|the runner)\\b.{0,35}\\b(after|right after|next to)\\b.{0,12}\\bcomma\\b",
+        "\\b(who|doer|person|subject|the one)\\b.{0,35}\\b(did|doing|does|runs?|running|is running)\\b.{0,30}\\b(after|right after|first|next)\\b",
+        "running to the bus,?\\s*(i|we|she|he|they)\\b",
+        "(rewrite|fix|change|reword)\\b.{0,50}\\b(i|who|person|subject|runner|doer)\\b"
+      ]
+    },
+    {
+      "concept_id": "k3",
+      "kind": "procedure",
+      "explain_level": "use",
+      "look_fors": [
+        "Checks a new sentence by asking who or what the opening phrase is about",
+        "Notices that 'Covered in sprinkles, my sister ...' says the sister is covered in sprinkles",
+        "Fixes it by moving the right noun (the donut) next to the comma, or rewriting"
+      ],
+      "probe_ladder": [
+        "is 'covered in sprinkles, my sister ate the donut' ok?",
+        "i'll guess it's fine because it has a comma after the phrase. am i right?",
+        "what would you ask yourself to check a sentence like that?",
+        "then 'walking the dog, the leash broke' is fine, since leashes can be walking. that's what my rule says."
+      ],
+      "concrete": [
+        "what if i try 'covered in sprinkles, my sister ate the donut' on a friend, who do they picture covered?"
+      ],
+      "connections": [
+        "so it's like checking who a caption is really under before you laugh?"
+      ],
+      "spoilers": [
+        "who is covered",
+        "who is doing",
+        "check the subject",
+        "ask who"
+      ],
+      "friend_nudge": "My cousin said to point at the first noun after the comma and ask if it fits the phrase…? I'm not sure that is it.",
+      "aha": "ok so I point at the noun after the comma and ask if it fits.",
+      "idea_patterns": [
+        "\\b(who|what)\\b.{0,20}\\b(is|are|was|were)\\b.{0,20}\\b(covered|running|doing|walking)\\b",
+        "(check|ask|look|point)\\b.{0,40}\\b(who|what|the noun|the subject|the word)\\b",
+        "sprinkles",
+        "(noun|subject|word)\\b.{0,20}\\b(after|following|next to)\\b.{0,12}\\bcomma\\b.{0,40}\\b(is|should|has to|fits)\\b"
+      ]
+    }
+  ],
+  "offline_demo": {
+    "assignment_id": "a_sat_modifiers",
+    "student_id": "s043",
+    "note": "Ready at text 3; a deliberate wrong rule for catching it (k3, the quiz trap) makes Pip miss one item; re-teach; K.O. fixed_after 1.",
+    "turns": [
+      {
+        "n": 1,
+        "phase": "teach",
+        "student": "the part before the comma describes the first noun after the comma, so it gets stuck on the wrong thing",
+        "kind": "explain",
+        "concept_id": "k1",
+        "level": 2,
+        "event": "hit",
+        "filed_rule": "",
+        "next_concept_id": "k2",
+        "rung": 1,
+        "pip": "ohh so the backpack is the thing running. how would you fix it?"
+      },
+      {
+        "n": 2,
+        "phase": "teach",
+        "student": "you put who did it right after the comma, like running to the bus, I felt my backpack fall open",
+        "kind": "explain",
+        "concept_id": "k2",
+        "level": 2,
+        "event": "hit",
+        "filed_rule": "",
+        "next_concept_id": "k3",
+        "rung": 1,
+        "pip": "oh the I goes next to the comma. so what would i ask on a new sentence?"
+      },
+      {
+        "n": 3,
+        "phase": "teach",
+        "student": "you check who the phrase is really about, covered in sprinkles my sister ate the donut says the sister is covered",
+        "kind": "explain",
+        "concept_id": "k3",
+        "level": 2,
+        "event": "hit",
+        "filed_rule": "",
+        "next_concept_id": null,
+        "rung": null,
+        "pip": "ha so my sister is covered in sprinkles. ok I think I get it. quiz me?"
+      },
+      {
+        "n": 4,
+        "phase": "teach",
+        "student": "oh and to catch it you just check there is a comma after the opening phrase",
+        "kind": "misconception",
+        "concept_id": "k3",
+        "level": 0,
+        "event": "heal",
+        "filed_rule": "to catch it you just check there is a comma after the opening phrase",
+        "next_concept_id": null,
+        "rung": null,
+        "pip": "Saving that: 'to catch it you just check there is a comma after the opening phrase'. easy, commas it is."
+      },
+      {
+        "n": 5,
+        "reteach_concept_id": "k3",
+        "pip_ask": "my brain has a bug. help me fix it: is 'covered in sprinkles, my sister ate the donut' ok?",
+        "student": "no wait. a comma isn't enough. you ask who is covered in sprinkles, it's the donut, so the donut has to come right after the comma",
+        "kind": "explain",
+        "concept_id": "k3",
+        "level": 3,
+        "event": "hit",
+        "filed_rule": "you ask who is covered in sprinkles, it's the donut",
+        "next_concept_id": null,
+        "rung": null,
+        "pip": "ohh the donut is the sprinkly one. throwing out my comma-only rule."
+      }
+    ],
+    "quiz": [
+      {
+        "concept_id": "k1",
+        "passed": true,
+        "pip_answer": "My backpack",
+        "line": "The backpack, because it's the noun right after the comma. So it was running."
+      },
+      {
+        "concept_id": "k2",
+        "passed": true,
+        "pip_answer": "Running to the bus, I felt my backpack fall open.",
+        "line": "Running to the bus, I felt my backpack fall open. The I goes next to the comma."
+      },
+      {
+        "concept_id": "k3",
+        "passed": false,
+        "pip_answer": "Yes, it's correct",
+        "line": "Your rule: just check there's a comma after the phrase. There is one. So it's fine, my sister is covered in sprinkles and that's fine. Following your rule anyway. 😵"
+      }
+    ],
+    "retry": [
+      {
+        "concept_id": "k3",
+        "passed": true,
+        "pip_answer": "No, the sister is the one covered.",
+        "line": "A comma isn't enough. Who's covered in sprinkles? The donut. So my sister ate it covered, which is wrong."
+      }
+    ]
+  },
+  "concept_labels": {
+    "k1": "Next noun",
+    "k2": "Doer first",
+    "k3": "Who's doing it"
+  },
+  "ko_strike": {
+    "wrong": "any phrase can describe anything",
+    "right": "the phrase describes the next noun"
+  },
+  "earned_items": [
+    {
+      "id": "next_noun_pin",
+      "name": "Next-noun pin"
+    },
+    {
+      "id": "fixed_it_star",
+      "name": "Fixed-it star"
+    }
+  ]
+}

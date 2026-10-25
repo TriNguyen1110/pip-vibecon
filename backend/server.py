@@ -548,8 +548,10 @@ def grant_payoff(st: dict, s: dict, a: dict, from_v: int, to_v: int) -> dict:
     st["brain_version"] = to_v
     earned = st.setdefault("earned_items", [])
     new = []
-    wants = (["fixed_it_star"] if s.get("reteach_count", 0) >= 1 else []) + [
-        PINS.get(a["id"]) or f"{lessons.topic_family(a)}_pin"]
+    les = a.get("lesson") or {}
+    mission_items = [x["id"] for x in les.get("earned_items") or [] if x.get("id") and x["id"] != "fixed_it_star"]
+    wants = (["fixed_it_star"] if s.get("reteach_count", 0) >= 1 else []) + (
+        mission_items or [PINS.get(a["id"]) or f"{lessons.topic_family(a)}_pin"])
     for item in wants:
         if item not in earned:
             earned.append(item)
@@ -557,7 +559,8 @@ def grant_payoff(st: dict, s: dict, a: dict, from_v: int, to_v: int) -> dict:
     album = st.setdefault("album", [])
     card = {"card_no": len(album) + 1, "variant": "comeback" if s.get("reteach_count", 0) >= 1 else "clean",
             "boss_name": a["boss"]["name"], "assignment_id": a["id"], "topic": a["topic"],
-            "strike": a.get("strike") or STRIKES.get(a["id"]) or a["misconception"]}
+            "strike": (les.get("ko_strike") or {}).get("wrong") or a.get("strike") or STRIKES.get(a["id"])
+            or a["misconception"], "right": (les.get("ko_strike") or {}).get("right", "")}
     album.append({"assignment_id": a["id"], "boss_name": a["boss"]["name"], "card_no": card["card_no"],
                   "variant": card["variant"], "date": logic.now()})
     return {"from_version": from_v, "to_version": to_v, "new_items": new, "card": card}

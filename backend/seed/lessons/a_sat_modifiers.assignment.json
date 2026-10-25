@@ -1,0 +1,75 @@
+{
+  "id": "a_sat_modifiers",
+  "student_id": "s043",
+  "tutor_id": "t1",
+  "grade": 10,
+  "topic": "SAT Writing: dangling modifiers",
+  "why_it_matters": "The SAT loves sentences where an opening phrase gets stuck on the wrong noun, and so do group chats: the caption ends up on the wrong photo.",
+  "concepts": [
+    {
+      "id": "k1",
+      "text": "The phrase before the comma describes whatever noun comes right after the comma",
+      "weapon": "Next-Noun Net 🥅",
+      "explain_level": "why"
+    },
+    {
+      "id": "k2",
+      "text": "Fix it by putting the one doing the action right after the comma",
+      "weapon": "Doer Dial 🎛️",
+      "explain_level": "use"
+    },
+    {
+      "id": "k3",
+      "text": "Catch it in a new sentence by checking who or what the opening phrase is really about",
+      "weapon": "Who's-Doing-It Detector 🕵️",
+      "explain_level": "use"
+    }
+  ],
+  "misconception": "An opening phrase can describe anything in the sentence, so 'Running to the bus, my backpack fell open' is a fine sentence",
+  "root_prerequisite": "Spotting the subject of a sentence",
+  "boss": {
+    "name": "Dame Dangle-Dangle",
+    "emoji": "🦆🎒",
+    "backstory": "A duck in running shoes who carries a sign reading 'ANY PHRASE CAN DESCRIBE ANYONE' and insists her backpack ran to the bus.",
+    "lines": {
+      "taunt": [
+        "My backpack was running. I have witnesses. They are also backpacks.",
+        "A phrase may describe whomever it pleases. That is the whole point of a phrase.",
+        "The backpack ran to the bus. I will not be taking questions."
+      ],
+      "heal": [
+        "Excellent. The phrase will describe whatever it wishes. I thank you.",
+        "Quite right. Readers can simply guess who is running."
+      ],
+      "hit": [
+        "This is most irregular. The backpack appears to have stopped running.",
+        "I did not authorize a doer to stand next to my comma."
+      ],
+      "ko": "I object to being edited.",
+      "reformed": "I have moved the runner. The backpack is relieved. I would like to join you."
+    }
+  },
+  "cliffhanger": "I heard a describing phrase can go at the END of a sentence too. Does the same rule work there? That can't be right… right?",
+  "quiz": [
+    {
+      "id": "q_k1",
+      "concept_id": "k1",
+      "question": "In 'Running to the bus, my backpack fell open', who or what is the opening phrase describing, as written?",
+      "answer": "My backpack: it is the noun right after the comma, so the sentence says the backpack was running."
+    },
+    {
+      "id": "q_k2",
+      "concept_id": "k2",
+      "question": "Fix it: 'Running to the bus, my backpack fell open.' Keep the opening phrase.",
+      "answer": "Running to the bus, I felt my backpack fall open. (The runner comes right after the comma.)"
+    },
+    {
+      "id": "q_k3",
+      "concept_id": "k3",
+      "question": "Is 'Covered in sprinkles, my sister ate the donut.' correct? Who is covered in sprinkles, as written?",
+      "answer": "No. As written, my sister is covered in sprinkles. Fix: 'Covered in sprinkles, the donut was eaten by my sister.'"
+    }
+  ],
+  "created_at": "2026-10-25T08:30:00+00:00",
+  "scene": "studio"
+}
