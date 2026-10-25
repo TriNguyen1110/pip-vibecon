@@ -139,3 +139,57 @@ export function PerkMarks({ A, ink }) {
     </g>
   )
 }
+
+// ---- turnaround (P2D-16) ----
+export const VIEWS = ['front', 'three-quarter', 'side', 'back']
+// front -> 3/4 -> side -> back -> side -> 3/4 -> front; `flip` mirrors the return leg.
+export const TURN_SEQUENCE = [
+  { view: 'front', flip: false },
+  { view: 'three-quarter', flip: false },
+  { view: 'side', flip: false },
+  { view: 'back', flip: false },
+  { view: 'side', flip: true },
+  { view: 'three-quarter', flip: true },
+  { view: 'front', flip: false },
+]
+
+// Steps through TURN_SEQUENCE once each time `playKey` changes (~1.2 s total). Returns { view, flip, turning }.
+export function useTurnaround(playKey, { stepMs = 170 } = {}) {
+  const [i, setI] = useState(-1)
+  const first = useRef(true)
+  useEffect(() => {
+    if (first.current) {
+      first.current = false
+      return
+    }
+    if (reducedMotion()) return
+    let k = 0
+    setI(0)
+    const id = setInterval(() => {
+      k += 1
+      if (k >= TURN_SEQUENCE.length) {
+        clearInterval(id)
+        setI(-1)
+      } else setI(k)
+    }, stepMs)
+    return () => clearInterval(id)
+  }, [playKey, stepMs])
+  const step = i >= 0 ? TURN_SEQUENCE[i] : TURN_SEQUENCE[0]
+  return { view: step.view, flip: step.flip, turning: i >= 0 }
+}
+
+// Squash for 140 ms whenever the view swaps (classic 2D turnaround feel).
+export function useSwapSquash(view, flip) {
+  const [on, setOn] = useState(false)
+  const first = useRef(true)
+  useEffect(() => {
+    if (first.current) {
+      first.current = false
+      return
+    }
+    setOn(true)
+    const id = setTimeout(() => setOn(false), 140)
+    return () => clearTimeout(id)
+  }, [view, flip])
+  return on
+}

@@ -1,5 +1,5 @@
 import { useEffect, useId, useRef, useState } from 'react'
-import { useIdleLife, useEyeTracking, usePokes, PokeZones, HeyBubble, PerkMarks } from './alive'
+import { useIdleLife, useEyeTracking, usePokes, PokeZones, HeyBubble, PerkMarks, useSwapSquash } from './alive'
 import { BLUSH, BOSS_TINT, EYE, MOOD_ALIASES, MOUTH, TONGUE } from './tokens'
 import { CREATURE_DEFS } from './creatures'
 import { mix, Shape, FinishCtx } from './shapes'
@@ -12,7 +12,7 @@ import { ACCESSORIES_2D, Y2KDefs, Gel, Glint, Sparkles, StarClips, Charm, FrostV
 
 export const ACCESSORIES_ALL = [...ACCESSORIES_2D, ...CLUB_ACCESSORIES]
 export { ACCESSORIES_2D, CLUB_ACCESSORIES }
-export { PIP_STATES, POKE_ZONES } from './alive'
+export { PIP_STATES, POKE_ZONES, VIEWS, TURN_SEQUENCE, useTurnaround } from './alive'
 export const POSES = ['idle', 'strut', 'pose', 'spin']
 export { Sticker2D, ComebackFrame, EARNED_ITEMS } from './earned'
 import './pip2d.css'
@@ -469,6 +469,35 @@ function RareTint({ id, Art, t, split }) {
   )
 }
 
+// Generic back view: the character's silhouette in flat body colour with an ink edge and a few fur strokes.
+function BackSilhouette({ Art, t, id }) {
+  return (
+    <g>
+      <defs>
+        <filter id={`${id}bkInk`} x="-10%" y="-10%" width="120%" height="120%">
+          <feMorphology in="SourceAlpha" operator="dilate" radius="2" result="d" />
+          <feFlood floodColor={t.ink} />
+          <feComposite in2="d" operator="in" />
+        </filter>
+        <filter id={`${id}bkFlat`}>
+          <feFlood floodColor={t.body} />
+          <feComposite in2="SourceAlpha" operator="in" />
+        </filter>
+      </defs>
+      <g filter={`url(#${id}bkInk)`}>
+        <Art t={t} id={`${id}bk1`} part="all" />
+      </g>
+      <g filter={`url(#${id}bkFlat)`}>
+        <Art t={t} id={`${id}bk2`} part="all" />
+      </g>
+      <g fill="none" stroke={t.shade} strokeWidth="2.4" strokeLinecap="round" opacity="0.8">
+        <path d="M100,70 Q96,110 100,150" />
+        <path d="M84,96 q-4,6 -2,12 M116,96 q4,6 2,12 M80,150 q-4,6 -2,12 M120,150 q4,6 2,12" />
+      </g>
+    </g>
+  )
+}
+
 export function Pip2D({
   creature = 'capybara',
   vibe = 'plain',
@@ -492,6 +521,8 @@ export function Pip2D({
   state = 'idle',
   onPoke,
   reactZone,
+  view = 'front',
+  flip = false,
   className = '',
   title,
 }) {
@@ -537,7 +568,10 @@ export function Pip2D({
   const vibeDefault = cute ? 'starclips' : cool ? 'visor' : null
   const accList = accIn.length ? accIn : !explicitNone && vibeDefault ? [vibeDefault] : []
   const has = (a) => accList.includes(a)
+  const headBob = pose === 'strut' && animate && frame == null ? 'pip2d-headbob' : undefined
+  const faceShift = view === 'three-quarter' ? 'translate(-14 0)' : view === 'side' ? 'translate(-28 0)' : undefined
   const id = useId().replace(/:/g, '')
+  const swapping = useSwapSquash(view, flip)
   const blink = useBlink(animate && state !== 'listening')
   const hop = useHop(m, animate)
   // Talking-Tom life: idle glances + rare yawn/tilt, eye tracking, pokes
@@ -665,7 +699,8 @@ export function Pip2D({
     </>
   )
   const face = (
-    <>
+    <g transform={faceShift}>
+      <g className={headBob}>
       {cute && !vinyl && (
         <g fill={BLUSH} opacity="0.55">
           {A.blush.map(([x, y], i) => (
@@ -693,10 +728,12 @@ export function Pip2D({
       </g>
       {main && plainEyes && <BrowShelf A={A} t={t} />}
       <Mouth shape={mouthShape} ink={t.ink} a={A.mouth} ugly={ugly} />
-    </>
+      </g>
+    </g>
   )
   const sprout = (
-    <>
+    <g transform={faceShift}>
+      <g className={headBob}>
       {grown && evo === 'ugly' && <MiniSprout A={A} t={t} />}
       {grown && evo !== 'cool' && (
         // v2+: a bigger head tuft around the sprout
@@ -715,11 +752,13 @@ export function Pip2D({
       </g>
       </g>
       {(m === 'aha' || m === 'proud') && <Sparkles A={A} />}
-    </>
+      </g>
+    </g>
   )
 
   const front = (
-    <>
+    <g transform={faceShift}>
+      <g className={headBob}>
       {pokeZone === 'head' && <HeyBubble A={A} ink={t.ink} />}
       {state === 'listening' && <PerkMarks A={A} ink={t.ink} />}
       {main && plainEyes && <LowShades A={A} t={t} id={id} />}
@@ -764,7 +803,8 @@ export function Pip2D({
           <Accessory key={`acc-${a}`} type={a} t={t} A={A} id={id} hx0={hx0} hx1={hx1} visorY={visorY} />
         ),
       )}
-    </>
+      </g>
+    </g>
   )
   const label = title ?? `Pip the ${def.name} looks ${m}`
   // runway poses: strut (3-frame walk cycle), pose (confident end pose with a tilt), spin
@@ -794,6 +834,9 @@ export function Pip2D({
       </g>
     </>
   )
+  // three-quarter / fallback side: compress the body and slide the face toward the turn; flip mirrors.
+  const viewK = view === 'three-quarter' ? 0.86 : view === 'side' && !def.views?.side ? 0.74 : 1
+  const viewT = `translate(100 0) scale(${(flip ? -1 : 1) * viewK} 1) translate(-100 0)`
   const stateClass =
     [
       state === 'listening' && 'pip2d-listen',
@@ -828,10 +871,12 @@ export function Pip2D({
         <g transform={poseT} className={poseClass}>
           <g transform={grown && evo === 'ugly' ? `translate(100 207) rotate(${awakened ? -5 : -3}) scale(${awakened ? 1.07 : 1.04} ${awakened ? 0.95 : 0.97}) translate(-100 -207)` : undefined}>
           <g className={hop ? 'pip2d-hop' : undefined}>
+            <g transform={viewT} className={swapping ? 'pip2d-swap' : undefined}>
             <g className={stateClass}>
             <g className={animate && pose === 'idle' ? 'pip2d-breathe' : undefined}>
               <FinishCtx.Provider value={vinyl ? 'vinyl' : 'plush'}>{stretch ? stretched(children, key) : children}</FinishCtx.Provider>
               {withZones && zones}
+            </g>
             </g>
             </g>
           </g>
@@ -840,6 +885,36 @@ export function Pip2D({
       </g>
     </svg>
   )
+
+  // ---- turnaround views (front | three-quarter | side | back) ----
+  const Custom = def.views?.[view]
+  if (view !== 'front' && (view === 'back' || Custom || view === 'three-quarter' || view === 'side')) {
+    if (view === 'back' || Custom) {
+      // dedicated art (e.g. the corgi's side and its fluffy butt) or a generic back silhouette
+      const spAnchor = def.views?.[`${view}Sprout`] ?? (view === 'back' ? { ...A.sprout, yuzu: false } : A.sprout)
+      const neck = def.views?.[`${view}Neck`] ?? A.neck
+      const content = Custom ? <Custom t={t} id={id} /> : <BackSilhouette Art={def.Art} t={t} id={id} />
+      return wrap(
+        <>
+          {defs}
+          {main && <Backlight id={id} />}
+          {content}
+          {view === 'back' && has('backpack') && (
+            // the pack sits on the upper back, leaving the butt in view
+            <g>
+              <rect x="66" y={neck.y + 6} width="68" height="44" rx="14" fill="#F59B76" stroke={t.ink} strokeWidth="3.4" />
+              <rect x="66" y={neck.y + 6} width="68" height="16" rx="10" fill="#D97E5C" stroke={t.ink} strokeWidth="3" />
+              <rect x="82" y={neck.y + 30} width="36" height="14" rx="5" fill="#D97E5C" stroke={t.ink} strokeWidth="2.6" />
+            </g>
+          )}
+          {view === 'back' && (has('scarf') || has('puffer') || grown || main) && (
+            <path d={`M${neck.x0},${neck.y} Q100,${neck.y + 9} ${neck.x1},${neck.y}`} fill="none" stroke={has('scarf') ? '#F59B76' : main ? '#FFD86B' : `url(#${id}holo)`} strokeWidth="9" strokeLinecap="round" />
+          )}
+          <Sprout pose={awakened || main ? 'crown' : 'droop'} anchor={spAnchor} t={t} flower={false} gid={id} grown={grown} chrome={evo === 'cool'} />
+        </>,
+      )
+    }
+  }
 
   if (main) {
     // Main Character: same face on a re-boned head (jaw, cheekbones, brow shelf) on a heroic V-shaped body

@@ -73,6 +73,14 @@
 @keyframes pip2d-pop { from { transform: scale(0.4); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 .pip2d-look { transition: transform 60ms linear; }
 
+/* turnaround + strut head bob + corgi tail wiggle */
+.pip2d-swap { transform-box: view-box; transform-origin: 100px 207px; animation: pip2d-swap 140ms ease-out; }
+@keyframes pip2d-swap { 0% { transform: scale(1.08, 0.9); } 100% { transform: scale(1, 1); } }
+.pip2d-headbob { transform-box: view-box; animation: pip2d-headbob 0.45s ease-in-out infinite; }
+@keyframes pip2d-headbob { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-3px) rotate(-1.5deg); } }
+.pip2d-wiggle { transform-box: view-box; animation: pip2d-wiggle 0.5s ease-in-out infinite; }
+@keyframes pip2d-wiggle { 0%, 100% { transform: rotate(-12deg); } 50% { transform: rotate(12deg); } }
+
 /* 2.5D depth mode */
 .pip2d-depth { position: relative; display: inline-block; perspective: calc(var(--size, 200px) * 3.2); --rx: 0deg; --ry: 0deg; --tx: 0px; --sheen: 0px; }
 .pip2d-depth-tilt { position: absolute; inset: 0; transform-style: preserve-3d; transform: rotateX(var(--rx)) rotateY(var(--ry)); }
@@ -86,7 +94,7 @@
 .pip2d-sheen { transform: translateX(var(--sheen)); }
 
 @media (prefers-reduced-motion: reduce) {
-  .pip2d-breathe, .pip2d-hop, .pip2d-dot, .pip2d-glow, .pip2d-sweat, .pip2d-twinkle, .pip2d-orbit, .pip2d-strut, .pip2d-spin, .pip2d-talkbob, .pip2d-squish, .pip2d-tilt, .pip2d-boing, .pip2d-flicker, .pip2d-pop { animation: none; }
+  .pip2d-breathe, .pip2d-hop, .pip2d-dot, .pip2d-glow, .pip2d-sweat, .pip2d-twinkle, .pip2d-orbit, .pip2d-strut, .pip2d-spin, .pip2d-talkbob, .pip2d-squish, .pip2d-tilt, .pip2d-boing, .pip2d-flicker, .pip2d-pop, .pip2d-swap, .pip2d-headbob, .pip2d-wiggle { animation: none; }
   .pip2d-listen { transition: none; }
   .pip2d-eyes { transition: none; }
 }
