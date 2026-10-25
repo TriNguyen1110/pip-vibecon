@@ -173,13 +173,23 @@ function KOStars({ x, y }) {
 }
 
 // A sign board that bends (cracked) or snaps in two (ko).
-function Board({ x, y, w, h, lines, state, size = 18, id, tilt = 0 }) {
+function Board({ x, y, w, h, lines, state, size: size0 = 18, id, tilt = 0 }) {
+  // auto-fit: shrink the font so the longest line fits with ~8px padding each side (and the lines fit the height);
+  // any line still too wide after that is squeezed to the inner width, so nothing ever crosses the sign edge.
+  const pad = 8
+  const inner = w - pad * 2
+  const em = 0.7 // conservative width of a heavy uppercase glyph, in em
+  const longest = Math.max(...lines.map((l) => [...l].length))
+  const size = Math.min(size0, inner / (longest * em), (h - 10) / (lines.length * 1.15))
   const text = (dx = 0) =>
-    lines.map((l, i) => (
-      <text key={i} x={x + w / 2 + dx} y={y + h / 2 + (i - (lines.length - 1) / 2) * size * 1.15 + size * 0.35} textAnchor="middle" fontFamily={FONT} fontWeight="900" fontSize={size} fill={INK}>
-        {l}
-      </text>
-    ))
+    lines.map((l, i) => {
+      const fit = [...l].length * size * em > inner ? { textLength: inner, lengthAdjust: 'spacingAndGlyphs' } : {}
+      return (
+        <text key={i} x={x + w / 2 + dx} y={y + h / 2 + (i - (lines.length - 1) / 2) * size * 1.15 + size * 0.35} textAnchor="middle" fontFamily={FONT} fontWeight="900" fontSize={size} fill={INK} {...fit}>
+          {l}
+        </text>
+      )
+    })
   const board = <rect x={x} y={y} width={w} height={h} rx="8" fill={SIGN} stroke={INK} strokeWidth="4.4" />
   if (state === 'ko') {
     const half = w / 2
