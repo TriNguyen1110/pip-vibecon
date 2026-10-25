@@ -516,17 +516,6 @@ function MissionView({ initial }) {
     </Drawer>
   )
 
-  const hudRight = (
-    <div className="hud__right">
-      <span className="y2k-capsule hud__cap" aria-label={`Pip's Brain version ${session.brain_version ?? 1}`}>
-        <i className="y2k-capsule__coin" aria-hidden>
-          🧠
-        </i>
-        v{session.brain_version ?? 1}
-      </span>
-      <MuteButton />
-    </div>
-  )
 
   /* ---------- Pip's exam: the Brain, then one question per screen ---------- */
   if (quizzedView) {
@@ -550,7 +539,6 @@ function MissionView({ initial }) {
           topic={assignment?.topic}
           home={home}
           onBackToKO={status === 'complete' ? () => setShowBrainAfterKO(false) : null}
-          hudRight={hudRight}
           onHistory={() => setHistoryOpen(true)}
           historyOpen={historyOpen}
         />
@@ -976,11 +964,11 @@ function Exam({
   topic,
   home,
   onBackToKO,
-  hudRight,
   onHistory,
   historyOpen,
 }) {
   const quiz = session.quiz ?? []
+  const pipName = usePipName()
   const pager = usePager(quizBusy ? 0 : 1 + quiz.length)
   const [box, h] = useBoxHeight(120)
   const cur = pager.i - 1
@@ -993,30 +981,33 @@ function Exam({
   }, [q, quizBusy])
   return (
     <div className="game play-screen game--exam">
-      <header className="game-top hud">
+      <header className="mhead">
         {onBackToKO ? (
           <IconButton label="Back to the K.O." onClick={onBackToKO}>
-            ←
+            ‹
           </IconButton>
         ) : (
           <Link to={home} className="gel-btn gel-btn--secondary icon-btn" aria-label="Pip’s room" title="Pip’s room">
-            <span aria-hidden>🏠</span>
+            <span aria-hidden>‹</span>
           </Link>
         )}
-        <div className="hud__title">
-          <span className="hud__name">{quizBusy ? 'Pip is taking its exam' : (topic ?? 'Pip’s exam')}</span>
+        <div className="mhead__title">
+          <div className="display-x">{quizBusy ? `${pipName} is taking its exam` : `${pipName}’s exam`}</div>
+          <span className="mono-label exam-head__meta">
+            {topic ?? 'Pip mission'} · Brain v{session.brain_version ?? 1}
+          </span>
+        </div>
+        <div className="mhead__right">
           {!quizBusy && quiz.length > 0 && (
             <span
-              className="quiz__dots"
+              className="lcd quiz__score"
               aria-label={`Pip passed ${quiz.filter((x) => x.passed).length} of ${quiz.length}`}
             >
-              {quiz.map((x, n) => (
-                <i key={x.id ?? n} className={x.passed ? 'is-pass' : 'is-miss'} />
-              ))}
+              {quiz.filter((x) => x.passed).length}/{quiz.length}
             </span>
           )}
+          <MuteButton />
         </div>
-        {hudRight}
       </header>
       <div className="exam-area">
         <div className="exam-stage" ref={box} aria-hidden>
@@ -1039,7 +1030,9 @@ function Exam({
         ) : (
           <div className="exam-pager snap-x quiz" ref={pager.ref}>
             <section className="exam-page exam-page--brain" aria-label="Pip's Brain">
-              <h2 className="ribbon exam-ribbon">Pip’s Brain v{session.brain_version ?? 1}</h2>
+              <h2 className="ribbon exam-ribbon">
+                {pipName}’s Brain v{session.brain_version ?? 1}
+              </h2>
               <Brain
                 assignment={assignment}
                 brain={session.brain}

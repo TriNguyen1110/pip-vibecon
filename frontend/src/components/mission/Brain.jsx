@@ -60,7 +60,7 @@ export function Brain({ assignment, brain = [], concepts = [], version = 1, onNo
                     {i >= 0 ? stepTitle(assignment, i) : r.concept_id}
                   </span>
                   <span className="note__quote">“{r.quote}”</span>
-                  {wrong && <span className="note__flag note__flag--wrong">Pip believes this 😵</span>}
+                  {wrong && <span className="note__flag note__flag--wrong">Pip believes this</span>}
                   {fixed && <span className="note__flag note__flag--fixed">fixed after {r.fixed_after} re-teach</span>}
                   {flip && <Glints />}
                 </button>
@@ -203,9 +203,9 @@ export function QuizPage({ q, n, brain = [], concepts = [], onReteach, busyConce
       <div className="qitem__spacer" aria-hidden />
       <div className="qitem__meta">
         {q.passed ? (
-          <span className="sticker sticker--progress qitem__ok">Pip got it 💡</span>
+          <span className="sticker sticker--progress qitem__ok">Pip got it</span>
         ) : (
-          <span className="sticker sticker--boss qitem__bug">My brain has a bug 😵</span>
+          <span className="sticker sticker--boss qitem__bug">My brain has a bug</span>
         )}
         {r ? (
           <button

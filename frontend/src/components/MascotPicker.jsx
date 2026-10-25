@@ -117,7 +117,7 @@ export default function MascotPicker({ initial, cta = 'Start teaching', busy, on
               type="button"
               role="radio"
               aria-checked={vibe === v.id}
-              className={`gel-btn gel-btn--sm vibe-chip${vibe === v.id ? '' : ' gel-btn--secondary'}`}
+              className={`gel-btn gel-btn--secondary gel-btn--sm vibe-chip${vibe === v.id ? ' is-on' : ''}`}
               onClick={() => {
                 setVibe(v.id)
                 setReact((r) => r + 1)
@@ -140,7 +140,7 @@ export default function MascotPicker({ initial, cta = 'Start teaching', busy, on
               type="button"
               role="radio"
               aria-checked={shownVoice === v.id}
-              className={`gel-btn gel-btn--sm vibe-chip${shownVoice === v.id ? '' : ' gel-btn--secondary'}`}
+              className={`gel-btn gel-btn--secondary gel-btn--sm vibe-chip${shownVoice === v.id ? ' is-on' : ''}`}
               onClick={() => {
                 setPipVoice(v.id)
                 speak('Hi. I’m Pip. Teach me something.', { speaker: 'pip', vibe, pip_voice: v.id })
@@ -160,7 +160,7 @@ export default function MascotPicker({ initial, cta = 'Start teaching', busy, on
               type="button"
               role="radio"
               aria-checked={aud === a.id}
-              className={`gel-btn gel-btn--sm vibe-chip${aud === a.id ? '' : ' gel-btn--secondary'}`}
+              className={`gel-btn gel-btn--secondary gel-btn--sm vibe-chip${aud === a.id ? ' is-on' : ''}`}
               onClick={() => setAud(a.id)}
             >
               {a.label}
@@ -177,7 +177,7 @@ export default function MascotPicker({ initial, cta = 'Start teaching', busy, on
               type="button"
               role="radio"
               aria-checked={skin === k.id}
-              className={`gel-btn gel-btn--sm vibe-chip${skin === k.id ? '' : ' gel-btn--secondary'}`}
+              className={`gel-btn gel-btn--secondary gel-btn--sm vibe-chip${skin === k.id ? ' is-on' : ''}`}
               onClick={() => setSkin(k.id)}
             >
               {k.label}
@@ -194,7 +194,7 @@ export default function MascotPicker({ initial, cta = 'Start teaching', busy, on
               type="button"
               role="radio"
               aria-checked={accessory === a}
-              className={`gel-btn gel-btn--sm acc-chip${accessory === a ? ' is-on' : ' gel-btn--secondary'}`}
+              className={`gel-btn gel-btn--secondary gel-btn--sm acc-chip${accessory === a ? ' is-on' : ''}`}
               onClick={() => {
                 setAccessory(a)
                 setReact((r) => r + 1)

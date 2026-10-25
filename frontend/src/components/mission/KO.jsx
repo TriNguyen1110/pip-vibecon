@@ -159,10 +159,20 @@ function KoCard({ session, assignment, nickname, pipLine }) {
           )}
           {session.finisher && (
             <span className="kocard__item">
-              <span>{typeof session.finisher === 'object' ? session.finisher.weapon : session.finisher}</span>
-              <span className="lcd">Earned</span>
+              <span>
+                <span className="mono-label">Finishing move</span>
+                <br />
+                {typeof session.finisher === 'object' ? session.finisher.weapon : session.finisher}
+              </span>
+              <span className="lcd kocard__lcd--plain">Used</span>
             </span>
           )}
+          {(session.payoff?.new_items ?? []).slice(0, 2).map((it) => (
+            <span key={it} className="kocard__item">
+              <span>{itemName(it).replace(/^./, (c) => c.toUpperCase())}</span>
+              <span className="lcd">Earned</span>
+            </span>
+          ))}
         </span>
         <span className="ko-card__face ko-card__back">
           <span className="ko-card__boss">{boss.name}</span>

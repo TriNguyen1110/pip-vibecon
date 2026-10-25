@@ -48,7 +48,7 @@ function StudentSwitch({ sid, onSwitch, onClose }) {
         <button
           key={s.id}
           type="button"
-          className={`gel-btn${s.id === sid ? '' : ' gel-btn--secondary'}`}
+          className={`gel-btn gel-btn--secondary switch-choice${s.id === sid ? ' is-on' : ''}`}
           aria-pressed={s.id === sid}
           onClick={() => {
             onClose()
