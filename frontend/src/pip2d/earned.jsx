@@ -33,21 +33,81 @@ export function FixedStarArt({ x, y, s = 1, id, ink = '#2A1630' }) {
 }
 
 // Album sticker: die-cut white border + holo sheen. item = half_pin | fixed_it_star | comeback
-export function Sticker2D({ item = 'half_pin', size = 96, label }) {
+const INK = '#2A1630'
+const KNOWN_LABELS = { half_pin: '½ OF IT', fixed_it_star: 'FIXED IT', comeback: 'COMEBACK', zoom_lens: 'ZOOM LENS', same_angle_pin: 'SAME ANGLE' }
+
+// "same_angle_pin" -> "SAME ANGLE" (drops a trailing pin/star/badge word)
+function labelFromId(item) {
+  return String(item || 'badge')
+    .replace(/_(pin|star|badge)$/i, '')
+    .replace(/[_-]+/g, ' ')
+    .trim()
+    .toUpperCase()
+}
+
+// Magnifier glyph (zoom_lens).
+function ZoomLensArt({ id }) {
+  return (
+    <g>
+      <path d="M62,58 L76,72" stroke={INK} strokeWidth="9" strokeLinecap="round" />
+      <path d="M62,58 L76,72" stroke="#C9D1D9" strokeWidth="4.5" strokeLinecap="round" />
+      <circle cx="46" cy="42" r="19" fill={`url(#${id}chrome)`} stroke={INK} strokeWidth="3" />
+      <circle cx="46" cy="42" r="13" fill="#C9FCFC" stroke={INK} strokeWidth="2" />
+      <path d="M39,36 Q43,31 49,31" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round" />
+    </g>
+  )
+}
+
+// Angle-mark glyph (same_angle_pin): two rays with matching arc ticks.
+function SameAngleArt({ id }) {
+  return (
+    <g>
+      <circle cx="50" cy="44" r="27" fill={`url(#${id}chrome)`} stroke={INK} strokeWidth="3" />
+      <path d="M32,58 L68,58 M32,58 L58,30" fill="none" stroke={INK} strokeWidth="3.6" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M46,58 A14,14 0 0,0 42,48" fill="none" stroke="#E8389A" strokeWidth="3" strokeLinecap="round" />
+      <path d="M52,58 A20,20 0 0,0 46,44" fill="none" stroke="#E8389A" strokeWidth="3" strokeLinecap="round" />
+    </g>
+  )
+}
+
+// Neutral generic badge for any other earned item: a chrome-rimmed holo disc with a star.
+function GenericBadgeArt({ id }) {
+  return (
+    <g>
+      <circle cx="50" cy="44" r="26" fill={`url(#${id}chrome)`} stroke={INK} strokeWidth="3" />
+      <circle cx="50" cy="44" r="19" fill={`url(#${id}holo)`} stroke={INK} strokeWidth="1.6" />
+      <path d={starPath(50, 44, 11)} fill="#fff" stroke={INK} strokeWidth="2" strokeLinejoin="round" />
+    </g>
+  )
+}
+
+// Album sticker: die-cut white border + holo sheen.
+// item = half_pin | fixed_it_star | comeback | zoom_lens | same_angle_pin | any other id (generic badge).
+// label/name: the item's display name (used for unknown ids; falls back to a humanised id).
+export function Sticker2D({ item = 'half_pin', size = 96, label, name }) {
   const id = useId().replace(/:/g, '')
   const art =
-    item === 'fixed_it_star' ? (
+    item === 'half_pin' ? (
+      <HalfPinArt x={50} y={48} s={2.3} id={id} />
+    ) : item === 'fixed_it_star' ? (
       <FixedStarArt x={50} y={46} s={2.2} id={id} />
     ) : item === 'comeback' ? (
       <g>
-        <path d={starPath(50, 44, 26)} fill={`url(#${id}holo)`} stroke="#2A1630" strokeWidth="3" strokeLinejoin="round" />
-        <path d="M30,46 Q50,30 70,46" fill="none" stroke="#2A1630" strokeWidth="3" strokeLinecap="round" />
-        <path d="M44,54 L50,60 L58,48" fill="none" stroke="#2A1630" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" />
+        <path d={starPath(50, 44, 26)} fill={`url(#${id}holo)`} stroke={INK} strokeWidth="3" strokeLinejoin="round" />
+        <path d="M30,46 Q50,30 70,46" fill="none" stroke={INK} strokeWidth="3" strokeLinecap="round" />
+        <path d="M44,54 L50,60 L58,48" fill="none" stroke={INK} strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" />
       </g>
+    ) : item === 'zoom_lens' ? (
+      <ZoomLensArt id={id} />
+    ) : item === 'same_angle_pin' ? (
+      <SameAngleArt id={id} />
     ) : (
-      <HalfPinArt x={50} y={48} s={2.3} id={id} />
+      <GenericBadgeArt id={id} />
     )
-  const text = label ?? (item === 'fixed_it_star' ? 'FIXED IT' : item === 'comeback' ? 'COMEBACK' : '½ OF IT')
+  const text = String(label ?? name ?? KNOWN_LABELS[item] ?? labelFromId(item)).toUpperCase()
+  const fontSize = text.length > 14 ? 8 : text.length > 10 ? 9 : 11
+  // squeeze long names to fit inside the sticker (estimated bold width ~0.66em per char)
+  const fit = text.length * fontSize * 0.66 > 76 ? { textLength: 76, lengthAdjust: 'spacingAndGlyphs' } : {}
   return (
     <svg width={size} height={size} viewBox="0 0 100 100" role="img" aria-label={`${text} sticker`}>
       <defs>
@@ -57,7 +117,7 @@ export function Sticker2D({ item = 'half_pin', size = 96, label }) {
       <circle cx="50" cy="50" r="41" fill={`url(#${id}holo)`} opacity="0.35" />
       {art}
       <path d="M22,26 Q36,12 56,12" fill="none" stroke="#fff" strokeWidth="5" strokeLinecap="round" opacity="0.8" />
-      <text x="50" y="86" textAnchor="middle" fontFamily="system-ui, sans-serif" fontWeight="900" fontSize="11" fill="#2A1630">
+      <text x="50" y="86" textAnchor="middle" fontFamily="system-ui, sans-serif" fontWeight="900" fontSize={fontSize} fill={INK} {...fit}>
         {text}
       </text>
     </svg>
