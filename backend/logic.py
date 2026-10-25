@@ -90,7 +90,8 @@ def apply_turn(session: dict, assignment: dict, student_text: str, r: dict) -> d
         session["boss_hp"] = min(100, hp + HEAL)
         amount = session["boss_hp"] - hp
     unlocked = []
-    prior = (assignment.get("lesson") or {}).get("prior_knowledge") or []
+    from lesson import prior_ids
+    prior = prior_ids(assignment.get("lesson"))
     for c in assignment["concepts"]:
         w = c.get("weapon")
         if c["id"] in prior:

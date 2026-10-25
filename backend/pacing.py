@@ -42,7 +42,7 @@ STOP = set("that this with from have when then they them what your each does int
 def new_pace(a: dict) -> dict:
     return {"cov": {c["id"]: {"idea": False, "reason": False, "example": False, "wrong": False}
                     for c in a["concepts"]},
-            "asks": {c["id"]: {"idea": 0, "why": 0, "example": 0, "try": 0, "predict": 0, "concrete": 0} for c in a["concepts"]},
+            "asks": {c["id"]: {"idea": 0, "why": 0, "example": 0, "try": 0, "predict": 0, "concrete": 0, "connect": 0} for c in a["concepts"]},
             "vague": {c["id"]: 0 for c in a["concepts"]},
             "nudged": {c["id"]: False for c in a["concepts"]},
             "qlog": [], "target": None, "last_q": "", "texts": 0, "all_texts": 0, "turns": 0, "post_ready": 0}
@@ -63,7 +63,7 @@ def ensure_pace(session: dict, a: dict) -> dict:
     session.setdefault("ready_for_quiz", False)
     if not p.get("prior_done"):  # what Pip already knows from its own opening claim is credited at the start
         les = a.get("lesson") or {}
-        for cid in les.get("prior_knowledge") or []:
+        for cid in L.prior_ids(les):
             if cid in p["cov"]:
                 p["cov"][cid].update(idea=True, reason=True, example=True, wrong=False)
                 session["ladder"][cid].update(done=True, best_level=max(2, session["ladder"][cid].get("best_level", 0)))
@@ -76,7 +76,7 @@ def ensure_pace(session: dict, a: dict) -> dict:
 def reset_concept(session: dict, a: dict, cid: str) -> None:
     p = ensure_pace(session, a)
     p["cov"][cid] = {"idea": False, "reason": False, "example": False, "wrong": False}
-    p["asks"][cid] = {"idea": 0, "why": 0, "example": 0, "try": 0, "predict": 0, "concrete": 0}
+    p["asks"][cid] = {"idea": 0, "why": 0, "example": 0, "try": 0, "predict": 0, "concrete": 0, "connect": 0}
     p["vague"][cid], p["nudged"][cid] = 0, False
     session["ladder"][cid].update(stuck=False, done=False)
     session["ready_for_quiz"] = False
@@ -92,11 +92,18 @@ def covered(c: dict) -> bool:
 
 
 def kind_of(les: dict | None, cid: str) -> str:
-    return ((L.lc(les, cid) if les else None) or {}).get("kind") or "reason"
+    """How Pip treats a concept, from its explain_level: given -> never asked; why -> reason drawn out with
+    concrete cases; use -> applied, never 'why does it work' (the old `kind` field is only a fallback)."""
+    spec = (L.lc(les, cid) if les else None) or {}
+    if spec.get("explain_level") or cid in ((les or {}).get("prior_knowledge") or []):
+        return {"given": "given", "why": "reason", "use": "procedure"}[L.level_of(les, cid)]
+    return spec.get("kind") or "reason"
 
 
 def explained(c: dict, kind: str = "reason") -> bool:
     """Reasons need a reason; conventions and procedures are explained by an applied example."""
+    if kind == "given":
+        return True
     if kind == "reason":
         return c["idea"] and (c["reason"] or c.get("solid", False)) and not c["wrong"]
     return c["idea"] and (c["example"] or c["reason"] or c.get("solid", False)) and not c["wrong"]
@@ -116,6 +123,9 @@ def rung_kind(text: str) -> str:
     t = norm(text)
     if re.search(r"why is that wrong|why is my|why am i wrong", t):
         return "idea"  # the opener: asks what is wrong with Pip's own rule
+    if re.search(r"\b(so )?(it'?s|that'?s|this is|is it|are they|that is) (kinda |just |basically )?like\b|"
+                 r"\bsame (as|thing as)\b", t) and "?" in text:
+        return "connect"
     if re.search(r"what if i (cut|fold|flip|draw|put|stick|slice|split|tear|cover|try to|read|say|want|have|take|remove|plug|swap|add)|"
                  r"^picture |^imagine ", t):
         return "concrete"
@@ -179,13 +189,13 @@ def best_concept(a: dict, les: dict | None, text: str, default: str | None = Non
 def closed(p: dict, ladder: dict, cid: str, kind: str = "reason") -> bool:
     """Nothing left to ask about this concept."""
     c, asks = p["cov"][cid], p["asks"][cid]
-    if ladder[cid]["stuck"]:
+    if ladder[cid]["stuck"] or kind == "given":
         return True
     if kind != "reason":  # convention / procedure: an applied example closes it; never ask why
         return explained(c, kind)
     if c["idea"] and c["reason"] and not c["wrong"]:
         return True
-    if c["idea"] and c["example"] and (asks["why"] + asks["try"] + asks["concrete"]) >= 1 and not c["wrong"]:
+    if c["idea"] and c["example"] and (asks["why"] + asks["try"] + asks["concrete"] + asks.get("connect", 0)) >= 1 and not c["wrong"]:
         return True
     return False
 
@@ -222,7 +232,10 @@ def next_question(session: dict, a: dict, les: dict, focus: str | None = None, i
         spec = L.lc(les, cid)
         rungs = [as_question(r) if "my rule says" in r.lower() else one_question(r)
                  for r in list(spec["probe_ladder"]) + list(spec.get("concrete") or [])]
+        conns = [x for x in (spec.get("connections") or []) if qnorm(x) not in used]
         has = {rung_kind(r) for r in rungs if qnorm(r) not in used and "?" in r}
+        if conns:
+            has.add("connect")
         if ck == "convention":
             if not c["idea"] or c["wrong"]:
                 kind = "idea"
@@ -233,10 +246,14 @@ def next_question(session: dict, a: dict, les: dict, focus: str | None = None, i
         elif ck == "procedure":
             if not c["idea"] or c["wrong"]:
                 kind = "idea"
+            elif not c["example"] and asks["connect"] < 1 and conns:
+                kind = "connect"
             elif not c["example"] and asks["concrete"] < 1 and "concrete" in has:
                 kind = "concrete"
             elif not c["example"] and asks["predict"] < 1 and "predict" in has:
                 kind = "predict"
+            elif not c["example"] and asks["try"] < 1 and "try" in has:
+                kind = "try"
             elif not c["example"] and asks["example"] < 1:
                 kind = "example"
             else:
@@ -247,6 +264,8 @@ def next_question(session: dict, a: dict, les: dict, focus: str | None = None, i
             # with something already on the table, a picture or action draws the idea out better than "what do you notice"
             kind = "concrete" if (any(x["idea"] for x in p["cov"].values()) and asks["concrete"] < 1
                                   and "concrete" in has) else "idea"
+        elif not c["reason"] and asks["connect"] < 1 and conns:
+            kind = "connect"  # a friend checking they got it: "so it's like cutting a pizza box corner to corner?"
         elif not c["reason"] and asks["concrete"] < 1 and "concrete" in has:
             kind = "concrete"
         elif not c["reason"] and asks["try"] < 1 and "try" in has:
@@ -261,6 +280,10 @@ def next_question(session: dict, a: dict, les: dict, focus: str | None = None, i
         else:
             continue
         anything = any(x["idea"] for x in p["cov"].values())
+        if kind == "connect" and conns:
+            return conns[0], cid, "connect"
+        if weak and conns and c["idea"] and asks["connect"] < 1:
+            return conns[0], cid, "connect"  # a yes/no that states the idea is the easiest thing to answer
         if weak:  # yes/no or pick-one only: guesses to correct, cases with numbers; never an open why / "what do you notice"
             for want in ("concrete", "predict", "try"):  # a picture or action pulls content out of a kid who says idk
                 for r in rungs:
@@ -322,6 +345,13 @@ def _frac_eq(t: str) -> bool:
 INFORMAL = [(r"\bb/?c\b|\bbcuz\b|\bbecuz\b|\bcos\b|\bcoz\b|\bcuz\b|\bcause\b", "because"),
             (r"\bu\b", "you"), (r"\bur\b", "your"), (r"\bya\b|\byea\b|\byeh\b", "yes"),
             (r"\bthru\b", "through"), (r"\bw/\b", "with"), (r"\bwhats\b", "what is"), (r"\bgotta\b", "have to")]
+
+
+AFFIRM = re.compile(r"^\W*(yes|yeah|yea|ya|yep|yup|yess+|exactly|right|correct|true|sure|thats? it|that'?s it|"
+                    r"kinda|basically|pretty much|mhm|uh huh|ok yes|oh yeah)\b", re.I)
+AUTHORITY = re.compile(r"\b(that'?s|thats|it'?s|its|it is|that is)\s+(just\s+)?(the|a)\s+(theorem|law|rule|formula|definition|"
+                       r"equation)\b|\bthe (theorem|law|formula)\b|\bnewton'?s\b|\bpythag\w*|because\s+(it'?s|that'?s)\s+"
+                       r"(the|a)\s+(law|theorem|rule|formula)", re.I)
 
 
 def informal(t: str) -> str:
@@ -431,10 +461,18 @@ def judge(text: str, a: dict, les: dict | None, session: dict) -> dict:
         for cid in ids:
             f[cid] = {"idea": False, "reason": False, "example": False, "wrong": False}
         f[wrong_cid] = {"idea": True, "reason": False, "example": False, "wrong": True}
+    auth_used = False
+    if AUTHORITY.search(t) or AUTHORITY.search(text) or (nonreason and tgt and L.level_of(les, tgt) == "use"):
+        # "that's the theorem / it's a law / thats just the rule" is the full reason for a `use` concept
+        for cid in ids:
+            if L.level_of(les, cid) == "use" and (f[cid]["idea"] or cid == tgt) and not wrong_cid:
+                f[cid]["reason"] = True
+                f[cid]["idea"] = f[cid]["idea"] or bool(cid == tgt and p["cov"][cid]["idea"])
+                auth_used = True
     interest = ""
     return {"flags": f, "refusal": bool(REFUSE.search(t)), "insult": bool(INSULT.search(t_ins)),
             "pointless": bool(POINTLESS.search(t)), "idk": bool(IDK.search(t)),
-            "nonreason": nonreason, "wrong_cid": wrong_cid,
+            "nonreason": nonreason and not auth_used, "wrong_cid": wrong_cid,
             "content": any(v["idea"] or v["reason"] or v["example"] or v["wrong"] for v in f.values()),
             "interest": interest}
 
@@ -573,6 +611,16 @@ def credit(session: dict, a: dict, les: dict, judged: dict, text: str) -> dict:
     gained: dict[str, dict] = {}
     progress, levels = [], {}
     wrong_cid = None
+    pc = p.get("pending_conn")
+    if pc and pc in ids and not judged["wrong_cid"] and AFFIRM.search(norm(text)) and len(norm(text).split()) <= 8 \
+            and not re.search(r"\bno\b|\bnot\b|\bnope\b|\bnah\b", norm(text)):
+        # "yeah": the kid confirmed a friend-style connection that carries the idea -> credit it
+        f_ = judged["flags"][pc]
+        lvl_ = L.level_of(les, pc)
+        judged["flags"][pc] = {**f_, "idea": True, "reason": f_["reason"] or lvl_ == "why",
+                               "example": f_["example"] or lvl_ == "use"}
+        judged["content"] = True
+    p["pending_conn"] = None
     answered_case = p.get("last_kind") in ("concrete", "try")  # Pip asked for a picture or a new case
     for cid in ids:
         new, cov = judged["flags"][cid], p["cov"][cid]
@@ -769,8 +817,9 @@ def finalize(session: dict, a: dict, les: dict, cr: dict, draft: str, said: str,
         p["last_q"] = q
     cid, kc = kind_cid
     p["last_kind"] = kc
-    if cid and kc in ("idea", "why", "example", "try", "predict", "concrete"):
+    if cid and kc in ("idea", "why", "example", "try", "predict", "concrete", "connect"):
         p["asks"][cid][kc] += 1
+    p["pending_conn"] = cid if (cid and kc == "connect") else None
     if cid:
         p["target"] = cid
     return reply

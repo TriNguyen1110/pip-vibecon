@@ -164,9 +164,21 @@ that too?"
 Bad: "Great job! Can you explain WHY we divide by 2?" (praise, bare why, caps)
 Bad: "So you're saying no its half of that." (parrots them)  Bad: "Are you sure? Think about it again." (grades them)
 
-Each concept has a kind (state.coverage shows it). reason: a "why" is fine once. convention (a rule people agreed \
-on): NEVER ask why; ask when it applies or give a tricky case to sort. procedure: ask them to walk one example, \
-or guess wrong and let them correct you.
+Each concept has an explain_level (state.coverage shows it), which decides what you may ask:
+- given: obvious or already known to you at this grade (the rectangle's area, a definition). You already know it: \
+never ask for it, never ask why. It is credited from the start.
+- why: one intuitive sentence explains it. Draw the reason out with a concrete case, a connection or a guess to fix; \
+a "why" is fine once, softly.
+- use: true and important but its justification is beyond them (a theorem, a law, a convention). NEVER ask why it \
+works or why the rule exists. Ask them to use it on a case, to say when it applies, or to catch you misusing it. \
+"that's the theorem", "it's a law", "that's just the rule" is a complete answer: accept it as the reason.
+Never ask something obvious, too deep or already answered: a kid who has to explain the obvious checks out fast.
+
+Connections (a friend checking they got it): at most one per reply, and it replaces your question. Link what \
+they said to something they already know ("so it's like cutting a pizza box corner to corner?", "so a full \
+shopping cart is harder to get going than an empty one?"), using the lesson's `connections` or one you invent \
+from THEIR words. A "yeah" to it is real credit when the connection carries the idea; if they correct it, that \
+is good teaching too.
 
 Insults and swearing: answer only the content, calmly, with no comment on the language; with no content at all, \
 one short deadpan line ("Noted. Still need to know why, though."). Refusals ("just tell me"): you don't know, \
@@ -224,10 +236,12 @@ def lesson_block(les: dict, a: dict) -> str:
         spec = L.lc(les, c["id"])
         if not spec:
             continue
-        out.append(f"\nConcept {i} ({c['text']}; kind: {spec.get('kind', 'reason')}):\n- look_fors (what a level 2 explanation contains): "
+        out.append(f"\nConcept {i} ({c['text']}; explain_level: {L.level_of(les, c['concept_id'])}):\n- look_fors (what a level 2 explanation contains): "
                    + "; ".join(spec["look_fors"]) + "\n- probe_ladder (question bank, see pacing rules): "
                    + " | ".join(f"{n + 1}. {r}" for n, r in enumerate(spec["probe_ladder"]))
                    + "\n- spoilers (never say these): " + "; ".join(spec["spoilers"])
+                   + ("\n- connections (friend-style checks you may use): " + " | ".join(spec["connections"])
+                      if spec.get("connections") else "")
                    + f"\n- friend_nudge (offered once, after the last rung): {spec['friend_nudge']}")
     return "\n".join(out)
 
@@ -293,7 +307,7 @@ def _history(session: dict) -> list[dict]:
 def pace_state(session: dict, a: dict, les: dict, nq, infer: bool, version: int = 1) -> str:
     p = PC.ensure_pace(session, a)
     ids = concept_ids(a)
-    cov = "; ".join(f"{i} [{PC.kind_of(les, cid)}]: " + ",".join(k for k in ("idea", "reason", "example", "wrong") if p["cov"][cid][k])
+    cov = "; ".join(f"{i} [{L.level_of(les, cid)}]: " + ",".join(k for k in ("idea", "reason", "example", "wrong") if p["cov"][cid][k])
                     + f" (asked: why {p['asks'][cid]['why']}, example {p['asks'][cid]['example']}, new case {p['asks'][cid]['try']}, guess {p['asks'][cid]['predict']})"
                     for i, cid in enumerate(ids))
     recent = " | ".join(p.get("qhist", [])[-6:]) or "none"
@@ -655,6 +669,12 @@ will teach a naive AI classmate named Pip the topic. Produce:
 - why_it_matters: one short real-life line for a 10-15 year old.
 - concepts: exactly 3 key concepts the student must be able to explain, each a plain sentence, each with a \
 silly weapon name (a tool or move with an emoji, e.g. "Common Denominator Cleaver 🪓") named after it.
+- explain_level for every concept (be honest, a tutor can edit it): "given" = obvious or prior knowledge at this \
+grade, Pip already knows it and never asks (a rectangle's area for grade 6); "why" = one intuitive sentence \
+explains it at this grade, Pip draws the reason out (two copies of a triangle make a rectangle); "use" = true and \
+important but its justification is beyond the grade, a theorem, a law of nature or a convention (the Pythagorean \
+theorem, Newton's laws, comma rules): Pip never asks why it works, only to apply it, say when it applies, or catch \
+a misuse. A "why" question about a given or use concept is a defect.
 - misconception: ONE common misconception Pip will believe at the start, as a student would say it.
 - root_prerequisite: the earlier skill the topic depends on.
 - boss: the misconception personified. name: a chantable two-part name with rhythm or repetition \
@@ -676,7 +696,7 @@ Math, science, or SAT Math topics. Keep language simple and calm."""
 
 DRAFT_SCHEMA = obj({
     "why_it_matters": STR,
-    "concepts": arr(obj({"text": STR, "weapon": STR})),
+    "concepts": arr(obj({"text": STR, "weapon": STR, "explain_level": enum("given", "why", "use")})),
     "misconception": STR,
     "root_prerequisite": STR,
     "boss": obj({"name": STR, "emoji": STR, "backstory": STR}),
@@ -728,11 +748,12 @@ def offline_draft(topic: str) -> dict:
     boss = _BOSSES[sum(map(ord, topic)) % len(_BOSSES)]
     t = topic.rstrip(".")
     concepts = [
-        {"id": "k1", "text": f"What {t} means, in plain words", "weapon": "Plain-Words Poker 🥢"},
+        {"id": "k1", "text": f"What {t} means, in plain words", "weapon": "Plain-Words Poker 🥢",
+         "explain_level": "why"},
         {"id": "k2", "text": f"Why {t} works, shown with an example",
-         "weapon": "Example Mallet 🔨"},
+         "weapon": "Example Mallet 🔨", "explain_level": "why"},
         {"id": "k3", "text": f"How to use {t} on a brand-new problem",
-         "weapon": "New-Problem Net 🥅"},
+         "weapon": "New-Problem Net 🥅", "explain_level": "use"},
     ]
     return {
         "lesson": L.offline_lesson(concepts, topic),
@@ -796,7 +817,7 @@ async def run_quiz(session: dict, a: dict, qs: list[dict], start: int = 0) -> di
             concepts = "\n".join(f"{i}: {c['text']}" for i, c in enumerate(a["concepts"]))
             quiz = "\n".join(f'{n}: (concept {ids.index(q["concept_id"])}) {q["question"]} '
                              f'[correct: {q.get("answer", "")}]' for n, q in enumerate(qs))
-            prior = [c["text"] for c in a["concepts"] if c["id"] in ((a.get("lesson") or {}).get("prior_knowledge") or [])]
+            prior = [c["text"] for c in a["concepts"] if c["id"] in L.prior_ids(a.get("lesson"))]
             prompt = (f"Topic: {a['topic']}\nMisconception Pip started with: {a['misconception']}\n"
                       f"Pip already knows: {prior or 'nothing in particular'}\n"
                       f"Concepts:\n{concepts}\n\nQuiz questions (question_index: ...):\n{quiz}\n\n"
@@ -874,7 +895,7 @@ def offline_quiz(session: dict, a: dict, qs: list[dict], start: int = 0) -> dict
     # inference: a concept with no rule of its own is answered from the taught rule that relates to it most
     # ("didn't teach me that" only when nothing taught relates)
     les_ = L.lesson_of(a)
-    prior_ = set((les_ or {}).get("prior_knowledge") or [])
+    prior_ = set(L.prior_ids(les_))
     if best and not is_fractions(a):
         voc = PC.vocab(a, les_)
         for cid in concept_ids(a):
@@ -924,7 +945,7 @@ def report_det(session: dict, a: dict, student: dict) -> dict:
     concepts = []
     for c in a["concepts"]:
         r = rules.get(c["id"])
-        known = c["id"] in ((a.get("lesson") or {}).get("prior_knowledge") or [])
+        known = c["id"] in L.prior_ids(a.get("lesson"))
         status = ("explained" if known else "vague") if r is None else ("explained" if r["correct"] else "misconception")
         stuck = bool((session.get("ladder") or {}).get(c["id"], {}).get("stuck")) and status != "explained"
         concepts.append({"concept_id": c["id"], "concept_text": c["text"], "status": status,

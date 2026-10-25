@@ -53,6 +53,10 @@
       ],
       "concrete": [
         "what if i cut my 6 by 4 box corner to corner, what do i get?"
+      ],
+      "explain_level": "why",
+      "connections": [
+        "ohh so it's like cutting a pizza box corner to corner?"
       ]
     },
     {
@@ -83,7 +87,8 @@
       ],
       "concrete": [
         "what if i cover a 6 by 4 box with 1 by 1 squares, how many do i need?"
-      ]
+      ],
+      "explain_level": "given"
     },
     {
       "concept_id": "k3",
@@ -115,6 +120,10 @@
       ],
       "concrete": [
         "what if i fold the 6 by 4 box corner to corner, how many squares sit on each side?"
+      ],
+      "explain_level": "why",
+      "connections": [
+        "so it's like sharing one sandwich with a friend, you each get the same bit?"
       ]
     }
   ],

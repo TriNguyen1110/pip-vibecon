@@ -560,7 +560,7 @@ def mastery(a: dict | None, s: dict | None) -> list[dict]:
     for c in a["concepts"]:
         lvl = int(((s or {}).get("ladder") or {}).get(c["id"], {}).get("best_level") or 0)
         r = rules.get(c["id"])
-        known = c["id"] in ((a.get("lesson") or {}).get("prior_knowledge") or [])  # Pip started out knowing it
+        known = c["id"] in lessons.prior_ids(a.get("lesson"))  # Pip started out knowing it
         if r and r.get("correct"):
             lvl = max(lvl, 2)
         elif r:

@@ -76,6 +76,21 @@ def lesson_of(a: dict) -> dict | None:
     return None
 
 
+def level_of(lesson: dict | None, cid: str) -> str:
+    """given | why | use (CONTRACT v3.17). Untagged concepts are `why`, except legacy prior_knowledge = given."""
+    spec = next((c for c in (lesson or {}).get("concepts", []) if c.get("concept_id") == cid), None) or {}
+    lvl = spec.get("explain_level")
+    if lvl in ("given", "why", "use"):
+        return lvl
+    return "given" if cid in ((lesson or {}).get("prior_knowledge") or []) else "why"
+
+
+def prior_ids(lesson: dict | None) -> list[str]:
+    """Concepts Pip already knows (explain_level given), credited from the start and never asked."""
+    ids = [c["concept_id"] for c in (lesson or {}).get("concepts", []) if level_of(lesson, c["concept_id"]) == "given"]
+    return ids
+
+
 def lc(lesson: dict, cid: str) -> dict | None:
     return next((c for c in lesson["concepts"] if c["concept_id"] == cid and c["probe_ladder"]), None)
 
@@ -103,7 +118,8 @@ def offline_lesson(concepts: list[dict], topic: str) -> dict:
             if w not in _STOP and w not in topic_words and w not in nouns:
                 nouns.append(w)
         cs.append({
-            "concept_id": c["id"],
+            "concept_id": c["id"], "explain_level": c.get("explain_level") if c.get("explain_level") in (
+                "given", "why", "use") else "why",
             "look_fors": [f"Says in their own words: {_phrase(txt)}",
                           "Gives a reason (because...), not just steps",
                           "Shows it on one small example they chose"],
@@ -131,7 +147,9 @@ def fit_lesson(raw: dict | None, concepts: list[dict], topic: str) -> dict:
         d = base["concepts"][i]
         ladder = _strs(r.get("probe_ladder"))[:4]
         ladder += d["probe_ladder"][len(ladder):]
-        cs.append({"concept_id": c["id"], "look_fors": _strs(r.get("look_fors")) or d["look_fors"],
+        cs.append({"concept_id": c["id"], "explain_level": c.get("explain_level") if c.get("explain_level") in (
+                       "given", "why", "use") else "why",
+                   "look_fors": _strs(r.get("look_fors")) or d["look_fors"],
                    "probe_ladder": ladder, "spoilers": _strs(r.get("spoilers")),
                    "friend_nudge": str(r.get("friend_nudge") or "").strip() or d["friend_nudge"]})
     return {"standard": str(raw.get("standard") or base["standard"]), "source": "AI-drafted for tutor review",

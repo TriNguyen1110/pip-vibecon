@@ -355,8 +355,9 @@ async def save_assignment(body: dict = Body(...)):
         raise HTTPException(422, "need topic, misconception and 3 concepts")
     a = {**body, "id": body.get("id") or logic.new_id("a"),
          "tutor_id": body.get("tutor_id") or st["tutor_id"],
-         "concepts": [{"id": c.get("id") or f"k{i + 1}", "text": c["text"],
-                       "weapon": c.get("weapon", "")} for i, c in enumerate(cs)],
+         "concepts": [{"id": c.get("id") or f"k{i + 1}", "text": c["text"], "weapon": c.get("weapon", ""),
+                       **({"explain_level": c["explain_level"]} if c.get("explain_level") in ("given", "why", "use") else {})}
+                      for i, c in enumerate(cs)],
          "created_at": body.get("created_at") or logic.now()}
     a.setdefault("boss", {"name": "Guess-Guess Goose", "emoji": "🪿🎲", "backstory": "A goose rolling dice instead of checking its work."})
     for k in ("cliffhanger", "root_prerequisite", "why_it_matters"):
@@ -365,6 +366,10 @@ async def save_assignment(body: dict = Body(...)):
     if a.get("lesson"):
         a["lesson"] = lessons.normalize_lesson(a["lesson"]) or lessons.offline_lesson(
             a["concepts"], a["topic"])
+        lv = {c["id"]: c.get("explain_level") for c in a["concepts"] if c.get("explain_level")}
+        for lc_ in a["lesson"]["concepts"]:  # the tutor's explain_level edit on a concept wins
+            if lv.get(lc_["concept_id"]):
+                lc_["explain_level"] = lv[lc_["concept_id"]]
     if {q.get("concept_id") for q in a.get("quiz") or []} != set(logic.concept_ids(a)):
         a["quiz"] = pip_ai.quiz_for(a)
     await store.put("assignments", a)
@@ -603,7 +608,7 @@ async def _quiz(sid: str, tasks: BackgroundTasks):
         i = x.get("rule_index", -1) if x else -1
         rule = by_concept.get(valid[i]["concept_id"]) if i in valid else None
         base = {"id": q["id"], "concept_id": q["concept_id"], "question": q["question"]}
-        if rule is None and q["concept_id"] in ((a.get("lesson") or {}).get("prior_knowledge") or []):
+        if rule is None and q["concept_id"] in lessons.prior_ids(a.get("lesson")):
             known = pip_ai.prior_answer(a, q)  # Pip's own opening claim already uses it: not taught, not missed
             new_items[q["id"]] = {**base, "rule_id": None, "passed": True, "pip_answer": known[0], "line": known[1]}
         elif rule is None:  # no rule, or the cited rule was dropped: Pip was not taught this

@@ -44,6 +44,10 @@
       "aha": "ohh so the slices have to match first",
       "concrete": [
         "what if i try to add a half pizza and a third pizza, how many slices is that?"
+      ],
+      "explain_level": "why",
+      "connections": [
+        "so it's like trying to add apples and oranges?"
       ]
     },
     {
@@ -56,7 +60,7 @@
       ],
       "probe_ladder": [
         "then how do i fix the pieces so i can add them?",
-        "why sixths, not tenths?",
+        "would tenths work too, or only sixths?",
         "can 6 slices make exactly a half? exactly a third?",
         "then can i use fifths, because 2 + 3 = 5? that's what my rule says."
       ],
@@ -73,6 +77,10 @@
       "aha": "ok so you cut both into the same size slices",
       "concrete": [
         "what if i cut both pizzas into 6 slices, how many slices is each fraction?"
+      ],
+      "explain_level": "use",
+      "connections": [
+        "so it's like cutting both pizzas into the same number of slices first?"
       ]
     },
     {
@@ -100,6 +108,10 @@
       "aha": "so the bottom just says what size the slices are",
       "concrete": [
         "what if i have 3 sixth-slices and 2 more, how many sixth-slices is that?"
+      ],
+      "explain_level": "why",
+      "connections": [
+        "so the bottom is like the name of the slice, like sixths?"
       ]
     }
   ],

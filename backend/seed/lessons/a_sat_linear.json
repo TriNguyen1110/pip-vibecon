@@ -48,6 +48,10 @@
       ],
       "concrete": [
         "picture a seesaw with 2 boxes and 6 marbles on one side and 20 on the other. what if i take the 6 off just one side?"
+      ],
+      "explain_level": "why",
+      "connections": [
+        "so it's like a seesaw, take a kid off one side and it tips?"
       ]
     },
     {
@@ -81,6 +85,10 @@
       ],
       "concrete": [
         "what if i want x alone in 3x = 15, what would i do to the 3?"
+      ],
+      "explain_level": "why",
+      "connections": [
+        "so it's like taking your shoes off in the opposite order you put them on?"
       ]
     },
     {
@@ -110,6 +118,10 @@
       ],
       "concrete": [
         "what if i put x = 10 into 2x + 6 = 20, what do i get on the left?"
+      ],
+      "explain_level": "use",
+      "connections": [
+        "so it's like checking your change before you leave the store?"
       ]
     }
   ],
