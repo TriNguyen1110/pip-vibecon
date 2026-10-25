@@ -434,6 +434,10 @@ def judge(text: str, a: dict, les: dict | None, session: dict) -> dict:
                 break  # the lesson says how its ideas are phrased: no loose stem guessing
             if words >= 3 and (sc >= 2.0 or (cid == top and sc >= 1.0 and sc > second)):
                 f[cid]["idea"] = True
+        wp = (les or {}).get("wrong_patterns") or []  # lesson-authored wordings of the wrong rule
+        if wp and not wrong_cid and not re.search(r"\b(not|never|isn'?t|doesn'?t|wrong)\b", t) \
+                and any(re.search(x, t2) for x in wp):
+            wrong_cid = (les or {}).get("misconception_concept") or best_concept(a, les, text, p["target"]) or ids[0]
         mis = stems(a.get("misconception", ""))
         neg = re.search(r"\b(not|never|don.?t|can.?t|isn.?t|no|wrong|shouldn.?t)\b", t)
         fixes = re.search(r"\bhalf\b|\u00bd|\u00f7|divid|over 2|opposite|undo|cancel|instead|actually|oh wait|switch", t)

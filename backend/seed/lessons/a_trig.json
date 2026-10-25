@@ -264,5 +264,9 @@
       "id": "fixed_it_star",
       "name": "Fixed-it star"
     }
+  ],
+  "wrong_patterns": [
+    "(bigger|larger|big|twice as big).{0,40}(bigger|larger|more) (sine|sin)\\b",
+    "\\b(sine|sin)\\b.{0,20}(gets|goes|is|grows).{0,12}(bigger|larger|bigger too)"
   ]
 }

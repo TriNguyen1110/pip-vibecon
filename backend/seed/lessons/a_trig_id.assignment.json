@@ -1,0 +1,75 @@
+{
+  "id": "a_trig_id",
+  "student_id": "s014",
+  "tutor_id": "t3",
+  "grade": 9,
+  "topic": "Sine and cosine added up",
+  "why_it_matters": "It is the shortcut behind half of trigonometry: know sin, and cos comes free. Calculators, game engines and rotating images all lean on it.",
+  "concepts": [
+    {
+      "id": "k1",
+      "text": "sin = opposite ÷ hypotenuse and cos = adjacent ÷ hypotenuse (the definitions)",
+      "weapon": "Ratio Ruler 📏",
+      "explain_level": "given"
+    },
+    {
+      "id": "k2",
+      "text": "In a right triangle a² + b² = c² (the Pythagorean theorem)",
+      "weapon": "Square Stamp 🟥",
+      "explain_level": "given"
+    },
+    {
+      "id": "k3",
+      "text": "Squaring both ratios and adding them gives (opp² + adj²) ÷ hyp² = hyp² ÷ hyp² = 1, so sin² + cos² = 1",
+      "weapon": "Over-Itself Wand 🪄",
+      "explain_level": "why"
+    }
+  ],
+  "misconception": "sin x + cos x = 1, even though 3/5 + 4/5 comes out 1.4 when I check it",
+  "root_prerequisite": "The Pythagorean theorem and the definitions of sine and cosine",
+  "boss": {
+    "name": "Baroness Plus-Plus-One",
+    "emoji": "🦉🧐",
+    "backstory": "An owl in a monocle who carries a sign reading 'SIN + COS = 1' and insists that 3/5 + 4/5 is one.",
+    "lines": {
+      "taunt": [
+        "Three fifths plus four fifths is one. I have checked. Twice. Badly.",
+        "The squares are decorative. I have removed them.",
+        "Addition suffices. It always has."
+      ],
+      "heal": [
+        "Splendid. Plain addition makes one. I shall have it engraved.",
+        "Quite right. The squares were never invited."
+      ],
+      "hit": [
+        "This is most irregular. The squares appear to have returned.",
+        "I did not authorize a hypotenuse in the denominator."
+      ],
+      "ko": "I object to being squared.",
+      "reformed": "I have restored the squares. Three fifths plus four fifths is, in fact, not one. I would like to join you."
+    }
+  },
+  "cliffhanger": "I heard the same trick makes 1 + tan² turn into something with sec. Is that just dividing again? That can't be right… right?",
+  "quiz": [
+    {
+      "id": "q_k1",
+      "concept_id": "k1",
+      "question": "In a 3-4-5 right triangle, what are sin and cos of the angle opposite the side 3?",
+      "answer": "sin = 3/5 and cos = 4/5."
+    },
+    {
+      "id": "q_k2",
+      "concept_id": "k2",
+      "question": "A right triangle has legs 3 and 4. What is the hypotenuse?",
+      "answer": "5, because 9 + 16 = 25."
+    },
+    {
+      "id": "q_k3",
+      "concept_id": "k3",
+      "question": "What is sin 30° + cos 30°, and what is sin² 30° + cos² 30°? (sin 30° = 1/2, cos 30° ≈ 0.87)",
+      "answer": "sin + cos ≈ 1.37, not 1. Squared: 1/4 + 3/4 = 1."
+    }
+  ],
+  "created_at": "2026-10-25T09:00:00+00:00",
+  "scene": "arcade"
+}

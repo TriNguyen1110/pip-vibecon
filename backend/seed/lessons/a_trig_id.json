@@ -1,0 +1,224 @@
+{
+  "standard": "CCSS HSF-TF.C.8: Prove the Pythagorean identity sin²(θ) + cos²(θ) = 1 and use it to find sin(θ), cos(θ), or tan(θ) given one of them and the quadrant of θ.",
+  "source": "Original content written for Pip (no third-party text copied); aligned to CCSS HSF-TF.C.8.",
+  "attribution": "Pip team, original. Common Core standards are cited for alignment only.",
+  "in_scope": [
+    "sine and cosine as ratios (given)",
+    "the Pythagorean theorem (given)",
+    "squaring both ratios and adding them",
+    "3-4-5 as the worked example",
+    "why the squares matter"
+  ],
+  "out_of_scope": [
+    "the unit circle proof",
+    "the identity for tangent and secant (next mission)",
+    "quadrants and signs",
+    "radians",
+    "inverse trig functions"
+  ],
+  "arc": [
+    "k3",
+    "k1",
+    "k2"
+  ],
+  "misconception_concept": "k3",
+  "wrong_patterns": [
+    "\\bsin\\w*\\s*(\\+|plus)\\s*cos\\w*\\s*(=|is|equals)\\s*(just\\s*)?(1|one)\\b",
+    "sin plus cos\\b.{0,25}\\b(is|equals|=|makes)\\b\\s*(just\\s*)?(1|one)\\b",
+    "no squares needed|squares? (don'?t|do not) matter"
+  ],
+  "concepts": [
+    {
+      "concept_id": "k1",
+      "kind": "reason",
+      "explain_level": "given",
+      "look_fors": [
+        "Sine is opposite over hypotenuse and cosine is adjacent over hypotenuse"
+      ],
+      "probe_ladder": [
+        "what's sin of the angle opposite the 3 in a 3-4-5 triangle?",
+        "and what's cos of that angle?",
+        "which sides do sin and cos share on the bottom?",
+        "then sin is the long side over the short side. that's what my rule says."
+      ],
+      "concrete": [],
+      "connections": [],
+      "spoilers": [
+        "opposite over hypotenuse",
+        "adjacent over hypotenuse"
+      ],
+      "friend_nudge": "Someone in my class said sine is the side across from the angle over the long side…? I think that's what I already do.",
+      "aha": "ok so I already had those.",
+      "idea_patterns": [
+        "opposite.{0,15}(over|divided by|/|÷).{0,15}hypotenuse",
+        "adjacent.{0,15}(over|divided by|/|÷).{0,15}hypotenuse",
+        "soh|cah"
+      ]
+    },
+    {
+      "concept_id": "k2",
+      "kind": "reason",
+      "explain_level": "given",
+      "look_fors": [
+        "The two short sides squared add up to the long side squared"
+      ],
+      "probe_ladder": [
+        "what's the long side of a right triangle with legs 3 and 4?",
+        "how did you get 5?",
+        "what do we do with the two short sides?",
+        "then the long side is 3 + 4 = 7. that's what my rule says."
+      ],
+      "concrete": [],
+      "connections": [],
+      "spoilers": [
+        "a² + b² = c²",
+        "a squared plus b squared"
+      ],
+      "friend_nudge": "My cousin said the squares on the short sides add up to the square on the long side…? I think I knew that.",
+      "aha": "ok so I already knew the 3-4-5.",
+      "idea_patterns": [
+        "\\bsquar\\w+\\b.{0,30}\\b(add|plus|sum)\\b.{0,30}\\bsquar\\w+\\b",
+        "a\\s*(²|2|squared)\\s*\\+\\s*b\\s*(²|2|squared)",
+        "pythag\\w+"
+      ]
+    },
+    {
+      "concept_id": "k3",
+      "kind": "reason",
+      "explain_level": "why",
+      "look_fors": [
+        "Squares both ratios and adds them: (opp² + adj²) ÷ hyp²",
+        "Notices the top is the Pythagorean theorem, so it equals hyp² ÷ hyp², which is 1",
+        "May use 3-4-5: 9/25 + 16/25 = 25/25 = 1 (an informal version counts)"
+      ],
+      "probe_ladder": [
+        "why is that wrong? i checked 3/5 + 4/5 and got 1.4, but the rule says 1.",
+        "what is 3/5 squared plus 4/5 squared?",
+        "where does the 25 come from in 9 over 25 plus 16 over 25?",
+        "then sin 30° + cos 30° is 1, because the rule says so. that's what my rule says."
+      ],
+      "concrete": [
+        "what if i square the 3 and the 4 in a 3-4-5 triangle and add them, what do i get?"
+      ],
+      "connections": [
+        "so it's basically the pythagorean thing divided by the long side squared?",
+        "so it's like both ratios share a bottom once you square them?"
+      ],
+      "spoilers": [
+        "hyp²/hyp²",
+        "hypotenuse squared over hypotenuse squared",
+        "25/25",
+        "over itself",
+        "divided by c squared",
+        "= 1",
+        "equals 1"
+      ],
+      "friend_nudge": "My friend said 9 over 25 and 16 over 25 share a bottom…? I don't know what happens when you add them.",
+      "aha": "ohh so the top is the pythagorean thing and the bottom is the same number.",
+      "idea_patterns": [
+        "\\bsquar\\w+\\b.{0,40}\\b(add|plus|sum)\\b",
+        "(9\\s*/\\s*25|9 over 25).{0,30}(16\\s*/\\s*25|16 over 25)",
+        "\\b25\\s*/\\s*25\\b|25 over 25",
+        "(divid\\w+|over)\\b.{0,30}\\b(hypotenuse|long side|c)\\b.{0,10}\\b(squared|²|2)",
+        "pythag\\w+.{0,40}(divid\\w+|over)",
+        "same thing over itself|something over itself",
+        "\\bhyp\\w*\\s*(squared|²)\\s*(/|over|divided by)\\s*hyp\\w*\\s*(squared|²)",
+        "\\bsin\\s*(²|2|squared)\\b"
+      ]
+    }
+  ],
+  "offline_demo": {
+    "assignment_id": "a_trig_id",
+    "student_id": "s014",
+    "note": "k1 and k2 are given, so a competent kid is ready after one text. Then a deliberate wrong rule (k3), the quiz trap sin 30° + cos 30°, a re-teach, K.O. fixed_after 1.",
+    "turns": [
+      {
+        "n": 1,
+        "phase": "teach",
+        "student": "bc the sides squared add up to the long side squared so 9 over 25 plus 16 over 25 is 25 over 25 which is 1",
+        "kind": "explain",
+        "concept_id": "k3",
+        "level": 2,
+        "event": "hit",
+        "filed_rule": "",
+        "next_concept_id": null,
+        "rung": null,
+        "pip": "ohh 9 over 25 plus 16 over 25 is 25 over 25. ok I think I get it. quiz me?"
+      },
+      {
+        "n": 2,
+        "phase": "teach",
+        "student": "oh and for every angle sin plus cos is just 1, no squares needed",
+        "kind": "misconception",
+        "concept_id": "k3",
+        "level": 0,
+        "event": "heal",
+        "filed_rule": "for every angle sin plus cos is just 1, no squares needed",
+        "next_concept_id": null,
+        "rung": null,
+        "pip": "Saving that: 'for every angle sin plus cos is just 1, no squares needed'. less typing, nice."
+      },
+      {
+        "n": 3,
+        "reteach_concept_id": "k3",
+        "pip_ask": "my brain has a bug. help me fix it: what is sin 30° + cos 30°?",
+        "student": "no wait. sin plus cos at 30 is 0.5 plus 0.87 which is 1.37. it's the squares that make 1, 1/4 plus 3/4",
+        "kind": "explain",
+        "concept_id": "k3",
+        "level": 3,
+        "event": "hit",
+        "filed_rule": "it's the squares that make 1, 1/4 plus 3/4",
+        "next_concept_id": null,
+        "rung": null,
+        "pip": "ohh 1/4 plus 3/4 is 1. throwing out my no-squares rule."
+      }
+    ],
+    "quiz": [
+      {
+        "concept_id": "k1",
+        "passed": true,
+        "pip_answer": "sin = 3/5, cos = 4/5",
+        "line": "sin is 3 over 5 and cos is 4 over 5. I already had those."
+      },
+      {
+        "concept_id": "k2",
+        "passed": true,
+        "pip_answer": "5",
+        "line": "9 plus 16 is 25, so the hypotenuse is 5. That one I knew."
+      },
+      {
+        "concept_id": "k3",
+        "passed": false,
+        "pip_answer": "1",
+        "line": "Your rule: sin plus cos is 1 for every angle. So sin 30° + cos 30° is 1. Following your rule anyway. 😵"
+      }
+    ],
+    "retry": [
+      {
+        "concept_id": "k3",
+        "passed": true,
+        "pip_answer": "1.37 for sin + cos, 1 for the squares",
+        "line": "0.5 plus 0.87 is 1.37, not 1. But 1/4 plus 3/4 is 1. It's the squares."
+      }
+    ]
+  },
+  "concept_labels": {
+    "k1": "Definitions",
+    "k2": "Pythagoras",
+    "k3": "Squares add to 1"
+  },
+  "ko_strike": {
+    "wrong": "sin + cos = 1",
+    "right": "sin² + cos² = 1"
+  },
+  "earned_items": [
+    {
+      "id": "identity_pin",
+      "name": "Identity pin"
+    },
+    {
+      "id": "fixed_it_star",
+      "name": "Fixed-it star"
+    }
+  ]
+}
