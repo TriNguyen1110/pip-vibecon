@@ -356,7 +356,7 @@ def classify_pip(reply: str, prior_questions: set[str], student_said: list[str])
         return "asks_example"
     if q and WHY_ASK_RE.search(q):
         return "asks_why"
-    if NUDGE_RE.search(reply) or re.search(r"what if i (cut|fold|flip|draw|put|stick|slice|cover)|^picture |"
+    if NUDGE_RE.search(reply) or re.search(r"what if i (cut|fold|flip|draw|put|stick|slice|cover|take|remove|plug|swap|add)|^picture |"
                                            r"if i (cut|fold|flip|draw|put|slice)|\b(cut|fold|flip|slice|draw|sandwich)\b|"
                                            r"corner to corner|picture (my|the|your)", reply, re.I):
         return "nudge_hint"  # a hint, a friend's story or a concrete case

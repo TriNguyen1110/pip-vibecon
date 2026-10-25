@@ -116,7 +116,7 @@ def rung_kind(text: str) -> str:
     t = norm(text)
     if re.search(r"why is that wrong|why is my|why am i wrong", t):
         return "idea"  # the opener: asks what is wrong with Pip's own rule
-    if re.search(r"what if i (cut|fold|flip|draw|put|stick|slice|split|tear|cover|try to|read|say|want|have)|"
+    if re.search(r"what if i (cut|fold|flip|draw|put|stick|slice|split|tear|cover|try to|read|say|want|have|take|remove|plug|swap|add)|"
                  r"^picture |^imagine ", t):
         return "concrete"
     if re.search(r"i.?ll guess|i.?d guess|i bet|my guess|my rule says", t):
