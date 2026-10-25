@@ -40,6 +40,7 @@ export default function RenewalNote({ row, onClose, onSent }) {
       setG(guardian)
       setQuote(q)
       setText(
+        row.note_text ??
         TEMPLATE({
           g: firstName(guardian.name),
           kid,

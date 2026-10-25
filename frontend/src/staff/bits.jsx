@@ -84,7 +84,7 @@ export function Thread({ items, mine = ['tutor', 'center'], names = {}, onSend, 
           const right = mine.includes(m.from)
           return (
             <li key={m.id} className={`msg${right ? ' msg--me' : ''}`}>
-              <span className="msg__who">{names[m.author_id] ?? names[m.from] ?? m.from}</span>
+              <span className="msg__who">{m.author?.name ?? names[m.author_id] ?? names[m.from] ?? m.from}</span>
               <p className="msg__text">{m.text}</p>
               <span className="msg__meta">
                 <time dateTime={m.ts}>{fmtWhen(m.ts)}</time>

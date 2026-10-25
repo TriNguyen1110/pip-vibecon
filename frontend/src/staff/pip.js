@@ -2,7 +2,7 @@
 export const pipOf = (x) => x?.pip ?? x?.student?.pip ?? null
 
 export function pip2dProps(pip) {
-  const v = Number(pip?.brain_version) || 1
+  const v = Number(pip?.brain_version ?? pip?.stage) || 1
   return {
     creature: pip?.creature ?? 'capybara',
     vibe: pip?.vibe ?? 'plain',

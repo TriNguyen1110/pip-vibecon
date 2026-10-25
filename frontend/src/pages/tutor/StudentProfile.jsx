@@ -4,7 +4,7 @@ import { useLoad } from '../../hooks'
 import { ErrorState, Empty } from '../../components/ui.jsx'
 import { LEVEL_WORDS } from '../../lib'
 import { Segmented } from '../../staff/StudioShell.jsx'
-import { isMissing, staffApi } from '../../staff/api'
+import { staffApi } from '../../staff/api'
 import { FlagPills, PipHead } from '../../staff/bits.jsx'
 import { pipOf } from '../../staff/pip'
 import { LEVEL_SHORT, ago, daysSince, fmtDate, fmtWhen, hoursLeft, sessionFromLink, subjectName, subjectShort } from '../../staff/format'
@@ -20,19 +20,9 @@ const TABS = [
 
 export default function StudentProfile({ id, tutorId, tutors, pane }) {
   const p = useLoad(() => staffApi.profile(id), [id])
-  // v3.15 drafts (B18). Before B18 the route is missing and the queue builds drafts from the v3.13 endpoints.
-  const dr = useLoad(
-    () =>
-      staffApi
-        .drafts(id)
-        .then((r) => ({ items: r.items ?? r.drafts ?? [], legacy: false }))
-        .catch((e) => {
-          if (isMissing(e)) return { items: [], legacy: true }
-          throw e
-        }),
-    [id],
-  )
-  const drafts = dr.data ?? { items: [], legacy: true }
+  // v3.15 drafts (B18): pending parent updates waiting for the tutor.
+  const dr = useLoad(() => staffApi.drafts(id).then((r) => ({ items: r.items ?? [] })), [id])
+  const drafts = dr.data ?? { items: [] }
   const [tab, setTab] = useState('progress')
 
   if (p.loading && !p.data) {

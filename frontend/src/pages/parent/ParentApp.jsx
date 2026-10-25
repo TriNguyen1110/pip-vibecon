@@ -213,7 +213,7 @@ function useMoreBelow(ref, deps) {
 // "Tue" within the last week, else "Oct 12". Labels when the tutor sent something, never activity.
 function sentLabel(ts) {
   if (!ts) return ''
-  const t = new Date(ts)
+  const t = new Date(String(ts).length === 10 ? `${ts}T12:00:00` : ts)
   if (Number.isNaN(t.getTime())) return ''
   const days = (Date.now() - t.getTime()) / 86400000
   return days < 6.5 ? t.toLocaleDateString('en-US', { weekday: 'short' }) : t.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
@@ -221,19 +221,14 @@ function sentLabel(ts) {
 
 const tutorNames = (kid) => Object.fromEntries((kid.subjects ?? []).map((s) => [s.tutor?.id, s.tutor?.name]).filter(([k]) => k))
 
-// Reports = what the tutor sent. v3.15 payloads carry kid.reports with `from`; before B18 they are the
-// update messages in the family thread (kind "update", or sent by the center on the tutor's behalf).
+// Reports = what the tutor sent (B18): the kid detail carries every report; home carries the latest.
 function useReports(gid, kid) {
-  const has = Array.isArray(kid.reports)
-  const t = useLoad(() => (has ? Promise.resolve(null) : staffApi.thread(kid.student.id, gid)), [gid, kid.student.id, has])
-  if (has) return { reports: kid.reports, loading: false }
-  const names = tutorNames(kid)
-  const reports = (t.data?.items ?? [])
-    .filter((m) => m.from !== 'guardian' && (m.kind === 'update' || m.from === 'center'))
-    .map((m) => ({ id: m.id, ts: m.ts, text: m.text, subject: null, quote: null, fixed: null, from: { tutor_id: m.author_id, name: names[m.author_id] ?? 'Bright Path' } }))
-    .sort((a, b) => (a.ts < b.ts ? 1 : -1))
-  return { reports, loading: t.loading && !t.data }
+  const d = useLoad(() => staffApi.parentKid(gid, kid.student.id), [gid, kid.student.id])
+  const latest = kid.this_week?.latest_report
+  const reports = (d.data?.reports ?? kid.reports ?? (latest ? [latest] : [])).slice().sort((a, b) => (stamp(a) < stamp(b) ? 1 : -1))
+  return { reports, loading: d.loading && !d.data && !latest }
 }
+const stamp = (r) => r.ts ?? r.date ?? ''
 
 function FromTutor({ gid, kid }) {
   const { reports, loading } = useReports(gid, kid)
@@ -261,6 +256,18 @@ function FromTutor({ gid, kid }) {
         </section>
       )}
 
+      {(kid.goal_progress ?? []).map((gp) => (
+        <section key={gp.subject} className="p-card p-goal" aria-label={`${gp.subject_name ?? subjectName(gp.subject)} goal`}>
+          <p className="p-eyebrow">{gp.goal ?? `${gp.subject_name ?? subjectName(gp.subject)} goal`}</p>
+          <p className="p-goal__nums">
+            <b>{gp.latest}</b> <span>latest practice score{gp.start != null ? `, up from ${gp.start}` : ''} · goal {gp.target}</span>
+          </p>
+          <span className="p-goal__bar" aria-hidden>
+            <i style={{ width: `${Math.max(4, Math.min(100, (gp.latest / gp.target) * 100))}%` }} />
+          </span>
+        </section>
+      ))}
+
       {sessions > 0 && (
         <p className="p-summary p-summary--quiet">
           {name} practiced with Pip {sessions === 1 ? 'once' : `${sessions} times`} this week
@@ -271,7 +278,7 @@ function FromTutor({ gid, kid }) {
       {note && (
         <section className="p-card" aria-label="Note from the tutor">
           <p className="p-eyebrow">
-            From {note.from?.name ?? note.tutor_name ?? tutorNames(kid)[note.tutor_id] ?? 'the tutor'} · {sentLabel(note.ts)}
+            From {note.from?.name ?? note.tutor_name ?? tutorNames(kid)[note.tutor_id] ?? 'the tutor'} · {sentLabel(note.date ?? note.ts)}
           </p>
           <p className="p-body">{note.text}</p>
         </section>
@@ -303,7 +310,7 @@ function ReportCard({ report, kid, hero }) {
           </div>
         )}
         <p className="p-eyebrow">
-          From {report.from?.name ?? 'Bright Path'} · {sentLabel(report.ts)}
+          From {report.from?.name ?? 'Bright Path'} · {sentLabel(stamp(report))}
           {report.subject ? <span className="p-cap"> · {subjectName(report.subject)}</span> : null}
         </p>
       </div>
@@ -421,7 +428,7 @@ function Messages({ gid, kid }) {
             const me = m.from === 'guardian'
             return (
               <li key={m.id} className={`p-msg${me ? ' p-msg--me' : ''}`}>
-                <span className="p-msg__who">{me ? 'You' : names[m.author_id] ?? names[m.from] ?? 'Bright Path'}</span>
+                <span className="p-msg__who">{me ? 'You' : m.author?.name ?? names[m.author_id] ?? names[m.from] ?? 'Bright Path'}</span>
                 <p className="p-msg__text">{m.text}</p>
                 <span className="p-msg__meta">
                   {fmtWhen(m.ts)}
