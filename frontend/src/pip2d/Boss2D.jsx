@@ -1,4 +1,8 @@
-import { useId } from 'react'
+import { createContext, useContext, useId } from 'react'
+import { mix } from './shapes'
+
+// finish: 'vinyl' (matte designer-toy, default) or 'gloss' (the original candy-plastic)
+const BossFinish = createContext('vinyl')
 import './pip2d.css'
 
 // Glossy candy-plastic villains (contrast with the soft, fuzzy Pips). viewBox 220 x 240.
@@ -29,7 +33,24 @@ export function bossIdFor(idOrName = '') {
 }
 
 // Hard cel-shaded glossy shape.
-function V({ d, fill, shade, uid, w = 4.4, sx = -10, sy = -8 }) {
+function V({ d, fill: fill0, shade: shade0, uid, w: w0 = 4.4, sx = -10, sy = -8 }) {
+  const vinyl = useContext(BossFinish) === 'vinyl'
+  const fill = vinyl && fill0?.startsWith('#') ? mix(fill0, '#8C8C8C', 0.14) : fill0
+  const shade = vinyl && shade0 ? mix(shade0, '#8C8C8C', 0.14) : shade0
+  const w = vinyl ? w0 * 0.72 : w0
+  if (vinyl && shade) {
+    return (
+      <g>
+        <linearGradient id={`${uid}vg`} x1="0.15" y1="0" x2="0.85" y2="1">
+          <stop offset="0" stopColor={mix(fill, '#ffffff', 0.1)} />
+          <stop offset="0.5" stopColor={fill} />
+          <stop offset="1" stopColor={shade} />
+        </linearGradient>
+        <path d={d} fill={`url(#${uid}vg)`} />
+        <path d={d} fill="none" stroke={INK} strokeWidth={w} strokeLinejoin="round" strokeLinecap="round" />
+      </g>
+    )
+  }
   return (
     <g>
       {shade ? (
@@ -52,6 +73,7 @@ function V({ d, fill, shade, uid, w = 4.4, sx = -10, sy = -8 }) {
 
 // Crisp glossy highlight: a bright streak + a dot.
 function Gloss({ x, y, rx = 14, ry = 6, rot = -30 }) {
+  if (useContext(BossFinish) === 'vinyl') return <ellipse cx={x} cy={y} rx={rx * 0.8} ry={ry * 0.6} transform={`rotate(${rot} ${x} ${y})`} fill="#fff" opacity="0.22" />
   return (
     <g fill="#fff">
       <ellipse cx={x} cy={y} rx={rx} ry={ry} transform={`rotate(${rot} ${x} ${y})`} opacity="0.9" />
@@ -446,7 +468,7 @@ function Peacock({ state, id, variant }) {
 
 const ART = { walrus: Walrus, penguin: Penguin, hamster: Hamster, triangle: Peacock }
 
-export function Boss2D({ boss = 'walrus', state, hp, size = 200, className = '', title, variant }) {
+export function Boss2D({ boss = 'walrus', state, hp, size = 200, className = '', title, variant, finish = 'vinyl' }) {
   const id = useId().replace(/:/g, '')
   const st = state ?? (hp == null ? 'smug' : hp <= 0 ? 'ko' : hp <= 50 ? 'cracked' : 'smug')
   const key = bossIdFor(boss)
@@ -458,9 +480,11 @@ export function Boss2D({ boss = 'walrus', state, hp, size = 200, className = '',
           <feGaussianBlur stdDeviation="2.2" />
         </filter>
       </defs>
-      <g transform={st === 'reformed' ? 'translate(110 236) scale(0.82) translate(-110 -236)' : undefined}>
-        <Art state={st} id={id} variant={variant} />
-      </g>
+      <BossFinish.Provider value={finish}>
+        <g transform={st === 'reformed' ? 'translate(110 236) scale(0.82) translate(-110 -236)' : undefined}>
+          <Art state={st} id={id} variant={variant} />
+        </g>
+      </BossFinish.Provider>
     </svg>
   )
 }

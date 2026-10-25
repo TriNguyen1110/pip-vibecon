@@ -1,4 +1,9 @@
+import { createContext, useContext } from 'react'
 import { furPath, pathToPoints } from './fuzz'
+
+// finish: 'plush' (soft fuzzy) or 'vinyl' (designer art-toy: tight fur edge, matte key light, thinner line)
+export const FinishCtx = createContext('plush')
+export const useVinyl = () => useContext(FinishCtx) === 'vinyl'
 
 // Shared soft, hand-inked drawing helpers for Pip2D creatures.
 
@@ -13,16 +18,27 @@ export function mix(a, b, t) {
 // A plush shape: soft radial shading (light upper-left -> shade at the rim) and a lighter hand-made double ink line.
 // fur = { key, seed, amp, spacing, zone } rebuilds the outline from small irregular tufts (mammals).
 export function Shape({ d, pts, fur, fill, shade, ink, uid, shadow = true, w = 3.2 }) {
-  const path = fur ? furPath(fur.key, pts ?? pathToPoints(d), fur) : d
+  const vinyl = useVinyl()
+  const f = fur && vinyl ? { ...fur, key: `${fur.key}-v`, amp: (fur.amp ?? 3) * 0.28, tuftChance: 0 } : fur
+  const path = f ? furPath(f.key, pts ?? pathToPoints(d), f) : d
   return (
     <g>
       {shadow && shade ? (
         <>
-          <radialGradient id={`${uid}g`} cx="0.36" cy="0.3" r="0.82">
-            <stop offset="0" stopColor={mix(fill, '#ffffff', 0.16)} />
-            <stop offset="0.55" stopColor={fill} />
-            <stop offset="1" stopColor={shade} />
-          </radialGradient>
+          {vinyl ? (
+            // matte vinyl: one soft key light from the upper left, falling off to the shade
+            <linearGradient id={`${uid}g`} x1="0.15" y1="0" x2="0.85" y2="1">
+              <stop offset="0" stopColor={mix(fill, '#ffffff', 0.1)} />
+              <stop offset="0.5" stopColor={fill} />
+              <stop offset="1" stopColor={shade} />
+            </linearGradient>
+          ) : (
+            <radialGradient id={`${uid}g`} cx="0.36" cy="0.3" r="0.82">
+              <stop offset="0" stopColor={mix(fill, '#ffffff', 0.16)} />
+              <stop offset="0.55" stopColor={fill} />
+              <stop offset="1" stopColor={shade} />
+            </radialGradient>
+          )}
           <path d={path} fill={`url(#${uid}g)`} />
         </>
       ) : (
@@ -34,7 +50,8 @@ export function Shape({ d, pts, fur, fill, shade, ink, uid, shadow = true, w = 3
 }
 
 // Two slightly offset strokes so the line weight wobbles (~3-3.8px): hand-made, not vector-perfect.
-export function Outline({ d, ink, w = 3.2 }) {
+export function Outline({ d, ink, w: w0 = 3.2 }) {
+  const w = useVinyl() ? w0 * 0.72 : w0
   return (
     <>
       <path d={d} fill="none" stroke={ink} strokeWidth={w} strokeLinejoin="round" strokeLinecap="round" />
@@ -45,6 +62,7 @@ export function Outline({ d, ink, w = 3.2 }) {
 
 // Soft plush highlight (blurred white blob), uses the SVG's shared `${id}soft` filter.
 export function Plush({ id, cx, cy, rx, ry, rot = -30, o = 0.5 }) {
+  if (useVinyl()) return <ellipse cx={cx} cy={cy} rx={rx * 0.8} ry={ry * 0.5} transform={`rotate(${rot} ${cx} ${cy})`} fill="#fff" opacity={0.18} filter={`url(#${id}soft)`} />
   return <ellipse cx={cx} cy={cy} rx={rx} ry={ry} transform={`rotate(${rot} ${cx} ${cy})`} fill="#fff" opacity={o} filter={`url(#${id}soft)`} />
 }
 
@@ -55,6 +73,7 @@ export function Sliver({ d, w = 5.5 }) {
 
 // A small group of three short curved hair strokes (fur texture).
 export function Hair({ x, y, rot = 0, s = 1, color }) {
+  if (useVinyl()) return null
   return (
     <g transform={`translate(${x} ${y}) rotate(${rot}) scale(${s})`} fill="none" stroke={color} strokeWidth="2.2" strokeLinecap="round">
       <path d="M-5,4 Q-6,-1 -3,-6" />
@@ -65,7 +84,9 @@ export function Hair({ x, y, rot = 0, s = 1, color }) {
 }
 
 // A thick inked stroke-shape (tails, gill fronds). fluffy = scalloped fur edge around it.
-export function InkStroke({ d, color, ink, w = 10, fluffy = false }) {
+export function InkStroke({ d, color, ink, w = 10, fluffy: f = false }) {
+  const vinyl = useVinyl()
+  const fluffy = f && !vinyl
   if (fluffy) {
     return (
       <>

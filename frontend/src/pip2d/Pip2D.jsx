@@ -1,7 +1,7 @@
 import { useEffect, useId, useRef, useState } from 'react'
 import { BLUSH, BOSS_TINT, EYE, MOOD_ALIASES, MOUTH, TONGUE } from './tokens'
 import { CREATURE_DEFS } from './creatures'
-import { mix, Shape } from './shapes'
+import { mix, Shape, FinishCtx } from './shapes'
 import { ellipsePoints } from './fuzz'
 import { HalfPinArt, FixedStarArt } from './earned'
 import { ClubDefs, ClubAccessory, CLUB_ACCESSORIES } from './club'
@@ -66,7 +66,7 @@ const MOOD_MOUTH = {
 
 
 // Big black oval eye, two highlights, deadpan lid cut as a flat ink line.
-function Eye({ e, lid = 0.35, look = [0, 0], scale = 1, ink, tint, sparkle, ring, uid }) {
+function Eye({ e, lid = 0.35, look = [0, 0], scale = 1, ink, tint, sparkle, ring, uid, matte }) {
   const cx = e.cx + look[0]
   const cy = e.cy + look[1]
   const rx = e.rx * scale
@@ -93,8 +93,8 @@ function Eye({ e, lid = 0.35, look = [0, 0], scale = 1, ink, tint, sparkle, ring
         <g clipPath={`url(#${uid})`}>
           <ellipse cx={cx} cy={cy} rx={rx} ry={ry} fill={tint ? '#2A0E12' : EYE} />
           {tint && <ellipse cx={cx} cy={cy + ry * 0.25} rx={rx * 0.62} ry={ry * 0.45} fill={tint} />}
-          <circle cx={cx - rx * 0.32} cy={hy} r={rx * 0.34} fill="#fff" />
-          <Glint x={cx + rx * 0.34} y={cy + ry * 0.42} r={rx * (sparkle ? 0.34 : 0.28)} />
+          <circle cx={cx - rx * 0.32} cy={hy} r={rx * (matte ? 0.2 : 0.34)} fill="#fff" opacity={matte ? 0.85 : 1} />
+          {!matte && <Glint x={cx + rx * 0.34} y={cy + ry * 0.42} r={rx * (sparkle ? 0.34 : 0.28)} />}
         </g>
       </g>
       {lid > 0.02 && <line x1={cx - chord} y1={ly} x2={cx + chord} y2={ly} stroke={ink} strokeWidth={Math.max(3, rx * 0.28)} strokeLinecap="round" />}
@@ -485,6 +485,8 @@ export function Pip2D({
   pose = 'idle',
   frame,
   mini = false,
+  finish,
+  colorway,
   className = '',
   title,
 }) {
@@ -493,7 +495,16 @@ export function Pip2D({
   const m = MOOD_ALIASES[mood] ?? mood
   const spec = MOOD_SPEC[m] ?? MOOD_SPEC.deadpan
   const club = lighting === 'club'
-  const base = def.tokens[vibe] ?? def.tokens.cute
+  // finish: designer-vinyl art toy by default for cool/ugly, plush for cute/plain
+  const vinyl = (finish ?? (vibe === 'cool' || vibe === 'ugly' ? 'vinyl' : 'plush')) === 'vinyl'
+  const base0 = def.tokens[vibe] ?? def.tokens.cute
+  const desat = (c) => mix(c, '#8C8C8C', 0.16)
+  const base =
+    colorway === 'gunmetal'
+      ? { ...base0, body: '#3B4049', shade: '#2A2E35', belly: '#5A616C', ink: '#0E1014', dark: '#22262C', inner: '#5A616C', mask: '#1A1D22', gill: '#2E333B', nose: '#5A616C' }
+      : vinyl
+        ? { ...base0, body: desat(base0.body), shade: desat(base0.shade), belly: desat(base0.belly) }
+        : base0
   // club lighting: deeper, darker fur under magenta/cyan rim light
   const t0 = club
     ? { ...base, body: mix(base.body, '#1B1640', 0.3), shade: mix(base.shade, '#120E30', 0.42), belly: mix(base.belly, '#2A2250', 0.25), ink: mix(base.ink, '#0B0820', 0.3) }
@@ -524,9 +535,10 @@ export function Pip2D({
   const lids = (spec.lids ?? [0.35, 0.37]).map((l) => {
     const v = (ugly ? Math.min(0.6, l + 0.15) : l) - (awakened ? 0.1 : grown ? 0.05 : 0)
     if (main) return 0.42 // confident, half-lidded over the shades
+    if (vinyl && !cool) return Math.min(0.6, Math.max(0, v) + 0.1)
     return Math.max(0, cool ? Math.max(v, 0.6) : v)
   })
-  const sizes = (spec.scale ?? [1, 1]).map((k) => (mini ? k * 1.32 : k))
+  const sizes = (spec.scale ?? [1, 1]).map((k) => (mini ? k * 1.32 : vinyl ? k * 0.8 : k))
   const plainEyes = !['arcs', 'spiral', 'dots'].includes(spec.eyes)
   let eyes
   if (spec.eyes === 'arcs') eyes = A.eyes.map((e, i) => <ArcEye key={i} e={e} ink={t.ink} />)
@@ -539,7 +551,7 @@ export function Pip2D({
     })
   else
     eyes = A.eyes.map((e, i) => (
-      <Eye key={i} e={e} lid={lids[i]} look={spec.look} scale={sizes[i]} ink={t.ink} tint={spec.tint} sparkle={cute || grown} ring={e.ring} uid={`${id}e${i}`} />
+      <Eye key={i} e={e} lid={lids[i]} look={spec.look} scale={sizes[i]} ink={t.ink} tint={spec.tint} sparkle={!vinyl && (cute || grown)} matte={vinyl} ring={e.ring} uid={`${id}e${i}`} />
     ))
 
   const mouthShape = viseme ?? talkShape(mouth) ?? (main && (m === 'deadpan' || m === 'notes') ? 'smirk' : MOOD_MOUTH[m])
@@ -630,14 +642,14 @@ export function Pip2D({
   )
   const face = (
     <>
-      {cute && (
+      {cute && !vinyl && (
         <g fill={BLUSH} opacity="0.55">
           {A.blush.map(([x, y], i) => (
             <ellipse key={i} cx={x} cy={y} rx="10.5" ry="6.5" />
           ))}
         </g>
       )}
-      {cute && A.blush.map(([x, y], i) => <circle key={`bg${i}`} cx={x - 4} cy={y - 2} r="1.8" fill="#fff" opacity="0.85" />)}
+      {cute && !vinyl && A.blush.map(([x, y], i) => <circle key={`bg${i}`} cx={x - 4} cy={y - 2} r="1.8" fill="#fff" opacity="0.85" />)}
       {A.nose && <Gel id={id} x={A.nose[0] - 2} y={A.nose[1] - 1.5} r={2.6} />}
       {ugly && plainEyes && (
         <g fill="none" stroke={t.ink} strokeWidth="2.6" strokeLinecap="round" opacity="0.55">
@@ -727,13 +739,37 @@ export function Pip2D({
   const animPose = animate && frame == null && (pose === 'strut' || pose === 'spin')
   const poseT = P && !animPose ? `translate(100 207) translate(${P.x} ${P.y}) rotate(${P.r}) scale(${P.sx} ${P.sy}) translate(-100 -207)` : undefined
   const poseClass = animPose ? `pip2d-${pose}` : undefined
+  // vinyl proportions: same head, longer body/limbs (head ~45% of height instead of ~60%)
+  const stretch = vinyl && !main && !mini
+  const SK = 1.45
+  const dy = (207 - A.neck.y) * (SK - 1)
+  const stretched = (children, key) => (
+    <>
+      <defs>
+        <clipPath id={`${id}vb${key ?? ''}`}>
+          <rect x="-60" y={A.neck.y} width="320" height="120" />
+        </clipPath>
+        <clipPath id={`${id}vh${key ?? ''}`}>
+          <rect x="-60" y="-80" width="320" height={A.neck.y + 80} />
+        </clipPath>
+      </defs>
+      <g transform={`translate(100 207) scale(1 ${SK}) translate(-100 -207)`} clipPath={`url(#${id}vb${key ?? ''})`}>
+        {children}
+      </g>
+      <g transform={`translate(0 ${-dy})`} clipPath={`url(#${id}vh${key ?? ''})`}>
+        {children}
+      </g>
+    </>
+  )
   const wrap = (children, key, extra) => (
     <svg key={key} className={`pip2d ${className}`} width={size} height={size * 1.1} viewBox="0 0 200 220" role={key ? undefined : 'img'} aria-label={key ? undefined : label} aria-hidden={key ? true : undefined} {...extra}>
-      <g transform={`translate(100 207) scale(${main ? MAIN_SCALE : GROWTH[ver - 1] * (mini ? 0.64 : 1)} ${main ? MAIN_SCALE : GROWTH[ver - 1] * (mini ? 0.58 : 1)}) translate(-100 -207)`}>
+      <g transform={`translate(100 207) scale(${(main ? MAIN_SCALE : GROWTH[ver - 1] * (mini ? 0.64 : 1)) * (stretch ? 0.82 : 1)} ${(main ? MAIN_SCALE : GROWTH[ver - 1] * (mini ? 0.58 : 1)) * (stretch ? 0.82 : 1)}) translate(-100 -207)`}>
         <g transform={poseT} className={poseClass}>
           <g transform={grown && evo === 'ugly' ? `translate(100 207) rotate(${awakened ? -5 : -3}) scale(${awakened ? 1.07 : 1.04} ${awakened ? 0.95 : 0.97}) translate(-100 -207)` : undefined}>
           <g className={hop ? 'pip2d-hop' : undefined}>
-            <g className={animate && pose === 'idle' ? 'pip2d-breathe' : undefined}>{children}</g>
+            <g className={animate && pose === 'idle' ? 'pip2d-breathe' : undefined}>
+              <FinishCtx.Provider value={vinyl ? 'vinyl' : 'plush'}>{stretch ? stretched(children, key) : children}</FinishCtx.Provider>
+            </g>
           </g>
           </g>
         </g>

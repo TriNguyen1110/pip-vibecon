@@ -1526,3 +1526,5 @@ Rules
 - Game words (K.O., boss, weapon, brain version) stay inside the student app; staff screens may show them as evidence with a plain label; parent screens translate them.
 - AA contrast everywhere; parent + owner screens target AAA for body text.
 - Reduced motion respected everywhere; staff/parent screens animate only on state change.
+
+> **AGE-1 override (coordinator):** student screens target 11–15 and must not read elementary. Default register is `cool` for every student (incl. grade 5–6); `play` is no longer a default — soft looks only when the kid picks a soft vibe. No rounded display fonts, no default sky/bubbles, one gel/chrome primary action per screen, dry copy.
