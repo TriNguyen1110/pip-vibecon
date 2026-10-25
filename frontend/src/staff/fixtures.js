@@ -1,0 +1,488 @@
+// Synthetic fixtures for CONTRACT v3.13 / v3.13b, served only when the real endpoint is missing
+// (dev) or when the URL has ?mock=1. Same seed facts as the backend: Maya s001 (math with Ms. Rivera
+// Tue 4:30pm, writing with Mr. Chen Thu 5pm), guardians g001 Ana R. (sms, es, every_ko; also her
+// brother s014) and g002 Sam R. (email, en, weekly). Contacts are 555-01xx and @example.com only.
+
+const DAY = 86400000
+const HOUR = 3600000
+const iso = (ms) => new Date(ms).toISOString()
+const ago = (d, h = 0) => iso(Date.now() - d * DAY - h * HOUR)
+const dateIn = (d) => new Date(Date.now() + d * DAY).toISOString().slice(0, 10)
+
+export const SUBJECTS = [
+  { id: 'math', name: 'Math', has_missions: true },
+  { id: 'writing', name: 'Writing', has_missions: true },
+  { id: 'sat_math', name: 'SAT Math', has_missions: true },
+  { id: 'sat_rw', name: 'SAT Reading & Writing', has_missions: true },
+  { id: 'science', name: 'Science', has_missions: false },
+]
+
+const TUTORS = [
+  { id: 't1', name: 'Ms. Rivera' },
+  { id: 't2', name: 'Mr. Chen' },
+  { id: 't3', name: 'Ms. Okafor' },
+  { id: 't4', name: 'Mr. Patel' },
+  { id: 't5', name: 'Ms. Nguyen' },
+  { id: 't6', name: 'Mr. Alvarez' },
+  { id: 't7', name: 'Ms. Kim' },
+  { id: 't8', name: 'Mr. Brooks' },
+]
+const tutorRef = (id) => TUTORS.find((t) => t.id === id) ?? { id, name: id }
+
+const CONCEPTS = {
+  math: [
+    ['k1', 'Two copies of a triangle make a rectangle'],
+    ['k2', 'A rectangle’s area is base × height'],
+    ['k3', 'So a triangle is half of base × height'],
+  ],
+  writing: [
+    ['c1', 'Two full sentences can’t be joined by a comma'],
+    ['c2', 'Fix a run-on with a period, semicolon or “and”'],
+    ['c3', 'Commas still go in lists and after intros'],
+  ],
+  sat_math: [
+    ['l1', 'Do the same thing to both sides'],
+    ['l2', 'Undo steps in reverse order'],
+    ['l3', 'Check by putting x back in'],
+  ],
+  sat_rw: [
+    ['r1', 'Spot the two independent clauses'],
+    ['r2', 'Pick the punctuation that can join them'],
+    ['r3', 'Explain why the other choices fail'],
+  ],
+  science: [],
+}
+const MISSION = { math: 'Area of a triangle', writing: 'Commas and run-ons', sat_math: 'Solving linear equations', sat_rw: 'Commas and run-ons (SAT)' }
+
+// [subject, tutor, slot, startedDaysAgo, [hours_total, hours_used, price_usd, renewsInDays], lastActiveDaysAgo|null, ko_count, levels]
+const SPEC = [
+  ['s001', 'Maya R.', 6, [['math', 't1', 'Tue 4:30pm', 70, [12, 10, 480, 10], 1, 2, [3, 2, 3]], ['writing', 't2', 'Thu 5:00pm', 40, [8, 3, 320, 34], 3, 0, [1, 0, 2]]], ['g001', 'g002'], { creature: 'capybara', vibe: 'cool', brain_version: 2 }],
+  ['s014', 'Theo R.', 9, [['sat_math', 't3', 'Wed 6:00pm', 50, [16, 9, 640, 40], 2, 1, [2, 2, 1]]], ['g001'], { creature: 'raccoon', vibe: 'cool', brain_version: 2 }],
+  ['s005', 'Yara K.', 8, [['sat_rw', 't1', 'Mon 5:00pm', 90, [16, 11, 560, 28], 2, 2, [2, 3, 2]], ['math', 't1', 'Thu 4:00pm', 90, [12, 4, 480, 60], 6, 1, [2, 1, 1]]], ['g105'], { creature: 'cat' }],
+  ['s027', 'Diego H.', 6, [['math', 't1', 'Tue 5:30pm', 120, [12, 7, 480, 35], 4, 1, [2, 2, 1]]], ['g127'], { creature: 'corgi' }],
+  ['s035', 'Yara W.', 8, [['math', 't1', 'Wed 4:30pm', 80, [12, 6, 480, 41], 0, 3, [3, 3, 2]], ['science', 't7', 'Fri 4:00pm', 80, [10, 8, 400, 12], 5, 0, []]], ['g135'], { creature: 'frog' }],
+  ['s036', 'Faye J.', 7, [['math', 't1', 'Mon 4:30pm', 150, [12, 5, 480, 50], 9, 1, [2, 1, 0]]], ['g136'], { creature: 'axolotl' }],
+  ['s039', 'Amara M.', 6, [['math', 't1', 'Thu 4:30pm', 6, [12, 1, 480, 84], 2, 0, [1, 0, 0]]], ['g139'], { creature: 'cat' }],
+  ['s043', 'Luna F.', 9, [['sat_math', 't1', 'Sat 10:00am', 110, [16, 14.5, 640, 6], 17, 1, [2, 1, 1]]], ['g143'], { creature: 'raccoon' }],
+  ['s058', 'Rosa E.', 9, [['sat_math', 't1', 'Sat 11:00am', 200, [16, 9, 640, 45], 3, 2, [3, 2, 2]], ['sat_rw', 't2', 'Wed 5:00pm', 200, [16, 16, 560, -2], 20, 1, [2, 1, 1]]], ['g158', 'g159'], { creature: 'capybara' }],
+  ['s070', 'Mia D.', 6, [['math', 't1', 'Fri 4:30pm', 60, [12, 10, 480, 9], 15, 0, [1, 1, 0]]], ['g170'], { creature: 'blob' }],
+  ['s084', 'Chloe N.', 7, [['math', 't1', 'Tue 6:00pm', 95, [12, 6, 480, 39], 1, 2, [3, 2, 2]], ['writing', 't2', 'Thu 6:00pm', 10, [8, 1, 320, 70], 1, 0, [1, 1, 0]]], ['g184'], { creature: 'corgi' }],
+  ['s087', 'Nico F.', 7, [['math', 't1', 'Wed 5:30pm', 130, [12, 3, 480, 66], 3, 2, [2, 3, 2]]], ['g187'], { creature: 'frog' }],
+  ['s109', 'Dani D.', 8, [['math', 't1', 'Mon 6:00pm', 140, [12, 11, 480, 5], 16, 0, [1, 0, 0]]], ['g209'], { creature: 'axolotl' }],
+  ['s006', 'Aisha R.', 9, [['writing', 't2', 'Mon 4:00pm', 100, [8, 4, 320, 48], 2, 1, [2, 2, 1]]], ['g106'], { creature: 'cat' }],
+  ['s013', 'Diego C.', 6, [['writing', 't2', 'Tue 4:00pm', 70, [8, 7, 320, 8], 4, 0, [1, 1, 0]], ['math', 't6', 'Thu 4:00pm', 70, [12, 5, 480, 50], 4, 1, [2, 2, 1]]], ['g113'], { creature: 'corgi' }],
+  ['s029', 'Xavi C.', 5, [['writing', 't2', 'Wed 4:00pm', 30, [8, 2, 320, 60], 1, 1, [2, 1, 1]]], ['g129'], { creature: 'frog' }],
+  ['s034', 'Owen L.', 8, [['writing', 't2', 'Fri 5:00pm', 160, [8, 5, 320, 40], 18, 0, [1, 0, 1]]], ['g134'], { creature: 'raccoon' }],
+  ['s080', 'Hana D.', 7, [['sat_rw', 't2', 'Sat 1:00pm', 12, [16, 2, 560, 80], 2, 0, [1, 1, 0]]], ['g180'], { creature: 'capybara' }],
+]
+
+const AT_RISK = {
+  s109: ['Stuck after Pip’s full set of questions on “One triangle”. The friend hint didn’t unlock it.', 'Hasn’t come back on their own in 14 days.'],
+  s043: ['Hasn’t come back on their own in 14 days.'],
+  s070: ['No parent update since the last finished session.'],
+  s034: ['Hasn’t come back on their own in 14 days.'],
+  s058: ['SAT R&W package ran out 2 days ago.'],
+}
+const LAST_UPDATE_DAYS = { s001: 1, s014: 3, s005: 4, s027: 6, s035: 2, s036: 16, s039: null, s043: 20, s058: 9, s070: 25, s084: 2, s087: 5, s109: 18, s006: 3, s013: 15, s029: 4, s034: 22, s080: null }
+
+// Guardians: g001 + g002 are hand-written; the rest are generated (synthetic).
+const GUARDIANS = [
+  { id: 'g001', name: 'Ana R.', relation: 'parent', phone: '555-0101', email: null, prefers: 'sms', language: 'es', updates: 'every_ko', quiet_hours: '21:00-07:00', student_ids: ['s001', 's014'] },
+  { id: 'g002', name: 'Sam R.', relation: 'parent', phone: null, email: 'sam.r@example.com', prefers: 'email', language: 'en', updates: 'weekly', quiet_hours: null, student_ids: ['s001'] },
+]
+const GEN = [
+  ['g105', 'Hiro K.', 's005', 'parent', 'en', 'sms'], ['g127', 'Lucia H.', 's027', 'parent', 'es', 'sms'],
+  ['g135', 'Mai W.', 's035', 'parent', 'vi', 'sms'], ['g136', 'Pat J.', 's036', 'grandparent', 'en', 'email'],
+  ['g139', 'Ngozi M.', 's039', 'parent', 'en', 'email'], ['g143', 'Wei F.', 's043', 'parent', 'zh', 'sms'],
+  ['g158', 'Carmen E.', 's058', 'parent', 'es', 'sms'], ['g159', 'Jorge E.', 's058', 'parent', 'es', 'email'],
+  ['g170', 'Dana D.', 's070', 'guardian', 'en', 'sms', true], ['g184', 'Linh N.', 's084', 'parent', 'vi', 'email'],
+  ['g187', 'Erin F.', 's087', 'parent', 'en', 'sms'], ['g209', 'Lee D.', 's109', 'parent', 'en', 'email'],
+  ['g106', 'Omar R.', 's006', 'parent', 'en', 'sms'], ['g113', 'Rosa C.', 's013', 'grandparent', 'es', 'sms'],
+  ['g129', 'Tom C.', 's029', 'parent', 'en', 'email'], ['g134', 'Jia L.', 's034', 'parent', 'zh', 'email'],
+  ['g180', 'Kenji D.', 's080', 'parent', 'en', 'sms'],
+]
+GEN.forEach(([id, name, sid, relation, language, prefers, unreachable], i) => {
+  const n = String(10 + i).padStart(2, '0')
+  GUARDIANS.push({
+    id, name, relation, language, prefers,
+    phone: unreachable || prefers !== 'sms' ? null : `555-01${n}`,
+    email: unreachable || prefers !== 'email' ? null : `${name.split(' ')[0].toLowerCase()}.${id}@example.com`,
+    updates: i % 4 === 0 ? 'every_ko' : 'weekly',
+    quiet_hours: i % 3 === 0 ? '21:00-07:00' : null,
+    student_ids: [sid],
+  })
+})
+
+function buildDb() {
+  const students = {}
+  const enrollments = []
+  for (const [id, name, grade, ens, guardian_ids, pip] of SPEC) {
+    const list = ens.map(([subject, tutor_id, slot, started, pk], i) => {
+      const [hours_total, hours_used, price_usd, renews] = pk
+      const left = hours_total - hours_used
+      const e = {
+        id: `e_${id}_${i}`, student_id: id, subject, tutor_id, slot, goal: null, started: dateIn(-started),
+        package: { hours_total, hours_used, price_usd, renews_on: dateIn(renews), status: renews < 0 || left <= 0 ? 'expired' : left <= 2 ? 'low' : 'active' },
+      }
+      enrollments.push(e)
+      return e
+    })
+    students[id] = {
+      id, name, grade, tutor_id: list[0].tutor_id, interests: null, since_last_session: null, last_session_id: null,
+      enrollments: list, guardian_ids, pip: { name: id === 's001' ? 'Pip' : 'Pip', creature: pip.creature, vibe: pip.vibe ?? 'plain', brain_version: pip.brain_version ?? 1, form: 'base' },
+      _spec: ens,
+    }
+  }
+  students.s001.goal = 'Feel ready for 7th-grade geometry'
+  return {
+    students,
+    enrollments,
+    guardians: GUARDIANS.map((g) => ({ ...g })),
+    notes: [
+      { id: 'n1', student_id: 's001', tutor_id: 't1', subject: 'math', text: 'Explained the half-rectangle rule in her own words, then fixed the right-triangle mistake herself. Starting Tuesday with parallelograms.', ts: ago(1, 2), share_with_parent: true },
+      { id: 'n2', student_id: 's001', tutor_id: 't1', subject: 'math', text: 'Rushes the last step when she’s tired. Keep her in the 4:30 slot, not 6.', ts: ago(6), share_with_parent: false },
+      { id: 'n3', student_id: 's001', tutor_id: 't2', subject: 'writing', text: 'Reads her sentences out loud to find run-ons. Keep encouraging that.', ts: ago(3, 1), share_with_parent: true },
+      { id: 'n4', student_id: 's014', tutor_id: 't3', subject: 'sat_math', text: 'Theo checks his answers by plugging x back in without being asked.', ts: ago(2), share_with_parent: true },
+      { id: 'n5', student_id: 's109', tutor_id: 't1', subject: 'math', text: 'Missed two sessions. Call home before the package runs out.', ts: ago(4), share_with_parent: false },
+    ],
+    threads: [
+      { id: 'm1', student_id: 's001', guardian_id: 'g001', from: 'tutor', author_id: 't1', text: 'Hola Ana, hoy Maya le enseñó a Pip por qué un triángulo es la mitad de un rectángulo, con sus propias palabras. También corrigió un error ella sola.', ts: ago(1, 3), status: 'test-mode (not delivered)' },
+      { id: 'm2', student_id: 's001', guardian_id: 'g001', from: 'guardian', author_id: 'g001', text: '¡Qué bien! Me lo explicó en la cena. ¿Qué podemos practicar en casa?', ts: ago(0, 20), status: 'received' },
+      { id: 'm3', student_id: 's001', guardian_id: 'g001', from: 'tutor', author_id: 't1', text: 'Pregúntele cuánto mide un triángulo de 10 por 5 y por qué. Si dice 25 y lo explica, ya lo tiene.', ts: ago(0, 19), status: 'test-mode (not delivered)' },
+      { id: 'm4', student_id: 's001', guardian_id: 'g002', from: 'center', author_id: 'center', text: 'Weekly update from Bright Path: Maya taught Pip 3 ideas about triangle area and fixed one mistake on her own. Next session: Tue 4:30pm with Ms. Rivera.', ts: ago(2), status: 'test-mode (not delivered)' },
+      { id: 'm5', student_id: 's014', guardian_id: 'g001', from: 'tutor', author_id: 't3', text: 'Hola Ana, Theo explicó por qué hay que hacer lo mismo en los dos lados de una ecuación. Va muy bien para el SAT.', ts: ago(3), status: 'test-mode (not delivered)' },
+    ],
+    sent: [],
+  }
+}
+
+let db = null
+const DB = () => (db ??= buildDb())
+export function resetMock() {
+  db = null
+}
+
+const guardianOf = (gid) => DB().guardians.find((g) => g.id === gid)
+const isReachable = (g) => !!(g && (g.phone || g.email))
+
+function rowFor(s) {
+  const flags = []
+  if (AT_RISK[s.id]) flags.push('at_risk')
+  const lu = LAST_UPDATE_DAYS[s.id]
+  if (lu == null || lu > 14) flags.push('needs_update')
+  const gs = s.guardian_ids.map(guardianOf).filter(Boolean)
+  if (!gs.some(isReachable)) flags.push('no_contact')
+  if (s.enrollments.some((e) => (Date.now() - new Date(e.started).getTime()) / DAY <= 14)) flags.push('new')
+  const subjects = s._spec.map(([subject, , , , , last, ko]) => ({
+    subject,
+    last_active: last == null ? null : ago(last, 3),
+    ko_count: ko,
+    flag: last != null && last > 14 ? 'quiet' : null,
+  }))
+  return {
+    student: publicStudent(s),
+    subjects,
+    guardians: gs.map((g) => ({ id: g.id, name: g.name, reachable: isReachable(g) })),
+    flags,
+    next_slot: s.enrollments[0]?.slot ?? null,
+  }
+}
+
+function publicStudent(s) {
+  // eslint-disable-next-line no-unused-vars
+  const { _spec, ...rest } = s
+  return rest
+}
+
+function progressFor(s) {
+  return s._spec.map(([subject, tutor_id, slot, , , last, ko, levels]) => {
+    const concepts = CONCEPTS[subject] ?? []
+    let open = null
+    if (s.id === 's001' && subject === 'writing') open = { quote: 'you put a comma wherever you’d take a breath', mission: 'Commas and run-ons' }
+    else if (s.id === 's109') open = { quote: 'the triangle is just base times height, it’s the same box', mission: 'Area of a triangle' }
+    else if (levels.includes(0) && concepts.length) open = { quote: subject === 'math' ? 'you just times the two sides' : subject === 'sat_math' ? 'you move the number and it stays the same sign' : 'a comma is where you pause', mission: MISSION[subject] }
+    return {
+      subject,
+      tutor: tutorRef(tutor_id),
+      missions_done: Math.max(ko, levels.length ? 1 : 0),
+      ko_count: ko,
+      last_session_at: last == null ? null : ago(last, 3),
+      next_slot: slot,
+      mastery: concepts.map(([concept_id, text], i) => ({ concept_id, text, level: levels[i] ?? 0 })),
+      open_misconception: open,
+      at_risk: AT_RISK[s.id] && s._spec[0][0] === subject ? { student_id: s.id, name: s.name, reasons: AT_RISK[s.id] } : null,
+    }
+  })
+}
+
+function timelineFor(s) {
+  const d = DB()
+  if (s.id === 's001') {
+    return [
+      { ts: ago(0, 19), kind: 'message', subject: 'math', text: 'Ms. Rivera replied to Ana R. with a practice question for home.', link: null },
+      { ts: ago(0, 20), kind: 'message', subject: 'math', text: 'Ana R. replied: “¡Qué bien! Me lo explicó en la cena.”', link: null },
+      { ts: ago(1, 2), kind: 'update', subject: 'math', text: 'Parent update sent to Ana R. (Spanish, text) · test mode', link: null },
+      { ts: ago(1, 2), kind: 'note', subject: 'math', text: 'Ms. Rivera shared a note with the family.', link: null },
+      { ts: ago(1, 3), kind: 'ko', subject: 'math', text: 'K.O. on Area of a triangle. Fixed “for a right triangle you just times the two sides” after 1 re-teach.', link: '/tutor/report/sess_maya_saved' },
+      { ts: ago(1, 4), kind: 'session', subject: 'math', text: 'Taught Pip for 14 minutes: “because 2 triangles make a rectangle”.', link: '/tutor/report/sess_maya_saved' },
+      { ts: ago(3, 1), kind: 'session', subject: 'writing', text: 'Commas and run-ons: 12 minutes, stopped at step 2.', link: null },
+      { ts: ago(8), kind: 'ko', subject: 'math', text: 'K.O. on Rectangles warm-up.', link: null },
+    ]
+  }
+  const out = []
+  s._spec.forEach(([subject, , , , , last, ko]) => {
+    if (last != null) out.push({ ts: ago(last, 3), kind: ko ? 'ko' : 'session', subject, text: ko ? `Finished ${MISSION[subject] ?? 'a lesson'} with Pip.` : `Practiced ${MISSION[subject] ?? 'with Pip'}.`, link: null })
+  })
+  d.notes.filter((n) => n.student_id === s.id).forEach((n) => out.push({ ts: n.ts, kind: 'note', subject: n.subject, text: n.share_with_parent ? 'Note shared with the family.' : 'Private note added.', link: null }))
+  const lu = LAST_UPDATE_DAYS[s.id]
+  if (lu != null) out.push({ ts: ago(lu), kind: 'update', subject: s._spec[0][0], text: 'Parent update sent · test mode', link: null })
+  return out.sort((a, b) => (a.ts < b.ts ? 1 : -1))
+}
+
+function quietNow(g) {
+  if (!g?.quiet_hours) return false
+  const [a, b] = g.quiet_hours.split('-').map((x) => Number(x.split(':')[0]))
+  const h = new Date().getHours()
+  return a > b ? h >= a || h < b : h >= a && h < b
+}
+
+function overview() {
+  const d = DB()
+  const all = Object.values(d.students)
+  const renewals = []
+  for (const s of all) {
+    for (const e of s.enrollments) {
+      const days = (new Date(e.package.renews_on).getTime() - Date.now()) / DAY
+      const left = e.package.hours_total - e.package.hours_used
+      if (days <= 14 || left <= 2) {
+        const last = s._spec.find((x) => x[0] === e.subject)?.[5]
+        const engaged = last != null && last <= 7
+        const g = s.guardian_ids.map(guardianOf).find(isReachable) ?? guardianOf(s.guardian_ids[0])
+        renewals.push({
+          student: { id: s.id, name: s.name }, guardian: { id: g.id, name: g.name, language: g.language, prefers: g.prefers },
+          subject: e.subject, hours_left: left, renews_on: e.package.renews_on, price_usd: e.package.price_usd,
+          signal: engaged ? 'engaged' : 'quiet', at_risk: !!AT_RISK[s.id],
+        })
+      }
+    }
+  }
+  renewals.sort((a, b) => (a.renews_on < b.renews_on ? -1 : 1))
+  const revenue = renewals.filter((r) => r.signal === 'quiet' || r.at_risk).reduce((t, r) => t + r.price_usd, 0)
+  const parent_updates_7d = 41
+  const gap_reports_7d = 38
+  return {
+    by_subject: [
+      { subject: 'math', students: 64, tutors: 6, kos_7d: 23 },
+      { subject: 'writing', students: 28, tutors: 3, kos_7d: 9 },
+      { subject: 'sat_math', students: 22, tutors: 3, kos_7d: 6 },
+      { subject: 'sat_rw', students: 18, tutors: 2, kos_7d: 4 },
+      { subject: 'science', students: 12, tutors: 2, kos_7d: 0 },
+    ],
+    by_tutor: [
+      { tutor: tutorRef('t1'), students: 12, subjects: ['math', 'sat_rw', 'sat_math'], needs_update: 5 },
+      { tutor: tutorRef('t2'), students: 13, subjects: ['writing', 'sat_rw'], needs_update: 2 },
+      { tutor: tutorRef('t3'), students: 18, subjects: ['sat_math', 'math'], needs_update: 3 },
+      { tutor: tutorRef('t4'), students: 14, subjects: ['science', 'math'], needs_update: 1 },
+      { tutor: tutorRef('t5'), students: 17, subjects: ['sat_math'], needs_update: 4 },
+      { tutor: tutorRef('t6'), students: 16, subjects: ['math'], needs_update: 0 },
+      { tutor: tutorRef('t7'), students: 15, subjects: ['science', 'math'], needs_update: 2 },
+      { tutor: tutorRef('t8'), students: 15, subjects: ['writing'], needs_update: 1 },
+    ],
+    parents_reachable_pct: 92,
+    updates_sent_7d: parent_updates_7d,
+    renewals_due: renewals,
+    revenue_at_risk_usd: revenue,
+    retention_30d_pct: 94,
+    parent_updates_7d,
+    parent_replies_7d: 17,
+    gap_reports_7d,
+    tutor_hours_saved_week: Math.round(((parent_updates_7d + gap_reports_7d) * 10) / 6) / 10,
+    came_back_on_their_own_7d: 9,
+    label: 'mock data',
+  }
+}
+
+const THIS_WEEK = {
+  s001: { minutes: 34, missions: 2, kos: 1, taught_quote: 'because 2 triangles make a rectangle', fixed: { before: 'for a right triangle you just times the two sides', after: 'a right triangle is still half a rectangle so its 10×5÷2 = 25' } },
+  s014: { minutes: 22, missions: 1, kos: 1, taught_quote: 'whatever you do to one side you do to the other so it stays balanced', fixed: null },
+}
+const WEEKS = {
+  es: {
+    s001: [
+      { week_of: dateIn(-5), summary: 'Maya le enseñó a Pip 3 ideas sobre el área del triángulo y corrigió un error ella sola.', quotes: ['because 2 triangles make a rectangle'], fixed: [{ before: 'for a right triangle you just times the two sides', after: 'a right triangle is still half a rectangle' }] },
+      { week_of: dateIn(-12), summary: 'Maya repasó el área del rectángulo y explicó por qué es base por altura.', quotes: ['a rectangle is rows of squares so you times them'], fixed: [] },
+    ],
+    s014: [{ week_of: dateIn(-5), summary: 'Theo le explicó a Pip cómo resolver ecuaciones paso a paso.', quotes: ['whatever you do to one side you do to the other so it stays balanced'], fixed: [] }],
+  },
+  en: {
+    s001: [
+      { week_of: dateIn(-5), summary: 'Maya taught Pip 3 ideas about triangle area and fixed one mistake on her own.', quotes: ['because 2 triangles make a rectangle'], fixed: [{ before: 'for a right triangle you just times the two sides', after: 'a right triangle is still half a rectangle' }] },
+      { week_of: dateIn(-12), summary: 'Maya reviewed rectangle area and explained why it’s base times height.', quotes: ['a rectangle is rows of squares so you times them'], fixed: [] },
+    ],
+  },
+}
+
+const UPDATE_TEXT = {
+  es: (kid, tutor) => `Hola, soy ${tutor} de Bright Path. Esta semana ${kid} le enseñó a Pip por qué el área de un triángulo es la mitad de un rectángulo, con sus propias palabras: “because 2 triangles make a rectangle”. También corrigió un error ella sola. Próxima clase: martes 4:30pm.`,
+  en: (kid, tutor) => `Hi, it’s ${tutor} from Bright Path. This week ${kid} taught Pip why a triangle’s area is half a rectangle, in her own words: “because 2 triangles make a rectangle”. She also fixed a mistake on her own. Next session: Tue 4:30pm.`,
+  vi: (kid, tutor) => `Xin chào, tôi là ${tutor} từ Bright Path. Tuần này ${kid} đã dạy Pip vì sao diện tích tam giác bằng một nửa hình chữ nhật: “because 2 triangles make a rectangle”.`,
+  zh: (kid, tutor) => `您好，我是 Bright Path 的 ${tutor}。本周 ${kid} 用自己的话教会了 Pip 三角形面积为什么是长方形的一半：“because 2 triangles make a rectangle”。`,
+}
+
+const DRAFT = (student_id, grade, topic) => ({
+  id: null, student_id, tutor_id: 't1', grade, topic, subject: 'math',
+  why_it_matters: 'You need this for areas of every polygon next unit.',
+  concepts: CONCEPTS.math.map(([id, text], i) => ({ id, text, weapon: ['Twin Triangle Mirror 🪞', 'Rectangle Ruler 📏', 'Half-Slice Blade 🔪'][i] })),
+  misconception: 'Area of a triangle is base times height.',
+  root_prerequisite: 'Area of a rectangle',
+  boss: { name: 'Duke Doublecount', emoji: '🦚', backstory: 'Counts every triangle twice and calls it a rectangle.' },
+  cliffhanger: 'I heard a parallelogram is base × height too. Even the slanted ones?',
+  quiz: [], created_at: null, mock: true,
+})
+
+class MockMiss extends Error {}
+
+// Returns the mock response for a request, or throws MockMiss when there is no fixture.
+export function mockRequest(method, path, body = {}) {
+  const d = DB()
+  const [p, qs] = path.split('?')
+  const q = new URLSearchParams(qs ?? '')
+  let m
+  const notFound = (what) => {
+    const e = new Error(`${what} not found`)
+    e.status = 404
+    e.mockDetail = true
+    throw e
+  }
+
+  if (method === 'GET' && p === '/subjects') return { subjects: SUBJECTS }
+  if (method === 'GET' && p === '/tutors') {
+    return {
+      tutors: TUTORS.map((t) => {
+        const mine = Object.values(d.students).filter((s) => s.enrollments.some((e) => e.tutor_id === t.id))
+        const subs = [...new Set(mine.flatMap((s) => s.enrollments.filter((e) => e.tutor_id === t.id).map((e) => e.subject)))]
+        return { ...t, subjects: subs, students: mine.length, at_risk: mine.filter((s) => AT_RISK[s.id]).length }
+      }),
+    }
+  }
+  if (method === 'GET' && (m = /^\/tutors\/([^/]+)\/students$/.exec(p))) {
+    const tid = m[1]
+    let rows = Object.values(d.students).filter((s) => s.enrollments.some((e) => e.tutor_id === tid)).map(rowFor)
+    rows = rows.map((r) => ({ ...r, next_slot: d.students[r.student.id].enrollments.find((e) => e.tutor_id === tid)?.slot ?? r.next_slot }))
+    const subject = q.get('subject')
+    const qq = (q.get('q') ?? '').toLowerCase()
+    const filter = q.get('filter')
+    if (subject) rows = rows.filter((r) => r.student.enrollments.some((e) => e.subject === subject))
+    if (qq) rows = rows.filter((r) => r.student.name.toLowerCase().includes(qq))
+    if (filter) rows = rows.filter((r) => r.flags.includes(filter))
+    return { tutor: tutorRef(tid), rows }
+  }
+  if (method === 'GET' && (m = /^\/students\/([^/]+)\/profile$/.exec(p))) {
+    const s = d.students[m[1]] ?? notFound('Student')
+    return {
+      student: publicStudent(s),
+      enrollments: s.enrollments,
+      progress: progressFor(s),
+      guardians: s.guardian_ids.map(guardianOf).filter(Boolean),
+      notes: d.notes.filter((n) => n.student_id === s.id).sort((a, b) => (a.ts < b.ts ? 1 : -1)),
+      timeline: timelineFor(s),
+      flags: rowFor(s).flags,
+    }
+  }
+  if (method === 'POST' && (m = /^\/students\/([^/]+)\/notes$/.exec(p))) {
+    const n = { id: `n${Date.now()}`, student_id: m[1], ts: iso(Date.now()), ...body }
+    d.notes.unshift(n)
+    return n
+  }
+  if (method === 'POST' && (m = /^\/students\/([^/]+)\/enrollments$/.exec(p))) {
+    const s = d.students[m[1]] ?? notFound('Student')
+    const e = { id: `e${Date.now()}`, student_id: s.id, started: dateIn(0), package: { hours_total: 12, hours_used: 0, price_usd: 480, renews_on: dateIn(84), status: 'active' }, ...body }
+    s.enrollments.push(e)
+    return e
+  }
+  if (method === 'POST' && p === '/assignments/bulk') {
+    const ids = body.student_ids ?? []
+    return { assignments: ids.map((sid, i) => ({ ...body.assignment, id: `a_bulk_${Date.now()}_${i}`, student_id: sid, mock: true })) }
+  }
+  if (method === 'POST' && p === '/assignments/draft') return DRAFT(body.student_id, body.grade, body.topic)
+  if (method === 'POST' && p === '/guardians') {
+    const g = { id: `g${Date.now()}`, student_ids: [], ...body }
+    d.guardians.push(g)
+    for (const sid of g.student_ids) d.students[sid]?.guardian_ids.push(g.id)
+    return g
+  }
+  if (method === 'PATCH' && (m = /^\/guardians\/([^/]+)$/.exec(p))) {
+    const g = guardianOf(m[1]) ?? notFound('Guardian')
+    Object.assign(g, body)
+    return { ...g }
+  }
+  if (method === 'GET' && p === '/threads') {
+    const sid = q.get('student_id')
+    const gid = q.get('guardian_id')
+    return { items: d.threads.filter((t) => (!sid || t.student_id === sid) && (!gid || t.guardian_id === gid)).sort((a, b) => (a.ts < b.ts ? -1 : 1)) }
+  }
+  if (method === 'POST' && p === '/threads') {
+    const g = guardianOf(body.guardian_id)
+    const status = body.from === 'guardian' ? 'received' : quietNow(g) ? 'queued (quiet hours)' : 'test-mode (not delivered)'
+    const t = { id: `m${Date.now()}`, ts: iso(Date.now()), status, ...body }
+    d.threads.push(t)
+    return t
+  }
+  if (method === 'GET' && p === '/center/overview') return overview()
+  if (method === 'GET' && (m = /^\/parent\/([^/]+)\/home$/.exec(p))) {
+    const g = guardianOf(m[1]) ?? notFound('Guardian')
+    return {
+      guardian: g,
+      kids: g.student_ids.map((sid) => d.students[sid]).filter(Boolean).map((s) => {
+        const shared = d.notes.filter((n) => n.student_id === s.id && n.share_with_parent).sort((a, b) => (a.ts < b.ts ? 1 : -1))[0] ?? null
+        return {
+          student: { id: s.id, name: s.name, grade: s.grade },
+          pip: s.pip,
+          this_week: { minutes: 0, missions: 0, kos: 0, taught_quote: null, fixed: null, ...(THIS_WEEK[s.id] ?? {}), shared_note: shared },
+          subjects: s.enrollments.map((e) => ({ subject: e.subject, tutor: tutorRef(e.tutor_id), next_slot: e.slot, ko_count: s._spec.find((x) => x[0] === e.subject)?.[6] ?? 0 })),
+        }
+      }),
+      unread: d.threads.filter((t) => t.guardian_id === g.id && t.from !== 'guardian' && t.ts > ago(1)).length,
+    }
+  }
+  if (method === 'GET' && (m = /^\/parent\/([^/]+)\/kids\/([^/]+)$/.exec(p))) {
+    const g = guardianOf(m[1]) ?? notFound('Guardian')
+    if (!g.student_ids.includes(m[2])) {
+      const e = new Error('Not your child')
+      e.status = 403
+      e.mockDetail = true
+      throw e
+    }
+    const s = d.students[m[2]]
+    return {
+      student: { id: s.id, name: s.name, grade: s.grade },
+      weeks: WEEKS[g.language]?.[s.id] ?? WEEKS.en[s.id] ?? [],
+      shared_notes: d.notes.filter((n) => n.student_id === s.id && n.share_with_parent),
+      next_sessions: s.enrollments.map((e) => ({ subject: e.subject, slot: e.slot, tutor: tutorRef(e.tutor_id) })),
+      tutors: s.enrollments.map((e) => ({ ...tutorRef(e.tutor_id), subject: e.subject })),
+    }
+  }
+  if (method === 'POST' && (m = /^\/sessions\/([^/]+)\/parent-update\/preview$/.exec(p))) {
+    const sid = body.student_id ?? 's001'
+    const s = d.students[sid] ?? d.students.s001
+    const tutor = tutorRef(s.tutor_id).name
+    const kid = s.name.split(' ')[0]
+    const messages = s.guardian_ids.map(guardianOf).filter((g) => g && g.updates !== 'off').map((g) => ({
+      guardian_id: g.id, name: g.name, language: g.language, prefers: g.prefers, reachable: isReachable(g),
+      message: (UPDATE_TEXT[g.language] ?? UPDATE_TEXT.en)(kid, tutor),
+    }))
+    return { message: UPDATE_TEXT.en(kid, tutor), by_guardian: messages.map((m) => ({ ...m, via: m.prefers })), skipped: [] }
+  }
+  if (method === 'POST' && (m = /^\/sessions\/([^/]+)\/parent-update\/send$/.exec(p))) {
+    const list = body.messages ? Object.entries(body.messages).map(([guardian_id, message]) => ({ guardian_id, message })) : [{ guardian_id: null, message: body.message }]
+    const sent = list.map((x) => {
+      const g = guardianOf(x.guardian_id)
+      return { id: `sl${Date.now()}${x.guardian_id}`, student_id: body.student_id ?? 's001', to: g ? (g.prefers === 'sms' ? g.phone : g.email) ?? g.name : 'parent', guardian_id: x.guardian_id, message: x.message, status: quietNow(g) ? 'queued (quiet hours)' : 'test-mode (not delivered)', ts: iso(Date.now()) }
+    })
+    d.sent.push(...sent)
+    return { sent: sent[0], sent_all: sent }
+  }
+  throw new MockMiss(`${method} ${p}`)
+}
+
+export const isMockMiss = (e) => e instanceof MockMiss

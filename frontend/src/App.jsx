@@ -11,6 +11,8 @@ import Mission from './pages/Mission.jsx'
 import AdminReset from './pages/AdminReset.jsx'
 import NotFound from './pages/NotFound.jsx'
 import { FrameSync, PlayRoute } from './components/PhoneFrame.jsx'
+import ParentRoute from './pages/parent/ParentApp.jsx'
+import { StudioScope } from './staff/StudioShell.jsx'
 
 function ScrollTop() {
   const { pathname } = useLocation()
@@ -28,10 +30,12 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/tutor" element={<TutorHome />} />
-        <Route path="/tutor/report/:sessionId" element={<GapReport />} />
+        <Route path="/tutor/students/:id" element={<TutorHome />} />
+        <Route path="/tutor/report/:sessionId" element={<StudioScope><GapReport /></StudioScope>} />
         <Route path="/owner" element={<Owner />} />
-        <Route path="/owner/pricing" element={<Pricing />} />
-        <Route path="/pricing" element={<Pricing />} />
+        <Route path="/owner/pricing" element={<StudioScope><Pricing /></StudioScope>} />
+        <Route path="/pricing" element={<StudioScope><Pricing /></StudioScope>} />
+        <Route path="/parent" element={<ParentRoute />} />
         <Route path="/pilot/success" element={<PilotSuccess />} />
         <Route path="/student" element={<PlayRoute><StudentHome /></PlayRoute>} />
         <Route path="/student/mission/:sessionId" element={<PlayRoute><Mission /></PlayRoute>} />
