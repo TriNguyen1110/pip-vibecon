@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { api, DEMO } from '../api'
 import { useLoad, readLocal, writeLocal } from '../hooks'
-import { Empty, ErrorState, Sheet, initialsOf, useToast } from '../components/ui.jsx'
+import { Dots, Empty, ErrorState, Sheet, initialsOf, useToast } from '../components/ui.jsx'
 import InsightCard from '../components/InsightCard.jsx'
 import AtRiskCard from '../components/AtRiskCard.jsx'
 import NewMission from '../components/NewMission.jsx'
@@ -43,6 +43,7 @@ export default function TutorHome() {
   const tutorList = tutors.data?.tutors ?? []
   const tutor = list.data?.tutor ?? tutorList.find((t) => t.id === tutorId) ?? { id: tutorId, name: 'Ms. Rivera' }
   const allRows = useMemo(() => list.data?.rows ?? [], [list.data])
+  const rosterReady = !!list.data && !list.loading && allRows.length > 0
 
   const rows = useMemo(() => {
     const qq = q.trim().toLowerCase()
@@ -138,8 +139,25 @@ export default function TutorHome() {
             <h1 className="display h-page">Your students</h1>
             <p className="muted">Every student, every subject, and what each one taught Pip since you last saw them.</p>
           </div>
-          <button className="btn btn--primary btn--lg" onClick={() => setMissionOpen(true)}>
-            <span aria-hidden>＋</span> New Pip mission
+          {/* D-36: NewMission defaults to the first student it gets, so open it only with the full roster. */}
+          <button
+            className="btn btn--primary btn--lg"
+            onClick={() => setMissionOpen(true)}
+            disabled={!rosterReady}
+            aria-busy={!rosterReady}
+            title={rosterReady ? undefined : 'Loading your students…'}
+          >
+            {rosterReady ? (
+              <>
+                <span aria-hidden>＋</span> New Pip mission
+              </>
+            ) : list.error ? (
+              'Students didn’t load'
+            ) : (
+              <>
+                Loading students <Dots />
+              </>
+            )}
           </button>
         </section>
 
@@ -235,7 +253,7 @@ export default function TutorHome() {
         </div>
       )}
 
-      <Sheet open={missionOpen} onClose={() => setMissionOpen(false)} label="New Pip mission">
+      <Sheet open={missionOpen && rosterReady} onClose={() => setMissionOpen(false)} label="New Pip mission">
         <NewMission
           students={allRows.map((r) => r.student)}
           tutorId={tutorId}
