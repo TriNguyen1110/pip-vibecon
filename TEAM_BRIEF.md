@@ -12,6 +12,8 @@ calls. Build the one daily job, live on Emergent, start to finish.
 
 ## Judging (both rounds, out of 100)
 
+> **UNVERIFIED (checked 2026-10-24 night):** the criteria and weights below came from pre-event research and are NOT on vibecon.com/rules as far as we can see. Confirm with organizers before relying on them.
+
 | Criterion | Weight | What a 10 looks like | How Pip scores it |
 |---|---|---|---|
 | Execution & UI/UX | **25%** | Works live without a hitch, handles a mistake, feels finished; a non-technical owner uses it unaided | One flow, polished: assign → teach Pip → quiz → gap report. Mistake moments are built in (wrong teaching → Pip fails; "just tell me" → refused) |

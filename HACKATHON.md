@@ -15,7 +15,7 @@ San Francisco (YC). Venue WiFi: `Y Combinator` / `makesomething`.
       written anywhere, e.g. our GitHub repo, and pulled into the Emergent project).
 - [ ] Synthetic data only for students, parents and tutors; any payments in test mode.
 - [ ] Research sources cited in the submission.
-- [ ] Video ≤ 2:00, screen recording of the live app + voiceover, title card only,
+- [ ] (UNVERIFIED pre-event note; confirm with organizers) Video ≤ 2:00, screen recording of the live app + voiceover, title card only,
       on Google Drive with "anyone with the link can view".
 - [ ] Badge and wristband on. Leaving after midnight = no re-entry until 6:00 AM.
 
