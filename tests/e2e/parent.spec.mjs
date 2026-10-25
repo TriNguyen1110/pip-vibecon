@@ -102,6 +102,12 @@ async function run(vp) {
       return { pass: where.length > 0, tabs: TABS, where }
     })
 
+    await H.step('D-21: package line reads "N of M hours left" (Schedule)', async () => {
+      const sched = Object.entries(texts).find(([k]) => /Schedule|Classes/.test(k))?.[1] ?? ''
+      const line = sched.match(/[^\n]*hours? left[^\n]*/i)?.[0] ?? null
+      return { pass: !!line && /\d+ of \d+ hours? left/i.test(line) && !/of\s+hours/i.test(line), line }
+    })
+
     await H.step('messages: thread with Ms. Rivera; message the tutor', async () => {
       await tabBtn(TABS.find((t) => /Messages/.test(t)) ?? 'Messages').click()
       await H.P.getByRole('list', { name: 'Messages' }).waitFor({ timeout: 8000 })
@@ -171,6 +177,7 @@ async function run(vp) {
     })
 
     await H.step('body text >= 17px, tap targets >= 48px', async () => {
+      await openApp() // back from the isolation probe's notice to Ana's real app
       const out = {}
       for (const t of TABS) {
         await tabBtn(t).click()
@@ -179,12 +186,14 @@ async function run(vp) {
           const els = [...document.querySelectorAll(sel)].filter((e) => e.getBoundingClientRect().width > 0)
           const small = els.map((e) => ({ c: e.className, px: parseFloat(getComputedStyle(e).fontSize), t: e.textContent.trim().slice(0, 30) })).filter((x) => x.px < 17)
           const min = Math.min(...[...document.querySelectorAll('.parent-app *')].filter((e) => e.getBoundingClientRect().width > 0 && [...e.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim())).map((e) => parseFloat(getComputedStyle(e).fontSize)))
-          return { bodyEls: els.length, small: small.slice(0, 5), minAnyText: min }
+          const caps = [...document.querySelectorAll('.p-cap')].filter((e) => e.getBoundingClientRect().width > 0).map((e) => parseFloat(getComputedStyle(e).fontSize))
+          return { bodyEls: els.length, small: small.slice(0, 5), minAnyText: min, minCaption: caps.length ? Math.min(...caps) : null }
         }, BODY_SEL)
         await H.targets(`tab-${t}`, 48)
       }
       const small48 = [...new Map(H.R.smallTargets.map((x) => [`${x.el}|${x.text}`, x])).values()]
-      return { pass: Object.values(out).every((x) => x.small.length === 0) && small48.length === 0, fonts: out, targetsUnder48: small48.slice(0, 10) }
+      // D-25: captions >= 15px as well
+      return { pass: Object.values(out).every((x) => x.small.length === 0 && (x.minCaption ?? 15) >= 15) && small48.length === 0, fonts: out, targetsUnder48: small48.slice(0, 10) }
     })
 
     await H.step('200% text zoom: no horizontal overflow (every tab)', async () => {

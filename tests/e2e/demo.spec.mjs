@@ -683,6 +683,8 @@ async function run(vp) {
     await page.getByRole('button', { name: /New Pip mission/ }).click()
     const dlg = page.getByRole('dialog', { name: 'New Pip mission' })
     await dlg.waitFor()
+    // The roster can land after the dialog opens (the dialog then follows it): read the student once it has.
+    await dlg.locator('select').first().locator('option').nth(1).waitFor({ state: 'attached', timeout: 10000 })
     const studentId = await dlg.locator('select').first().inputValue()
     const studentName = await dlg.locator('select').first().locator('option:checked').textContent()
     await dlg.getByRole('button', { name: 'Expanding (a + b)²' }).click()

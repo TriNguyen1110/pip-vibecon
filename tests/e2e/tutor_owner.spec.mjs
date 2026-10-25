@@ -260,6 +260,12 @@ async function run(vp) {
       return { pass: !!ana && !!sam && tags.length >= 2, flow, draftsQueued: H.R.notes.draftsQueued, anaPreview: ana?.slice(0, 160), samPreview: sam?.slice(0, 160), tags, sentItems }
     })
 
+    await H.step('D-27: one K.O. queues exactly one draft (no draft from the saved session)', async () => {
+      const n = H.R.notes.draftsQueued
+      const api1 = (await api('/students/s001/drafts')).json?.items ?? []
+      return { pass: n === 1, queuedBeforeSend: n, openAfterSend: api1.map((d) => d.session_id) }
+    })
+
     await H.step('parent updates are English with no game words (v3.16, B18/F18)', async () => {
       const { ana, sam } = H.R.notes.update ?? {}
       const g = (await api('/students/s001/profile')).json.guardians

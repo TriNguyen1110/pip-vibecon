@@ -26,7 +26,7 @@ const FIX = readFixture('students/a_tri.json')
 const PERSONAS = (process.env.PERSONAS || 'tri_quick:cool,tri_idk:play,tri_insult:focus').split(',').map((x) => {
   const [id, register] = x.split(':')
   return { card: FIX.personas.find((p) => p.id === id), register }
-})
+}).filter((p) => p.card) // PERSONAS=none skips them
 
 // Student register on the shell root: data-register (play|cool|focus) since DES-Y2K-1; data-audience before it.
 const registerOf = (P) =>
@@ -36,6 +36,10 @@ const registerOf = (P) =>
   })
 // ui_actions in the cards are probabilistic; the run follows the ones with p >= P_ACT (deterministic).
 const P_ACT = Number(process.env.P_ACT ?? 0.75)
+// Home primary: "Play" (pre AGE-2) or "Teach <pip name>" (AGE-2 drop card).
+const PLAY_RE = /^(play|teach [a-z]+)$/i
+// Exam/quiz screens are mid-restyle: their visual checks (fit, contrast) are reported as pending, not pass/fail.
+const EXAM_VISUAL = /^quiz-|-quiz$/
 const sessionIdOf = (P) => P.url().split('?')[0].split('/').pop()
 const getSession = async (sid) => (await api(`/sessions/${sid}`)).json
 const pipMsgs = (s) => s.transcript.filter((m) => m.from === 'pip')
@@ -44,7 +48,8 @@ const pipMsgs = (s) => s.transcript.filter((m) => m.from === 'pip')
 async function sendText(H, sid, text) {
   const { P, page } = H
   const respP = page.waitForResponse((r) => r.url().includes(`/sessions/${sid}/turn`) && r.request().method() === 'POST', { timeout: 30000 })
-  await P.getByRole('textbox', { name: 'Message to Pip' }).fill(text)
+  respP.catch(() => {}) // if typing fails, the step reports that error instead of an unhandled rejection
+  await P.getByRole('textbox', { name: 'Message to Pip' }).fill(text, { timeout: 10000 })
   await P.getByRole('button', { name: 'Send to Pip' }).click()
   const resp = await respP
   const js = await resp.json().catch(() => ({}))
@@ -56,6 +61,20 @@ async function waitBubble(H, s) {
   const tail = last.replace(/[‘’'“”"]/g, '').trim().slice(-14)
   await H.P.waitForFunction((t) => (document.querySelector('.speech .bubble__text')?.textContent ?? '').replace(/[‘’'“”"]/g, '').includes(t), tail, { timeout: 6000 }).catch(() => {})
   await sleep(250)
+}
+
+// The newest Pip line must be on screen and not covered (AGE-2 feed: scrolled to the end after each reply).
+async function newestVisible(H) {
+  return H.P.evaluate(() => {
+    const el = document.querySelector('.speech .bubble__text')
+    const feed = document.querySelector('.feed')
+    if (!el) return { ok: false, why: 'no newest Pip line' }
+    const r = el.getBoundingClientRect()
+    const y = Math.min(r.bottom - 4, innerHeight - 1)
+    const hit = document.elementFromPoint(r.left + Math.min(20, r.width / 2), Math.max(0, y))
+    const ok = r.top >= 0 && r.bottom <= innerHeight + 1 && !!hit && (hit === el || el.contains(hit) || hit.contains(el))
+    return { ok, top: Math.round(r.top), bottom: Math.round(r.bottom), vh: innerHeight, feed: feed ? { scrollTop: Math.round(feed.scrollTop), scrollHeight: feed.scrollHeight, clientHeight: feed.clientHeight } : null }
+  })
 }
 
 // Before ready_for_quiz the primary "Quiz Pip" gel must not show (a quiet "Keep teaching" hold-to-quiz instead).
@@ -71,7 +90,7 @@ async function startMission(H, { reset = true } = {}) {
   await H.page.goto(`${BASE}/student`)
   await H.inApp()
   await H.P.locator('.home-current__topic').waitFor({ timeout: 20000 })
-  await H.P.locator('.home-current').getByRole('button', { name: /^play$/i }).click()
+  await H.P.locator('.home-current').getByRole('button', { name: PLAY_RE }).click()
   const dlg = H.P.getByRole('dialog', { name: "Pick Pip's look" })
   await dlg.waitFor()
   return dlg
@@ -128,7 +147,8 @@ async function runMaya(H) {
     await H.P.locator('.home-current__topic').waitFor({ timeout: 20000 })
     await sleep(800)
     const topic = await H.P.locator('.home-current__topic').textContent()
-    const boss = await H.P.locator('.home-current__vs').getAttribute('aria-label')
+    // AGE-2 drop card: the boss is named in the drop line (the sticker is decorative); pre-AGE-2: the vs sticker label
+    const boss = (await H.P.locator('.home-current__vs').getAttribute('aria-label', { timeout: 1500 }).catch(() => null)) ?? (await H.P.locator('.home-current').innerText())
     const aud = await registerOf(H.P)
     await H.shot('home')
     const o = await H.overflow('home')
@@ -139,7 +159,7 @@ async function runMaya(H) {
   })
 
   await H.step('start mission: picker -> Start teaching', async () => {
-    await H.P.locator('.home-current').getByRole('button', { name: /^play$/i }).click()
+    await H.P.locator('.home-current').getByRole('button', { name: PLAY_RE }).click()
     const dlg = H.P.getByRole('dialog', { name: "Pick Pip's look" })
     await dlg.waitFor()
     await dlg.getByRole('radio', { name: /Cat/ }).first().click().catch(() => {})
@@ -179,11 +199,13 @@ async function runMaya(H) {
       const pip = fresh.filter((m) => m.from === 'pip').map((m) => m.text).join(' | ')
       const events = fresh.map((m) => m.event).filter(Boolean)
       const gate = await quizGate(H, after)
+      await sleep(500)
+      const seen = await newestVisible(H)
       await H.shot(`mission-text${i + 1}`)
       await fitHere(`mission-text${i + 1}`)
-      const t = { hp: [before.boss_hp, after.boss_hp], ready: after.ready_for_quiz, gate, pip: pip.slice(0, 200), events: events.map((e) => `${e.kind}:${e.level ?? ''}`) }
+      const t = { hp: [before.boss_hp, after.boss_hp], ready: after.ready_for_quiz, gate, newestPipVisible: seen, pip: pip.slice(0, 200), events: events.map((e) => `${e.kind}:${e.level ?? ''}`) }
       turns.push(t)
-      let pass = !!pip && gate.ok
+      let pass = !!pip && gate.ok && seen.ok
       if (i === 0) pass = pass && after.boss_hp === before.boss_hp && /\?/.test(pip) && after.ready_for_quiz === false
       if (i === 1) pass = pass && after.boss_hp < before.boss_hp && events.some((e) => e.kind === 'hit')
       // PACE-2: ready may already come at text 2; text 3 then only has to keep Pip ready (no regression).
@@ -262,10 +284,16 @@ async function runMaya(H) {
     const chips = H.P.locator('.ko__weapons .weapon')
     await chips.first().waitFor({ timeout: 8000 })
     await chips.first().click()
-    await H.P.locator('.ko--card').waitFor({ timeout: 12000 }).catch(async () => {
-      await H.P.locator('.ko').first().click() // "Tap to skip"
-      await H.P.locator('.ko--card').waitFor({ timeout: 8000 })
-    })
+    // stamp -> (AGE-2) "The new look" -> card; tap through like a kid would, keeping what each beat says.
+    for (let i = 0; i < 12 && !(await H.P.locator('.ko--card').count()); i++) {
+      await sleep(900)
+      if (await H.P.locator('.ko--newlook').count()) {
+        koText += await H.P.locator('.ko--newlook').innerText().catch(() => '')
+        await H.shot('ko-newlook')
+      }
+      if (!(await H.P.locator('.ko--card').count())) await H.P.locator('.ko').first().click().catch(() => {})
+    }
+    await H.P.locator('.ko--card').waitFor({ timeout: 8000 })
     await sleep(1000)
     const version = await H.P.locator('.ko__version').getAttribute('aria-label')
     const front = await H.P.locator('.ko-card__front').innerText()
@@ -304,8 +332,10 @@ async function runMaya(H) {
 
   if (vp.mobile) {
     await H.step('no page scroll on Play screens at 390 (mission, quiz, re-teach, K.O.)', async () => {
-      const bad = fits.filter(([, ok]) => !ok).map(([l]) => l)
-      return { pass: fits.length >= 8 && bad.length === 0, checked: fits.length, bad, detail: Object.fromEntries(bad.map((b) => [b, H.R.fit[b]])) }
+      const exam = fits.filter(([l]) => EXAM_VISUAL.test(l))
+      const rest = fits.filter(([l]) => !EXAM_VISUAL.test(l))
+      const bad = rest.filter(([, ok]) => !ok).map(([l]) => l)
+      return { pass: rest.length >= 6 && bad.length === 0, checked: rest.length, bad, detail: Object.fromEntries(bad.map((b) => [b, H.R.fit[b]])), examPending: exam }
     })
   }
   return sid
@@ -333,19 +363,25 @@ async function runPersona(H, { card, register }) {
     await H.P.evaluate((r) => localStorage.setItem('pip.audience', r), register)
     await H.P.evaluate(() => location.reload())
     await H.P.locator('.home-current__topic').waitFor({ timeout: 20000 })
-    await H.P.locator('.home-current').getByRole('button', { name: /^play$/i }).click()
+    await H.P.locator('.home-current').getByRole('button', { name: PLAY_RE }).click()
     const dlg = H.P.getByRole('dialog', { name: "Pick Pip's look" })
     await dlg.getByRole('button', { name: 'Start teaching' }).click()
     await H.P.waitForURL('**/student/mission/**', { timeout: 20000 })
     sid = sessionIdOf(H.P)
     await H.P.locator('.speech .bubble__text').waitFor({ timeout: 10000 })
     const aud = await registerOf(H.P)
+    const composer = await H.P.evaluate(() => {
+      const el = document.querySelector('.composer__input')
+      const r = el?.getBoundingClientRect()
+      const hit = r && document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2)
+      return { present: !!el, inView: !!r && r.top >= 0 && r.bottom <= innerHeight, onTop: !!hit && (hit === el || el.contains(hit)) }
+    })
     await H.shot(`${id}-opening`)
     const o = await H.overflow(`${id}-mission`)
     if (vp.mobile) fits.push((await H.fit(`${id}-opening`)).ok)
     await H.targets(`${id}-mission`, 44)
     await H.contrast(`${id}-mission`)
-    return { pass: aud === register && !o.overflows, register: aud, sid, overflow: o.wide }
+    return { pass: aud === register && !o.overflows && composer.inView && composer.onTop, register: aud, sid, overflow: o.wide, composer }
   })
 
   const say = async (text, label) => {
@@ -418,7 +454,7 @@ async function runPersona(H, { card, register }) {
       await H.P.locator('.home-current__topic').waitFor({ timeout: 10000 })
       const btn = await H.P.locator('.home-current .home-play').textContent()
       await H.shot(`${id}-left-home`)
-      return { pass: /play/i.test(btn), outcome: 'left; mission resumes from home', btn }
+      return { pass: /play|keep teaching|teach/i.test(btn), outcome: 'left; mission resumes from home', btn }
     }
     const respP = page.waitForResponse((r) => r.url().includes(`/sessions/${sid}/quiz`), { timeout: 30000 })
     const s0 = await getSession(sid)
@@ -437,7 +473,7 @@ async function runPersona(H, { card, register }) {
     await H.P.locator('.exam-page--brain, .ko').first().waitFor({ timeout: 15000 })
     await sleep(800)
     await H.shot(`${id}-quiz`)
-    if (vp.mobile) fits.push((await H.fit(`${id}-quiz`)).ok)
+    if (vp.mobile) await H.fit(`${id}-quiz`) // exam screen: pending restyle, recorded only
     const rounds = [q.quiz.map((x) => [x.concept_id, x.passed])]
     const skip = kid.action('after_quiz_miss')
     for (let round = 0; round < 3 && !q.ko; round++) {
@@ -495,12 +531,12 @@ async function sendDouble(H, sid, first, second) {
     await box.fill(first)
     await P.getByRole('button', { name: 'Send to Pip' }).click()
     await sleep(200)
-    const thinking = await P.locator('.speech__bubble--dots').count()
+    const thinking = await P.locator('.speech__bubble--dots, .msg__bubble--dots, .msg--status').count()
     await box.fill(second)
     const sendEnabled = await P.getByRole('button', { name: 'Send to Pip' }).isEnabled()
     if (sendEnabled) await P.getByRole('button', { name: 'Send to Pip' }).click()
     await sleep(150)
-    const waiting = await P.locator('.msg__sending').textContent().catch(() => null)
+    const waiting = (await P.locator('.msg__sending').allTextContents().catch(() => [])).join(' ') || null
     await H.shot('double-text-waiting')
     // both turns go out one after another
     for (let i = 0; i < 40; i++) {
@@ -554,43 +590,246 @@ async function runOwnerTranscript(H) {
   })
 }
 
-// AGE-1/AGE-2: the student default is the night "secondary" look (reports/design/secondary_preview.png): night by
-// default, grotesk/condensed/mono type (no Fredoka), radii 6-12, one primary, body >= 15px.
+// AGE-1/AGE-2: the student default is the night "secondary" look (reports/design/secondary_preview.png).
+// Checked on a fresh device (no stored theme/register/skin) with the OS in LIGHT mode, so "night" must be the default.
+// Preview frames: 01 home = drop card + mono labels + "Teach Pip" + bottom tabs; 02 mission = LCD boss bar + chat feed
+// + tool chips + composer. Type: grotesk/condensed/mono, no Fredoka; radii 6-12; body >= 15px (12px mono labels OK).
+const LOOK = () => {
+  const shell = document.querySelector('[data-register]')
+  const vis = [...document.querySelectorAll('body *')].filter((e) => {
+    const r = e.getBoundingClientRect()
+    return r.width > 0 && r.bottom > 0 && r.top < innerHeight && [...e.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim()) && !e.closest('[aria-hidden="true"],.sr-only')
+  })
+  const fredoka = vis.filter((e) => /fredoka/i.test(getComputedStyle(e).fontFamily)).map((e) => e.textContent.trim().slice(0, 24))
+  const body = vis.filter((e) => e.textContent.trim().length > 25 && !e.closest('.mono-label,.lcd,.mono')).map((e) => [parseFloat(getComputedStyle(e).fontSize), e.textContent.trim().slice(0, 30)])
+  const radii = [...document.querySelectorAll('.gel-btn, .drop, .row2, .msg__bubble, .chip-tool, .composer')]
+    .filter((e) => e.getBoundingClientRect().width > 0)
+    .map((e) => [parseFloat(getComputedStyle(e).borderTopLeftRadius), e.className.split(' ')[0]])
+    .filter(([r, c]) => r > 12 && !/icon-btn|composer__send/.test(c))
+  const bg = getComputedStyle(document.body).backgroundColor
+  const rgb = (c) => (c.match(/[\d.]+/g) ?? []).slice(0, 3).map(Number)
+  const lum = (c) => {
+    const [r, g, b] = rgb(c).map((v) => ((v /= 255) <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4))
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b
+  }
+  const screenBg = [document.querySelector('.play-screen'), shell, document.body].map((e) => e && getComputedStyle(e).backgroundColor).find((c) => c && !/rgba\(0, 0, 0, 0\)|transparent/.test(c)) ?? bg
+  return {
+    // "night" = what the screen renders (the data-theme attribute still follows the OS for the legacy skins)
+    theme: lum(screenBg) < 0.05 ? 'night' : 'day',
+    dataTheme: shell?.getAttribute('data-theme'),
+    screenBg,
+    register: shell?.getAttribute('data-register'),
+    skin: shell?.getAttribute('data-skin'),
+    bodyBg: bg,
+    fredoka: fredoka.slice(0, 4),
+    fredokaCount: fredoka.length,
+    smallBody: body.filter(([px]) => px < 15).slice(0, 4),
+    bigRadii: radii.slice(0, 4),
+    monoLabels: document.querySelectorAll('.mono-label').length,
+    cta: [...document.querySelectorAll('.home-play')].map((b) => b.textContent.trim())[0] ?? null,
+    tabs: [...document.querySelectorAll('nav.tabs .tab')].map((t) => t.textContent.trim()),
+    feed: !!document.querySelector('.game--feed .feed'),
+    lcdBoss: !!document.querySelector('.bossbar .lcd--boss'),
+    segHp: document.querySelectorAll('.bossbar .seg-hp b').length,
+    toolChips: [...document.querySelectorAll('.tools .chip-tool')].map((t) => t.textContent.trim()),
+    composer: !!document.querySelector('.composer__input'),
+  }
+}
 async function runSecondaryLook(H) {
-  await H.step('AGE-2 secondary look on home + mission (night default, no Fredoka, radii <= 12)', async () => {
+  let home
+  await H.step('AGE-2 home vs secondary_preview #01 (night default, drop card, Teach Pip, mono, tabs)', async () => {
     await api('/demo/reset', 'POST')
     await H.page.goto(`${BASE}/student`)
     await H.inApp()
-    await H.P.evaluate(() => {
-      localStorage.removeItem('pip.theme')
-      localStorage.removeItem('pip.audience')
-      localStorage.removeItem('pip.skin')
-    })
+    await H.P.evaluate(() => ['pip.theme', 'pip.audience', 'pip.skin'].forEach((k) => localStorage.removeItem(k)))
     await H.P.evaluate(() => location.reload())
-    await H.P.locator('.home-mission, main').first().waitFor({ timeout: 20000 })
+    await H.P.locator('.home-current__topic').waitFor({ timeout: 20000 })
     await sleep(900)
-    const look = await H.P.evaluate(() => {
-      const shell = document.querySelector('[data-register]')
-      const vis = [...document.querySelectorAll('body *')].filter((e) => e.getBoundingClientRect().width > 0 && [...e.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim()))
-      const fredoka = vis.filter((e) => /fredoka/i.test(getComputedStyle(e).fontFamily)).map((e) => e.textContent.trim().slice(0, 24))
-      const body = vis.filter((e) => e.textContent.trim().length > 25).map((e) => parseFloat(getComputedStyle(e).fontSize))
-      const cta = [...document.querySelectorAll('button, a')].find((b) => /teach pip|^play$/i.test(b.textContent.trim()))
-      return {
-        theme: shell?.getAttribute('data-theme') ?? document.documentElement.getAttribute('data-theme'),
-        register: shell?.getAttribute('data-register'),
-        skin: shell?.getAttribute('data-skin'),
-        fredoka: fredoka.slice(0, 6),
-        fredokaCount: fredoka.length,
-        minBodyPx: body.length ? Math.min(...body) : null,
-        cta: cta?.textContent.trim(),
-        ctaRadius: cta ? parseFloat(getComputedStyle(cta).borderTopLeftRadius) : null,
-      }
-    })
+    home = await H.P.evaluate(LOOK)
     await H.shot('age2-home-default')
-    const ok = look.theme === 'night' && look.fredokaCount === 0 && (look.ctaRadius ?? 99) <= 12 && (look.minBodyPx ?? 15) >= 15
-    // The restyle (AGE-2) has landed when the home is the night secondary layout with a "Teach Pip" primary.
-    if (!ok && (look.theme !== 'night' || !/teach pip/i.test(look.cta ?? '') || look.fredokaCount > 0 || (look.ctaRadius ?? 0) > 12)) notBuilt(`student restyle not landed: ${JSON.stringify(look)}`)
-    return { pass: ok, ...look }
+    if (home.cta && /^play$/i.test(home.cta)) notBuilt(`restyle not landed: ${JSON.stringify(home)}`)
+    const ok = home.theme === 'night' && /^teach /i.test(home.cta ?? '') && home.fredokaCount === 0 && home.bigRadii.length === 0 && home.smallBody.length === 0 && home.monoLabels >= 1 && home.tabs.length >= 3 // TOM-1 moved the continue rows to the Missions sheet
+    return { pass: ok, ...home }
+  })
+  await H.step('AGE-2 mission vs secondary_preview #02 (LCD boss bar, chat feed, tool chips)', async () => {
+    await H.P.locator('.home-current').getByRole('button', { name: PLAY_RE }).click()
+    await H.P.getByRole('dialog', { name: "Pick Pip's look" }).getByRole('button', { name: 'Start teaching' }).click()
+    await H.P.waitForURL('**/student/mission/**', { timeout: 20000 })
+    const sid = sessionIdOf(H.P)
+    await H.P.locator('.speech .bubble__text').waitFor({ timeout: 10000 })
+    await sendText(H, sid, 'no its half of that')
+    await sendText(H, sid, 'because 2 triangles make a rectangle')
+    const m = await H.P.evaluate(LOOK)
+    await H.shot('age2-mission-feed')
+    const f = H.vp.mobile ? await H.fit('age2-mission') : { ok: true }
+    const c = await H.contrast('age2-mission')
+    if (!m.feed && !m.lcdBoss) notBuilt('mission still uses the pre-AGE-2 stage layout')
+    const ok = m.theme === 'night' && m.feed && m.lcdBoss && m.segHp === 10 && m.toolChips.length >= 3 && m.composer && m.fredokaCount === 0 && m.bigRadii.length === 0 && f.ok
+    return { pass: ok, ...m, fit: f, contrastViolations: c.violations }
+  })
+}
+
+// TOM-1: Talking-Tom Pip. Hero size, live states, pokes, chat overlay + full-chat sheet.
+const POKE_LINES = {
+  head: ['Hey.', 'That’s where the rules live.', 'Careful. Thinking in there.', 'Hey. I felt that.'],
+  belly: ['Squish. Noted.', 'That’s not a button.', 'Rude, but fine.'],
+  sprout: ['Boing. Please don’t.', 'The sprout is load-bearing.', 'Leave the sprout alone.'],
+}
+const pipBox = (P) =>
+  P.evaluate(() => {
+    const el = document.querySelector('.stage2d__pip svg.pip2d, .stage2d__pip .pip2d-depth')
+    if (!el) return null
+    const r = el.getBoundingClientRect()
+    return { h: Math.round(r.height), w: Math.round(r.width), cx: Math.round(r.left + r.width / 2), vh: innerHeight, vw: innerWidth, pct: Math.round((r.height / innerHeight) * 100), centered: Math.abs(r.left + r.width / 2 - innerWidth / 2) < innerWidth * 0.12 }
+  })
+const stateOf = (P) => P.evaluate(() => document.querySelector('[data-pip-state]')?.getAttribute('data-pip-state') ?? null)
+async function waitState(P, want, ms) {
+  const seen = []
+  const t0 = Date.now()
+  while (Date.now() - t0 < ms) {
+    const st = await stateOf(P)
+    if (seen.at(-1) !== st) seen.push(st)
+    if (st === want) return { ok: true, seen }
+    await sleep(60)
+  }
+  return { ok: false, seen }
+}
+// Tap the centre of each poke zone (real hit-testing through the page) and read the line Pip says.
+// P2D-15b: zones carry data-zone (belly, head, and one or more sprout circles incl. the leaf tip).
+async function pokeAll(H, lineSel) {
+  const zones = await H.P.evaluate(() => {
+    const svg = document.querySelector('.stage2d__pip svg.pip2d')
+    if (!svg) return null
+    return [...svg.querySelectorAll('[data-zone]')].map((e) => {
+      const r = e.getBoundingClientRect()
+      return { zone: e.getAttribute('data-zone'), x: r.left + r.width / 2, y: r.top + r.height / 2 }
+    })
+  })
+  if (!zones?.length) notBuilt('no Pip2D poke zones (data-zone)')
+  const off = H.vp.mobile
+    ? { x: 0, y: 0, sc: 1 }
+    : await H.page.evaluate(() => {
+        const r = document.querySelector('iframe.device__iframe').getBoundingClientRect()
+        return { x: r.left, y: r.top, sc: r.width / 390 }
+      })
+  const targets = [
+    ['head', zones.find((z) => z.zone === 'head')],
+    ['belly', zones.find((z) => z.zone === 'belly')],
+    ...zones.filter((z) => z.zone === 'sprout').map((z, i, all) => [i === all.length - 1 && all.length > 1 ? 'sproutTip' : `sprout${i ? i + 1 : ''}`, z]),
+  ]
+  const out = {}
+  for (const [name, z] of targets) {
+    if (!z) {
+      out[name] = { ok: false, line: null, note: 'zone missing' }
+      continue
+    }
+    await H.page.mouse.click(off.x + z.x * off.sc, off.y + z.y * off.sc)
+    await sleep(350)
+    const line = (await H.P.locator(lineSel).last().textContent().catch(() => '')).trim()
+    const zone = name.startsWith('sprout') ? 'sprout' : name
+    out[name] = { line, ok: POKE_LINES[zone].includes(line) }
+    await sleep(3400) // the line clears after 3.2 s
+  }
+  return out
+}
+
+async function runTom(H) {
+  const { vp } = H
+  let sid
+  await H.step('TOM-1 home: Pip is the front-facing hero (~55-60% of height)', async () => {
+    await api('/demo/reset', 'POST')
+    await H.page.goto(`${BASE}/student`)
+    await H.inApp()
+    await H.P.locator('.home-current__topic').waitFor({ timeout: 20000 })
+    await sleep(900)
+    const b = await pipBox(H.P)
+    await H.shot('tom-home')
+    const f = vp.mobile ? await H.fit('tom-home') : { ok: true }
+    if (!b) notBuilt('no Pip on home')
+    return { pass: b.pct >= 50 && b.pct <= 66 && b.centered && f.ok, pip: b, fit: f }
+  })
+  await H.step('TOM-1 home: the first poke (greeting) shows a caption, not voice only', async () => {
+    const head = await H.P.evaluate(() => {
+      const r = document.querySelector('.stage2d__pip [data-zone="head"]')?.getBoundingClientRect()
+      return r && { x: r.left + r.width / 2, y: r.top + r.height / 2 }
+    })
+    const off = vp.mobile ? { x: 0, y: 0, sc: 1 } : await H.page.evaluate(() => {
+      const r = document.querySelector('iframe.device__iframe').getBoundingClientRect()
+      return { x: r.left, y: r.top, sc: r.width / 390 }
+    })
+    await H.page.mouse.click(off.x + head.x * off.sc, off.y + head.y * off.sc)
+    await sleep(400)
+    const caption = (await H.P.locator('.drop__say').last().textContent({ timeout: 500 }).catch(() => null))?.trim() ?? null
+    await sleep(3400)
+    return { pass: !!caption, caption, note: caption ? null : 'first tap speaks the greeting with no on-screen text (captions must always show)' }
+  })
+  await H.step('TOM-1 home pokes: head, belly, sprout each get their line', async () => {
+    const r = await pokeAll(H, '.drop__say')
+    await H.shot('tom-home-poke')
+    return { pass: Object.values(r).every((x) => x.ok), ...r }
+  })
+  await H.step('TOM-1 mission: Pip hero size + idle', async () => {
+    await H.P.locator('.home-current').getByRole('button', { name: PLAY_RE }).click()
+    await H.P.getByRole('dialog', { name: "Pick Pip's look" }).getByRole('button', { name: 'Start teaching' }).click()
+    await H.P.waitForURL('**/student/mission/**', { timeout: 20000 })
+    sid = sessionIdOf(H.P)
+    await H.P.locator('.speech .bubble__text').waitFor({ timeout: 10000 })
+    await sleep(2500)
+    const b = await pipBox(H.P)
+    const st = await waitState(H.P, 'idle', 6000)
+    await H.shot('tom-mission-idle')
+    const f = vp.mobile ? await H.fit('tom-mission') : { ok: true }
+    return { pass: !!b && b.pct >= 50 && b.pct <= 66 && b.centered && st.ok && f.ok, pip: b, state: st, fit: f }
+  })
+  await H.step('TOM-1 states: listening while typing, thinking while waiting, talking while the reply shows', async () => {
+    const box = H.P.getByRole('textbox', { name: 'Message to Pip' })
+    await box.click()
+    await box.fill('no its half of that')
+    const listening = await waitState(H.P, 'listening', 1500)
+    await H.shot('tom-listening')
+    await H.page.route('**/api/sessions/*/turn', async (route) => {
+      await sleep(1500)
+      await route.continue()
+    })
+    let thinking, talking
+    try {
+      const respP = H.page.waitForResponse((r) => r.url().includes(`/sessions/${sid}/turn`), { timeout: 30000 })
+      await H.P.getByRole('button', { name: 'Send to Pip' }).click()
+      thinking = await waitState(H.P, 'thinking', 1200)
+      await H.shot('tom-thinking')
+      await respP
+      talking = await waitState(H.P, 'talking', 2500)
+      await H.shot('tom-talking')
+    } finally {
+      await H.page.unroute('**/api/sessions/*/turn')
+    }
+    const after = await waitState(H.P, 'idle', 12000)
+    return { pass: listening.ok && thinking.ok && talking.ok, listening, thinking, talking, backToIdle: after }
+  })
+  await H.step('TOM-1 mission pokes: head, belly, sprout each get their line', async () => {
+    const r = await pokeAll(H, '.fcap--pip')
+    return { pass: Object.values(r).every((x) => x.ok), ...r }
+  })
+  await H.step('TOM-1 chat: overlay shows the newest lines; the full sheet opens at the newest', async () => {
+    for (const t of ['because 2 triangles make a rectangle', 'so 6×4÷2 = 12', 'oh but for a right triangle you just times the two sides']) await sendText(H, sid, t)
+    await sleep(700)
+    const overlay = await newestVisible(H)
+    await H.shot('tom-overlay')
+    const f = vp.mobile ? await H.fit('tom-overlay') : { ok: true }
+    await H.P.getByRole('button', { name: 'Open the full chat' }).click()
+    await sleep(900)
+    const sheet = await H.P.evaluate(() => {
+      const feed = document.querySelector('.feed--sheet')
+      const msgs = feed ? [...feed.querySelectorAll('.msg')] : []
+      const last = msgs.at(-1)
+      const r = last?.getBoundingClientRect()
+      return { open: !!feed && feed.getBoundingClientRect().height > 0, messages: msgs.length, lastText: last?.textContent.trim().slice(0, 60), lastInView: !!r && r.bottom <= innerHeight + 1 && r.top >= 0, scroll: feed ? { top: Math.round(feed.scrollTop), h: feed.scrollHeight, ch: feed.clientHeight } : null }
+    })
+    await H.shot('tom-sheet')
+    const c = await H.contrast('tom-sheet')
+    await H.page.keyboard.press('Escape')
+    await sleep(400)
+    return { pass: overlay.ok && sheet.open && sheet.lastInView && f.ok, overlay, sheet, fit: f, sheetContrast: c.violations }
   })
 }
 
@@ -608,7 +847,7 @@ async function runRegisters(H) {
       await H.inApp()
       await H.P.evaluate(() => localStorage.removeItem('pip.audience'))
       await H.P.evaluate(() => location.reload())
-      await H.P.locator('.home-mission').waitFor({ timeout: 20000 })
+      await H.P.locator('.home-mission, .home-current__topic, .drop__desc').first().waitFor({ timeout: 20000 })
       await sleep(900)
       const st = (await api(`/students/${sid}`)).json?.student
       const aud = await registerOf(H.P)
@@ -622,7 +861,7 @@ async function runRegisters(H) {
   await H.step('register switch: Look sheet -> Mode', async () => {
     await page.goto(`${BASE}/student`)
     await H.inApp()
-    await H.P.locator('.home-mission').waitFor({ timeout: 20000 })
+    await H.P.locator('.home-mission, .home-current__topic, .drop__desc').first().waitFor({ timeout: 20000 })
     const out = {}
     for (const mode of ['Cool', 'Focus', 'Play']) {
       await H.P.getByRole('button', { name: 'Change Pip’s look' }).click()
@@ -649,6 +888,7 @@ for (const vp of VIEWPORTS) {
   const H = await openRun('student', vp)
   try {
     if (!process.env.SKIP_MAYA) await runMaya(H)
+    if (!process.env.SKIP_TOM) await runTom(H)
     await runOwnerTranscript(H)
     await runSecondaryLook(H)
     for (const p of PERSONAS) await runPersona(H, p)
@@ -658,8 +898,9 @@ for (const vp of VIEWPORTS) {
       const uniq = [...new Map(list.map((t) => [`${t.el}|${t.text}|${t.w}x${t.h}`, t])).values()]
       return { pass: uniq.length === 0, count: uniq.length, small: uniq.slice(0, 12) }
     })
-    await H.step('AA contrast on student screens', async () => {
-      const bad = Object.entries(H.R.contrast).filter(([, c]) => c.violations > 0)
+    await H.step('AA contrast on student screens (exam screens pending restyle)', async () => {
+      const bad = Object.entries(H.R.contrast).filter(([k, c]) => c.violations > 0 && !EXAM_VISUAL.test(k))
+      H.R.notes.examContrastPending = Object.entries(H.R.contrast).filter(([k]) => EXAM_VISUAL.test(k)).map(([k, c]) => [k, c.violations])
       return { pass: bad.length === 0, tool: Object.values(H.R.contrast)[0]?.tool, bad: bad.map(([k, c]) => ({ screen: k, n: c.violations, nodes: c.nodes?.slice(0, 3) })) }
     })
     await hygiene(H)

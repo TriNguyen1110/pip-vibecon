@@ -100,7 +100,8 @@ export async function openRun(journey, vp, { colorScheme = 'light' } = {}) {
   page.on('requestfailed', (r) => {
     const err = r.failure()?.errorText
     // Aborted media/TTS prefetches on navigation are not failures of the app.
-    if (/ERR_ABORTED/.test(err || '') && !/\/api\//.test(r.url())) return
+    // Aborted media/prefetch and GETs cut off by a navigation or reload are not app failures.
+    if (/ERR_ABORTED/.test(err || '') && (r.method() === 'GET' || !/\/api\//.test(r.url()))) return
     R.failedRequests.push({ step: cur, url: r.url().replace(BASE, ''), err })
   })
   page.on('response', (r) => {
