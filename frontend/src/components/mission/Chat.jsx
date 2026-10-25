@@ -3,6 +3,63 @@ import { CREATURE_EMOJI, MOOD_FACE } from '../Mascot.jsx'
 import { Dots } from '../ui.jsx'
 import { isCrit, isProcedureOnly } from '../../lib'
 
+// AGE-2 feed: one mono line per event, "−25 HP · Duke took a hit" (the boss's full line shows in the arena).
+const shortName = (n = '') => n.split(/\s+/)[0] || 'The boss'
+function FeedEventLines({ ev, bossName }) {
+  if (!ev) return null
+  const out = []
+  const who = shortName(bossName)
+  const amt = Math.abs(ev.amount || 0)
+  if (isProcedureOnly(ev) || ev.kind === 'none') {
+    out.push(
+      <p key="w" className="caption caption--whiff">
+        <span className="caption__text">
+          {who} unbothered{isProcedureOnly(ev) ? ' · procedure, no reason' : ''}
+        </span>
+      </p>,
+    )
+  } else if (ev.kind === 'hit') {
+    out.push(
+      <p key="h" className={`caption caption--hit${isCrit(ev) ? ' caption--crit' : ''}`}>
+        <span className="caption__text">
+          {amt ? `−${amt} HP · ` : ''}
+          {isCrit(ev) ? 'critical · ' : ''}
+          {who} took a hit
+        </span>
+      </p>,
+    )
+  } else if (ev.kind === 'heal') {
+    out.push(
+      <p key="he" className="caption caption--heal">
+        <span className="caption__text">
+          {amt ? `+${amt} HP · ` : ''}
+          {who} healed
+        </span>
+      </p>,
+    )
+  }
+  for (const w of ev.unlocked ?? []) {
+    out.push(
+      <p key={`u-${w}`} className="caption caption--unlock">
+        <span className="caption__text">
+          Unlocked · <b>{w}</b>
+        </span>
+      </p>,
+    )
+  }
+  return out.length ? (
+    <div className="captions" role="status">
+      {out}
+    </div>
+  ) : null
+}
+
+const hhmm = (ts) => {
+  if (!ts) return ''
+  const d = new Date(ts)
+  return Number.isNaN(d.getTime()) ? '' : d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }).replace(/\s?[AP]M$/i, '')
+}
+
 // Hit / heal / whiff captions are centered system lines in the chat flow, never on her bubble.
 function EventLines({ ev, bossName }) {
   if (!ev) return null
@@ -114,7 +171,12 @@ export default function Chat({
   highlight,
   endRef,
   onShare,
+  feed = false,
+  beliefs = {},
+  pipName = 'pip',
+  face,
 }) {
+  const Lines = feed ? FeedEventLines : EventLines
   // F19: long-press one of your own messages to show it to your family (private by default).
   const hold = useRef(null)
   const holdProps = (i) =>
@@ -142,11 +204,41 @@ export default function Chat({
           return (
             <div key={i} id={`msg-${i}`} className={`msg msg--system${turn}`}>
               <p>{m.text}</p>
-              <EventLines ev={m.event} bossName={bossName} />
+              <Lines ev={m.event} bossName={bossName} />
             </div>
           )
         }
         const isPip = m.from === 'pip'
+        if (feed && isPip) {
+          // Discord-style row: avatar, name + time, text, and a "Pip believes" tag when this line holds a rule.
+          return (
+            <div key={i} className="msg-group">
+              <div id={`msg-${i}`} className={`msg msg--pip${turn}${highlight === i ? ' is-flash' : ''}`}>
+                <span className="msg__face" aria-hidden>
+                  {face ?? body}
+                </span>
+                <div className="msg__main">
+                  <div className="msg__who">
+                    <span className="msg__name">{pipName.toLowerCase()}</span>
+                    <span className="mono-label">{hhmm(m.ts)}</span>
+                  </div>
+                  <p className="msg__bubble">
+                    <span className={i === lastPip ? 'bubble__text' : undefined}>
+                      <PipText text={m.text} />
+                    </span>
+                  </p>
+                  {beliefs[i] && (
+                    <div className="belief">
+                      <span>{beliefs[i]}</span>
+                      <span className="mono-label">{pipName} believes</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+              <Lines ev={m.event} bossName={bossName} />
+            </div>
+          )
+        }
         return (
           <div key={i} className="msg-group">
             <div id={`msg-${i}`} className={`msg ${isPip ? 'msg--pip' : 'msg--me'}${turn}${highlight === i ? ' is-flash' : ''}`}>
@@ -159,7 +251,7 @@ export default function Chat({
                 {isPip ? <PipText text={m.text} /> : m.text}
               </p>
             </div>
-            <EventLines ev={m.event} bossName={bossName} />
+            <Lines ev={m.event} bossName={bossName} />
           </div>
         )
       })}

@@ -265,7 +265,7 @@ async function run(vp) {
     const first = P.locator('.mission-tile').first()
     const topic = await first.locator('h3').textContent()
     // F4: the home is a title screen; the current mission starts from the PLAY gel.
-    await first.getByRole('button', { name: /^play$/i }).click()
+    await first.getByRole('button', { name: /^(play|teach [a-z]+)$/i }).click()
     await P.getByRole('dialog', { name: "Pick Pip's look" }).waitFor()
     await P.getByRole('radio', { name: new RegExp(process.env.CREATURE || 'Cat') }).click()
     await P.getByRole('radio', { name: /Glasses/ }).click()
@@ -391,14 +391,16 @@ async function run(vp) {
       const meterSum = (s) => Object.values(s.meters || {}).reduce((a, b) => a + b, 0)
       // Turn 1: level 1 (procedure, no reason): no damage, Pip asks why.
       if (i === 0) pass = after.boss_hp === before.boss_hp && events.every((e) => e.kind !== 'hit') && /\?/.test(pipText)
-      // Turns 2-3: real reasons: hits.
-      if (i === 1 || i === 2) {
-        pass = after.boss_hp < before.boss_hp && events.some((e) => e.kind === 'hit') && /\?|quiz me/i.test(pipText)
+      // Turn 2: a real reason: the boss takes a hit. Turn 3 (TUNE-2): ready for the quiz (state, not copy);
+      // a hit there is welcome but not required.
+      if (i === 1 || (i === 2 && events.some((e) => e.kind === 'hit'))) {
+        pass = after.boss_hp < before.boss_hp && events.some((e) => e.kind === 'hit')
         t.fightVisible = fightVis[i]
         // laptop: HP bar fully visible and >= 90% of the arena (Pip + boss) in view
         if (vp.w >= 1024) pass = pass && fightVis[i].hpVisible >= 0.99 && fightVis[i].arenaVisible >= 0.9
         else pass = pass && fightVis[i].hpVisible >= 0.99
       }
+      if (i === 2) pass = pass && (after.ready_for_quiz === true || /quiz me/i.test(pipText))
       // Turn 4: the deliberate wrong rule: the boss heals and Pip files it verbatim.
       if (i === 3) pass = after.boss_hp > before.boss_hp && events.some((e) => e.kind === 'heal') && /Saving that/.test(pipText) && pipText.includes(WRONG_RULE)
       // UI: no coral on her bubble

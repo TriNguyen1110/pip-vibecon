@@ -180,6 +180,8 @@ export function Shell({ who, initials, right, game, children, footer = true, bar
   const [skin] = usePlaySkin()
   const [aud] = useAudience()
   const [stTheme] = useStudentTheme()
+  // AGE-2: the soft palette only when the student picked Soft Pop or Kawaii Gel in the vibe grid.
+  const soft = /soft_pop|kawaii_gel/.test(stTheme?.id ?? '')
   useEffect(() => {
     setMetaColor(!!game, theme)
   }, [game, theme, skin])
@@ -188,7 +190,8 @@ export function Shell({ who, initials, right, game, children, footer = true, bar
       className={`shell${bar ? '' : ' shell--bare'}`}
       data-register={game ? (audience ?? aud) : 'studio'}
       data-student-theme={game && stTheme ? stTheme.id : undefined}
-      style={game && stTheme ? themeVars(stTheme) : undefined}
+      data-soft={game && soft ? '' : undefined}
+      style={game && stTheme && !soft ? themeVars(stTheme) : undefined}
       data-theme={game ? theme : undefined}
       data-skin={game ? skin : undefined}
     >

@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Pip2D from '../../pip2d/Pip2D.jsx'
+import Boss2D from '../../pip2d/Boss2D.jsx'
 import { MuteButton, PagerControls, TalkingMascot, useBoxHeight, usePager } from '../game.jsx'
 import { enqueueLine, sayLines, speak, stingLine } from '../../voice'
 import { accessoryFor, bossKindFor } from '../Mascot.jsx'
-import { Glints, InlineError } from '../ui.jsx'
+import { InlineError } from '../ui.jsx'
 import { CIRCLED } from '../../lib'
 import { usePipName } from '../../identity'
 
@@ -61,8 +62,18 @@ function cardEquation(assignment) {
   return KO_EQUATIONS[assignment?.id] ?? wrongEquation(assignment?.misconception)
 }
 
+// Time on the mission, as an LCD "mm:ss" from the first to the last message.
+function elapsed(session) {
+  const ts = (session.transcript ?? []).map((m) => Date.parse(m.ts)).filter((x) => !Number.isNaN(x))
+  const sec = ts.length > 1 ? Math.max(0, Math.round((Math.max(...ts) - Math.min(...ts)) / 1000)) : 0
+  return `${String(Math.floor(sec / 60)).padStart(2, '0')}:${String(sec % 60).padStart(2, '0')}`
+}
+
 function KoCard({ session, assignment, nickname, pipLine }) {
   const [flipped, setFlipped] = useState(false)
+  const pipName = usePipName()
+  const v = session.brain_version ?? 2
+  const prevV = Math.max(1, v - 1)
   const boss = assignment?.boss ?? {}
   const eq = cardEquation(assignment)
   const fixedRule = session.brain?.find((r) => r.fixed_after) ?? session.brain?.filter((r) => r.correct).at(-1)
@@ -74,32 +85,84 @@ function KoCard({ session, assignment, nickname, pipLine }) {
   return (
     <button
       type="button"
-      className={`ko-card${flipped ? ' is-flipped' : ''}`}
+      className={`ko-card kocard${flipped ? ' is-flipped' : ''}`}
       onClick={() => setFlipped((f) => !f)}
       aria-label={flipped ? 'K.O. card, back. Tap to flip.' : 'K.O. card, front. Tap to flip.'}
     >
       <span className="ko-card__inner">
         <span className="ko-card__face ko-card__front">
-          <span className="ko-card__top">
-            <span className="ko-card__meta ko-card__no mono">No. {serial(session.id)}</span>
-            <span className="ko-card__emoji" aria-hidden>
-              {boss.emoji}
+          <span className="kocard__top">
+            <span className="mono-label">
+              {pipName} · Card #{String(session.payoff?.card?.card_no ?? serial(session.id)).padStart(3, '0')}
+            </span>
+            <span className="mono-label ko__version" aria-label={`Brain upgraded from version ${prevV} to ${v}`}>
+              ● Brain v{prevV} → Brain v{v}
             </span>
           </span>
-          <span className="ko-card__line" aria-hidden />
-          <span className="ko-card__eq">
-            {eq ? (
-              <>
-                {pretty(eq[0])} = <s>{pretty(eq[1])}</s>
-              </>
-            ) : (
-              <s>{boss.name}</s>
-            )}
+          <span className="kocard__art scanbox">
+            <span className="kocard__boss" aria-hidden>
+              <Boss2D boss={bossKindFor(boss.name, boss.emoji)} state="ko" size={72} />
+            </span>
+            <span className="kocard__pip" aria-hidden>
+              <Pip2D
+                creature={session.creature ?? 'capybara'}
+                vibe={session.vibe ?? 'cool'}
+                accessory={accessoryFor(session.accessory, session.vibe ?? 'cool')}
+                version={v}
+                mood="proud"
+                size={128}
+                animate={false}
+              />
+            </span>
+            <span className="kocard__ko display-x chrome-type">K.O.</span>
           </span>
-          <span className="ko-card__bottom">
-            <span className="ko-card__nick">{nickname}</span>
-            <span className="ko-card__meta mono">{date}</span>
+          <span className="holo-line" aria-hidden />
+          <span className="kgrid">
+            <span>
+              <span className="mono-label">Boss</span>
+              <b className="kgrid__plain">{boss.name}</b>
+            </span>
+            <span>
+              <span className="mono-label">Time</span>
+              <b>{elapsed(session)}</b>
+            </span>
+            <span>
+              <span className="mono-label">Re-teaches</span>
+              <b>{String(session.reteach_count ?? 0).padStart(2, '0')}</b>
+            </span>
+            <span>
+              <span className="mono-label">Quiz</span>
+              <b>
+                {(session.quiz ?? []).filter((q) => q.passed).length}/{(session.quiz ?? []).length || 3}
+              </b>
+            </span>
           </span>
+          <span className="kocard__item">
+            <span className="mono-label">{pipName} believed</span>
+            <span className="kocard__eq">
+              {eq ? (
+                <>
+                  {pretty(eq[0])} = <s>{pretty(eq[1])}</s>
+                </>
+              ) : (
+                <s>{boss.name}</s>
+              )}
+            </span>
+          </span>
+          {fixedRule && (
+            <span className="kocard__quote">
+              “{fixedRule.quote}”
+              <span className="mono-label">
+                — {nickname}, teaching {pipName} · {date}
+              </span>
+            </span>
+          )}
+          {session.finisher && (
+            <span className="kocard__item">
+              <span>{typeof session.finisher === 'object' ? session.finisher.weapon : session.finisher}</span>
+              <span className="lcd">Earned</span>
+            </span>
+          )}
         </span>
         <span className="ko-card__face ko-card__back">
           <span className="ko-card__boss">{boss.name}</span>
@@ -369,13 +432,6 @@ export default function KO({
       </header>
       <div className="ko__beats snap-x" ref={pager.ref}>
         <section className="ko-beat ko-beat--card" aria-label="Your K.O. card">
-          <div className="ko__version" aria-label={`Brain upgraded from version ${prevV} to ${v}`}>
-            <span className="sticker sticker--chrome brain-badge--old">Brain v{prevV}</span>
-            <span aria-hidden>→</span>
-            <span className="sticker sticker--chrome brain-badge--new">Brain v{v}</span>
-            <i className="y2k-star y2k-star--glint" aria-hidden />
-            <Glints />
-          </div>
           <div className="ko__cardwrap">
             <KoCard session={session} assignment={assignment} nickname={nickname} pipLine={pipLine} />
             <p className="ko__hint">Tap the card to flip it. It’s yours to keep.</p>

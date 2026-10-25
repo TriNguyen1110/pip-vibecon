@@ -3,9 +3,10 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { api, DEMO, DEMO_STUDENTS, PINNED_MISSIONS } from '../api'
 import { readLocal, useLoad, writeLocal } from '../hooks'
 import { ErrorState, InlineError, Shell, Sheet, Wordmark, useToast } from '../components/ui.jsx'
-import { DEFAULT_CREATURE, lookForCreature } from '../components/Mascot.jsx'
+import { DEFAULT_CREATURE, bossKindFor, lookForCreature } from '../components/Mascot.jsx'
+import Boss2D from '../pip2d/Boss2D.jsx'
 import { noteGrade, setStudentTheme } from '../theme'
-import { Drawer, IconButton, MuteButton, TalkingMascot, ThemeButton, useBoxHeight } from '../components/game.jsx'
+import { Drawer, MuteButton, TalkingMascot, useBoxHeight } from '../components/game.jsx'
 import { setVoiceContext, speak, tapLine, voiceForVibe } from '../voice'
 import MascotPicker from '../components/MascotPicker.jsx'
 import StyleGrid from '../components/StyleGrid.jsx'
@@ -28,6 +29,15 @@ export default function StudentHome() {
   const preview = params.get('preview') === '1'
   return <StudentHomeView key={sid} sid={sid} onSwitch={pick} recordOpen={!switched.current && !preview} />
 }
+
+// The drop card's one line: what Pip believes and who lives in that rule.
+function dropLine(a, pipName) {
+  const claim = String(a?.misconception ?? '').split(/,| so |;|\.\s/)[0].trim()
+  const rule = claim ? claim.charAt(0).toLowerCase() + claim.slice(1) : 'something wrong'
+  return `${pipName} thinks ${rule}. ${a?.boss?.name ?? 'The boss'} is living in that rule.`
+}
+const thumbFor = (a) =>
+  /tri/.test(a?.id ?? '') ? '△' : /frac/.test(a?.id ?? '') ? '½' : /comma/.test(a?.id ?? '') ? ',' : /linear/.test(a?.id ?? '') ? 'x' : '·'
 
 // Demo: switch the student (no <select> on Play screens; a sheet of gels instead).
 function StudentSwitch({ sid, onSwitch, onClose }) {
@@ -220,115 +230,186 @@ function StudentHomeView({ sid, onSwitch, recordOpen }) {
 
   return (
     <Shell game bar={false} footer={false}>
-      <div className="game play-screen game--home">
-        <header className="game-top hud home-top">
-          <span className="home-top__left">
-            <Wordmark size={34} holo />
-
-          </span>
-          <div className="hud__right">
-            <IconButton
-              label="Try another student"
-              onClick={() => setSheet('switch')}
-              aria-expanded={sheet === 'switch'}
-            >
-              👥
-            </IconButton>
-            <ThemeButton />
+      <div className="game play-screen game--home game--home2">
+        <header className="home2-top">
+          <Wordmark size={26} />
+          <div className="home2-top__right">
+            <span className="lcd" aria-label={`${pipName}'s Brain version ${brainV}, taught by ${first}`}>
+              Brain v{brainV}
+            </span>
             <MuteButton />
+            <button
+              type="button"
+              className="home2-avatar"
+              aria-label="Try another student"
+              title="Try another student"
+              onClick={() => setSheet('switch')}
+            >
+              {(first || '?').charAt(0)}
+            </button>
           </div>
         </header>
 
-        <section className="home-stage" aria-label="Pip’s room">
-          <span className="sticker sticker--chrome home-top__brain home-plaque" aria-label={`${pipName}'s Brain version ${brainV}, taught by ${first}`}>
-            {pipName !== 'Pip' ? `${pipName} · ` : ''}Brain v{brainV} · taught by {first || 'you'}
-          </span>
-          <div className="home-stage__room" ref={stageBox}>
-            {stageH > 0 && (
-              <TalkingMascot
-                creature={look.creature}
-                look={look.creature}
-                accessory={look.accessory}
-                vibe={look.vibe}
-                version={brainV}
-                mood={latest?.mood === 'celebrating' ? 'celebrating' : 'confused'}
-                env="room"
-                framing="hero"
-                reaction={react}
-                height={stageH}
-                onTap={tapPip}
-              />
-            )}
-          </div>
-          <div className="speech msg msg--pip" aria-live="polite">
-            <p className={`bubble bubble--pip speech__bubble pip-line${say ? ' is-aside' : ''}`} key={say ?? 'g'}>
-              {say ?? (current || data.loading ? greeting : 'No mission yet. Your tutor will send one.')}
-            </p>
-            <span className="speech__tail" aria-hidden />
-          </div>
-        </section>
-
         <h1 className="sr-only">{first ? `Hi ${first}.` : 'Hi.'}</h1>
 
-        <section className="home-mission" aria-label="Current mission">
-          {data.loading && !data.data ? (
-            <p className="home-mission__wait">Finding your missions…</p>
-          ) : data.error && !data.data ? (
-            <ErrorState error={data.error} onRetry={data.reload} title="Pip lost the thread." />
-          ) : current ? (
-            <article className={`mission-tile home-current${current.active ? ' is-active' : ''}`}>
-              <h3 className="ribbon home-current__topic">{current.a.topic}</h3>
-              <span
-                className="sticker sticker--boss home-current__vs"
-                aria-label={`Boss: ${current.a.boss?.name ?? ''}`}
-              >
-                vs {current.a.boss?.emoji ?? '👾'}
+        {data.loading && !data.data ? (
+          <p className="drop__desc">Finding your missions…</p>
+        ) : data.error && !data.data ? (
+          <ErrorState error={data.error} onRetry={data.reload} title="Pip lost the thread." />
+        ) : current ? (
+          <article className={`mission-tile home-current drop${current.active ? ' is-active' : ''}`}>
+            <div className="drop__art scanbox">
+              <div className="drop__labels">
+                <span className="mono-label">● {current.active ? 'In progress' : current.done ? 'Done' : 'Today’s drop'}</span>
+                <span className="mono-label">
+                  Mission {String(missions.indexOf(current) + 1).padStart(2, '0')}/{String(missions.length).padStart(2, '0')}
+                </span>
+              </div>
+              <span className="drop__boss" aria-hidden>
+                <Boss2D boss={bossKindFor(current.a.boss?.name, current.a.boss?.emoji)} state="smug" size={78} />
               </span>
+              <div className="home-stage__room" ref={stageBox}>
+                {stageH > 0 && (
+                  <TalkingMascot
+                    creature={look.creature}
+                    look={look.creature}
+                    accessory={look.accessory}
+                    vibe={look.vibe ?? 'cool'}
+                    version={brainV}
+                    mood={latest?.mood === 'celebrating' ? 'celebrating' : 'deadpan'}
+                    env="room"
+                    framing="hero"
+                    reaction={react}
+                    height={stageH}
+                    onTap={tapPip}
+                  />
+                )}
+              </div>
+              {say && (
+                <p className="drop__say" key={say} aria-live="polite">
+                  {say}
+                </p>
+              )}
+            </div>
+            <div className="drop__body">
+              <h3 className="drop__title display-x chrome-type home-current__topic">{current.a.topic}</h3>
+              <p className="drop__desc">{dropLine(current.a, pipName)}</p>
+              <div className="drop__meta">
+                <div>
+                  <span className="mono-label">Time</span>
+                  <b>~6 min</b>
+                </div>
+                <div>
+                  <span className="mono-label">Ideas</span>
+                  <b>{current.a.concepts?.length ?? 3}</b>
+                </div>
+                <div>
+                  <span className="mono-label">Brain</span>
+                  <b>v{brainV}</b>
+                </div>
+              </div>
               {current.active ? (
                 <Link className="gel-btn gel-btn--lg home-play" to={`/student/mission/${current.active.id}`}>
-                  Play
+                  Keep teaching
                 </Link>
               ) : current.done ? (
-                <Link
-                  className="gel-btn gel-btn--lg gel-btn--secondary home-play"
-                  to={`/student/mission/${current.done.id}`}
-                >
-                  K.O.
+                <Link className="gel-btn gel-btn--lg home-play" to={`/student/mission/${current.done.id}`}>
+                  See the K.O.
                 </Link>
               ) : (
                 <button className="gel-btn gel-btn--lg home-play" onClick={() => openMission(current.a)}>
-                  Play
+                  Teach {pipName}
                 </button>
               )}
-            </article>
-          ) : (
-            <button className="gel-btn gel-btn--lg home-play" disabled>
-              Play
+            </div>
+          </article>
+        ) : (
+          <p className="drop__desc">No missions yet. Your tutor will send one.</p>
+        )}
+
+        <section className="rows" aria-label="Continue">
+          <div className="rows__head">
+            <span className="mono-label">Continue</span>
+            <button type="button" className="mono-label linklike" onClick={() => setSheet('missions')}>
+              See all
             </button>
+          </div>
+          {missions.filter((m) => m !== current).length === 0 && (
+            <>
+              {saved.slice(0, 1).map((sv) => (
+                <Link key={sv.id} to={`/student/mission/${sv.id}`} className="row2">
+                  <span className="row2__thumb scanbox" aria-hidden>
+                    {thumbFor(assignments.find((a) => a.id === sv.assignment_id))}
+                  </span>
+                  <span>
+                    <span className="row2__t">{assignments.find((a) => a.id === sv.assignment_id)?.topic ?? 'Pip session'}</span>
+                    <span className="row2__s mono-label">{sv.label ?? 'Saved session'}</span>
+                  </span>
+                  <span className="lcd">Saved</span>
+                </Link>
+              ))}
+              <div className="row2 row2--locked" aria-label="Next mission, after this one">
+                <span className="row2__thumb scanbox" aria-hidden>
+                  ?
+                </span>
+                <span>
+                  <span className="row2__t">Next drop</span>
+                  <span className="row2__s mono-label">Locked · after this mission</span>
+                </span>
+                <span className="mono-label">—</span>
+              </div>
+            </>
           )}
+          {missions
+            .filter((m) => m !== current)
+            .slice(0, 2)
+            .map(({ a, active, done }) => (
+              <button
+                key={a.id}
+                type="button"
+                className="row2"
+                onClick={() => (active ? navigate(`/student/mission/${active.id}`) : done ? navigate(`/student/mission/${done.id}`) : openMission(a))}
+              >
+                <span className="row2__thumb scanbox" aria-hidden>
+                  {thumbFor(a)}
+                </span>
+                <span>
+                  <span className="row2__t">{a.topic}</span>
+                  <span className="row2__s mono-label">{done ? `Fixed · ${done.reteach_count ?? 0} re-teach` : active ? 'In progress' : 'New'}</span>
+                </span>
+                {done ? <span className="lcd">K.O.</span> : <span className="mono-label">›</span>}
+              </button>
+            ))}
         </section>
 
-        <footer className="game-foot home-foot">
-          <IconButton label="Change Pip’s look" caption="Look" onClick={() => setPicker({ editOnly: true })}>
-            🎨
-          </IconButton>
-          <IconButton
-            label="The vault"
-            caption="Vault"
-            onClick={() => setSheet('vault')}
-            aria-expanded={sheet === 'vault'}
-          >
-            🏆
-          </IconButton>
-          <IconButton
-            label="Missions"
-            caption="Missions"
-            onClick={() => setSheet('missions')}
-            aria-expanded={sheet === 'missions'}
-          >
-            🗺️
-          </IconButton>
-        </footer>
+        <nav className="tabs" aria-label="Pip">
+          <button type="button" className="tab on" aria-current="page">
+            <svg viewBox="0 0 24 24" aria-hidden>
+              <path d="M3 11 12 4l9 7v9H3z" />
+            </svg>
+            Home
+          </button>
+          <button type="button" className="tab" onClick={() => setSheet('missions')} aria-label="Missions">
+            <svg viewBox="0 0 24 24" aria-hidden>
+              <path d="M4 6h16M4 12h16M4 18h10" />
+            </svg>
+            Missions
+          </button>
+          <button type="button" className="tab" onClick={() => setSheet('vault')} aria-label="The vault">
+            <svg viewBox="0 0 24 24" aria-hidden>
+              <rect x="4" y="4" width="16" height="16" rx="2" />
+              <path d="M4 10h16" />
+            </svg>
+            Vault
+          </button>
+          <button type="button" className="tab" onClick={() => setPicker({ editOnly: true })} aria-label="Change Pip’s look">
+            <svg viewBox="0 0 24 24" aria-hidden>
+              <circle cx="12" cy="12" r="8" />
+              <path d="M12 8v8M8 12h8" />
+            </svg>
+            Look
+          </button>
+        </nav>
       </div>
 
       <Drawer open={sheet === 'vault'} onClose={() => setSheet(null)} label="The vault">

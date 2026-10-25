@@ -6,10 +6,12 @@ import { setPipName, usePipName } from '../identity'
 import { Scene2D, sceneFor } from '../scenes'
 import { copyFor, noteGrade, useAudience, usePlayTheme } from '../theme'
 import QuizWait from '../components/mission/QuizWait.jsx'
-import { Dots, ErrorState, Loading, Shell, useToast } from '../components/ui.jsx'
+import { ErrorState, Loading, Shell, useToast } from '../components/ui.jsx'
 import { LevelMap } from '../components/mission/MissionCard.jsx'
-import { HudBoss, WeaponGels } from '../components/mission/Boss.jsx'
-import Chat, { PipText } from '../components/mission/Chat.jsx'
+import { WeaponGels } from '../components/mission/Boss.jsx'
+import Pip2D from '../pip2d/Pip2D.jsx'
+import { accessoryFor } from '../components/Mascot.jsx'
+import Chat from '../components/mission/Chat.jsx'
 import { Brain, QuizPage } from '../components/mission/Brain.jsx'
 import KO from '../components/mission/KO.jsx'
 import {
@@ -130,6 +132,7 @@ function MissionView({ initial }) {
   const [finisherErr, setFinisherErr] = useState(null)
   const [showBrainAfterKO, setShowBrainAfterKO] = useState(false)
   const [historyOpen, setHistoryOpen] = useState(false)
+  const [mapOpen, setMapOpen] = useState(false)
   const [highlight, setHighlight] = useState(null)
 
   const endRef = useRef(null)
@@ -154,7 +157,6 @@ function MissionView({ initial }) {
   const quizOpen =
     canQuiz && (session.reteach_concept || session.ready_for_quiz === undefined || session.ready_for_quiz === true)
   const lastPip = [...transcript].reverse().find((m) => m.from === 'pip')
-  const lastMe = [...transcript].reverse().find((m) => m.from === 'student')
 
   const flash = useCallback((key, setter, value, ms) => {
     clearTimeout(timers.current[key])
@@ -228,7 +230,9 @@ function MissionView({ initial }) {
       ]
       if (unlocked.length) {
         flash('fresh', setFreshWeapons, unlocked, 1600)
-        toast(`${unlocked.length > 1 ? 'Weapons' : 'Weapon'} unlocked: ${unlocked.join(', ')}`)
+        // The feed already shows "Unlocked · X" for announced weapons; only silent ones get a toast.
+        const silent = unlocked.filter((w) => !announced.includes(w))
+        if (silent.length) toast(`${silent.length > 1 ? 'Weapons' : 'Weapon'} unlocked: ${silent.join(', ')}`)
       }
       if (next.mood !== prev.mood) setReaction((r) => r + 1)
       if (evs.some((e) => e.kind === 'family_shared')) toast('Ms. Rivera shared this with your family.')
@@ -555,31 +559,51 @@ function MissionView({ initial }) {
     )
   }
 
-  /* ---------- Teaching: Talking-Tom stage, newest line as a speech bubble ---------- */
-  const bubbleText = tapSay ?? lastPip?.text ?? ''
-  const her = queued.length ? { text: queued.at(-1), queued: true } : (pending ?? (lastMe ? { text: lastMe.text } : null))
+  /* ---------- Teaching (AGE-2): Discord-style feed under an LCD boss bar and a small arena strip ---------- */
   const ready = nextReady(session, concepts) || !!session.reteach_concept
+  const hp = Math.max(0, Math.min(100, session.boss_hp ?? 100))
+  const bossTag = (boss.name ?? 'boss')
+    .split(/\s+/)
+    .map((w, k) => (k === 0 ? w.slice(0, 4) : w.slice(0, 3)))
+    .join('.')
+    .toUpperCase()
+  const missionNo = String((assignmentIndex(assignment) ?? 0) + 1).padStart(2, '0')
+  const beliefs = beliefsFor(session, assignment)
 
   return (
     <Shell game bar={false} footer={false}>
-      <div className={`game play-screen game--mission${wide ? ' is-wide' : ''}`}>
-        <header className="game-top hud">
+      <div className={`game play-screen game--mission game--feed${wide ? ' is-wide' : ''}`}>
+        <header className="mhead">
           <Link to={home} className="gel-btn gel-btn--secondary icon-btn" aria-label="Pip’s room" title="Pip’s room">
-            <span aria-hidden>🏠</span>
+            <span aria-hidden>‹</span>
           </Link>
-          <HudBoss boss={boss} hp={session.boss_hp} fx={fx} />
-          {hudRight}
+          <div className="mhead__title">
+            <div className="display-x">{assignment?.topic ?? 'Pip mission'}</div>
+            <span className="mono-label">
+              Mission {missionNo} · Brain v{session.brain_version ?? 1}
+            </span>
+          </div>
+          <div className="mhead__right">
+            <MuteButton />
+            <IconButton label="Notebook" onClick={() => setHistoryOpen(true)} aria-expanded={historyOpen}>
+              ▤
+            </IconButton>
+          </div>
         </header>
 
-        <div className="game-sub">
-          <LevelMap
-            assignment={assignment}
-            session={session}
-            concepts={concepts}
-            focus={focus}
-            onFocus={status === 'teaching' ? focusStep : null}
-            bossEmoji={boss.emoji}
-          />
+        <div className="bossbar" aria-label={`${boss.name}, ${hp} HP`}>
+          <span className={`lcd lcd--boss${fx ? ` shake-${fx.kind} fx-${fx.n % 2}` : ''}`}>{bossTag}</span>
+          <span className="seg-hp hp__track" role="meter" aria-valuemin={0} aria-valuemax={100} aria-valuenow={hp} aria-label="Boss HP">
+            {Array.from({ length: 10 }, (_, k) => (
+              <b key={k} className={k < Math.ceil(hp / 10) ? '' : 'off'} />
+            ))}
+          </span>
+          <span className="lcd">{String(hp).padStart(3, '0')}</span>
+          {fx?.amount ? (
+            <span key={fx.n} className="dmg" aria-hidden>
+              {fx.kind === 'hit' ? `−${fx.amount}` : fx.kind === 'heal' ? `+${fx.amount}` : ''}
+            </span>
+          ) : null}
         </div>
 
         {session.reteach_concept && (
@@ -590,89 +614,104 @@ function MissionView({ initial }) {
         )}
 
         <Stage
+          strip
           session={session}
           boss={boss}
           accessory={accessory}
           reaction={reaction}
           onTap={tapPip}
-          bubble={
-            sending ? (
-              <p className="bubble bubble--pip speech__bubble speech__bubble--dots msg__bubble">
-                <span className="sr-only">Pip is thinking…</span>
-                <Dots />
-              </p>
-            ) : (
-              <p
-                className={`bubble bubble--pip speech__bubble msg__bubble${tapSay ? ' is-aside' : ''}`}
-                key={bubbleText}
-              >
-                <span className="bubble__text">{tapSay ? tapSay : <PipText text={bubbleText} />}</span>
-              </p>
-            )
-          }
-          listening={typing}
           fcap={fcap}
           taunt={taunt}
-          her={
-            her && (
-              <div className={`msg msg--me her-line${!her.queued && pending?.failed ? ' is-failed' : her.queued || pending ? ' is-pending' : ''}`}>
-                <div className="msg__body">
-                  <p className="bubble bubble--me msg__bubble" key={her.text}>
-                    <span className="bubble__text bubble__text--2">{her.text}</span>
-                  </p>
-                  {her.queued ? (
-                    <p className="msg__sending">{queued.length > 1 ? `${queued.length} waiting` : 'waiting'}</p>
-                  ) : pending?.failed ? (
-                    <p className="msg__retry">
-                      Didn’t send.{' '}
-                      <button className="linklike" onClick={() => send(pending.text)}>
-                        Try again
-                      </button>
-                    </p>
-                  ) : null}
-                </div>
-              </div>
-            )
-          }
           sending={sending}
           fx={fx}
           onGiveUp={() => abortRef.current?.abort()}
+          tapSay={tapSay}
         />
 
-        <div className="tray">
-          {!wide && (
-            <IconButton
-              label="Notebook"
-              className="icon-btn--sm"
-              onClick={() => setHistoryOpen(true)}
-              aria-expanded={historyOpen}
-            >
-              📓
-            </IconButton>
+        <div className="feed chat-scroll speech">
+          <Chat
+            feed
+            transcript={session.transcript}
+            creature={session.creature}
+            mood={session.mood}
+            bossName={boss.name}
+            pending={pending}
+            onRetry={() => send(pending?.text)}
+            onGiveUp={() => abortRef.current?.abort()}
+            typing={typing}
+            thinking={sending}
+            highlight={highlight}
+            endRef={endRef}
+            onShare={shareWithFamily}
+            beliefs={beliefs}
+            pipName={pipName}
+            face={
+              <Pip2D
+                creature={session.creature ?? 'capybara'}
+                vibe={session.vibe ?? 'cool'}
+                accessory={accessoryFor(accessory, session.vibe ?? 'cool')}
+                mood="deadpan"
+                size={30}
+                animate={false}
+              />
+            }
+          />
+          {queued.map((t, k) => (
+            <div key={`q${k}`} className="msg msg--me is-pending">
+              <div className="msg__body">
+                <p className="msg__bubble">{t}</p>
+                <p className="msg__sending mono">waiting</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="tools tray">
+          {mapOpen && (
+            <div className="levelmap-pop">
+              <LevelMap
+                assignment={assignment}
+                session={session}
+                concepts={concepts}
+                focus={focus}
+                onFocus={status === 'teaching' ? (cid) => (focusStep(cid), setMapOpen(false)) : null}
+                bossEmoji={boss.emoji}
+              />
+            </div>
           )}
-          <div className="tray__weapons">
-            <WeaponGels
-              weapons={session.weapons}
-              equipped={session.equipped}
-              onEquip={equip}
-              equipping={equipping}
-              fresh={freshWeapons ?? []}
-            />
-          </div>
+          <button
+            type="button"
+            className="gel-btn gel-btn--secondary chip-tool"
+            aria-expanded={mapOpen}
+            onClick={() => setMapOpen((v) => !v)}
+          >
+            ◫ Steps
+          </button>
+          <button
+            type="button"
+            className="gel-btn gel-btn--secondary chip-tool"
+            onClick={() => {
+              setInput((v) => (v.trim() ? v : 'for example, '))
+              inputRef.current?.focus()
+            }}
+          >
+            ↺ Example
+          </button>
           {quizOpen ? (
             <button
-              className={`gel-btn gel-btn--sm quiz-btn${ready ? ' is-ready' : ' gel-btn--secondary'}`}
+              className={`gel-btn gel-btn--secondary chip-tool quiz-btn${ready ? ' is-ready' : ''}`}
               onClick={quiz}
               disabled={sending || quizBusy}
             >
-              {named(session.reteach_concept ? copyFor(aud, 'retry') : copyFor(aud, 'quiz'))}
+              ? {named(session.reteach_concept ? copyFor(aud, 'retry') : copyFor(aud, 'quiz'))}
             </button>
           ) : (
             canQuiz && (
-              // Not ready yet (ready_for_quiz): a quiet state. Hold it to quiz anyway, so nobody is trapped.
               <button
-                className="gel-btn gel-btn--sm gel-btn--secondary keep-teaching"
-                onClick={() => flash('tap', setTapSay, 'Teach me a bit more first. Hold the button if you want to quiz me anyway.', 3200)}
+                className="gel-btn gel-btn--secondary chip-tool keep-teaching"
+                onClick={() =>
+                  flash('tap', setTapSay, 'Teach me a bit more first. Hold the button if you want to quiz me anyway.', 3200)
+                }
                 disabled={sending || quizBusy}
                 aria-label="Keep teaching. Hold to quiz Pip anyway."
                 {...holdToQuiz}
@@ -681,6 +720,15 @@ function MissionView({ initial }) {
               </button>
             )
           )}
+          <span className="tray__weapons">
+            <WeaponGels
+              weapons={session.weapons}
+              equipped={session.equipped}
+              onEquip={equip}
+              equipping={equipping}
+              fresh={freshWeapons ?? []}
+            />
+          </span>
         </div>
 
         <div className="game-input">
@@ -708,11 +756,7 @@ function MissionView({ initial }) {
               aria-label="Message to Pip"
               enterKeyHint="send"
             />
-            <button
-              className="composer__send gel-btn icon-btn"
-              disabled={!input.trim()}
-              aria-label="Send to Pip"
-            >
+            <button className="composer__send gel-btn icon-btn" disabled={!input.trim()} aria-label="Send to Pip">
               ↑
             </button>
           </form>
@@ -722,6 +766,28 @@ function MissionView({ initial }) {
     </Shell>
   )
 }
+
+// "Pip believes" tags in the feed: the opening claim (the misconception's first clause) and every rule Pip files
+// while the boss heals (the quoted words after "Saving that:").
+function beliefsFor(session, assignment) {
+  const t = session.transcript ?? []
+  const out = {}
+  const firstMe = t.findIndex((m) => m.from === 'student')
+  const opening = t.slice(0, firstMe < 0 ? t.length : firstMe).map((m) => m.from).lastIndexOf('pip')
+  const claim = String(assignment?.misconception ?? '')
+    .split(/,| so |;|\.\s/)[0]
+    .trim()
+  if (opening >= 0 && claim) out[opening] = claim.charAt(0).toLowerCase() + claim.slice(1)
+  t.forEach((m, i) => {
+    if (m.from !== 'pip' || m.event?.kind !== 'heal') return
+    const q = /Saving that:\s*['‘"“]([\s\S]+?)['’"”]/.exec(m.text ?? '')
+    if (q) out[i] = q[1]
+  })
+  return out
+}
+
+const assignmentIndex = (a) => (a?.id === 'a_tri' ? 0 : null)
+
 
 // Pip2D mood for the newest moment (coordinator mapping): thinking while waiting, smug (possessed)
 // right after she teaches the misconception (the boss heals), aha on a level-2/3 hit, notes when
@@ -761,8 +827,10 @@ function Stage({
   sending,
   onGiveUp,
   fx,
+  strip,
+  tapSay,
 }) {
-  const [box, h] = useBoxHeight(140)
+  const [box, h] = useBoxHeight(strip ? 80 : 140)
   const [theme] = usePlayTheme()
   const [slow, setSlow] = useState(false)
   useEffect(() => {
@@ -773,6 +841,61 @@ function Stage({
     const t = setTimeout(() => setSlow(true), 8000)
     return () => clearTimeout(t)
   }, [sending])
+  if (strip) {
+    // AGE-2: a small "now playing" strip over the quiet scene: Pip (mouth, moods, tap-to-talk) and the boss.
+    const note = fcap
+      ? {
+          k: `f${fcap.n}`,
+          cls: `fcap fcap--${fcap.kind}`,
+          text:
+            fcap.text ||
+            (fcap.kind === 'hit' ? `${boss.name} took a hit.` : fcap.kind === 'heal' ? `${boss.name} healed.` : `${boss.name} is unbothered.`),
+        }
+      : taunt
+        ? { k: 'taunt', cls: 'taunt', text: taunt }
+        : tapSay
+          ? { k: `t${tapSay}`, cls: 'fcap fcap--pip', text: tapSay }
+          : slow
+            ? { k: 'slow', cls: 'fcap', text: 'Still thinking. Long thought.' }
+            : null
+    return (
+      <div className="arena-strip game-stage--scene">
+        <Scene2D scene={sceneFor({ assignmentId: session.assignment_id })} theme={theme} className="mission-scene" variant="lite" />
+        <div className="arena" ref={box}>
+          {h > 0 && (
+            <TalkingMascot
+              creature={session.creature ?? 'capybara'}
+              look={session.look}
+              accessory={accessory}
+              vibe={session.vibe ?? 'cool'}
+              mood={pipMood(session, sending)}
+              env="arena"
+              framing="hero"
+              bossEmoji={boss.emoji}
+              bossName={boss.name}
+              bossHp={session.boss_hp ?? 100}
+              bossFx={fx}
+              reaction={reaction}
+              height={h}
+              onTap={onTap}
+            />
+          )}
+        </div>
+        {note && (
+          <p key={note.k} className={note.cls} role="status">
+            {note.text}
+            {fcap?.lvl1 && <span className="caption__lvl"> · procedure, no reason</span>}
+            {slow && !fcap && !taunt && !tapSay && (
+              <button className="linklike" onClick={onGiveUp}>
+                {' '}
+                Try again
+              </button>
+            )}
+          </p>
+        )}
+      </div>
+    )
+  }
   return (
     <div className="game-stage game-stage--scene">
       {/* The mission's 2D world (src/scenes): skatepark for triangles, boba for fractions, and so on. */}

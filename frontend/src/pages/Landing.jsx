@@ -58,7 +58,7 @@ export default function Landing() {
             <span className="podium" aria-hidden />
           </div>
           <span className="landing-hero__pip" aria-hidden>
-            <Pip2D creature="capybara" vibe="cool" accessory={['none', 'none']} mood="deadpan" pose="pose" size={190} lighting="club" />
+            <Pip2D creature="capybara" vibe="cool" accessory={['none', '']} mood="deadpan" pose="pose" size={190} lighting="club" />
           </span>
         </div>
       </section>

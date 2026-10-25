@@ -214,7 +214,7 @@ function usePoke(reaction) {
 // Students default to cool now, so "none" means none: pass an explicit empty pair. Cute keeps its star clips.
 export function accessoryFor(accessory, vibe) {
   const none = !accessory || accessory === 'none' || (Array.isArray(accessory) && accessory.every((a) => a === 'none'))
-  return none && vibe !== 'cute' ? ['none', 'none'] : accessory
+  return none && vibe !== 'cute' ? ['none', ''] : accessory
 }
 
 export function Stage2D({
