@@ -1,4 +1,5 @@
 import { FlagPills, PipHead } from '../../staff/bits.jsx'
+import { pipOf } from '../../staff/pip'
 import { ago, daysSince, subjectShort } from '../../staff/format'
 
 // Students × subjects. Dense, scannable rows (44px+ touch), whole row opens the profile.
@@ -34,7 +35,7 @@ export default function StudentsTable({ rows, tutors, tutorId, activeId, selecte
               <input type="checkbox" aria-label={`Select ${s.name}`} checked={on} onChange={() => onToggle(s.id)} />
             </span>
             <span role="cell" className="st__who">
-              <PipHead pip={s.pip} taught={daysSince(last) <= 7} />
+              <PipHead pip={pipOf(r)} name={s.name} taught={daysSince(last) <= 7} />
               <span className="st__id">
                 <button
                   type="button"

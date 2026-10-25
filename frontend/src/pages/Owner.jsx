@@ -7,7 +7,6 @@ import InsightCard from '../components/InsightCard.jsx'
 import AtRiskCard from '../components/AtRiskCard.jsx'
 import { StudioShell } from '../staff/StudioShell.jsx'
 import { staffApi } from '../staff/api'
-import { LangTag } from '../staff/bits.jsx'
 import RenewalNote from '../staff/RenewalNote.jsx'
 import { fmtDate, pct, refId, refName, subjectShort, usd } from '../staff/format'
 
@@ -201,7 +200,7 @@ function Overview({ ov, noted, onRenew }) {
                 <b className="mono">{ov.parent_replies_7d ?? '—'}</b> replies · {pct(ov.parents_reachable_pct)} of families have a working contact
               </>
             }
-            explain="Updates = parent updates sent this week (test mode in the demo), each in the guardian’s language. Replies = guardian messages back in the same threads. Reachable = families with at least one guardian who has a phone or email."
+            explain="Updates = parent updates sent this week (test mode in the demo). Replies = guardian messages back in the same threads. Reachable = families with at least one guardian who has a phone or email."
           />
           <Metric
             lcd
@@ -251,7 +250,6 @@ function Overview({ ov, noted, onRenew }) {
             {rows.map((r) => {
               const key = `${refId(r.student)}-${r.subject}`
               const st = noted[key]
-              const g = typeof r.guardian === 'object' ? r.guardian : null
               return (
                 <div key={key} role="row" className={`rn__row${r.signal === 'quiet' ? ' is-quiet' : ''}`}>
                   <span role="cell" className="rn__who">
@@ -259,7 +257,7 @@ function Overview({ ov, noted, onRenew }) {
                       {refName(r.student)}
                     </Link>
                     <span className="small subtle">
-                      {refName(r.guardian)} {g?.language && <LangTag lang={g.language} />}
+                      {refName(r.guardian)}
                     </span>
                   </span>
                   <span role="cell">{subjectShort(r.subject)}</span>

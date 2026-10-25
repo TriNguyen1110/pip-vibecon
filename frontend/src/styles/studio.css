@@ -1596,6 +1596,7 @@ html:has(.parent-app) body {
 }
 .parent-app {
   --p-bg: #f7f5f0;
+  --p-frame-top: 0px;
   --p-card: #ffffff;
   --p-ink: #0c0a18;
   --p-ink-2: #2e2a40; /* 13:1 on white, AAA */
@@ -1615,11 +1616,16 @@ html:has(.parent-app) body {
   line-height: 1.55;
   container: papp / inline-size;
 }
-.p-top {
-  order: -1;
-}
+
 html.is-framed .parent-app {
   padding-top: 44px;
+  --p-frame-top: 44px;
+}
+/* One screen per tab: header, a scrolling middle, tabs. Only the middle scrolls (with a "More below" cue). */
+.p-shell {
+  height: calc(100dvh - var(--p-frame-top));
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
 }
 .parent-app :focus-visible {
   outline: 3px solid #0c0a18;
@@ -1631,6 +1637,7 @@ html.is-framed .parent-app {
   font: inherit;
 }
 .p-top {
+  order: -1;
   padding: 0.75rem 1rem 0.5rem;
   display: flex;
   flex-direction: column;
@@ -1684,8 +1691,34 @@ html.is-framed .parent-app {
   color: #ffffff;
 }
 .p-main {
-  flex: 1 0 auto;
-  padding: 0.5rem 1rem 1.5rem;
+  position: relative;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0.25rem 1rem 1rem;
+}
+.p-more {
+  position: sticky;
+  bottom: -1rem;
+  margin: 0 -1rem -1rem;
+  padding: 2.5rem 1rem 0.75rem;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(247, 245, 240, 0), var(--p-bg) 60%);
+}
+.p-more__btn {
+  pointer-events: auto;
+  min-height: 44px;
+  padding: 0 1.125rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--p-ink);
+  background: var(--p-card);
+  color: var(--p-ink);
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 6px 16px -10px rgba(12, 10, 24, 0.5);
 }
 .p-stack {
   display: flex;
@@ -2002,8 +2035,7 @@ html.is-framed .parent-app {
 
 /* Tab bar: sticky at the bottom; at large text it becomes a 2×2 grid (container units follow the font). */
 .p-tabs {
-  position: sticky;
-  bottom: 0;
+  position: relative;
   z-index: 5;
   container-type: inline-size;
   display: grid;
@@ -2098,8 +2130,14 @@ html.is-framed .p-tabs {
   html.is-framed .p-tabs {
     padding-bottom: 0.25rem;
   }
+  .p-shell {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+  }
   .p-main {
     order: 1;
+    overflow: visible;
   }
   .p-tab {
     flex-direction: row;
@@ -2236,4 +2274,263 @@ html.is-framed .p-tabs {
 .metric--big .money__list {
   width: auto;
   margin: 0 28px 24px;
+}
+
+/* F16b: initials until the backend sends each student's pip */
+.pip-head--initials {
+  display: grid;
+  place-items: center;
+  color: var(--fg);
+  font-size: calc(var(--ph) * 0.38);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* F16b: This week fits one 390×844 screen (hero, fix, numbers); the rest scrolls inside. */
+.p-hero__top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+.p-hero__top .p-hero__pip {
+  width: 3rem;
+  height: 3rem;
+  flex: none;
+}
+.p-week .p-hero {
+  padding: 1rem 1.125rem;
+  gap: 0.375rem;
+}
+.p-week .p-quote {
+  font-size: 1.5rem;
+}
+.p-week .p-fixed {
+  padding: 0.75rem 1rem;
+  gap: 0.25rem;
+}
+.p-week .p-stat {
+  padding: 0.5rem 0.625rem;
+}
+.p-week .p-stat b {
+  font-size: 1.625rem;
+}
+.p-week .p-stat span {
+  font-size: 0.9375rem;
+}
+.p-top__hi {
+  font-size: 1.5rem;
+}
+.orig-toggle {
+  align-self: flex-start;
+  min-height: 32px;
+  padding: 0 0.5rem;
+  margin-top: -0.125rem;
+  border: 0;
+  background: none;
+  color: var(--fg-subtle);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.msg--me .orig-toggle {
+  align-self: flex-end;
+}
+.parent-app .orig-toggle {
+  min-height: 44px;
+  padding: 0;
+  color: var(--p-ink-2);
+  font-size: 1rem;
+}
+.p-msg--me .orig-toggle {
+  align-self: flex-end;
+}
+.update-msg__orig {
+  color: var(--fg-muted);
+  border-left: 2px solid var(--divider);
+  padding-left: 10px;
+  white-space: pre-wrap;
+}
+
+/* ---------- F18: To send queue (tutor) + "From Ms. Rivera" parent app ---------- */
+.seg__badge,
+.count-dot {
+  display: inline-grid;
+  place-items: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #0c0a18;
+  font-size: 12px;
+  font-weight: 800;
+  vertical-align: middle;
+}
+.to-send {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  border-radius: var(--r-lg);
+  border: 1px solid var(--ice-line);
+  background: var(--ice-soft);
+}
+.draft {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--border);
+  background: rgba(12, 10, 24, 0.55);
+}
+.draft.is-sent {
+  opacity: 0.85;
+}
+.draft__title {
+  font-weight: 700;
+}
+.draft__quote {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.draft__picked {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 10px;
+  padding-left: 12px;
+  border-left: 2px solid var(--accent-2);
+}
+.draft__picked .quote,
+.moment .quote {
+  font-size: 16px;
+  color: var(--fg);
+  quotes: '“' '”';
+}
+.moments {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.moments ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+.moment {
+  width: 100%;
+  min-height: 44px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px 10px;
+  padding: 8px 12px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--divider);
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.moment:hover {
+  border-color: var(--field-border-hover);
+}
+.moment.is-on {
+  border-color: var(--accent);
+  background: var(--ice-soft);
+}
+.moment__tag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 22px;
+  padding: 0 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(182, 255, 59, 0.35);
+  color: var(--accent-2);
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.auto-ko {
+  padding: 4px 2px;
+}
+.auto-ko__text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.35;
+}
+
+.p-kid {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.p-kid__pip {
+  width: 2rem;
+  height: 2rem;
+  flex: none;
+  border-radius: 50%;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  padding: 2px;
+  background: linear-gradient(180deg, #cff6ff, #46c3fa 60%, #1e8deb);
+}
+.p-kid__pip > * {
+  width: 135% !important;
+  height: auto !important;
+  max-width: none;
+  margin-top: -18%;
+  border-radius: 50%;
+  background: var(--p-soft);
+}
+.p-report .p-body {
+  font-size: 1.0625rem;
+}
+.p-report .p-fixed {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--p-line);
+}
+.p-summary--quiet {
+  font-size: 1.0625rem;
+  font-weight: 600;
+}
+.p-goal {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.p-goal__nums b {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 500;
+}
+.p-goal__bar {
+  height: 0.625rem;
+  border-radius: 999px;
+  background: var(--p-soft);
+  overflow: hidden;
+}
+.p-goal__bar i {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #1670d8, #46c3fa);
+}
+.p-hours {
+  font-size: 1.0625rem;
+}
+.p-hours.is-low b {
+  color: #6b4500;
 }

@@ -1,7 +1,8 @@
 // Staff + parent client for CONTRACT v3.13 / v3.13b.
 // Mock fallback (src/staff/fixtures.js) is served when:
 //   dev builds only (`npm run dev`): the URL has ?mock=1 (remembered for this tab; ?mock=0 clears it), or the
-//   route doesn't exist (FastAPI's bare 404 "Not Found") or the backend is unreachable.
+//   backend is unreachable. A route that doesn't exist yet throws an ApiError with `missingRoute: true`
+//   (isMissing) so screens can fall back to older endpoints.
 // Production builds always use the real v3.13 endpoints; the shell shows a "mock data" badge whenever a mock answered.
 import { useSyncExternalStore } from 'react'
 import { ApiError } from '../api'
@@ -80,16 +81,21 @@ async function request(method, path, body) {
   }
   if (!res.ok) {
     const missingRoute = (res.status === 404 && data?.detail === 'Not Found') || res.status === 405
-    if (DEV && (missingRoute || res.status >= 502)) {
+    // Dev: fixtures only stand in for an unreachable backend. A missing route is a real answer, so screens can
+    // take their compat path (e.g. v3.15 drafts before B18 lands); use ?mock=1 to see the full fixture flow.
+    if (DEV && res.status >= 502) {
       const m = fromMock(method, path, body)
       if (m) return m
     }
     const d = data?.detail
     const msg = typeof d === 'string' ? d : Array.isArray(d) ? d.map((x) => x.msg).join('; ') : null
-    throw new ApiError(msg || `Something went wrong (${res.status}).`, res.status)
+    if (missingRoute) throw Object.assign(new ApiError('This feature isn’t on the server yet.', res.status), { missingRoute: true })
+    throw new ApiError(msg || (res.status >= 500 ? `The Pip server isn’t answering right now (${res.status}).` : `Something went wrong (${res.status}).`), res.status)
   }
   return data
 }
+
+export const isMissing = (e) => !!e?.missingRoute
 
 const qs = (o) => {
   const p = new URLSearchParams()
@@ -117,4 +123,12 @@ export const staffApi = {
   // Existing per-session parent update; v3.13 addresses every guardian (messages[] when the backend has it).
   updatePreview: (sessionId, student_id) => request('POST', `/sessions/${sessionId}/parent-update/preview`, { student_id }),
   updateSend: (sessionId, body) => request('POST', `/sessions/${sessionId}/parent-update/send`, body),
+  // v3.15 (B18, proposed shapes; see fixtures.js): tutor-approved drafts, quote moments, per-student switches.
+  drafts: (sid) => request('GET', `/students/${sid}/drafts`),
+  createDraft: (sid, body) => request('POST', `/students/${sid}/drafts`, body),
+  patchDraft: (id, patch) => request('PATCH', `/drafts/${id}`, patch),
+  sendDraft: (id, body) => request('POST', `/drafts/${id}/send`, body),
+  skipDraft: (id) => request('POST', `/drafts/${id}/skip`),
+  studentSettings: (sid, patch) => request('PATCH', `/students/${sid}/settings`, patch),
+  session: (id) => request('GET', `/sessions/${id}`),
 }

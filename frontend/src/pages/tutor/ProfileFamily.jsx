@@ -1,14 +1,13 @@
 import { useState } from 'react'
-import { api } from '../../api'
 import { useLoad } from '../../hooks'
-import { Dots, InlineError, useToast } from '../../components/ui.jsx'
-import { pickReportSession } from '../../lib'
+import { InlineError } from '../../components/ui.jsx'
 import { Segmented, Toggle } from '../../staff/StudioShell.jsx'
 import { staffApi } from '../../staff/api'
-import { LangTag, StatusTag, Thread } from '../../staff/bits.jsx'
-import { LANG_EN, LANG_NAMES, PREFERS_WORDS, RELATION_WORDS, UPDATES_SHORT, firstName, reachable } from '../../staff/format'
+import { Thread } from '../../staff/bits.jsx'
+import ToSend, { AutoKoNote } from './ToSend.jsx'
+import { PREFERS_WORDS, RELATION_WORDS, UPDATES_SHORT, firstName, reachable } from '../../staff/format'
 
-export default function ProfileFamily({ profile, tutorId, tutors, updateOpen, setUpdateOpen, onChanged, latestSession }) {
+export default function ProfileFamily({ profile, tutorId, tutors, onChanged, latestSession, drafts, setDrafts }) {
   const s = profile.student
   const guardians = profile.guardians ?? []
   const [adding, setAdding] = useState(false)
@@ -16,7 +15,15 @@ export default function ProfileFamily({ profile, tutorId, tutors, updateOpen, se
 
   return (
     <div className="stack family">
-      {updateOpen && <ParentUpdate student={s} guardians={guardians} sessionId={latestSession} onClose={() => setUpdateOpen(false)} />}
+      <ToSend
+        student={s}
+        guardians={guardians}
+        drafts={drafts}
+        setDrafts={setDrafts}
+        latestSession={latestSession}
+        needsUpdate={(profile.flags ?? []).includes('needs_update')}
+      />
+      <AutoKoNote student={s} onChange={(st) => onChanged((d) => ({ ...d, student: { ...d.student, ...st } }))} />
 
       <section aria-label="Guardians" className="stack-sm">
         <div className="row row--between">
@@ -71,10 +78,7 @@ function GuardianRow({ g, onSaved }) {
               <b>Prefers</b> {PREFERS_WORDS[g.prefers] ?? g.prefers}
             </span>
             <span className="kv">
-              <b>Reads</b> <LangTag lang={g.language} />
-            </span>
-            <span className="kv">
-              <b>Updates</b> {UPDATES_SHORT[g.updates] ?? g.updates}
+              <b>Cadence</b> {UPDATES_SHORT[g.updates] ?? g.updates}
             </span>
             <span className="kv">
               <b>Quiet</b> {g.quiet_hours ? g.quiet_hours.replace('-', '–') : 'none'}
@@ -102,7 +106,7 @@ function GuardianRow({ g, onSaved }) {
 }
 
 function PrefsForm({ g, onCancel, onSaved }) {
-  const [v, setV] = useState({ prefers: g.prefers, language: g.language, updates: g.updates, quiet_hours: g.quiet_hours, phone: g.phone ?? '', email: g.email ?? '' })
+  const [v, setV] = useState({ prefers: g.prefers, updates: g.updates, quiet_hours: g.quiet_hours, phone: g.phone ?? '', email: g.email ?? '' })
   const [busy, setBusy] = useState(false)
   const [err, setErr] = useState(null)
   const set = (k, x) => setV((o) => ({ ...o, [k]: x }))
@@ -139,17 +143,7 @@ function PrefsForm({ g, onCancel, onSaved }) {
           </select>
         </label>
         <label className="field">
-          <span>Language</span>
-          <select className="select" value={v.language} onChange={(e) => set('language', e.target.value)}>
-            {Object.keys(LANG_NAMES).map((l) => (
-              <option key={l} value={l}>
-                {LANG_NAMES[l]} ({LANG_EN[l]})
-              </option>
-            ))}
-          </select>
-        </label>
-        <label className="field">
-          <span>Updates</span>
+          <span>Prompt me to update</span>
           <select className="select" value={v.updates} onChange={(e) => set('updates', e.target.value)}>
             <option value="every_ko">Every finished lesson</option>
             <option value="weekly">Weekly</option>
@@ -177,7 +171,7 @@ function PrefsForm({ g, onCancel, onSaved }) {
 }
 
 function AddGuardian({ studentId, onCancel, onAdded }) {
-  const [v, setV] = useState({ name: '', relation: 'parent', phone: '', email: '', prefers: 'sms', language: 'en', updates: 'weekly' })
+  const [v, setV] = useState({ name: '', relation: 'parent', phone: '', email: '', prefers: 'sms', updates: 'weekly' })
   const [busy, setBusy] = useState(false)
   const [err, setErr] = useState(null)
   const set = (k, x) => setV((o) => ({ ...o, [k]: x }))
@@ -229,16 +223,6 @@ function AddGuardian({ studentId, onCancel, onAdded }) {
             <option value="email">Email</option>
           </select>
         </label>
-        <label className="field">
-          <span>Language</span>
-          <select className="select" value={v.language} onChange={(e) => set('language', e.target.value)}>
-            {Object.keys(LANG_NAMES).map((l) => (
-              <option key={l} value={l}>
-                {LANG_NAMES[l]} ({LANG_EN[l]})
-              </option>
-            ))}
-          </select>
-        </label>
       </div>
       <p className="small subtle">Synthetic contacts only in this demo (555-01xx, @example.com).</p>
       <InlineError error={err} />
@@ -251,136 +235,6 @@ function AddGuardian({ studentId, onCancel, onAdded }) {
         </button>
       </div>
     </form>
-  )
-}
-
-// Existing preview/send, now addressed per guardian in their language (CONTRACT v3.13).
-function ParentUpdate({ student, guardians, sessionId, onClose }) {
-  const toast = useToast()
-  const [phase, setPhase] = useState('idle') // idle | loading | preview | sending | sent
-  const [msgs, setMsgs] = useState([])
-  const [sent, setSent] = useState([])
-  const [english, setEnglish] = useState('')
-  const [skipped, setSkipped] = useState([])
-  const [err, setErr] = useState(null)
-  const targets = guardians.filter((g) => g.updates !== 'off')
-  const off = guardians.filter((g) => g.updates === 'off')
-
-  async function resolveSession() {
-    if (sessionId) return sessionId
-    const d = await api.student(student.id)
-    const s = pickReportSession(d.sessions)
-    if (!s) throw new Error(`${firstName(student.name)} hasn’t finished a Pip session yet, so there’s nothing to report.`)
-    return s.id
-  }
-
-  async function preview() {
-    setPhase('loading')
-    setErr(null)
-    try {
-      const sid = await resolveSession()
-      const r = await staffApi.updatePreview(sid, student.id)
-      const per = r.by_guardian ?? r.messages
-      const list = per?.length
-        ? per.map((m) => ({ ...m, prefers: m.prefers ?? m.via }))
-        : targets.map((g) => ({ guardian_id: g.id, name: g.name, language: g.language, prefers: g.prefers, message: r.message, untranslated: g.language !== 'en' }))
-      setEnglish(r.message ?? list[0]?.message ?? '')
-      setSkipped(r.skipped ?? [])
-      setMsgs(list.map((m) => ({ ...m, sid })))
-      setPhase('preview')
-    } catch (e) {
-      setErr(e)
-      setPhase('idle')
-    }
-  }
-
-  async function send() {
-    setPhase('sending')
-    setErr(null)
-    try {
-      // `message` is the English base; `messages` maps guardian id → the (edited) localized text.
-      const r = await staffApi.updateSend(msgs[0].sid, {
-        message: english || msgs[0]?.message,
-        messages: Object.fromEntries(msgs.filter((m) => m.guardian_id).map((m) => [m.guardian_id, m.message])),
-        student_id: student.id,
-      })
-      const items = r.sent_all ?? r.items ?? (Array.isArray(r.sent) ? r.sent : r.sent ? [r.sent] : [])
-      setSent(items)
-      setPhase('sent')
-      toast(`Update sent to ${msgs.length} guardian${msgs.length === 1 ? '' : 's'} (test mode).`)
-    } catch (e) {
-      setErr(e)
-      setPhase('preview')
-    }
-  }
-
-  const gName = (id) => guardians.find((g) => g.id === id)
-  return (
-    <section className="update-box" aria-label="Parent update">
-      <div className="row row--between">
-        <div>
-          <h3 className="sec-title">Update to {firstName(student.name)}’s family</h3>
-          <p className="small subtle">
-            Goes to {targets.length ? targets.map((g) => g.name).join(' and ') : 'nobody yet'}, each in their language and by their preferred channel.
-            {off.length > 0 && ` ${off.map((g) => g.name).join(', ')}: updates off.`}
-            {skipped.length > 0 && ` Skipped: ${skipped.map((x) => (typeof x === 'object' ? `${x.name ?? x.guardian_id}${x.reason ? ` (${x.reason})` : ''}` : x)).join(', ')}.`}
-          </p>
-        </div>
-        <button className="btn btn--ghost btn--sm" onClick={onClose}>
-          Close
-        </button>
-      </div>
-      {phase === 'idle' || phase === 'loading' ? (
-        <div className="row">
-          <button className="btn btn--primary" onClick={preview} disabled={phase === 'loading' || !targets.length}>
-            {phase === 'loading' ? (
-              <>
-                Writing <Dots />
-              </>
-            ) : (
-              'Preview the update'
-            )}
-          </button>
-        </div>
-      ) : (
-        <div className="update-msgs">
-          {msgs.map((m, i) => {
-            const g = gName(m.guardian_id) ?? m
-            const st = sent.find((x) => x.guardian_id === m.guardian_id) ?? (sent.length === 1 && i === 0 ? sent[0] : null)
-            return (
-              <div key={m.guardian_id ?? i} className="update-msg">
-                <p className="update-msg__to small">
-                  <b>{g.name}</b> · {PREFERS_WORDS[g.prefers] ?? g.prefers} · <LangTag lang={g.language} />
-                  {!reachable(g) && <span className="warn-line"> · no contact on file</span>}
-                </p>
-                {phase === 'sent' ? (
-                  <p className="update-msg__text">{m.message}</p>
-                ) : (
-                  <textarea
-                    className="textarea"
-                    rows={4}
-                    value={m.message}
-                    aria-label={`Message to ${g.name}`}
-                    onChange={(e) => setMsgs((xs) => xs.map((x, j) => (j === i ? { ...x, message: e.target.value } : x)))}
-                  />
-                )}
-                {m.untranslated && phase !== 'sent' && <p className="small subtle">The server writes the {LANG_EN[g.language]} version when it sends.</p>}
-                {st ? <StatusTag status={st.status} after={st.deliver_after} /> : m.quiet_hours_now ? <StatusTag status="queued (quiet hours)" after={m.deliver_after} /> : null}
-              </div>
-            )
-          })}
-          {phase !== 'sent' && (
-            <div className="row">
-              <button className="btn btn--primary" onClick={send} disabled={phase === 'sending'}>
-                {phase === 'sending' ? 'Sending…' : `Send to ${msgs.length} guardian${msgs.length === 1 ? '' : 's'}`}
-              </button>
-              <span className="small subtle">Test mode: nothing leaves the demo.</span>
-            </div>
-          )}
-        </div>
-      )}
-      <InlineError error={err} />
-    </section>
   )
 }
 
@@ -411,9 +265,10 @@ function Threads({ student, guardians, tutorId, tutors }) {
             const m = await staffApi.sendThread({ student_id: student.id, guardian_id: gid, from: 'tutor', author_id: tutorId, text })
             t.setData((d) => ({ items: [...(d?.items ?? []), m] }))
           }}
-          note={`Sends by ${(PREFERS_WORDS[g.prefers] ?? g.prefers ?? '').toLowerCase()} · test mode${quiet ? ` · quiet ${quiet.replace('-', '–')}, messages queue` : ''}. ${g.language !== 'en' ? `${g.name} reads ${LANG_EN[g.language]}.` : ''}`}
+          note={`Sends by ${(PREFERS_WORDS[g.prefers] ?? g.prefers ?? '').toLowerCase()} · test mode${quiet ? ` · quiet ${quiet.replace('-', '–')}, messages queue` : ''}.`}
         />
       )}
     </section>
   )
 }
+

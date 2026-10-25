@@ -4,8 +4,9 @@ import { useLoad } from '../../hooks'
 import { ErrorState, Empty } from '../../components/ui.jsx'
 import { LEVEL_WORDS } from '../../lib'
 import { Segmented } from '../../staff/StudioShell.jsx'
-import { staffApi } from '../../staff/api'
+import { isMissing, staffApi } from '../../staff/api'
 import { FlagPills, PipHead } from '../../staff/bits.jsx'
+import { pipOf } from '../../staff/pip'
 import { LEVEL_SHORT, ago, daysSince, fmtDate, fmtWhen, hoursLeft, sessionFromLink, subjectName, subjectShort } from '../../staff/format'
 import ProfileFamily from './ProfileFamily.jsx'
 import ProfileNotes from './ProfileNotes.jsx'
@@ -19,8 +20,20 @@ const TABS = [
 
 export default function StudentProfile({ id, tutorId, tutors, pane }) {
   const p = useLoad(() => staffApi.profile(id), [id])
+  // v3.15 drafts (B18). Before B18 the route is missing and the queue builds drafts from the v3.13 endpoints.
+  const dr = useLoad(
+    () =>
+      staffApi
+        .drafts(id)
+        .then((r) => ({ items: r.items ?? r.drafts ?? [], legacy: false }))
+        .catch((e) => {
+          if (isMissing(e)) return { items: [], legacy: true }
+          throw e
+        }),
+    [id],
+  )
+  const drafts = dr.data ?? { items: [], legacy: true }
   const [tab, setTab] = useState('progress')
-  const [updateOpen, setUpdateOpen] = useState(false)
 
   if (p.loading && !p.data) {
     return (
@@ -39,11 +52,12 @@ export default function StudentProfile({ id, tutorId, tutors, pane }) {
   const latestReport = reports[0]?.link ?? null
   const lastActive = (d.progress ?? []).map((x) => x.last_session_at).filter(Boolean).sort().at(-1)
   const flags = d.flags ?? []
+  const toSend = drafts.items.filter((x) => (x.status ?? 'draft') === 'draft').length
 
   return (
     <div className={`profile${pane ? ' profile--pane' : ''}`}>
       <header className="profile__head">
-        <PipHead pip={s.pip} size={52} taught={daysSince(lastActive) <= 7} />
+        <PipHead pip={d.pip ?? pipOf(s)} name={s.name} size={52} taught={daysSince(lastActive) <= 7} />
         <div className="grow stack-sm" style={{ gap: 4 }}>
           <h2 className="display profile__name">
             {s.name} <span className="profile__grade mono">Grade {s.grade}</span>
@@ -55,14 +69,8 @@ export default function StudentProfile({ id, tutorId, tutors, pane }) {
           <FlagPills flags={flags} />
         </div>
         <div className="profile__actions">
-          <button
-            className="btn btn--primary"
-            onClick={() => {
-              setTab('family')
-              setUpdateOpen(true)
-            }}
-          >
-            Send parent update
+          <button className="btn btn--primary" onClick={() => setTab('family')}>
+            {toSend > 0 ? `To send · ${toSend}` : 'Update the family'}
           </button>
           {latestReport && (
             <Link className="btn" to={latestReport}>
@@ -72,7 +80,13 @@ export default function StudentProfile({ id, tutorId, tutors, pane }) {
         </div>
       </header>
 
-      <Segmented value={tab} onChange={setTab} options={TABS} label="Profile sections" className="profile__tabs" />
+      <Segmented
+        value={tab}
+        onChange={setTab}
+        options={TABS.map((t) => (t.value === 'family' && toSend ? { ...t, badge: toSend } : t))}
+        label="Profile sections"
+        className="profile__tabs"
+      />
 
       <div className="profile__body" role="tabpanel">
         {tab === 'progress' && <Progress progress={d.progress ?? []} enrollments={enrollments} reports={reports} tutorId={tutorId} />}
@@ -81,10 +95,10 @@ export default function StudentProfile({ id, tutorId, tutors, pane }) {
             profile={d}
             tutorId={tutorId}
             tutors={tutors}
-            updateOpen={updateOpen}
-            setUpdateOpen={setUpdateOpen}
             onChanged={(fn) => p.setData(fn)}
             latestSession={sessionFromLink(latestReport)}
+            drafts={drafts}
+            setDrafts={(fn) => dr.setData((x) => fn(x ?? drafts))}
           />
         )}
         {tab === 'notes' && <ProfileNotes profile={d} tutorId={tutorId} tutors={tutors} onAdded={(n) => p.setData((x) => ({ ...x, notes: [n, ...(x.notes ?? [])] }))} />}

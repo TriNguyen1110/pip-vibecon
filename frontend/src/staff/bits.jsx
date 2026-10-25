@@ -1,13 +1,22 @@
 import { useEffect, useRef, useState } from 'react'
 import Pip2D from '../pip2d/Pip2D.jsx'
-import { Dots, InlineError } from '../components/ui.jsx'
-import { FLAG_ORDER, FLAG_WORDS, LANG_NAMES, STATUS_WORDS, fmtWhen } from './format'
+import { Dots, InlineError, initialsOf } from '../components/ui.jsx'
+import { pip2dProps } from './pip'
+import { FLAG_ORDER, FLAG_WORDS, STATUS_WORDS, fmtWhen } from './format'
 
-// The student's own Pip, cropped to the head, in a ring (lime when they taught this week).
-export function PipHead({ pip, size = 32, taught, title }) {
+// The student's own Pip (CONTRACT: pip {creature, vibe, accessory, brain_version, form}), cropped to the
+// head in a ring (lime when they taught this week). Until the backend sends `pip`, show their initials.
+export function PipHead({ pip, name, size = 32, taught, title }) {
+  if (!pip?.creature) {
+    return (
+      <span className={`pip-head pip-head--initials${taught ? ' is-taught' : ''}`} style={{ '--ph': `${size}px` }} title={title} aria-hidden>
+        {initialsOf(name ?? '') || '·'}
+      </span>
+    )
+  }
   return (
-    <span className={`pip-head${taught ? ' is-taught' : ''}`} style={{ '--ph': `${size}px` }} title={title} aria-hidden>
-      <Pip2D creature={pip?.creature ?? 'capybara'} vibe={pip?.vibe ?? 'plain'} version={pip?.brain_version ?? 1} size={size * 1.9} animate={false} />
+    <span className={`pip-head${taught ? ' is-taught' : ''}`} style={{ '--ph': `${size}px` }} title={title ?? pip.name} aria-hidden>
+      <Pip2D {...pip2dProps(pip)} size={size * 1.9} animate={false} />
     </span>
   )
 }
@@ -35,15 +44,6 @@ export function StatusTag({ status, after }) {
     <span className={`status-tag status-tag--${kind}`}>
       {STATUS_WORDS[status] ?? status}
       {when && kind === 'queued' ? ` · sends ${when}` : ''}
-    </span>
-  )
-}
-
-export function LangTag({ lang }) {
-  if (!lang) return null
-  return (
-    <span className="lang-tag" title="Language this guardian reads">
-      {LANG_NAMES[lang] ?? lang}
     </span>
   )
 }
@@ -119,3 +119,4 @@ export function Thread({ items, mine = ['tutor', 'center'], names = {}, onSend, 
     </div>
   )
 }
+

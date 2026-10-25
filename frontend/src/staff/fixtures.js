@@ -146,13 +146,64 @@ function buildDb() {
       { id: 'n5', student_id: 's109', tutor_id: 't1', subject: 'math', text: 'Missed two sessions. Call home before the package runs out.', ts: ago(4), share_with_parent: false },
     ],
     threads: [
-      { id: 'm1', student_id: 's001', guardian_id: 'g001', from: 'tutor', author_id: 't1', text: 'Hola Ana, hoy Maya le enseñó a Pip por qué un triángulo es la mitad de un rectángulo, con sus propias palabras. También corrigió un error ella sola.', ts: ago(1, 3), status: 'test-mode (not delivered)' },
-      { id: 'm2', student_id: 's001', guardian_id: 'g001', from: 'guardian', author_id: 'g001', text: '¡Qué bien! Me lo explicó en la cena. ¿Qué podemos practicar en casa?', ts: ago(0, 20), status: 'received' },
-      { id: 'm3', student_id: 's001', guardian_id: 'g001', from: 'tutor', author_id: 't1', text: 'Pregúntele cuánto mide un triángulo de 10 por 5 y por qué. Si dice 25 y lo explica, ya lo tiene.', ts: ago(0, 19), status: 'test-mode (not delivered)' },
+      { id: 'm1', student_id: 's001', guardian_id: 'g001', from: 'tutor', author_id: 't1', text: 'Hi Ana, today Maya taught Pip why a triangle is half a rectangle, in her own words. She also fixed a mistake on her own.', kind: 'update', ts: ago(1, 3), status: 'test-mode (not delivered)' },
+      { id: 'm2', student_id: 's001', guardian_id: 'g001', from: 'guardian', author_id: 'g001', text: 'Love this! She explained it to us at dinner. What can we practice at home?', ts: ago(0, 20), status: 'received' },
+      { id: 'm3', student_id: 's001', guardian_id: 'g001', from: 'tutor', author_id: 't1', text: 'Ask her how big a 10 by 5 triangle is, and why. If she says 25 and explains it, she has it.', ts: ago(0, 19), status: 'test-mode (not delivered)' },
       { id: 'm4', student_id: 's001', guardian_id: 'g002', from: 'center', author_id: 'center', text: 'Weekly update from Bright Path: Maya taught Pip 3 ideas about triangle area and fixed one mistake on her own. Next session: Tue 4:30pm with Ms. Rivera.', ts: ago(2), status: 'test-mode (not delivered)' },
-      { id: 'm5', student_id: 's014', guardian_id: 'g001', from: 'tutor', author_id: 't3', text: 'Hola Ana, Theo explicó por qué hay que hacer lo mismo en los dos lados de una ecuación. Va muy bien para el SAT.', ts: ago(3), status: 'test-mode (not delivered)' },
+      { id: 'm5', student_id: 's014', guardian_id: 'g001', from: 'tutor', author_id: 't3', text: 'Hi Ana, Theo explained why you do the same thing to both sides of an equation. He is on track for his SAT goal.', kind: 'update', ts: ago(3), status: 'test-mode (not delivered)' },
     ],
     sent: [],
+    drafts: [
+      draftFor('dr1', 's001', 't1', 'sess_maya_saved', 'math', 'Area of a triangle', MAYA_MOMENTS, { text: 'because 2 triangles make a rectangle', msg_index: 3, source: 'auto' }, 'Ana R.'),
+      draftFor('dr2', 's084', 't1', 'sess_chloe', 'math', 'Area of a triangle', CHLOE_MOMENTS, null, 'Linh N.'),
+    ],
+    reports: [
+      { id: 'rp1', student_id: 's001', guardian_ids: ['g001', 'g002'], from: { tutor_id: 't1', name: 'Ms. Rivera' }, ts: lastWeekday(2), subject: 'math',
+        text: 'Maya taught Pip why a triangle’s area is half a rectangle, and fixed a mistake on her own. Next class we start parallelograms.',
+        quote: 'because 2 triangles make a rectangle', fixed: { before: 'for a right triangle you just times the two sides', after: 'a right triangle is still half a rectangle' }, goal: null },
+      { id: 'rp2', student_id: 's014', guardian_ids: ['g001'], from: { tutor_id: 't3', name: 'Ms. Okafor' }, ts: lastWeekday(3), subject: 'sat_math',
+        text: 'Theo is working toward his SAT Math goal. He explained how to solve equations step by step.', quote: null, fixed: null, goal: { target: 650, latest: 590, label: 'SAT Math practice score' } },
+    ],
+    settings: {},
+  }
+}
+
+// Most recent date that fell on the given weekday (0 = Sun … 6 = Sat), at 6pm.
+function lastWeekday(dow) {
+  const t = new Date()
+  t.setHours(18, 0, 0, 0)
+  const back = (t.getDay() - dow + 7) % 7 || 7
+  return new Date(t.getTime() - back * DAY).toISOString()
+}
+
+const MAYA_MOMENTS = [
+  [1, 'no its half of that', false],
+  [3, 'because 2 triangles make a rectangle', false],
+  [5, 'so 6×4÷2 = 12', false],
+  [10, 'no a right triangle is still half a rectangle so its 10×5÷2 = 25', true],
+]
+const CHLOE_MOMENTS = [
+  [1, 'idk its just half', false],
+  [3, 'oh so the triangle is literally half the box', true],
+  [5, 'two of them make the rectangle so you divide by 2', false],
+]
+
+function draftText(kid, tutor, topic, quote) {
+  return `Hi, it’s ${tutor} from Bright Path. This week ${kid} worked on ${topic.toLowerCase()} by teaching Pip, our practice buddy.` +
+    (quote ? ` In ${kid}’s own words: “${quote}”.` : '') + ' See you at the next class.'
+}
+
+// v3.15 Draft (proposed for B18): a tutor-approved parent update waiting in the "To send" queue.
+function draftFor(id, sid, tid, session_id, subject, topic, moments, quote, gname) {
+  const kid = (SPEC.find((x) => x[0] === sid)?.[1] ?? 'Your child').split(' ')[0]
+  const tutor = tutorRef(tid).name
+  const gids = SPEC.find((x) => x[0] === sid)?.[4] ?? []
+  return {
+    id, student_id: sid, tutor_id: tid, session_id, subject, topic, kind: 'report', status: 'draft', created_at: iso(Date.now() - 2 * HOUR),
+    quote: quote ? { ...quote, session_id, shared: false } : null,
+    fixed: sid === 's001' ? { before: 'for a right triangle you just times the two sides', after: 'a right triangle is still half a rectangle' } : null,
+    moments: moments.map(([msg_index, text, shared]) => ({ session_id, msg_index, text, shared })),
+    by_guardian: gids.map((gid) => ({ guardian_id: gid, name: gid === 'g002' ? 'Sam R.' : gname, via: gid === 'g002' ? 'email' : 'sms', message: draftText(kid, tutor, topic, quote?.text) })),
   }
 }
 
@@ -307,13 +358,6 @@ const THIS_WEEK = {
   s014: { minutes: 22, missions: 1, kos: 1, taught_quote: 'whatever you do to one side you do to the other so it stays balanced', fixed: null },
 }
 const WEEKS = {
-  es: {
-    s001: [
-      { week_of: dateIn(-5), summary: 'Maya le enseñó a Pip 3 ideas sobre el área del triángulo y corrigió un error ella sola.', quotes: ['because 2 triangles make a rectangle'], fixed: [{ before: 'for a right triangle you just times the two sides', after: 'a right triangle is still half a rectangle' }] },
-      { week_of: dateIn(-12), summary: 'Maya repasó el área del rectángulo y explicó por qué es base por altura.', quotes: ['a rectangle is rows of squares so you times them'], fixed: [] },
-    ],
-    s014: [{ week_of: dateIn(-5), summary: 'Theo le explicó a Pip cómo resolver ecuaciones paso a paso.', quotes: ['whatever you do to one side you do to the other so it stays balanced'], fixed: [] }],
-  },
   en: {
     s001: [
       { week_of: dateIn(-5), summary: 'Maya taught Pip 3 ideas about triangle area and fixed one mistake on her own.', quotes: ['because 2 triangles make a rectangle'], fixed: [{ before: 'for a right triangle you just times the two sides', after: 'a right triangle is still half a rectangle' }] },
@@ -323,10 +367,7 @@ const WEEKS = {
 }
 
 const UPDATE_TEXT = {
-  es: (kid, tutor) => `Hola, soy ${tutor} de Bright Path. Esta semana ${kid} le enseñó a Pip por qué el área de un triángulo es la mitad de un rectángulo, con sus propias palabras: “because 2 triangles make a rectangle”. También corrigió un error ella sola. Próxima clase: martes 4:30pm.`,
   en: (kid, tutor) => `Hi, it’s ${tutor} from Bright Path. This week ${kid} taught Pip why a triangle’s area is half a rectangle, in her own words: “because 2 triangles make a rectangle”. She also fixed a mistake on her own. Next session: Tue 4:30pm.`,
-  vi: (kid, tutor) => `Xin chào, tôi là ${tutor} từ Bright Path. Tuần này ${kid} đã dạy Pip vì sao diện tích tam giác bằng một nửa hình chữ nhật: “because 2 triangles make a rectangle”.`,
-  zh: (kid, tutor) => `您好，我是 Bright Path 的 ${tutor}。本周 ${kid} 用自己的话教会了 Pip 三角形面积为什么是长方形的一半：“because 2 triangles make a rectangle”。`,
 }
 
 const DRAFT = (student_id, grade, topic) => ({
@@ -438,8 +479,12 @@ export function mockRequest(method, path, body = {}) {
         return {
           student: { id: s.id, name: s.name, grade: s.grade },
           pip: s.pip,
-          this_week: { minutes: 0, missions: 0, kos: 0, taught_quote: null, fixed: null, ...(THIS_WEEK[s.id] ?? {}), shared_note: shared },
-          subjects: s.enrollments.map((e) => ({ subject: e.subject, tutor: tutorRef(e.tutor_id), next_slot: e.slot, ko_count: s._spec.find((x) => x[0] === e.subject)?.[6] ?? 0 })),
+          this_week: { sessions: THIS_WEEK[s.id]?.missions ?? 0, kos: THIS_WEEK[s.id]?.kos ?? 0, shared_note: shared ? { ...shared, from: tutorRef(shared.tutor_id) } : null, from: null },
+          reports: d.reports.filter((r) => r.student_id === s.id && r.guardian_ids.includes(g.id)).sort((a, b) => (a.ts < b.ts ? 1 : -1)),
+          subjects: s.enrollments.map((e) => ({
+            subject: e.subject, tutor: tutorRef(e.tutor_id), next_slot: e.slot,
+            package: { hours_left: e.package.hours_total - e.package.hours_used, hours_total: e.package.hours_total, renews_on: e.package.renews_on, status: e.package.status },
+          })),
         }
       }),
       unread: d.threads.filter((t) => t.guardian_id === g.id && t.from !== 'guardian' && t.ts > ago(1)).length,
@@ -456,7 +501,7 @@ export function mockRequest(method, path, body = {}) {
     const s = d.students[m[2]]
     return {
       student: { id: s.id, name: s.name, grade: s.grade },
-      weeks: WEEKS[g.language]?.[s.id] ?? WEEKS.en[s.id] ?? [],
+      weeks: WEEKS.en[s.id] ?? [],
       shared_notes: d.notes.filter((n) => n.student_id === s.id && n.share_with_parent),
       next_sessions: s.enrollments.map((e) => ({ subject: e.subject, slot: e.slot, tutor: tutorRef(e.tutor_id) })),
       tutors: s.enrollments.map((e) => ({ ...tutorRef(e.tutor_id), subject: e.subject })),
@@ -469,7 +514,7 @@ export function mockRequest(method, path, body = {}) {
     const kid = s.name.split(' ')[0]
     const messages = s.guardian_ids.map(guardianOf).filter((g) => g && g.updates !== 'off').map((g) => ({
       guardian_id: g.id, name: g.name, language: g.language, prefers: g.prefers, reachable: isReachable(g),
-      message: (UPDATE_TEXT[g.language] ?? UPDATE_TEXT.en)(kid, tutor),
+      message: UPDATE_TEXT.en(kid, tutor),
     }))
     return { message: UPDATE_TEXT.en(kid, tutor), by_guardian: messages.map((m) => ({ ...m, via: m.prefers })), skipped: [] }
   }
@@ -481,6 +526,58 @@ export function mockRequest(method, path, body = {}) {
     })
     d.sent.push(...sent)
     return { sent: sent[0], sent_all: sent }
+  }
+  // ---- v3.15 (proposed B18 shapes) ----
+  if (method === 'GET' && (m = /^\/students\/([^/]+)\/drafts$/.exec(p))) {
+    return { items: d.drafts.filter((x) => x.student_id === m[1] && x.status === 'draft') }
+  }
+  if (method === 'POST' && (m = /^\/students\/([^/]+)\/drafts$/.exec(p))) {
+    const st = d.students[m[1]] ?? notFound('Student')
+    const nd = draftFor(`dr${Date.now()}`, st.id, st.tutor_id, body.session_id ?? null, st.enrollments[0].subject, MISSION[st.enrollments[0].subject] ?? 'this week’s lesson', [], null, guardianOf(st.guardian_ids[0])?.name ?? 'Guardian')
+    d.drafts.unshift(nd)
+    return nd
+  }
+  if (method === 'PATCH' && (m = /^\/drafts\/([^/]+)$/.exec(p))) {
+    const dr = d.drafts.find((x) => x.id === m[1]) ?? notFound('Draft')
+    if ('quote' in body) {
+      const mo = body.quote ? dr.moments.find((x) => x.msg_index === body.quote.msg_index) : null
+      dr.quote = mo ? { text: mo.text, msg_index: mo.msg_index, session_id: mo.session_id, shared: mo.shared, source: mo.shared ? 'student' : 'tutor' } : null
+      const st = d.students[dr.student_id]
+      dr.by_guardian = dr.by_guardian.map((x) => ({ ...x, message: draftText(st.name.split(' ')[0], tutorRef(dr.tutor_id).name, dr.topic, dr.quote?.text) }))
+    }
+    if (body.by_guardian) dr.by_guardian = dr.by_guardian.map((x) => ({ ...x, ...(body.by_guardian.find((y) => y.guardian_id === x.guardian_id) ?? {}) }))
+    return { ...dr }
+  }
+  if (method === 'POST' && (m = /^\/drafts\/([^/]+)\/send$/.exec(p))) {
+    const dr = d.drafts.find((x) => x.id === m[1]) ?? notFound('Draft')
+    const msgs = dr.by_guardian.map((x) => ({ ...x, ...(body.by_guardian?.find((y) => y.guardian_id === x.guardian_id) ?? {}) }))
+    dr.status = 'sent'
+    const ts = iso(Date.now())
+    const sent_all = msgs.map((x) => {
+      const g = guardianOf(x.guardian_id)
+      const status = quietNow(g) ? 'queued (quiet hours)' : 'test-mode (not delivered)'
+      d.threads.push({ id: `m${Date.now()}${x.guardian_id}`, student_id: dr.student_id, guardian_id: x.guardian_id, from: 'tutor', author_id: dr.tutor_id, text: x.message, ts, status, kind: 'update' })
+      return { guardian_id: x.guardian_id, to: g?.phone ?? g?.email ?? x.name, message: x.message, status, ts }
+    })
+    d.reports.push({ id: `rp${Date.now()}`, student_id: dr.student_id, guardian_ids: msgs.map((x) => x.guardian_id), from: tutorRef(dr.tutor_id), ts, subject: dr.subject, text: msgs[0]?.message ?? '', quote: dr.quote?.text ?? null, fixed: dr.fixed, goal: null })
+    return { sent_all, draft: { ...dr } }
+  }
+  if (method === 'POST' && (m = /^\/drafts\/([^/]+)\/skip$/.exec(p))) {
+    const dr = d.drafts.find((x) => x.id === m[1]) ?? notFound('Draft')
+    dr.status = 'skipped'
+    return { ok: true }
+  }
+  if (method === 'PATCH' && (m = /^\/students\/([^/]+)\/settings$/.exec(p))) {
+    const st = d.students[m[1]] ?? notFound('Student')
+    if ('auto_ko_note' in body) {
+      if (st.grade > 6) {
+        const e = new Error('auto_ko_note is only for grade 6 and under')
+        e.status = 422
+        throw e
+      }
+      st.auto_ko_note = !!body.auto_ko_note
+    }
+    return { student: publicStudent(st) }
   }
   throw new MockMiss(`${method} ${p}`)
 }

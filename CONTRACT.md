@@ -233,7 +233,7 @@ Shapes
 Subject         { id: "math"|"writing"|"sat_math"|"sat_rw"|"science", name, has_missions: bool }
 Enrollment      { id, student_id, subject, tutor_id, slot: "Tue 4:30pm", goal: string|null, started: date }
 Guardian        { id, name, relation: "parent"|"grandparent"|"guardian", phone|null, email|null,
-                  prefers: "sms"|"email", language: "en"|"es"|"vi"|"zh", updates: "every_ko"|"weekly"|"off",
+                  prefers: "sms"|"email", updates: "every_ko"|"weekly"|"off",
                   quiet_hours: "21:00-07:00"|null, student_ids: string[] }
                   // synthetic contacts only: 555-01xx numbers, @example.com
 Note            { id, student_id, tutor_id, subject, text, ts, share_with_parent: bool }
@@ -270,9 +270,9 @@ Endpoints (parent side; demo identity, no login: `/parent?as=g001`, labeled "dem
 
 Rules
 - A parent sees only their linked kids. No full transcripts to parents: only verbatim quotes already in gap reports, and notes the tutor marked `share_with_parent`. Private tutor notes never leave staff endpoints.
-- Parent updates (existing preview/send) now address each guardian of the student with `updates != "off"`, in the guardian's `language` (AI when live; offline templates in en/es/vi/zh), via `prefers`. Inside `quiet_hours` the send is `queued (quiet hours)`. Every send is test-mode unless Twilio is configured.
+- Parent updates (existing preview/send) now address each guardian of the student with `updates != "off"`, in English, via `prefers`. Inside `quiet_hours` the send is `queued (quiet hours)`. Every send is test-mode unless Twilio is configured.
 - Tone to parents: lead with what the kid taught and fixed; never "behind", "failing", or rankings vs. other kids.
-- Seed: every student gets 1–3 enrollments across subjects/tutors; ~1.3 guardians per student, some siblings sharing a guardian, ~8% with no reachable contact (flag `no_contact`). Maya s001: math with Ms. Rivera (Tue 4:30pm) + writing with Mr. Chen (Thu 5pm); guardians g001 Ana R. (parent, sms, es, every_ko; also guardian of her brother s014, grade 9, sat_math) and g002 Sam R. (parent, email, en, weekly). A short seeded thread between Ms. Rivera and g001.
+- Seed: every student gets 1–3 enrollments across subjects/tutors; ~1.3 guardians per student, some siblings sharing a guardian, ~8% with no reachable contact (flag `no_contact`). Maya s001: math with Ms. Rivera (Tue 4:30pm) + writing with Mr. Chen (Thu 5pm); guardians g001 Ana R. (parent, sms, every_ko; also guardian of her brother s014, grade 9, sat_math) and g002 Sam R. (parent, email, weekly). A short seeded thread between Ms. Rivera and g001.
 - Reset restores all of this.
 
 ### v3.13b (the business side is the product; owner metrics + packages)
@@ -300,3 +300,40 @@ black/yellow, sticker tags), `cybercore` (blue duotone, scanlines), `grunge_ugly
 action/progress/win) so meaning never changes with taste.
 `POST /api/students/{id}/style {tiles: string[]}` → `{theme, vibe, register_intensity: "low"|"mid"|"high"}`;
 `Student.style` stores the picks. Tiles carry no gender labels and no "for boys/for girls" copy.
+
+## v3.15 (the tutor is the filter; parents see reports, never the chat)
+Teens stop being honest if parents watch, so: **tutors see everything; parents see only what the tutor sends.**
+- Parent payloads (`/api/parent/*`, sends, renewal notes) contain only: tutor-sent reports, notes marked shared,
+  thread messages, schedule, package. Never transcripts, Pip's brain, mistakes-in-progress, minutes, or timestamps of
+  activity. Every item carries `from: {tutor_id, name}`; the parent app labels it "From Ms. Rivera".
+- Parent updates are **tutor-approved drafts**. `Guardian.updates` cadence only decides how often the tutor is prompted.
+  Exception: grade ≤ 6, the tutor may enable `auto_ko_note` per student (a short K.O. note goes out unreviewed).
+- Quotes in parent reports: grade ≥ 7 uses the **student-picked** moment if there is one (else the tutor picks; the
+  backend never auto-picks for ≥ 7). `POST /api/sessions/{id}/share {msg_index}` = student taps "show my family this"
+  on their own message (validated: it's their message, in that session). Returns the share.
+- `GET /api/students/{id}/family-view` → exactly what the guardians currently see (same payload builder as parent
+  home), so the student app can show "What my family sees". When a tutor sends something, the student gets a
+  `family_shared` event ("Ms. Rivera shared this with your family").
+- SAT students (grade ≥ 10 or subject sat_*): parent reports show goal progress (target vs. latest practice score),
+  not quotes, unless the student shared one.
+- Parent `this_week` drops `minutes`; keeps sessions count, what was taught (shared/approved quote), fixed (approved).
+
+## v3.16 (English only)
+Owner decision: the whole product is English. No `Guardian.language`, no translated templates, no language setting or "original" toggle in any UI.
+
+### v3.15b (tutor drafts API, adopted from the F18 proposal)
+```
+Draft { id, student_id, tutor_id, session_id, subject, topic, kind: "report"|"ko_note",
+        status: "draft"|"sent"|"skipped", created_at,
+        quote: {text, msg_index, session_id, shared: bool, source: "student"|"tutor"|"auto"}|null,
+        fixed: {before, after}|null, goal?: {target, latest}, by_guardian: [{guardian_id, message}] }
+```
+| Method + path | Body | Returns |
+|---|---|---|
+| GET `/api/students/{id}/drafts` | | `{items: Draft[]}` newest first |
+| POST `/api/students/{id}/drafts` | `{session_id?, kind?}` | `Draft` (built from the latest K.O./session) |
+| PATCH `/api/drafts/{id}` | `{quote: {session_id, msg_index}|null, by_guardian?}` | `Draft` |
+| POST `/api/drafts/{id}/send` | `{by_guardian: [{guardian_id, message}]}` | `{sent_all: SentLog[], draft}` |
+| POST `/api/drafts/{id}/skip` | | `Draft` |
+| PATCH `/api/students/{id}/settings` | `{auto_ko_note}` (422 if grade ≥ 7) | `{student}` |
+A K.O. creates a draft automatically (or sends it when `auto_ko_note` and grade ≤ 6). `source: "auto"` is allowed only for grade ≤ 6.

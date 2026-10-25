@@ -1,35 +1,13 @@
 import { useEffect, useState } from 'react'
 import { Dots, InlineError } from '../components/ui.jsx'
 import { staffApi } from './api'
-import { LangTag, StatusTag } from './bits.jsx'
-import { LANG_EN, PREFERS_WORDS, firstName, fmtDate, refId, refName, subjectName, usd } from './format'
+import { StatusTag } from './bits.jsx'
+import { PREFERS_WORDS, firstName, fmtDate, refId, refName, subjectName, usd } from './format'
 
-const dateIn = (d, lang) => {
-  const t = new Date(String(d).length === 10 ? `${d}T12:00:00` : d)
-  if (Number.isNaN(t.getTime())) return fmtDate(d)
-  return t.toLocaleDateString(lang, { month: 'long', day: 'numeric' })
-}
-
-const SUBJ_ES = { math: 'matemáticas', writing: 'escritura', sat_math: 'SAT Math', sat_rw: 'SAT Reading & Writing', science: 'ciencias' }
-
-const TEMPLATES = {
-  en: ({ g, kid, h, subj, date, quote, price }) =>
-    `Hi ${g}, this is Bright Path Tutoring. ${kid} has ${h} hour${h === 1 ? '' : 's'} left in the ${subj} package (renews ${date}).` +
-    (quote ? ` This week ${kid} taught Pip, in ${kid}’s own words: “${quote}”.` : '') +
-    ` Want us to keep ${kid}’s spot? Reply YES and we’ll renew (${price}).`,
-  es: ({ g, kid, h, subjEs, date, quote, price }) =>
-    `Hola ${g}, le escribe Bright Path Tutoring. A ${kid} le quedan ${h} hora${h === 1 ? '' : 's'} del paquete de ${subjEs} (se renueva el ${date}).` +
-    (quote ? ` Esta semana ${kid} le enseñó a Pip con sus propias palabras: “${quote}”.` : '') +
-    ` ¿Guardamos su lugar? Responda SÍ y renovamos (${price}).`,
-  vi: ({ g, kid, h, subj, date, quote, price }) =>
-    `Xin chào ${g}, đây là Bright Path Tutoring. ${kid} còn ${h} giờ trong gói ${subj} (gia hạn ${date}).` +
-    (quote ? ` Tuần này ${kid} đã dạy Pip: “${quote}”.` : '') +
-    ` Trả lời CÓ để gia hạn (${price}).`,
-  zh: ({ g, kid, h, subj, date, quote, price }) =>
-    `${g}您好，这里是 Bright Path Tutoring。${kid} 的 ${subj} 课时包还剩 ${h} 小时（${date} 续费）。` +
-    (quote ? `本周 ${kid} 用自己的话教 Pip：“${quote}”。` : '') +
-    `回复“是”即可续费（${price}）。`,
-}
+const TEMPLATE = ({ g, kid, h, subj, date, quote, price }) =>
+  `Hi ${g}, this is Bright Path Tutoring. ${kid} has ${h} hour${h === 1 ? '' : 's'} left in the ${subj} package (renews ${date}).` +
+  (quote ? ` This week ${kid} taught Pip, in ${kid}’s own words: “${quote}”.` : '') +
+  ` Want us to keep ${kid}’s spot? Reply YES and we’ll renew (${price}).`
 
 // Owner → family renewal note: preview (with a verbatim quote as evidence) → parent thread (test mode).
 export default function RenewalNote({ row, onClose, onSent }) {
@@ -59,18 +37,15 @@ export default function RenewalNote({ row, onClose, onSent }) {
         /* preview still works without the evidence quote */
       }
       if (!alive) return
-      const lang = TEMPLATES[guardian.language] ? guardian.language : 'en'
       setG(guardian)
       setQuote(q)
       setText(
-        row.note_text ??
-        TEMPLATES[lang]({
+        TEMPLATE({
           g: firstName(guardian.name),
           kid,
           h: row.hours_left,
           subj: subjectName(row.subject),
-          subjEs: SUBJ_ES[row.subject] ?? subjectName(row.subject),
-          date: dateIn(row.renews_on, lang),
+          date: fmtDate(row.renews_on),
           quote: q,
           price: usd(row.price_usd),
         }),
@@ -105,8 +80,7 @@ export default function RenewalNote({ row, onClose, onSent }) {
           To {g.name ?? 'the family'} about {kid}
         </h2>
         <p className="small subtle">
-          {PREFERS_WORDS[g.prefers] ?? 'Their usual channel'} · <LangTag lang={g.language} /> · goes into the family’s message thread
-          {g.language && g.language !== 'en' ? ` (written in ${LANG_EN[g.language]})` : ''}.
+          {PREFERS_WORDS[g.prefers] ?? 'Their usual channel'} · goes into the family’s message thread.
         </p>
       </div>
       {phase === 'loading' ? (

@@ -19,8 +19,6 @@ export const FLAG_WORDS = {
 }
 export const FLAG_ORDER = ['at_risk', 'needs_update', 'no_contact', 'new']
 
-export const LANG_NAMES = { en: 'English', es: 'Español', vi: 'Tiếng Việt', zh: '中文' }
-export const LANG_EN = { en: 'English', es: 'Spanish', vi: 'Vietnamese', zh: 'Chinese' }
 export const PREFERS_WORDS = { sms: 'Text message', email: 'Email' }
 export const UPDATES_WORDS = { every_ko: 'After every finished lesson', weekly: 'Once a week', off: 'Off' }
 export const UPDATES_SHORT = { every_ko: 'Every finished lesson', weekly: 'Weekly', off: 'Off' }
