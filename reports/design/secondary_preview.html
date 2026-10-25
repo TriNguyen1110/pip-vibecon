@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=390">
+<title>Pip Secondary Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Inter+Tight:ital,wght@0,400..800;1,400..600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* =====================================================================
+   Pip "Secondary" student register (11-15). Lift-ready values.
+   Refs: Spotify (list rows, dark), Discord (chat rows), Nike SNKRS (drop card),
+   Valorant/Fortnite menus (hard grid, mono labels), CapCut (tool chips).
+   Y2K only as: chrome type, LCD readouts, cybercore scanlines. No bubbles/sky/candy pills.
+   ===================================================================== */
+:root, [data-skin="night"] {
+  /* type */
+  --font-ui: 'Inter Tight', system-ui, sans-serif;                 /* body 15-16px, 500/600 */
+  --font-display: 'Archivo', 'Inter Tight', sans-serif;            /* font-stretch: 125% (Expanded), 800-900 */
+  --font-mono: 'Geist Mono', ui-monospace, monospace;              /* micro-labels 12px, .12em, uppercase */
+  /* ground */
+  --bg: #0A0A0C;  --surface: #131317;  --surface-2: #1B1B21;  --surface-3: #24242C;
+  --line: rgba(255,255,255,.10);  --line-strong: rgba(255,255,255,.20);
+  /* text on --bg: fg 17.7:1 · muted 7.7:1 · subtle 5.4:1 (5.1 on surface) */
+  --fg: #F2F2F4;  --fg-muted: #A1A1AA;  --fg-subtle: #85858F;
+  /* roles (unchanged meaning): act / learned / wins / boss */
+  --accent: #2EF2FF;  --accent-2: #B6FF3B;  --sun: #FFE14D;  --coral: #FF6F61;
+  --her: rgba(46,242,255,.10);  --her-line: rgba(46,242,255,.35);
+  /* materials */
+  --chrome: linear-gradient(180deg, #FFFFFF 0%, #E6EAEF 22%, #A7B0BB 47%, #4A515C 50%, #8C95A1 63%, #DCE1E7 85%, #FFFFFF 100%);
+  --chrome-btn: linear-gradient(180deg, #FFFFFF 0%, #EEF1F5 42%, #C9D0D8 56%, #E4E8ED 78%, #FFFFFF 100%);  /* buttons: no dark horizon under the label; ink 12.7:1 worst */
+  --chrome-ink: #0A0A0C;
+  --lcd-bg: #07131C;  --lcd-ink: #7CF4FF;  --lcd-glow: 0 0 6px rgba(124,244,255,.45);
+  --scan: repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0 1px, transparent 1px 3px);
+  --grid: linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px) 0 0/24px 24px,
+          linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px) 0 0/24px 24px;
+  /* shape */
+  --r-sm: 6px; --r-md: 8px; --r-lg: 12px;
+  --mascot-fill: #2A2A32; --mascot-line: #3A3A44; --mascot-eye: #F2F2F4;
+}
+/* Soft Pop: same structure, type, radii and grid; only the palette softens. Still no pink/lilac. */
+[data-skin="soft"] {
+  --bg: #F3F0EA;  --surface: #FFFFFF;  --surface-2: #F8F6F1;  --surface-3: #ECE8E0;
+  --line: rgba(20,20,26,.10);  --line-strong: rgba(20,20,26,.22);
+  --fg: #14141A;  --fg-muted: #4A4A55;  --fg-subtle: #6A6A75;      /* on bg: 16.1 · 7.7 · 4.7 (5.3 on white) */
+  --accent: #0F6E8C;  --accent-2: #2F6B00;  --sun: #8A5200;  --coral: #B0281A;   /* text-safe on light */
+  --her: #DDF3EA;  --her-line: #9ED9C2;                               /* mint */
+  --chrome: linear-gradient(180deg, #FFFFFF 0%, #F1F3F6 40%, #D3D9E0 50%, #EEF1F4 100%);
+  --lcd-bg: #E3EBD2;  --lcd-ink: #26331A;  --lcd-glow: none;         /* soft green LCD 10.8:1 */
+  --scan: repeating-linear-gradient(0deg, rgba(0,0,0,.035) 0 1px, transparent 1px 3px);
+  --grid: linear-gradient(rgba(20,20,26,.04) 1px, transparent 1px) 0 0/24px 24px,
+          linear-gradient(90deg, rgba(20,20,26,.04) 1px, transparent 1px) 0 0/24px 24px;
+  --mascot-fill: #CFE7DC; --mascot-line: #14141A; --mascot-eye: #14141A;
+}
+
+* { box-sizing: border-box; margin: 0; }
+body { width: 390px; background: #000; font-family: var(--font-ui); -webkit-font-smoothing: antialiased; }
+.cap { height: 32px; padding: 0 16px; display: flex; align-items: center; justify-content: space-between; background: #000; color: #85858F;
+  font: 500 11px/1 var(--font-mono); letter-spacing: .14em; text-transform: uppercase; border-top: 1px solid #222; }
+.screen { position: relative; width: 390px; height: 844px; overflow: hidden; background: var(--bg); color: var(--fg);
+  display: flex; flex-direction: column; isolation: isolate; }
+.screen::before { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--grid); -webkit-mask: linear-gradient(180deg, #000, transparent 60%); mask: linear-gradient(180deg, #000, transparent 60%); }
+
+/* status bar (device) */
+.sb { height: 44px; padding: 0 22px; display: flex; align-items: center; justify-content: space-between; font: 600 15px/1 var(--font-ui); }
+.sb i { font-style: normal; font: 500 12px/1 var(--font-mono); color: var(--fg-muted); }
+
+/* atoms */
+.mono { font: 500 12px/1.2 var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--fg-subtle); }
+.display { font-family: var(--font-display); font-stretch: 125%; font-weight: 800; letter-spacing: -.01em; line-height: .95; text-transform: uppercase; }
+.chrome-type { color: transparent; background: var(--chrome); -webkit-background-clip: text; background-clip: text; -webkit-text-stroke: .5px rgba(255,255,255,.25); }
+[data-skin="soft"] .chrome-type { color: var(--fg); background: none; -webkit-text-stroke: 0; }
+.lcd { display: inline-flex; align-items: center; gap: 8px; height: 28px; padding: 0 10px; border-radius: var(--r-sm); background: var(--lcd-bg);
+  color: var(--lcd-ink); text-shadow: var(--lcd-glow); font: 500 13px/1 var(--font-mono); letter-spacing: .08em;
+  box-shadow: inset 0 0 0 1px var(--line-strong), inset 0 2px 4px rgba(0,0,0,.35); font-variant-numeric: tabular-nums; }
+.btn-primary { height: 52px; width: 100%; border: 0; border-radius: var(--r-md); background: var(--chrome-btn); color: var(--chrome-ink);
+  font: 800 15px/1 var(--font-display); font-stretch: 125%; letter-spacing: .06em; text-transform: uppercase;
+  box-shadow: inset 0 1px 0 #fff, inset 0 -2px 0 rgba(0,0,0,.25), 0 0 0 1px rgba(255,255,255,.35), 0 8px 24px -10px rgba(46,242,255,.45); }
+[data-skin="soft"] .btn-primary { background: #14141A; color: #FFFFFF; box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 6px 16px -8px rgba(20,20,26,.5); }
+.btn-ghost { height: 44px; padding: 0 14px; border-radius: var(--r-md); border: 1px solid var(--line-strong); background: transparent; color: var(--fg);
+  font: 600 14px/1 var(--font-ui); display: inline-flex; align-items: center; gap: 8px; }
+.chip { height: 34px; padding: 0 12px; border-radius: var(--r-sm); border: 1px solid var(--line-strong); background: var(--surface);
+  color: var(--fg-muted); font: 600 13px/1 var(--font-ui); display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); }
+.hp { display: grid; grid-template-columns: repeat(10, 1fr); gap: 2px; height: 8px; flex: 1; }
+.hp b { background: var(--coral); border-radius: 1px; } .hp b.off { background: var(--surface-3); }
+.scanbox { position: relative; overflow: hidden; background: radial-gradient(80% 70% at 50% 100%, rgba(46,242,255,.18), transparent 70%), var(--surface-2); }
+.scanbox::after { content: ''; position: absolute; inset: 0; background: var(--scan); pointer-events: none; }
+[data-skin="soft"] .scanbox { background: radial-gradient(80% 70% at 50% 100%, rgba(15,110,140,.12), transparent 70%), var(--surface-2); }
+
+/* mascot placeholder: deadpan silhouette */
+.pip { display: block; }
+
+/* tab bar */
+.tabs { margin-top: auto; height: 76px; padding: 0 8px 18px; display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); background: var(--bg); }
+.tab { display: grid; place-items: center; align-content: center; gap: 6px; color: var(--fg-subtle); font: 500 11px/1 var(--font-mono); letter-spacing: .1em; text-transform: uppercase; position: relative; }
+.tab svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.6; }
+.tab.on { color: var(--fg); } .tab.on::before { content: ''; position: absolute; top: -1px; left: 30%; right: 30%; height: 2px; background: var(--accent); }
+
+/* ---------- HOME ---------- */
+.home-top { display: flex; align-items: center; justify-content: space-between; padding: 6px 16px 14px; }
+.wordmark { font: 900 26px/1 var(--font-display); font-stretch: 125%; letter-spacing: -.04em; text-transform: lowercase; }
+.avatar { width: 32px; height: 32px; border-radius: var(--r-sm); border: 1px solid var(--line-strong); background: var(--surface-2); display: grid; place-items: center; font: 600 13px var(--font-ui); }
+.drop { margin: 0 16px; overflow: hidden; }
+.drop__art { height: 196px; display: grid; grid-template-columns: 1fr 1fr; align-items: end; padding: 14px 16px 0; border-bottom: 1px solid var(--line); }
+.drop__body { padding: 14px 16px 16px; display: grid; gap: 12px; }
+.meta { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--line); border-radius: var(--r-md); }
+.meta div { padding: 10px; display: grid; gap: 6px; } .meta div + div { border-left: 1px solid var(--line); }
+.meta b { font: 600 16px/1 var(--font-ui); color: var(--fg); }
+.row { display: grid; grid-template-columns: 48px 1fr auto; gap: 12px; align-items: center; padding: 10px 16px; }
+.thumb { width: 48px; height: 48px; border-radius: var(--r-sm); border: 1px solid var(--line); display: grid; place-items: center; font: 800 15px/1 var(--font-display); font-stretch: 125%; }
+.row__t { font: 600 15px/1.25 var(--font-ui); } .row__s { margin-top: 4px; }
+
+/* ---------- MISSION ---------- */
+.mhead { display: grid; grid-template-columns: 36px 1fr auto; gap: 10px; align-items: center; padding: 4px 16px 10px; border-bottom: 1px solid var(--line); }
+.iconbtn { width: 36px; height: 36px; border-radius: var(--r-md); border: 1px solid var(--line-strong); display: grid; place-items: center; color: var(--fg); }
+.iconbtn svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.8; }
+.bossbar { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 1px solid var(--line); }
+.feed { flex: 1; padding: 14px 16px 8px; display: flex; flex-direction: column; gap: 14px; overflow: hidden; }
+.msg { display: grid; grid-template-columns: 32px 1fr; gap: 10px; }
+.msg__who { display: flex; gap: 8px; align-items: baseline; margin-bottom: 4px; }
+.msg__name { font: 700 14px/1 var(--font-ui); }
+.msg__text { font: 500 15px/1.45 var(--font-ui); color: var(--fg); }
+.pip-av { width: 32px; height: 32px; border-radius: var(--r-sm); overflow: hidden; border: 1px solid var(--line-strong); }
+.belief { margin-top: 8px; padding: 8px 10px; border-radius: var(--r-sm); background: var(--surface); border: 1px solid var(--line); border-left: 2px solid var(--coral);
+  display: flex; justify-content: space-between; align-items: center; gap: 8px; font: 600 14px/1.3 var(--font-ui); }
+.her { align-self: flex-end; max-width: 82%; padding: 10px 12px; border-radius: var(--r-lg) var(--r-lg) var(--r-sm) var(--r-lg); background: var(--her); border: 1px solid var(--her-line); font: 500 15px/1.45 var(--font-ui); }
+.event { display: flex; align-items: center; gap: 10px; color: var(--coral); }
+.event::before, .event::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+.tools { display: flex; gap: 8px; padding: 0 16px 10px; overflow: hidden; }
+.composer { display: grid; grid-template-columns: 1fr 44px; gap: 8px; padding: 10px 16px 26px; border-top: 1px solid var(--line); }
+.field { height: 44px; border-radius: var(--r-md); border: 1px solid var(--line-strong); background: var(--surface); padding: 0 14px; display: flex; align-items: center; color: var(--fg-subtle); font: 500 15px/1 var(--font-ui); }
+.send { height: 44px; border-radius: var(--r-md); background: var(--chrome-btn); display: grid; place-items: center; box-shadow: inset 0 1px 0 #fff, 0 0 0 1px rgba(255,255,255,.35); }
+[data-skin="soft"] .send { background: #14141A; }
+.send svg { width: 18px; height: 18px; stroke: var(--chrome-ink); fill: none; stroke-width: 2.2; }
+[data-skin="soft"] .send svg { stroke: #fff; }
+
+/* ---------- K.O. CARD ---------- */
+.ko { padding: 8px 16px 26px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+.kocard { border-radius: var(--r-lg); border: 1px solid var(--line-strong); overflow: hidden; background: #0E0E12; }
+.kocard__top { display: flex; justify-content: space-between; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+.kocard__art { height: 250px; position: relative; display: grid; place-items: center; }
+.kocard__ko { position: absolute; left: 14px; bottom: 10px; font-size: 92px; }
+.kgrid { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line); }
+.kgrid div { padding: 12px 14px; display: grid; gap: 6px; } .kgrid div:nth-child(odd) { border-right: 1px solid var(--line); }
+.kgrid div:nth-child(n+3) { border-top: 1px solid var(--line); }
+.kgrid b { font: 500 18px/1 var(--font-mono); color: var(--lcd-ink); text-shadow: var(--lcd-glow); font-variant-numeric: tabular-nums; }
+.quote { padding: 14px; border-top: 1px solid var(--line); font: italic 500 17px/1.35 var(--font-ui); }
+.item { display: flex; justify-content: space-between; align-items: center; padding: 12px 14px; border-top: 1px solid var(--line); }
+.holo-line { height: 2px; background: conic-gradient(from 90deg, #2EF2FF, #B6FF3B, #FFE14D, #7B6CFF, #2EF2FF); }
+</style></head>
+<body>
+
+<!-- reusable deadpan silhouette (placeholder): rounded block body, ear nubs, flat-line eyes -->
+<svg width="0" height="0" style="position:absolute"><defs>
+  <symbol id="pip" viewBox="0 0 100 100">
+    <path d="M22 30 L26 14 L38 24 Q50 20 62 24 L74 14 L78 30 Q86 40 86 58 Q86 88 50 88 Q14 88 14 58 Q14 40 22 30 Z" fill="var(--mascot-fill)" stroke="var(--mascot-line)" stroke-width="2"/>
+    <rect x="33" y="50" width="11" height="3" rx="1.5" fill="var(--mascot-eye)"/><rect x="56" y="50" width="11" height="3" rx="1.5" fill="var(--mascot-eye)"/>
+    <rect x="45" y="64" width="10" height="2" rx="1" fill="var(--mascot-eye)" opacity=".6"/>
+  </symbol>
+  <symbol id="boss" viewBox="0 0 100 100">
+    <path d="M50 8 L58 30 L82 22 L70 44 L92 56 L66 62 L70 90 L50 74 L30 90 L34 62 L8 56 L30 44 L18 22 L42 30 Z" fill="none" stroke="var(--coral)" stroke-width="2.5" stroke-linejoin="round"/>
+    <rect x="38" y="46" width="9" height="3" fill="var(--coral)"/><rect x="53" y="46" width="9" height="3" fill="var(--coral)"/>
+  </symbol>
+</defs></svg>
+
+<!-- ============ 1. HOME ============ -->
+<div class="cap"><span>01 · Student home</span><span>night · default</span></div>
+<section class="screen" data-skin="night">
+  <div class="sb">9:41<i>5G ▮▮▮</i></div>
+  <div class="home-top">
+    <span class="wordmark chrome-type">pip</span>
+    <div style="display:flex;gap:8px;align-items:center"><span class="lcd">STREAK 07D</span><span class="avatar">M</span></div>
+  </div>
+  <div class="card drop">
+    <div class="drop__art scanbox">
+      <div style="align-self:start;display:grid;gap:8px"><span class="mono" style="color:var(--accent)">● Today's drop</span><span class="mono">Mission 01/03</span></div>
+      <div style="display:flex;justify-content:flex-end;align-items:end;gap:6px">
+        <svg class="pip" width="74" height="74"><use href="#pip"/></svg>
+        <svg width="58" height="58" style="margin-bottom:22px;opacity:.9"><use href="#boss"/></svg>
+      </div>
+    </div>
+    <div class="drop__body">
+      <div class="display chrome-type" style="font-size:30px">Area of a<br>triangle</div>
+      <div style="font:500 15px/1.4 var(--font-ui);color:var(--fg-muted)">Pip thinks it's base × height. Duke Doublecount is living in that rule.</div>
+      <div class="meta"><div><span class="mono">Time</span><b>~6 min</b></div><div><span class="mono">Ideas</span><b>3</b></div><div><span class="mono">Brain</span><b>v1</b></div></div>
+      <button class="btn-primary">Teach Pip</button>
+    </div>
+  </div>
+  <div style="display:flex;justify-content:space-between;align-items:baseline;padding:20px 16px 4px"><span class="mono">Continue</span><span class="mono" style="color:var(--fg-muted)">See all</span></div>
+  <div class="row"><div class="thumb scanbox" style="color:var(--accent-2)">½</div><div><div class="row__t">Adding fractions</div><div class="row__s mono">Fixed · 1 re-teach</div></div><span class="lcd" style="height:24px;color:var(--accent-2)">K.O.</span></div>
+  <div class="row"><div class="thumb scanbox">%</div><div><div class="row__t">Percent of a number</div><div class="row__s mono">Locked · after mission 02</div></div><span class="mono">—</span></div>
+  <nav class="tabs">
+    <div class="tab on"><svg viewBox="0 0 24 24"><path d="M3 11 12 4l9 7v9H3z"/></svg>Home</div>
+    <div class="tab"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Missions</div>
+    <div class="tab"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 10h16"/></svg>Vault</div>
+    <div class="tab"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v8M8 12h8"/></svg>Brain</div>
+  </nav>
+</section>
+
+<!-- ============ 2. MISSION (night) ============ -->
+<div class="cap"><span>02 · Mission chat</span><span>night · default</span></div>
+<section class="screen" data-skin="night" id="mission-night">
+  <div class="sb">9:42<i>5G ▮▮▮</i></div>
+  <div class="mhead">
+    <span class="iconbtn"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></span>
+    <div><div class="display" style="font-size:15px;letter-spacing:.02em">Area of a triangle</div><div class="mono" style="margin-top:5px">Mission 01 · Brain v1</div></div>
+    <span class="iconbtn"><svg viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="16" rx="2"/><path d="M9 9h6M9 13h6"/></svg></span>
+  </div>
+  <div class="bossbar">
+    <span class="lcd" style="color:var(--coral);text-shadow:none">DUKE.DBL</span>
+    <span class="hp"><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b class="off"></b><b class="off"></b><b class="off"></b></span>
+    <span class="lcd">070</span>
+  </div>
+  <div class="feed">
+    <div class="msg"><span class="pip-av scanbox"><svg width="32" height="32"><use href="#pip"/></svg></span>
+      <div><div class="msg__who"><span class="msg__name">pip</span><span class="mono">9:41</span></div>
+        <div class="msg__text">area of a triangle is base times height. so a 6 by 4 triangle is 24. obviously.</div>
+        <div class="belief"><span>area = base × height</span><span class="mono" style="color:var(--coral)">Pip believes</span></div></div></div>
+    <div class="her">no. draw the rectangle around it. the triangle is half of that box.</div>
+    <div class="event"><span class="mono" style="color:var(--coral)">−30 HP · Duke took a hit</span></div>
+    <div class="msg"><span class="pip-av scanbox"><svg width="32" height="32"><use href="#pip"/></svg></span>
+      <div><div class="msg__who"><span class="msg__name">pip</span><span class="mono">9:42</span></div>
+        <div class="msg__text">half the box. ok. so 6 × 4 is 24, half is 12. but does that work for a skinny one too?</div></div></div>
+    <div class="her">yes. any triangle. b × h ÷ 2.</div>
+  </div>
+  <div class="tools"><span class="chip">✎ Draw it</span><span class="chip">↺ Example</span><span class="chip">? Quiz Pip</span><span class="chip">▤ Brain</span></div>
+  <div class="composer"><div class="field">Explain it to Pip…</div><div class="send"><svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg></div></div>
+</section>
+
+<!-- ============ 3. K.O. CARD ============ -->
+<div class="cap"><span>03 · K.O. card</span><span>night · default</span></div>
+<section class="screen" data-skin="night">
+  <div class="sb">9:47<i>5G ▮▮▮</i></div>
+  <div class="mhead" style="border:0">
+    <span class="iconbtn"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></span>
+    <div class="mono" style="text-align:center">Mission 01 complete</div>
+    <span class="iconbtn"><svg viewBox="0 0 24 24"><path d="M12 4v12M7 9l5-5 5 5M5 20h14"/></svg></span>
+  </div>
+  <div class="ko">
+    <div class="kocard">
+      <div class="kocard__top"><span class="mono">Pip · Card #014</span><span class="mono" style="color:var(--accent-2)">● Brain v1 → v2</span></div>
+      <div class="kocard__art scanbox" style="background:radial-gradient(70% 60% at 60% 40%, rgba(63,91,255,.45), transparent 70%), linear-gradient(180deg,#0A0F3D,#101030)">
+        <svg width="132" height="132" style="position:absolute;right:30px;top:28px"><use href="#pip"/></svg>
+        <svg width="64" height="64" style="position:absolute;right:178px;top:60px;opacity:.35;transform:rotate(-24deg)"><use href="#boss"/></svg>
+        <span class="kocard__ko display chrome-type">K.O.</span>
+      </div>
+      <div class="holo-line"></div>
+      <div class="kgrid">
+        <div><span class="mono">Boss</span><b style="color:var(--fg);text-shadow:none;font:600 15px/1.2 var(--font-ui)">Duke Doublecount</b></div>
+        <div><span class="mono">Time</span><b>05:48</b></div>
+        <div><span class="mono">Re-teaches</span><b>01</b></div>
+        <div><span class="mono">Quiz</span><b>3/3</b></div>
+      </div>
+      <div class="quote">"the triangle is half of that box."<div class="mono" style="margin-top:8px;font-style:normal">— Maya, teaching Pip</div></div>
+      <div class="item"><span style="font:600 15px/1.2 var(--font-ui)">Copy-and-Flip Mirror</span><span class="lcd" style="color:var(--sun);text-shadow:none">EARNED</span></div>
+    </div>
+    <button class="btn-primary" style="margin-top:auto">Next mission</button>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><span class="btn-ghost" style="justify-content:center">Save card</span><span class="btn-ghost" style="justify-content:center">Open Brain</span></div>
+  </div>
+</section>
+
+<!-- ============ 4. MISSION · SOFT POP ============ -->
+<div class="cap"><span>04 · Mission chat</span><span>soft pop · student-picked</span></div>
+<section class="screen" data-skin="soft">
+  <div class="sb">9:42<i>5G ▮▮▮</i></div>
+  <div class="mhead">
+    <span class="iconbtn"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></span>
+    <div><div class="display" style="font-size:15px;letter-spacing:.02em">Area of a triangle</div><div class="mono" style="margin-top:5px">Mission 01 · Brain v1</div></div>
+    <span class="iconbtn"><svg viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="16" rx="2"/><path d="M9 9h6M9 13h6"/></svg></span>
+  </div>
+  <div class="bossbar">
+    <span class="lcd" style="color:var(--coral)">DUKE.DBL</span>
+    <span class="hp"><b style="background:#FF8A7A"></b><b style="background:#FF8A7A"></b><b style="background:#FF8A7A"></b><b style="background:#FF8A7A"></b><b style="background:#FF8A7A"></b><b style="background:#FF8A7A"></b><b style="background:#FF8A7A"></b><b class="off"></b><b class="off"></b><b class="off"></b></span>
+    <span class="lcd">070</span>
+  </div>
+  <div class="feed">
+    <div class="msg"><span class="pip-av scanbox"><svg width="32" height="32"><use href="#pip"/></svg></span>
+      <div><div class="msg__who"><span class="msg__name">pip</span><span class="mono">9:41</span></div>
+        <div class="msg__text">area of a triangle is base times height. so a 6 by 4 triangle is 24. obviously.</div>
+        <div class="belief"><span>area = base × height</span><span class="mono" style="color:var(--coral)">Pip believes</span></div></div></div>
+    <div class="her">no. draw the rectangle around it. the triangle is half of that box.</div>
+    <div class="event"><span class="mono" style="color:var(--coral)">−30 HP · Duke took a hit</span></div>
+    <div class="msg"><span class="pip-av scanbox"><svg width="32" height="32"><use href="#pip"/></svg></span>
+      <div><div class="msg__who"><span class="msg__name">pip</span><span class="mono">9:42</span></div>
+        <div class="msg__text">half the box. ok. so 6 × 4 is 24, half is 12. but does that work for a skinny one too?</div></div></div>
+    <div class="her">yes. any triangle. b × h ÷ 2.</div>
+  </div>
+  <div class="tools"><span class="chip">✎ Draw it</span><span class="chip">↺ Example</span><span class="chip">? Quiz Pip</span><span class="chip">▤ Brain</span></div>
+  <div class="composer"><div class="field">Explain it to Pip…</div><div class="send"><svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg></div></div>
+</section>
+</body></html>
