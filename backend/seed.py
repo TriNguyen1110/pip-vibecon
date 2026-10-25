@@ -11,7 +11,7 @@ from logic import new_ladder, now
 
 SEED = Path(__file__).parent / "seed"
 COLLS = ["center", "tutors", "students", "assignments", "sessions", "events", "sent", "workshops",
-         "pilot", "themes", "guardians", "notes", "threads"]  # last three: v3.13 center ops
+         "pilot", "themes", "guardians", "notes", "threads", "shares", "drafts"]  # v3.13/v3.15 center ops
 
 
 def _load(name):

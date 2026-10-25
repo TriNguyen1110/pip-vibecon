@@ -633,6 +633,7 @@ async def _quiz(sid: str, tasks: BackgroundTasks):
         st["since_last_session"], st["last_session_id"] = s["gap_report"]["summary"], s["id"]
         await store.put("students", st)
         tasks.add_task(finish_ko, s["id"])
+        tasks.add_task(center_ops.after_ko, s["id"])  # v3.15: opt-in auto note (grade <= 6 only)
     else:
         s.update(status="quizzed", mood="stuck")
     await store.put("sessions", s)
@@ -727,17 +728,14 @@ async def get_report(sid: str):
 
 
 @api.post("/sessions/{sid}/parent-update/preview")
-async def parent_preview(sid: str):
+async def parent_preview(sid: str, body: dict = Body(default={})):
     await make_report(sid)
     s = await need("sessions", sid, "session")
     a = await need("assignments", s["assignment_id"], "assignment")
     st = await need("students", s["student_id"], "student")
-    if not s.get("parent_message"):
-        s["parent_message"] = await pip_ai.parent_message(s, a, st, await tutor_name(st))
-        await store.put("sessions", s)
-    # v3.13: one localized message per guardian with updates != off (by_guardian), plus who is skipped
-    return {"message": s["parent_message"],
-            **await center_ops.preview_update(s, a, st, await tutor_name(st), s["parent_message"])}
+    # v3.15: a tutor-approved draft (no game words; quote = student's share > tutor pick {msg_index} > auto only
+    # for grade <= 6), the guardians it goes to, and who is skipped. Instant: no AI call.
+    return await center_ops.preview_update(s, a, st, await tutor_name(st), body if isinstance(body, dict) else {})
 
 
 async def twilio_send(to: str, body: str) -> bool:
@@ -764,7 +762,7 @@ async def parent_send(sid: str, body: dict = Body(...)):
     a = await need("assignments", s["assignment_id"], "assignment")
     st = await need("students", s["student_id"], "student")
     # v3.13: each guardian with updates != off, in their language, via prefers, honoring quiet hours
-    rows = await center_ops.send_update(s, a, st, await tutor_name(st), msg, body.get("messages"))
+    rows = await center_ops.send_update(s, a, st, await tutor_name(st), msg, body)
     s = await need("sessions", sid, "session")
     s["parent_sent_at"] = rows[0]["ts"]
     await store.put("sessions", s)

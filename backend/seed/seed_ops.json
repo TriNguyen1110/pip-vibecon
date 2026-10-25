@@ -101,7 +101,14 @@
      "hours_used": 7,
      "price_usd": 1280,
      "renews_in_days": 24
-    }
+    },
+    "practice_scores": [
+     540,
+     550,
+     580,
+     600
+    ],
+    "target_score": 650
    }
   ],
   "s003": [
@@ -259,7 +266,14 @@
      "hours_used": 17,
      "price_usd": 1920,
      "renews_in_days": 33
-    }
+    },
+    "practice_scores": [
+     520,
+     530,
+     540,
+     580
+    ],
+    "target_score": 650
    },
    {
     "id": "en_s009_writing",
@@ -429,7 +443,13 @@
      "hours_used": 9,
      "price_usd": 1280,
      "renews_in_days": 33
-    }
+    },
+    "practice_scores": [
+     560,
+     590,
+     610
+    ],
+    "target_score": 650
    }
   ],
   "s015": [
@@ -447,7 +467,13 @@
      "hours_used": 6,
      "price_usd": 960,
      "renews_in_days": 16
-    }
+    },
+    "practice_scores": [
+     580,
+     590,
+     640
+    ],
+    "target_score": 650
    },
    {
     "id": "en_s015_sat_rw",
@@ -463,7 +489,12 @@
      "hours_used": 1,
      "price_usd": 1280,
      "renews_in_days": 37
-    }
+    },
+    "practice_scores": [
+     560,
+     570
+    ],
+    "target_score": 650
    }
   ],
   "s016": [
@@ -607,7 +638,12 @@
      "hours_used": 14,
      "price_usd": 1920,
      "renews_in_days": 57
-    }
+    },
+    "practice_scores": [
+     520,
+     530
+    ],
+    "target_score": 650
    },
    {
     "id": "en_s023_math",
@@ -693,7 +729,13 @@
      "hours_used": 10,
      "price_usd": 1280,
      "renews_in_days": 23
-    }
+    },
+    "practice_scores": [
+     560,
+     590,
+     580
+    ],
+    "target_score": 650
    }
   ],
   "s027": [
@@ -1233,7 +1275,13 @@
      "hours_used": 2,
      "price_usd": 1280,
      "renews_in_days": 20
-    }
+    },
+    "practice_scores": [
+     520,
+     550,
+     580
+    ],
+    "target_score": 650
    }
   ],
   "s049": [
@@ -1475,7 +1523,12 @@
      "hours_used": 1,
      "price_usd": 1280,
      "renews_in_days": 80
-    }
+    },
+    "practice_scores": [
+     540,
+     550
+    ],
+    "target_score": 650
    }
   ],
   "s058": [
@@ -1509,7 +1562,12 @@
      "hours_used": 9,
      "price_usd": 960,
      "renews_in_days": -30
-    }
+    },
+    "practice_scores": [
+     540,
+     550
+    ],
+    "target_score": 650
    },
    {
     "id": "en_s058_writing",
@@ -2671,7 +2729,14 @@
      "hours_used": 1,
      "price_usd": 960,
      "renews_in_days": 73
-    }
+    },
+    "practice_scores": [
+     540,
+     550,
+     600,
+     600
+    ],
+    "target_score": 650
    }
   ],
   "s104": [
@@ -2707,7 +2772,13 @@
      "hours_used": 0,
      "price_usd": 1280,
      "renews_in_days": 64
-    }
+    },
+    "practice_scores": [
+     540,
+     570,
+     560
+    ],
+    "target_score": 650
    }
   ],
   "s106": [
@@ -2949,7 +3020,13 @@
      "hours_used": 10,
      "price_usd": 1920,
      "renews_in_days": 54
-    }
+    },
+    "practice_scores": [
+     580,
+     610,
+     640
+    ],
+    "target_score": 650
    }
   ],
   "s115": [
@@ -3133,7 +3210,6 @@
    "phone": "+1-415-555-0101",
    "email": "ana.r@example.com",
    "prefers": "sms",
-   "language": "es",
    "updates": "every_ko",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -3148,7 +3224,6 @@
    "phone": "+1-415-555-0102",
    "email": "sam.r@example.com",
    "prefers": "email",
-   "language": "en",
    "updates": "weekly",
    "quiet_hours": null,
    "student_ids": [
@@ -3162,7 +3237,6 @@
    "phone": "+1-510-555-0173",
    "email": null,
    "prefers": "sms",
-   "language": "en",
    "updates": "off",
    "quiet_hours": null,
    "student_ids": [
@@ -3176,7 +3250,6 @@
    "phone": "+1-415-555-0157",
    "email": "drew.n4@example.com",
    "prefers": "sms",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -3190,7 +3263,6 @@
    "phone": null,
    "email": "pat.f5@example.com",
    "prefers": "email",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -3204,7 +3276,6 @@
    "phone": "+1-650-555-0119",
    "email": null,
    "prefers": "sms",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -3218,7 +3289,6 @@
    "phone": "+1-415-555-0158",
    "email": null,
    "prefers": "sms",
-   "language": "en",
    "updates": "weekly",
    "quiet_hours": null,
    "student_ids": [
@@ -3233,7 +3303,6 @@
    "phone": "+1-650-555-0179",
    "email": null,
    "prefers": "sms",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": null,
    "student_ids": [
@@ -3247,7 +3316,6 @@
    "phone": null,
    "email": "jorge.r9@example.com",
    "prefers": "email",
-   "language": "es",
    "updates": "every_ko",
    "quiet_hours": null,
    "student_ids": [
@@ -3261,7 +3329,6 @@
    "phone": "+1-415-555-0189",
    "email": "blair.t10@example.com",
    "prefers": "email",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": null,
    "student_ids": [
@@ -3275,7 +3342,6 @@
    "phone": "+1-415-555-0196",
    "email": "blair.t11@example.com",
    "prefers": "sms",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -3289,7 +3355,6 @@
    "phone": "+1-415-555-0163",
    "email": "leslie.r12@example.com",
    "prefers": "sms",
-   "language": "en",
    "updates": "weekly",
    "quiet_hours": null,
    "student_ids": [
@@ -3303,7 +3368,6 @@
    "phone": "+1-650-555-0139",
    "email": "drew.c13@example.com",
    "prefers": "sms",
-   "language": "en",
    "updates": "weekly",
    "quiet_hours": null,
    "student_ids": [
@@ -3317,7 +3381,6 @@
    "phone": "+1-510-555-0121",
    "email": "robin.y14@example.com",
    "prefers": "email",
-   "language": "en",
    "updates": "off",
    "quiet_hours": null,
    "student_ids": [
@@ -3331,7 +3394,6 @@
    "phone": "+1-510-555-0179",
    "email": null,
    "prefers": "sms",
-   "language": "es",
    "updates": "every_ko",
    "quiet_hours": null,
    "student_ids": [
@@ -3346,7 +3408,6 @@
    "phone": "+1-650-555-0159",
    "email": "carmen.b16@example.com",
    "prefers": "sms",
-   "language": "es",
    "updates": "every_ko",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -3360,7 +3421,6 @@
    "phone": "+1-510-555-0159",
    "email": null,
    "prefers": "sms",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -3374,7 +3434,6 @@
    "phone": "+1-408-555-0180",
    "email": null,
    "prefers": "sms",
-   "language": "en",
    "updates": "off",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -3388,7 +3447,6 @@
    "phone": "+1-650-555-0173",
    "email": "jamie.e19@example.com",
    "prefers": "email",
-   "language": "en",
    "updates": "weekly",
    "quiet_hours": null,
    "student_ids": [
@@ -3402,7 +3460,6 @@
    "phone": "+1-408-555-0119",
    "email": null,
    "prefers": "sms",
-   "language": "en",
    "updates": "weekly",
    "quiet_hours": null,
    "student_ids": [
@@ -3416,7 +3473,6 @@
    "phone": "+1-650-555-0135",
    "email": null,
    "prefers": "sms",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -3430,7 +3486,6 @@
    "phone": "+1-408-555-0140",
    "email": "avery.h22@example.com",
    "prefers": "email",
-   "language": "en",
    "updates": "weekly",
    "quiet_hours": null,
    "student_ids": [
@@ -3444,7 +3499,6 @@
    "phone": "+1-510-555-0139",
    "email": "drew.v23@example.com",
    "prefers": "sms",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -3458,7 +3512,6 @@
    "phone": "+1-415-555-0105",
    "email": null,
    "prefers": "sms",
-   "language": "en",
    "updates": "weekly",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -3473,7 +3526,6 @@
    "phone": "+1-510-555-0191",
    "email": null,
    "prefers": "sms",
-   "language": "es",
    "updates": "weekly",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -3488,7 +3540,6 @@
    "phone": "+1-510-555-0113",
    "email": null,
    "prefers": "sms",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": null,
    "student_ids": [
@@ -3502,7 +3553,6 @@
    "phone": null,
    "email": null,
    "prefers": "sms",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": null,
    "student_ids": [
@@ -3516,7 +3566,6 @@
    "phone": null,
    "email": "carlos.h28@example.com",
    "prefers": "email",
-   "language": "es",
    "updates": "every_ko",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -3530,7 +3579,6 @@
    "phone": null,
    "email": "jorge.h29@example.com",
    "prefers": "email",
-   "language": "es",
    "updates": "every_ko",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -3544,7 +3592,6 @@
    "phone": "+1-415-555-0129",
    "email": null,
    "prefers": "sms",
-   "language": "zh",
    "updates": "every_ko",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -3558,7 +3605,6 @@
    "phone": "+1-408-555-0157",
    "email": null,
    "prefers": "sms",
-   "language": "zh",
    "updates": "weekly",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -3572,7 +3618,6 @@
    "phone": "+1-510-555-0118",
    "email": null,
    "prefers": "sms",
-   "language": "en",
    "updates": "off",
    "quiet_hours": null,
    "student_ids": [
@@ -3587,7 +3632,6 @@
    "phone": "+1-415-555-0177",
    "email": null,
    "prefers": "sms",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -3602,7 +3646,6 @@
    "phone": "+1-415-555-0123",
    "email": "alex.p34@example.com",
    "prefers": "sms",
-   "language": "en",
    "updates": "weekly",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -3616,7 +3659,6 @@
    "phone": null,
    "email": "lucia.s35@example.com",
    "prefers": "email",
-   "language": "es",
    "updates": "weekly",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -3630,7 +3672,6 @@
    "phone": "+1-415-555-0149",
    "email": "carlos.s36@example.com",
    "prefers": "sms",
-   "language": "es",
    "updates": "off",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -3644,7 +3685,6 @@
    "phone": null,
    "email": "robin.k37@example.com",
    "prefers": "email",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": null,
    "student_ids": [
@@ -3658,7 +3698,6 @@
    "phone": null,
    "email": "blair.l38@example.com",
    "prefers": "email",
-   "language": "en",
    "updates": "off",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -3672,7 +3711,6 @@
    "phone": null,
    "email": "mai.w39@example.com",
    "prefers": "email",
-   "language": "vi",
    "updates": "every_ko",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -3686,7 +3724,6 @@
    "phone": null,
    "email": "dana.j40@example.com",
    "prefers": "email",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": null,
    "student_ids": [
@@ -3700,7 +3737,6 @@
    "phone": "+1-415-555-0138",
    "email": null,
    "prefers": "sms",
-   "language": "en",
    "updates": "weekly",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -3714,7 +3750,6 @@
    "phone": "+1-408-555-0156",
    "email": null,
    "prefers": "sms",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": null,
    "student_ids": [
@@ -3728,7 +3763,6 @@
    "phone": "+1-408-555-0150",
    "email": "drew.k43@example.com",
    "prefers": "sms",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": null,
    "student_ids": [
@@ -3742,7 +3776,6 @@
    "phone": "+1-650-555-0146",
    "email": null,
    "prefers": "sms",
-   "language": "es",
    "updates": "every_ko",
    "quiet_hours": null,
    "student_ids": [
@@ -3756,7 +3789,6 @@
    "phone": "+1-650-555-0149",
    "email": null,
    "prefers": "sms",
-   "language": "es",
    "updates": "every_ko",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -3770,7 +3802,6 @@
    "phone": null,
    "email": null,
    "prefers": "sms",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": null,
    "student_ids": [
@@ -3784,7 +3815,6 @@
    "phone": "+1-650-555-0191",
    "email": null,
    "prefers": "sms",
-   "language": "zh",
    "updates": "every_ko",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -3799,7 +3829,6 @@
    "phone": "+1-415-555-0134",
    "email": "mei.w48@example.com",
    "prefers": "sms",
-   "language": "zh",
    "updates": "every_ko",
    "quiet_hours": null,
    "student_ids": [
@@ -3813,7 +3842,6 @@
    "phone": "+1-408-555-0162",
    "email": "alex.f49@example.com",
    "prefers": "email",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": null,
    "student_ids": [
@@ -3827,7 +3855,6 @@
    "phone": "+1-510-555-0137",
    "email": null,
    "prefers": "sms",
-   "language": "en",
    "updates": "weekly",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -3841,7 +3868,6 @@
    "phone": "+1-650-555-0141",
    "email": null,
    "prefers": "sms",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -3855,7 +3881,6 @@
    "phone": null,
    "email": "quinn.f52@example.com",
    "prefers": "email",
-   "language": "en",
    "updates": "weekly",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -3869,7 +3894,6 @@
    "phone": null,
    "email": "taylor.f53@example.com",
    "prefers": "email",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -3883,7 +3907,6 @@
    "phone": "+1-510-555-0169",
    "email": null,
    "prefers": "sms",
-   "language": "vi",
    "updates": "off",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -3897,7 +3920,6 @@
    "phone": "+1-650-555-0180",
    "email": null,
    "prefers": "sms",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": null,
    "student_ids": [
@@ -3911,7 +3933,6 @@
    "phone": null,
    "email": "robin.t56@example.com",
    "prefers": "email",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": null,
    "student_ids": [
@@ -3925,7 +3946,6 @@
    "phone": "+1-415-555-0115",
    "email": null,
    "prefers": "sms",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -3939,7 +3959,6 @@
    "phone": "+1-408-555-0143",
    "email": null,
    "prefers": "sms",
-   "language": "vi",
    "updates": "weekly",
    "quiet_hours": null,
    "student_ids": [
@@ -3953,7 +3972,6 @@
    "phone": null,
    "email": "blair.t59@example.com",
    "prefers": "email",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": null,
    "student_ids": [
@@ -3967,7 +3985,6 @@
    "phone": null,
    "email": "taylor.t60@example.com",
    "prefers": "email",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": null,
    "student_ids": [
@@ -3981,7 +3998,6 @@
    "phone": null,
    "email": null,
    "prefers": "sms",
-   "language": "vi",
    "updates": "every_ko",
    "quiet_hours": null,
    "student_ids": [
@@ -3995,7 +4011,6 @@
    "phone": "+1-510-555-0172",
    "email": null,
    "prefers": "sms",
-   "language": "en",
    "updates": "weekly",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -4009,7 +4024,6 @@
    "phone": "+1-408-555-0114",
    "email": "xiu.y63@example.com",
    "prefers": "sms",
-   "language": "zh",
    "updates": "weekly",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -4023,7 +4037,6 @@
    "phone": "+1-415-555-0114",
    "email": "avery.l64@example.com",
    "prefers": "sms",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -4037,7 +4050,6 @@
    "phone": "+1-510-555-0197",
    "email": "jordan.e65@example.com",
    "prefers": "email",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": null,
    "student_ids": [
@@ -4052,7 +4064,6 @@
    "phone": "+1-408-555-0184",
    "email": "kelly.e66@example.com",
    "prefers": "sms",
-   "language": "en",
    "updates": "weekly",
    "quiet_hours": null,
    "student_ids": [
@@ -4067,7 +4078,6 @@
    "phone": "+1-510-555-0129",
    "email": null,
    "prefers": "sms",
-   "language": "en",
    "updates": "weekly",
    "quiet_hours": null,
    "student_ids": [
@@ -4081,7 +4091,6 @@
    "phone": "+1-650-555-0182",
    "email": "leslie.f68@example.com",
    "prefers": "email",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": null,
    "student_ids": [
@@ -4095,7 +4104,6 @@
    "phone": null,
    "email": null,
    "prefers": "sms",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": null,
    "student_ids": [
@@ -4109,7 +4117,6 @@
    "phone": "+1-650-555-0193",
    "email": null,
    "prefers": "sms",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": null,
    "student_ids": [
@@ -4123,7 +4130,6 @@
    "phone": "+1-510-555-0163",
    "email": null,
    "prefers": "sms",
-   "language": "en",
    "updates": "off",
    "quiet_hours": null,
    "student_ids": [
@@ -4137,7 +4143,6 @@
    "phone": "+1-510-555-0105",
    "email": "drew.s72@example.com",
    "prefers": "sms",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -4151,7 +4156,6 @@
    "phone": null,
    "email": "blair.h73@example.com",
    "prefers": "email",
-   "language": "en",
    "updates": "off",
    "quiet_hours": null,
    "student_ids": [
@@ -4165,7 +4169,6 @@
    "phone": null,
    "email": "jordan.h74@example.com",
    "prefers": "email",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -4179,7 +4182,6 @@
    "phone": null,
    "email": "robin.h75@example.com",
    "prefers": "email",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -4193,7 +4195,6 @@
    "phone": null,
    "email": "jun.t76@example.com",
    "prefers": "email",
-   "language": "zh",
    "updates": "weekly",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -4207,7 +4208,6 @@
    "phone": "+1-415-555-0150",
    "email": "mai.c77@example.com",
    "prefers": "sms",
-   "language": "vi",
    "updates": "every_ko",
    "quiet_hours": null,
    "student_ids": [
@@ -4221,7 +4221,6 @@
    "phone": "+1-415-555-0139",
    "email": "toni.r78@example.com",
    "prefers": "sms",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -4235,7 +4234,6 @@
    "phone": "+1-415-555-0181",
    "email": "thu.w79@example.com",
    "prefers": "sms",
-   "language": "vi",
    "updates": "every_ko",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -4249,7 +4247,6 @@
    "phone": "+1-408-555-0127",
    "email": "jamie.k80@example.com",
    "prefers": "sms",
-   "language": "en",
    "updates": "weekly",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -4263,7 +4260,6 @@
    "phone": "+1-415-555-0124",
    "email": null,
    "prefers": "sms",
-   "language": "en",
    "updates": "weekly",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -4277,7 +4273,6 @@
    "phone": "+1-408-555-0153",
    "email": "morgan.m82@example.com",
    "prefers": "email",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": null,
    "student_ids": [
@@ -4291,7 +4286,6 @@
    "phone": "+1-415-555-0194",
    "email": null,
    "prefers": "sms",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": null,
    "student_ids": [
@@ -4305,7 +4299,6 @@
    "phone": "+1-415-555-0193",
    "email": null,
    "prefers": "sms",
-   "language": "zh",
    "updates": "weekly",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -4320,7 +4313,6 @@
    "phone": "+1-510-555-0133",
    "email": "mei.e85@example.com",
    "prefers": "sms",
-   "language": "zh",
    "updates": "every_ko",
    "quiet_hours": null,
    "student_ids": [
@@ -4335,7 +4327,6 @@
    "phone": null,
    "email": null,
    "prefers": "sms",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": null,
    "student_ids": [
@@ -4349,7 +4340,6 @@
    "phone": "+1-510-555-0175",
    "email": "uc.j87@example.com",
    "prefers": "sms",
-   "language": "vi",
    "updates": "every_ko",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -4363,7 +4353,6 @@
    "phone": "+1-510-555-0186",
    "email": "jun.f88@example.com",
    "prefers": "sms",
-   "language": "zh",
    "updates": "off",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -4377,7 +4366,6 @@
    "phone": "+1-650-555-0155",
    "email": null,
    "prefers": "sms",
-   "language": "en",
    "updates": "off",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -4392,7 +4380,6 @@
    "phone": "+1-650-555-0121",
    "email": "quinn.s90@example.com",
    "prefers": "sms",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -4406,7 +4393,6 @@
    "phone": null,
    "email": "jamie.d91@example.com",
    "prefers": "email",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": null,
    "student_ids": [
@@ -4420,7 +4406,6 @@
    "phone": "+1-650-555-0157",
    "email": null,
    "prefers": "sms",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": null,
    "student_ids": [
@@ -4434,7 +4419,6 @@
    "phone": "+1-650-555-0128",
    "email": null,
    "prefers": "sms",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -4448,7 +4432,6 @@
    "phone": "+1-510-555-0125",
    "email": null,
    "prefers": "sms",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": null,
    "student_ids": [
@@ -4462,7 +4445,6 @@
    "phone": null,
    "email": "morgan.n95@example.com",
    "prefers": "email",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": null,
    "student_ids": [
@@ -4476,7 +4458,6 @@
    "phone": null,
    "email": "miguel.v96@example.com",
    "prefers": "email",
-   "language": "es",
    "updates": "weekly",
    "quiet_hours": null,
    "student_ids": [
@@ -4490,7 +4471,6 @@
    "phone": "+1-408-555-0158",
    "email": null,
    "prefers": "sms",
-   "language": "es",
    "updates": "every_ko",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -4504,7 +4484,6 @@
    "phone": "+1-408-555-0185",
    "email": null,
    "prefers": "sms",
-   "language": "zh",
    "updates": "every_ko",
    "quiet_hours": null,
    "student_ids": [
@@ -4518,7 +4497,6 @@
    "phone": null,
    "email": "yan.s99@example.com",
    "prefers": "email",
-   "language": "zh",
    "updates": "weekly",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -4532,7 +4510,6 @@
    "phone": null,
    "email": null,
    "prefers": "sms",
-   "language": "es",
    "updates": "every_ko",
    "quiet_hours": null,
    "student_ids": [
@@ -4546,7 +4523,6 @@
    "phone": "+1-510-555-0185",
    "email": "chris.t101@example.com",
    "prefers": "email",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": null,
    "student_ids": [
@@ -4560,7 +4536,6 @@
    "phone": "+1-408-555-0131",
    "email": "jing.l102@example.com",
    "prefers": "sms",
-   "language": "zh",
    "updates": "every_ko",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -4574,7 +4549,6 @@
    "phone": "+1-510-555-0117",
    "email": "jamie.j103@example.com",
    "prefers": "sms",
-   "language": "en",
    "updates": "off",
    "quiet_hours": null,
    "student_ids": [
@@ -4588,7 +4562,6 @@
    "phone": "+1-415-555-0167",
    "email": null,
    "prefers": "sms",
-   "language": "en",
    "updates": "weekly",
    "quiet_hours": null,
    "student_ids": [
@@ -4602,7 +4575,6 @@
    "phone": "+1-415-555-0161",
    "email": "drew.d105@example.com",
    "prefers": "sms",
-   "language": "en",
    "updates": "weekly",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -4617,7 +4589,6 @@
    "phone": "+1-510-555-0199",
    "email": "casey.d106@example.com",
    "prefers": "email",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": null,
    "student_ids": [
@@ -4632,7 +4603,6 @@
    "phone": "+1-408-555-0187",
    "email": "morgan.y107@example.com",
    "prefers": "email",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": null,
    "student_ids": [
@@ -4646,7 +4616,6 @@
    "phone": null,
    "email": "casey.h108@example.com",
    "prefers": "email",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -4660,7 +4629,6 @@
    "phone": "+1-415-555-0147",
    "email": null,
    "prefers": "sms",
-   "language": "en",
    "updates": "weekly",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -4674,7 +4642,6 @@
    "phone": "+1-408-555-0183",
    "email": "elena.e110@example.com",
    "prefers": "sms",
-   "language": "es",
    "updates": "off",
    "quiet_hours": null,
    "student_ids": [
@@ -4689,7 +4656,6 @@
    "phone": "+1-408-555-0103",
    "email": "carlos.e111@example.com",
    "prefers": "sms",
-   "language": "es",
    "updates": "weekly",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -4704,7 +4670,6 @@
    "phone": "+1-510-555-0180",
    "email": null,
    "prefers": "sms",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -4718,7 +4683,6 @@
    "phone": "+1-415-555-0152",
    "email": "taylor.a113@example.com",
    "prefers": "sms",
-   "language": "en",
    "updates": "weekly",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -4732,7 +4696,6 @@
    "phone": "+1-408-555-0109",
    "email": "toni.a114@example.com",
    "prefers": "email",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": null,
    "student_ids": [
@@ -4746,7 +4709,6 @@
    "phone": "+1-408-555-0168",
    "email": null,
    "prefers": "sms",
-   "language": "en",
    "updates": "weekly",
    "quiet_hours": null,
    "student_ids": [
@@ -4760,7 +4722,6 @@
    "phone": "+1-415-555-0122",
    "email": null,
    "prefers": "sms",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -4774,7 +4735,6 @@
    "phone": "+1-408-555-0133",
    "email": "yan.f117@example.com",
    "prefers": "sms",
-   "language": "zh",
    "updates": "weekly",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -4788,7 +4748,6 @@
    "phone": "+1-650-555-0150",
    "email": "wei.f118@example.com",
    "prefers": "sms",
-   "language": "zh",
    "updates": "every_ko",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -4802,7 +4761,6 @@
    "phone": null,
    "email": "shawn.g119@example.com",
    "prefers": "email",
-   "language": "en",
    "updates": "off",
    "quiet_hours": null,
    "student_ids": [
@@ -4816,7 +4774,6 @@
    "phone": "+1-415-555-0144",
    "email": "jorge.p120@example.com",
    "prefers": "email",
-   "language": "es",
    "updates": "weekly",
    "quiet_hours": null,
    "student_ids": [
@@ -4830,7 +4787,6 @@
    "phone": "+1-408-555-0112",
    "email": "casey.y121@example.com",
    "prefers": "email",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -4844,7 +4800,6 @@
    "phone": "+1-415-555-0132",
    "email": null,
    "prefers": "sms",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -4858,7 +4813,6 @@
    "phone": "+1-408-555-0132",
    "email": "wei.f123@example.com",
    "prefers": "sms",
-   "language": "zh",
    "updates": "weekly",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -4872,7 +4826,6 @@
    "phone": "+1-650-555-0144",
    "email": "wei.f124@example.com",
    "prefers": "sms",
-   "language": "zh",
    "updates": "every_ko",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -4886,7 +4839,6 @@
    "phone": "+1-408-555-0104",
    "email": null,
    "prefers": "sms",
-   "language": "en",
    "updates": "weekly",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -4900,7 +4852,6 @@
    "phone": "+1-650-555-0167",
    "email": null,
    "prefers": "sms",
-   "language": "en",
    "updates": "weekly",
    "quiet_hours": null,
    "student_ids": [
@@ -4914,7 +4865,6 @@
    "phone": null,
    "email": "chris.y127@example.com",
    "prefers": "email",
-   "language": "en",
    "updates": "weekly",
    "quiet_hours": null,
    "student_ids": [
@@ -4928,7 +4878,6 @@
    "phone": null,
    "email": "taylor.t128@example.com",
    "prefers": "email",
-   "language": "en",
    "updates": "weekly",
    "quiet_hours": null,
    "student_ids": [
@@ -4942,7 +4891,6 @@
    "phone": null,
    "email": null,
    "prefers": "sms",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": null,
    "student_ids": [
@@ -4956,7 +4904,6 @@
    "phone": "+1-650-555-0161",
    "email": null,
    "prefers": "sms",
-   "language": "en",
    "updates": "weekly",
    "quiet_hours": null,
    "student_ids": [
@@ -4970,7 +4917,6 @@
    "phone": "+1-650-555-0148",
    "email": "morgan.n131@example.com",
    "prefers": "email",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -4984,7 +4930,6 @@
    "phone": "+1-408-555-0141",
    "email": "jamie.d132@example.com",
    "prefers": "sms",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": null,
    "student_ids": [
@@ -4999,7 +4944,6 @@
    "phone": "+1-408-555-0177",
    "email": "pat.d133@example.com",
    "prefers": "email",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -5014,7 +4958,6 @@
    "phone": "+1-408-555-0146",
    "email": "chris.b134@example.com",
    "prefers": "email",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -5028,7 +4971,6 @@
    "phone": "+1-650-555-0131",
    "email": null,
    "prefers": "sms",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -5042,7 +4984,6 @@
    "phone": null,
    "email": "linh.f136@example.com",
    "prefers": "email",
-   "language": "vi",
    "updates": "every_ko",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -5056,7 +4997,6 @@
    "phone": "+1-408-555-0159",
    "email": "lucia.n137@example.com",
    "prefers": "sms",
-   "language": "es",
    "updates": "weekly",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -5070,7 +5010,6 @@
    "phone": null,
    "email": "lucia.n138@example.com",
    "prefers": "email",
-   "language": "es",
    "updates": "off",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -5084,7 +5023,6 @@
    "phone": "+1-650-555-0163",
    "email": "erin.w139@example.com",
    "prefers": "email",
-   "language": "en",
    "updates": "every_ko",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -5098,7 +5036,6 @@
    "phone": "+1-510-555-0135",
    "email": null,
    "prefers": "sms",
-   "language": "en",
    "updates": "weekly",
    "quiet_hours": "21:00-07:00",
    "student_ids": [
@@ -5720,7 +5657,7 @@
    "author_id": "t1",
    "minutes_ago": 8940,
    "status": "test-mode (not delivered)",
-   "text": "Hi Ana, this is Ms. Rivera. This week Maya starts area of triangles. She will teach it to Pip, our AI classmate. Ask her to explain it to you!"
+   "text": "Hi Ana, this is Ms. Rivera. This week Maya starts area of triangles and will teach it to Pip, her AI classmate. Ask her to explain it to you at home!"
   },
   {
    "id": "tm_g001_2",
@@ -5730,8 +5667,7 @@
    "author_id": "g001",
    "minutes_ago": 8100,
    "status": "received",
-   "text": "¡Gracias, Sra. Rivera! Maya ya nos explicó que dos triángulos forman un rectángulo. ¿Puede practicar en casa?",
-   "translation": "Thank you, Ms. Rivera! Maya already told us two triangles make a rectangle. Can she practice at home?"
+   "text": "Thank you, Ms. Rivera! Maya already told us two triangles make a rectangle. Can she practice at home?"
   },
   {
    "id": "tm_g001_3",
@@ -5841,8 +5777,7 @@
    "author_id": "g009",
    "minutes_ago": 1551,
    "status": "received",
-   "text": "¡Muchas gracias! Seguiremos practicando en casa.",
-   "translation": "Thank you so much! We'll keep practicing at home."
+   "text": "Thanks so much! We'll keep practicing at home."
   },
   {
    "id": "tm_g006_1",
@@ -5942,8 +5877,7 @@
    "author_id": "g015",
    "minutes_ago": 17280,
    "status": "received",
-   "text": "¡Muchas gracias! Seguiremos practicando en casa.",
-   "translation": "Thank you so much! We'll keep practicing at home."
+   "text": "Thanks so much! We'll keep practicing at home."
   },
   {
    "id": "tm_g060_1",
@@ -5995,6 +5929,7 @@
   "days_ago": 2,
   "minutes": 12,
   "reteach_count": 1,
+  "share_concept": "k2",
   "brain": [
    {
     "concept_id": "k1",
@@ -6013,5 +5948,727 @@
     "quote": "put 7 back in, 2 times 7 plus 6 is 20 so both sides match"
    }
   ]
+ },
+ "pips": {
+  "s001": {
+   "name": "Pip",
+   "creature": "capybara",
+   "vibe": "cool",
+   "accessory": "none"
+  },
+  "s002": {
+   "name": "Pip",
+   "creature": "axolotl",
+   "vibe": "cute",
+   "accessory": "glasses"
+  },
+  "s003": {
+   "name": "Pip",
+   "creature": "frog",
+   "vibe": "cute",
+   "accessory": "backpack"
+  },
+  "s004": {
+   "name": "Pip",
+   "creature": "corgi",
+   "vibe": "ugly",
+   "accessory": "badge"
+  },
+  "s005": {
+   "name": "Pip",
+   "creature": "raccoon",
+   "vibe": "cute",
+   "accessory": "none"
+  },
+  "s006": {
+   "name": "Pip",
+   "creature": "axolotl",
+   "vibe": "cute",
+   "accessory": "starclips"
+  },
+  "s007": {
+   "name": "Waffles",
+   "creature": "capybara",
+   "vibe": "cool",
+   "accessory": "starclips"
+  },
+  "s008": {
+   "name": "Rocket",
+   "creature": "cat",
+   "vibe": "cute",
+   "accessory": "scarf"
+  },
+  "s009": {
+   "name": "Pip",
+   "creature": "frog",
+   "vibe": "ugly",
+   "accessory": "glasses"
+  },
+  "s010": {
+   "name": "Pip",
+   "creature": "cat",
+   "vibe": "cute",
+   "accessory": "none"
+  },
+  "s011": {
+   "name": "Pip",
+   "creature": "raccoon",
+   "vibe": "cool",
+   "accessory": "starclips"
+  },
+  "s012": {
+   "name": "Pip",
+   "creature": "frog",
+   "vibe": "cool",
+   "accessory": "charm"
+  },
+  "s013": {
+   "name": "Pip",
+   "creature": "frog",
+   "vibe": "cute",
+   "accessory": "starclips"
+  },
+  "s014": {
+   "name": "Turbo",
+   "creature": "frog",
+   "vibe": "cool",
+   "accessory": "shades"
+  },
+  "s015": {
+   "name": "Turbo",
+   "creature": "corgi",
+   "vibe": "cute",
+   "accessory": "none"
+  },
+  "s016": {
+   "name": "Pip",
+   "creature": "cat",
+   "vibe": "cute",
+   "accessory": "scarf"
+  },
+  "s017": {
+   "name": "Pip",
+   "creature": "frog",
+   "vibe": "cute",
+   "accessory": "shades"
+  },
+  "s018": {
+   "name": "Pip",
+   "creature": "raccoon",
+   "vibe": "cool",
+   "accessory": "backpack"
+  },
+  "s019": {
+   "name": "Pip",
+   "creature": "capybara",
+   "vibe": "cool",
+   "accessory": "none"
+  },
+  "s020": {
+   "name": "Mochi",
+   "creature": "corgi",
+   "vibe": "cute",
+   "accessory": "scarf"
+  },
+  "s021": {
+   "name": "Pepper",
+   "creature": "corgi",
+   "vibe": "cute",
+   "accessory": "pencil"
+  },
+  "s022": {
+   "name": "Nugget",
+   "creature": "corgi",
+   "vibe": "cool",
+   "accessory": "pencil"
+  },
+  "s023": {
+   "name": "Turbo",
+   "creature": "corgi",
+   "vibe": "cute",
+   "accessory": "badge"
+  },
+  "s024": {
+   "name": "Pip",
+   "creature": "raccoon",
+   "vibe": "ugly",
+   "accessory": "badge"
+  },
+  "s025": {
+   "name": "Pip",
+   "creature": "capybara",
+   "vibe": "ugly",
+   "accessory": "glasses"
+  },
+  "s026": {
+   "name": "Nugget",
+   "creature": "raccoon",
+   "vibe": "ugly",
+   "accessory": "none"
+  },
+  "s027": {
+   "name": "Pip",
+   "creature": "raccoon",
+   "vibe": "cute",
+   "accessory": "badge"
+  },
+  "s028": {
+   "name": "Pip",
+   "creature": "axolotl",
+   "vibe": "cute",
+   "accessory": "visor"
+  },
+  "s029": {
+   "name": "Sprout",
+   "creature": "corgi",
+   "vibe": "cute",
+   "accessory": "scarf"
+  },
+  "s030": {
+   "name": "Pip",
+   "creature": "raccoon",
+   "vibe": "ugly",
+   "accessory": "pencil"
+  },
+  "s031": {
+   "name": "Pickles",
+   "creature": "raccoon",
+   "vibe": "cute",
+   "accessory": "visor"
+  },
+  "s032": {
+   "name": "Pip",
+   "creature": "frog",
+   "vibe": "cute",
+   "accessory": "visor"
+  },
+  "s033": {
+   "name": "Toast",
+   "creature": "capybara",
+   "vibe": "cool",
+   "accessory": "backpack"
+  },
+  "s034": {
+   "name": "Pip",
+   "creature": "corgi",
+   "vibe": "cool",
+   "accessory": "visor"
+  },
+  "s035": {
+   "name": "Pip",
+   "creature": "raccoon",
+   "vibe": "cute",
+   "accessory": "none"
+  },
+  "s036": {
+   "name": "Pip",
+   "creature": "capybara",
+   "vibe": "cool",
+   "accessory": "none"
+  },
+  "s037": {
+   "name": "Ziggy",
+   "creature": "raccoon",
+   "vibe": "cool",
+   "accessory": "charm"
+  },
+  "s038": {
+   "name": "Pip",
+   "creature": "corgi",
+   "vibe": "cool",
+   "accessory": "badge"
+  },
+  "s039": {
+   "name": "Noodle",
+   "creature": "cat",
+   "vibe": "ugly",
+   "accessory": "backpack"
+  },
+  "s040": {
+   "name": "Pip",
+   "creature": "capybara",
+   "vibe": "cute",
+   "accessory": "glasses"
+  },
+  "s041": {
+   "name": "Pip",
+   "creature": "axolotl",
+   "vibe": "cute",
+   "accessory": "none"
+  },
+  "s042": {
+   "name": "Pip",
+   "creature": "capybara",
+   "vibe": "cool",
+   "accessory": "charm"
+  },
+  "s043": {
+   "name": "Pip",
+   "creature": "frog",
+   "vibe": "cute",
+   "accessory": "none"
+  },
+  "s044": {
+   "name": "Pip",
+   "creature": "axolotl",
+   "vibe": "cool",
+   "accessory": "backpack"
+  },
+  "s045": {
+   "name": "Zippy",
+   "creature": "raccoon",
+   "vibe": "ugly",
+   "accessory": "none"
+  },
+  "s046": {
+   "name": "Pip",
+   "creature": "corgi",
+   "vibe": "cool",
+   "accessory": "visor"
+  },
+  "s047": {
+   "name": "Ziggy",
+   "creature": "frog",
+   "vibe": "cool",
+   "accessory": "charm"
+  },
+  "s048": {
+   "name": "Pudding",
+   "creature": "cat",
+   "vibe": "ugly",
+   "accessory": "glasses"
+  },
+  "s049": {
+   "name": "Pip",
+   "creature": "raccoon",
+   "vibe": "cute",
+   "accessory": "shades"
+  },
+  "s050": {
+   "name": "Pip",
+   "creature": "axolotl",
+   "vibe": "ugly",
+   "accessory": "pencil"
+  },
+  "s051": {
+   "name": "Pip",
+   "creature": "frog",
+   "vibe": "ugly",
+   "accessory": "glasses"
+  },
+  "s052": {
+   "name": "Ziggy",
+   "creature": "corgi",
+   "vibe": "cute",
+   "accessory": "scarf"
+  },
+  "s053": {
+   "name": "Nugget",
+   "creature": "cat",
+   "vibe": "ugly",
+   "accessory": "glasses"
+  },
+  "s054": {
+   "name": "Pip",
+   "creature": "capybara",
+   "vibe": "cool",
+   "accessory": "backpack"
+  },
+  "s055": {
+   "name": "Pip",
+   "creature": "axolotl",
+   "vibe": "cool",
+   "accessory": "none"
+  },
+  "s056": {
+   "name": "Pip",
+   "creature": "frog",
+   "vibe": "cool",
+   "accessory": "visor"
+  },
+  "s057": {
+   "name": "Pudding",
+   "creature": "corgi",
+   "vibe": "cool",
+   "accessory": "charm"
+  },
+  "s058": {
+   "name": "Sushi",
+   "creature": "frog",
+   "vibe": "cool",
+   "accessory": "starclips"
+  },
+  "s059": {
+   "name": "Pudding",
+   "creature": "frog",
+   "vibe": "cool",
+   "accessory": "visor"
+  },
+  "s060": {
+   "name": "Pickles",
+   "creature": "axolotl",
+   "vibe": "cute",
+   "accessory": "shades"
+  },
+  "s061": {
+   "name": "Pip",
+   "creature": "raccoon",
+   "vibe": "cute",
+   "accessory": "badge"
+  },
+  "s062": {
+   "name": "Pip",
+   "creature": "frog",
+   "vibe": "cute",
+   "accessory": "scarf"
+  },
+  "s063": {
+   "name": "Pip",
+   "creature": "corgi",
+   "vibe": "cute",
+   "accessory": "none"
+  },
+  "s064": {
+   "name": "Pip",
+   "creature": "axolotl",
+   "vibe": "ugly",
+   "accessory": "pencil"
+  },
+  "s065": {
+   "name": "Pip",
+   "creature": "axolotl",
+   "vibe": "cute",
+   "accessory": "charm"
+  },
+  "s066": {
+   "name": "Rocket",
+   "creature": "capybara",
+   "vibe": "cool",
+   "accessory": "none"
+  },
+  "s067": {
+   "name": "Bean",
+   "creature": "corgi",
+   "vibe": "cool",
+   "accessory": "visor"
+  },
+  "s068": {
+   "name": "Pip",
+   "creature": "axolotl",
+   "vibe": "ugly",
+   "accessory": "backpack"
+  },
+  "s069": {
+   "name": "Pip",
+   "creature": "raccoon",
+   "vibe": "cool",
+   "accessory": "scarf"
+  },
+  "s070": {
+   "name": "Waffles",
+   "creature": "cat",
+   "vibe": "cute",
+   "accessory": "charm"
+  },
+  "s071": {
+   "name": "Pip",
+   "creature": "axolotl",
+   "vibe": "cute",
+   "accessory": "charm"
+  },
+  "s072": {
+   "name": "Pip",
+   "creature": "cat",
+   "vibe": "cute",
+   "accessory": "glasses"
+  },
+  "s073": {
+   "name": "Nugget",
+   "creature": "axolotl",
+   "vibe": "cool",
+   "accessory": "backpack"
+  },
+  "s074": {
+   "name": "Noodle",
+   "creature": "capybara",
+   "vibe": "cool",
+   "accessory": "backpack"
+  },
+  "s075": {
+   "name": "Pudding",
+   "creature": "frog",
+   "vibe": "cute",
+   "accessory": "starclips"
+  },
+  "s076": {
+   "name": "Zippy",
+   "creature": "cat",
+   "vibe": "cool",
+   "accessory": "visor"
+  },
+  "s077": {
+   "name": "Pip",
+   "creature": "cat",
+   "vibe": "cute",
+   "accessory": "charm"
+  },
+  "s078": {
+   "name": "Pip",
+   "creature": "frog",
+   "vibe": "ugly",
+   "accessory": "none"
+  },
+  "s079": {
+   "name": "Gizmo",
+   "creature": "capybara",
+   "vibe": "cute",
+   "accessory": "visor"
+  },
+  "s080": {
+   "name": "Pip",
+   "creature": "cat",
+   "vibe": "cool",
+   "accessory": "glasses"
+  },
+  "s081": {
+   "name": "Turbo",
+   "creature": "cat",
+   "vibe": "cool",
+   "accessory": "charm"
+  },
+  "s082": {
+   "name": "Pip",
+   "creature": "cat",
+   "vibe": "cool",
+   "accessory": "backpack"
+  },
+  "s083": {
+   "name": "Ziggy",
+   "creature": "frog",
+   "vibe": "cool",
+   "accessory": "charm"
+  },
+  "s084": {
+   "name": "Pip",
+   "creature": "cat",
+   "vibe": "cool",
+   "accessory": "badge"
+  },
+  "s085": {
+   "name": "Pip",
+   "creature": "raccoon",
+   "vibe": "ugly",
+   "accessory": "starclips"
+  },
+  "s086": {
+   "name": "Toast",
+   "creature": "cat",
+   "vibe": "cool",
+   "accessory": "none"
+  },
+  "s087": {
+   "name": "Pip",
+   "creature": "axolotl",
+   "vibe": "cool",
+   "accessory": "visor"
+  },
+  "s088": {
+   "name": "Pip",
+   "creature": "cat",
+   "vibe": "cool",
+   "accessory": "backpack"
+  },
+  "s089": {
+   "name": "Pip",
+   "creature": "cat",
+   "vibe": "cool",
+   "accessory": "pencil"
+  },
+  "s090": {
+   "name": "Pip",
+   "creature": "raccoon",
+   "vibe": "ugly",
+   "accessory": "badge"
+  },
+  "s091": {
+   "name": "Ziggy",
+   "creature": "cat",
+   "vibe": "cute",
+   "accessory": "shades"
+  },
+  "s092": {
+   "name": "Ziggy",
+   "creature": "corgi",
+   "vibe": "cute",
+   "accessory": "backpack"
+  },
+  "s093": {
+   "name": "Pip",
+   "creature": "corgi",
+   "vibe": "cool",
+   "accessory": "none"
+  },
+  "s094": {
+   "name": "Pip",
+   "creature": "axolotl",
+   "vibe": "cute",
+   "accessory": "visor"
+  },
+  "s095": {
+   "name": "Pip",
+   "creature": "corgi",
+   "vibe": "cool",
+   "accessory": "shades"
+  },
+  "s096": {
+   "name": "Pip",
+   "creature": "frog",
+   "vibe": "cool",
+   "accessory": "backpack"
+  },
+  "s097": {
+   "name": "Pip",
+   "creature": "frog",
+   "vibe": "cool",
+   "accessory": "glasses"
+  },
+  "s098": {
+   "name": "Bean",
+   "creature": "corgi",
+   "vibe": "cool",
+   "accessory": "starclips"
+  },
+  "s099": {
+   "name": "Ziggy",
+   "creature": "raccoon",
+   "vibe": "cute",
+   "accessory": "pencil"
+  },
+  "s100": {
+   "name": "Pip",
+   "creature": "cat",
+   "vibe": "cool",
+   "accessory": "starclips"
+  },
+  "s101": {
+   "name": "Pip",
+   "creature": "cat",
+   "vibe": "cute",
+   "accessory": "none"
+  },
+  "s102": {
+   "name": "Bean",
+   "creature": "axolotl",
+   "vibe": "cute",
+   "accessory": "none"
+  },
+  "s103": {
+   "name": "Pip",
+   "creature": "capybara",
+   "vibe": "cute",
+   "accessory": "glasses"
+  },
+  "s104": {
+   "name": "Pip",
+   "creature": "raccoon",
+   "vibe": "cute",
+   "accessory": "none"
+  },
+  "s105": {
+   "name": "Noodle",
+   "creature": "raccoon",
+   "vibe": "cute",
+   "accessory": "pencil"
+  },
+  "s106": {
+   "name": "Pip",
+   "creature": "corgi",
+   "vibe": "cool",
+   "accessory": "backpack"
+  },
+  "s107": {
+   "name": "Pip",
+   "creature": "cat",
+   "vibe": "ugly",
+   "accessory": "scarf"
+  },
+  "s108": {
+   "name": "Pip",
+   "creature": "cat",
+   "vibe": "cool",
+   "accessory": "shades"
+  },
+  "s109": {
+   "name": "Gizmo",
+   "creature": "capybara",
+   "vibe": "ugly",
+   "accessory": "starclips"
+  },
+  "s110": {
+   "name": "Pip",
+   "creature": "axolotl",
+   "vibe": "cool",
+   "accessory": "scarf"
+  },
+  "s111": {
+   "name": "Pip",
+   "creature": "corgi",
+   "vibe": "ugly",
+   "accessory": "scarf"
+  },
+  "s112": {
+   "name": "Pip",
+   "creature": "capybara",
+   "vibe": "cute",
+   "accessory": "shades"
+  },
+  "s113": {
+   "name": "Pip",
+   "creature": "corgi",
+   "vibe": "cool",
+   "accessory": "charm"
+  },
+  "s114": {
+   "name": "Pip",
+   "creature": "capybara",
+   "vibe": "cool",
+   "accessory": "scarf"
+  },
+  "s115": {
+   "name": "Gizmo",
+   "creature": "capybara",
+   "vibe": "cool",
+   "accessory": "charm"
+  },
+  "s116": {
+   "name": "Pip",
+   "creature": "corgi",
+   "vibe": "ugly",
+   "accessory": "starclips"
+  },
+  "s117": {
+   "name": "Pip",
+   "creature": "corgi",
+   "vibe": "cool",
+   "accessory": "badge"
+  },
+  "s118": {
+   "name": "Gizmo",
+   "creature": "corgi",
+   "vibe": "cute",
+   "accessory": "glasses"
+  },
+  "s119": {
+   "name": "Captain",
+   "creature": "capybara",
+   "vibe": "cute",
+   "accessory": "badge"
+  },
+  "s120": {
+   "name": "Pip",
+   "creature": "raccoon",
+   "vibe": "cool",
+   "accessory": "scarf"
+  }
  }
 }

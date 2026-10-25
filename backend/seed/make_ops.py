@@ -143,10 +143,10 @@ def ascii_(s):
 
 guardians = [
     {"id": "g001", "name": "Ana R.", "relation": "parent", "phone": "+1-415-555-0101",
-     "email": "ana.r@example.com", "prefers": "sms", "language": "es", "updates": "every_ko",
+     "email": "ana.r@example.com", "prefers": "sms", "updates": "every_ko",
      "quiet_hours": "21:00-07:00", "student_ids": ["s001", "s014"]},
     {"id": "g002", "name": "Sam R.", "relation": "parent", "phone": "+1-415-555-0102",
-     "email": "sam.r@example.com", "prefers": "email", "language": "en", "updates": "weekly",
+     "email": "sam.r@example.com", "prefers": "email", "updates": "weekly",
      "quiet_hours": None, "student_ids": ["s001"]},
 ]
 # families: siblings share a last initial; ~12 sibling pairs
@@ -174,7 +174,7 @@ for fam in sorted(families):
         lang = R.choices(["en", "es", "vi", "zh"], weights=[70, 18, 7, 5])[0]
         guardians.append({"id": f"g{n:03d}", "name": f"{R.choice(FIRST[lang])} {initial}",
                           "relation": "guardian", "phone": None, "email": None, "prefers": "sms",
-                          "language": lang, "updates": "every_ko", "quiet_hours": None, "student_ids": fam})
+                          "updates": "every_ko", "quiet_hours": None, "student_ids": fam})
         n += 1
         continue
     lang = R.choices(["en", "es", "vi", "zh"], weights=[70, 18, 7, 5])[0]
@@ -188,7 +188,7 @@ for fam in sorted(families):
             "relation": R.choices(["parent", "grandparent", "guardian"], weights=[85, 8, 7])[0] if k == 0 else "parent",
             "phone": phone() if has_phone else None,
             "email": f"{ascii_(first)}.{ascii_(initial[0])}{n}@example.com" if has_email else None,
-            "prefers": prefers, "language": lang,
+            "prefers": prefers,
             "updates": R.choices(["every_ko", "weekly", "off"], weights=[55, 35, 10])[0],
             "quiet_hours": "21:00-07:00" if R.random() < 0.6 else None, "student_ids": fam})
         n += 1
@@ -240,26 +240,19 @@ for sid in sorted(R.sample([s for s in rest if s != "s014"], k=45)):
                       "subject": en["subject"], "days_ago": R.randint(0, 20), "share_with_parent": share,
                       "text": text})
 
-# --------------------------------------------------------------- threads
+# --------------------------------------------------------------- threads (English only: CONTRACT v3.16)
 threads = [
     {"id": "tm_g001_1", "student_id": "s001", "guardian_id": "g001", "from": "tutor", "author_id": "t1",
      "minutes_ago": 6 * 1440 + 300, "status": "test-mode (not delivered)",
-     "text": "Hi Ana, this is Ms. Rivera. This week Maya starts area of triangles. She will teach it to Pip, "
-             "our AI classmate. Ask her to explain it to you!"},
+     "text": "Hi Ana, this is Ms. Rivera. This week Maya starts area of triangles and will teach it to Pip, "
+             "her AI classmate. Ask her to explain it to you at home!"},
     {"id": "tm_g001_2", "student_id": "s001", "guardian_id": "g001", "from": "guardian", "author_id": "g001",
      "minutes_ago": 5 * 1440 + 900, "status": "received",
-     "text": "¡Gracias, Sra. Rivera! Maya ya nos explicó que dos triángulos forman un rectángulo. "
-             "¿Puede practicar en casa?",
-     "translation": "Thank you, Ms. Rivera! Maya already told us two triangles make a rectangle. "
-                    "Can she practice at home?"},
+     "text": "Thank you, Ms. Rivera! Maya already told us two triangles make a rectangle. Can she practice at home?"},
     {"id": "tm_g001_3", "student_id": "s001", "guardian_id": "g001", "from": "tutor", "author_id": "t1",
      "minutes_ago": 5 * 1440 + 600, "status": "test-mode (not delivered)",
      "text": "Yes! She can open Pip any time, no homework required. See you Tuesday at 4:30."},
 ]
-REPLY = {"en": ("Thanks so much! We'll keep practicing at home.", None),
-         "es": ("¡Muchas gracias! Seguiremos practicando en casa.", "Thank you so much! We'll keep practicing at home."),
-         "vi": ("Cảm ơn thầy cô nhiều! Cả nhà sẽ tiếp tục luyện tập ở nhà.", "Thank you so much! We'll keep practicing at home."),
-         "zh": ("非常感谢！我们会在家继续练习。", "Thank you so much! We'll keep practicing at home.")}
 reachable = [g for g in guardians[2:] if g["phone"] or g["email"]]
 for i, g in enumerate(R.sample(reachable, k=12)):
     sid = g["student_ids"][0]
@@ -270,14 +263,14 @@ for i, g in enumerate(R.sample(reachable, k=12)):
                     "author_id": en["tutor_id"], "minutes_ago": ago + 240, "status": "test-mode (not delivered)",
                     "text": f"Hi {g['name'].split()[0]}, {f} had a strong session today. Ask {f} to teach you "
                             f"what they taught Pip!"})
-    text, tr = REPLY[g["language"]]
     threads.append({"id": f"tm_{g['id']}_2", "student_id": sid, "guardian_id": g["id"], "from": "guardian",
-                    "author_id": g["id"], "minutes_ago": ago, "status": "received", "text": text,
-                    **({"translation": tr} if tr else {})})
+                    "author_id": g["id"], "minutes_ago": ago, "status": "received",
+                    "text": "Thanks so much! We'll keep practicing at home."})
 
 # --------------------------------------------------------------- Theo's synthetic K.O. (sat_math, re-taught k2)
 theo = {"assignment_from": "a_sat_linear", "assignment_id": "a_sat_linear_s014", "student_id": "s014",
         "tutor_id": "t3", "session_id": "sess_theo_ko", "days_ago": 2, "minutes": 12, "reteach_count": 1,
+        "share_concept": "k2",   # Theo tapped "show my family this" on his re-teach explanation
         "brain": [{"concept_id": "k1", "correct": True,
                    "quote": "whatever you do to one side you have to do to the other or it stops being equal"},
                   {"concept_id": "k2", "correct": True, "fixed_after": 1,
@@ -285,10 +278,39 @@ theo = {"assignment_from": "a_sat_linear", "assignment_id": "a_sat_linear_s014",
                   {"concept_id": "k3", "correct": True,
                    "quote": "put 7 back in, 2 times 7 plus 6 is 20 so both sides match"}]}
 
+# --------------------------------------------------------------- each student's own Pip (separate RNG: the data above
+# stays byte-identical). Custom names only for students no scripted test/eval drives (their openings say "Pip").
+RP = random.Random(31337)
+SCRIPTED = BUSY | {"s001", "s002", "s005", "s009"}
+CREATURES = ["capybara", "corgi", "cat", "raccoon", "frog", "axolotl"]
+VIBES = ["cute", "cool", "ugly"]
+ACCESSORIES = ["none", "none", "glasses", "scarf", "pencil", "badge", "backpack", "starclips", "charm", "visor", "shades"]
+PIP_NAMES = ["Biscuit", "Nugget", "Pickles", "Mochi", "Turbo", "Waffles", "Sprout", "Pebble", "Zippy", "Noodle",
+             "Captain", "Bean", "Toast", "Ziggy", "Pudding", "Rocket", "Tofu", "Gizmo", "Sushi", "Pepper"]
+pips = {}
+for i, sid in enumerate(sorted(students)):
+    pips[sid] = {"name": "Pip" if sid in SCRIPTED or RP.random() < 0.55 else RP.choice(PIP_NAMES),
+                 "creature": CREATURES[(i + RP.randint(0, 5)) % 6], "vibe": RP.choices(VIBES, weights=[35, 45, 20])[0],
+                 "accessory": RP.choice(ACCESSORIES)}
+# SAT goal progress (v3.15): target from the goal + practice scores, oldest first (separate RNG, data above unchanged)
+RS = random.Random(650)
+for sid, rows in enrollments.items():
+    for e in rows:
+        if e["subject"] in ("sat_math", "sat_rw"):
+            m = __import__("re").search(r"(\d{3})\+", e["goal"] or "")
+            target = int(m.group(1)) if m else 650
+            start = target - RS.choice([70, 90, 110, 130])
+            e["practice_scores"] = [start + k * RS.choice([10, 20, 30]) for k in range(RS.randint(2, 4))]
+            e["target_score"] = target
+enrollments["s014"][0].update(target_score=650, practice_scores=[560, 590, 610])
+
+pips["s001"] = {"name": "Pip", "creature": "capybara", "vibe": "cool", "accessory": "none"}   # Maya's demo setup
+pips["s014"] = {"name": "Turbo", "creature": "frog", "vibe": "cool", "accessory": "shades"}
+
 out = {"_about": "Generated by backend/seed/make_ops.py (deterministic). Offsets are relative to reset time. "
                  "Synthetic people only: 555-01xx phones, @example.com emails.",
        "tz": "America/Los_Angeles", "tutor_subjects": TUTOR_SUBJECTS, "enrollments": enrollments,
-       "guardians": guardians, "notes": notes, "threads": threads, "theo": theo}
+       "guardians": guardians, "notes": notes, "threads": threads, "theo": theo, "pips": pips}
 (HERE / "seed_ops.json").write_text(json.dumps(out, indent=1, ensure_ascii=False) + "\n")
 gids = {}
 for g in guardians:
