@@ -1,4 +1,5 @@
 import { useEffect, useId, useRef, useState } from 'react'
+import { useIdleLife, useEyeTracking, usePokes, PokeZones, HeyBubble, PerkMarks } from './alive'
 import { BLUSH, BOSS_TINT, EYE, MOOD_ALIASES, MOUTH, TONGUE } from './tokens'
 import { CREATURE_DEFS } from './creatures'
 import { mix, Shape, FinishCtx } from './shapes'
@@ -11,6 +12,7 @@ import { ACCESSORIES_2D, Y2KDefs, Gel, Glint, Sparkles, StarClips, Charm, FrostV
 
 export const ACCESSORIES_ALL = [...ACCESSORIES_2D, ...CLUB_ACCESSORIES]
 export { ACCESSORIES_2D, CLUB_ACCESSORIES }
+export { PIP_STATES, POKE_ZONES } from './alive'
 export const POSES = ['idle', 'strut', 'pose', 'spin']
 export { Sticker2D, ComebackFrame, EARNED_ITEMS } from './earned'
 import './pip2d.css'
@@ -385,7 +387,7 @@ function useBlink(enabled) {
           setBlink(false)
           loop()
         }, 90)
-      }, 3000 + Math.random() * 2000)
+      }, 3000 + Math.random() * 3000)
     }
     loop()
     return () => {
@@ -487,6 +489,9 @@ export function Pip2D({
   mini = false,
   finish,
   colorway,
+  state = 'idle',
+  onPoke,
+  reactZone,
   className = '',
   title,
 }) {
@@ -533,13 +538,26 @@ export function Pip2D({
   const accList = accIn.length ? accIn : !explicitNone && vibeDefault ? [vibeDefault] : []
   const has = (a) => accList.includes(a)
   const id = useId().replace(/:/g, '')
-  const blink = useBlink(animate)
+  const blink = useBlink(animate && state !== 'listening')
   const hop = useHop(m, animate)
+  // Talking-Tom life: idle glances + rare yawn/tilt, eye tracking, pokes
+  const { glance, quirk } = useIdleLife(animate && state === 'idle')
+  const { zone: pokeZone, poke } = usePokes(onPoke, state === 'react' ? reactZone ?? 'head' : null)
+  const svgRef = useRef(null)
+  const eyesRef = useRef(null)
+  useEyeTracking(svgRef, eyesRef, animate && (state === 'idle' || state === 'talking'))
+  useEffect(() => {
+    if (eyesRef.current && (state === 'listening' || state === 'thinking')) eyesRef.current.style.transform = ''
+  }, [state])
   const [L, R] = A.eyes
 
   // eyes: cool = permanent ~60% lid; ugly = tired (heavier lids + bags)
   const lids = (spec.lids ?? [0.35, 0.37]).map((l) => {
     const v = (ugly ? Math.min(0.6, l + 0.15) : l) - (awakened ? 0.1 : grown ? 0.05 : 0)
+    if (pokeZone === 'head') return 0.72 // squint
+    if (state === 'listening') return 0.06 // eyes wide-ish, locked on the viewer
+    if (quirk === 'yawn') return 0.62
+    if (state === 'thinking') return 0.3
     if (main) return 0.42 // confident, half-lidded over the shades
     if (vinyl && !cool) return Math.min(0.6, Math.max(0, v) + 0.1)
     return Math.max(0, cool ? Math.max(v, 0.6) : v)
@@ -557,10 +575,10 @@ export function Pip2D({
     })
   else
     eyes = A.eyes.map((e, i) => (
-      <Eye key={i} e={e} lid={lids[i]} look={spec.look} scale={sizes[i]} ink={t.ink} tint={spec.tint} sparkle={!vinyl && (cute || grown)} matte={vinyl} ring={e.ring} uid={`${id}e${i}`} />
+      <Eye key={i} e={e} lid={lids[i]} look={state === 'thinking' ? [0, -4] : glance ? [glance * 4, 0] : spec.look} scale={sizes[i]} ink={t.ink} tint={spec.tint} sparkle={!vinyl && (cute || grown)} matte={vinyl} ring={e.ring} uid={`${id}e${i}`} />
     ))
 
-  const mouthShape = viseme ?? talkShape(mouth) ?? (main && (m === 'deadpan' || m === 'notes') ? 'smirk' : MOOD_MOUTH[m])
+  const mouthShape = viseme ?? talkShape(mouth) ?? (quirk === 'yawn' ? 'o' : pokeZone === 'head' ? 'hmm' : state === 'listening' ? 'closed' : main && (m === 'deadpan' || m === 'notes') ? 'smirk' : MOOD_MOUTH[m])
   const visorY = A.visorY ?? Math.min(L.cy - L.ry, R.cy - R.ry) - 12
   const hx0 = A.head.cx - A.head.w / 2 + 2
   const hx1 = A.head.cx + A.head.w / 2 - 2
@@ -670,7 +688,9 @@ export function Pip2D({
           <path d={`M${R.cx - R.rx * 0.6},${R.cy - R.ry - 14} L${R.cx + R.rx * 0.8},${R.cy - R.ry - 8}`} />
         </g>
       )}
-      <g className={`pip2d-eyes${blink && plainEyes ? ' is-blinking' : ''}`}>{eyes}</g>
+      <g ref={eyesRef} className="pip2d-look">
+        <g className={`pip2d-eyes${blink && plainEyes ? ' is-blinking' : ''}`}>{eyes}</g>
+      </g>
       {main && plainEyes && <BrowShelf A={A} t={t} />}
       <Mouth shape={mouthShape} ink={t.ink} a={A.mouth} ugly={ugly} />
     </>
@@ -686,8 +706,13 @@ export function Pip2D({
           ))}
         </g>
       )}
+      <g
+        className={pokeZone === 'sprout' ? 'pip2d-boing' : state === 'thinking' ? 'pip2d-flicker' : undefined}
+        style={{ transformOrigin: `${A.sprout.x}px ${A.sprout.y + 12}px` }}
+      >
       <g transform={awakened && evo === 'ugly' ? `rotate(16 ${A.sprout.x} ${A.sprout.y + 10})` : undefined}>
-        <Sprout pose={awakened || main ? 'crown' : spec.sprout} anchor={mini ? { ...A.sprout, scale: (A.sprout.scale ?? 1) * 0.62 } : A.sprout} t={t} flower={false} tint={m === 'possessed' ? BOSS_TINT : undefined} gid={id} grown={grown} chrome={evo === 'cool'} />
+        <Sprout pose={awakened || main ? 'crown' : state === 'thinking' ? 'bulb' : spec.sprout} anchor={mini ? { ...A.sprout, scale: (A.sprout.scale ?? 1) * 0.62 } : A.sprout} t={t} flower={false} tint={m === 'possessed' ? BOSS_TINT : undefined} gid={id} grown={grown} chrome={evo === 'cool'} />
+      </g>
       </g>
       {(m === 'aha' || m === 'proud') && <Sparkles A={A} />}
     </>
@@ -695,6 +720,8 @@ export function Pip2D({
 
   const front = (
     <>
+      {pokeZone === 'head' && <HeyBubble A={A} ink={t.ink} />}
+      {state === 'listening' && <PerkMarks A={A} ink={t.ink} />}
       {main && plainEyes && <LowShades A={A} t={t} id={id} />}
       {main && <SlowSparkle A={A} />}
       {m === 'notes' && <Notebook t={t} A={A} />}
@@ -753,10 +780,10 @@ export function Pip2D({
     <>
       <defs>
         <clipPath id={`${id}vb${key ?? ''}`}>
-          <rect x="-60" y={A.neck.y} width="320" height="120" />
+          <rect x="-60" y={A.neck.y - 0.8} width="320" height="120" />
         </clipPath>
         <clipPath id={`${id}vh${key ?? ''}`}>
-          <rect x="-60" y="-80" width="320" height={A.neck.y + 80} />
+          <rect x="-60" y="-80" width="320" height={A.neck.y + 80.8} />
         </clipPath>
       </defs>
       <g transform={`translate(100 207) scale(1 ${SK}) translate(-100 -207)`} clipPath={`url(#${id}vb${key ?? ''})`}>
@@ -767,14 +794,27 @@ export function Pip2D({
       </g>
     </>
   )
+  const stateClass =
+    [
+      state === 'listening' && 'pip2d-listen',
+      state === 'talking' && animate && 'pip2d-talkbob',
+      pokeZone === 'belly' && 'pip2d-squish',
+      quirk === 'tilt' && 'pip2d-tilt',
+      !animate && 'is-static',
+    ]
+      .filter(Boolean)
+      .join(' ') || undefined
+  const zones = <PokeZones A={A} poke={poke} lift={main ? HERO_LIFT[def.name] ?? HERO_LIFT.default : 0} />
   const wrap = (children, key, extra) => (
-    <svg key={key} className={`pip2d ${className}`} width={size} height={size * 1.1} viewBox="0 0 200 220" role={key ? undefined : 'img'} aria-label={key ? undefined : label} aria-hidden={key ? true : undefined} {...extra}>
+    <svg ref={!key || key === 'front' ? svgRef : undefined} key={key} className={`pip2d ${className}`} width={size} height={size * 1.1} viewBox="0 0 200 220" role={key ? undefined : 'img'} aria-label={key ? undefined : label} aria-hidden={key ? true : undefined} {...extra}>
       <g transform={`translate(100 207) scale(${(main ? MAIN_SCALE : GROWTH[ver - 1] * (mini ? 0.64 : 1)) * (stretch ? 0.82 : 1)} ${(main ? MAIN_SCALE : GROWTH[ver - 1] * (mini ? 0.58 : 1)) * (stretch ? 0.82 : 1)}) translate(-100 -207)`}>
         <g transform={poseT} className={poseClass}>
           <g transform={grown && evo === 'ugly' ? `translate(100 207) rotate(${awakened ? -5 : -3}) scale(${awakened ? 1.07 : 1.04} ${awakened ? 0.95 : 0.97}) translate(-100 -207)` : undefined}>
           <g className={hop ? 'pip2d-hop' : undefined}>
+            <g className={stateClass}>
             <g className={animate && pose === 'idle' ? 'pip2d-breathe' : undefined}>
               <FinishCtx.Provider value={vinyl ? 'vinyl' : 'plush'}>{stretch ? stretched(children, key) : children}</FinishCtx.Provider>
+            </g>
             </g>
           </g>
           </g>
@@ -838,6 +878,7 @@ export function Pip2D({
           {headLayer}
           {faceLayer}
           {frontLayer}
+          {zones}
         </>,
       )
     }
@@ -848,7 +889,7 @@ export function Pip2D({
           [-16 * k2, wrap(<>{defs}{backLayer}</>, 'back')],
           [0, wrap(<>{defs}{mainDefs}{headLayer}</>, 'body')],
           [12 * k2, wrap(<>{defs}{faceLayer}</>, 'face')],
-          [24 * k2, wrap(<>{defs}{frontLayer}</>, 'front')],
+          [24 * k2, wrap(<>{defs}{frontLayer}{zones}</>, 'front')],
         ]}
       </DepthStage>
     )
@@ -863,6 +904,7 @@ export function Pip2D({
         {sprout}
         {face}
         {front}
+        {zones}
       </>,
     )
   }
@@ -897,7 +939,7 @@ export function Pip2D({
         [-16 * k, wrap(<>{defs}{back}</>, 'back')],
         [0, wrap(<>{defs}{body}{sheen}</>, 'body')],
         [12 * k, wrap(face, 'face')],
-        [24 * k, wrap(<>{sprout}{front}</>, 'front')],
+        [24 * k, wrap(<>{sprout}{front}{zones}</>, 'front')],
       ]}
     </DepthStage>
   )

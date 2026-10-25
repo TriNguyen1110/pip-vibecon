@@ -5,7 +5,7 @@
 .pip2d-breathe, .pip2d-hop { transform-box: view-box; }
 
 .pip2d-breathe { transform-origin: 100px 206px; animation: pip2d-breathe 2.4s ease-in-out infinite; }
-@keyframes pip2d-breathe { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(1.03); } }
+@keyframes pip2d-breathe { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(1.015); } }
 
 .pip2d-eyes { transform-origin: 50% 50%; transition: transform 45ms linear; }
 .pip2d-eyes.is-blinking { transform: scaleY(0.1); }
@@ -51,6 +51,25 @@
 .pip2d-spin { transform-box: view-box; transform-origin: 100px 207px; animation: pip2d-spin 1.2s cubic-bezier(0.6, 0, 0.4, 1) infinite; }
 @keyframes pip2d-spin { 0%, 100% { transform: scaleX(1); } 50% { transform: scaleX(-1); } }
 
+/* Talking-Tom life (deadpan): listening lean-in, talk bobs, poke reactions, idle tilt */
+.pip2d-listen, .pip2d-talkbob, .pip2d-squish, .pip2d-tilt { transform-box: view-box; transform-origin: 100px 207px; }
+.pip2d-listen { transform: translateY(-3px) scale(1.035, 1.045); transition: transform 220ms ease-out; }
+.pip2d-talkbob { animation: pip2d-talkbob 0.62s ease-in-out infinite; }
+@keyframes pip2d-talkbob { 0%, 100% { transform: translateY(0) rotate(0deg); } 30% { transform: translateY(-1.5px) rotate(-0.8deg); } 65% { transform: translateY(0.5px) rotate(0.6deg); } }
+.pip2d-squish { animation: pip2d-squish 0.5s cubic-bezier(0.34, 1.4, 0.64, 1); }
+.pip2d-squish.is-static { animation: none; transform: scale(1.1, 0.9); }
+@keyframes pip2d-squish { 0% { transform: scale(1, 1); } 30% { transform: scale(1.12, 0.88); } 60% { transform: scale(0.97, 1.03); } 100% { transform: scale(1, 1); } }
+.pip2d-tilt { animation: pip2d-tilt 1.6s ease-in-out; }
+@keyframes pip2d-tilt { 0%, 100% { transform: rotate(0deg); } 30%, 70% { transform: rotate(-5deg); } }
+.pip2d-boing { transform-box: view-box; animation: pip2d-boing 0.7s cubic-bezier(0.3, 1.6, 0.5, 1); }
+.pip2d-boing.is-static, .is-static .pip2d-boing { animation: none; transform: rotate(14deg) scaleY(1.12); }
+@keyframes pip2d-boing { 0% { transform: rotate(0) scaleY(1); } 20% { transform: rotate(16deg) scaleY(1.18); } 45% { transform: rotate(-11deg) scaleY(0.92); } 70% { transform: rotate(6deg); } 100% { transform: rotate(0); } }
+.pip2d-flicker { animation: pip2d-flicker 1.3s steps(1) infinite; }
+@keyframes pip2d-flicker { 0%, 100% { opacity: 1; } 42% { opacity: 0.55; } 47% { opacity: 1; } 71% { opacity: 0.7; } 74% { opacity: 1; } }
+.pip2d-pop { transform-box: fill-box; transform-origin: 0% 100%; animation: pip2d-pop 0.22s ease-out; }
+@keyframes pip2d-pop { from { transform: scale(0.4); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.pip2d-look { transition: transform 60ms linear; }
+
 /* 2.5D depth mode */
 .pip2d-depth { position: relative; display: inline-block; perspective: calc(var(--size, 200px) * 3.2); --rx: 0deg; --ry: 0deg; --tx: 0px; --sheen: 0px; }
 .pip2d-depth-tilt { position: absolute; inset: 0; transform-style: preserve-3d; transform: rotateX(var(--rx)) rotateY(var(--ry)); }
@@ -64,6 +83,7 @@
 .pip2d-sheen { transform: translateX(var(--sheen)); }
 
 @media (prefers-reduced-motion: reduce) {
-  .pip2d-breathe, .pip2d-hop, .pip2d-dot, .pip2d-glow, .pip2d-sweat, .pip2d-twinkle, .pip2d-orbit, .pip2d-strut, .pip2d-spin { animation: none; }
+  .pip2d-breathe, .pip2d-hop, .pip2d-dot, .pip2d-glow, .pip2d-sweat, .pip2d-twinkle, .pip2d-orbit, .pip2d-strut, .pip2d-spin, .pip2d-talkbob, .pip2d-squish, .pip2d-tilt, .pip2d-boing, .pip2d-flicker, .pip2d-pop { animation: none; }
+  .pip2d-listen { transition: none; }
   .pip2d-eyes { transition: none; }
 }
