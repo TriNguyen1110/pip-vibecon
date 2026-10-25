@@ -1373,10 +1373,14 @@ async def build_draft(s: dict, a: dict, st: dict, kind: str = "report") -> dict:
     return await _render(d)
 
 
-async def _latest_session(student_id: str) -> dict | None:
-    mine = [s for s in await _ctx["store"].all("sessions", student_id=student_id) if s.get("kind") != "review"]
+async def _latest_session(student_id: str, last_id: str | None = None) -> dict | None:
+    mine = [s for s in await _ctx["store"].all("sessions", student_id=student_id)
+            if s.get("kind") != "review" and not s.get("saved")]   # saved demo runs never feed drafts
     done = [s for s in mine if s.get("ko")] or [s for s in mine if s["status"] in ("quizzed", "complete")] or mine
-    return max(done, key=lambda s: (not s.get("saved"), s["created_at"])) if done else None
+    if not done:
+        return None
+    pinned = next((s for s in done if s["id"] == last_id), None)  # same-second sessions: the student's latest wins
+    return pinned or max(reversed(done), key=lambda s: s["created_at"])
 
 
 @router.get("/students/{student_id}/drafts")
@@ -1391,7 +1395,7 @@ async def create_draft(student_id: str, body: dict = Body(default={})):
     store = _ctx["store"]
     st = _need(await store.get("students", student_id), "student")
     sid = (body or {}).get("session_id")
-    s = await store.get("sessions", sid) if sid else await _latest_session(student_id)
+    s = await store.get("sessions", sid) if sid else await _latest_session(student_id, st.get("last_session_id"))
     if not s or s["student_id"] != student_id:
         raise HTTPException(404 if not sid else 422, "no session to report on" if not sid else "not this student's session")
     for d in await store.all("drafts", session_id=s["id"]):
@@ -1650,10 +1654,12 @@ async def seed_ops(store, now: datetime | None = None) -> None:
             await store.put("events", {"id": f"ev_fam_{s['id']}", "kind": "family_shared", "student_id": st["id"],
                                        "ts": s["parent_sent_at"], "due": False, "by": who, "synthetic": True,
                                        "text": f"{who['name']} shared this with your family", "preview": msg[:240]})
-    # v3.15b "To send" queue: Maya's saved run + every finished seeded session that has no update yet
+    # v3.15b "To send" queue: every finished seeded session with no update yet. Saved demo runs are invisible to
+    # logic (rule 1), so Maya's saved session gets no draft: her live K.O. makes her one pending draft (D-27).
     _ctx["store"] = _ctx["store"] or store
     for s in await store.all("sessions"):
-        if s.get("parent_sent_at") or s["status"] not in ("quizzed", "complete") or s.get("kind") == "review":
+        if (s.get("saved") or s.get("parent_sent_at") or s["status"] not in ("quizzed", "complete")
+                or s.get("kind") == "review"):
             continue
         st, a = students.get(s["student_id"]), assignments.get(s["assignment_id"])
         if st and a:

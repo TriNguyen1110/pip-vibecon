@@ -421,22 +421,28 @@ check("auto note passes the parent copy rules", all(center.parent_clean(r["messa
 post("/api/demo/reset")
 DRAFT_KEYS = ["id", "student_id", "tutor_id", "session_id", "subject", "topic", "kind", "status", "created_at", "quote",
               "fixed", "moments", "by_guardian"]
+check("D-27: no draft for Maya's saved run at reset (saved sessions are invisible)",
+      get("/api/students/s001/drafts")["items"] == [])
+check("POST drafts with only a saved run has nothing to report on",
+      client.post("/api/students/s001/drafts", json={}).status_code == 404)
+q = ko()
 dl = get("/api/students/s001/drafts")["items"]
-check("seeded draft for Maya's saved run, fixture shape", len(dl) == 1 and has(dl[0], DRAFT_KEYS)
-      and dl[0]["session_id"] == "sess_maya_saved" and dl[0]["status"] == "draft"
+check("D-27: Maya's live K.O. makes exactly one pending draft, fixture shape", len(dl) == 1 and has(dl[0], DRAFT_KEYS)
+      and dl[0]["session_id"] == q["id"] and dl[0]["status"] == "draft" and dl[0]["kind"] == "report"
       and all(has(x, ["guardian_id", "name", "via", "message"]) for x in dl[0]["by_guardian"])
-      and all(has(m, ["session_id", "msg_index", "text", "shared"]) for m in dl[0]["moments"]), dl[:1])
+      and all(has(m, ["session_id", "msg_index", "text", "shared"]) for m in dl[0]["moments"]), dl)
 d0 = dl[0]
 check("grade 6 draft: auto quote with msg_index, verbatim in the message", d0["quote"]["source"] == "auto"
       and d0["quote"]["shared"] is False and all(f'"{d0["quote"]["text"]}"' in x["message"] for x in d0["by_guardian"]))
 check("drafts carry no game words", not any(GAME_WORDS.search(x["message"]) for x in d0["by_guardian"]))
+check("POST drafts is idempotent for the same session", post("/api/students/s001/drafts", {"session_id": q["id"]})["id"] == d0["id"])
 pick = next(m for m in d0["moments"] if m["text"] != d0["quote"]["text"])
 pd = client.patch(f"/api/drafts/{d0['id']}", json={"quote": {"session_id": pick["session_id"], "msg_index": pick["msg_index"]}}).json()
 check("PATCH quote -> tutor pick, messages rewritten", pd["quote"]["source"] == "tutor" and pd["quote"]["text"] == pick["text"]
       and all(pick["text"] in x["message"] for x in pd["by_guardian"]))
-pip_i = next(i for i, m in enumerate(get("/api/sessions/sess_maya_saved")["transcript"]) if m["from"] == "pip")
+pip_i = next(i for i, m in enumerate(get(f"/api/sessions/{q['id']}")["transcript"]) if m["from"] == "pip")
 check("PATCH quote must be the student's message", client.patch(f"/api/drafts/{d0['id']}", json={
-    "quote": {"session_id": "sess_maya_saved", "msg_index": pip_i}}).status_code == 422)
+    "quote": {"session_id": q["id"], "msg_index": pip_i}}).status_code == 422)
 check("PATCH quote from another student's session rejected", client.patch(f"/api/drafts/{d0['id']}", json={
     "quote": {"session_id": "sess_theo_ko", "msg_index": 1}}).status_code == 422)
 pn = client.patch(f"/api/drafts/{d0['id']}", json={"quote": None}).json()
@@ -451,15 +457,14 @@ check("send -> {sent_all, draft}, one row per guardian, draft sent", has(sd, ["s
 check("sent draft leaves the queue; resend is 409", get("/api/students/s001/drafts")["items"] == []
       and client.post(f"/api/drafts/{d0['id']}/send", json={}).status_code == 409)
 check("family sees the sent report, from Ms. Rivera", get("/api/parent/g001/kids/s001")["reports"][0]["from"]["name"] == "Ms. Rivera")
-q = ko()
+q2 = ko()
 dk = get("/api/students/s001/drafts")["items"]
-check("a K.O. auto-creates a report draft (auto_ko_note off)", len(dk) == 1 and dk[0]["session_id"] == q["id"]
-      and dk[0]["kind"] == "report")
-check("POST drafts is idempotent for the same session", post("/api/students/s001/drafts", {"session_id": q["id"]})["id"] == dk[0]["id"])
+check("the next K.O. makes one new draft (auto_ko_note off)", len(dk) == 1 and dk[0]["session_id"] == q2["id"])
 sk = post(f"/api/drafts/{dk[0]['id']}/skip")
 check("skip -> draft skipped", sk["status"] == "skipped" and get("/api/students/s001/drafts")["items"] == [])
 nd = post("/api/students/s001/drafts", {})
-check("POST drafts builds from the latest K.O.", nd["session_id"] == q["id"] and nd["status"] == "draft" and has(nd, DRAFT_KEYS))
+check("POST drafts builds from the latest live K.O., never the saved run", nd["session_id"] == q2["id"]
+      and nd["status"] == "draft" and has(nd, DRAFT_KEYS))
 q9 = ko("s002", "a_tri")
 d9 = get("/api/students/s002/drafts")["items"][0]
 check("grade 9 K.O. draft: no auto quote", d9["quote"] is None and d9["fixed"] is None
