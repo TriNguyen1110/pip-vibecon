@@ -176,7 +176,7 @@ function Overview({ ov, noted, onRenew }) {
                 .map((r) => (
                   <li key={`${refId(r.student)}-${r.subject}`}>
                     <span>
-                      <b>{refName(r.student)}</b> · {subjectShort(r.subject)} · {r.hours_left}h left
+                      <b>{refName(r.student)}</b> · {subjectShort(r.subject)} · {r.hours_left > 0 ? `${r.hours_left}h left` : 'used up'}
                     </span>
                     <span className="mono">{usd(r.price_usd)}</span>
                   </li>
@@ -261,8 +261,8 @@ function Overview({ ov, noted, onRenew }) {
                     </span>
                   </span>
                   <span role="cell">{subjectShort(r.subject)}</span>
-                  <span role="cell" className={`rn__num mono${r.hours_left <= 2 ? ' is-low' : ''}`}>
-                    {r.hours_left}
+                  <span role="cell" className={`rn__num mono${r.hours_left <= 2 ? ' is-low' : ''}${r.hours_left > 0 ? '' : ' is-usedup'}`}>
+                    {r.hours_left > 0 ? r.hours_left : 'used up'}
                   </span>
                   <span role="cell" className="mono">{fmtDate(r.renews_on)}</span>
                   <span role="cell" className="rn__num mono">{usd(r.price_usd)}</span>

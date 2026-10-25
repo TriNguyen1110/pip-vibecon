@@ -2534,3 +2534,71 @@ html.is-framed .p-tabs {
 .p-hours.is-low b {
   color: #6b4500;
 }
+
+/* ---------- V4 fixes (D-21, D-25, D-26) ---------- */
+/* D-21: the low-hours line stays dark ink (studio's global .is-low is yellow and is not used here). */
+.parent-app .p-hours {
+  color: var(--p-ink);
+}
+.parent-app .p-hours--low b {
+  color: #5c3b00; /* 9.6:1 on white */
+}
+/* D-25: 48px targets and ≥ 15px captions in the parent app. */
+.p-more__btn {
+  min-height: 48px;
+}
+.p-demo,
+.parent-app .status-tag,
+.p-tab__badge {
+  font-size: 0.9375rem;
+}
+.p-tab__badge {
+  min-width: 1.5rem;
+  height: 1.5rem;
+}
+/* D-26: text links are real targets: 44px on phones, 24px on laptops. */
+.studio .prog__rep,
+.studio .insight a,
+.studio .atrisk__all,
+.studio .atrisk__more a,
+.studio .rn__name,
+.studio .load__table a,
+.studio .tl__item a,
+.studio .draft__head a,
+.studio .metric__sub a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+}
+@media (max-width: 1023px), (pointer: coarse) {
+  .studio .prog__rep,
+  .studio .insight a,
+  .studio .atrisk__all,
+  .studio .atrisk__more a,
+  .studio .rn__name,
+  .studio .load__table a,
+  .studio .tl__item a,
+  .studio .draft__head a,
+  .studio .metric__sub a {
+    min-height: 44px;
+  }
+}
+.rn__num.is-usedup {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  white-space: nowrap;
+}
+.known-tag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 20px;
+  margin-left: 8px;
+  padding: 0 8px;
+  border-radius: 999px;
+  border: 1px solid var(--divider);
+  color: var(--fg-muted);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  vertical-align: middle;
+}

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { api } from '../../api'
 import { useLoad } from '../../hooks'
 import { ErrorState, Empty } from '../../components/ui.jsx'
 import { LEVEL_WORDS } from '../../lib'
@@ -20,6 +21,9 @@ const TABS = [
 
 export default function StudentProfile({ id, tutorId, tutors, pane }) {
   const p = useLoad(() => staffApi.profile(id), [id])
+  // Concepts Pip starts out knowing (lesson.prior_knowledge, CONTRACT v3.6 lesson spec), per mission id.
+  const st = useLoad(() => api.student(id).catch(() => null), [id])
+  const priorByMission = Object.fromEntries((st.data?.assignments ?? []).map((a) => [a.id, a.lesson?.prior_knowledge ?? []]))
   // v3.15 drafts (B18): pending parent updates waiting for the tutor.
   const dr = useLoad(() => staffApi.drafts(id).then((r) => ({ items: r.items ?? [] })), [id])
   const drafts = dr.data ?? { items: [] }
@@ -79,7 +83,7 @@ export default function StudentProfile({ id, tutorId, tutors, pane }) {
       />
 
       <div className="profile__body" role="tabpanel">
-        {tab === 'progress' && <Progress progress={d.progress ?? []} enrollments={enrollments} reports={reports} tutorId={tutorId} />}
+        {tab === 'progress' && <Progress progress={d.progress ?? []} enrollments={enrollments} reports={reports} tutorId={tutorId} priorByMission={priorByMission} />}
         {tab === 'family' && (
           <ProfileFamily
             profile={d}
@@ -98,7 +102,7 @@ export default function StudentProfile({ id, tutorId, tutors, pane }) {
   )
 }
 
-function Progress({ progress, enrollments, reports, tutorId }) {
+function Progress({ progress, enrollments, reports, tutorId, priorByMission = {} }) {
   if (!progress.length) return <Empty title="No subjects yet">Enroll the student in a subject to see progress here.</Empty>
   return (
     <div className="prog-list">
@@ -129,7 +133,13 @@ function Progress({ progress, enrollments, reports, tutorId }) {
                   <div className={pkg.status !== 'active' ? 'is-low' : ''}>
                     <dt>Package</dt>
                     <dd>
-                      <span className="mono">{left}</span>h left
+                      {left > 0 ? (
+                        <>
+                          <span className="mono">{left}</span>h left
+                        </>
+                      ) : (
+                        'used up'
+                      )}
                     </dd>
                   </div>
                 )}
@@ -138,17 +148,26 @@ function Progress({ progress, enrollments, reports, tutorId }) {
 
             {x.mastery?.length ? (
               <ul className="mastery" aria-label={`${subjectName(x.subject)} concepts`}>
-                {x.mastery.map((m) => (
-                  <li key={m.concept_id} className="mastery__row">
-                    <span className="mastery__text">{m.text}</span>
-                    <span className="mastery__meter" role="img" aria-label={`Level ${m.level} of 3: ${LEVEL_WORDS[m.level]}`} title={LEVEL_WORDS[m.level]}>
-                      {[1, 2, 3].map((k) => (
-                        <i key={k} className={k <= m.level ? `on l${m.level}` : ''} />
-                      ))}
-                    </span>
-                    <span className="mastery__word small">{LEVEL_SHORT[m.level]}</span>
-                  </li>
-                ))}
+                {x.mastery.map((m) => {
+                  // The backend's level is the truth; a prior-knowledge concept reads as known (≥ 2) and says so.
+                  const prior = m.known ?? m.prior_knowledge ?? (priorByMission[x.current_mission?.id] ?? []).includes(m.concept_id)
+                  const level = prior ? Math.max(2, m.level) : m.level
+                  const word = prior && m.level < 2 ? 'Already knew' : LEVEL_SHORT[level]
+                  return (
+                    <li key={m.concept_id} className="mastery__row">
+                      <span className="mastery__text">
+                        {m.text}
+                        {prior && <span className="known-tag">Already knew</span>}
+                      </span>
+                      <span className="mastery__meter" role="img" aria-label={`${word}: level ${level} of 3`} title={prior ? 'Already knew this before the lesson' : LEVEL_WORDS[level]}>
+                        {[1, 2, 3].map((k) => (
+                          <i key={k} className={k <= level ? `on l${level}` : ''} />
+                        ))}
+                      </span>
+                      <span className="mastery__word small">{word}</span>
+                    </li>
+                  )
+                })}
               </ul>
             ) : null}
             {x.mastery?.length ? (

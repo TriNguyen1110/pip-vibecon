@@ -101,7 +101,8 @@ export function ParentApp() {
 
   const data = home.data
   const kids = data?.kids ?? []
-  const kid = kids.find((k) => k.student.id === kidId) ?? kids[0]
+  const unlinked = !!(kidId && data && !kids.some((k) => k.student.id === kidId))
+  const kid = unlinked ? null : (kids.find((k) => k.student.id === kidId) ?? kids[0])
   const g = data?.guardian
 
   return (
@@ -142,6 +143,16 @@ export function ParentApp() {
               <button className="p-btn" onClick={home.reload}>
                 Try again
               </button>
+            </div>
+          ) : unlinked ? (
+            <div className="p-state" role="status">
+              <p className="p-h">This student isn’t linked to your account.</p>
+              <p>You can only see your own children. If this is your child, ask the center to link them.</p>
+              {kids.length > 0 && (
+                <button className="p-btn" onClick={() => setKidId(kids[0].student.id)}>
+                  See {firstName(kids[0].student.name)}
+                </button>
+              )}
             </div>
           ) : !kid ? (
             <div className="p-state">
@@ -216,7 +227,7 @@ function sentLabel(ts) {
   const t = new Date(String(ts).length === 10 ? `${ts}T12:00:00` : ts)
   if (Number.isNaN(t.getTime())) return ''
   const days = (Date.now() - t.getTime()) / 86400000
-  return days < 6.5 ? t.toLocaleDateString('en-US', { weekday: 'short' }) : t.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+  return days < 6.5 ? t.toLocaleDateString('en-US', { weekday: 'long' }) : t.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
 }
 
 const tutorNames = (kid) => Object.fromEntries((kid.subjects ?? []).map((s) => [s.tutor?.id, s.tutor?.name]).filter(([k]) => k))
@@ -360,6 +371,7 @@ function Schedule({ kid }) {
         {(kid.subjects ?? []).map((s) => {
           const pkg = s.package
           const left = pkg ? (pkg.hours_left ?? (pkg.hours_total ?? 0) - (pkg.hours_used ?? 0)) : null
+          const total = pkg?.hours_total ?? (pkg?.hours_used != null ? left + pkg.hours_used : null)
           return (
             <li key={s.subject} className="p-card p-class">
               <p className="p-class__name">{subjectName(s.subject)}</p>
@@ -368,8 +380,16 @@ function Schedule({ kid }) {
                 <span className="p-cap">Next class</span> <b>{s.next_slot ?? 'not scheduled'}</b>
               </p>
               {pkg && (
-                <p className={`p-hours${left <= 2 ? ' is-low' : ''}`}>
-                  <b>{left}</b> of {pkg.hours_total} hours left{pkg.renews_on ? ` · renews ${fmtDate(pkg.renews_on)}` : ''}
+                <p className={`p-hours${left <= 2 ? ' p-hours--low' : ''}`}>
+                  {left > 0 ? (
+                    <>
+                      <b>{left}</b>
+                      {total ? ` of ${total}` : ''} hour{left === 1 && !total ? '' : 's'} left
+                    </>
+                  ) : (
+                    <b>Package hours used up</b>
+                  )}
+                  {pkg.renews_on ? ` · renews ${fmtDate(pkg.renews_on)}` : ''}
                 </p>
               )}
             </li>
