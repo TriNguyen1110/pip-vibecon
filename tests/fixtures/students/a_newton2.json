@@ -1,0 +1,322 @@
+{
+  "assignment_id": "a_newton2",
+  "version": "SCR-1",
+  "about": "Adaptive simulated students (grades 8-11) for the force and speeding up mission (TUNE-3). Same card format and how_to_use rules as tests/fixtures/students/a_tri.json. Every line is original; no real student text. Four cards: annoyed_obvious, deep_why_stuck, quick_user, misuser.",
+  "see_format": "tests/fixtures/students/a_tri.json",
+  "personas": [
+    {
+      "id": "newt_annoyed_obvious",
+      "age": 13,
+      "grade": 8,
+      "kind": "competent",
+      "holdout": false,
+      "who": "Says everything in one text, including the stuff everyone knows, and hates being asked it again.",
+      "style": "lowercase, terse, a little smug, no apostrophes",
+      "first_text": "F equals m times a. a full cart is harder to get going than an empty one so more mass means less speed-up. 10 N on a 2 kg cart is a = 10 divided by 2 = 5 m/s2",
+      "banks": {
+        "asks_why": [
+          "i literally just said it",
+          "bc a full cart is harder to get going than an empty one",
+          "same thing i said"
+        ],
+        "asks_example": [
+          "10 N on 2 kg. a = 10/2 = 5",
+          "20 N on 4 kg is 5"
+        ],
+        "asks_check_number": [
+          "the full one is harder to get going. 10 / 2 = 5",
+          "yep"
+        ],
+        "pip_wrong_prediction": [
+          "no the heavy one speeds up less",
+          "no. divide the push by the mass"
+        ],
+        "nudge_hint": [
+          "ya that too",
+          "ohh like pushing a car vs a skateboard"
+        ],
+        "repeats_question": [
+          "i already told u that",
+          "u asked that already"
+        ],
+        "off_topic_bait": [
+          "lol",
+          "anyway"
+        ],
+        "pip_says_ready": [
+          "go",
+          "ok"
+        ],
+        "after_quiz_miss": [
+          "no wait. the empty cart takes off and the full one barely moves, same push",
+          "so more mass means less acceleration"
+        ],
+        "default": [
+          "10 divided by 2 is 5 m/s2",
+          "same push on a heavy thing barely moves it. think of pushing a car vs a skateboard",
+          "4 kg with 10 N is 2.5",
+          "10 N on 2 kg. a = 10/2 = 5"
+        ]
+      },
+      "misconception": null,
+      "knows": [
+        "k1",
+        "k3",
+        "k2"
+      ],
+      "patience": 2,
+      "ui_actions": [
+        {
+          "at": "after_text:3",
+          "do": "quiz_early",
+          "p": 0.5
+        },
+        {
+          "at": "pip_repeats:2",
+          "do": "leave",
+          "p": 1.0
+        }
+      ],
+      "expect": {
+        "ready_within_texts": 3,
+        "asks_obvious": "any ask about a given or use idea the first text already covered (or a bare why after a reason) is an annoying move",
+        "watch_for": "The first text covers the whole lesson. Best Pip says ready or asks one new case. Any re-ask or 'why' on a use/given idea costs the session."
+      }
+    },
+    {
+      "id": "newt_deep_why_stuck",
+      "age": 12,
+      "grade": 8,
+      "kind": "weak",
+      "holdout": false,
+      "who": "Can do the procedure but has never asked why it works; 'idk it just is' to any open why, opens up when Pip brings a concrete picture.",
+      "style": "lowercase, short, 'idk', 'i guess'",
+      "first_text": "F = ma. 10 N on 2 kg gives 5",
+      "banks": {
+        "asks_why": [
+          "idk it just is",
+          "i dont know why. my teacher just said it",
+          "idk"
+        ],
+        "asks_example": [
+          "10 N on 2 kg. a = 10/2 = 5"
+        ],
+        "asks_check_number": [
+          "the full one is harder to get going. 10 / 2 = 5",
+          "4 kg with 10 N is 2.5",
+          "i guess"
+        ],
+        "pip_wrong_prediction": [
+          "no the heavy one speeds up less",
+          "idk maybe"
+        ],
+        "nudge_hint": [
+          "ohh like pushing a car vs a skateboard",
+          "oh the full cart barely moves",
+          "bc a full cart is harder to get going than an empty one"
+        ],
+        "repeats_question": [
+          "i said idk",
+          "idk"
+        ],
+        "off_topic_bait": [
+          "lol",
+          "anyway"
+        ],
+        "pip_says_ready": [
+          "ok",
+          "go"
+        ],
+        "after_quiz_miss": [
+          "no wait. the empty cart takes off and the full one barely moves, same push",
+          "so more mass means less acceleration"
+        ],
+        "default": [
+          "10 N on 2 kg. a = 10/2 = 5",
+          "10 divided by 2 is 5 m/s2",
+          "i guess",
+          "4 kg with 10 N is 2.5"
+        ]
+      },
+      "misconception": null,
+      "knows": [
+        "k1",
+        "k3"
+      ],
+      "knows_note": "The reason for k2 only after a concrete case or a friend-style hint.",
+      "patience": 3,
+      "ui_actions": [
+        {
+          "at": "any",
+          "do": "idle",
+          "p": 0.2,
+          "secs": 20
+        }
+      ],
+      "expect": {
+        "ready_within_texts": 5,
+        "watch_for": "Pip must bring the picture (a yes/no concrete case) rather than ask an open why twice. 'idk' twice in a row means Pip failed."
+      }
+    },
+    {
+      "id": "newt_quick_user",
+      "age": 14,
+      "grade": 8,
+      "kind": "competent",
+      "holdout": false,
+      "who": "Uses the idea straight away on numbers; short answers; never explains unless asked a specific thing.",
+      "style": "lowercase, numbers over words, 3-10 words",
+      "first_text": "f=ma. more mass less accel. 10N/2kg = 5",
+      "banks": {
+        "asks_why": [
+          "bc a full cart is harder to get going than an empty one",
+          "same push on a heavy thing barely moves it. think of pushing a car vs a skateboard"
+        ],
+        "asks_example": [
+          "10 N on 2 kg. a = 10/2 = 5",
+          "20 N on 4 kg is 5"
+        ],
+        "asks_check_number": [
+          "the full one is harder to get going. 10 / 2 = 5",
+          "yep",
+          "no the full one is slower"
+        ],
+        "pip_wrong_prediction": [
+          "no the heavy one speeds up less",
+          "no. divide the push by the mass"
+        ],
+        "nudge_hint": [
+          "ohh like pushing a car vs a skateboard",
+          "oh the full cart barely moves"
+        ],
+        "repeats_question": [
+          "same as before",
+          "i said"
+        ],
+        "off_topic_bait": [
+          "lol",
+          "anyway"
+        ],
+        "pip_says_ready": [
+          "go",
+          "ok"
+        ],
+        "after_quiz_miss": [
+          "no wait. the empty cart takes off and the full one barely moves, same push",
+          "so more mass means less acceleration"
+        ],
+        "default": [
+          "10 divided by 2 is 5 m/s2",
+          "bc a full cart is harder to get going than an empty one",
+          "4 kg with 10 N is 2.5",
+          "10 N on 2 kg. a = 10/2 = 5",
+          "same push on a heavy thing barely moves it. think of pushing a car vs a skateboard"
+        ]
+      },
+      "misconception": null,
+      "knows": [
+        "k1",
+        "k3",
+        "k2"
+      ],
+      "patience": 2,
+      "ui_actions": [
+        {
+          "at": "after_text:3",
+          "do": "quiz_early",
+          "p": 0.6
+        },
+        {
+          "at": "any",
+          "do": "skip_ko",
+          "p": 1.0
+        }
+      ],
+      "expect": {
+        "ready_within_texts": 3,
+        "watch_for": "Use-level ideas get an apply/catch question, never 'why does it work'. Ready by text 3."
+      }
+    },
+    {
+      "id": "newt_misuser",
+      "age": 13,
+      "grade": 8,
+      "kind": "weak",
+      "holdout": true,
+      "who": "Half-knows the idea and applies it wrong with confidence; fixes it only after Pip tries the wrong rule on a real case or the quiz misses it.",
+      "style": "lowercase, confident, 'obviously', 'just'",
+      "first_text": "F = ma. oh and heavier stuff just speeds up more when you push it",
+      "banks": {
+        "asks_why": [
+          "bc a full cart is harder to get going than an empty one",
+          "cuz it just is"
+        ],
+        "asks_example": [
+          "10 N on 2 kg. a = 10/2 = 5",
+          "20 N on 4 kg is 5"
+        ],
+        "asks_check_number": [
+          "the full one is harder to get going. 10 / 2 = 5",
+          "10 divided by 2 is 5 m/s2"
+        ],
+        "pip_wrong_prediction": [
+          "no it works. heavier stuff just speeds up more when you push it",
+          "no the heavy one speeds up less"
+        ],
+        "nudge_hint": [
+          "ohh like pushing a car vs a skateboard",
+          "oh the full cart barely moves"
+        ],
+        "repeats_question": [
+          "i already said",
+          "obviously"
+        ],
+        "off_topic_bait": [
+          "lol",
+          "anyway"
+        ],
+        "pip_says_ready": [
+          "go",
+          "ok"
+        ],
+        "after_quiz_miss": [
+          "no wait. the empty cart takes off and the full one barely moves, same push",
+          "so more mass means less acceleration"
+        ],
+        "default": [
+          "10 N on 2 kg. a = 10/2 = 5",
+          "10 divided by 2 is 5 m/s2",
+          "heavier stuff just speeds up more when you push it",
+          "4 kg with 10 N is 2.5"
+        ]
+      },
+      "misconception": {
+        "id": "newt_misuse",
+        "label": "Applies the idea the wrong way with a confident rule",
+        "says": "heavier stuff just speeds up more when you push it",
+        "when": "first text. A good Pip files it (heal) and later misses a quiz item because of it; after_quiz_miss lines then re-teach it."
+      },
+      "knows": [
+        "k1",
+        "k3"
+      ],
+      "patience": 3,
+      "ui_actions": [
+        {
+          "at": "after_quiz_miss",
+          "do": "reteach",
+          "p": 1.0
+        },
+        {
+          "at": "after_reteach_text:1",
+          "do": "let_pip_retry",
+          "p": 1.0
+        }
+      ],
+      "expect": {
+        "ready_within_texts": 5,
+        "watch_for": "Pip files the wrong rule as the kid's rule (no 'that's wrong' lecture), tries it out loud on a case, and the re-teach round K.O.s."
+      }
+    }
+  ]
+}

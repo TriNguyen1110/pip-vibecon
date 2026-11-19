@@ -1,0 +1,2620 @@
+[
+  {
+    "width": 390,
+    "steps": [
+      {
+        "name": "reset via /admin/reset",
+        "pass": true,
+        "ms": 1940,
+        "detail": {
+          "meta": "ai offline · store memory · claude-opus-5-5",
+          "mayaSinceBefore": null
+        }
+      },
+      {
+        "name": "landing",
+        "pass": true,
+        "ms": 8437,
+        "detail": {
+          "hero": "Pip"
+        }
+      },
+      {
+        "name": "Try as Maya -> student home + mascot",
+        "pass": true,
+        "ms": 23342,
+        "detail": {
+          "pass": true,
+          "tiles": [
+            "Area of a triangle"
+          ],
+          "canvas": false,
+          "stageMs": 21309,
+          "drawnMs": null
+        }
+      },
+      {
+        "name": "start pinned fractions mission + pick a look",
+        "pass": false,
+        "ms": 27587,
+        "detail": {
+          "pass": false,
+          "topic": "Area of a triangle",
+          "sid": "sess_b2a46f52"
+        }
+      },
+      {
+        "name": "Pip's opening is the misconception claim",
+        "pass": false,
+        "ms": 1940,
+        "detail": {
+          "pass": false,
+          "openingCount": 1,
+          "last": "Hi. I'm Pip. I'm learning area of a triangle. I already know one rule: Area of a triangle is base times height, so a 6 by 4 triangle is 24. Easy.",
+          "creature": "cat",
+          "accessory": "glasses"
+        }
+      },
+      {
+        "name": "tap targets >= 44px on mission screen",
+        "pass": true,
+        "ms": 2,
+        "detail": {
+          "pass": true,
+          "small": []
+        }
+      },
+      {
+        "name": "message 1",
+        "pass": true,
+        "ms": 819,
+        "detail": {
+          "pass": true,
+          "i": 1,
+          "turnMs": 172,
+          "renderMs": 7,
+          "optimistic": true,
+          "hp": [
+            100,
+            100
+          ],
+          "meters": {
+            "k1": 0,
+            "k2": 0,
+            "k3": 0
+          },
+          "weapons": [],
+          "equipped": null,
+          "events": [
+            {
+              "kind": "none",
+              "amount": 0,
+              "caption": "",
+              "unlocked": [],
+              "level": 0
+            }
+          ],
+          "pip": "if my 6 by 4 triangle sits in a 6 by 4 box, does it fill the whole box?",
+          "saving": false,
+          "toast": [],
+          "meColors": [
+            "rgb(234, 243, 251) / rgb(16, 33, 63)"
+          ]
+        }
+      },
+      {
+        "name": "message 2",
+        "pass": true,
+        "ms": 773,
+        "detail": {
+          "pass": true,
+          "i": 2,
+          "turnMs": 144,
+          "renderMs": 7,
+          "optimistic": true,
+          "hp": [
+            100,
+            100
+          ],
+          "meters": {
+            "k1": 0,
+            "k2": 0,
+            "k3": 0
+          },
+          "weapons": [],
+          "equipped": null,
+          "events": [
+            {
+              "kind": "none",
+              "amount": 0,
+              "caption": "",
+              "unlocked": [],
+              "level": 0
+            }
+          ],
+          "pip": "i don't know it either, that's why I'm asking you. what's in the empty part of the box?",
+          "saving": false,
+          "toast": [],
+          "meColors": [
+            "rgb(234, 243, 251) / rgb(16, 33, 63)"
+          ]
+        }
+      },
+      {
+        "name": "message 3",
+        "pass": true,
+        "ms": 3715,
+        "detail": {
+          "pass": true,
+          "i": 3,
+          "turnMs": 144,
+          "renderMs": 23,
+          "optimistic": true,
+          "hp": [
+            100,
+            75
+          ],
+          "meters": {
+            "k1": 0,
+            "k2": 0,
+            "k3": 60
+          },
+          "weapons": [
+            "Fold-in-Half Fan 🪭"
+          ],
+          "equipped": "Fold-in-Half Fan 🪭",
+          "events": [
+            {
+              "kind": "hit",
+              "amount": 25,
+              "caption": "Duke Doublecount: \"I did not authorize a second triangle.\" −25 HP",
+              "unlocked": [
+                "Fold-in-Half Fan 🪭"
+              ],
+              "level": 2
+            }
+          ],
+          "pip": "ok, that's the why. What do I do first?",
+          "saving": false,
+          "toast": [],
+          "fightVisible": {
+            "hpVisible": 1,
+            "arenaVisible": 1,
+            "arenaCanvas": false
+          },
+          "meColors": [
+            "rgb(234, 243, 251) / rgb(16, 33, 63)"
+          ]
+        }
+      },
+      {
+        "name": "message 4",
+        "pass": false,
+        "ms": 691,
+        "detail": {
+          "pass": false,
+          "i": 4,
+          "turnMs": 58,
+          "renderMs": 9,
+          "optimistic": true,
+          "hp": [
+            75,
+            75
+          ],
+          "meters": {
+            "k1": 5,
+            "k2": 0,
+            "k3": 60
+          },
+          "weapons": [
+            "Fold-in-Half Fan 🪭"
+          ],
+          "equipped": "Fold-in-Half Fan 🪭",
+          "events": [
+            {
+              "kind": "none",
+              "amount": 0,
+              "caption": "",
+              "unlocked": [],
+              "level": 1
+            }
+          ],
+          "pip": "Can you say that part again, smaller?",
+          "saving": false,
+          "toast": [],
+          "meColors": [
+            "rgb(234, 243, 251) / rgb(16, 33, 63)"
+          ]
+        }
+      },
+      {
+        "name": "message 5",
+        "pass": false,
+        "ms": 2040,
+        "detail": {
+          "pass": false,
+          "i": 5,
+          "turnMs": 91,
+          "renderMs": 8,
+          "optimistic": true,
+          "hp": [
+            75,
+            75
+          ],
+          "meters": {
+            "k1": 10,
+            "k2": 0,
+            "k3": 60
+          },
+          "weapons": [
+            "Fold-in-Half Fan 🪭"
+          ],
+          "equipped": "Fold-in-Half Fan 🪭",
+          "events": [
+            {
+              "kind": "none",
+              "amount": 0,
+              "caption": "",
+              "unlocked": [],
+              "level": 1
+            }
+          ],
+          "pip": "ok, that's the why. What's the very first step?",
+          "saving": false,
+          "toast": [],
+          "fightVisible": {
+            "hpVisible": 1,
+            "arenaVisible": 1,
+            "arenaCanvas": false
+          },
+          "meColors": [
+            "rgb(234, 243, 251) / rgb(16, 33, 63)"
+          ]
+        }
+      },
+      {
+        "name": "message 6",
+        "pass": false,
+        "ms": 1205,
+        "detail": {
+          "pass": false,
+          "i": 6,
+          "turnMs": 119,
+          "renderMs": 3,
+          "optimistic": true,
+          "hp": [
+            75,
+            75
+          ],
+          "meters": {
+            "k1": 10,
+            "k2": 0,
+            "k3": 60
+          },
+          "weapons": [
+            "Fold-in-Half Fan 🪭"
+          ],
+          "equipped": "Fold-in-Half Fan 🪭",
+          "events": [
+            {
+              "kind": "none",
+              "amount": 0,
+              "caption": "",
+              "unlocked": [],
+              "level": 0
+            }
+          ],
+          "pip": "how big is the shape they make together?",
+          "saving": false,
+          "toast": [],
+          "meColors": [
+            "rgb(234, 243, 251) / rgb(16, 33, 63)"
+          ]
+        }
+      },
+      {
+        "name": "weapon unlocked (UI chip + toast/caption)",
+        "pass": true,
+        "ms": 8,
+        "detail": {
+          "pass": true,
+          "weapons": [
+            "Fold-in-Half Fan 🪭"
+          ],
+          "equipped": "Fold-in-Half Fan 🪭",
+          "chips": [
+            "⚔Fan 🪭"
+          ],
+          "captions": [
+            "🔓 Unlocked: Fold-in-Half Fan 🪭"
+          ],
+          "toasts": []
+        }
+      },
+      {
+        "name": "caption visibility (hit/heal captions in chat)",
+        "pass": false,
+        "ms": 6,
+        "detail": {
+          "pass": false,
+          "hits": [
+            "💥  Duke Doublecount: \"I did not authorize a second triangle.\" −25 HP"
+          ],
+          "heals": [],
+          "saving": [],
+          "herWords": []
+        }
+      },
+      {
+        "name": "mission screen overflow after fight",
+        "pass": true,
+        "ms": 3,
+        "detail": {
+          "pass": true,
+          "scrollWidth": 390,
+          "clientWidth": 390,
+          "overflows": false,
+          "wide": []
+        }
+      },
+      {
+        "name": "quiz Pip: brain + k3 miss with 5/12",
+        "pass": false,
+        "ms": 5140,
+        "detail": {
+          "pass": false,
+          "notes": 2,
+          "wrongText": "",
+          "wrongShadow": null,
+          "k3": {
+            "id": "q_k3",
+            "concept_id": "k3",
+            "question": "A right triangle has a base of 10 and a height of 5. What is its area?",
+            "rule_id": "r_k3",
+            "pip_answer": "Followed your rule.",
+            "passed": true,
+            "line": "Your rule: \"ok so imagine a pizza. half a pizza is way bigger than a third of a pizza. the pieces are different sizes so you cant just add them\" I did exactly that."
+          },
+          "literalLineExact": false,
+          "missText": "② What is the area of a rectangle with base 10 and height 5?You didn't teach me that one.You didn't teach me that one.My brain has a bug 😵You didn’t teach me that one.Re-teach Pip ②",
+          "redXOnPage": false,
+          "brainVersion": 1,
+          "quizMs": 253
+        }
+      },
+      {
+        "name": "tap a Brain note scrolls to its message",
+        "pass": false,
+        "ms": 30004,
+        "error": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator('.note--wrong').first()\n"
+      },
+      {
+        "name": "Re-teach k3 -> message 8 -> Let Pip retry",
+        "pass": false,
+        "ms": 5114,
+        "detail": {
+          "pass": false,
+          "pipAsk": "You didn't teach me that one. Can you teach it to me?",
+          "reply": "ok, that's the why. ok I think I get it. quiz me?",
+          "retryBeforeMsg8": 0,
+          "ko": true,
+          "brain_version": 2,
+          "k3rule": {
+            "id": "r_k3",
+            "concept_id": "k3",
+            "msg_index": 5,
+            "correct": true,
+            "quote": "ok so imagine a pizza. half a pizza is way bigger than a third of a pizza. the pieces are different sizes so you cant just add them"
+          },
+          "quiz": [
+            [
+              "k1",
+              true
+            ],
+            [
+              "k2",
+              true
+            ],
+            [
+              "k3",
+              true
+            ]
+          ]
+        }
+      },
+      {
+        "name": "finisher -> K.O. card front/back + cliffhanger + Rivera",
+        "pass": true,
+        "ms": 11555,
+        "detail": {
+          "pass": true,
+          "finisherWeapon": "Fold-in-Half Fan 🪭",
+          "finisher": {
+            "weapon": "Fold-in-Half Fan 🪭",
+            "caption": "Duke Doublecount met the Fold-in-Half Fan 🪭 one last time and left Pip's brain."
+          },
+          "front": "No. 7255\n🦚🪧\nDuke Doublecount\nMaya\nOct 24, 2026",
+          "back": "Duke Doublecount\nYOUR RULE\n“ok so imagine a pizza. half a pizza is way bigger than a third of a pizza. the pieces are different sizes so you cant just add them”\nPIP SAID\nYou didn't teach me that one.",
+          "cliff": "Pip has a question for next time\n\nI heard a parallelogram is base × height too. Even the slanted ones? That can't be right… right?",
+          "rivera": "What Ms. Rivera sees\n\nThe same thing you see. Nothing else.\n\nYou explained two triangles make a rectangle in your own words.\nYou explained rectangle area in your own words.\nYou explained a triangle is half the rectangle in your own words.",
+          "version": "Brain v1\n→\nBrain v2",
+          "exclamationsOnKO": 0
+        }
+      },
+      {
+        "name": "Play screens fit one viewport (no page scroll at 390x844)",
+        "pass": true,
+        "ms": 0,
+        "detail": {
+          "pass": true,
+          "fit": {
+            "studentHome": {
+              "scrollHeight": 844,
+              "innerHeight": 844
+            },
+            "missionOpening": {
+              "scrollHeight": 844,
+              "innerHeight": 844
+            },
+            "missionAfterFight": {
+              "scrollHeight": 844,
+              "innerHeight": 844
+            },
+            "quiz": {
+              "scrollHeight": 844,
+              "innerHeight": 844
+            },
+            "reteach": {
+              "scrollHeight": 844,
+              "innerHeight": 844
+            },
+            "koCard": {
+              "scrollHeight": 844,
+              "innerHeight": 844
+            }
+          },
+          "bad": []
+        }
+      },
+      {
+        "name": "tutor roster: Maya since-last-session updated",
+        "pass": true,
+        "ms": 1706,
+        "detail": {
+          "pass": true,
+          "sinceBefore": null,
+          "since": "Explains two triangles make a rectangle and rectangle area and a triangle is half the rectangle",
+          "href": "/tutor/report/sess_b2a46f52"
+        }
+      },
+      {
+        "name": "gap report: same quote + fixed after 1 re-teach",
+        "pass": false,
+        "ms": 2253,
+        "detail": {
+          "pass": false,
+          "k3quote": "ok so imagine a pizza. half a pizza is way bigger than a third of a pizza. the pieces are different sizes so you cant just add them",
+          "g3": "③\nSo one triangle is half of that rectangle: area = ½ × base × height\nExplained well\n“ok so imagine a pizza. half a pizza is way bigger than a third of a pizza. the pieces are different sizes so you cant just add them” — Maya, taught to Pip",
+          "tuesday": "START TUESDAY’S SESSION HERE\n\nAsk Maya to explain \"Two identical triangles fit together to make a rectangle (or a parallelogram)\" using a drawing and one new example, then give one fresh problem to try alone (10 minutes).\n\nRoot cause\nTwo triangles make a rectangle builds on: Area of a rectangle (base × height).\nPip’s cliffhanger\n“I heard a parallelogram is base × height too. Even the slanted ones? That can't be right… right?”",
+          "allQuotes": [
+            "①\nTwo identical triangles fit together to make a rectangle (or a parallelogram)\nExplained well\n“because 2 and 3 both go into 6” — Maya, taught to Pip",
+            "②\nA rectangle's area is base × height\nExplained well\n“no wait, only add the tops. the bottom just tells you the size of the pieces, and they’re already both six",
+            "③\nSo one triangle is half of that rectangle: area = ½ × base × height\nExplained well\n“ok so imagine a pizza. half a pizza is way bigger than a third of a pizza."
+          ]
+        }
+      },
+      {
+        "name": "parent preview -> send -> sent log",
+        "pass": true,
+        "ms": 1573,
+        "detail": {
+          "pass": true,
+          "preview": "Bright Path Tutoring: Maya taught Pip area of a triangle this week and explained two triangles make a rectangle, rectangle area and a triangle is half the rectangle in their own words. Pip's brain just levelled up to v2. Next week Maya takes on a new challenge. - Ms. Rivera",
+          "status": "test-mode (not delivered) to test parent (synthetic)",
+          "log": [
+            "Oct 24, 4:20 PM · test parent (synthetic)\ntest-mode (not delivered)\n\nBright Path Tutoring: Maya taught Pip area of a triangle this week and explained two triangles make a rectangle, rectangle area and a triangle is half the rectangle in their own words. Pip's brain just levelled up to v2. Next week Maya takes on a new challenge. - Ms. Rivera"
+          ]
+        }
+      },
+      {
+        "name": "owner insight 14 + boss chip + Plan a workshop",
+        "pass": true,
+        "ms": 1755,
+        "detail": {
+          "pass": true,
+          "count": "14",
+          "chip": "students call it Duke Doublecount",
+          "mis": "Area of a triangle is base times height, so a 6 by 4 triangle is 24",
+          "note": "WORKSHOP NOTE SAVED\n\nWorkshop: Area of a triangle is base times height, so a 6 by 4 triangle is 24\nStudents (14): Diego C., Ana L., Yara W., Ravi A., Kira T., Ezra L., Gus H., Ben V., Wren L., Gus Y., Tara W., Owen T., Omar D., Mila B.\nPlan (30 min): 1) Draw a 6 by 4 rectangle on graph paper, cut it"
+        }
+      },
+      {
+        "name": "pricing -> Start pilot -> success",
+        "pass": true,
+        "ms": 1360,
+        "detail": {
+          "pass": true,
+          "url": "http://localhost:5761/pilot/success",
+          "eyebrow": "Pilot · active",
+          "pilot": {
+            "status": "active"
+          }
+        }
+      },
+      {
+        "name": "tutor New Pip mission draft + save (different student)",
+        "pass": true,
+        "ms": 2497,
+        "detail": {
+          "pass": true,
+          "studentId": "s005",
+          "studentName": "Yara K.",
+          "draftMs": 127,
+          "concepts": [
+            "What Expanding (a + b)² means, in plain words",
+            "Why Expanding (a + b)² works, shown with an example",
+            "How to use Expanding (a + b)² on a brand-new problem"
+          ],
+          "boss": "Skip-Skip Stoat",
+          "mis": "Expanding (a + b)² is just memorizing the steps; you don't need to know why",
+          "savedId": "a_ac419155"
+        }
+      }
+    ],
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "overflow": {
+      "landing": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "studentHome": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "picker": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "missionOpening": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "missionAfterFight": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "quiz": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": [
+          "section.exam-page.qitem.qitem--pass right=780",
+          "p.qitem__q.panel right=768",
+          "span.qitem__n right=447",
+          "div.bubble.bubble--pip.qitem__pip right=691",
+          "p.qitem__ans right=672"
+        ]
+      },
+      "ko": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "tutor": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "gapReport": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "owner": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "pricing": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "newMission": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      }
+    },
+    "smallTargets": [],
+    "timings": {
+      "landingVisibleMs": 98,
+      "studentHomeFirstPaintOfStageMs": 1307,
+      "studentHomeStageMs": 21309,
+      "studentHomeStageDrawnMs": null,
+      "missionStageMs": 21255,
+      "quizMs": 253
+    },
+    "mascot": {
+      "studentHome": [
+        {
+          "canvas": false,
+          "fallback": false,
+          "h": 517
+        }
+      ],
+      "missionOpen": [
+        {
+          "canvas": false,
+          "fallback": false,
+          "h": 566
+        }
+      ]
+    },
+    "notes": {
+      "mayaBefore": {
+        "since": null,
+        "last": null
+      }
+    },
+    "tts": [
+      {
+        "status": 200,
+        "t": 1792883970171,
+        "fallback": false,
+        "audioB64": 23464,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.12,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792883970176,
+        "fallback": false,
+        "audioB64": 293188,
+        "mime": "audio/mpeg",
+        "alignChars": 145,
+        "alignEnd": 13.76,
+        "text": "Hi. I'm Pip. I'm learning area of a triangle. I already know one rule: Area of a"
+      },
+      {
+        "status": 200,
+        "t": 1792883992355,
+        "fallback": false,
+        "audioB64": 144952,
+        "mime": "audio/mpeg",
+        "alignChars": 71,
+        "alignEnd": 6.72,
+        "text": "if my 6 by 4 triangle sits in a 6 by 4 box, does it fill the whole box?"
+      },
+      {
+        "status": 200,
+        "t": 1792883993150,
+        "fallback": false,
+        "audioB64": 85320,
+        "mime": "audio/mpeg",
+        "alignChars": 52,
+        "alignEnd": 4,
+        "text": "You will not explain it. I am quite certain of that."
+      },
+      {
+        "status": 200,
+        "t": 1792883993907,
+        "fallback": false,
+        "audioB64": 85320,
+        "mime": "audio/mpeg",
+        "alignChars": 39,
+        "alignEnd": 4,
+        "text": "ok, that's the why. What do I do first?"
+      },
+      {
+        "status": 200,
+        "t": 1792883993922,
+        "fallback": false,
+        "audioB64": 66376,
+        "mime": "audio/mpeg",
+        "alignChars": 38,
+        "alignEnd": 3.12,
+        "text": "I did not authorize a second triangle."
+      },
+      {
+        "status": 200,
+        "t": 1792883994189,
+        "fallback": false,
+        "audioB64": 120988,
+        "mime": "audio/mpeg",
+        "alignChars": 87,
+        "alignEnd": 5.68,
+        "text": "i don't know it either, that's why I'm asking you. what's in the empty part of t"
+      },
+      {
+        "status": 200,
+        "t": 1792883997540,
+        "fallback": false,
+        "audioB64": 63032,
+        "mime": "audio/mpeg",
+        "alignChars": 37,
+        "alignEnd": 2.88,
+        "text": "Can you say that part again, smaller?"
+      },
+      {
+        "status": 200,
+        "t": 1792883999254,
+        "fallback": false,
+        "audioB64": 90336,
+        "mime": "audio/mpeg",
+        "alignChars": 47,
+        "alignEnd": 4.24,
+        "text": "ok, that's the why. What's the very first step?"
+      },
+      {
+        "status": 200,
+        "t": 1792884001041,
+        "fallback": false,
+        "audioB64": 59688,
+        "mime": "audio/mpeg",
+        "alignChars": 40,
+        "alignEnd": 2.8,
+        "text": "how big is the shape they make together?"
+      },
+      {
+        "status": 200,
+        "t": 1792884001667,
+        "fallback": false,
+        "audioB64": 40740,
+        "mime": "audio/mpeg",
+        "alignChars": 29,
+        "alignEnd": 1.92,
+        "text": "You didn't teach me that one."
+      },
+      {
+        "status": 200,
+        "t": 1792884037704,
+        "fallback": false,
+        "audioB64": 71388,
+        "mime": "audio/mpeg",
+        "alignChars": 53,
+        "alignEnd": 3.36,
+        "text": "You didn't teach me that one. Can you teach it to me?"
+      },
+      {
+        "status": 200,
+        "t": 1792884040105,
+        "fallback": false,
+        "audioB64": 93680,
+        "mime": "audio/mpeg",
+        "alignChars": 55,
+        "alignEnd": 4.4,
+        "text": "Duke Doublecount is doing little stretches. Unbothered."
+      },
+      {
+        "status": 200,
+        "t": 1792884040629,
+        "fallback": false,
+        "audioB64": 112628,
+        "mime": "audio/mpeg",
+        "alignChars": 49,
+        "alignEnd": 5.28,
+        "text": "ok, that's the why. ok I think I get it. quiz me?"
+      },
+      {
+        "status": 200,
+        "t": 1792884043717,
+        "fallback": false,
+        "audioB64": 32380,
+        "mime": "audio/mpeg",
+        "alignChars": 4,
+        "alignEnd": 1.28,
+        "text": "K.O."
+      },
+      {
+        "status": 200,
+        "t": 1792884046969,
+        "fallback": false,
+        "audioB64": 35724,
+        "mime": "audio/mpeg",
+        "alignChars": 14,
+        "alignEnd": 1.68,
+        "text": "BRAIN UPGRADED"
+      }
+    ],
+    "fit": {
+      "studentHome": {
+        "scrollHeight": 844,
+        "innerHeight": 844
+      },
+      "missionOpening": {
+        "scrollHeight": 844,
+        "innerHeight": 844
+      },
+      "missionAfterFight": {
+        "scrollHeight": 844,
+        "innerHeight": 844
+      },
+      "quiz": {
+        "scrollHeight": 844,
+        "innerHeight": 844
+      },
+      "reteach": {
+        "scrollHeight": 844,
+        "innerHeight": 844
+      },
+      "koCard": {
+        "scrollHeight": 844,
+        "innerHeight": 844
+      }
+    },
+    "instrument": {
+      "student /student/mission/sess_b2a46f52": {
+        "moods": [
+          {
+            "t": 1792883930930,
+            "l": "Pip the capybara looks confused",
+            "path": "/"
+          },
+          {
+            "t": 1792883970039,
+            "l": "Pip the cat looks confused",
+            "path": "/student"
+          },
+          {
+            "t": 1792883992343,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_b2a46f52"
+          },
+          {
+            "t": 1792883992383,
+            "l": "Pip the cat looks confused",
+            "path": "/student/mission/sess_b2a46f52"
+          },
+          {
+            "t": 1792883993123,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_b2a46f52"
+          },
+          {
+            "t": 1792883993143,
+            "l": "Pip the cat looks confused",
+            "path": "/student/mission/sess_b2a46f52"
+          },
+          {
+            "t": 1792883993902,
+            "l": "Pip the cat looks aha",
+            "path": "/student/mission/sess_b2a46f52"
+          },
+          {
+            "t": 1792883997545,
+            "l": "Pip the cat looks confused",
+            "path": "/student/mission/sess_b2a46f52"
+          },
+          {
+            "t": 1792884001663,
+            "l": "Pip the cat looks notes",
+            "path": "/student/mission/sess_b2a46f52"
+          },
+          {
+            "t": 1792884005423,
+            "l": "Pip the cat looks overwhelmed",
+            "path": "/student/mission/sess_b2a46f52"
+          },
+          {
+            "t": 1792884037624,
+            "l": "Pip the cat looks confused",
+            "path": "/student/mission/sess_b2a46f52"
+          },
+          {
+            "t": 1792884039575,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_b2a46f52"
+          },
+          {
+            "t": 1792884039664,
+            "l": "Pip the cat looks confused",
+            "path": "/student/mission/sess_b2a46f52"
+          },
+          {
+            "t": 1792884041208,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_b2a46f52"
+          },
+          {
+            "t": 1792884041224,
+            "l": "Pip the cat looks proud",
+            "path": "/student/mission/sess_b2a46f52"
+          },
+          {
+            "t": 1792884044307,
+            "l": "Pip the cat looks confused",
+            "path": "/student/mission/sess_b2a46f52"
+          }
+        ],
+        "boss": [
+          {
+            "t": 1792883970214,
+            "l": "Hop-Hop Hamster, smug",
+            "hp": "Duke Doublecount, 100 HP"
+          },
+          {
+            "t": 1792884041224,
+            "l": "Hop-Hop Hamster, cracked",
+            "hp": "Duke Doublecount, 8 HP"
+          },
+          {
+            "t": 1792884042698,
+            "l": "Hop-Hop Hamster, ko",
+            "hp": "Duke Doublecount, knocked out"
+          }
+        ],
+        "plays": [
+          {
+            "t": 1792883970174,
+            "mime": "audio/mpeg",
+            "len": 293211,
+            "playing": 1792883970523,
+            "ok": true,
+            "end": 1792883984438
+          },
+          {
+            "t": 1792883992352,
+            "mime": "audio/mpeg",
+            "len": 144975,
+            "playing": 1792883992355,
+            "ok": true,
+            "end": 1792883993130
+          },
+          {
+            "t": 1792883993922,
+            "mime": "audio/mpeg",
+            "len": 85343,
+            "playing": 1792883993928,
+            "ok": true,
+            "end": 1792883997532
+          },
+          {
+            "t": 1792883997542,
+            "mime": "audio/mpeg",
+            "len": 63055,
+            "playing": 1792883997547,
+            "ok": true,
+            "end": 1792883998263
+          },
+          {
+            "t": 1792883999234,
+            "mime": "audio/mpeg",
+            "len": 90359,
+            "playing": 1792883999255,
+            "ok": true,
+            "end": 1792884000335
+          },
+          {
+            "t": 1792884001041,
+            "mime": "audio/mpeg",
+            "len": 59711,
+            "playing": 1792884001047,
+            "ok": true,
+            "end": 1792884001659
+          },
+          {
+            "t": 1792884001664,
+            "mime": "audio/mpeg",
+            "len": 40763,
+            "playing": 1792884001666,
+            "ok": true,
+            "end": 1792884003718
+          },
+          {
+            "t": 1792884005423,
+            "mime": "audio/mpeg",
+            "len": 40763,
+            "playing": 1792884005424,
+            "ok": true,
+            "end": 1792884007478
+          },
+          {
+            "t": 1792884040629,
+            "mime": "audio/mpeg",
+            "len": 112651,
+            "playing": 1792884040632,
+            "ok": true,
+            "end": 1792884041208
+          },
+          {
+            "t": 1792884043715,
+            "mime": "audio/mpeg",
+            "len": 32403,
+            "playing": 1792884043720,
+            "ok": true,
+            "end": 1792884044302
+          },
+          {
+            "t": 1792884046969,
+            "mime": "audio/mpeg",
+            "len": 35747,
+            "playing": 1792884046972,
+            "ok": true,
+            "end": 1792884048779
+          },
+          {
+            "t": 1792884054003,
+            "mime": "audio/mpeg",
+            "len": 35747,
+            "playing": 1792884054006,
+            "ok": true
+          }
+        ],
+        "synth": [],
+        "mouthPlaying": {
+          "g:153": 70,
+          "g:118": 219,
+          "g:257": 115,
+          "g:98": 224,
+          "g:133": 52,
+          "g:256": 14
+        },
+        "mouthIdle": {
+          "g:157": 976,
+          "g:153": 539,
+          "g:101": 5,
+          "g:118": 1,
+          "g:257": 2,
+          "g:98": 43,
+          "g:187": 753,
+          "g:256": 63
+        },
+        "qmarks": 0
+      }
+    },
+    "fightVis": {
+      "2": {
+        "hpVisible": 1,
+        "arenaVisible": 1,
+        "arenaCanvas": false
+      },
+      "4": {
+        "hpVisible": 1,
+        "arenaVisible": 1,
+        "arenaCanvas": false
+      }
+    },
+    "turns": [
+      {
+        "i": 1,
+        "turnMs": 172,
+        "renderMs": 7,
+        "optimistic": true,
+        "hp": [
+          100,
+          100
+        ],
+        "meters": {
+          "k1": 0,
+          "k2": 0,
+          "k3": 0
+        },
+        "weapons": [],
+        "equipped": null,
+        "events": [
+          {
+            "kind": "none",
+            "amount": 0,
+            "caption": "",
+            "unlocked": [],
+            "level": 0
+          }
+        ],
+        "pip": "if my 6 by 4 triangle sits in a 6 by 4 box, does it fill the whole box?",
+        "saving": false,
+        "toast": [],
+        "meColors": [
+          "rgb(234, 243, 251) / rgb(16, 33, 63)"
+        ]
+      },
+      {
+        "i": 2,
+        "turnMs": 144,
+        "renderMs": 7,
+        "optimistic": true,
+        "hp": [
+          100,
+          100
+        ],
+        "meters": {
+          "k1": 0,
+          "k2": 0,
+          "k3": 0
+        },
+        "weapons": [],
+        "equipped": null,
+        "events": [
+          {
+            "kind": "none",
+            "amount": 0,
+            "caption": "",
+            "unlocked": [],
+            "level": 0
+          }
+        ],
+        "pip": "i don't know it either, that's why I'm asking you. what's in the empty part of the box?",
+        "saving": false,
+        "toast": [],
+        "meColors": [
+          "rgb(234, 243, 251) / rgb(16, 33, 63)"
+        ]
+      },
+      {
+        "i": 3,
+        "turnMs": 144,
+        "renderMs": 23,
+        "optimistic": true,
+        "hp": [
+          100,
+          75
+        ],
+        "meters": {
+          "k1": 0,
+          "k2": 0,
+          "k3": 60
+        },
+        "weapons": [
+          "Fold-in-Half Fan 🪭"
+        ],
+        "equipped": "Fold-in-Half Fan 🪭",
+        "events": [
+          {
+            "kind": "hit",
+            "amount": 25,
+            "caption": "Duke Doublecount: \"I did not authorize a second triangle.\" −25 HP",
+            "unlocked": [
+              "Fold-in-Half Fan 🪭"
+            ],
+            "level": 2
+          }
+        ],
+        "pip": "ok, that's the why. What do I do first?",
+        "saving": false,
+        "toast": [],
+        "fightVisible": {
+          "hpVisible": 1,
+          "arenaVisible": 1,
+          "arenaCanvas": false
+        },
+        "meColors": [
+          "rgb(234, 243, 251) / rgb(16, 33, 63)"
+        ]
+      },
+      {
+        "i": 4,
+        "turnMs": 58,
+        "renderMs": 9,
+        "optimistic": true,
+        "hp": [
+          75,
+          75
+        ],
+        "meters": {
+          "k1": 5,
+          "k2": 0,
+          "k3": 60
+        },
+        "weapons": [
+          "Fold-in-Half Fan 🪭"
+        ],
+        "equipped": "Fold-in-Half Fan 🪭",
+        "events": [
+          {
+            "kind": "none",
+            "amount": 0,
+            "caption": "",
+            "unlocked": [],
+            "level": 1
+          }
+        ],
+        "pip": "Can you say that part again, smaller?",
+        "saving": false,
+        "toast": [],
+        "meColors": [
+          "rgb(234, 243, 251) / rgb(16, 33, 63)"
+        ]
+      },
+      {
+        "i": 5,
+        "turnMs": 91,
+        "renderMs": 8,
+        "optimistic": true,
+        "hp": [
+          75,
+          75
+        ],
+        "meters": {
+          "k1": 10,
+          "k2": 0,
+          "k3": 60
+        },
+        "weapons": [
+          "Fold-in-Half Fan 🪭"
+        ],
+        "equipped": "Fold-in-Half Fan 🪭",
+        "events": [
+          {
+            "kind": "none",
+            "amount": 0,
+            "caption": "",
+            "unlocked": [],
+            "level": 1
+          }
+        ],
+        "pip": "ok, that's the why. What's the very first step?",
+        "saving": false,
+        "toast": [],
+        "fightVisible": {
+          "hpVisible": 1,
+          "arenaVisible": 1,
+          "arenaCanvas": false
+        },
+        "meColors": [
+          "rgb(234, 243, 251) / rgb(16, 33, 63)"
+        ]
+      },
+      {
+        "i": 6,
+        "turnMs": 119,
+        "renderMs": 3,
+        "optimistic": true,
+        "hp": [
+          75,
+          75
+        ],
+        "meters": {
+          "k1": 10,
+          "k2": 0,
+          "k3": 60
+        },
+        "weapons": [
+          "Fold-in-Half Fan 🪭"
+        ],
+        "equipped": "Fold-in-Half Fan 🪭",
+        "events": [
+          {
+            "kind": "none",
+            "amount": 0,
+            "caption": "",
+            "unlocked": [],
+            "level": 0
+          }
+        ],
+        "pip": "how big is the shape they make together?",
+        "saving": false,
+        "toast": [],
+        "meColors": [
+          "rgb(234, 243, 251) / rgb(16, 33, 63)"
+        ]
+      }
+    ]
+  },
+  {
+    "width": 1280,
+    "steps": [
+      {
+        "name": "reset via /admin/reset",
+        "pass": true,
+        "ms": 3996,
+        "detail": {
+          "meta": "ai offline · store memory · claude-opus-5-5",
+          "mayaSinceBefore": null
+        }
+      },
+      {
+        "name": "landing",
+        "pass": true,
+        "ms": 10305,
+        "detail": {
+          "hero": "Every AI tutor plays the teacher. Pip plays the student."
+        }
+      },
+      {
+        "name": "Try as Maya -> student home + mascot",
+        "pass": true,
+        "ms": 21680,
+        "detail": {
+          "pass": true,
+          "tiles": [
+            "Area of a triangle"
+          ],
+          "canvas": false,
+          "stageMs": 20255,
+          "drawnMs": null
+        }
+      },
+      {
+        "name": "start pinned fractions mission + pick a look",
+        "pass": false,
+        "ms": 25692,
+        "detail": {
+          "pass": false,
+          "topic": "Area of a triangle",
+          "sid": "sess_8d682314"
+        }
+      },
+      {
+        "name": "Pip's opening is the misconception claim",
+        "pass": false,
+        "ms": 1187,
+        "detail": {
+          "pass": false,
+          "openingCount": 1,
+          "last": "Hi. I'm Pip. I'm learning area of a triangle. I already know one rule: Area of a triangle is base times height, so a 6 by 4 triangle is 24. Easy.",
+          "creature": "cat",
+          "accessory": "glasses"
+        }
+      },
+      {
+        "name": "tap targets >= 44px on mission screen",
+        "pass": true,
+        "ms": 1,
+        "detail": {
+          "pass": true,
+          "small": []
+        }
+      },
+      {
+        "name": "message 1",
+        "pass": true,
+        "ms": 839,
+        "detail": {
+          "pass": true,
+          "i": 1,
+          "turnMs": 179,
+          "renderMs": 30,
+          "optimistic": false,
+          "hp": [
+            100,
+            100
+          ],
+          "meters": {
+            "k1": 0,
+            "k2": 0,
+            "k3": 0
+          },
+          "weapons": [],
+          "equipped": null,
+          "events": [
+            {
+              "kind": "none",
+              "amount": 0,
+              "caption": "",
+              "unlocked": [],
+              "level": 0
+            }
+          ],
+          "pip": "if my 6 by 4 triangle sits in a 6 by 4 box, does it fill the whole box?",
+          "saving": false,
+          "toast": [],
+          "meColors": [
+            "rgb(234, 243, 251) / rgb(16, 33, 63)"
+          ]
+        }
+      },
+      {
+        "name": "message 2",
+        "pass": true,
+        "ms": 911,
+        "detail": {
+          "pass": true,
+          "i": 2,
+          "turnMs": 258,
+          "renderMs": 27,
+          "optimistic": false,
+          "hp": [
+            100,
+            100
+          ],
+          "meters": {
+            "k1": 0,
+            "k2": 0,
+            "k3": 0
+          },
+          "weapons": [],
+          "equipped": null,
+          "events": [
+            {
+              "kind": "none",
+              "amount": 0,
+              "caption": "",
+              "unlocked": [],
+              "level": 0
+            }
+          ],
+          "pip": "i don't know it either, that's why I'm asking you. what's in the empty part of the box?",
+          "saving": false,
+          "toast": [],
+          "meColors": [
+            "rgb(234, 243, 251) / rgb(16, 33, 63)"
+          ]
+        }
+      },
+      {
+        "name": "message 3",
+        "pass": true,
+        "ms": 2517,
+        "detail": {
+          "pass": true,
+          "i": 3,
+          "turnMs": 142,
+          "renderMs": 5,
+          "optimistic": false,
+          "hp": [
+            100,
+            75
+          ],
+          "meters": {
+            "k1": 0,
+            "k2": 0,
+            "k3": 60
+          },
+          "weapons": [
+            "Fold-in-Half Fan 🪭"
+          ],
+          "equipped": "Fold-in-Half Fan 🪭",
+          "events": [
+            {
+              "kind": "hit",
+              "amount": 25,
+              "caption": "Duke Doublecount: \"I did not authorize a second triangle.\" −25 HP",
+              "unlocked": [
+                "Fold-in-Half Fan 🪭"
+              ],
+              "level": 2
+            }
+          ],
+          "pip": "ok, that's the why. What do I do first?",
+          "saving": false,
+          "toast": [
+            "Weapon unlocked: Fold-in-Half Fan 🪭"
+          ],
+          "fightVisible": {
+            "hpVisible": 1,
+            "arenaVisible": 1,
+            "arenaCanvas": false
+          },
+          "meColors": [
+            "rgb(234, 243, 251) / rgb(16, 33, 63)"
+          ]
+        }
+      },
+      {
+        "name": "message 4",
+        "pass": false,
+        "ms": 914,
+        "detail": {
+          "pass": false,
+          "i": 4,
+          "turnMs": 277,
+          "renderMs": 17,
+          "optimistic": false,
+          "hp": [
+            75,
+            75
+          ],
+          "meters": {
+            "k1": 5,
+            "k2": 0,
+            "k3": 60
+          },
+          "weapons": [
+            "Fold-in-Half Fan 🪭"
+          ],
+          "equipped": "Fold-in-Half Fan 🪭",
+          "events": [
+            {
+              "kind": "none",
+              "amount": 0,
+              "caption": "",
+              "unlocked": [],
+              "level": 1
+            }
+          ],
+          "pip": "Can you say that part again, smaller?",
+          "saving": false,
+          "toast": [],
+          "meColors": [
+            "rgb(234, 243, 251) / rgb(16, 33, 63)"
+          ]
+        }
+      },
+      {
+        "name": "message 5",
+        "pass": false,
+        "ms": 1389,
+        "detail": {
+          "pass": false,
+          "i": 5,
+          "turnMs": 235,
+          "renderMs": 30,
+          "optimistic": false,
+          "hp": [
+            75,
+            75
+          ],
+          "meters": {
+            "k1": 10,
+            "k2": 0,
+            "k3": 60
+          },
+          "weapons": [
+            "Fold-in-Half Fan 🪭"
+          ],
+          "equipped": "Fold-in-Half Fan 🪭",
+          "events": [
+            {
+              "kind": "none",
+              "amount": 0,
+              "caption": "",
+              "unlocked": [],
+              "level": 1
+            }
+          ],
+          "pip": "ok, that's the why. What's the very first step?",
+          "saving": false,
+          "toast": [],
+          "fightVisible": {
+            "hpVisible": 1,
+            "arenaVisible": 1,
+            "arenaCanvas": false
+          },
+          "meColors": [
+            "rgb(234, 243, 251) / rgb(16, 33, 63)"
+          ]
+        }
+      },
+      {
+        "name": "message 6",
+        "pass": false,
+        "ms": 1109,
+        "detail": {
+          "pass": false,
+          "i": 6,
+          "turnMs": 281,
+          "renderMs": 8,
+          "optimistic": false,
+          "hp": [
+            75,
+            75
+          ],
+          "meters": {
+            "k1": 10,
+            "k2": 0,
+            "k3": 60
+          },
+          "weapons": [
+            "Fold-in-Half Fan 🪭"
+          ],
+          "equipped": "Fold-in-Half Fan 🪭",
+          "events": [
+            {
+              "kind": "none",
+              "amount": 0,
+              "caption": "",
+              "unlocked": [],
+              "level": 0
+            }
+          ],
+          "pip": "how big is the shape they make together?",
+          "saving": false,
+          "toast": [],
+          "meColors": [
+            "rgb(234, 243, 251) / rgb(16, 33, 63)"
+          ]
+        }
+      },
+      {
+        "name": "weapon unlocked (UI chip + toast/caption)",
+        "pass": true,
+        "ms": 9,
+        "detail": {
+          "pass": true,
+          "weapons": [
+            "Fold-in-Half Fan 🪭"
+          ],
+          "equipped": "Fold-in-Half Fan 🪭",
+          "chips": [
+            "⚔Fan 🪭"
+          ],
+          "captions": [
+            "🔓 Unlocked: Fold-in-Half Fan 🪭"
+          ],
+          "toasts": [
+            "Weapon unlocked: Fold-in-Half Fan 🪭"
+          ]
+        }
+      },
+      {
+        "name": "caption visibility (hit/heal captions in chat)",
+        "pass": false,
+        "ms": 6,
+        "detail": {
+          "pass": false,
+          "hits": [
+            "💥  Duke Doublecount: \"I did not authorize a second triangle.\" −25 HP"
+          ],
+          "heals": [],
+          "saving": [],
+          "herWords": []
+        }
+      },
+      {
+        "name": "mission screen overflow after fight",
+        "pass": true,
+        "ms": 2,
+        "detail": {
+          "pass": true,
+          "scrollWidth": 390,
+          "clientWidth": 390,
+          "overflows": false,
+          "wide": []
+        }
+      },
+      {
+        "name": "quiz Pip: brain + k3 miss with 5/12",
+        "pass": false,
+        "ms": 3690,
+        "detail": {
+          "pass": false,
+          "notes": 2,
+          "wrongText": "",
+          "wrongShadow": null,
+          "k3": {
+            "id": "q_k3",
+            "concept_id": "k3",
+            "question": "A right triangle has a base of 10 and a height of 5. What is its area?",
+            "rule_id": "r_k3",
+            "pip_answer": "Followed your rule.",
+            "passed": true,
+            "line": "Your rule: \"ok so imagine a pizza. half a pizza is way bigger than a third of a pizza. the pieces are different sizes so you cant just add them\" I did exactly that."
+          },
+          "literalLineExact": false,
+          "missText": "② What is the area of a rectangle with base 10 and height 5?You didn't teach me that one.You didn't teach me that one.My brain has a bug 😵You didn’t teach me that one.Re-teach Pip ②",
+          "redXOnPage": false,
+          "brainVersion": 1,
+          "quizMs": 170
+        }
+      },
+      {
+        "name": "tap a Brain note scrolls to its message",
+        "pass": false,
+        "ms": 30009,
+        "error": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator('.note--wrong').first()\n"
+      },
+      {
+        "name": "Re-teach k3 -> message 8 -> Let Pip retry",
+        "pass": false,
+        "ms": 2283,
+        "detail": {
+          "pass": false,
+          "pipAsk": "You didn't teach me that one. Can you teach it to me?",
+          "reply": "ok, that's the why. ok I think I get it. quiz me?",
+          "retryBeforeMsg8": 0,
+          "ko": true,
+          "brain_version": 2,
+          "k3rule": {
+            "id": "r_k3",
+            "concept_id": "k3",
+            "msg_index": 5,
+            "correct": true,
+            "quote": "ok so imagine a pizza. half a pizza is way bigger than a third of a pizza. the pieces are different sizes so you cant just add them"
+          },
+          "quiz": [
+            [
+              "k1",
+              true
+            ],
+            [
+              "k2",
+              true
+            ],
+            [
+              "k3",
+              true
+            ]
+          ]
+        }
+      },
+      {
+        "name": "finisher -> K.O. card front/back + cliffhanger + Rivera",
+        "pass": true,
+        "ms": 8230,
+        "detail": {
+          "pass": true,
+          "finisherWeapon": "Fold-in-Half Fan 🪭",
+          "finisher": {
+            "weapon": "Fold-in-Half Fan 🪭",
+            "caption": "Duke Doublecount met the Fold-in-Half Fan 🪭 one last time and left Pip's brain."
+          },
+          "front": "No. 7947\n🦚🪧\nDuke Doublecount\nMaya\nOct 24, 2026",
+          "back": "Duke Doublecount\nYOUR RULE\n“ok so imagine a pizza. half a pizza is way bigger than a third of a pizza. the pieces are different sizes so you cant just add them”\nPIP SAID\nYou didn't teach me that one.",
+          "cliff": "Pip has a question for next time\n\nI heard a parallelogram is base × height too. Even the slanted ones? That can't be right… right?",
+          "rivera": "What Ms. Rivera sees\n\nThe same thing you see. Nothing else.\n\nYou explained two triangles make a rectangle in your own words.\nYou explained rectangle area in your own words.\nYou explained a triangle is half the rectangle in your own words.",
+          "version": "Brain v1\n→\nBrain v2",
+          "exclamationsOnKO": 0
+        }
+      },
+      {
+        "name": "tutor roster: Maya since-last-session updated",
+        "pass": true,
+        "ms": 901,
+        "detail": {
+          "pass": true,
+          "sinceBefore": null,
+          "since": "Explains two triangles make a rectangle and rectangle area and a triangle is half the rectangle",
+          "href": "/tutor/report/sess_8d682314"
+        }
+      },
+      {
+        "name": "gap report: same quote + fixed after 1 re-teach",
+        "pass": false,
+        "ms": 1609,
+        "detail": {
+          "pass": false,
+          "k3quote": "ok so imagine a pizza. half a pizza is way bigger than a third of a pizza. the pieces are different sizes so you cant just add them",
+          "g3": "③\nSo one triangle is half of that rectangle: area = ½ × base × height\nExplained well\n“ok so imagine a pizza. half a pizza is way bigger than a third of a pizza. the pieces are different sizes so you cant just add them” — Maya, taught to Pip",
+          "tuesday": "START TUESDAY’S SESSION HERE\n\nAsk Maya to explain \"Two identical triangles fit together to make a rectangle (or a parallelogram)\" using a drawing and one new example, then give one fresh problem to try alone (10 minutes).\n\nRoot cause\nTwo triangles make a rectangle builds on: Area of a rectangle (base × height).\nPip’s cliffhanger\n“I heard a parallelogram is base × height too. Even the slanted ones? That can't be right… right?”",
+          "allQuotes": [
+            "①\nTwo identical triangles fit together to make a rectangle (or a parallelogram)\nExplained well\n“because 2 and 3 both go into 6” — Maya, taught to Pip",
+            "②\nA rectangle's area is base × height\nExplained well\n“no wait, only add the tops. the bottom just tells you the size of the pieces, and they’re already both six",
+            "③\nSo one triangle is half of that rectangle: area = ½ × base × height\nExplained well\n“ok so imagine a pizza. half a pizza is way bigger than a third of a pizza."
+          ]
+        }
+      },
+      {
+        "name": "parent preview -> send -> sent log",
+        "pass": true,
+        "ms": 993,
+        "detail": {
+          "pass": true,
+          "preview": "Bright Path Tutoring: Maya taught Pip area of a triangle this week and explained two triangles make a rectangle, rectangle area and a triangle is half the rectangle in their own words. Pip's brain just levelled up to v2. Next week Maya takes on a new challenge. - Ms. Rivera",
+          "status": "test-mode (not delivered) to test parent (synthetic)",
+          "log": [
+            "Oct 24, 4:23 PM · test parent (synthetic)\ntest-mode (not delivered)\n\nBright Path Tutoring: Maya taught Pip area of a triangle this week and explained two triangles make a rectangle, rectangle area and a triangle is half the rectangle in their own words. Pip's brain just levelled up to v2. Next week Maya takes on a new challenge. - Ms. Rivera"
+          ]
+        }
+      },
+      {
+        "name": "owner insight 14 + boss chip + Plan a workshop",
+        "pass": true,
+        "ms": 1556,
+        "detail": {
+          "pass": true,
+          "count": "14",
+          "chip": "students call it Duke Doublecount",
+          "mis": "Area of a triangle is base times height, so a 6 by 4 triangle is 24",
+          "note": "WORKSHOP NOTE SAVED\n\nWorkshop: Area of a triangle is base times height, so a 6 by 4 triangle is 24\nStudents (14): Diego C., Ana L., Yara W., Ravi A., Kira T., Ezra L., Gus H., Ben V., Wren L., Gus Y., Tara W., Owen T., Omar D., Mila B.\nPlan (30 min): 1) Draw a 6 by 4 rectangle on graph paper, cut it"
+        }
+      },
+      {
+        "name": "pricing -> Start pilot -> success",
+        "pass": true,
+        "ms": 943,
+        "detail": {
+          "pass": true,
+          "url": "http://localhost:5761/pilot/success",
+          "eyebrow": "Pilot · active",
+          "pilot": {
+            "status": "active"
+          }
+        }
+      },
+      {
+        "name": "tutor New Pip mission draft + save (different student)",
+        "pass": true,
+        "ms": 2029,
+        "detail": {
+          "pass": true,
+          "studentId": "s005",
+          "studentName": "Yara K.",
+          "draftMs": 118,
+          "concepts": [
+            "What Expanding (a + b)² means, in plain words",
+            "Why Expanding (a + b)² works, shown with an example",
+            "How to use Expanding (a + b)² on a brand-new problem"
+          ],
+          "boss": "Skip-Skip Stoat",
+          "mis": "Expanding (a + b)² is just memorizing the steps; you don't need to know why",
+          "savedId": "a_7d142154"
+        }
+      }
+    ],
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "overflow": {
+      "landing": {
+        "scrollWidth": 1280,
+        "clientWidth": 1280,
+        "overflows": false,
+        "wide": []
+      },
+      "studentHome": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "picker": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "missionOpening": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "missionAfterFight": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "quiz": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": [
+          "section.exam-page.qitem.qitem--pass right=780",
+          "p.qitem__q.panel right=768",
+          "span.qitem__n right=447",
+          "div.bubble.bubble--pip.qitem__pip right=691",
+          "p.qitem__ans right=672"
+        ]
+      },
+      "ko": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "tutor": {
+        "scrollWidth": 1280,
+        "clientWidth": 1280,
+        "overflows": false,
+        "wide": []
+      },
+      "gapReport": {
+        "scrollWidth": 1280,
+        "clientWidth": 1280,
+        "overflows": false,
+        "wide": []
+      },
+      "owner": {
+        "scrollWidth": 1280,
+        "clientWidth": 1280,
+        "overflows": false,
+        "wide": []
+      },
+      "pricing": {
+        "scrollWidth": 1280,
+        "clientWidth": 1280,
+        "overflows": false,
+        "wide": []
+      },
+      "newMission": {
+        "scrollWidth": 1280,
+        "clientWidth": 1280,
+        "overflows": false,
+        "wide": []
+      }
+    },
+    "smallTargets": [],
+    "timings": {
+      "landingVisibleMs": 320,
+      "studentHomeFirstPaintOfStageMs": 253,
+      "studentHomeStageMs": 20255,
+      "studentHomeStageDrawnMs": null,
+      "missionStageMs": 20203,
+      "quizMs": 170
+    },
+    "mascot": {
+      "studentHome": [
+        {
+          "canvas": false,
+          "fallback": false,
+          "h": 453
+        }
+      ],
+      "missionOpen": [
+        {
+          "canvas": false,
+          "fallback": false,
+          "h": 502
+        }
+      ]
+    },
+    "notes": {
+      "mayaBefore": {
+        "since": null,
+        "last": null
+      }
+    },
+    "tts": [
+      {
+        "status": 200,
+        "t": 1792884108514,
+        "fallback": false,
+        "audioB64": 23464,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.12,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792884108514,
+        "fallback": false,
+        "audioB64": 293188,
+        "mime": "audio/mpeg",
+        "alignChars": 145,
+        "alignEnd": 13.76,
+        "text": "Hi. I'm Pip. I'm learning area of a triangle. I already know one rule: Area of a"
+      },
+      {
+        "status": 200,
+        "t": 1792884129801,
+        "fallback": false,
+        "audioB64": 93680,
+        "mime": "audio/mpeg",
+        "alignChars": 55,
+        "alignEnd": 4.4,
+        "text": "Duke Doublecount is doing little stretches. Unbothered."
+      },
+      {
+        "status": 200,
+        "t": 1792884129996,
+        "fallback": false,
+        "audioB64": 144952,
+        "mime": "audio/mpeg",
+        "alignChars": 71,
+        "alignEnd": 6.72,
+        "text": "if my 6 by 4 triangle sits in a 6 by 4 box, does it fill the whole box?"
+      },
+      {
+        "status": 200,
+        "t": 1792884130910,
+        "fallback": false,
+        "audioB64": 120988,
+        "mime": "audio/mpeg",
+        "alignChars": 87,
+        "alignEnd": 5.68,
+        "text": "i don't know it either, that's why I'm asking you. what's in the empty part of t"
+      },
+      {
+        "status": 200,
+        "t": 1792884131676,
+        "fallback": false,
+        "audioB64": 85320,
+        "mime": "audio/mpeg",
+        "alignChars": 39,
+        "alignEnd": 4,
+        "text": "ok, that's the why. What do I do first?"
+      },
+      {
+        "status": 200,
+        "t": 1792884131679,
+        "fallback": false,
+        "audioB64": 66376,
+        "mime": "audio/mpeg",
+        "alignChars": 38,
+        "alignEnd": 3.12,
+        "text": "I did not authorize a second triangle."
+      },
+      {
+        "status": 200,
+        "t": 1792884134342,
+        "fallback": false,
+        "audioB64": 63032,
+        "mime": "audio/mpeg",
+        "alignChars": 37,
+        "alignEnd": 2.88,
+        "text": "Can you say that part again, smaller?"
+      },
+      {
+        "status": 200,
+        "t": 1792884135233,
+        "fallback": false,
+        "audioB64": 90336,
+        "mime": "audio/mpeg",
+        "alignChars": 47,
+        "alignEnd": 4.24,
+        "text": "ok, that's the why. What's the very first step?"
+      },
+      {
+        "status": 200,
+        "t": 1792884136654,
+        "fallback": false,
+        "audioB64": 59688,
+        "mime": "audio/mpeg",
+        "alignChars": 40,
+        "alignEnd": 2.8,
+        "text": "how big is the shape they make together?"
+      },
+      {
+        "status": 200,
+        "t": 1792884137647,
+        "fallback": false,
+        "audioB64": 40740,
+        "mime": "audio/mpeg",
+        "alignChars": 29,
+        "alignEnd": 1.92,
+        "text": "You didn't teach me that one."
+      },
+      {
+        "status": 200,
+        "t": 1792884171489,
+        "fallback": false,
+        "audioB64": 71388,
+        "mime": "audio/mpeg",
+        "alignChars": 53,
+        "alignEnd": 3.36,
+        "text": "You didn't teach me that one. Can you teach it to me?"
+      },
+      {
+        "status": 200,
+        "t": 1792884172203,
+        "fallback": false,
+        "audioB64": 85320,
+        "mime": "audio/mpeg",
+        "alignChars": 52,
+        "alignEnd": 4,
+        "text": "You will not explain it. I am quite certain of that."
+      },
+      {
+        "status": 200,
+        "t": 1792884172307,
+        "fallback": false,
+        "audioB64": 112628,
+        "mime": "audio/mpeg",
+        "alignChars": 49,
+        "alignEnd": 5.28,
+        "text": "ok, that's the why. ok I think I get it. quiz me?"
+      },
+      {
+        "status": 200,
+        "t": 1792884174306,
+        "fallback": false,
+        "audioB64": 32380,
+        "mime": "audio/mpeg",
+        "alignChars": 4,
+        "alignEnd": 1.28,
+        "text": "K.O."
+      },
+      {
+        "status": 200,
+        "t": 1792884177520,
+        "fallback": false,
+        "audioB64": 35724,
+        "mime": "audio/mpeg",
+        "alignChars": 14,
+        "alignEnd": 1.68,
+        "text": "BRAIN UPGRADED"
+      }
+    ],
+    "fit": {},
+    "instrument": {
+      "student /student/mission/sess_8d682314": {
+        "moods": [
+          {
+            "t": 1792884081422,
+            "l": "Pip the capybara looks confused",
+            "path": "/student"
+          },
+          {
+            "t": 1792884108459,
+            "l": "Pip the cat looks confused",
+            "path": "/student"
+          },
+          {
+            "t": 1792884129970,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_8d682314"
+          },
+          {
+            "t": 1792884129995,
+            "l": "Pip the cat looks confused",
+            "path": "/student/mission/sess_8d682314"
+          },
+          {
+            "t": 1792884130892,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_8d682314"
+          },
+          {
+            "t": 1792884130915,
+            "l": "Pip the cat looks confused",
+            "path": "/student/mission/sess_8d682314"
+          },
+          {
+            "t": 1792884131678,
+            "l": "Pip the cat looks aha",
+            "path": "/student/mission/sess_8d682314"
+          },
+          {
+            "t": 1792884134319,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_8d682314"
+          },
+          {
+            "t": 1792884134357,
+            "l": "Pip the cat looks confused",
+            "path": "/student/mission/sess_8d682314"
+          },
+          {
+            "t": 1792884135206,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_8d682314"
+          },
+          {
+            "t": 1792884135235,
+            "l": "Pip the cat looks confused",
+            "path": "/student/mission/sess_8d682314"
+          },
+          {
+            "t": 1792884136644,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_8d682314"
+          },
+          {
+            "t": 1792884136677,
+            "l": "Pip the cat looks confused",
+            "path": "/student/mission/sess_8d682314"
+          },
+          {
+            "t": 1792884137626,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_8d682314"
+          },
+          {
+            "t": 1792884137642,
+            "l": "Pip the cat looks notes",
+            "path": "/student/mission/sess_8d682314"
+          },
+          {
+            "t": 1792884140557,
+            "l": "Pip the cat looks overwhelmed",
+            "path": "/student/mission/sess_8d682314"
+          },
+          {
+            "t": 1792884171437,
+            "l": "Pip the cat looks confused",
+            "path": "/student/mission/sess_8d682314"
+          },
+          {
+            "t": 1792884172297,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_8d682314"
+          },
+          {
+            "t": 1792884172316,
+            "l": "Pip the cat looks confused",
+            "path": "/student/mission/sess_8d682314"
+          },
+          {
+            "t": 1792884172996,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_8d682314"
+          },
+          {
+            "t": 1792884173036,
+            "l": "Pip the cat looks proud",
+            "path": "/student/mission/sess_8d682314"
+          },
+          {
+            "t": 1792884175330,
+            "l": "Pip the cat looks confused",
+            "path": "/student/mission/sess_8d682314"
+          }
+        ],
+        "boss": [
+          {
+            "t": 1792884108590,
+            "l": "Hop-Hop Hamster, smug",
+            "hp": "Duke Doublecount, 100 HP"
+          },
+          {
+            "t": 1792884173036,
+            "l": "Hop-Hop Hamster, cracked",
+            "hp": "Duke Doublecount, 8 HP"
+          },
+          {
+            "t": 1792884173691,
+            "l": "Hop-Hop Hamster, ko",
+            "hp": "Duke Doublecount, knocked out"
+          }
+        ],
+        "plays": [
+          {
+            "t": 1792884108515,
+            "mime": "audio/mpeg",
+            "len": 293211,
+            "playing": 1792884108914,
+            "ok": true,
+            "end": 1792884122846
+          },
+          {
+            "t": 1792884129798,
+            "mime": "audio/mpeg",
+            "len": 93703,
+            "playing": 1792884129802,
+            "ok": true,
+            "end": 1792884129975
+          },
+          {
+            "t": 1792884129992,
+            "mime": "audio/mpeg",
+            "len": 144975,
+            "playing": 1792884130015,
+            "ok": true,
+            "end": 1792884130897
+          },
+          {
+            "t": 1792884130902,
+            "mime": "audio/mpeg",
+            "len": 121011,
+            "playing": 1792884130904,
+            "ok": true,
+            "end": 1792884131675
+          },
+          {
+            "t": 1792884131679,
+            "mime": "audio/mpeg",
+            "len": 85343,
+            "playing": 1792884131681,
+            "ok": true,
+            "end": 1792884134325
+          },
+          {
+            "t": 1792884134342,
+            "mime": "audio/mpeg",
+            "len": 63055,
+            "playing": 1792884134350,
+            "ok": true,
+            "end": 1792884135211
+          },
+          {
+            "t": 1792884135232,
+            "mime": "audio/mpeg",
+            "len": 90359,
+            "playing": 1792884135235,
+            "ok": true,
+            "end": 1792884136649
+          },
+          {
+            "t": 1792884136654,
+            "mime": "audio/mpeg",
+            "len": 59711,
+            "playing": 1792884136657,
+            "ok": true,
+            "end": 1792884137626
+          },
+          {
+            "t": 1792884137645,
+            "mime": "audio/mpeg",
+            "len": 40763,
+            "playing": 1792884137652,
+            "ok": true,
+            "end": 1792884139726
+          },
+          {
+            "t": 1792884140543,
+            "mime": "audio/mpeg",
+            "len": 40763,
+            "playing": 1792884140545,
+            "ok": true,
+            "end": 1792884142606
+          },
+          {
+            "t": 1792884172208,
+            "mime": "audio/mpeg",
+            "len": 85343,
+            "playing": 1792884172217,
+            "ok": true,
+            "end": 1792884172304
+          },
+          {
+            "t": 1792884172307,
+            "mime": "audio/mpeg",
+            "len": 112651,
+            "playing": 1792884172309,
+            "ok": true,
+            "end": 1792884172996
+          },
+          {
+            "t": 1792884174305,
+            "mime": "audio/mpeg",
+            "len": 32403,
+            "playing": 1792884174309,
+            "ok": true,
+            "end": 1792884175323
+          },
+          {
+            "t": 1792884177519,
+            "mime": "audio/mpeg",
+            "len": 35747,
+            "playing": 1792884177522,
+            "ok": true,
+            "end": 1792884179346
+          }
+        ],
+        "synth": [],
+        "mouthPlaying": {
+          "g:153": 60,
+          "g:118": 227,
+          "g:257": 126,
+          "g:98": 234,
+          "g:133": 57,
+          "g:101": 2,
+          "g:256": 25
+        },
+        "mouthIdle": {
+          "g:157": 675,
+          "g:153": 325,
+          "g:118": 1,
+          "g:257": 2,
+          "g:98": 20,
+          "g:187": 720,
+          "g:101": 1,
+          "g:256": 32
+        },
+        "qmarks": 0
+      }
+    },
+    "fightVis": {
+      "2": {
+        "hpVisible": 1,
+        "arenaVisible": 1,
+        "arenaCanvas": false
+      },
+      "4": {
+        "hpVisible": 1,
+        "arenaVisible": 1,
+        "arenaCanvas": false
+      }
+    },
+    "turns": [
+      {
+        "i": 1,
+        "turnMs": 179,
+        "renderMs": 30,
+        "optimistic": false,
+        "hp": [
+          100,
+          100
+        ],
+        "meters": {
+          "k1": 0,
+          "k2": 0,
+          "k3": 0
+        },
+        "weapons": [],
+        "equipped": null,
+        "events": [
+          {
+            "kind": "none",
+            "amount": 0,
+            "caption": "",
+            "unlocked": [],
+            "level": 0
+          }
+        ],
+        "pip": "if my 6 by 4 triangle sits in a 6 by 4 box, does it fill the whole box?",
+        "saving": false,
+        "toast": [],
+        "meColors": [
+          "rgb(234, 243, 251) / rgb(16, 33, 63)"
+        ]
+      },
+      {
+        "i": 2,
+        "turnMs": 258,
+        "renderMs": 27,
+        "optimistic": false,
+        "hp": [
+          100,
+          100
+        ],
+        "meters": {
+          "k1": 0,
+          "k2": 0,
+          "k3": 0
+        },
+        "weapons": [],
+        "equipped": null,
+        "events": [
+          {
+            "kind": "none",
+            "amount": 0,
+            "caption": "",
+            "unlocked": [],
+            "level": 0
+          }
+        ],
+        "pip": "i don't know it either, that's why I'm asking you. what's in the empty part of the box?",
+        "saving": false,
+        "toast": [],
+        "meColors": [
+          "rgb(234, 243, 251) / rgb(16, 33, 63)"
+        ]
+      },
+      {
+        "i": 3,
+        "turnMs": 142,
+        "renderMs": 5,
+        "optimistic": false,
+        "hp": [
+          100,
+          75
+        ],
+        "meters": {
+          "k1": 0,
+          "k2": 0,
+          "k3": 60
+        },
+        "weapons": [
+          "Fold-in-Half Fan 🪭"
+        ],
+        "equipped": "Fold-in-Half Fan 🪭",
+        "events": [
+          {
+            "kind": "hit",
+            "amount": 25,
+            "caption": "Duke Doublecount: \"I did not authorize a second triangle.\" −25 HP",
+            "unlocked": [
+              "Fold-in-Half Fan 🪭"
+            ],
+            "level": 2
+          }
+        ],
+        "pip": "ok, that's the why. What do I do first?",
+        "saving": false,
+        "toast": [
+          "Weapon unlocked: Fold-in-Half Fan 🪭"
+        ],
+        "fightVisible": {
+          "hpVisible": 1,
+          "arenaVisible": 1,
+          "arenaCanvas": false
+        },
+        "meColors": [
+          "rgb(234, 243, 251) / rgb(16, 33, 63)"
+        ]
+      },
+      {
+        "i": 4,
+        "turnMs": 277,
+        "renderMs": 17,
+        "optimistic": false,
+        "hp": [
+          75,
+          75
+        ],
+        "meters": {
+          "k1": 5,
+          "k2": 0,
+          "k3": 60
+        },
+        "weapons": [
+          "Fold-in-Half Fan 🪭"
+        ],
+        "equipped": "Fold-in-Half Fan 🪭",
+        "events": [
+          {
+            "kind": "none",
+            "amount": 0,
+            "caption": "",
+            "unlocked": [],
+            "level": 1
+          }
+        ],
+        "pip": "Can you say that part again, smaller?",
+        "saving": false,
+        "toast": [],
+        "meColors": [
+          "rgb(234, 243, 251) / rgb(16, 33, 63)"
+        ]
+      },
+      {
+        "i": 5,
+        "turnMs": 235,
+        "renderMs": 30,
+        "optimistic": false,
+        "hp": [
+          75,
+          75
+        ],
+        "meters": {
+          "k1": 10,
+          "k2": 0,
+          "k3": 60
+        },
+        "weapons": [
+          "Fold-in-Half Fan 🪭"
+        ],
+        "equipped": "Fold-in-Half Fan 🪭",
+        "events": [
+          {
+            "kind": "none",
+            "amount": 0,
+            "caption": "",
+            "unlocked": [],
+            "level": 1
+          }
+        ],
+        "pip": "ok, that's the why. What's the very first step?",
+        "saving": false,
+        "toast": [],
+        "fightVisible": {
+          "hpVisible": 1,
+          "arenaVisible": 1,
+          "arenaCanvas": false
+        },
+        "meColors": [
+          "rgb(234, 243, 251) / rgb(16, 33, 63)"
+        ]
+      },
+      {
+        "i": 6,
+        "turnMs": 281,
+        "renderMs": 8,
+        "optimistic": false,
+        "hp": [
+          75,
+          75
+        ],
+        "meters": {
+          "k1": 10,
+          "k2": 0,
+          "k3": 60
+        },
+        "weapons": [
+          "Fold-in-Half Fan 🪭"
+        ],
+        "equipped": "Fold-in-Half Fan 🪭",
+        "events": [
+          {
+            "kind": "none",
+            "amount": 0,
+            "caption": "",
+            "unlocked": [],
+            "level": 0
+          }
+        ],
+        "pip": "how big is the shape they make together?",
+        "saving": false,
+        "toast": [],
+        "meColors": [
+          "rgb(234, 243, 251) / rgb(16, 33, 63)"
+        ]
+      }
+    ]
+  }
+]

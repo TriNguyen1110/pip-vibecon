@@ -315,6 +315,11 @@ def sentences(text: str) -> list[str]:
 def quote(text: str) -> str:
     """A verbatim sentence from the text for "Saving that": the first sentence with a reason, else the first."""
     ss = [s for s in sentences(text) if len(s) >= 12] or [text.strip()]
+    if len(ss) > 1 and len(text.split()) > 14:  # a rule tacked on after other talk: file just that sentence
+        rule = next((x for x in reversed(ss) if re.match(r"(oh,? )?(and|also|but|so) ", x.lower())
+                     or re.search(r"\b(just|always|only|never)\b", x.lower())), None)
+        if rule:
+            return rule.strip()[:240]
     if len(text.strip()) <= 140:
         return text.strip()
     pick = next((s for s in ss if REASON.search(norm(s))), ss[0])

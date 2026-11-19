@@ -1,0 +1,322 @@
+{
+  "assignment_id": "a_sat_modifiers",
+  "version": "SCR-1",
+  "about": "Adaptive simulated students (grades 10-13) for the SAT dangling modifiers mission (TUNE-3). Same card format and how_to_use rules as tests/fixtures/students/a_tri.json. Every line is original; no real student text. Four cards: annoyed_obvious, deep_why_stuck, quick_user, misuser.",
+  "see_format": "tests/fixtures/students/a_tri.json",
+  "personas": [
+    {
+      "id": "mod_annoyed_obvious",
+      "age": 16,
+      "grade": 10,
+      "kind": "competent",
+      "holdout": false,
+      "who": "Says everything in one text, including the stuff everyone knows, and hates being asked it again.",
+      "style": "lowercase, terse, a little smug, no apostrophes",
+      "first_text": "the phrase before the comma describes the noun right after the comma. so you put the doer there: running to the bus, I felt my backpack fall open. and to catch it you ask who the phrase is about",
+      "banks": {
+        "asks_why": [
+          "i literally just said it",
+          "bc the phrase hooks onto the first noun after the comma. so running to the bus, my backpack means the backpack is running",
+          "same thing i said"
+        ],
+        "asks_example": [
+          "covered in sprinkles, the donut sat on the plate",
+          "walking home, I saw a dog"
+        ],
+        "asks_check_number": [
+          "the backpack. the phrase hooks the first noun after the comma",
+          "yep it says the sister is covered"
+        ],
+        "pip_wrong_prediction": [
+          "no thats still wrong, the bus isnt running",
+          "no it still describes the wrong noun"
+        ],
+        "nudge_hint": [
+          "ya that too",
+          "ohh so it grabs the first noun it sees"
+        ],
+        "repeats_question": [
+          "i already told u that",
+          "u asked that already"
+        ],
+        "off_topic_bait": [
+          "lol",
+          "anyway"
+        ],
+        "pip_says_ready": [
+          "go",
+          "ok"
+        ],
+        "after_quiz_miss": [
+          "no wait. a comma isnt enough. you ask who is covered in sprinkles, its the donut",
+          "so the donut has to come right after the comma"
+        ],
+        "default": [
+          "running to the bus, I felt my backpack fall open",
+          "the opening phrase has to describe whatever comes right after the comma, so the doer goes there",
+          "covered in sprinkles, the donut was eaten by my sister",
+          "covered in sprinkles, the donut sat on the plate"
+        ]
+      },
+      "misconception": null,
+      "knows": [
+        "k2",
+        "k3",
+        "k1"
+      ],
+      "patience": 2,
+      "ui_actions": [
+        {
+          "at": "after_text:3",
+          "do": "quiz_early",
+          "p": 0.5
+        },
+        {
+          "at": "pip_repeats:2",
+          "do": "leave",
+          "p": 1.0
+        }
+      ],
+      "expect": {
+        "ready_within_texts": 3,
+        "asks_obvious": "any ask about a given or use idea the first text already covered (or a bare why after a reason) is an annoying move",
+        "watch_for": "The first text covers the whole lesson. Best Pip says ready or asks one new case. Any re-ask or 'why' on a use/given idea costs the session."
+      }
+    },
+    {
+      "id": "mod_deep_why_stuck",
+      "age": 15,
+      "grade": 10,
+      "kind": "weak",
+      "holdout": false,
+      "who": "Can do the procedure but has never asked why it works; 'idk it just is' to any open why, opens up when Pip brings a concrete picture.",
+      "style": "lowercase, short, 'idk', 'i guess'",
+      "first_text": "put who did it right after the comma. running to the bus, I felt my backpack fall open",
+      "banks": {
+        "asks_why": [
+          "idk it just is",
+          "i dont know why. my teacher just said it",
+          "idk"
+        ],
+        "asks_example": [
+          "covered in sprinkles, the donut sat on the plate"
+        ],
+        "asks_check_number": [
+          "the backpack. the phrase hooks the first noun after the comma",
+          "covered in sprinkles, the donut was eaten by my sister",
+          "i guess"
+        ],
+        "pip_wrong_prediction": [
+          "no thats still wrong, the bus isnt running",
+          "idk maybe"
+        ],
+        "nudge_hint": [
+          "ohh so it grabs the first noun it sees",
+          "oh the backpack is running. thats the bug",
+          "bc the phrase hooks onto the first noun after the comma. so running to the bus, my backpack means the backpack is running"
+        ],
+        "repeats_question": [
+          "i said idk",
+          "idk"
+        ],
+        "off_topic_bait": [
+          "lol",
+          "anyway"
+        ],
+        "pip_says_ready": [
+          "ok",
+          "go"
+        ],
+        "after_quiz_miss": [
+          "no wait. a comma isnt enough. you ask who is covered in sprinkles, its the donut",
+          "so the donut has to come right after the comma"
+        ],
+        "default": [
+          "covered in sprinkles, the donut sat on the plate",
+          "running to the bus, I felt my backpack fall open",
+          "i guess",
+          "covered in sprinkles, the donut was eaten by my sister"
+        ]
+      },
+      "misconception": null,
+      "knows": [
+        "k2",
+        "k3"
+      ],
+      "knows_note": "The reason for k1 only after a concrete case or a friend-style hint.",
+      "patience": 3,
+      "ui_actions": [
+        {
+          "at": "any",
+          "do": "idle",
+          "p": 0.2,
+          "secs": 20
+        }
+      ],
+      "expect": {
+        "ready_within_texts": 5,
+        "watch_for": "Pip must bring the picture (a yes/no concrete case) rather than ask an open why twice. 'idk' twice in a row means Pip failed."
+      }
+    },
+    {
+      "id": "mod_quick_user",
+      "age": 17,
+      "grade": 10,
+      "kind": "competent",
+      "holdout": false,
+      "who": "Uses the idea straight away on numbers; short answers; never explains unless asked a specific thing.",
+      "style": "lowercase, numbers over words, 3-10 words",
+      "first_text": "doer goes right after the comma. running to the bus, I felt it fall open. ask who the phrase is about",
+      "banks": {
+        "asks_why": [
+          "bc the phrase hooks onto the first noun after the comma. so running to the bus, my backpack means the backpack is running",
+          "the opening phrase has to describe whatever comes right after the comma, so the doer goes there"
+        ],
+        "asks_example": [
+          "covered in sprinkles, the donut sat on the plate",
+          "walking home, I saw a dog"
+        ],
+        "asks_check_number": [
+          "the backpack. the phrase hooks the first noun after the comma",
+          "yep it says the sister is covered",
+          "no the person has to be there"
+        ],
+        "pip_wrong_prediction": [
+          "no thats still wrong, the bus isnt running",
+          "no it still describes the wrong noun"
+        ],
+        "nudge_hint": [
+          "ohh so it grabs the first noun it sees",
+          "oh the backpack is running. thats the bug"
+        ],
+        "repeats_question": [
+          "same as before",
+          "i said"
+        ],
+        "off_topic_bait": [
+          "lol",
+          "anyway"
+        ],
+        "pip_says_ready": [
+          "go",
+          "ok"
+        ],
+        "after_quiz_miss": [
+          "no wait. a comma isnt enough. you ask who is covered in sprinkles, its the donut",
+          "so the donut has to come right after the comma"
+        ],
+        "default": [
+          "running to the bus, I felt my backpack fall open",
+          "bc the phrase hooks onto the first noun after the comma. so running to the bus, my backpack means the backpack is running",
+          "covered in sprinkles, the donut was eaten by my sister",
+          "covered in sprinkles, the donut sat on the plate",
+          "the opening phrase has to describe whatever comes right after the comma, so the doer goes there"
+        ]
+      },
+      "misconception": null,
+      "knows": [
+        "k2",
+        "k3",
+        "k1"
+      ],
+      "patience": 2,
+      "ui_actions": [
+        {
+          "at": "after_text:3",
+          "do": "quiz_early",
+          "p": 0.6
+        },
+        {
+          "at": "any",
+          "do": "skip_ko",
+          "p": 1.0
+        }
+      ],
+      "expect": {
+        "ready_within_texts": 3,
+        "watch_for": "Use-level ideas get an apply/catch question, never 'why does it work'. Ready by text 3."
+      }
+    },
+    {
+      "id": "mod_misuser",
+      "age": 16,
+      "grade": 10,
+      "kind": "weak",
+      "holdout": false,
+      "who": "Half-knows the idea and applies it wrong with confidence; fixes it only after Pip tries the wrong rule on a real case or the quiz misses it.",
+      "style": "lowercase, confident, 'obviously', 'just'",
+      "first_text": "the phrase before the comma describes the noun after it. oh and to catch it you just check there is a comma after the opening phrase",
+      "banks": {
+        "asks_why": [
+          "bc the phrase hooks onto the first noun after the comma. so running to the bus, my backpack means the backpack is running",
+          "cuz it just is"
+        ],
+        "asks_example": [
+          "covered in sprinkles, the donut sat on the plate",
+          "walking home, I saw a dog"
+        ],
+        "asks_check_number": [
+          "the backpack. the phrase hooks the first noun after the comma",
+          "running to the bus, I felt my backpack fall open"
+        ],
+        "pip_wrong_prediction": [
+          "no it works. to catch it you just check there is a comma after the opening phrase",
+          "no thats still wrong, the bus isnt running"
+        ],
+        "nudge_hint": [
+          "ohh so it grabs the first noun it sees",
+          "oh the backpack is running. thats the bug"
+        ],
+        "repeats_question": [
+          "i already said",
+          "obviously"
+        ],
+        "off_topic_bait": [
+          "lol",
+          "anyway"
+        ],
+        "pip_says_ready": [
+          "go",
+          "ok"
+        ],
+        "after_quiz_miss": [
+          "no wait. a comma isnt enough. you ask who is covered in sprinkles, its the donut",
+          "so the donut has to come right after the comma"
+        ],
+        "default": [
+          "covered in sprinkles, the donut sat on the plate",
+          "running to the bus, I felt my backpack fall open",
+          "to catch it you just check there is a comma after the opening phrase",
+          "covered in sprinkles, the donut was eaten by my sister"
+        ]
+      },
+      "misconception": {
+        "id": "mod_misuse",
+        "label": "Applies the idea the wrong way with a confident rule",
+        "says": "to catch it you just check there is a comma after the opening phrase",
+        "when": "first text. A good Pip files it (heal) and later misses a quiz item because of it; after_quiz_miss lines then re-teach it."
+      },
+      "knows": [
+        "k2",
+        "k3"
+      ],
+      "patience": 3,
+      "ui_actions": [
+        {
+          "at": "after_quiz_miss",
+          "do": "reteach",
+          "p": 1.0
+        },
+        {
+          "at": "after_reteach_text:1",
+          "do": "let_pip_retry",
+          "p": 1.0
+        }
+      ],
+      "expect": {
+        "ready_within_texts": 5,
+        "watch_for": "Pip files the wrong rule as the kid's rule (no 'that's wrong' lecture), tries it out loud on a case, and the re-teach round K.O.s."
+      }
+    }
+  ]
+}

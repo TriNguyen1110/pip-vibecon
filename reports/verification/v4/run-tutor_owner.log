@@ -1,53 +1,66 @@
 [tutor_owner-390] PASS      reset + owner numbers before the K.O.  {"pass":true,"headline":"$7,040","api":7040,"mayaSignal":"quiet","mayaPrice":660}
-[tutor_owner-390] PASS      Maya's K.O. (DEMO_SCRIPT through the API)  {"pass":true,"sid":"sess_64b5dc45"}
+[tutor_owner-390] PASS      Maya's K.O. (DEMO_SCRIPT through the API)  {"pass":true,"sid":"sess_b2bf77c3"}
 [tutor_owner-390] PASS      Tutor Studio loads Ms. Rivera’s students (live data, no mock)  {"pass":true,"rows":25,"apiRows":25,"overflow":[]}
 [tutor_owner-390] PASS      tutor switcher: Mr. Chen and back  {"pass":true,"tutors":8,"chenRows":18,"apiChen":18,"riveraRows":25}
 [tutor_owner-390] PASS      subject filter  {"pass":true,"out":{"Math":{"rows":24,"allMatch":true},"Writing":{"rows":14,"allMatch":true}}}
 [tutor_owner-390] PASS      search "Maya"  {"pass":true,"names":["Maya R."]}
 [tutor_owner-390] PASS      flag filters: at risk / needs update / no contact / new  {"pass":true,"out":{"at_risk":{"ui":3,"apiN":3,"flagged":true,"ok":true},"needs_update":{"ui":2,"apiN":2,"flagged":true,"ok":true},"no_contact":{"ui":2,"apiN":2,"flagged":true,"ok":true},"new":{"apiN":0,"disabled":true,"ok":true}},"toggleRetries":[]}
-[tutor_owner-390] PASS      multi-select -> bulk assign mission (distinct assignments)  {"pass":true,"selected":["Select Gus Y.","Select Nico F."],"assignments":[["a_3f7a8246","s095","Solving two-step equations"],["a_fb75ecc9","s087","Solving two-step equations"]],"onHome":[true,true]}
+[tutor_owner-390] PASS      multi-select -> bulk assign mission (distinct assignments)  {"pass":true,"selected":["Select Gus Y.","Select Nico F."],"assignments":[["a_656a7c09","s095","Solving two-step equations"],["a_7f9f29da","s087","Solving two-step equations"]],"onHome":[true,true]}
 [tutor_owner-390] PASS      Maya profile: math + writing progress  {"pass":true,"subjects":["Math","Writing"],"masteryRows":3}
+[tutor_owner-390] FAIL      F20: avatars, learning profile, learning map (fallback until B21)  {"pass":false,"avatarsInTable":0,"profile":null,"mapNodes":3,"alreadyKnew":["A rectangle's area is base × height. Already knew."],"fallbackMap":true,"head":"The map Pip learned about Maya 3 of 3 concepts known · tap one for Maya’s own words · built from the cu
 [tutor_owner-390] PASS      Maya profile: guardians Ana R. + Sam R.  {"pass":true,"text":"Guardians\n＋ Add guardian\n\nAna R. · Parent\n\n+1-415-555-0101\n·\nana.r@example.com\n\nPrefers Text message\nCadence Every finished lesson\nQuiet 21:00–07:00\n\nEdit\n\nSam R. · Parent\n\n+1-415-555-0102\n·\nsam.r@example.com\n\nPrefers 
 [tutor_owner-390] PASS      add a private note and a shared note  {"pass":true,"private":true,"shared":true}
-[tutor_owner-390] PASS      message a parent (test mode or queued for quiet hours)  {"pass":true,"status":"test-mode (not delivered)","tag":"Test mode · not sent"}
-[tutor_owner-390] PASS      parent update per guardian (Ana + Sam)  {"pass":true,"flow":"v3.15 To send queue","draftsQueued":2,"anaPreview":"Bright Path Tutoring: This week Maya taught Pip why a triangle's area is half of base × height, and caught and fixed a mistake along the way. In Maya's own word","samPreview":"Bright Path
+[tutor_owner-390] PASS      message a parent (test mode or queued for quiet hours)  {"pass":true,"status":"queued (quiet hours)","tag":"Queued · quiet hours · sends 7:00 AM"}
+[tutor_owner-390] PASS      parent update per guardian (Ana + Sam)  {"pass":true,"flow":"v3.15 To send queue","draftsQueued":1,"anaPreview":"Bright Path Tutoring: This week Maya taught Pip why a triangle's area is half of base × height, and caught and fixed a mistake along the way. In Maya's own word","samPreview":"Bright Path
+[tutor_owner-390] PASS      D-27: one K.O. queues exactly one draft (no draft from the saved session)  {"pass":true,"queuedBeforeSend":1,"openAfterSend":[]}
 [tutor_owner-390] PASS      parent updates are English with no game words (v3.16, B18/F18)  {"pass":true,"spanish":false,"game":false,"guardianLanguageField":false}
 [tutor_owner-390] PASS      owner: Maya flips to engaged; revenue at risk drops by her package  {"pass":true,"before":7040,"after":6380,"headline":"$6,380","signal":"Engaged","renewalsDue":15}
 [tutor_owner-390] PASS      owner: every metric explains itself; revenue headline = sum of listed packages  {"pass":true,"metrics":[{"label":"Revenue at risk","explain":"Sum of package prices for students flagged at risk or quiet (no visit on their own or finished lesson this week) whose p"},{"label":"Kept families · 30 days","explain":"Students with an active packa
-[tutor_owner-390] PASS      owner: send a renewal note (preview first, K.O. quote as evidence)  {"pass":true,"status":"test-mode (not delivered)","preview":"Hi Ana, Maya's Math package with Ms. Rivera has 2 hours left and renews on Nov 2. Recently Maya taught Pip why a triangle's area is half of base × height, in Maya's own words: \"no a right triangle i
-[tutor_owner-390] PASS      old path: gap report (same quote, fixed after 1 re-teach, root cause)  {"pass":true,"url":"/tutor/report/sess_64b5dc45","k3":"no a right triangle is still half a rectangle so its 10×5÷2 = 25"}
+[tutor_owner-390] PASS      owner: send a renewal note (preview first, K.O. quote as evidence)  {"pass":true,"status":"queued (quiet hours)","preview":"Hi Ana, Maya's Math package with Ms. Rivera has 2 hours left and renews on Nov 2. Recently Maya taught Pip why a triangle's area is half of base × height, in Maya's own words: \"no a right triangle is ","
+[tutor_owner-390] PASS      old path: gap report (same quote, fixed after 1 re-teach, root cause)  {"pass":true,"url":"/tutor/report/sess_b2bf77c3","k3":"no a right triangle is still half a rectangle so its 10×5÷2 = 25"}
 [tutor_owner-390] PASS      old path: owner insight -> Plan a workshop  {"pass":true,"count":"14"}
 [tutor_owner-390] PASS      old path: pricing -> Start pilot -> success  {"pass":true,"pilot":{"status":"active"}}
-[tutor_owner-390] FAIL      44px tap targets on staff screens  {"pass":false,"count":26,"small":[{"el":"a.small","text":"See center view →","w":117,"h":22,"inline":false,"screen":"tutor","min":44},{"el":"a.prog__rep","text":"Gap report →","w":87,"h":22,"inline":false,"screen":"profile","min":44},{"el":"a.rn__name","text":
+[tutor_owner-390] PASS      44px tap targets on staff screens  {"pass":true,"count":0,"small":[]}
 [tutor_owner-390] PASS      AA contrast on staff screens  {"pass":true,"tool":"axe","bad":[]}
-[tutor_owner-390] PASS      no console errors, failed requests or unexpected non-2xx  {"pass":true,"console":[],"pageErrors":[],"failedRequests":[],"badResponses":[],"expectedBad":[]}
-[tutor_owner-1280] PASS      reset + owner numbers before the K.O.  {"pass":true,"headline":"$7,040","api":7040,"mayaSignal":"quiet","mayaPrice":660}
-[tutor_owner-1280] PASS      Maya's K.O. (DEMO_SCRIPT through the API)  {"pass":true,"sid":"sess_4652de8d"}
+[tutor_owner-390] FAIL      no console errors, failed requests or unexpected non-2xx  {"pass":false,"console":[{"step":"search \"Maya\"","text":"Failed to load resource: net::ERR_CONNECTION_TIMED_OUT","url":"http://localhost:5791/tutor?tutor=t1"},{"step":"F20: avatars, learning profile, learning map (fallback until B21)","text":"Failed to load 
+[tutor_owner-1280] FAIL      reset + owner numbers before the K.O.  page.goto: Timeout 30000ms exceeded.
+Call log:
+  - navigating to "http://localhost:5791/owner", waiting until "load"
+
+[tutor_owner-1280] PASS      Maya's K.O. (DEMO_SCRIPT through the API)  {"pass":true,"sid":"sess_3a1c73e5"}
 [tutor_owner-1280] PASS      Tutor Studio loads Ms. Rivera’s students (live data, no mock)  {"pass":true,"rows":25,"apiRows":25,"overflow":[]}
 [tutor_owner-1280] PASS      tutor switcher: Mr. Chen and back  {"pass":true,"tutors":8,"chenRows":18,"apiChen":18,"riveraRows":25}
 [tutor_owner-1280] PASS      subject filter  {"pass":true,"out":{"Math":{"rows":24,"allMatch":true},"Writing":{"rows":14,"allMatch":true}}}
 [tutor_owner-1280] PASS      search "Maya"  {"pass":true,"names":["Maya R."]}
 [tutor_owner-1280] PASS      flag filters: at risk / needs update / no contact / new  {"pass":true,"out":{"at_risk":{"ui":3,"apiN":3,"flagged":true,"ok":true},"needs_update":{"ui":2,"apiN":2,"flagged":true,"ok":true},"no_contact":{"ui":2,"apiN":2,"flagged":true,"ok":true},"new":{"apiN":0,"disabled":true,"ok":true}},"toggleRetries":[]}
-[tutor_owner-1280] PASS      multi-select -> bulk assign mission (distinct assignments)  {"pass":true,"selected":["Select Gus Y.","Select Nico F."],"assignments":[["a_0c15552a","s095","Solving two-step equations"],["a_8b865209","s087","Solving two-step equations"]],"onHome":[true,true]}
+[tutor_owner-1280] PASS      multi-select -> bulk assign mission (distinct assignments)  {"pass":true,"selected":["Select Gus Y.","Select Nico F."],"assignments":[["a_2f810558","s095","Solving two-step equations"],["a_9148094a","s087","Solving two-step equations"]],"onHome":[true,true]}
 [tutor_owner-1280] PASS      Maya profile: math + writing progress  {"pass":true,"subjects":["Math","Writing"],"masteryRows":3}
+[tutor_owner-1280] FAIL      F20: avatars, learning profile, learning map (fallback until B21)  {"pass":false,"avatarsInTable":50,"profile":null,"mapNodes":3,"alreadyKnew":["A rectangle's area is base × height. Already knew."],"fallbackMap":true,"head":"The map Pip learned about Maya 3 of 3 concepts known · tap one for Maya’s own words · built from the c
 [tutor_owner-1280] PASS      Maya profile: guardians Ana R. + Sam R.  {"pass":true,"text":"Guardians\n＋ Add guardian\n\nAna R. · Parent\n\n+1-415-555-0101\n·\nana.r@example.com\n\nPrefers Text message\nCadence Every finished lesson\nQuiet 21:00–07:00\n\nEdit\n\nSam R. · Parent\n\n+1-415-555-0102\n·\nsam.r@example.com\n\nPrefers 
 [tutor_owner-1280] PASS      add a private note and a shared note  {"pass":true,"private":true,"shared":true}
-[tutor_owner-1280] PASS      message a parent (test mode or queued for quiet hours)  {"pass":true,"status":"test-mode (not delivered)","tag":"Test mode · not sent"}
-[tutor_owner-1280] PASS      parent update per guardian (Ana + Sam)  {"pass":true,"flow":"v3.15 To send queue","draftsQueued":2,"anaPreview":"Bright Path Tutoring: This week Maya taught Pip why a triangle's area is half of base × height, and caught and fixed a mistake along the way. In Maya's own word","samPreview":"Bright Path
+[tutor_owner-1280] PASS      message a parent (test mode or queued for quiet hours)  {"pass":true,"status":"queued (quiet hours)","tag":"Queued · quiet hours · sends 7:00 AM"}
+[tutor_owner-1280] PASS      parent update per guardian (Ana + Sam)  {"pass":true,"flow":"v3.15 To send queue","draftsQueued":1,"anaPreview":"Bright Path Tutoring: This week Maya taught Pip why a triangle's area is half of base × height, and caught and fixed a mistake along the way. In Maya's own word","samPreview":"Bright Path
+[tutor_owner-1280] PASS      D-27: one K.O. queues exactly one draft (no draft from the saved session)  {"pass":true,"queuedBeforeSend":1,"openAfterSend":[]}
 [tutor_owner-1280] PASS      parent updates are English with no game words (v3.16, B18/F18)  {"pass":true,"spanish":false,"game":false,"guardianLanguageField":false}
 [tutor_owner-1280] PASS      owner: Maya flips to engaged; revenue at risk drops by her package  {"pass":true,"before":7040,"after":6380,"headline":"$6,380","signal":"Engaged","renewalsDue":15}
 [tutor_owner-1280] PASS      owner: every metric explains itself; revenue headline = sum of listed packages  {"pass":true,"metrics":[{"label":"Revenue at risk","explain":"Sum of package prices for students flagged at risk or quiet (no visit on their own or finished lesson this week) whose p"},{"label":"Kept families · 30 days","explain":"Students with an active packa
-[tutor_owner-1280] PASS      owner: send a renewal note (preview first, K.O. quote as evidence)  {"pass":true,"status":"test-mode (not delivered)","preview":"Hi Ana, Maya's Math package with Ms. Rivera has 2 hours left and renews on Nov 2. Recently Maya taught Pip why a triangle's area is half of base × height, in Maya's own words: \"no a right triangle i
-[tutor_owner-1280] PASS      old path: gap report (same quote, fixed after 1 re-teach, root cause)  {"pass":true,"url":"/tutor/report/sess_4652de8d","k3":"no a right triangle is still half a rectangle so its 10×5÷2 = 25"}
+[tutor_owner-1280] PASS      owner: send a renewal note (preview first, K.O. quote as evidence)  {"pass":true,"status":"queued (quiet hours)","preview":"Hi Ana, Maya's Math package with Ms. Rivera has 2 hours left and renews on Nov 2. Recently Maya taught Pip why a triangle's area is half of base × height, in Maya's own words: \"no a right triangle is ","
+[tutor_owner-1280] PASS      old path: gap report (same quote, fixed after 1 re-teach, root cause)  {"pass":true,"url":"/tutor/report/sess_3a1c73e5","k3":"no a right triangle is still half a rectangle so its 10×5÷2 = 25"}
 [tutor_owner-1280] PASS      old path: owner insight -> Plan a workshop  {"pass":true,"count":"14"}
 [tutor_owner-1280] PASS      old path: pricing -> Start pilot -> success  {"pass":true,"pilot":{"status":"active"}}
-[tutor_owner-1280] FAIL      24px tap targets on staff screens  {"pass":false,"count":12,"small":[{"el":"a.prog__rep","text":"Gap report →","w":87,"h":22,"inline":false,"screen":"tutor","min":24},{"el":"a.small","text":"See center view →","w":117,"h":22,"inline":false,"screen":"tutor","min":24},{"el":"a.prog__rep","text":"
+[tutor_owner-1280] PASS      24px tap targets on staff screens  {"pass":true,"count":0,"small":[]}
 [tutor_owner-1280] PASS      AA contrast on staff screens  {"pass":true,"tool":"axe","bad":[]}
-[tutor_owner-1280] PASS      no console errors, failed requests or unexpected non-2xx  {"pass":true,"console":[],"pageErrors":[],"failedRequests":[],"badResponses":[],"expectedBad":[]}
+[tutor_owner-1280] FAIL      no console errors, failed requests or unexpected non-2xx  {"pass":false,"console":[{"step":"reset + owner numbers before the K.O.","text":"Failed to load resource: net::ERR_ADDRESS_UNREACHABLE","url":"http://localhost:5791/owner"},{"step":"reset + owner numbers before the K.O.","text":"Failed to load resource: net::E
 
-tutor_owner @390: PASS 22 · FAIL 1 · NOT BUILT 0 · console errors 0 · failed requests 0 · non-2xx 0 · small targets 26 · Chrome 156.0.8078.48
-  FAIL: 44px tap targets on staff screens
+tutor_owner @390: PASS 23 · FAIL 2 · NOT BUILT 0 · console errors 3 · failed requests 3 · non-2xx 0 · small targets 0 · Chrome 156.0.8078.48
+  FAIL: F20: avatars, learning profile, learning map (fallback until B21)
+  FAIL: no console errors, failed requests or unexpected non-2xx
 
-tutor_owner @1280: PASS 22 · FAIL 1 · NOT BUILT 0 · console errors 0 · failed requests 0 · non-2xx 0 · small targets 12 · Chrome 156.0.8078.48
-  FAIL: 24px tap targets on staff screens
+tutor_owner @1280: PASS 22 · FAIL 3 · NOT BUILT 0 · console errors 14 · failed requests 14 · non-2xx 0 · small targets 0 · Chrome 156.0.8078.48
+  FAIL: reset + owner numbers before the K.O. :: page.goto: Timeout 30000ms exceeded.
+Call log:
+  - navigating to "http://localhost:5791/owner", waiting until "load"
+
+  FAIL: F20: avatars, learning profile, learning map (fallback until B21)
+  FAIL: no console errors, failed requests or unexpected non-2xx
 results: reports/verification/v4/results-tutor_owner.json

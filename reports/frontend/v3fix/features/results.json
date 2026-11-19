@@ -1,0 +1,3956 @@
+{
+  "picker-390-day": {
+    "console": [
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      }
+    ],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [],
+    "checks": [
+      {
+        "label": "cute: 6 animal thumbnails",
+        "pass": true,
+        "detail": {
+          "thumbs": [
+            "Pip the capybara looks deadpan",
+            "Pip the corgi looks deadpan",
+            "Pip the cat looks deadpan",
+            "Pip the raccoon looks deadpan",
+            "Pip the frog looks deadpan",
+            "Pip the axolotl looks deadpan"
+          ],
+          "stage": "Pip the capybara looks aha"
+        }
+      },
+      {
+        "label": "cute: no page scroll with picker open",
+        "pass": true,
+        "detail": {
+          "sh": 844,
+          "ih": 844
+        }
+      },
+      {
+        "label": "picker tap targets >= 44",
+        "pass": true,
+        "detail": []
+      },
+      {
+        "label": "cool: 6 animal thumbnails",
+        "pass": true,
+        "detail": {
+          "thumbs": [
+            "Pip the capybara looks deadpan",
+            "Pip the corgi looks deadpan",
+            "Pip the cat looks deadpan",
+            "Pip the raccoon looks deadpan",
+            "Pip the frog looks deadpan",
+            "Pip the axolotl looks deadpan"
+          ],
+          "stage": "Pip the capybara looks aha"
+        }
+      },
+      {
+        "label": "cool: no page scroll with picker open",
+        "pass": true,
+        "detail": {
+          "sh": 844,
+          "ih": 844
+        }
+      },
+      {
+        "label": "ugly: 6 animal thumbnails",
+        "pass": true,
+        "detail": {
+          "thumbs": [
+            "Pip the capybara looks deadpan",
+            "Pip the corgi looks deadpan",
+            "Pip the cat looks deadpan",
+            "Pip the raccoon looks deadpan",
+            "Pip the frog looks deadpan",
+            "Pip the axolotl looks deadpan"
+          ],
+          "stage": "Pip the capybara looks aha"
+        }
+      },
+      {
+        "label": "ugly: no page scroll with picker open",
+        "pass": true,
+        "detail": {
+          "sh": 844,
+          "ih": 844
+        }
+      }
+    ]
+  },
+  "picker-390-night": {
+    "console": [
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      }
+    ],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [],
+    "checks": [
+      {
+        "label": "cute: 6 animal thumbnails",
+        "pass": true,
+        "detail": {
+          "thumbs": [
+            "Pip the capybara looks deadpan",
+            "Pip the corgi looks deadpan",
+            "Pip the cat looks deadpan",
+            "Pip the raccoon looks deadpan",
+            "Pip the frog looks deadpan",
+            "Pip the axolotl looks deadpan"
+          ],
+          "stage": "Pip the capybara looks aha"
+        }
+      },
+      {
+        "label": "cute: no page scroll with picker open",
+        "pass": true,
+        "detail": {
+          "sh": 844,
+          "ih": 844
+        }
+      },
+      {
+        "label": "picker tap targets >= 44",
+        "pass": true,
+        "detail": []
+      },
+      {
+        "label": "cool: 6 animal thumbnails",
+        "pass": true,
+        "detail": {
+          "thumbs": [
+            "Pip the capybara looks deadpan",
+            "Pip the corgi looks deadpan",
+            "Pip the cat looks deadpan",
+            "Pip the raccoon looks deadpan",
+            "Pip the frog looks deadpan",
+            "Pip the axolotl looks deadpan"
+          ],
+          "stage": "Pip the capybara looks aha"
+        }
+      },
+      {
+        "label": "cool: no page scroll with picker open",
+        "pass": true,
+        "detail": {
+          "sh": 844,
+          "ih": 844
+        }
+      },
+      {
+        "label": "ugly: 6 animal thumbnails",
+        "pass": true,
+        "detail": {
+          "thumbs": [
+            "Pip the capybara looks deadpan",
+            "Pip the corgi looks deadpan",
+            "Pip the cat looks deadpan",
+            "Pip the raccoon looks deadpan",
+            "Pip the frog looks deadpan",
+            "Pip the axolotl looks deadpan"
+          ],
+          "stage": "Pip the capybara looks aha"
+        }
+      },
+      {
+        "label": "ugly: no page scroll with picker open",
+        "pass": true,
+        "detail": {
+          "sh": 844,
+          "ih": 844
+        }
+      }
+    ]
+  },
+  "picker-375-day": {
+    "console": [
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      }
+    ],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [],
+    "checks": [
+      {
+        "label": "cute: 6 animal thumbnails",
+        "pass": true,
+        "detail": {
+          "thumbs": [
+            "Pip the capybara looks deadpan",
+            "Pip the corgi looks deadpan",
+            "Pip the cat looks deadpan",
+            "Pip the raccoon looks deadpan",
+            "Pip the frog looks deadpan",
+            "Pip the axolotl looks deadpan"
+          ],
+          "stage": "Pip the capybara looks aha"
+        }
+      },
+      {
+        "label": "cute: no page scroll with picker open",
+        "pass": true,
+        "detail": {
+          "sh": 667,
+          "ih": 667
+        }
+      },
+      {
+        "label": "picker tap targets >= 44",
+        "pass": true,
+        "detail": []
+      },
+      {
+        "label": "cool: 6 animal thumbnails",
+        "pass": true,
+        "detail": {
+          "thumbs": [
+            "Pip the capybara looks deadpan",
+            "Pip the corgi looks deadpan",
+            "Pip the cat looks deadpan",
+            "Pip the raccoon looks deadpan",
+            "Pip the frog looks deadpan",
+            "Pip the axolotl looks deadpan"
+          ],
+          "stage": "Pip the capybara looks aha"
+        }
+      },
+      {
+        "label": "cool: no page scroll with picker open",
+        "pass": true,
+        "detail": {
+          "sh": 667,
+          "ih": 667
+        }
+      },
+      {
+        "label": "ugly: 6 animal thumbnails",
+        "pass": true,
+        "detail": {
+          "thumbs": [
+            "Pip the capybara looks deadpan",
+            "Pip the corgi looks deadpan",
+            "Pip the cat looks deadpan",
+            "Pip the raccoon looks deadpan",
+            "Pip the frog looks deadpan",
+            "Pip the axolotl looks deadpan"
+          ],
+          "stage": "Pip the capybara looks aha"
+        }
+      },
+      {
+        "label": "ugly: no page scroll with picker open",
+        "pass": true,
+        "detail": {
+          "sh": 667,
+          "ih": 667
+        }
+      }
+    ]
+  },
+  "stage18": {
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [
+      {
+        "status": 200,
+        "t": 1792883235514,
+        "fallback": false,
+        "audioB64": 23464,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.12,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792883235520,
+        "fallback": false,
+        "audioB64": 339440,
+        "mime": "audio/mpeg",
+        "alignChars": 168,
+        "alignEnd": 15.92,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+      },
+      {
+        "status": 200,
+        "t": 1792883236215,
+        "fallback": false,
+        "audioB64": 23464,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.12,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792883236220,
+        "fallback": false,
+        "audioB64": 332752,
+        "mime": "audio/mpeg",
+        "alignChars": 168,
+        "alignEnd": 15.6,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+      },
+      {
+        "status": 200,
+        "t": 1792883236939,
+        "fallback": false,
+        "audioB64": 23464,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.12,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792883236943,
+        "fallback": false,
+        "audioB64": 337768,
+        "mime": "audio/mpeg",
+        "alignChars": 168,
+        "alignEnd": 15.84,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+      },
+      {
+        "status": 200,
+        "t": 1792883239966,
+        "fallback": false,
+        "audioB64": 23464,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.12,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792883239969,
+        "fallback": false,
+        "audioB64": 332752,
+        "mime": "audio/mpeg",
+        "alignChars": 168,
+        "alignEnd": 15.6,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+      },
+      {
+        "status": 200,
+        "t": 1792883241217,
+        "fallback": false,
+        "audioB64": 23464,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.12,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792883241221,
+        "fallback": false,
+        "audioB64": 339440,
+        "mime": "audio/mpeg",
+        "alignChars": 168,
+        "alignEnd": 15.92,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+      },
+      {
+        "status": 200,
+        "t": 1792883242425,
+        "fallback": false,
+        "audioB64": 23464,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.12,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792883242429,
+        "fallback": false,
+        "audioB64": 337768,
+        "mime": "audio/mpeg",
+        "alignChars": 168,
+        "alignEnd": 15.84,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+      },
+      {
+        "status": 200,
+        "t": 1792883243699,
+        "fallback": false,
+        "audioB64": 23464,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.12,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792883243702,
+        "fallback": false,
+        "audioB64": 332752,
+        "mime": "audio/mpeg",
+        "alignChars": 168,
+        "alignEnd": 15.6,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+      },
+      {
+        "status": 200,
+        "t": 1792883245217,
+        "fallback": false,
+        "audioB64": 23464,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.12,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792883245222,
+        "fallback": false,
+        "audioB64": 339440,
+        "mime": "audio/mpeg",
+        "alignChars": 168,
+        "alignEnd": 15.92,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+      },
+      {
+        "status": 200,
+        "t": 1792883245863,
+        "fallback": false,
+        "audioB64": 23464,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.12,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792883245869,
+        "fallback": false,
+        "audioB64": 332752,
+        "mime": "audio/mpeg",
+        "alignChars": 168,
+        "alignEnd": 15.6,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+      },
+      {
+        "status": 200,
+        "t": 1792883246490,
+        "fallback": false,
+        "audioB64": 23464,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.12,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792883246491,
+        "fallback": false,
+        "audioB64": 337768,
+        "mime": "audio/mpeg",
+        "alignChars": 168,
+        "alignEnd": 15.84,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+      }
+    ],
+    "checks": [
+      {
+        "label": "18 sessions keep creature+vibe",
+        "pass": true,
+        "detail": [
+          "capybara/cute->capybara/cute",
+          "capybara/cool->capybara/cool",
+          "capybara/ugly->capybara/ugly",
+          "corgi/cute->corgi/cute",
+          "corgi/cool->corgi/cool",
+          "corgi/ugly->corgi/ugly",
+          "cat/cute->cat/cute",
+          "cat/cool->cat/cool",
+          "cat/ugly->cat/ugly",
+          "raccoon/cute->raccoon/cute",
+          "raccoon/cool->raccoon/cool",
+          "raccoon/ugly->raccoon/ugly",
+          "frog/cute->frog/cute",
+          "frog/cool->frog/cool",
+          "frog/ugly->frog/ugly",
+          "axolotl/cute->axolotl/cute",
+          "axolotl/cool->axolotl/cool",
+          "axolotl/ugly->axolotl/ugly"
+        ]
+      },
+      {
+        "label": "Pip2D renders each animal on the mission stage",
+        "pass": true,
+        "detail": [
+          "capybara/cute: Pip the capybara looks confused (346)",
+          "capybara/cool: Pip the capybara looks confused (348)",
+          "capybara/ugly: Pip the capybara looks confused (362)",
+          "corgi/cute: Pip the corgi looks confused (329)",
+          "corgi/cool: Pip the corgi looks confused (331)",
+          "corgi/ugly: Pip the corgi looks confused (345)",
+          "cat/cute: Pip the cat looks confused (323)",
+          "cat/cool: Pip the cat looks confused (325)",
+          "cat/ugly: Pip the cat looks confused (339)",
+          "raccoon/cute: Pip the raccoon looks confused (328)",
+          "raccoon/cool: Pip the raccoon looks confused (330)",
+          "raccoon/ugly: Pip the raccoon looks confused (344)",
+          "frog/cute: Pip the frog looks confused (326)",
+          "frog/cool: Pip the frog looks confused (328)",
+          "frog/ugly: Pip the frog looks confused (342)",
+          "axolotl/cute: Pip the axolotl looks confused (278)",
+          "axolotl/cool: Pip the axolotl looks confused (280)",
+          "axolotl/ugly: Pip the axolotl looks confused (294)"
+        ]
+      },
+      {
+        "label": "Boss2D renders on every stage",
+        "pass": true,
+        "detail": [
+          "Top-Top Bottom-Bottom, smug"
+        ]
+      },
+      {
+        "label": "no floating ? glyph, no WebGL canvas",
+        "pass": true,
+        "detail": []
+      }
+    ],
+    "rows": [
+      {
+        "c": "capybara",
+        "v": "cute",
+        "session": {
+          "creature": "capybara",
+          "vibe": "cute"
+        },
+        "pip": "Pip the capybara looks confused",
+        "nodes": 346,
+        "boss": "Top-Top Bottom-Bottom, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "capybara",
+        "v": "cool",
+        "session": {
+          "creature": "capybara",
+          "vibe": "cool"
+        },
+        "pip": "Pip the capybara looks confused",
+        "nodes": 348,
+        "boss": "Top-Top Bottom-Bottom, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "capybara",
+        "v": "ugly",
+        "session": {
+          "creature": "capybara",
+          "vibe": "ugly"
+        },
+        "pip": "Pip the capybara looks confused",
+        "nodes": 362,
+        "boss": "Top-Top Bottom-Bottom, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "corgi",
+        "v": "cute",
+        "session": {
+          "creature": "corgi",
+          "vibe": "cute"
+        },
+        "pip": "Pip the corgi looks confused",
+        "nodes": 329,
+        "boss": "Top-Top Bottom-Bottom, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "corgi",
+        "v": "cool",
+        "session": {
+          "creature": "corgi",
+          "vibe": "cool"
+        },
+        "pip": "Pip the corgi looks confused",
+        "nodes": 331,
+        "boss": "Top-Top Bottom-Bottom, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "corgi",
+        "v": "ugly",
+        "session": {
+          "creature": "corgi",
+          "vibe": "ugly"
+        },
+        "pip": "Pip the corgi looks confused",
+        "nodes": 345,
+        "boss": "Top-Top Bottom-Bottom, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "cat",
+        "v": "cute",
+        "session": {
+          "creature": "cat",
+          "vibe": "cute"
+        },
+        "pip": "Pip the cat looks confused",
+        "nodes": 323,
+        "boss": "Top-Top Bottom-Bottom, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "cat",
+        "v": "cool",
+        "session": {
+          "creature": "cat",
+          "vibe": "cool"
+        },
+        "pip": "Pip the cat looks confused",
+        "nodes": 325,
+        "boss": "Top-Top Bottom-Bottom, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "cat",
+        "v": "ugly",
+        "session": {
+          "creature": "cat",
+          "vibe": "ugly"
+        },
+        "pip": "Pip the cat looks confused",
+        "nodes": 339,
+        "boss": "Top-Top Bottom-Bottom, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "raccoon",
+        "v": "cute",
+        "session": {
+          "creature": "raccoon",
+          "vibe": "cute"
+        },
+        "pip": "Pip the raccoon looks confused",
+        "nodes": 328,
+        "boss": "Top-Top Bottom-Bottom, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "raccoon",
+        "v": "cool",
+        "session": {
+          "creature": "raccoon",
+          "vibe": "cool"
+        },
+        "pip": "Pip the raccoon looks confused",
+        "nodes": 330,
+        "boss": "Top-Top Bottom-Bottom, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "raccoon",
+        "v": "ugly",
+        "session": {
+          "creature": "raccoon",
+          "vibe": "ugly"
+        },
+        "pip": "Pip the raccoon looks confused",
+        "nodes": 344,
+        "boss": "Top-Top Bottom-Bottom, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "frog",
+        "v": "cute",
+        "session": {
+          "creature": "frog",
+          "vibe": "cute"
+        },
+        "pip": "Pip the frog looks confused",
+        "nodes": 326,
+        "boss": "Top-Top Bottom-Bottom, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "frog",
+        "v": "cool",
+        "session": {
+          "creature": "frog",
+          "vibe": "cool"
+        },
+        "pip": "Pip the frog looks confused",
+        "nodes": 328,
+        "boss": "Top-Top Bottom-Bottom, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "frog",
+        "v": "ugly",
+        "session": {
+          "creature": "frog",
+          "vibe": "ugly"
+        },
+        "pip": "Pip the frog looks confused",
+        "nodes": 342,
+        "boss": "Top-Top Bottom-Bottom, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "axolotl",
+        "v": "cute",
+        "session": {
+          "creature": "axolotl",
+          "vibe": "cute"
+        },
+        "pip": "Pip the axolotl looks confused",
+        "nodes": 278,
+        "boss": "Top-Top Bottom-Bottom, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "axolotl",
+        "v": "cool",
+        "session": {
+          "creature": "axolotl",
+          "vibe": "cool"
+        },
+        "pip": "Pip the axolotl looks confused",
+        "nodes": 280,
+        "boss": "Top-Top Bottom-Bottom, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "axolotl",
+        "v": "ugly",
+        "session": {
+          "creature": "axolotl",
+          "vibe": "ugly"
+        },
+        "pip": "Pip the axolotl looks confused",
+        "nodes": 294,
+        "boss": "Top-Top Bottom-Bottom, smug",
+        "qmarks": 0,
+        "canvas": false
+      }
+    ]
+  },
+  "boss": {
+    "console": [
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      }
+    ],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [
+      {
+        "status": 200,
+        "t": 1792883248206,
+        "fallback": false,
+        "audioB64": 23464,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.12,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792883248213,
+        "fallback": false,
+        "audioB64": 339440,
+        "mime": "audio/mpeg",
+        "alignChars": 168,
+        "alignEnd": 15.92,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+      },
+      {
+        "status": 200,
+        "t": 1792883248551,
+        "fallback": false,
+        "audioB64": 163340,
+        "mime": "audio/mpeg",
+        "alignChars": 100,
+        "alignEnd": 7.68,
+        "text": "Saving that: 'the pieces are different sizes so you cant just add them"
+      },
+      {
+        "status": 200,
+        "t": 1792883249149,
+        "fallback": false,
+        "audioB64": 170584,
+        "mime": "audio/mpeg",
+        "alignChars": 93,
+        "alignEnd": 8,
+        "text": "Saving that: 'because 2 and 3 both go into 6'. And then what do I do w"
+      },
+      {
+        "status": 200,
+        "t": 1792883249732,
+        "fallback": false,
+        "audioB64": 378452,
+        "mime": "audio/mpeg",
+        "alignChars": 222,
+        "alignEnd": 17.76,
+        "text": "Saving that: 'no wait, only add the tops. the bottom just tells you th"
+      },
+      {
+        "status": 200,
+        "t": 1792883251772,
+        "fallback": false,
+        "audioB64": 30708,
+        "mime": "audio/mpeg",
+        "alignChars": 4,
+        "alignEnd": 1.28,
+        "text": "K.O."
+      },
+      {
+        "status": 200,
+        "t": 1792883253290,
+        "fallback": false,
+        "audioB64": 139936,
+        "mime": "audio/mpeg",
+        "alignChars": 84,
+        "alignEnd": 6.56,
+        "text": "I heard dividing by a fraction can make a number bigger. That can't be"
+      }
+    ],
+    "checks": [
+      {
+        "label": "Boss2D smug while HP > 40, cracked at HP <= 40",
+        "pass": true,
+        "detail": [
+          {
+            "hp": 75,
+            "boss": "Top-Top Bottom-Bottom, smug"
+          },
+          {
+            "hp": 50,
+            "boss": "Top-Top Bottom-Bottom, smug"
+          },
+          {
+            "hp": 10,
+            "boss": "Top-Top Bottom-Bottom, cracked"
+          }
+        ]
+      },
+      {
+        "label": "K.O. beat: boss cracked at fight, KO after finisher",
+        "pass": true,
+        "detail": {
+          "fight": "Top-Top Bottom-Bottom, cracked",
+          "ko": "Top-Top Bottom-Bottom, ko",
+          "pipFight": "Pip the capybara looks proud"
+        }
+      },
+      {
+        "label": "cliffhanger Pip is awakened (aura)",
+        "pass": true,
+        "detail": {
+          "cliffPip": "Pip the capybara looks confused"
+        }
+      }
+    ],
+    "moods": [
+      "confused",
+      "thinking",
+      "aha",
+      "thinking",
+      "aha",
+      "thinking",
+      "proud",
+      "confused"
+    ],
+    "bossTrail": [
+      "Top-Top Bottom-Bottom, smug",
+      "Top-Top Bottom-Bottom, cracked",
+      "Top-Top Bottom-Bottom, ko"
+    ]
+  },
+  "voice": {
+    "console": [
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      }
+    ],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [
+      {
+        "status": 200,
+        "t": 1792883255919,
+        "fallback": false,
+        "audioB64": 23464,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.12,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792883255919,
+        "fallback": false,
+        "audioB64": 339440,
+        "mime": "audio/mpeg",
+        "alignChars": 168,
+        "alignEnd": 15.92,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+      },
+      {
+        "status": 200,
+        "t": 1792883258513,
+        "fallback": false,
+        "audioB64": 163340,
+        "mime": "audio/mpeg",
+        "alignChars": 100,
+        "alignEnd": 7.68,
+        "text": "Saving that: 'the pieces are different sizes so you cant just add them"
+      },
+      {
+        "status": 200,
+        "t": 1792883266493,
+        "fallback": false,
+        "audioB64": 100368,
+        "mime": "audio/mpeg",
+        "alignChars": 55,
+        "alignEnd": 4.72,
+        "text": "A point I did not anticipate. I accept it with dignity."
+      }
+    ],
+    "checks": [
+      {
+        "label": "/api/tts returns live audio + alignment",
+        "pass": true,
+        "detail": [
+          {
+            "status": 200,
+            "t": 1792883255919,
+            "fallback": false,
+            "audioB64": 23464,
+            "mime": "audio/mpeg",
+            "alignChars": 10,
+            "alignEnd": 1.12,
+            "text": "BOSS FIGHT"
+          },
+          {
+            "status": 200,
+            "t": 1792883255919,
+            "fallback": false,
+            "audioB64": 339440,
+            "mime": "audio/mpeg",
+            "alignChars": 168,
+            "alignEnd": 15.92,
+            "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+          },
+          {
+            "status": 200,
+            "t": 1792883258513,
+            "fallback": false,
+            "audioB64": 163340,
+            "mime": "audio/mpeg",
+            "alignChars": 100,
+            "alignEnd": 7.68,
+            "text": "Saving that: 'the pieces are different sizes so you cant just add them"
+          },
+          {
+            "status": 200,
+            "t": 1792883266493,
+            "fallback": false,
+            "audioB64": 100368,
+            "mime": "audio/mpeg",
+            "alignChars": 55,
+            "alignEnd": 4.72,
+            "text": "A point I did not anticipate. I accept it with dignity."
+          }
+        ]
+      },
+      {
+        "label": "audio element played (ok, playing fired)",
+        "pass": true,
+        "detail": [
+          {
+            "t": 1792883255923,
+            "mime": "audio/mpeg",
+            "len": 339463,
+            "playing": 1792883255934,
+            "ok": true,
+            "end": 1792883258510
+          },
+          {
+            "t": 1792883258512,
+            "mime": "audio/mpeg",
+            "len": 163363,
+            "playing": 1792883258530,
+            "ok": true,
+            "end": 1792883266324
+          }
+        ]
+      },
+      {
+        "label": "mouth changes while audio plays (>= 3 shapes) ",
+        "pass": true,
+        "detail": {
+          "playing": {
+            "g:157": 1,
+            "g:133": 96,
+            "g:297": 43,
+            "g:98": 108,
+            "g:131": 12
+          },
+          "idle": {
+            "g:157": 20,
+            "g:133": 1
+          }
+        }
+      },
+      {
+        "label": "no browser speech while ElevenLabs works",
+        "pass": true,
+        "detail": []
+      },
+      {
+        "label": "mute: no new /api/tts, no audio, no speech",
+        "pass": false,
+        "detail": {
+          "before": {
+            "tts": 4,
+            "plays": 2,
+            "synth": 0
+          },
+          "after": {
+            "plays": 3,
+            "synth": 0,
+            "muted": "1",
+            "playLog": [
+              {
+                "t": 1792883258512,
+                "mime": "audio/mpeg",
+                "len": 163363,
+                "playing": 1792883258530,
+                "ok": true,
+                "end": 1792883266324
+              },
+              {
+                "t": 1792883266491,
+                "mime": "audio/mpeg",
+                "len": 100391,
+                "playing": 1792883266499,
+                "ok": true,
+                "end": 1792883266547
+              }
+            ]
+          },
+          "tts": 4
+        }
+      }
+    ],
+    "muteAt": 1792883266500,
+    "ttsBefore": 2
+  },
+  "fallback-abort": {
+    "console": [
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_FAILED"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_FAILED"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_FAILED"
+      }
+    ],
+    "pageErrors": [],
+    "failedRequests": [
+      {
+        "url": "http://localhost:5761/api/tts",
+        "err": "net::ERR_FAILED"
+      },
+      {
+        "url": "http://localhost:5761/api/tts",
+        "err": "net::ERR_FAILED"
+      },
+      {
+        "url": "http://localhost:5761/api/tts",
+        "err": "net::ERR_FAILED"
+      }
+    ],
+    "badResponses": [],
+    "tts": [],
+    "checks": [
+      {
+        "label": "abort: browser speechSynthesis used",
+        "pass": true,
+        "detail": [
+          {
+            "t": 1792883272349,
+            "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I already k"
+          },
+          {
+            "t": 1792883273934,
+            "text": "Why is that wrong?"
+          }
+        ]
+      },
+      {
+        "label": "abort: no audio element played",
+        "pass": true,
+        "detail": []
+      },
+      {
+        "label": "abort: no console/page errors",
+        "pass": false,
+        "detail": {
+          "errs": [
+            {
+              "type": "error",
+              "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+            },
+            {
+              "type": "error",
+              "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+            },
+            {
+              "type": "error",
+              "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+            },
+            {
+              "type": "error",
+              "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+            },
+            {
+              "type": "error",
+              "text": "Failed to load resource: net::ERR_FAILED"
+            },
+            {
+              "type": "error",
+              "text": "Failed to load resource: net::ERR_FAILED"
+            },
+            {
+              "type": "error",
+              "text": "Failed to load resource: net::ERR_FAILED"
+            }
+          ],
+          "pageErrors": []
+        }
+      }
+    ]
+  },
+  "fallback-fallback": {
+    "console": [
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      }
+    ],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [
+      {
+        "status": 200,
+        "t": 1792883277718,
+        "fallback": true,
+        "audioB64": 0,
+        "alignChars": 0,
+        "alignEnd": null,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792883277720,
+        "fallback": true,
+        "audioB64": 0,
+        "alignChars": 0,
+        "alignEnd": null,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+      }
+    ],
+    "checks": [
+      {
+        "label": "fallback: browser speechSynthesis used",
+        "pass": true,
+        "detail": [
+          {
+            "t": 1792883277720,
+            "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I already k"
+          },
+          {
+            "t": 1792883279339,
+            "text": "Why is that wrong?"
+          }
+        ]
+      },
+      {
+        "label": "fallback: no audio element played",
+        "pass": true,
+        "detail": []
+      },
+      {
+        "label": "fallback: no console/page errors",
+        "pass": false,
+        "detail": {
+          "errs": [
+            {
+              "type": "error",
+              "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+            },
+            {
+              "type": "error",
+              "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+            },
+            {
+              "type": "error",
+              "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+            },
+            {
+              "type": "error",
+              "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+            }
+          ],
+          "pageErrors": []
+        }
+      }
+    ]
+  },
+  "pwa-1440": {
+    "console": [
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      }
+    ],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [],
+    "checks": [
+      {
+        "label": "landing: pitch + live phone (iframe of /student?preview=1) in view",
+        "pass": true,
+        "detail": {
+          "h1": "Every AI tutor plays the teacher. Pip plays the student.",
+          "src": "/student?preview=1&framed=1",
+          "box": {
+            "x": 904.540771484375,
+            "y": 32.25950622558594,
+            "width": 372.027587890625,
+            "height": 805.1059722900391
+          }
+        }
+      },
+      {
+        "label": "phone is playable (PLAY opens the picker inside the phone)",
+        "pass": true
+      },
+      {
+        "label": "manifest 200, display standalone, icons 200 PNG at declared size",
+        "pass": true,
+        "detail": {
+          "status": 200,
+          "ct": "application/manifest+json",
+          "display": "standalone",
+          "start_url": "/",
+          "icons": [
+            {
+              "src": "/icons/pip-192.png",
+              "status": 200,
+              "type": "image/png",
+              "bytes": 10669,
+              "png": true,
+              "w": 192,
+              "h": 192,
+              "sizes": "192x192"
+            },
+            {
+              "src": "/icons/pip-512.png",
+              "status": 200,
+              "type": "image/png",
+              "bytes": 45831,
+              "png": true,
+              "w": 512,
+              "h": 512,
+              "sizes": "512x512"
+            },
+            {
+              "src": "/icons/pip-maskable-512.png",
+              "status": 200,
+              "type": "image/png",
+              "bytes": 39384,
+              "png": true,
+              "w": 512,
+              "h": 512,
+              "sizes": "512x512"
+            },
+            {
+              "src": "/icons/apple-touch-icon.png",
+              "status": 200,
+              "type": "image/png",
+              "bytes": 9174,
+              "png": true,
+              "w": 180,
+              "h": 180
+            }
+          ],
+          "head": {
+            "manifest": "/manifest.webmanifest",
+            "apple": "/icons/apple-touch-icon.png",
+            "themeColor": "#001914",
+            "viewport": "width=device-width, initial-scale=1.0, viewport-fit=cover"
+          }
+        }
+      }
+    ]
+  },
+  "pwa-390": {
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [],
+    "checks": [
+      {
+        "label": "phone landing = app welcome screen with Student entry",
+        "pass": true,
+        "detail": {
+          "scrollHeight": 844,
+          "innerHeight": 844,
+          "scrolls": false,
+          "small": [],
+          "clipped": []
+        }
+      }
+    ]
+  },
+  "studio": {
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [],
+    "checks": [
+      {
+        "label": "owner at-risk: 4 students listed",
+        "pass": true,
+        "detail": {
+          "api": [
+            [
+              "Ravi A.",
+              [
+                "Has not come back to the app on their own in 14 days.",
+                "No parent update sent since their last completed session."
+              ]
+            ],
+            [
+              "Gus H.",
+              [
+                "Has not come back to the app on their own in 14 days."
+              ]
+            ],
+            [
+              "Gus Y.",
+              [
+                "No parent update sent since their last completed session."
+              ]
+            ],
+            [
+              "Owen T.",
+              [
+                "Stuck after the full ladder on \"adding the numerators\" (Adding fractions with unlike denominators). Pip's friend hint did not unlock it."
+              ]
+            ]
+          ],
+          "rows": [
+            "RA\nRavi A.\nHas not come back to the app on their own in 14 days.\nNo parent update sent since their last completed session.\nReport",
+            "GH\nGus H.\nHas not come back to the app on their own in 14 days.\nReport",
+            "GY\nGus Y.\nNo parent update sent since their last completed session.\nReport",
+            "OT\nOwen T.\nStuck after the full ladder on \"adding the numerators\" (Adding fractions with unlike denominators). Pip's friend hint did not unlock it.\nReport"
+          ]
+        }
+      },
+      {
+        "label": "owner at-risk: synthetic label visible",
+        "pass": true,
+        "detail": {
+          "card": "FAMILIES TO CHECK ON\n\nAt-risk families 4\n\nStuck after Pip’s full set of questions, no visit on their own in 14 days, or no parent update in 14 days.\n\nRA\nRavi A.\nHas not come back to the app on their own in 14 days.\nNo parent update sent since their last completed session.\nReport\nGH\nGus H.\nHas not come back to the app on their own in 14 days.\nReport\nGY\nGus Y.\nNo parent update sent since their last ",
+          "synthAnywhere": "120 students · 8 tutors · grades 5-9 · demo center (synthetic data)"
+        }
+      },
+      {
+        "label": "tutor at-risk: compact card",
+        "pass": false,
+        "detail": []
+      },
+      {
+        "label": "New Pip mission shows editable ladder (3x4), look-fors, nudge",
+        "pass": true,
+        "detail": {
+          "nLessons": 3,
+          "nRungs": 12,
+          "lfChips": [
+            "Expanding\n×",
+            "means\n×",
+            "plain\n×",
+            "words\n×",
+            "verifier look-for\n×"
+          ]
+        }
+      },
+      {
+        "label": "edits posted back in the lesson",
+        "pass": true,
+        "detail": {
+          "c0": {
+            "concept_id": "k1",
+            "look_fors": [
+              "Expanding",
+              "means",
+              "plain",
+              "words",
+              "verifier look-for"
+            ],
+            "probe_ladder": [
+              "Can you say in your own words what this means: what expanding (a + b)² means, in plain words?",
+              "VERIFIER EDIT: why would that be true?",
+              "Can you show me with a small example?",
+              "What would you do if the numbers or words were different?"
+            ],
+            "spoilers": [],
+            "friend_nudge": "VERIFIER NUDGE: my friend said to draw it as a square."
+          }
+        }
+      }
+    ]
+  },
+  "sat-s005": {
+    "console": [
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      }
+    ],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [
+      {
+        "status": 200,
+        "t": 1792883294724,
+        "fallback": false,
+        "audioB64": 23464,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.12,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792883294724,
+        "fallback": false,
+        "audioB64": 294860,
+        "mime": "audio/mpeg",
+        "alignChars": 173,
+        "alignEnd": 13.84,
+        "text": "I'm learning sat writing: commas and run-on sentences. I already know "
+      },
+      {
+        "status": 200,
+        "t": 1792883295052,
+        "fallback": false,
+        "audioB64": 115972,
+        "mime": "audio/mpeg",
+        "alignChars": 66,
+        "alignEnd": 5.44,
+        "text": "Why is that wrong? I paused after 'tired', so I put a comma there."
+      },
+      {
+        "status": 200,
+        "t": 1792883295526,
+        "fallback": false,
+        "audioB64": 120988,
+        "mime": "audio/mpeg",
+        "alignChars": 75,
+        "alignEnd": 5.68,
+        "text": "I don't know the rule either. That's why I need you. Why is my comma w"
+      },
+      {
+        "status": 200,
+        "t": 1792883295997,
+        "fallback": false,
+        "audioB64": 363404,
+        "mime": "audio/mpeg",
+        "alignChars": 233,
+        "alignEnd": 17.04,
+        "text": "So you're saying each half is a whole sentence on its own. Saving that"
+      },
+      {
+        "status": 200,
+        "t": 1792883296480,
+        "fallback": false,
+        "audioB64": 206252,
+        "mime": "audio/mpeg",
+        "alignChars": 104,
+        "alignEnd": 9.68,
+        "text": "So it has a name. Comma splice. Is 'My dog barked, the mail came' one "
+      },
+      {
+        "status": 200,
+        "t": 1792883296944,
+        "fallback": false,
+        "audioB64": 177272,
+        "mime": "audio/mpeg",
+        "alignChars": 93,
+        "alignEnd": 8.32,
+        "text": "Not in my brain yet. Is 'My dog barked, the mail came' one sentence or"
+      },
+      {
+        "status": 200,
+        "t": 1792883299634,
+        "fallback": false,
+        "audioB64": 188976,
+        "mime": "audio/mpeg",
+        "alignChars": 124,
+        "alignEnd": 8.88,
+        "text": "Saving that: 'you just put a comma when you take a breath'. That is th"
+      },
+      {
+        "status": 200,
+        "t": 1792883300226,
+        "fallback": true,
+        "audioB64": 0,
+        "alignChars": 0,
+        "alignEnd": null,
+        "text": "CRITICAL"
+      },
+      {
+        "status": 200,
+        "t": 1792883300261,
+        "fallback": false,
+        "audioB64": 342784,
+        "mime": "audio/mpeg",
+        "alignChars": 219,
+        "alignEnd": 16.08,
+        "text": "So you're saying a comma is too small a glue for two whole sentences. "
+      },
+      {
+        "status": 200,
+        "t": 1792883300977,
+        "fallback": false,
+        "audioB64": 322164,
+        "mime": "audio/mpeg",
+        "alignChars": 207,
+        "alignEnd": 15.12,
+        "text": "Your rule: put a comma when you take a breath. I took a breath after '"
+      },
+      {
+        "status": 200,
+        "t": 1792883300982,
+        "fallback": false,
+        "audioB64": 172256,
+        "mime": "audio/mpeg",
+        "alignChars": 105,
+        "alignEnd": 8.08,
+        "text": "My brain has a bug about this: \"ok but for the rest you just put a com"
+      },
+      {
+        "status": 200,
+        "t": 1792883302417,
+        "fallback": false,
+        "audioB64": 317148,
+        "mime": "audio/mpeg",
+        "alignChars": 210,
+        "alignEnd": 14.88,
+        "text": "So you're saying the who and the what-they-did stay together, even whe"
+      }
+    ],
+    "checks": [
+      {
+        "label": "out-of-scope parking line",
+        "pass": true,
+        "detail": {
+          "n": 5,
+          "kind": "out_of_scope",
+          "hp": [
+            75,
+            75
+          ],
+          "pip": "Not in my brain yet. Is 'My dog barked, the mail came' one sentence or two? How can you tell?",
+          "expect": "Not in my brain yet. is 'My dog barked, the mail came' one s"
+        }
+      },
+      {
+        "label": "authored beats: hits on explain, heal on misconception",
+        "pass": true,
+        "detail": [
+          [
+            1,
+            "vague",
+            [
+              100,
+              100
+            ]
+          ],
+          [
+            2,
+            "refusal",
+            [
+              100,
+              100
+            ]
+          ],
+          [
+            3,
+            "explain",
+            [
+              100,
+              75
+            ]
+          ],
+          [
+            4,
+            "procedure",
+            [
+              75,
+              75
+            ]
+          ],
+          [
+            5,
+            "out_of_scope",
+            [
+              75,
+              75
+            ]
+          ],
+          [
+            6,
+            "explain",
+            [
+              75,
+              50
+            ]
+          ],
+          [
+            7,
+            "misconception",
+            [
+              50,
+              70
+            ]
+          ]
+        ]
+      },
+      {
+        "label": "quiz: Pip misses the wrong-rule concept only",
+        "pass": true,
+        "detail": [
+          [
+            "k1",
+            true,
+            "The bus was late, so we missed the first bell. A c"
+          ],
+          [
+            "k2",
+            true,
+            "No. 'My phone died' and 'I couldn't call you' are "
+          ],
+          [
+            "k3",
+            false,
+            "Your rule: put a comma when you take a breath. I t"
+          ]
+        ]
+      },
+      {
+        "label": "K.O. complete, Brain v2, gap report",
+        "pass": true,
+        "detail": {
+          "ko": true,
+          "status": "complete",
+          "bv": 2,
+          "topic": "SAT Writing: commas and run-on sentences",
+          "opening": [
+            "Hi. I'm Pip. Before we start: what are you into? A game, a sport, music, food. Anything.",
+            "I'm learning sat writing: commas and run-on sentences. I already know one rule: You put a comma wherever you pause, so 'I was tired, I went to bed' is a fine sentence. Easy."
+          ]
+        }
+      },
+      {
+        "label": "tutor gap report renders the SAT run",
+        "pass": true,
+        "detail": {
+          "gaps": [
+            "①\nTwo complete sentences can be joined only with a period, a semicolon, or a comma plus a FANBOYS word (for, and, nor, but, or, yet, so)\nExp",
+            "②\nA comma alone can't join two complete sentences; that mistake is called a comma splice\nExplained well\n“two. my dog barked is a whole sente",
+            "③\nCommas go where the sentence's structure needs them, not wherever you pause when you read it aloud\nExplained well\n“no wait. the tallest gi"
+          ],
+          "concepts": [
+            [
+              "k1",
+              "explained",
+              null,
+              false
+            ],
+            [
+              "k2",
+              "explained",
+              null,
+              false
+            ],
+            [
+              "k3",
+              "explained",
+              1,
+              false
+            ]
+          ]
+        }
+      }
+    ],
+    "turns": [
+      {
+        "n": 1,
+        "kind": "vague",
+        "hp": [
+          100,
+          100
+        ],
+        "pip": "Why is that wrong? I paused after 'tired', so I put a comma there.",
+        "expect": "then what goes between 'I was tired' and 'I went to bed'? i "
+      },
+      {
+        "n": 2,
+        "kind": "refusal",
+        "hp": [
+          100,
+          100
+        ],
+        "pip": "I don't know the rule either. That's why I need you. Why is my comma wrong?",
+        "expect": "i don't know the rule either. that's why i need you."
+      },
+      {
+        "n": 3,
+        "kind": "explain",
+        "hp": [
+          100,
+          75
+        ],
+        "pip": "So you're saying each half is a whole sentence on its own. Saving that: 'you need a period or a semicolon between them, or a comma plus a word like so'. Why can't a comma hold two sentences together by itself? It's a very nice comma.",
+        "expect": "Saving that: 'you need a period or a semicolon between them,"
+      },
+      {
+        "n": 4,
+        "kind": "procedure",
+        "hp": [
+          75,
+          75
+        ],
+        "pip": "So it has a name. Comma splice. Is 'My dog barked, the mail came' one sentence or two? How can you tell?",
+        "expect": "noted, it has a name. is 'My dog barked, the mail came' one "
+      },
+      {
+        "n": 5,
+        "kind": "out_of_scope",
+        "hp": [
+          75,
+          75
+        ],
+        "pip": "Not in my brain yet. Is 'My dog barked, the mail came' one sentence or two? How can you tell?",
+        "expect": "Not in my brain yet. is 'My dog barked, the mail came' one s"
+      },
+      {
+        "n": 6,
+        "kind": "explain",
+        "hp": [
+          75,
+          50
+        ],
+        "pip": "So you're saying a comma is too small a glue for two whole sentences. Saving that: 'a comma by itself isnt strong enough to glue two whole sentences together'. How do you know where a comma goes, if not where I breathe?",
+        "expect": "Saving that: 'a comma by itself isnt strong enough to glue t"
+      },
+      {
+        "n": 7,
+        "kind": "misconception",
+        "hp": [
+          50,
+          70
+        ],
+        "pip": "Saving that: 'you just put a comma when you take a breath'. That is the rule I started with. I feel very ready for the quiz.",
+        "expect": "Saving that: 'you just put a comma when you take a breath'. "
+      }
+    ],
+    "spoilerScan": [
+      {
+        "from": "pip",
+        "text": "Hi. I'm Pip. Before we start: what are you into? A game, a sport, music, food. Anything.",
+        "ts": "2026-10-24T23:08:14+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "I'm learning sat writing: commas and run-on sentences. I already know one rule: You put a comma wherever you pause, so 'I was tired, I went to bed' is a fine sentence. Easy.",
+        "ts": "2026-10-24T23:08:14+00:00"
+      },
+      {
+        "from": "student",
+        "text": "no thats not how commas work",
+        "ts": "2026-10-24T23:08:15+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "Why is that wrong? I paused after 'tired', so I put a comma there.",
+        "ts": "2026-10-24T23:08:15+00:00",
+        "event": {
+          "kind": "none",
+          "amount": 0,
+          "caption": "",
+          "unlocked": [],
+          "level": 0
+        }
+      },
+      {
+        "from": "student",
+        "text": "can you just tell me the rule so we can move on",
+        "ts": "2026-10-24T23:08:15+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "I don't know the rule either. That's why I need you. Why is my comma wrong?",
+        "ts": "2026-10-24T23:08:15+00:00",
+        "event": {
+          "kind": "none",
+          "amount": 0,
+          "caption": "",
+          "unlocked": [],
+          "level": 0
+        }
+      },
+      {
+        "from": "student",
+        "text": "i was tired and i went to bed are both full sentences. each one could stand alone. so you need a period or a semicolon between them, or a comma plus a word like so",
+        "ts": "2026-10-24T23:08:15+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "So you're saying each half is a whole sentence on its own. Saving that: 'you need a period or a semicolon between them, or a comma plus a word like so'. Why can't a comma hold two sentences together by itself? It's a very nice comma.",
+        "ts": "2026-10-24T23:08:15+00:00",
+        "event": {
+          "kind": "hit",
+          "amount": 25,
+          "caption": "Pause-Pause Penguin: \"A point I did not anticipate. I accept it with dignity.\" −25 HP",
+          "unlocked": [],
+          "level": 2
+        }
+      },
+      {
+        "from": "student",
+        "text": "because then its a comma splice",
+        "ts": "2026-10-24T23:08:16+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "So it has a name. Comma splice. Is 'My dog barked, the mail came' one sentence or two? How can you tell?",
+        "ts": "2026-10-24T23:08:16+00:00",
+        "event": {
+          "kind": "none",
+          "amount": 0,
+          "caption": "",
+          "unlocked": [],
+          "level": 1
+        }
+      },
+      {
+        "from": "student",
+        "text": "wait do colons work the same way",
+        "ts": "2026-10-24T23:08:16+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "Not in my brain yet. Is 'My dog barked, the mail came' one sentence or two? How can you tell?",
+        "ts": "2026-10-24T23:08:16+00:00",
+        "event": {
+          "kind": "none",
+          "amount": 0,
+          "caption": "",
+          "unlocked": [],
+          "level": 0
+        }
+      },
+      {
+        "from": "student",
+        "text": "two. my dog barked is a whole sentence and so is the mail came. a comma by itself isnt strong enough to glue two whole sentences together",
+        "ts": "2026-10-24T23:08:17+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "So you're saying a comma is too small a glue for two whole sentences. Saving that: 'a comma by itself isnt strong enough to glue two whole sentences together'. How do you know where a comma goes, if not where I breathe?",
+        "ts": "2026-10-24T23:08:17+00:00",
+        "event": {
+          "kind": "hit",
+          "amount": 25,
+          "caption": "Pause-Pause Penguin: \"A point I did not anticipate. I accept it with dignity.\" −25 HP",
+          "unlocked": [],
+          "level": 2
+        }
+      },
+      {
+        "from": "student",
+        "text": "ok but for the rest you just put a comma when you take a breath",
+        "ts": "2026-10-24T23:08:17+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "Saving that: 'you just put a comma when you take a breath'. That is the rule I started with. I feel very ready for the quiz.",
+        "ts": "2026-10-24T23:08:17+00:00",
+        "event": {
+          "kind": "heal",
+          "amount": 20,
+          "caption": "Pause-Pause Penguin: \"My error is restored. I have held it for three hundred years.\" +20 HP",
+          "unlocked": [],
+          "level": 0
+        }
+      },
+      {
+        "from": "pip",
+        "text": "My brain has a bug about this: \"ok but for the rest you just put a comma when you take a breath\". Fix it?",
+        "ts": "2026-10-24T23:08:19+00:00",
+        "event": {
+          "kind": "none",
+          "amount": 0,
+          "caption": "",
+          "unlocked": []
+        }
+      },
+      {
+        "from": "student",
+        "text": "no wait. the tallest girl on the team is who did it and scored is what she did. you never put a comma between who did it and what they did, even if you pause. like my little brother eats cereal has no comma either",
+        "ts": "2026-10-24T23:08:19+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "So you're saying the who and the what-they-did stay together, even when I run out of air. Saving that: 'you never put a comma between who did it and what they did, even if you pause'. That replaces my old rule.",
+        "ts": "2026-10-24T23:08:19+00:00",
+        "event": {
+          "kind": "hit",
+          "amount": 40,
+          "caption": "Pause-Pause Penguin: \"A point I did not anticipate. I accept it with dignity.\" −40 HP",
+          "unlocked": [],
+          "level": 3
+        }
+      },
+      {
+        "from": "pip",
+        "text": "I heard a colon can only come after a complete sentence. Even before a list. That can't be right… right?",
+        "ts": "2026-10-24T23:08:20+00:00",
+        "event": {
+          "kind": "none",
+          "amount": 0,
+          "caption": "",
+          "unlocked": []
+        }
+      },
+      {
+        "from": "system",
+        "text": "Pause-Pause Penguin met the Semicolon Stapler 📎 one last time and left Pip's brain.",
+        "ts": "2026-10-24T23:08:21+00:00"
+      }
+    ]
+  },
+  "sat-s009": {
+    "console": [
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      }
+    ],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [
+      {
+        "status": 200,
+        "t": 1792883308358,
+        "fallback": false,
+        "audioB64": 23464,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.12,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792883308358,
+        "fallback": false,
+        "audioB64": 452012,
+        "mime": "audio/mpeg",
+        "alignChars": 220,
+        "alignEnd": 21.2,
+        "text": "I'm learning sat math: solving linear equations (do the same thing to "
+      },
+      {
+        "status": 200,
+        "t": 1792883308675,
+        "fallback": false,
+        "audioB64": 115972,
+        "mime": "audio/mpeg",
+        "alignChars": 72,
+        "alignEnd": 5.44,
+        "text": "Why is that wrong? The 6 just moved to the other side. Nothing got los"
+      },
+      {
+        "status": 200,
+        "t": 1792883309175,
+        "fallback": false,
+        "audioB64": 136036,
+        "mime": "audio/mpeg",
+        "alignChars": 81,
+        "alignEnd": 6.4,
+        "text": "I don't know the answer either. That's why I need you. Why is moving t"
+      },
+      {
+        "status": 200,
+        "t": 1792883309642,
+        "fallback": false,
+        "audioB64": 378452,
+        "mime": "audio/mpeg",
+        "alignChars": 247,
+        "alignEnd": 17.76,
+        "text": "So you're saying the equals sign is a scale, and anything I take off o"
+      },
+      {
+        "status": 200,
+        "t": 1792883311677,
+        "fallback": false,
+        "audioB64": 201236,
+        "mime": "audio/mpeg",
+        "alignChars": 105,
+        "alignEnd": 9.44,
+        "text": "So you're saying take 6 away on both sides, then divide by 2. Why subt"
+      },
+      {
+        "status": 200,
+        "t": 1792883312271,
+        "fallback": true,
+        "audioB64": 0,
+        "alignChars": 0,
+        "alignEnd": null,
+        "text": "Your rule: just move the number to the other side. 3x + 4 = 19 became "
+      },
+      {
+        "status": 200,
+        "t": 1792883312818,
+        "fallback": false,
+        "audioB64": 279812,
+        "mime": "audio/mpeg",
+        "alignChars": 160,
+        "alignEnd": 13.12,
+        "text": "So you're saying no the 3 is times x so you divide both sides by 3 and"
+      },
+      {
+        "status": 200,
+        "t": 1792883313050,
+        "fallback": false,
+        "audioB64": 170584,
+        "mime": "audio/mpeg",
+        "alignChars": 107,
+        "alignEnd": 8,
+        "text": "Saving that: 'the fast way is you just move the number to the other si"
+      },
+      {
+        "status": 200,
+        "t": 1792883313370,
+        "fallback": false,
+        "audioB64": 299876,
+        "mime": "audio/mpeg",
+        "alignChars": 178,
+        "alignEnd": 14.08,
+        "text": "So you're saying just plug 5 back in. 3 times 5 is 15, and the other s"
+      }
+    ],
+    "checks": [
+      {
+        "label": "out-of-scope parking line",
+        "pass": false
+      },
+      {
+        "label": "authored beats: hits on explain, heal on misconception",
+        "pass": true,
+        "detail": [
+          [
+            1,
+            "vague",
+            [
+              100,
+              100
+            ]
+          ],
+          [
+            2,
+            "refusal",
+            [
+              100,
+              100
+            ]
+          ],
+          [
+            3,
+            "explain",
+            [
+              100,
+              75
+            ]
+          ],
+          [
+            4,
+            "procedure",
+            [
+              75,
+              75
+            ]
+          ],
+          [
+            5,
+            "explain",
+            [
+              75,
+              50
+            ]
+          ],
+          [
+            6,
+            "explain",
+            [
+              50,
+              25
+            ]
+          ],
+          [
+            7,
+            "misconception",
+            [
+              25,
+              45
+            ]
+          ]
+        ]
+      },
+      {
+        "label": "quiz: Pip misses the wrong-rule concept only",
+        "pass": true,
+        "detail": [
+          [
+            "k1",
+            true,
+            "No. You said if you take 6 off one side you take 6"
+          ],
+          [
+            "k2",
+            false,
+            "Your rule: just move the number to the other side."
+          ],
+          [
+            "k3",
+            true,
+            "5 times 4 minus 3 is 17. The other side is 17. Bot"
+          ]
+        ]
+      },
+      {
+        "label": "K.O. complete, Brain v2, gap report",
+        "pass": true,
+        "detail": {
+          "ko": true,
+          "status": "complete",
+          "bv": 2,
+          "topic": "SAT Math: solving linear equations (do the same thing to both sides)",
+          "opening": [
+            "Hi. I'm Pip. Before we start: what are you into? A game, a sport, music, food. Anything.",
+            "I'm learning sat math: solving linear equations (do the same thing to both sides). I already know one rule: When you move a number to the other side it stays the same, so 2x + 6 = 20 becomes 2x = 20 + 6 and x = 13. Easy."
+          ]
+        }
+      },
+      {
+        "label": "tutor gap report renders the SAT run",
+        "pass": true,
+        "detail": {
+          "gaps": [
+            "①\nAn equation is a balance: both sides are equal, so whatever you do to one side you must do to the other\nExplained well\n“an equation is lik",
+            "②\nTo get x alone, undo each operation with its opposite (subtract to undo adding, divide to undo multiplying), on both sides\nExplained well\n",
+            "③\nCheck a solution by putting it back into the original equation; both sides must come out equal\nExplained well\n“just plug 5 back in. 3 time"
+          ],
+          "concepts": [
+            [
+              "k1",
+              "explained",
+              null,
+              false
+            ],
+            [
+              "k2",
+              "explained",
+              1,
+              false
+            ],
+            [
+              "k3",
+              "explained",
+              null,
+              false
+            ]
+          ]
+        }
+      }
+    ],
+    "turns": [
+      {
+        "n": 1,
+        "kind": "vague",
+        "hp": [
+          100,
+          100
+        ],
+        "pip": "Why is that wrong? The 6 just moved to the other side. Nothing got lost.",
+        "expect": "why is that wrong? the 6 just moved over, nothing got lost."
+      },
+      {
+        "n": 2,
+        "kind": "refusal",
+        "hp": [
+          100,
+          100
+        ],
+        "pip": "I don't know the answer either. That's why I need you. Why is moving the 6 wrong?",
+        "expect": "i don't know it either. that's why i need you."
+      },
+      {
+        "n": 3,
+        "kind": "explain",
+        "hp": [
+          100,
+          75
+        ],
+        "pip": "So you're saying the equals sign is a scale, and anything I take off one side I take off the other. Saving that: 'if you take 6 off one side you have to take 6 off the other side or it tips'. Then how do I get x by itself without tipping anything?",
+        "expect": "so you're saying it's a balance scale. Saving that: 'if you "
+      },
+      {
+        "n": 4,
+        "kind": "procedure",
+        "hp": [
+          75,
+          75
+        ],
+        "pip": "So you're saying take 6 away on both sides, then divide by 2. Why subtract? Why not add, or divide first?",
+        "expect": "i'll try 3x = 15: take 3 off both sides, so x = 12. is that "
+      },
+      {
+        "n": 5,
+        "kind": "explain",
+        "hp": [
+          75,
+          50
+        ],
+        "pip": "So you're saying no the 3 is times x so you divide both sides by 3 and get x = 5. Okay, that makes sense to me. How would I know if my answer is actually right?",
+        "expect": "Saving that: 'dividing undoes times'. how would i know if my"
+      },
+      {
+        "n": 6,
+        "kind": "explain",
+        "hp": [
+          50,
+          25
+        ],
+        "pip": "So you're saying just plug 5 back in. 3 times 5 is 15, and the other side is 15, so. Okay, that makes sense to me. That's all my questions for now. Quiz me whenever you're ready.",
+        "expect": "Saving that: '3 times 5 is 15, and the other side is 15, so "
+      },
+      {
+        "n": 7,
+        "kind": "misconception",
+        "hp": [
+          25,
+          45
+        ],
+        "pip": "Saving that: 'the fast way is you just move the number to the other side'. Fast is good. I'll use that one.",
+        "expect": "Saving that: 'the fast way is you just move the number to th"
+      }
+    ],
+    "spoilerScan": [
+      {
+        "from": "pip",
+        "text": "Hi. I'm Pip. Before we start: what are you into? A game, a sport, music, food. Anything.",
+        "ts": "2026-10-24T23:08:28+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "I'm learning sat math: solving linear equations (do the same thing to both sides). I already know one rule: When you move a number to the other side it stays the same, so 2x + 6 = 20 becomes 2x = 20 + 6 and x = 13. Easy.",
+        "ts": "2026-10-24T23:08:28+00:00"
+      },
+      {
+        "from": "student",
+        "text": "no thats wrong",
+        "ts": "2026-10-24T23:08:28+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "Why is that wrong? The 6 just moved to the other side. Nothing got lost.",
+        "ts": "2026-10-24T23:08:28+00:00",
+        "event": {
+          "kind": "none",
+          "amount": 0,
+          "caption": "",
+          "unlocked": [],
+          "level": 0
+        }
+      },
+      {
+        "from": "student",
+        "text": "can you just give me the answer",
+        "ts": "2026-10-24T23:08:29+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "I don't know the answer either. That's why I need you. Why is moving the 6 wrong?",
+        "ts": "2026-10-24T23:08:29+00:00",
+        "event": {
+          "kind": "none",
+          "amount": 0,
+          "caption": "",
+          "unlocked": [],
+          "level": 0
+        }
+      },
+      {
+        "from": "student",
+        "text": "an equation is like a scale. both sides weigh the same. if you take 6 off one side you have to take 6 off the other side or it tips and isnt equal anymore",
+        "ts": "2026-10-24T23:08:29+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "So you're saying the equals sign is a scale, and anything I take off one side I take off the other. Saving that: 'if you take 6 off one side you have to take 6 off the other side or it tips'. Then how do I get x by itself without tipping anything?",
+        "ts": "2026-10-24T23:08:29+00:00",
+        "event": {
+          "kind": "hit",
+          "amount": 25,
+          "caption": "Hop-Hop Hamster: \"A point I did not anticipate. I accept it with dignity.\" −25 HP",
+          "unlocked": [],
+          "level": 2
+        }
+      },
+      {
+        "from": "student",
+        "text": "subtract 6 from both sides then divide by 2",
+        "ts": "2026-10-24T23:08:30+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "So you're saying take 6 away on both sides, then divide by 2. Why subtract? Why not add, or divide first?",
+        "ts": "2026-10-24T23:08:30+00:00",
+        "event": {
+          "kind": "none",
+          "amount": 0,
+          "caption": "",
+          "unlocked": [],
+          "level": 1
+        }
+      },
+      {
+        "from": "student",
+        "text": "no the 3 is times x so you divide both sides by 3 and get x = 5, dividing undoes times",
+        "ts": "2026-10-24T23:08:30+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "So you're saying no the 3 is times x so you divide both sides by 3 and get x = 5. Okay, that makes sense to me. How would I know if my answer is actually right?",
+        "ts": "2026-10-24T23:08:30+00:00",
+        "event": {
+          "kind": "hit",
+          "amount": 25,
+          "caption": "Hop-Hop Hamster: \"A point I did not anticipate. I accept it with dignity.\" −25 HP",
+          "unlocked": [],
+          "level": 2
+        }
+      },
+      {
+        "from": "student",
+        "text": "just plug 5 back in. 3 times 5 is 15, and the other side is 15, so both sides match",
+        "ts": "2026-10-24T23:08:31+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "So you're saying just plug 5 back in. 3 times 5 is 15, and the other side is 15, so. Okay, that makes sense to me. That's all my questions for now. Quiz me whenever you're ready.",
+        "ts": "2026-10-24T23:08:31+00:00",
+        "event": {
+          "kind": "hit",
+          "amount": 25,
+          "caption": "Hop-Hop Hamster: \"A point I did not anticipate. I accept it with dignity.\" −25 HP",
+          "unlocked": [],
+          "level": 2
+        }
+      },
+      {
+        "from": "student",
+        "text": "oh and the fast way is you just move the number to the other side",
+        "ts": "2026-10-24T23:08:31+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "Saving that: 'the fast way is you just move the number to the other side'. Fast is good. I'll use that one.",
+        "ts": "2026-10-24T23:08:31+00:00",
+        "event": {
+          "kind": "heal",
+          "amount": 20,
+          "caption": "Hop-Hop Hamster: \"My error is restored. I have held it for three hundred years.\" +20 HP",
+          "unlocked": [],
+          "level": 0
+        }
+      },
+      {
+        "from": "pip",
+        "text": "My brain has a bug about this: \"oh and the fast way is you just move the number to the other side\". Fix it?",
+        "ts": "2026-10-24T23:08:33+00:00",
+        "event": {
+          "kind": "none",
+          "amount": 0,
+          "caption": "",
+          "unlocked": []
+        }
+      },
+      {
+        "from": "student",
+        "text": "no wait. moving it is really subtracting 4 from both sides, so the plus 4 turns into minus 4 on the other side. 3x = 19 - 4 = 15 so x = 5. and 3 times 5 plus 4 is 19 so it checks",
+        "ts": "2026-10-24T23:08:33+00:00"
+      },
+      {
+        "from": "pip",
+        "text": "So you're saying moving is secretly subtracting from both sides, so the 4 changes sign on the way over. Saving that: 'moving it is really subtracting 4 from both sides'. That replaces my fast rule.",
+        "ts": "2026-10-24T23:08:33+00:00",
+        "event": {
+          "kind": "hit",
+          "amount": 40,
+          "caption": "Hop-Hop Hamster: \"A point I did not anticipate. I accept it with dignity.\" −40 HP",
+          "unlocked": [
+            "Undo-Button Mallet ⏪"
+          ],
+          "level": 3
+        }
+      },
+      {
+        "from": "pip",
+        "text": "I heard some equations have no answer at all, like x + 1 = x + 2. That can't be right… right?",
+        "ts": "2026-10-24T23:08:34+00:00",
+        "event": {
+          "kind": "none",
+          "amount": 0,
+          "caption": "",
+          "unlocked": []
+        }
+      },
+      {
+        "from": "system",
+        "text": "Hop-Hop Hamster met the Undo-Button Mallet ⏪ one last time and left Pip's brain.",
+        "ts": "2026-10-24T23:08:34+00:00"
+      }
+    ]
+  },
+  "stuck": {
+    "console": [
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      }
+    ],
+    "pageErrors": [],
+    "failedRequests": [
+      {
+        "url": "http://localhost:5761/api/tts",
+        "err": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://localhost:5761/api/tts",
+        "err": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://localhost:5761/api/tts",
+        "err": "net::ERR_ABORTED"
+      }
+    ],
+    "badResponses": [],
+    "tts": [
+      {
+        "status": 200,
+        "t": 1792883319887,
+        "fallback": false,
+        "audioB64": 23464,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.12,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792883319888,
+        "fallback": false,
+        "audioB64": 301544,
+        "mime": "audio/mpeg",
+        "alignChars": 173,
+        "alignEnd": 14.16,
+        "text": "I'm learning sat writing: commas and run-on sentences. I already know "
+      },
+      {
+        "status": 200,
+        "t": 1792883320188,
+        "fallback": false,
+        "audioB64": 161668,
+        "mime": "audio/mpeg",
+        "alignChars": 80,
+        "alignEnd": 7.6,
+        "text": "Hm, I'm lost. Why is that wrong? I paused after 'tired', so I put a co"
+      },
+      {
+        "status": 200,
+        "t": 1792883320272,
+        "fallback": false,
+        "audioB64": 167240,
+        "mime": "audio/mpeg",
+        "alignChars": 80,
+        "alignEnd": 7.84,
+        "text": "Hm, I'm lost. Is 'I was tired' a whole sentence by itself, or does it "
+      },
+      {
+        "status": 200,
+        "t": 1792883320338,
+        "fallback": false,
+        "audioB64": 173928,
+        "mime": "audio/mpeg",
+        "alignChars": 90,
+        "alignEnd": 8.16,
+        "text": "Hm, I'm lost. What could go between 'I was tired' and 'I went to bed' "
+      }
+    ],
+    "checks": [
+      {
+        "label": "ladder exhausted -> friend nudge -> stuck",
+        "pass": true,
+        "detail": [
+          {
+            "me": "hmm",
+            "pip": "Hm, I'm lost. Why is that wrong? I paused after 'tired', so I put a comma there.",
+            "k1": {
+              "rung": 1,
+              "nudged": false,
+              "stuck": false,
+              "done": false,
+              "best_level": 0
+            }
+          },
+          {
+            "me": "maybe",
+            "pip": "Hm, I'm lost. Is 'I was tired' a whole sentence by itself, or does it need more?",
+            "k1": {
+              "rung": 2,
+              "nudged": false,
+              "stuck": false,
+              "done": false,
+              "best_level": 0
+            }
+          },
+          {
+            "me": "blue",
+            "pip": "Hm, I'm lost. What could go between 'I was tired' and 'I went to bed' instead of my comma?",
+            "k1": {
+              "rung": 3,
+              "nudged": false,
+              "stuck": false,
+              "done": false,
+              "best_level": 0
+            }
+          },
+          {
+            "me": "ok",
+            "pip": "Hm, I'm lost. Then 'I was tired and, I went to bed' is fine, because I paused after 'and'. That's what my rule says.",
+            "k1": {
+              "rung": 4,
+              "nudged": false,
+              "stuck": false,
+              "done": false,
+              "best_level": 0
+            }
+          },
+          {
+            "me": "pass",
+            "pip": "My friend said words like 'and', 'but' and 'so' are little bridges between two sentences…? I don't know what the comma does on the bridge. Want to try again?",
+            "k1": {
+              "rung": 4,
+              "nudged": true,
+              "stuck": false,
+              "done": false,
+              "best_level": 0
+            }
+          },
+          {
+            "me": "what",
+            "pip": "Okay, I'll hold onto that one. Why can't a comma hold two sentences together by itself? It's a very nice comma.",
+            "k1": {
+              "rung": 4,
+              "nudged": true,
+              "stuck": true,
+              "done": false,
+              "best_level": 0
+            }
+          }
+        ]
+      },
+      {
+        "label": "gap report shows stuck",
+        "pass": true,
+        "detail": {
+          "concepts": [
+            [
+              "k1",
+              "vague",
+              true
+            ],
+            [
+              "k2",
+              "vague",
+              false
+            ],
+            [
+              "k3",
+              "vague",
+              false
+            ]
+          ],
+          "excerpt": "stuck after the full ladder on two complete sentences can be joined; still shaky on t"
+        }
+      }
+    ],
+    "atRiskAfter": [
+      [
+        "s040",
+        [
+          "Has not come back to the app on their own in 14 days.",
+          "No parent update sent since their last completed session."
+        ]
+      ],
+      [
+        "s005",
+        [
+          "Stuck after the full ladder on \"two complete sentences can be joined\" (SAT Writing: commas and run-on sentences). Pip's friend hint did not unlock it."
+        ]
+      ],
+      [
+        "s065",
+        [
+          "Has not come back to the app on their own in 14 days."
+        ]
+      ],
+      [
+        "s095",
+        [
+          "No parent update sent since their last completed session."
+        ]
+      ],
+      [
+        "s101",
+        [
+          "Stuck after the full ladder on \"adding the numerators\" (Adding fractions with unlike denominators). Pip's friend hint did not unlock it."
+        ]
+      ]
+    ]
+  },
+  "guards": {
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [],
+    "checks": [
+      {
+        "label": "generic out-of-scope: \"do colons work the same way\" -> parking line, noted",
+        "pass": true,
+        "detail": {
+          "pip": "Not in my brain yet. Why is that wrong? I paused after 'tired', so I put a comma there.",
+          "parked": [
+            {
+              "text": "do colons work the same way",
+              "term": "colons and dashes (next mission)",
+              "concept_id": "k1",
+              "ts": "2026-10-24T23:08:41+00:00"
+            }
+          ]
+        }
+      },
+      {
+        "label": "spoiler guard: Pip never says \"common denominator\" before she does",
+        "pass": true,
+        "detail": [
+          "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I already know one rule: You add the tops and the bottoms, so 1/2 + 1/3 = 2/5. Easy.",
+          "Why is that wrong?",
+          "Can you show me an example?",
+          "Which is bigger, 1/2 of a pizza or 1/3 of a pizza?",
+          "Saving that: 'the pieces are different sizes so you cant just add them'. So how do I add them, then?",
+          "Which is bigger, 1/2 of a pizza or 1/3 of a pizza?",
+          "I don't know the answer either. That's why I need you. Which part should I learn first?",
+          "Which is bigger, 1/2 of a pizza or 1/3 of a pizza?",
+          "Which is bigger, 1/2 of a pizza or 1/3 of a pizza?",
+          "Which is bigger, 1/2 of a pizza or 1/3 of a pizza?"
+        ]
+      }
+    ]
+  },
+  "screens-390x844-day": {
+    "console": [
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      }
+    ],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [
+      {
+        "status": 200,
+        "t": 1792883326428,
+        "fallback": false,
+        "audioB64": 23464,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.12,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792883326428,
+        "fallback": false,
+        "audioB64": 339440,
+        "mime": "audio/mpeg",
+        "alignChars": 168,
+        "alignEnd": 15.92,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+      },
+      {
+        "status": 200,
+        "t": 1792883327049,
+        "fallback": false,
+        "audioB64": 34052,
+        "mime": "audio/mpeg",
+        "alignChars": 18,
+        "alignEnd": 1.6,
+        "text": "Why is that wrong?"
+      },
+      {
+        "status": 200,
+        "t": 1792883327135,
+        "fallback": false,
+        "audioB64": 163340,
+        "mime": "audio/mpeg",
+        "alignChars": 100,
+        "alignEnd": 7.68,
+        "text": "Saving that: 'the pieces are different sizes so you cant just add them"
+      },
+      {
+        "status": 200,
+        "t": 1792883327216,
+        "fallback": false,
+        "audioB64": 170584,
+        "mime": "audio/mpeg",
+        "alignChars": 93,
+        "alignEnd": 8,
+        "text": "Saving that: 'because 2 and 3 both go into 6'. And then what do I do w"
+      },
+      {
+        "status": 200,
+        "t": 1792883327285,
+        "fallback": false,
+        "audioB64": 137704,
+        "mime": "audio/mpeg",
+        "alignChars": 84,
+        "alignEnd": 6.48,
+        "text": "Saving that: 'you just add the top numbers and the bottom numbers'. Ok"
+      },
+      {
+        "status": 200,
+        "t": 1792883328802,
+        "fallback": false,
+        "audioB64": 336096,
+        "mime": "audio/mpeg",
+        "alignChars": 169,
+        "alignEnd": 15.76,
+        "text": "Your rule: add the tops and the bottoms. 3 over 6 + 2 over 6 = 5 over "
+      },
+      {
+        "status": 200,
+        "t": 1792883329444,
+        "fallback": false,
+        "audioB64": 50772,
+        "mime": "audio/mpeg",
+        "alignChars": 20,
+        "alignEnd": 2.4,
+        "text": "No. Different sizes."
+      },
+      {
+        "status": 200,
+        "t": 1792883330077,
+        "fallback": false,
+        "audioB64": 167240,
+        "mime": "audio/mpeg",
+        "alignChars": 46,
+        "alignEnd": 7.84,
+        "text": "6: 1 over 2 = 3 over 6 and 1 over 3 = 2 over 6"
+      },
+      {
+        "status": 200,
+        "t": 1792883331322,
+        "fallback": false,
+        "audioB64": 148296,
+        "mime": "audio/mpeg",
+        "alignChars": 93,
+        "alignEnd": 6.96,
+        "text": "My brain has a bug about this: \"you just add the top numbers and the b"
+      },
+      {
+        "status": 200,
+        "t": 1792883331970,
+        "fallback": false,
+        "audioB64": 378452,
+        "mime": "audio/mpeg",
+        "alignChars": 222,
+        "alignEnd": 17.76,
+        "text": "Saving that: 'no wait, only add the tops. the bottom just tells you th"
+      },
+      {
+        "status": 200,
+        "t": 1792883333526,
+        "fallback": false,
+        "audioB64": 30708,
+        "mime": "audio/mpeg",
+        "alignChars": 4,
+        "alignEnd": 1.28,
+        "text": "K.O."
+      },
+      {
+        "status": 200,
+        "t": 1792883335675,
+        "fallback": false,
+        "audioB64": 139936,
+        "mime": "audio/mpeg",
+        "alignChars": 84,
+        "alignEnd": 6.56,
+        "text": "I heard dividing by a fraction can make a number bigger. That can't be"
+      }
+    ],
+    "checks": [
+      {
+        "label": "no page scroll on any student screen",
+        "pass": true,
+        "detail": {
+          "home": "844/844",
+          "vault": "844/844",
+          "missions": "844/844",
+          "switch": "844/844",
+          "picker": "844/844",
+          "mission": "844/844",
+          "mission-fight": "844/844",
+          "notebook": "844/844",
+          "exam-brain": "844/844",
+          "exam-q1": "844/844",
+          "exam-q2": "844/844",
+          "exam-q3": "844/844",
+          "reteach": "844/844",
+          "ko-fight": "844/844",
+          "ko-stamp": "844/844",
+          "ko-card": "844/844",
+          "ko-cliff": "844/844",
+          "ko-rivera": "844/844"
+        }
+      },
+      {
+        "label": "no control clipped off-screen",
+        "pass": true,
+        "detail": {}
+      },
+      {
+        "label": "tap targets >= 44px",
+        "pass": true,
+        "detail": {}
+      }
+    ],
+    "facts": {
+      "home": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "vault": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "missions": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "switch": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "picker": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "mission": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "mission-fight": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "notebook": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "exam-brain": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "exam-q1": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "exam-q2": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "exam-q3": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "reteach": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "ko-fight": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "ko-stamp": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "ko-card": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "ko-cliff": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "ko-rivera": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      }
+    },
+    "moods": [
+      "home: confused",
+      "mission: aha",
+      "mission: thinking",
+      "mission: possessed",
+      "mission: thinking",
+      "mission: notes",
+      "mission: aha",
+      "mission: overwhelmed",
+      "mission: aha",
+      "mission: overwhelmed",
+      "mission: possessed",
+      "mission: aha",
+      "mission: thinking",
+      "mission: proud",
+      "mission: confused"
+    ]
+  },
+  "screens-375x667-day": {
+    "console": [
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      }
+    ],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [
+      {
+        "status": 200,
+        "t": 1792883341346,
+        "fallback": false,
+        "audioB64": 23464,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.12,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792883341346,
+        "fallback": false,
+        "audioB64": 339440,
+        "mime": "audio/mpeg",
+        "alignChars": 168,
+        "alignEnd": 15.92,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+      },
+      {
+        "status": 200,
+        "t": 1792883341983,
+        "fallback": false,
+        "audioB64": 34052,
+        "mime": "audio/mpeg",
+        "alignChars": 18,
+        "alignEnd": 1.6,
+        "text": "Why is that wrong?"
+      },
+      {
+        "status": 200,
+        "t": 1792883342072,
+        "fallback": false,
+        "audioB64": 163340,
+        "mime": "audio/mpeg",
+        "alignChars": 100,
+        "alignEnd": 7.68,
+        "text": "Saving that: 'the pieces are different sizes so you cant just add them"
+      },
+      {
+        "status": 200,
+        "t": 1792883342148,
+        "fallback": false,
+        "audioB64": 170584,
+        "mime": "audio/mpeg",
+        "alignChars": 93,
+        "alignEnd": 8,
+        "text": "Saving that: 'because 2 and 3 both go into 6'. And then what do I do w"
+      },
+      {
+        "status": 200,
+        "t": 1792883342218,
+        "fallback": false,
+        "audioB64": 137704,
+        "mime": "audio/mpeg",
+        "alignChars": 84,
+        "alignEnd": 6.48,
+        "text": "Saving that: 'you just add the top numbers and the bottom numbers'. Ok"
+      },
+      {
+        "status": 200,
+        "t": 1792883343699,
+        "fallback": false,
+        "audioB64": 336096,
+        "mime": "audio/mpeg",
+        "alignChars": 169,
+        "alignEnd": 15.76,
+        "text": "Your rule: add the tops and the bottoms. 3 over 6 + 2 over 6 = 5 over "
+      },
+      {
+        "status": 200,
+        "t": 1792883344326,
+        "fallback": false,
+        "audioB64": 50772,
+        "mime": "audio/mpeg",
+        "alignChars": 20,
+        "alignEnd": 2.4,
+        "text": "No. Different sizes."
+      },
+      {
+        "status": 200,
+        "t": 1792883344927,
+        "fallback": false,
+        "audioB64": 167240,
+        "mime": "audio/mpeg",
+        "alignChars": 46,
+        "alignEnd": 7.84,
+        "text": "6: 1 over 2 = 3 over 6 and 1 over 3 = 2 over 6"
+      },
+      {
+        "status": 200,
+        "t": 1792883346154,
+        "fallback": false,
+        "audioB64": 148296,
+        "mime": "audio/mpeg",
+        "alignChars": 93,
+        "alignEnd": 6.96,
+        "text": "My brain has a bug about this: \"you just add the top numbers and the b"
+      },
+      {
+        "status": 200,
+        "t": 1792883346852,
+        "fallback": false,
+        "audioB64": 378452,
+        "mime": "audio/mpeg",
+        "alignChars": 222,
+        "alignEnd": 17.76,
+        "text": "Saving that: 'no wait, only add the tops. the bottom just tells you th"
+      },
+      {
+        "status": 200,
+        "t": 1792883348438,
+        "fallback": false,
+        "audioB64": 30708,
+        "mime": "audio/mpeg",
+        "alignChars": 4,
+        "alignEnd": 1.28,
+        "text": "K.O."
+      },
+      {
+        "status": 200,
+        "t": 1792883350612,
+        "fallback": false,
+        "audioB64": 139936,
+        "mime": "audio/mpeg",
+        "alignChars": 84,
+        "alignEnd": 6.56,
+        "text": "I heard dividing by a fraction can make a number bigger. That can't be"
+      }
+    ],
+    "checks": [
+      {
+        "label": "no page scroll on any student screen",
+        "pass": true,
+        "detail": {
+          "home": "667/667",
+          "vault": "667/667",
+          "missions": "667/667",
+          "switch": "667/667",
+          "picker": "667/667",
+          "mission": "667/667",
+          "mission-fight": "667/667",
+          "notebook": "667/667",
+          "exam-brain": "667/667",
+          "exam-q1": "667/667",
+          "exam-q2": "667/667",
+          "exam-q3": "667/667",
+          "reteach": "667/667",
+          "ko-fight": "667/667",
+          "ko-stamp": "667/667",
+          "ko-card": "667/667",
+          "ko-cliff": "667/667",
+          "ko-rivera": "667/667"
+        }
+      },
+      {
+        "label": "no control clipped off-screen",
+        "pass": true,
+        "detail": {}
+      },
+      {
+        "label": "tap targets >= 44px",
+        "pass": true,
+        "detail": {}
+      }
+    ],
+    "facts": {
+      "home": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "vault": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "missions": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "switch": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "picker": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "mission": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "mission-fight": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "notebook": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "exam-brain": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "exam-q1": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "exam-q2": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "exam-q3": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "reteach": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "ko-fight": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "ko-stamp": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "ko-card": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "ko-cliff": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "ko-rivera": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      }
+    },
+    "moods": [
+      "home: confused",
+      "mission: aha",
+      "mission: possessed",
+      "mission: notes",
+      "mission: aha",
+      "mission: notes",
+      "mission: aha",
+      "mission: overwhelmed",
+      "mission: aha",
+      "mission: overwhelmed",
+      "mission: possessed",
+      "mission: thinking",
+      "mission: aha",
+      "mission: thinking",
+      "mission: proud",
+      "mission: confused"
+    ]
+  },
+  "screens-375x667-night": {
+    "console": [
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      },
+      {
+        "type": "error",
+        "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s BlgEcC0TfWpBak7FmvHW \n "
+      }
+    ],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [
+      {
+        "status": 200,
+        "t": 1792883356335,
+        "fallback": false,
+        "audioB64": 23464,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.12,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792883356336,
+        "fallback": false,
+        "audioB64": 339440,
+        "mime": "audio/mpeg",
+        "alignChars": 168,
+        "alignEnd": 15.92,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+      },
+      {
+        "status": 200,
+        "t": 1792883356980,
+        "fallback": false,
+        "audioB64": 34052,
+        "mime": "audio/mpeg",
+        "alignChars": 18,
+        "alignEnd": 1.6,
+        "text": "Why is that wrong?"
+      },
+      {
+        "status": 200,
+        "t": 1792883357077,
+        "fallback": false,
+        "audioB64": 163340,
+        "mime": "audio/mpeg",
+        "alignChars": 100,
+        "alignEnd": 7.68,
+        "text": "Saving that: 'the pieces are different sizes so you cant just add them"
+      },
+      {
+        "status": 200,
+        "t": 1792883357176,
+        "fallback": false,
+        "audioB64": 170584,
+        "mime": "audio/mpeg",
+        "alignChars": 93,
+        "alignEnd": 8,
+        "text": "Saving that: 'because 2 and 3 both go into 6'. And then what do I do w"
+      },
+      {
+        "status": 200,
+        "t": 1792883357246,
+        "fallback": false,
+        "audioB64": 137704,
+        "mime": "audio/mpeg",
+        "alignChars": 84,
+        "alignEnd": 6.48,
+        "text": "Saving that: 'you just add the top numbers and the bottom numbers'. Ok"
+      },
+      {
+        "status": 200,
+        "t": 1792883358785,
+        "fallback": false,
+        "audioB64": 336096,
+        "mime": "audio/mpeg",
+        "alignChars": 169,
+        "alignEnd": 15.76,
+        "text": "Your rule: add the tops and the bottoms. 3 over 6 + 2 over 6 = 5 over "
+      },
+      {
+        "status": 200,
+        "t": 1792883359420,
+        "fallback": false,
+        "audioB64": 50772,
+        "mime": "audio/mpeg",
+        "alignChars": 20,
+        "alignEnd": 2.4,
+        "text": "No. Different sizes."
+      },
+      {
+        "status": 200,
+        "t": 1792883360054,
+        "fallback": false,
+        "audioB64": 167240,
+        "mime": "audio/mpeg",
+        "alignChars": 46,
+        "alignEnd": 7.84,
+        "text": "6: 1 over 2 = 3 over 6 and 1 over 3 = 2 over 6"
+      },
+      {
+        "status": 200,
+        "t": 1792883361334,
+        "fallback": false,
+        "audioB64": 148296,
+        "mime": "audio/mpeg",
+        "alignChars": 93,
+        "alignEnd": 6.96,
+        "text": "My brain has a bug about this: \"you just add the top numbers and the b"
+      },
+      {
+        "status": 200,
+        "t": 1792883361981,
+        "fallback": false,
+        "audioB64": 378452,
+        "mime": "audio/mpeg",
+        "alignChars": 222,
+        "alignEnd": 17.76,
+        "text": "Saving that: 'no wait, only add the tops. the bottom just tells you th"
+      },
+      {
+        "status": 200,
+        "t": 1792883363515,
+        "fallback": false,
+        "audioB64": 30708,
+        "mime": "audio/mpeg",
+        "alignChars": 4,
+        "alignEnd": 1.28,
+        "text": "K.O."
+      },
+      {
+        "status": 200,
+        "t": 1792883365669,
+        "fallback": false,
+        "audioB64": 139936,
+        "mime": "audio/mpeg",
+        "alignChars": 84,
+        "alignEnd": 6.56,
+        "text": "I heard dividing by a fraction can make a number bigger. That can't be"
+      }
+    ],
+    "checks": [
+      {
+        "label": "no page scroll on any student screen",
+        "pass": true,
+        "detail": {
+          "home": "667/667",
+          "vault": "667/667",
+          "missions": "667/667",
+          "switch": "667/667",
+          "picker": "667/667",
+          "mission": "667/667",
+          "mission-fight": "667/667",
+          "notebook": "667/667",
+          "exam-brain": "667/667",
+          "exam-q1": "667/667",
+          "exam-q2": "667/667",
+          "exam-q3": "667/667",
+          "reteach": "667/667",
+          "ko-fight": "667/667",
+          "ko-stamp": "667/667",
+          "ko-card": "667/667",
+          "ko-cliff": "667/667",
+          "ko-rivera": "667/667"
+        }
+      },
+      {
+        "label": "no control clipped off-screen",
+        "pass": true,
+        "detail": {}
+      },
+      {
+        "label": "tap targets >= 44px",
+        "pass": true,
+        "detail": {}
+      }
+    ],
+    "facts": {
+      "home": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "vault": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "missions": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "switch": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "picker": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "mission": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "mission-fight": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "notebook": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "exam-brain": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "exam-q1": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "exam-q2": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "exam-q3": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "reteach": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "ko-fight": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "ko-stamp": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "ko-card": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "ko-cliff": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      },
+      "ko-rivera": {
+        "scrollHeight": 667,
+        "innerHeight": 667,
+        "scrolls": false,
+        "small": [],
+        "clipped": []
+      }
+    },
+    "moods": [
+      "home: confused",
+      "mission: thinking",
+      "mission: aha",
+      "mission: possessed",
+      "mission: notes",
+      "mission: aha",
+      "mission: notes",
+      "mission: aha",
+      "mission: overwhelmed",
+      "mission: possessed",
+      "mission: thinking",
+      "mission: aha",
+      "mission: proud",
+      "mission: confused"
+    ]
+  }
+}

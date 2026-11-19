@@ -59,7 +59,8 @@
       "idea_patterns": [
         "f\\s*=\\s*m\\s*[\\*x×]?\\s*a\\b",
         "force.{0,25}(mass|m)\\b.{0,25}accelerat",
-        "newton'?s (second|2nd) law|second law|\\bnewtons? law\\b"
+        "newton'?s (second|2nd) law|second law|\\bnewtons? law\\b",
+        "\\bf\\s*(=|equals|is)\\s*m\\s*(\\*|x|×|times)?\\s*a\\b"
       ]
     },
     {

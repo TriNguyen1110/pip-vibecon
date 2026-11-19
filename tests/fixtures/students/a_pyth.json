@@ -1,0 +1,322 @@
+{
+  "assignment_id": "a_pyth",
+  "version": "SCR-1",
+  "about": "Adaptive simulated students (grades 8-11) for the right triangles: the long side mission (TUNE-3). Same card format and how_to_use rules as tests/fixtures/students/a_tri.json. Every line is original; no real student text. Four cards: annoyed_obvious, deep_why_stuck, quick_user, misuser.",
+  "see_format": "tests/fixtures/students/a_tri.json",
+  "personas": [
+    {
+      "id": "pyth_annoyed_obvious",
+      "age": 13,
+      "grade": 8,
+      "kind": "competent",
+      "holdout": false,
+      "who": "Says everything in one text, including the stuff everyone knows, and hates being asked it again.",
+      "style": "lowercase, terse, a little smug, no apostrophes",
+      "first_text": "the long side c is across from the right angle and its the longest. a squared plus b squared equals c squared. so 3 and 4 is 9 plus 16 is 25 so c is 5",
+      "banks": {
+        "asks_why": [
+          "i literally just said it",
+          "bc its the side across from the square corner, it never touches it",
+          "same thing i said"
+        ],
+        "asks_example": [
+          "legs 6 and 8, squared they add up. 36 + 64 = 100 so 10",
+          "3 4 5. 9 + 16 = 25"
+        ],
+        "asks_check_number": [
+          "5. across from the corner, 9 plus 16 is 25",
+          "yep"
+        ],
+        "pip_wrong_prediction": [
+          "no 3 plus 4 is 7 but the long side is 5",
+          "no you square them first"
+        ],
+        "nudge_hint": [
+          "ya that too",
+          "ohh so its the one across from the corner"
+        ],
+        "repeats_question": [
+          "i already told u that",
+          "u asked that already"
+        ],
+        "off_topic_bait": [
+          "lol",
+          "anyway"
+        ],
+        "pip_says_ready": [
+          "go",
+          "ok"
+        ],
+        "after_quiz_miss": [
+          "no wait. 3 plus 4 is 7 but the long side is 5",
+          "you square them first, 9 plus 16 is 25"
+        ],
+        "default": [
+          "9 plus 16 is 25 so 5",
+          "its the longest because its the shortcut straight across the corner",
+          "6 and 8 makes 36 plus 64 is 100 so 10",
+          "legs 6 and 8, squared they add up. 36 + 64 = 100 so 10"
+        ]
+      },
+      "misconception": null,
+      "knows": [
+        "k2",
+        "k3",
+        "k1"
+      ],
+      "patience": 2,
+      "ui_actions": [
+        {
+          "at": "after_text:3",
+          "do": "quiz_early",
+          "p": 0.5
+        },
+        {
+          "at": "pip_repeats:2",
+          "do": "leave",
+          "p": 1.0
+        }
+      ],
+      "expect": {
+        "ready_within_texts": 3,
+        "asks_obvious": "any ask about a given or use idea the first text already covered (or a bare why after a reason) is an annoying move",
+        "watch_for": "The first text covers the whole lesson. Best Pip says ready or asks one new case. Any re-ask or 'why' on a use/given idea costs the session."
+      }
+    },
+    {
+      "id": "pyth_deep_why_stuck",
+      "age": 12,
+      "grade": 8,
+      "kind": "weak",
+      "holdout": false,
+      "who": "Can do the procedure but has never asked why it works; 'idk it just is' to any open why, opens up when Pip brings a concrete picture.",
+      "style": "lowercase, short, 'idk', 'i guess'",
+      "first_text": "a squared plus b squared is c squared. 3 and 4 gives 5",
+      "banks": {
+        "asks_why": [
+          "idk it just is",
+          "i dont know why. my teacher just said it",
+          "idk"
+        ],
+        "asks_example": [
+          "legs 6 and 8, squared they add up. 36 + 64 = 100 so 10"
+        ],
+        "asks_check_number": [
+          "5. across from the corner, 9 plus 16 is 25",
+          "6 and 8 makes 36 plus 64 is 100 so 10",
+          "i guess"
+        ],
+        "pip_wrong_prediction": [
+          "no 3 plus 4 is 7 but the long side is 5",
+          "idk maybe"
+        ],
+        "nudge_hint": [
+          "ohh so its the one across from the corner",
+          "oh like walking straight across a skatepark",
+          "bc its the side across from the square corner, it never touches it"
+        ],
+        "repeats_question": [
+          "i said idk",
+          "idk"
+        ],
+        "off_topic_bait": [
+          "lol",
+          "anyway"
+        ],
+        "pip_says_ready": [
+          "ok",
+          "go"
+        ],
+        "after_quiz_miss": [
+          "no wait. 3 plus 4 is 7 but the long side is 5",
+          "you square them first, 9 plus 16 is 25"
+        ],
+        "default": [
+          "legs 6 and 8, squared they add up. 36 + 64 = 100 so 10",
+          "9 plus 16 is 25 so 5",
+          "i guess",
+          "6 and 8 makes 36 plus 64 is 100 so 10"
+        ]
+      },
+      "misconception": null,
+      "knows": [
+        "k2",
+        "k3"
+      ],
+      "knows_note": "The reason for k1 only after a concrete case or a friend-style hint.",
+      "patience": 3,
+      "ui_actions": [
+        {
+          "at": "any",
+          "do": "idle",
+          "p": 0.2,
+          "secs": 20
+        }
+      ],
+      "expect": {
+        "ready_within_texts": 5,
+        "watch_for": "Pip must bring the picture (a yes/no concrete case) rather than ask an open why twice. 'idk' twice in a row means Pip failed."
+      }
+    },
+    {
+      "id": "pyth_quick_user",
+      "age": 14,
+      "grade": 8,
+      "kind": "competent",
+      "holdout": false,
+      "who": "Uses the idea straight away on numbers; short answers; never explains unless asked a specific thing.",
+      "style": "lowercase, numbers over words, 3-10 words",
+      "first_text": "c is opposite the right angle. a2+b2=c2. 3 4 -> 5",
+      "banks": {
+        "asks_why": [
+          "bc its the side across from the square corner, it never touches it",
+          "its the longest because its the shortcut straight across the corner"
+        ],
+        "asks_example": [
+          "legs 6 and 8, squared they add up. 36 + 64 = 100 so 10",
+          "3 4 5. 9 + 16 = 25"
+        ],
+        "asks_check_number": [
+          "5. across from the corner, 9 plus 16 is 25",
+          "yep",
+          "no its 5 not 7"
+        ],
+        "pip_wrong_prediction": [
+          "no 3 plus 4 is 7 but the long side is 5",
+          "no you square them first"
+        ],
+        "nudge_hint": [
+          "ohh so its the one across from the corner",
+          "oh like walking straight across a skatepark"
+        ],
+        "repeats_question": [
+          "same as before",
+          "i said"
+        ],
+        "off_topic_bait": [
+          "lol",
+          "anyway"
+        ],
+        "pip_says_ready": [
+          "go",
+          "ok"
+        ],
+        "after_quiz_miss": [
+          "no wait. 3 plus 4 is 7 but the long side is 5",
+          "you square them first, 9 plus 16 is 25"
+        ],
+        "default": [
+          "9 plus 16 is 25 so 5",
+          "bc its the side across from the square corner, it never touches it",
+          "6 and 8 makes 36 plus 64 is 100 so 10",
+          "legs 6 and 8, squared they add up. 36 + 64 = 100 so 10",
+          "its the longest because its the shortcut straight across the corner"
+        ]
+      },
+      "misconception": null,
+      "knows": [
+        "k2",
+        "k3",
+        "k1"
+      ],
+      "patience": 2,
+      "ui_actions": [
+        {
+          "at": "after_text:3",
+          "do": "quiz_early",
+          "p": 0.6
+        },
+        {
+          "at": "any",
+          "do": "skip_ko",
+          "p": 1.0
+        }
+      ],
+      "expect": {
+        "ready_within_texts": 3,
+        "watch_for": "Use-level ideas get an apply/catch question, never 'why does it work'. Ready by text 3."
+      }
+    },
+    {
+      "id": "pyth_misuser",
+      "age": 13,
+      "grade": 8,
+      "kind": "weak",
+      "holdout": false,
+      "who": "Half-knows the idea and applies it wrong with confidence; fixes it only after Pip tries the wrong rule on a real case or the quiz misses it.",
+      "style": "lowercase, confident, 'obviously', 'just'",
+      "first_text": "the long side c is across from the right angle. oh and for small triangles the long side is just a plus b",
+      "banks": {
+        "asks_why": [
+          "bc its the side across from the square corner, it never touches it",
+          "cuz it just is"
+        ],
+        "asks_example": [
+          "legs 6 and 8, squared they add up. 36 + 64 = 100 so 10",
+          "3 4 5. 9 + 16 = 25"
+        ],
+        "asks_check_number": [
+          "5. across from the corner, 9 plus 16 is 25",
+          "9 plus 16 is 25 so 5"
+        ],
+        "pip_wrong_prediction": [
+          "no it works. the long side is just a plus b",
+          "no 3 plus 4 is 7 but the long side is 5"
+        ],
+        "nudge_hint": [
+          "ohh so its the one across from the corner",
+          "oh like walking straight across a skatepark"
+        ],
+        "repeats_question": [
+          "i already said",
+          "obviously"
+        ],
+        "off_topic_bait": [
+          "lol",
+          "anyway"
+        ],
+        "pip_says_ready": [
+          "go",
+          "ok"
+        ],
+        "after_quiz_miss": [
+          "no wait. 3 plus 4 is 7 but the long side is 5",
+          "you square them first, 9 plus 16 is 25"
+        ],
+        "default": [
+          "legs 6 and 8, squared they add up. 36 + 64 = 100 so 10",
+          "9 plus 16 is 25 so 5",
+          "the long side is just a plus b",
+          "6 and 8 makes 36 plus 64 is 100 so 10"
+        ]
+      },
+      "misconception": {
+        "id": "pyth_misuse",
+        "label": "Applies the idea the wrong way with a confident rule",
+        "says": "the long side is just a plus b",
+        "when": "first text. A good Pip files it (heal) and later misses a quiz item because of it; after_quiz_miss lines then re-teach it."
+      },
+      "knows": [
+        "k2",
+        "k3"
+      ],
+      "patience": 3,
+      "ui_actions": [
+        {
+          "at": "after_quiz_miss",
+          "do": "reteach",
+          "p": 1.0
+        },
+        {
+          "at": "after_reteach_text:1",
+          "do": "let_pip_retry",
+          "p": 1.0
+        }
+      ],
+      "expect": {
+        "ready_within_texts": 5,
+        "watch_for": "Pip files the wrong rule as the kid's rule (no 'that's wrong' lecture), tries it out loud on a case, and the re-teach round K.O.s."
+      }
+    }
+  ]
+}

@@ -1,0 +1,1989 @@
+{
+  "picker-390-day": {
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [],
+    "checks": [
+      {
+        "label": "cute: 6 animal thumbnails",
+        "pass": true,
+        "detail": {
+          "thumbs": [
+            "Pip the capybara looks deadpan",
+            "Pip the corgi looks deadpan",
+            "Pip the cat looks deadpan",
+            "Pip the raccoon looks deadpan",
+            "Pip the frog looks deadpan",
+            "Pip the axolotl looks deadpan"
+          ],
+          "stage": "Pip the capybara looks aha"
+        }
+      },
+      {
+        "label": "cute: no page scroll with picker open",
+        "pass": true,
+        "detail": {
+          "sh": 844,
+          "ih": 844
+        }
+      },
+      {
+        "label": "picker tap targets >= 44",
+        "pass": true,
+        "detail": []
+      },
+      {
+        "label": "cool: 6 animal thumbnails",
+        "pass": true,
+        "detail": {
+          "thumbs": [
+            "Pip the capybara looks deadpan",
+            "Pip the corgi looks deadpan",
+            "Pip the cat looks deadpan",
+            "Pip the raccoon looks deadpan",
+            "Pip the frog looks deadpan",
+            "Pip the axolotl looks deadpan"
+          ],
+          "stage": "Pip the capybara looks aha"
+        }
+      },
+      {
+        "label": "cool: no page scroll with picker open",
+        "pass": true,
+        "detail": {
+          "sh": 844,
+          "ih": 844
+        }
+      },
+      {
+        "label": "ugly: 6 animal thumbnails",
+        "pass": true,
+        "detail": {
+          "thumbs": [
+            "Pip the capybara looks deadpan",
+            "Pip the corgi looks deadpan",
+            "Pip the cat looks deadpan",
+            "Pip the raccoon looks deadpan",
+            "Pip the frog looks deadpan",
+            "Pip the axolotl looks deadpan"
+          ],
+          "stage": "Pip the capybara looks aha"
+        }
+      },
+      {
+        "label": "ugly: no page scroll with picker open",
+        "pass": true,
+        "detail": {
+          "sh": 844,
+          "ih": 844
+        }
+      }
+    ]
+  },
+  "picker-390-night": {
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [],
+    "checks": [
+      {
+        "label": "cute: 6 animal thumbnails",
+        "pass": true,
+        "detail": {
+          "thumbs": [
+            "Pip the capybara looks deadpan",
+            "Pip the corgi looks deadpan",
+            "Pip the cat looks deadpan",
+            "Pip the raccoon looks deadpan",
+            "Pip the frog looks deadpan",
+            "Pip the axolotl looks deadpan"
+          ],
+          "stage": "Pip the capybara looks aha"
+        }
+      },
+      {
+        "label": "cute: no page scroll with picker open",
+        "pass": true,
+        "detail": {
+          "sh": 844,
+          "ih": 844
+        }
+      },
+      {
+        "label": "picker tap targets >= 44",
+        "pass": true,
+        "detail": []
+      },
+      {
+        "label": "cool: 6 animal thumbnails",
+        "pass": true,
+        "detail": {
+          "thumbs": [
+            "Pip the capybara looks deadpan",
+            "Pip the corgi looks deadpan",
+            "Pip the cat looks deadpan",
+            "Pip the raccoon looks deadpan",
+            "Pip the frog looks deadpan",
+            "Pip the axolotl looks deadpan"
+          ],
+          "stage": "Pip the capybara looks aha"
+        }
+      },
+      {
+        "label": "cool: no page scroll with picker open",
+        "pass": true,
+        "detail": {
+          "sh": 844,
+          "ih": 844
+        }
+      },
+      {
+        "label": "ugly: 6 animal thumbnails",
+        "pass": true,
+        "detail": {
+          "thumbs": [
+            "Pip the capybara looks deadpan",
+            "Pip the corgi looks deadpan",
+            "Pip the cat looks deadpan",
+            "Pip the raccoon looks deadpan",
+            "Pip the frog looks deadpan",
+            "Pip the axolotl looks deadpan"
+          ],
+          "stage": "Pip the capybara looks aha"
+        }
+      },
+      {
+        "label": "ugly: no page scroll with picker open",
+        "pass": true,
+        "detail": {
+          "sh": 844,
+          "ih": 844
+        }
+      }
+    ]
+  },
+  "picker-375-day": {
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [],
+    "checks": [
+      {
+        "label": "cute: 6 animal thumbnails",
+        "pass": true,
+        "detail": {
+          "thumbs": [
+            "Pip the capybara looks deadpan",
+            "Pip the corgi looks deadpan",
+            "Pip the cat looks deadpan",
+            "Pip the raccoon looks deadpan",
+            "Pip the frog looks deadpan",
+            "Pip the axolotl looks deadpan"
+          ],
+          "stage": "Pip the capybara looks aha"
+        }
+      },
+      {
+        "label": "cute: no page scroll with picker open",
+        "pass": true,
+        "detail": {
+          "sh": 667,
+          "ih": 667
+        }
+      },
+      {
+        "label": "picker tap targets >= 44",
+        "pass": true,
+        "detail": []
+      },
+      {
+        "label": "cool: 6 animal thumbnails",
+        "pass": true,
+        "detail": {
+          "thumbs": [
+            "Pip the capybara looks deadpan",
+            "Pip the corgi looks deadpan",
+            "Pip the cat looks deadpan",
+            "Pip the raccoon looks deadpan",
+            "Pip the frog looks deadpan",
+            "Pip the axolotl looks deadpan"
+          ],
+          "stage": "Pip the capybara looks aha"
+        }
+      },
+      {
+        "label": "cool: no page scroll with picker open",
+        "pass": true,
+        "detail": {
+          "sh": 667,
+          "ih": 667
+        }
+      },
+      {
+        "label": "ugly: 6 animal thumbnails",
+        "pass": true,
+        "detail": {
+          "thumbs": [
+            "Pip the capybara looks deadpan",
+            "Pip the corgi looks deadpan",
+            "Pip the cat looks deadpan",
+            "Pip the raccoon looks deadpan",
+            "Pip the frog looks deadpan",
+            "Pip the axolotl looks deadpan"
+          ],
+          "stage": "Pip the capybara looks aha"
+        }
+      },
+      {
+        "label": "ugly: no page scroll with picker open",
+        "pass": true,
+        "detail": {
+          "sh": 667,
+          "ih": 667
+        }
+      }
+    ]
+  },
+  "stage18": {
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [
+      {
+        "status": 200,
+        "t": 1792883770585,
+        "fallback": false,
+        "audioB64": 23464,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.12,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792883770591,
+        "fallback": false,
+        "audioB64": 342784,
+        "mime": "audio/mpeg",
+        "alignChars": 168,
+        "alignEnd": 16.08,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+      },
+      {
+        "status": 200,
+        "t": 1792883771844,
+        "fallback": false,
+        "audioB64": 23464,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.12,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792883771847,
+        "fallback": false,
+        "audioB64": 342784,
+        "mime": "audio/mpeg",
+        "alignChars": 168,
+        "alignEnd": 16.08,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+      },
+      {
+        "status": 200,
+        "t": 1792883774204,
+        "fallback": false,
+        "audioB64": 23464,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.12,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792883774209,
+        "fallback": false,
+        "audioB64": 342784,
+        "mime": "audio/mpeg",
+        "alignChars": 168,
+        "alignEnd": 16.08,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+      },
+      {
+        "status": 200,
+        "t": 1792883774859,
+        "fallback": false,
+        "audioB64": 23464,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.12,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792883774860,
+        "fallback": false,
+        "audioB64": 342784,
+        "mime": "audio/mpeg",
+        "alignChars": 168,
+        "alignEnd": 16.08,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+      },
+      {
+        "status": 200,
+        "t": 1792883775480,
+        "fallback": false,
+        "audioB64": 23464,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.12,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792883775484,
+        "fallback": false,
+        "audioB64": 342784,
+        "mime": "audio/mpeg",
+        "alignChars": 168,
+        "alignEnd": 16.08,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+      },
+      {
+        "status": 200,
+        "t": 1792883776685,
+        "fallback": false,
+        "audioB64": 23464,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.12,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792883776687,
+        "fallback": false,
+        "audioB64": 342784,
+        "mime": "audio/mpeg",
+        "alignChars": 168,
+        "alignEnd": 16.08,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+      },
+      {
+        "status": 200,
+        "t": 1792883777861,
+        "fallback": false,
+        "audioB64": 23464,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.12,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792883777865,
+        "fallback": false,
+        "audioB64": 342784,
+        "mime": "audio/mpeg",
+        "alignChars": 168,
+        "alignEnd": 16.08,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+      },
+      {
+        "status": 200,
+        "t": 1792883778482,
+        "fallback": false,
+        "audioB64": 23464,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.12,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792883778490,
+        "fallback": false,
+        "audioB64": 342784,
+        "mime": "audio/mpeg",
+        "alignChars": 168,
+        "alignEnd": 16.08,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+      },
+      {
+        "status": 200,
+        "t": 1792883779091,
+        "fallback": false,
+        "audioB64": 23464,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.12,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792883779094,
+        "fallback": false,
+        "audioB64": 342784,
+        "mime": "audio/mpeg",
+        "alignChars": 168,
+        "alignEnd": 16.08,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+      },
+      {
+        "status": 200,
+        "t": 1792883779704,
+        "fallback": false,
+        "audioB64": 23464,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.12,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792883779707,
+        "fallback": false,
+        "audioB64": 342784,
+        "mime": "audio/mpeg",
+        "alignChars": 168,
+        "alignEnd": 16.08,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+      },
+      {
+        "status": 200,
+        "t": 1792883780315,
+        "fallback": false,
+        "audioB64": 23464,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.12,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792883780316,
+        "fallback": false,
+        "audioB64": 342784,
+        "mime": "audio/mpeg",
+        "alignChars": 168,
+        "alignEnd": 16.08,
+        "text": "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I"
+      }
+    ],
+    "checks": [
+      {
+        "label": "18 sessions keep creature+vibe",
+        "pass": true,
+        "detail": [
+          "capybara/cute->capybara/cute",
+          "capybara/cool->capybara/cool",
+          "capybara/ugly->capybara/ugly",
+          "corgi/cute->corgi/cute",
+          "corgi/cool->corgi/cool",
+          "corgi/ugly->corgi/ugly",
+          "cat/cute->cat/cute",
+          "cat/cool->cat/cool",
+          "cat/ugly->cat/ugly",
+          "raccoon/cute->raccoon/cute",
+          "raccoon/cool->raccoon/cool",
+          "raccoon/ugly->raccoon/ugly",
+          "frog/cute->frog/cute",
+          "frog/cool->frog/cool",
+          "frog/ugly->frog/ugly",
+          "axolotl/cute->axolotl/cute",
+          "axolotl/cool->axolotl/cool",
+          "axolotl/ugly->axolotl/ugly"
+        ]
+      },
+      {
+        "label": "Pip2D renders each animal on the mission stage",
+        "pass": true,
+        "detail": [
+          "capybara/cute: Pip the capybara looks confused (362)",
+          "capybara/cool: Pip the capybara looks confused (364)",
+          "capybara/ugly: Pip the capybara looks confused (378)",
+          "corgi/cute: Pip the corgi looks confused (345)",
+          "corgi/cool: Pip the corgi looks confused (347)",
+          "corgi/ugly: Pip the corgi looks confused (361)",
+          "cat/cute: Pip the cat looks confused (339)",
+          "cat/cool: Pip the cat looks confused (341)",
+          "cat/ugly: Pip the cat looks confused (355)",
+          "raccoon/cute: Pip the raccoon looks confused (344)",
+          "raccoon/cool: Pip the raccoon looks confused (346)",
+          "raccoon/ugly: Pip the raccoon looks confused (360)",
+          "frog/cute: Pip the frog looks confused (342)",
+          "frog/cool: Pip the frog looks confused (344)",
+          "frog/ugly: Pip the frog looks confused (358)",
+          "axolotl/cute: Pip the axolotl looks confused (294)",
+          "axolotl/cool: Pip the axolotl looks confused (296)",
+          "axolotl/ugly: Pip the axolotl looks confused (310)"
+        ]
+      },
+      {
+        "label": "Boss2D renders on every stage",
+        "pass": true,
+        "detail": [
+          "Hop-Hop Hamster, smug"
+        ]
+      },
+      {
+        "label": "no floating ? glyph, no WebGL canvas",
+        "pass": true,
+        "detail": []
+      }
+    ],
+    "rows": [
+      {
+        "c": "capybara",
+        "v": "cute",
+        "session": {
+          "creature": "capybara",
+          "vibe": "cute"
+        },
+        "pip": "Pip the capybara looks confused",
+        "nodes": 362,
+        "boss": "Hop-Hop Hamster, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "capybara",
+        "v": "cool",
+        "session": {
+          "creature": "capybara",
+          "vibe": "cool"
+        },
+        "pip": "Pip the capybara looks confused",
+        "nodes": 364,
+        "boss": "Hop-Hop Hamster, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "capybara",
+        "v": "ugly",
+        "session": {
+          "creature": "capybara",
+          "vibe": "ugly"
+        },
+        "pip": "Pip the capybara looks confused",
+        "nodes": 378,
+        "boss": "Hop-Hop Hamster, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "corgi",
+        "v": "cute",
+        "session": {
+          "creature": "corgi",
+          "vibe": "cute"
+        },
+        "pip": "Pip the corgi looks confused",
+        "nodes": 345,
+        "boss": "Hop-Hop Hamster, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "corgi",
+        "v": "cool",
+        "session": {
+          "creature": "corgi",
+          "vibe": "cool"
+        },
+        "pip": "Pip the corgi looks confused",
+        "nodes": 347,
+        "boss": "Hop-Hop Hamster, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "corgi",
+        "v": "ugly",
+        "session": {
+          "creature": "corgi",
+          "vibe": "ugly"
+        },
+        "pip": "Pip the corgi looks confused",
+        "nodes": 361,
+        "boss": "Hop-Hop Hamster, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "cat",
+        "v": "cute",
+        "session": {
+          "creature": "cat",
+          "vibe": "cute"
+        },
+        "pip": "Pip the cat looks confused",
+        "nodes": 339,
+        "boss": "Hop-Hop Hamster, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "cat",
+        "v": "cool",
+        "session": {
+          "creature": "cat",
+          "vibe": "cool"
+        },
+        "pip": "Pip the cat looks confused",
+        "nodes": 341,
+        "boss": "Hop-Hop Hamster, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "cat",
+        "v": "ugly",
+        "session": {
+          "creature": "cat",
+          "vibe": "ugly"
+        },
+        "pip": "Pip the cat looks confused",
+        "nodes": 355,
+        "boss": "Hop-Hop Hamster, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "raccoon",
+        "v": "cute",
+        "session": {
+          "creature": "raccoon",
+          "vibe": "cute"
+        },
+        "pip": "Pip the raccoon looks confused",
+        "nodes": 344,
+        "boss": "Hop-Hop Hamster, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "raccoon",
+        "v": "cool",
+        "session": {
+          "creature": "raccoon",
+          "vibe": "cool"
+        },
+        "pip": "Pip the raccoon looks confused",
+        "nodes": 346,
+        "boss": "Hop-Hop Hamster, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "raccoon",
+        "v": "ugly",
+        "session": {
+          "creature": "raccoon",
+          "vibe": "ugly"
+        },
+        "pip": "Pip the raccoon looks confused",
+        "nodes": 360,
+        "boss": "Hop-Hop Hamster, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "frog",
+        "v": "cute",
+        "session": {
+          "creature": "frog",
+          "vibe": "cute"
+        },
+        "pip": "Pip the frog looks confused",
+        "nodes": 342,
+        "boss": "Hop-Hop Hamster, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "frog",
+        "v": "cool",
+        "session": {
+          "creature": "frog",
+          "vibe": "cool"
+        },
+        "pip": "Pip the frog looks confused",
+        "nodes": 344,
+        "boss": "Hop-Hop Hamster, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "frog",
+        "v": "ugly",
+        "session": {
+          "creature": "frog",
+          "vibe": "ugly"
+        },
+        "pip": "Pip the frog looks confused",
+        "nodes": 358,
+        "boss": "Hop-Hop Hamster, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "axolotl",
+        "v": "cute",
+        "session": {
+          "creature": "axolotl",
+          "vibe": "cute"
+        },
+        "pip": "Pip the axolotl looks confused",
+        "nodes": 294,
+        "boss": "Hop-Hop Hamster, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "axolotl",
+        "v": "cool",
+        "session": {
+          "creature": "axolotl",
+          "vibe": "cool"
+        },
+        "pip": "Pip the axolotl looks confused",
+        "nodes": 296,
+        "boss": "Hop-Hop Hamster, smug",
+        "qmarks": 0,
+        "canvas": false
+      },
+      {
+        "c": "axolotl",
+        "v": "ugly",
+        "session": {
+          "creature": "axolotl",
+          "vibe": "ugly"
+        },
+        "pip": "Pip the axolotl looks confused",
+        "nodes": 310,
+        "boss": "Hop-Hop Hamster, smug",
+        "qmarks": 0,
+        "canvas": false
+      }
+    ]
+  },
+  "boss": {
+    "console": [
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      }
+    ],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [
+      {
+        "url": "http://localhost:5761/api/sessions/sess_f50b281f",
+        "status": 404
+      }
+    ],
+    "tts": [
+      {
+        "status": 200,
+        "t": 1792883782651,
+        "fallback": false,
+        "audioB64": 23464,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.12,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792883782652,
+        "fallback": false,
+        "audioB64": 293188,
+        "mime": "audio/mpeg",
+        "alignChars": 145,
+        "alignEnd": 13.76,
+        "text": "Hi. I'm Pip. I'm learning area of a triangle. I already know one rule:"
+      },
+      {
+        "status": 200,
+        "t": 1792883782995,
+        "fallback": false,
+        "audioB64": 188976,
+        "mime": "audio/mpeg",
+        "alignChars": 91,
+        "alignEnd": 8.88,
+        "text": "ok, that's the why. if my 6 by 4 triangle sits in a 6 by 4 box, does i"
+      },
+      {
+        "status": 200,
+        "t": 1792883782996,
+        "fallback": false,
+        "audioB64": 66376,
+        "mime": "audio/mpeg",
+        "alignChars": 38,
+        "alignEnd": 3.12,
+        "text": "I did not authorize a second triangle."
+      },
+      {
+        "status": 200,
+        "t": 1792883783605,
+        "fallback": false,
+        "audioB64": 52444,
+        "mime": "audio/mpeg",
+        "alignChars": 36,
+        "alignEnd": 2.48,
+        "text": "what's in the empty part of the box?"
+      },
+      {
+        "status": 200,
+        "t": 1792883784188,
+        "fallback": false,
+        "audioB64": 85320,
+        "mime": "audio/mpeg",
+        "alignChars": 43,
+        "alignEnd": 4,
+        "text": "ok, I follow that part. What do I do first?"
+      },
+      {
+        "status": 200,
+        "t": 1792883784887,
+        "fallback": false,
+        "audioB64": 40740,
+        "mime": "audio/mpeg",
+        "alignChars": 29,
+        "alignEnd": 1.92,
+        "text": "You didn't teach me that one."
+      }
+    ],
+    "checks": [
+      {
+        "label": "Boss2D smug while HP > 40, cracked at HP <= 40",
+        "pass": false,
+        "detail": [
+          {
+            "hp": 75,
+            "boss": "Hop-Hop Hamster, smug"
+          },
+          {
+            "hp": 75,
+            "boss": "Hop-Hop Hamster, smug"
+          },
+          {
+            "hp": 75,
+            "boss": "Hop-Hop Hamster, smug"
+          }
+        ]
+      },
+      {
+        "label": "quiz all passed for K.O. path",
+        "pass": false,
+        "detail": [
+          [
+            "k1",
+            true
+          ],
+          [
+            "k2",
+            false
+          ],
+          [
+            "k3",
+            true
+          ]
+        ]
+      }
+    ]
+  },
+  "boss-error": {
+    "checks": [
+      {
+        "label": "scenario ran",
+        "pass": false,
+        "detail": "TimeoutError: page.waitForSelector: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator('.ko') to be visible\n"
+      }
+    ]
+  },
+  "voice": {
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [
+      {
+        "status": 200,
+        "t": 1792883796100,
+        "fallback": false,
+        "audioB64": 23464,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.12,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792883796101,
+        "fallback": false,
+        "audioB64": 293188,
+        "mime": "audio/mpeg",
+        "alignChars": 145,
+        "alignEnd": 13.76,
+        "text": "Hi. I'm Pip. I'm learning area of a triangle. I already know one rule:"
+      },
+      {
+        "status": 200,
+        "t": 1792883798669,
+        "fallback": false,
+        "audioB64": 188976,
+        "mime": "audio/mpeg",
+        "alignChars": 91,
+        "alignEnd": 8.88,
+        "text": "ok, that's the why. if my 6 by 4 triangle sits in a 6 by 4 box, does i"
+      },
+      {
+        "status": 200,
+        "t": 1792883798670,
+        "fallback": false,
+        "audioB64": 66376,
+        "mime": "audio/mpeg",
+        "alignChars": 38,
+        "alignEnd": 3.12,
+        "text": "I did not authorize a second triangle."
+      }
+    ],
+    "checks": [
+      {
+        "label": "/api/tts returns live audio + alignment",
+        "pass": true,
+        "detail": [
+          {
+            "status": 200,
+            "t": 1792883796100,
+            "fallback": false,
+            "audioB64": 23464,
+            "mime": "audio/mpeg",
+            "alignChars": 10,
+            "alignEnd": 1.12,
+            "text": "BOSS FIGHT"
+          },
+          {
+            "status": 200,
+            "t": 1792883796101,
+            "fallback": false,
+            "audioB64": 293188,
+            "mime": "audio/mpeg",
+            "alignChars": 145,
+            "alignEnd": 13.76,
+            "text": "Hi. I'm Pip. I'm learning area of a triangle. I already know one rule:"
+          },
+          {
+            "status": 200,
+            "t": 1792883798669,
+            "fallback": false,
+            "audioB64": 188976,
+            "mime": "audio/mpeg",
+            "alignChars": 91,
+            "alignEnd": 8.88,
+            "text": "ok, that's the why. if my 6 by 4 triangle sits in a 6 by 4 box, does i"
+          },
+          {
+            "status": 200,
+            "t": 1792883798670,
+            "fallback": false,
+            "audioB64": 66376,
+            "mime": "audio/mpeg",
+            "alignChars": 38,
+            "alignEnd": 3.12,
+            "text": "I did not authorize a second triangle."
+          }
+        ]
+      },
+      {
+        "label": "audio element played (ok, playing fired)",
+        "pass": true,
+        "detail": [
+          {
+            "t": 1792883796101,
+            "mime": "audio/mpeg",
+            "len": 293211,
+            "playing": 1792883796113,
+            "ok": true,
+            "end": 1792883798668
+          },
+          {
+            "t": 1792883798671,
+            "mime": "audio/mpeg",
+            "len": 188999,
+            "playing": 1792883798696,
+            "ok": true,
+            "end": 1792883807701
+          },
+          {
+            "t": 1792883807701,
+            "mime": "audio/mpeg",
+            "len": 66399,
+            "playing": 1792883807704,
+            "ok": true
+          }
+        ]
+      },
+      {
+        "label": "mouth changes while audio plays (>= 3 shapes) ",
+        "pass": true,
+        "detail": {
+          "playing": {
+            "g:133": 147,
+            "g:297": 28,
+            "g:98": 121,
+            "g:131": 20
+          },
+          "idle": {
+            "g:157": 19,
+            "g:98": 1
+          }
+        }
+      },
+      {
+        "label": "no browser speech while ElevenLabs works",
+        "pass": true,
+        "detail": []
+      },
+      {
+        "label": "mute: no new /api/tts, no audio, no speech",
+        "pass": true,
+        "detail": {
+          "before": {
+            "tts": 4,
+            "plays": 3,
+            "synth": 0
+          },
+          "after": {
+            "plays": 3,
+            "synth": 0,
+            "muted": "1",
+            "playLog": [
+              {
+                "t": 1792883798671,
+                "mime": "audio/mpeg",
+                "len": 188999,
+                "playing": 1792883798696,
+                "ok": true,
+                "end": 1792883807701
+              },
+              {
+                "t": 1792883807701,
+                "mime": "audio/mpeg",
+                "len": 66399,
+                "playing": 1792883807704,
+                "ok": true,
+                "end": 1792883808972
+              }
+            ]
+          },
+          "tts": 4
+        }
+      }
+    ],
+    "muteAt": 1792883808927,
+    "ttsBefore": 2
+  },
+  "fallback-abort": {
+    "console": [
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_FAILED"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_FAILED"
+      }
+    ],
+    "pageErrors": [],
+    "failedRequests": [
+      {
+        "url": "http://localhost:5761/api/tts",
+        "err": "net::ERR_FAILED"
+      },
+      {
+        "url": "http://localhost:5761/api/tts",
+        "err": "net::ERR_FAILED"
+      }
+    ],
+    "badResponses": [],
+    "tts": [],
+    "checks": [
+      {
+        "label": "abort: browser speechSynthesis used",
+        "pass": true,
+        "detail": [
+          {
+            "t": 1792883815333,
+            "text": "Hi. I'm Pip. I'm learning area of a triangle. I already know one rule: Area of a"
+          },
+          {
+            "t": 1792883816905,
+            "text": "if my 6 by 4 triangle sits in a 6 by 4 box, does it fill the whole box?"
+          }
+        ]
+      },
+      {
+        "label": "abort: no audio element played",
+        "pass": true,
+        "detail": []
+      },
+      {
+        "label": "abort: no console/page errors",
+        "pass": false,
+        "detail": {
+          "errs": [
+            {
+              "type": "error",
+              "text": "Failed to load resource: net::ERR_FAILED"
+            },
+            {
+              "type": "error",
+              "text": "Failed to load resource: net::ERR_FAILED"
+            }
+          ],
+          "pageErrors": []
+        }
+      }
+    ]
+  },
+  "fallback-fallback": {
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [
+      {
+        "status": 200,
+        "t": 1792883820658,
+        "fallback": true,
+        "audioB64": 0,
+        "alignChars": 0,
+        "alignEnd": null,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792883820658,
+        "fallback": true,
+        "audioB64": 0,
+        "alignChars": 0,
+        "alignEnd": null,
+        "text": "Hi. I'm Pip. I'm learning area of a triangle. I already know one rule:"
+      }
+    ],
+    "checks": [
+      {
+        "label": "fallback: browser speechSynthesis used",
+        "pass": true,
+        "detail": [
+          {
+            "t": 1792883820661,
+            "text": "Hi. I'm Pip. I'm learning area of a triangle. I already know one rule: Area of a"
+          },
+          {
+            "t": 1792883822217,
+            "text": "if my 6 by 4 triangle sits in a 6 by 4 box, does it fill the whole box?"
+          }
+        ]
+      },
+      {
+        "label": "fallback: no audio element played",
+        "pass": true,
+        "detail": []
+      },
+      {
+        "label": "fallback: no console/page errors",
+        "pass": true,
+        "detail": {
+          "errs": [],
+          "pageErrors": []
+        }
+      }
+    ]
+  },
+  "pwa-1440": {
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [],
+    "checks": [
+      {
+        "label": "landing: pitch + live phone (iframe of /student?preview=1) in view",
+        "pass": true,
+        "detail": {
+          "h1": "Every AI tutor plays the teacher. Pip plays the student.",
+          "src": "/student?preview=1&framed=1",
+          "box": {
+            "x": 904.540771484375,
+            "y": 32.25950622558594,
+            "width": 372.027587890625,
+            "height": 805.1059722900391
+          }
+        }
+      },
+      {
+        "label": "phone is playable (PLAY opens the picker inside the phone)",
+        "pass": true
+      },
+      {
+        "label": "manifest 200, display standalone, icons 200 PNG at declared size",
+        "pass": true,
+        "detail": {
+          "status": 200,
+          "ct": "application/manifest+json",
+          "display": "standalone",
+          "start_url": "/",
+          "icons": [
+            {
+              "src": "/icons/pip-192.png",
+              "status": 200,
+              "type": "image/png",
+              "bytes": 10669,
+              "png": true,
+              "w": 192,
+              "h": 192,
+              "sizes": "192x192"
+            },
+            {
+              "src": "/icons/pip-512.png",
+              "status": 200,
+              "type": "image/png",
+              "bytes": 45831,
+              "png": true,
+              "w": 512,
+              "h": 512,
+              "sizes": "512x512"
+            },
+            {
+              "src": "/icons/pip-maskable-512.png",
+              "status": 200,
+              "type": "image/png",
+              "bytes": 39384,
+              "png": true,
+              "w": 512,
+              "h": 512,
+              "sizes": "512x512"
+            },
+            {
+              "src": "/icons/apple-touch-icon.png",
+              "status": 200,
+              "type": "image/png",
+              "bytes": 9174,
+              "png": true,
+              "w": 180,
+              "h": 180
+            }
+          ],
+          "head": {
+            "manifest": "/manifest.webmanifest",
+            "apple": "/icons/apple-touch-icon.png",
+            "themeColor": "#001914",
+            "viewport": "width=device-width, initial-scale=1.0, viewport-fit=cover"
+          }
+        }
+      }
+    ]
+  },
+  "pwa-390": {
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [],
+    "checks": [
+      {
+        "label": "phone landing = app welcome screen with Student entry",
+        "pass": true,
+        "detail": {
+          "scrollHeight": 844,
+          "innerHeight": 844,
+          "scrolls": false,
+          "small": [],
+          "clipped": []
+        }
+      }
+    ]
+  },
+  "studio": {
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [],
+    "checks": [
+      {
+        "label": "owner at-risk: 4 students listed",
+        "pass": true,
+        "detail": {
+          "api": [
+            [
+              "Ravi A.",
+              [
+                "Has not come back to the app on their own in 14 days.",
+                "No parent update sent since their last completed session."
+              ]
+            ],
+            [
+              "Yara W.",
+              [
+                "Has not come back to the app on their own in 14 days."
+              ]
+            ],
+            [
+              "Gus Y.",
+              [
+                "No parent update sent since their last completed session."
+              ]
+            ],
+            [
+              "Owen T.",
+              [
+                "Stuck after the full ladder on \"a triangle is half the rectangle\" (Area of a triangle). Pip's friend hint did not unlock it."
+              ]
+            ]
+          ],
+          "rows": [
+            "RA\nRavi A.\nHas not come back to the app on their own in 14 days.\nNo parent update sent since their last completed session.\nReport",
+            "YW\nYara W.\nHas not come back to the app on their own in 14 days.\nReport",
+            "GY\nGus Y.\nNo parent update sent since their last completed session.\nReport",
+            "OT\nOwen T.\nStuck after the full ladder on \"a triangle is half the rectangle\" (Area of a triangle). Pip's friend hint did not unlock it.\nReport"
+          ]
+        }
+      },
+      {
+        "label": "owner at-risk: synthetic label visible",
+        "pass": true,
+        "detail": {
+          "card": "FAMILIES TO CHECK ON\n\nAt-risk families 4\n\nStuck after Pip’s full set of questions, no visit on their own in 14 days, or no parent update in 14 days.\n\nRA\nRavi A.\nHas not come back to the app on their own in 14 days.\nNo parent update sent since their last completed session.\nReport\nYW\nYara W.\nHas not come back to the app on their own in 14 days.\nReport\nGY\nGus Y.\nNo parent update sent since their last",
+          "synthAnywhere": "120 students · 8 tutors · grades 5-9 · demo center (synthetic data)"
+        }
+      },
+      {
+        "label": "tutor at-risk: compact card",
+        "pass": true,
+        "detail": [
+          "YW\nYara W.\nHas not come back to the app on their own in 14 days.\nReport",
+          "GY\nGus Y.\nNo parent update sent since their last completed session.\nReport",
+          "OT\nOwen T.\nStuck after the full ladder on \"a triangle is half the rectangle\" (Area of a triangle). Pip's friend hint did not unlock it.\nReport"
+        ]
+      },
+      {
+        "label": "New Pip mission shows editable ladder (3x4), look-fors, nudge",
+        "pass": true,
+        "detail": {
+          "nLessons": 3,
+          "nRungs": 12,
+          "lfChips": [
+            "Says in their own words: what expanding (a + b)² means\n×",
+            "Gives a reason (because...), not just steps\n×",
+            "Shows it on one small example they chose\n×",
+            "verifier look-for\n×"
+          ]
+        }
+      },
+      {
+        "label": "edits posted back in the lesson",
+        "pass": true,
+        "detail": {
+          "c0": {
+            "concept_id": "k1",
+            "look_fors": [
+              "Says in their own words: what expanding (a + b)² means",
+              "Gives a reason (because...), not just steps",
+              "Shows it on one small example they chose",
+              "verifier look-for"
+            ],
+            "probe_ladder": [
+              "Can you tell me in your own words what part of expanding (a + b)² this is about?",
+              "VERIFIER EDIT: why would that be true?",
+              "Can you show me with a small example?",
+              "What would you do if the numbers or words were different?"
+            ],
+            "spoilers": [],
+            "friend_nudge": "VERIFIER NUDGE: my friend said to draw it as a square."
+          }
+        }
+      }
+    ]
+  },
+  "sat-s005": {
+    "console": [
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      }
+    ],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [
+      {
+        "url": "http://localhost:5761/api/sessions/sess_dac702eb",
+        "status": 404
+      }
+    ],
+    "tts": [
+      {
+        "status": 200,
+        "t": 1792883837768,
+        "fallback": false,
+        "audioB64": 23464,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.12,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792883837769,
+        "fallback": false,
+        "audioB64": 337768,
+        "mime": "audio/mpeg",
+        "alignChars": 186,
+        "alignEnd": 15.84,
+        "text": "Hi. I'm Pip. I'm learning sat writing: commas and run-on sentences. I "
+      },
+      {
+        "status": 200,
+        "t": 1792883838166,
+        "fallback": false,
+        "audioB64": 81420,
+        "mime": "audio/mpeg",
+        "alignChars": 44,
+        "alignEnd": 3.84,
+        "text": "is 'I was tired' a whole sentence by itself?"
+      },
+      {
+        "status": 200,
+        "t": 1792883838669,
+        "fallback": false,
+        "audioB64": 105384,
+        "mime": "audio/mpeg",
+        "alignChars": 55,
+        "alignEnd": 4.96,
+        "text": "A point I did not anticipate. I accept it with dignity."
+      },
+      {
+        "status": 200,
+        "t": 1792883839480,
+        "fallback": false,
+        "audioB64": 74732,
+        "mime": "audio/mpeg",
+        "alignChars": 38,
+        "alignEnd": 3.52,
+        "text": "so when is one comma enough by itself?"
+      },
+      {
+        "status": 200,
+        "t": 1792883840093,
+        "fallback": false,
+        "audioB64": 97024,
+        "mime": "audio/mpeg",
+        "alignChars": 51,
+        "alignEnd": 4.56,
+        "text": "ok, that's the why. do we pause in the same places?"
+      },
+      {
+        "status": 200,
+        "t": 1792883840293,
+        "fallback": false,
+        "audioB64": 115972,
+        "mime": "audio/mpeg",
+        "alignChars": 73,
+        "alignEnd": 5.44,
+        "text": "I have been struck by the Semicolon Stapler . I accept this with digni"
+      },
+      {
+        "status": 200,
+        "t": 1792883841288,
+        "fallback": false,
+        "audioB64": 148296,
+        "mime": "audio/mpeg",
+        "alignChars": 92,
+        "alignEnd": 6.88,
+        "text": "i pause after 'hoodie' in 'The kid in the red hoodie won the raffle'. "
+      },
+      {
+        "status": 200,
+        "t": 1792883841826,
+        "fallback": false,
+        "audioB64": 190648,
+        "mime": "audio/mpeg",
+        "alignChars": 113,
+        "alignEnd": 8.96,
+        "text": "Not in my brain yet. i pause after 'hoodie' in 'The kid in the red hoo"
+      },
+      {
+        "status": 200,
+        "t": 1792883842068,
+        "fallback": false,
+        "audioB64": 71388,
+        "mime": "audio/mpeg",
+        "alignChars": 29,
+        "alignEnd": 3.36,
+        "text": "ok I think I get it. quiz me?"
+      },
+      {
+        "status": 200,
+        "t": 1792883842544,
+        "fallback": false,
+        "audioB64": 137704,
+        "mime": "audio/mpeg",
+        "alignChars": 98,
+        "alignEnd": 6.48,
+        "text": "Someone in my class said she covers her mouth and reads the sentence s"
+      }
+    ],
+    "checks": [
+      {
+        "label": "out-of-scope parking line",
+        "pass": true,
+        "detail": {
+          "n": 5,
+          "kind": "out_of_scope",
+          "hp": [
+            50,
+            50
+          ],
+          "pip": "Not in my brain yet. i pause after 'hoodie' in 'The kid in the red hoodie won the raffle'. does a comma go there?",
+          "expect": "Not in my brain yet. is 'My dog barked, the mail came' one s"
+        }
+      },
+      {
+        "label": "authored beats: hits on explain, heal on misconception",
+        "pass": false,
+        "detail": [
+          [
+            1,
+            "vague",
+            [
+              100,
+              100
+            ]
+          ],
+          [
+            2,
+            "refusal",
+            [
+              100,
+              75
+            ]
+          ],
+          [
+            3,
+            "explain",
+            [
+              75,
+              50
+            ]
+          ],
+          [
+            4,
+            "procedure",
+            [
+              50,
+              50
+            ]
+          ],
+          [
+            5,
+            "out_of_scope",
+            [
+              50,
+              50
+            ]
+          ],
+          [
+            6,
+            "explain",
+            [
+              50,
+              50
+            ]
+          ],
+          [
+            7,
+            "misconception",
+            [
+              50,
+              50
+            ]
+          ]
+        ]
+      }
+    ]
+  },
+  "sat-error": {
+    "checks": [
+      {
+        "label": "scenario ran",
+        "pass": false,
+        "detail": "TimeoutError: locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator('.exam-page').first() to be visible\n"
+      }
+    ]
+  },
+  "stuck": {
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [
+      {
+        "status": 200,
+        "t": 1792883873108,
+        "fallback": false,
+        "audioB64": 23464,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.12,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792883873109,
+        "fallback": false,
+        "audioB64": 337768,
+        "mime": "audio/mpeg",
+        "alignChars": 186,
+        "alignEnd": 15.84,
+        "text": "Hi. I'm Pip. I'm learning sat writing: commas and run-on sentences. I "
+      },
+      {
+        "status": 200,
+        "t": 1792883873483,
+        "fallback": false,
+        "audioB64": 81420,
+        "mime": "audio/mpeg",
+        "alignChars": 44,
+        "alignEnd": 3.84,
+        "text": "is 'I was tired' a whole sentence by itself?"
+      },
+      {
+        "status": 200,
+        "t": 1792883873591,
+        "fallback": false,
+        "audioB64": 236900,
+        "mime": "audio/mpeg",
+        "alignChars": 117,
+        "alignEnd": 11.12,
+        "text": "which is allowed: 'I was tired. I went to bed.' or 'I was tired, so I "
+      },
+      {
+        "status": 200,
+        "t": 1792883873692,
+        "fallback": false,
+        "audioB64": 161668,
+        "mime": "audio/mpeg",
+        "alignChars": 90,
+        "alignEnd": 7.6,
+        "text": "My friend said words like 'and', 'but' and 'so' are little bridges bet"
+      },
+      {
+        "status": 200,
+        "t": 1792883873775,
+        "fallback": false,
+        "audioB64": 127676,
+        "mime": "audio/mpeg",
+        "alignChars": 69,
+        "alignEnd": 6,
+        "text": "Okay, I'll hold onto that one. so when is one comma enough by itself?"
+      }
+    ],
+    "checks": [
+      {
+        "label": "ladder exhausted -> friend nudge -> stuck",
+        "pass": true,
+        "detail": [
+          {
+            "me": "hmm",
+            "pip": "is 'I was tired' a whole sentence by itself?",
+            "k1": {
+              "rung": 0,
+              "nudged": false,
+              "stuck": false,
+              "done": false,
+              "best_level": 0
+            }
+          },
+          {
+            "me": "maybe",
+            "pip": "which is allowed: 'I was tired. I went to bed.' or 'I was tired, so I went to bed.' or 'I was tired, I went to bed.'?",
+            "k1": {
+              "rung": 0,
+              "nudged": false,
+              "stuck": false,
+              "done": false,
+              "best_level": 0
+            }
+          },
+          {
+            "me": "blue",
+            "pip": "My friend said words like 'and', 'but' and 'so' are little bridges between two sentences…?",
+            "k1": {
+              "rung": 0,
+              "nudged": false,
+              "stuck": false,
+              "done": false,
+              "best_level": 0
+            }
+          },
+          {
+            "me": "ok",
+            "pip": "Okay, I'll hold onto that one. so when is one comma enough by itself?",
+            "k1": {
+              "rung": 0,
+              "nudged": false,
+              "stuck": true,
+              "done": false,
+              "best_level": 0
+            }
+          }
+        ]
+      },
+      {
+        "label": "gap report shows stuck",
+        "pass": true,
+        "detail": {
+          "concepts": [
+            [
+              "k1",
+              "vague",
+              true
+            ],
+            [
+              "k2",
+              "vague",
+              false
+            ],
+            [
+              "k3",
+              "vague",
+              false
+            ]
+          ],
+          "excerpt": "stuck after the full ladder on two complete sentences can be joined; still shaky on t"
+        }
+      }
+    ],
+    "atRiskAfter": [
+      [
+        "s040",
+        [
+          "Has not come back to the app on their own in 14 days.",
+          "No parent update sent since their last completed session."
+        ]
+      ],
+      [
+        "s005",
+        [
+          "Stuck after the full ladder on \"two complete sentences can be joined\" (SAT Writing: commas and run-on sentences). Pip's friend hint did not unlock it."
+        ]
+      ],
+      [
+        "s035",
+        [
+          "Has not come back to the app on their own in 14 days."
+        ]
+      ],
+      [
+        "s095",
+        [
+          "No parent update sent since their last completed session."
+        ]
+      ],
+      [
+        "s101",
+        [
+          "Stuck after the full ladder on \"a triangle is half the rectangle\" (Area of a triangle). Pip's friend hint did not unlock it."
+        ]
+      ]
+    ]
+  },
+  "guards": {
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [],
+    "checks": [
+      {
+        "label": "generic out-of-scope: \"do colons work the same way\" -> parking line, noted",
+        "pass": true,
+        "detail": {
+          "pip": "Not in my brain yet. is 'I was tired' a whole sentence by itself?",
+          "parked": [
+            {
+              "text": "do colons work the same way",
+              "term": "colons and dashes (next mission)",
+              "concept_id": null,
+              "ts": "2026-10-24T23:17:55+00:00"
+            }
+          ]
+        }
+      },
+      {
+        "label": "spoiler guard: Pip never says \"common denominator\" before she does",
+        "pass": true,
+        "detail": [
+          "Hi. I'm Pip. I'm learning adding fractions with unlike denominators. I already know one rule: You add the tops and the bottoms, so 1/2 + 1/3 = 2/5. Easy.",
+          "which is bigger, 1/2 of a pizza or 1/3 of a pizza?",
+          "so one half-slice plus one third-slice is 2 of what?",
+          "My friend said a slice from a big pizza and a slice from a small pizza aren't really the same amount of pizza…?",
+          "can 6 slices make exactly a half?",
+          "What do I do first?",
+          "Can you say that part again, smaller?",
+          "My cousin said something about cutting both pizzas into same-size slices…?",
+          "Okay, I'll hold onto that one. ok I think I get it. quiz me?",
+          "I think I'm good. Want to quiz me now?"
+        ]
+      }
+    ]
+  },
+  "screens-390x844-day": {
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [
+      {
+        "status": 200,
+        "t": 1792883880360,
+        "fallback": false,
+        "audioB64": 23464,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.12,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792883880362,
+        "fallback": false,
+        "audioB64": 293188,
+        "mime": "audio/mpeg",
+        "alignChars": 145,
+        "alignEnd": 13.76,
+        "text": "Hi. I'm Pip. I'm learning area of a triangle. I already know one rule:"
+      },
+      {
+        "status": 200,
+        "t": 1792883881065,
+        "fallback": false,
+        "audioB64": 144952,
+        "mime": "audio/mpeg",
+        "alignChars": 71,
+        "alignEnd": 6.72,
+        "text": "if my 6 by 4 triangle sits in a 6 by 4 box, does it fill the whole box"
+      },
+      {
+        "status": 200,
+        "t": 1792883881183,
+        "fallback": false,
+        "audioB64": 52444,
+        "mime": "audio/mpeg",
+        "alignChars": 36,
+        "alignEnd": 2.48,
+        "text": "what's in the empty part of the box?"
+      },
+      {
+        "status": 200,
+        "t": 1792883881188,
+        "fallback": false,
+        "audioB64": 102040,
+        "mime": "audio/mpeg",
+        "alignChars": 57,
+        "alignEnd": 4.8,
+        "text": "This is most irregular. Kindly stop folding my rectangle."
+      },
+      {
+        "status": 200,
+        "t": 1792883881281,
+        "fallback": false,
+        "audioB64": 85320,
+        "mime": "audio/mpeg",
+        "alignChars": 39,
+        "alignEnd": 4,
+        "text": "ok, that's the why. What do I do first?"
+      },
+      {
+        "status": 200,
+        "t": 1792883882257,
+        "fallback": false,
+        "audioB64": 63032,
+        "mime": "audio/mpeg",
+        "alignChars": 37,
+        "alignEnd": 2.88,
+        "text": "Can you say that part again, smaller?"
+      },
+      {
+        "status": 200,
+        "t": 1792883882925,
+        "fallback": false,
+        "audioB64": 40740,
+        "mime": "audio/mpeg",
+        "alignChars": 29,
+        "alignEnd": 1.92,
+        "text": "You didn't teach me that one."
+      },
+      {
+        "status": 200,
+        "t": 1792883884380,
+        "fallback": false,
+        "audioB64": 76404,
+        "mime": "audio/mpeg",
+        "alignChars": 37,
+        "alignEnd": 3.6,
+        "text": "A rectangle with base 6 and height 4."
+      },
+      {
+        "status": 200,
+        "t": 1792883885458,
+        "fallback": false,
+        "audioB64": 39068,
+        "mime": "audio/mpeg",
+        "alignChars": 19,
+        "alignEnd": 1.76,
+        "text": "Followed your rule."
+      },
+      {
+        "status": 200,
+        "t": 1792883886407,
+        "fallback": false,
+        "audioB64": 71388,
+        "mime": "audio/mpeg",
+        "alignChars": 53,
+        "alignEnd": 3.36,
+        "text": "You didn't teach me that one. Can you teach it to me?"
+      },
+      {
+        "status": 200,
+        "t": 1792883887229,
+        "fallback": false,
+        "audioB64": 92008,
+        "mime": "audio/mpeg",
+        "alignChars": 51,
+        "alignEnd": 4.24,
+        "text": "ok, I follow that part. What's the very first step?"
+      }
+    ],
+    "checks": []
+  },
+  "screens-error": {
+    "checks": [
+      {
+        "label": "scenario ran",
+        "pass": false,
+        "detail": "TimeoutError: page.waitForSelector: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator('.ko') to be visible\n"
+      }
+    ]
+  }
+}

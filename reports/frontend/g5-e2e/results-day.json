@@ -1,0 +1,2667 @@
+[
+  {
+    "width": 390,
+    "steps": [
+      {
+        "name": "reset via /admin/reset",
+        "pass": true,
+        "ms": 1851,
+        "detail": {
+          "meta": "ai offline · store memory · claude-opus-5-5",
+          "mayaSinceBefore": null
+        }
+      },
+      {
+        "name": "landing",
+        "pass": true,
+        "ms": 9584,
+        "detail": {
+          "hero": "Pip"
+        }
+      },
+      {
+        "name": "Try as Maya -> student home + mascot",
+        "pass": true,
+        "ms": 23738,
+        "detail": {
+          "pass": true,
+          "tiles": [
+            "Area of a triangle"
+          ],
+          "canvas": false,
+          "stageMs": 21276,
+          "drawnMs": null
+        }
+      },
+      {
+        "name": "start pinned triangle mission + pick a look",
+        "pass": true,
+        "ms": 34979,
+        "detail": {
+          "pass": true,
+          "topic": "Area of a triangle",
+          "sid": "sess_8ec5caa3"
+        }
+      },
+      {
+        "name": "Pip's opening is the misconception claim",
+        "pass": true,
+        "ms": 3111,
+        "detail": {
+          "pass": true,
+          "openingCount": 1,
+          "last": "Hi. I'm Pip. I'm learning area of a triangle. I already know one rule: Area of a triangle is base times height, so a 6 by 4 triangle is 24. Easy.",
+          "creature": "cat",
+          "accessory": "glasses"
+        }
+      },
+      {
+        "name": "tap targets >= 44px on mission screen",
+        "pass": true,
+        "ms": 12,
+        "detail": {
+          "pass": true,
+          "small": []
+        }
+      },
+      {
+        "name": "message 1",
+        "pass": true,
+        "ms": 1498,
+        "detail": {
+          "pass": true,
+          "i": 1,
+          "turnMs": 747,
+          "renderMs": 70,
+          "optimistic": true,
+          "hp": [
+            100,
+            100
+          ],
+          "meters": {
+            "k1": 0,
+            "k2": 0,
+            "k3": 5
+          },
+          "weapons": [],
+          "equipped": null,
+          "events": [
+            {
+              "kind": "none",
+              "amount": 0,
+              "caption": "",
+              "unlocked": [],
+              "level": 1
+            }
+          ],
+          "pip": "ok, I follow that part. why would a triangle get less than base times height?",
+          "saving": false,
+          "toast": [],
+          "meColors": [
+            "rgb(241, 238, 255) / rgb(11, 11, 18)",
+            "rgb(241, 238, 255) / rgb(16, 33, 63)"
+          ]
+        }
+      },
+      {
+        "name": "message 2",
+        "pass": true,
+        "ms": 10512,
+        "detail": {
+          "pass": true,
+          "i": 2,
+          "turnMs": 271,
+          "renderMs": 19,
+          "optimistic": true,
+          "hp": [
+            100,
+            75
+          ],
+          "meters": {
+            "k1": 60,
+            "k2": 0,
+            "k3": 60
+          },
+          "weapons": [
+            "Copy-and-Flip Mirror 🪞",
+            "Fold-in-Half Fan 🪭"
+          ],
+          "equipped": "Copy-and-Flip Mirror 🪞",
+          "events": [
+            {
+              "kind": "hit",
+              "amount": 25,
+              "caption": "Duke Doublecount: \"This is most irregular. Kindly stop folding my rectangle.\" −25 HP",
+              "unlocked": [
+                "Copy-and-Flip Mirror 🪞",
+                "Fold-in-Half Fan 🪭"
+              ],
+              "level": 2
+            }
+          ],
+          "pip": "how big is the shape they make together?",
+          "saving": false,
+          "toast": [],
+          "fightVisible": {
+            "hpVisible": 1,
+            "arenaVisible": 1,
+            "arenaCanvas": false
+          },
+          "meColors": [
+            "rgb(241, 238, 255) / rgb(11, 11, 18)",
+            "rgb(241, 238, 255) / rgb(16, 33, 63)"
+          ]
+        }
+      },
+      {
+        "name": "message 3",
+        "pass": true,
+        "ms": 3048,
+        "detail": {
+          "pass": true,
+          "i": 3,
+          "turnMs": 107,
+          "renderMs": 26,
+          "optimistic": true,
+          "hp": [
+            75,
+            50
+          ],
+          "meters": {
+            "k1": 60,
+            "k2": 60,
+            "k3": 65
+          },
+          "weapons": [
+            "Copy-and-Flip Mirror 🪞",
+            "Fold-in-Half Fan 🪭",
+            "Row-by-Row Ruler 📏"
+          ],
+          "equipped": "Copy-and-Flip Mirror 🪞",
+          "events": [
+            {
+              "kind": "hit",
+              "amount": 25,
+              "caption": "Duke Doublecount: \"I did not authorize a second triangle.\" −25 HP",
+              "unlocked": [
+                "Row-by-Row Ruler 📏"
+              ],
+              "level": 2,
+              "weapon": "Copy-and-Flip Mirror 🪞"
+            }
+          ],
+          "pip": "ok I think I get it. quiz me?",
+          "saving": false,
+          "toast": [
+            "Weapon unlocked: Row-by-Row Ruler 📏"
+          ],
+          "fightVisible": {
+            "hpVisible": 1,
+            "arenaVisible": 1,
+            "arenaCanvas": false
+          },
+          "meColors": [
+            "rgb(241, 238, 255) / rgb(11, 11, 18)",
+            "rgb(241, 238, 255) / rgb(16, 33, 63)"
+          ]
+        }
+      },
+      {
+        "name": "message 4",
+        "pass": true,
+        "ms": 3570,
+        "detail": {
+          "pass": true,
+          "i": 4,
+          "turnMs": 198,
+          "renderMs": 26,
+          "optimistic": true,
+          "hp": [
+            50,
+            70
+          ],
+          "meters": {
+            "k1": 60,
+            "k2": 60,
+            "k3": 65
+          },
+          "weapons": [
+            "Copy-and-Flip Mirror 🪞",
+            "Fold-in-Half Fan 🪭",
+            "Row-by-Row Ruler 📏"
+          ],
+          "equipped": "Copy-and-Flip Mirror 🪞",
+          "events": [
+            {
+              "kind": "heal",
+              "amount": 20,
+              "caption": "Duke Doublecount: \"Excellent. Base times height. Write that on everything.\" +20 HP",
+              "unlocked": [],
+              "level": 0
+            }
+          ],
+          "pip": "Saving that: 'oh but for a right triangle you just times the two sides'. I think I'm good. Want to quiz me now?",
+          "saving": true,
+          "toast": [],
+          "meColors": [
+            "rgb(241, 238, 255) / rgb(11, 11, 18)",
+            "rgb(241, 238, 255) / rgb(16, 33, 63)"
+          ]
+        }
+      },
+      {
+        "name": "weapon unlocked (UI chip + toast/caption)",
+        "pass": true,
+        "ms": 11,
+        "detail": {
+          "pass": true,
+          "weapons": [
+            "Copy-and-Flip Mirror 🪞",
+            "Fold-in-Half Fan 🪭",
+            "Row-by-Row Ruler 📏"
+          ],
+          "equipped": "Copy-and-Flip Mirror 🪞",
+          "chips": [
+            "⚔Mirror 🪞",
+            "Fan 🪭",
+            "Ruler 📏"
+          ],
+          "captions": [
+            "🔓 Unlocked: Copy-and-Flip Mirror 🪞",
+            "🔓 Unlocked: Fold-in-Half Fan 🪭",
+            "🔓 Unlocked: Row-by-Row Ruler 📏"
+          ],
+          "toasts": [
+            "Weapon unlocked: Row-by-Row Ruler 📏"
+          ]
+        }
+      },
+      {
+        "name": "caption visibility (hit/heal captions in chat)",
+        "pass": true,
+        "ms": 9,
+        "detail": {
+          "pass": true,
+          "hits": [
+            "💥  Duke Doublecount: \"This is most irregular. Kindly stop folding my rectangle.\" −25 HP",
+            "💥  Duke Doublecount: \"I did not authorize a second triangle.\" −25 HP"
+          ],
+          "heals": [
+            "🩹 Duke Doublecount: \"Excellent. Base times height. Write that on everything.\" +20 HP"
+          ],
+          "saving": [
+            "Saving that: oh but for a right triangle you just times the two sides. I think I'm good. Want to quiz me now?",
+            "Saving that: oh but for a right triangle you just times the two sides. I think I'm good. Want to quiz me now?"
+          ],
+          "herWords": [
+            "oh but for a right triangle you just times the two sides",
+            "oh but for a right triangle you just times the two sides"
+          ]
+        }
+      },
+      {
+        "name": "mission screen overflow after fight",
+        "pass": true,
+        "ms": 2,
+        "detail": {
+          "pass": true,
+          "scrollWidth": 390,
+          "clientWidth": 390,
+          "overflows": false,
+          "wide": [
+            "g.[object.SVGAnimatedString] right=1300",
+            "rect.[object.SVGAnimatedString] right=900",
+            "g.[object.SVGAnimatedString] right=637",
+            "g.[object.SVGAnimatedString] right=637",
+            "path.[object.SVGAnimatedString] right=637"
+          ]
+        }
+      },
+      {
+        "name": "quiz Pip: brain + k3 miss with 5/12",
+        "pass": true,
+        "ms": 6237,
+        "detail": {
+          "pass": true,
+          "notes": 3,
+          "wrongText": "Step 3: One triangle“oh but for a right triangle you just times the two sides”Pip believes this 😵",
+          "wrongShadow": "rgb(255, 138, 122) 0px 0px 0px 2.00082px, rgba(255, 138, 122, 0.75) 0px 0px 43.9869px -4px, rgba(0, 0, 0, 0.06) 0px 1px 0px 0px, rgba(0, 0, 0, 0.7) 0px 12px 24px -14px",
+          "k3": {
+            "id": "q_k3",
+            "concept_id": "k3",
+            "question": "A right triangle has a base of 10 and a height of 5. What is its area?",
+            "rule_id": "r_k3",
+            "pip_answer": "50",
+            "passed": false,
+            "line": "Your rule for right triangles: times the two sides. 10 × 5 = 50, which is the whole rectangle. Following your rule anyway. 😵"
+          },
+          "literalLineExact": true,
+          "missText": "③ A right triangle has a base of 10 and a height of 5. What is its area?50Your rule for right triangles: times the two sides.10 × 5 = 50, which is the whole rectangle.Following your rule anyway. 😵My brain has a bug 😵Used rule ③Re-teach Pip ③",
+          "redXOnPage": false,
+          "brainVersion": 1,
+          "quizMs": 245
+        }
+      },
+      {
+        "name": "tap a Brain note scrolls to its message",
+        "pass": true,
+        "ms": 3668,
+        "detail": {
+          "pass": true,
+          "id": "msg-7",
+          "text": "oh but for a right triangle you just times the two sides",
+          "inView": true,
+          "top": 663,
+          "msg_index": 7
+        }
+      },
+      {
+        "name": "Re-teach k3 -> message 8 -> Let Pip retry",
+        "pass": true,
+        "ms": 6682,
+        "detail": {
+          "pass": true,
+          "pipAsk": "My brain has a bug about this: \"oh but for a right triangle you just times the two sides\". Fix it?",
+          "reply": "Anything else, or should I try the quiz?",
+          "retryBeforeMsg8": 0,
+          "ko": true,
+          "brain_version": 2,
+          "k3rule": {
+            "id": "r_k3",
+            "concept_id": "k3",
+            "msg_index": 10,
+            "correct": true,
+            "quote": "no a right triangle is still half a rectangle so its 10×5÷2 = 25",
+            "fixed_after": 1
+          },
+          "quiz": [
+            [
+              "k1",
+              true
+            ],
+            [
+              "k2",
+              true
+            ],
+            [
+              "k3",
+              true
+            ]
+          ]
+        }
+      },
+      {
+        "name": "finisher -> K.O. card front/back + cliffhanger + Rivera",
+        "pass": true,
+        "ms": 10119,
+        "detail": {
+          "pass": true,
+          "finisherWeapon": "Copy-and-Flip Mirror 🪞",
+          "finisher": {
+            "weapon": "Copy-and-Flip Mirror 🪞",
+            "caption": "Duke Doublecount met the Copy-and-Flip Mirror 🪞 one last time and left Pip's brain."
+          },
+          "front": "No. 5500\n🦚🪧\nA = b × h\nMaya\nOct 24, 2026",
+          "back": "Duke Doublecount\nYOUR RULE\n“no a right triangle is still half a rectangle so its 10×5÷2 = 25”\nPIP SAID\nYour rule for right triangles: times the two sides. 10 × 5 = 50, which is the whole rectangle. Following your rule anyway. 😵",
+          "cliff": "Pip has a question for next time\n\nI heard a parallelogram is base × height too. Even the slanted ones? That can't be right… right?",
+          "rivera": "What Ms. Rivera sees\n\nThe same thing you see. Nothing else.\n\nYou explained two triangles make a rectangle in your own words.\nYou explained rectangle area in your own words.\nYou explained a triangle is half the rectangle in your own words and fixed it after 1 re-teach.",
+          "version": "Brain v1\n→\nBrain v2",
+          "exclamationsOnKO": 0
+        }
+      },
+      {
+        "name": "Play screens fit one viewport (no page scroll at 390x844)",
+        "pass": true,
+        "ms": 1,
+        "detail": {
+          "pass": true,
+          "fit": {
+            "studentHome": {
+              "scrollHeight": 844,
+              "innerHeight": 844
+            },
+            "missionOpening": {
+              "scrollHeight": 844,
+              "innerHeight": 844
+            },
+            "missionAfterFight": {
+              "scrollHeight": 844,
+              "innerHeight": 844
+            },
+            "quiz": {
+              "scrollHeight": 844,
+              "innerHeight": 844
+            },
+            "reteach": {
+              "scrollHeight": 844,
+              "innerHeight": 844
+            },
+            "koCard": {
+              "scrollHeight": 844,
+              "innerHeight": 844
+            }
+          },
+          "bad": []
+        }
+      },
+      {
+        "name": "tutor roster: Maya since-last-session updated",
+        "pass": false,
+        "ms": 30111,
+        "error": "TimeoutError: locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator('.roster__row').nth(1) to be visible\n"
+      },
+      {
+        "name": "gap report: same quote + fixed after 1 re-teach",
+        "pass": false,
+        "ms": 30002,
+        "error": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator('.roster__row').filter({ hasText: 'Maya' }).first().getByRole('link', { name: 'Report' })\n"
+      },
+      {
+        "name": "parent preview -> send -> sent log",
+        "pass": false,
+        "ms": 30002,
+        "error": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for getByRole('button', { name: 'Send weekly update to parent' })\n"
+      },
+      {
+        "name": "owner insight 14 + boss chip + Plan a workshop",
+        "pass": true,
+        "ms": 1787,
+        "detail": {
+          "pass": true,
+          "count": "14",
+          "chip": "students call it Duke Doublecount",
+          "mis": "Area of a triangle is base times height, so a 6 by 4 triangle is 24",
+          "note": "WORKSHOP NOTE SAVED\n\nWorkshop: Area of a triangle is base times height, so a 6 by 4 triangle is 24\nStudents (14): Diego C., Ana L., Yara W., Ravi A., Kira T., Ezra L., Gus H., Ben V., Wren L., Gus Y., Tara W., Owen T., Omar D., Mila B.\nPlan (30 min): 1) Draw a 6 by 4 rectangle on graph paper, cut it"
+        }
+      },
+      {
+        "name": "pricing -> Start pilot -> success",
+        "pass": true,
+        "ms": 1188,
+        "detail": {
+          "pass": true,
+          "url": "http://localhost:5761/pilot/success",
+          "eyebrow": "Pilot · active",
+          "pilot": {
+            "status": "active"
+          }
+        }
+      },
+      {
+        "name": "tutor New Pip mission draft + save (different student)",
+        "pass": true,
+        "ms": 2641,
+        "detail": {
+          "pass": true,
+          "studentId": "s005",
+          "studentName": "Yara K.",
+          "draftMs": 423,
+          "concepts": [
+            "What Expanding (a + b)² means, in plain words",
+            "Why Expanding (a + b)² works, shown with an example",
+            "How to use Expanding (a + b)² on a brand-new problem"
+          ],
+          "boss": "Skip-Skip Stoat",
+          "mis": "Expanding (a + b)² is just memorizing the steps; you don't need to know why",
+          "savedId": "a_67747f58"
+        }
+      }
+    ],
+    "console": [
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/owner"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/owner"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      }
+    ],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [
+      {
+        "url": "http://localhost:5761/api/tutors",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/tutors/t1/students",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/tutors",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/tutors/t1/students",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/center/overview",
+        "status": 404,
+        "page": "http://localhost:5761/owner"
+      },
+      {
+        "url": "http://localhost:5761/api/center/overview",
+        "status": 404,
+        "page": "http://localhost:5761/owner"
+      },
+      {
+        "url": "http://localhost:5761/api/tutors",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/tutors/t1/students",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/tutors",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/tutors/t1/students",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      }
+    ],
+    "overflow": {
+      "landing": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "studentHome": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "picker": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "missionOpening": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": [
+          "g.[object.SVGAnimatedString] right=1300",
+          "rect.[object.SVGAnimatedString] right=900",
+          "g.[object.SVGAnimatedString] right=655",
+          "g.[object.SVGAnimatedString] right=655",
+          "path.[object.SVGAnimatedString] right=655"
+        ]
+      },
+      "missionAfterFight": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": [
+          "g.[object.SVGAnimatedString] right=1300",
+          "rect.[object.SVGAnimatedString] right=900",
+          "g.[object.SVGAnimatedString] right=637",
+          "g.[object.SVGAnimatedString] right=637",
+          "path.[object.SVGAnimatedString] right=637"
+        ]
+      },
+      "quiz": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "ko": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "owner": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "pricing": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "newMission": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      }
+    },
+    "smallTargets": [],
+    "timings": {
+      "landingVisibleMs": 133,
+      "studentHomeFirstPaintOfStageMs": 1274,
+      "studentHomeStageMs": 21276,
+      "studentHomeStageDrawnMs": null,
+      "missionStageMs": 23245,
+      "quizMs": 245
+    },
+    "mascot": {
+      "studentHome": [
+        {
+          "canvas": false,
+          "fallback": false,
+          "h": 489
+        }
+      ],
+      "missionOpen": [
+        {
+          "canvas": false,
+          "fallback": false,
+          "h": 568
+        }
+      ]
+    },
+    "notes": {
+      "mayaBefore": {
+        "since": null,
+        "last": null
+      }
+    },
+    "tts": [
+      {
+        "status": 200,
+        "t": 1792886856600,
+        "fallback": false,
+        "audioB64": 23464,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.12,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792886856607,
+        "fallback": false,
+        "audioB64": 293188,
+        "mime": "audio/mpeg",
+        "alignChars": 145,
+        "alignEnd": 13.76,
+        "text": "Hi. I'm Pip. I'm learning area of a triangle. I already know one rule: Area of a"
+      },
+      {
+        "status": 200,
+        "t": 1792886879800,
+        "fallback": false,
+        "audioB64": 95352,
+        "mime": "audio/mpeg",
+        "alignChars": 53,
+        "alignEnd": 4.4,
+        "text": "I have counted the entire rectangle. You are welcome."
+      },
+      {
+        "status": 200,
+        "t": 1792886880501,
+        "fallback": false,
+        "audioB64": 126004,
+        "mime": "audio/mpeg",
+        "alignChars": 77,
+        "alignEnd": 5.92,
+        "text": "ok, I follow that part. why would a triangle get less than base times height?"
+      },
+      {
+        "status": 200,
+        "t": 1792886881546,
+        "fallback": false,
+        "audioB64": 59688,
+        "mime": "audio/mpeg",
+        "alignChars": 40,
+        "alignEnd": 2.8,
+        "text": "how big is the shape they make together?"
+      },
+      {
+        "status": 200,
+        "t": 1792886881547,
+        "fallback": false,
+        "audioB64": 103712,
+        "mime": "audio/mpeg",
+        "alignChars": 57,
+        "alignEnd": 4.88,
+        "text": "This is most irregular. Kindly stop folding my rectangle."
+      },
+      {
+        "status": 200,
+        "t": 1792886891875,
+        "fallback": false,
+        "audioB64": 71388,
+        "mime": "audio/mpeg",
+        "alignChars": 29,
+        "alignEnd": 3.36,
+        "text": "ok I think I get it. quiz me?"
+      },
+      {
+        "status": 200,
+        "t": 1792886891886,
+        "fallback": false,
+        "audioB64": 63032,
+        "mime": "audio/mpeg",
+        "alignChars": 38,
+        "alignEnd": 2.96,
+        "text": "I did not authorize a second triangle."
+      },
+      {
+        "status": 200,
+        "t": 1792886895018,
+        "fallback": false,
+        "audioB64": 173928,
+        "mime": "audio/mpeg",
+        "alignChars": 111,
+        "alignEnd": 8.16,
+        "text": "Saving that: 'oh but for a right triangle you just times the two sides'. I think"
+      },
+      {
+        "status": 200,
+        "t": 1792886895021,
+        "fallback": false,
+        "audioB64": 143280,
+        "mime": "audio/mpeg",
+        "alignChars": 62,
+        "alignEnd": 6.72,
+        "text": "Excellent. Base times height. Write that on everything. +20 HP"
+      },
+      {
+        "status": 200,
+        "t": 1792886898604,
+        "fallback": false,
+        "audioB64": 235228,
+        "mime": "audio/mpeg",
+        "alignChars": 122,
+        "alignEnd": 10.96,
+        "text": "Your rule for right triangles: times the two sides. 10 × 5 = 50, which is the wh"
+      },
+      {
+        "status": 200,
+        "t": 1792886908693,
+        "fallback": false,
+        "audioB64": 167240,
+        "mime": "audio/mpeg",
+        "alignChars": 98,
+        "alignEnd": 7.84,
+        "text": "My brain has a bug about this: \"oh but for a right triangle you just times the t"
+      },
+      {
+        "status": 200,
+        "t": 1792886911911,
+        "fallback": false,
+        "audioB64": 63032,
+        "mime": "audio/mpeg",
+        "alignChars": 29,
+        "alignEnd": 2.96,
+        "text": "Twenty-four. As is customary."
+      },
+      {
+        "status": 200,
+        "t": 1792886911996,
+        "fallback": false,
+        "audioB64": 66376,
+        "mime": "audio/mpeg",
+        "alignChars": 40,
+        "alignEnd": 3.12,
+        "text": "Anything else, or should I try the quiz?"
+      },
+      {
+        "status": 200,
+        "t": 1792886911998,
+        "fallback": false,
+        "audioB64": 21792,
+        "mime": "audio/mpeg",
+        "alignChars": 8,
+        "alignEnd": 1.04,
+        "text": "CRITICAL"
+      },
+      {
+        "status": 200,
+        "t": 1792886915632,
+        "fallback": false,
+        "audioB64": 32380,
+        "mime": "audio/mpeg",
+        "alignChars": 4,
+        "alignEnd": 1.28,
+        "text": "K.O."
+      },
+      {
+        "status": 200,
+        "t": 1792886915633,
+        "fallback": false,
+        "audioB64": 61360,
+        "mime": "audio/mpeg",
+        "alignChars": 33,
+        "alignEnd": 2.88,
+        "text": "I object to being divided by two."
+      },
+      {
+        "status": 200,
+        "t": 1792886918856,
+        "fallback": false,
+        "audioB64": 35724,
+        "mime": "audio/mpeg",
+        "alignChars": 14,
+        "alignEnd": 1.68,
+        "text": "BRAIN UPGRADED"
+      }
+    ],
+    "fit": {
+      "studentHome": {
+        "scrollHeight": 844,
+        "innerHeight": 844
+      },
+      "missionOpening": {
+        "scrollHeight": 844,
+        "innerHeight": 844
+      },
+      "missionAfterFight": {
+        "scrollHeight": 844,
+        "innerHeight": 844
+      },
+      "quiz": {
+        "scrollHeight": 844,
+        "innerHeight": 844
+      },
+      "reteach": {
+        "scrollHeight": 844,
+        "innerHeight": 844
+      },
+      "koCard": {
+        "scrollHeight": 844,
+        "innerHeight": 844
+      }
+    },
+    "instrument": {
+      "student /student/mission/sess_8ec5caa3": {
+        "moods": [
+          {
+            "t": 1792886808425,
+            "l": "Pip the capybara looks confused",
+            "path": "/"
+          },
+          {
+            "t": 1792886856467,
+            "l": "Pip the cat looks confused",
+            "path": "/student"
+          },
+          {
+            "t": 1792886881537,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_8ec5caa3"
+          },
+          {
+            "t": 1792886881561,
+            "l": "Pip the cat looks aha",
+            "path": "/student/mission/sess_8ec5caa3"
+          },
+          {
+            "t": 1792886891866,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_8ec5caa3"
+          },
+          {
+            "t": 1792886891880,
+            "l": "Pip the cat looks aha",
+            "path": "/student/mission/sess_8ec5caa3"
+          },
+          {
+            "t": 1792886895006,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_8ec5caa3"
+          },
+          {
+            "t": 1792886895042,
+            "l": "Pip the cat looks possessed",
+            "path": "/student/mission/sess_8ec5caa3"
+          },
+          {
+            "t": 1792886898597,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_8ec5caa3"
+          },
+          {
+            "t": 1792886898602,
+            "l": "Pip the cat looks notes",
+            "path": "/student/mission/sess_8ec5caa3"
+          },
+          {
+            "t": 1792886903281,
+            "l": "Pip the cat looks overwhelmed",
+            "path": "/student/mission/sess_8ec5caa3"
+          },
+          {
+            "t": 1792886905041,
+            "l": "Pip the cat looks notes",
+            "path": "/student/mission/sess_8ec5caa3"
+          },
+          {
+            "t": 1792886908692,
+            "l": "Pip the cat looks possessed",
+            "path": "/student/mission/sess_8ec5caa3"
+          },
+          {
+            "t": 1792886911985,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_8ec5caa3"
+          },
+          {
+            "t": 1792886912000,
+            "l": "Pip the cat looks aha",
+            "path": "/student/mission/sess_8ec5caa3"
+          },
+          {
+            "t": 1792886913466,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_8ec5caa3"
+          },
+          {
+            "t": 1792886913480,
+            "l": "Pip the cat looks proud",
+            "path": "/student/mission/sess_8ec5caa3"
+          },
+          {
+            "t": 1792886916661,
+            "l": "Pip the cat looks confused",
+            "path": "/student/mission/sess_8ec5caa3"
+          }
+        ],
+        "boss": [
+          {
+            "t": 1792886856601,
+            "l": "Duke Doublecount, smug",
+            "hp": "Duke Doublecount, 100 HP"
+          },
+          {
+            "t": 1792886912000,
+            "l": "Duke Doublecount, cracked",
+            "hp": "Duke Doublecount, 30 HP"
+          },
+          {
+            "t": 1792886915060,
+            "l": "Duke Doublecount, ko",
+            "hp": "Duke Doublecount, knocked out"
+          }
+        ],
+        "plays": [
+          {
+            "t": 1792886856604,
+            "mime": "audio/mpeg",
+            "len": 293211,
+            "playing": 1792886856942,
+            "ok": true,
+            "end": 1792886870857
+          },
+          {
+            "t": 1792886879798,
+            "mime": "audio/mpeg",
+            "len": 95375,
+            "playing": 1792886879802,
+            "ok": true,
+            "end": 1792886880480
+          },
+          {
+            "t": 1792886880499,
+            "mime": "audio/mpeg",
+            "len": 126027,
+            "playing": 1792886880502,
+            "ok": true,
+            "end": 1792886881545
+          },
+          {
+            "t": 1792886881551,
+            "mime": "audio/mpeg",
+            "len": 59711,
+            "playing": 1792886881553,
+            "ok": true,
+            "end": 1792886884517
+          },
+          {
+            "t": 1792886884517,
+            "mime": "audio/mpeg",
+            "len": 103735,
+            "playing": 1792886884526,
+            "ok": true,
+            "end": 1792886889537
+          },
+          {
+            "t": 1792886891877,
+            "mime": "audio/mpeg",
+            "len": 71411,
+            "playing": 1792886891887,
+            "ok": true,
+            "end": 1792886895014
+          },
+          {
+            "t": 1792886895019,
+            "mime": "audio/mpeg",
+            "len": 173951,
+            "playing": 1792886895022,
+            "ok": true,
+            "end": 1792886898597
+          },
+          {
+            "t": 1792886898603,
+            "mime": "audio/mpeg",
+            "len": 235251,
+            "playing": 1792886898619,
+            "ok": true,
+            "end": 1792886903255
+          },
+          {
+            "t": 1792886903255,
+            "mime": "audio/mpeg",
+            "len": 235251,
+            "playing": 1792886903261,
+            "ok": true,
+            "end": 1792886908685
+          },
+          {
+            "t": 1792886911908,
+            "mime": "audio/mpeg",
+            "len": 63055,
+            "playing": 1792886911911,
+            "ok": true,
+            "end": 1792886911992
+          },
+          {
+            "t": 1792886911997,
+            "mime": "audio/mpeg",
+            "len": 21815,
+            "playing": 1792886911999,
+            "ok": true,
+            "end": 1792886913177
+          },
+          {
+            "t": 1792886913177,
+            "mime": "audio/mpeg",
+            "len": 66399,
+            "playing": 1792886913179,
+            "ok": true,
+            "end": 1792886913466
+          },
+          {
+            "t": 1792886915631,
+            "mime": "audio/mpeg",
+            "len": 32403,
+            "playing": 1792886915634,
+            "ok": true,
+            "end": 1792886916657
+          },
+          {
+            "t": 1792886918856,
+            "mime": "audio/mpeg",
+            "len": 35747,
+            "playing": 1792886918858,
+            "ok": true,
+            "end": 1792886920677
+          }
+        ],
+        "synth": [],
+        "mouthPlaying": {
+          "g:153": 82,
+          "g:118": 644,
+          "g:257": 125,
+          "g:98": 214,
+          "g:133": 20,
+          "g:124": 1,
+          "g:101": 1,
+          "g:256": 25
+        },
+        "mouthIdle": {
+          "g:157": 1197,
+          "g:153": 403,
+          "g:118": 59,
+          "g:101": 3,
+          "g:98": 9,
+          "g:124": 73,
+          "g:256": 53
+        },
+        "qmarks": 0
+      }
+    },
+    "fightVis": {
+      "1": {
+        "hpVisible": 1,
+        "arenaVisible": 1,
+        "arenaCanvas": false
+      },
+      "2": {
+        "hpVisible": 1,
+        "arenaVisible": 1,
+        "arenaCanvas": false
+      }
+    },
+    "turns": [
+      {
+        "i": 1,
+        "turnMs": 747,
+        "renderMs": 70,
+        "optimistic": true,
+        "hp": [
+          100,
+          100
+        ],
+        "meters": {
+          "k1": 0,
+          "k2": 0,
+          "k3": 5
+        },
+        "weapons": [],
+        "equipped": null,
+        "events": [
+          {
+            "kind": "none",
+            "amount": 0,
+            "caption": "",
+            "unlocked": [],
+            "level": 1
+          }
+        ],
+        "pip": "ok, I follow that part. why would a triangle get less than base times height?",
+        "saving": false,
+        "toast": [],
+        "meColors": [
+          "rgb(241, 238, 255) / rgb(11, 11, 18)",
+          "rgb(241, 238, 255) / rgb(16, 33, 63)"
+        ]
+      },
+      {
+        "i": 2,
+        "turnMs": 271,
+        "renderMs": 19,
+        "optimistic": true,
+        "hp": [
+          100,
+          75
+        ],
+        "meters": {
+          "k1": 60,
+          "k2": 0,
+          "k3": 60
+        },
+        "weapons": [
+          "Copy-and-Flip Mirror 🪞",
+          "Fold-in-Half Fan 🪭"
+        ],
+        "equipped": "Copy-and-Flip Mirror 🪞",
+        "events": [
+          {
+            "kind": "hit",
+            "amount": 25,
+            "caption": "Duke Doublecount: \"This is most irregular. Kindly stop folding my rectangle.\" −25 HP",
+            "unlocked": [
+              "Copy-and-Flip Mirror 🪞",
+              "Fold-in-Half Fan 🪭"
+            ],
+            "level": 2
+          }
+        ],
+        "pip": "how big is the shape they make together?",
+        "saving": false,
+        "toast": [],
+        "fightVisible": {
+          "hpVisible": 1,
+          "arenaVisible": 1,
+          "arenaCanvas": false
+        },
+        "meColors": [
+          "rgb(241, 238, 255) / rgb(11, 11, 18)",
+          "rgb(241, 238, 255) / rgb(16, 33, 63)"
+        ]
+      },
+      {
+        "i": 3,
+        "turnMs": 107,
+        "renderMs": 26,
+        "optimistic": true,
+        "hp": [
+          75,
+          50
+        ],
+        "meters": {
+          "k1": 60,
+          "k2": 60,
+          "k3": 65
+        },
+        "weapons": [
+          "Copy-and-Flip Mirror 🪞",
+          "Fold-in-Half Fan 🪭",
+          "Row-by-Row Ruler 📏"
+        ],
+        "equipped": "Copy-and-Flip Mirror 🪞",
+        "events": [
+          {
+            "kind": "hit",
+            "amount": 25,
+            "caption": "Duke Doublecount: \"I did not authorize a second triangle.\" −25 HP",
+            "unlocked": [
+              "Row-by-Row Ruler 📏"
+            ],
+            "level": 2,
+            "weapon": "Copy-and-Flip Mirror 🪞"
+          }
+        ],
+        "pip": "ok I think I get it. quiz me?",
+        "saving": false,
+        "toast": [
+          "Weapon unlocked: Row-by-Row Ruler 📏"
+        ],
+        "fightVisible": {
+          "hpVisible": 1,
+          "arenaVisible": 1,
+          "arenaCanvas": false
+        },
+        "meColors": [
+          "rgb(241, 238, 255) / rgb(11, 11, 18)",
+          "rgb(241, 238, 255) / rgb(16, 33, 63)"
+        ]
+      },
+      {
+        "i": 4,
+        "turnMs": 198,
+        "renderMs": 26,
+        "optimistic": true,
+        "hp": [
+          50,
+          70
+        ],
+        "meters": {
+          "k1": 60,
+          "k2": 60,
+          "k3": 65
+        },
+        "weapons": [
+          "Copy-and-Flip Mirror 🪞",
+          "Fold-in-Half Fan 🪭",
+          "Row-by-Row Ruler 📏"
+        ],
+        "equipped": "Copy-and-Flip Mirror 🪞",
+        "events": [
+          {
+            "kind": "heal",
+            "amount": 20,
+            "caption": "Duke Doublecount: \"Excellent. Base times height. Write that on everything.\" +20 HP",
+            "unlocked": [],
+            "level": 0
+          }
+        ],
+        "pip": "Saving that: 'oh but for a right triangle you just times the two sides'. I think I'm good. Want to quiz me now?",
+        "saving": true,
+        "toast": [],
+        "meColors": [
+          "rgb(241, 238, 255) / rgb(11, 11, 18)",
+          "rgb(241, 238, 255) / rgb(16, 33, 63)"
+        ]
+      }
+    ]
+  },
+  {
+    "width": 1280,
+    "steps": [
+      {
+        "name": "reset via /admin/reset",
+        "pass": true,
+        "ms": 1777,
+        "detail": {
+          "meta": "ai offline · store memory · claude-opus-5-5",
+          "mayaSinceBefore": null
+        }
+      },
+      {
+        "name": "landing",
+        "pass": true,
+        "ms": 9854,
+        "detail": {
+          "hero": "Every AI tutor plays the teacher. Pip plays the student."
+        }
+      },
+      {
+        "name": "Try as Maya -> student home + mascot",
+        "pass": true,
+        "ms": 21970,
+        "detail": {
+          "pass": true,
+          "tiles": [
+            "Area of a triangle"
+          ],
+          "canvas": false,
+          "stageMs": 20563,
+          "drawnMs": null
+        }
+      },
+      {
+        "name": "start pinned triangle mission + pick a look",
+        "pass": true,
+        "ms": 26987,
+        "detail": {
+          "pass": true,
+          "topic": "Area of a triangle",
+          "sid": "sess_b7e14ad4"
+        }
+      },
+      {
+        "name": "Pip's opening is the misconception claim",
+        "pass": true,
+        "ms": 1405,
+        "detail": {
+          "pass": true,
+          "openingCount": 1,
+          "last": "Hi. I'm Pip. I'm learning area of a triangle. I already know one rule: Area of a triangle is base times height, so a 6 by 4 triangle is 24. Easy.",
+          "creature": "cat",
+          "accessory": "glasses"
+        }
+      },
+      {
+        "name": "tap targets >= 44px on mission screen",
+        "pass": true,
+        "ms": 3,
+        "detail": {
+          "pass": true,
+          "small": []
+        }
+      },
+      {
+        "name": "message 1",
+        "pass": true,
+        "ms": 855,
+        "detail": {
+          "pass": true,
+          "i": 1,
+          "turnMs": 164,
+          "renderMs": 34,
+          "optimistic": false,
+          "hp": [
+            100,
+            100
+          ],
+          "meters": {
+            "k1": 0,
+            "k2": 0,
+            "k3": 5
+          },
+          "weapons": [],
+          "equipped": null,
+          "events": [
+            {
+              "kind": "none",
+              "amount": 0,
+              "caption": "",
+              "unlocked": [],
+              "level": 1
+            }
+          ],
+          "pip": "ok, I follow that part. why would a triangle get less than base times height?",
+          "saving": false,
+          "toast": [],
+          "meColors": [
+            "rgb(241, 238, 255) / rgb(11, 11, 18)",
+            "rgb(241, 238, 255) / rgb(16, 33, 63)"
+          ]
+        }
+      },
+      {
+        "name": "message 2",
+        "pass": true,
+        "ms": 2515,
+        "detail": {
+          "pass": true,
+          "i": 2,
+          "turnMs": 494,
+          "renderMs": 21,
+          "optimistic": false,
+          "hp": [
+            100,
+            75
+          ],
+          "meters": {
+            "k1": 60,
+            "k2": 0,
+            "k3": 60
+          },
+          "weapons": [
+            "Copy-and-Flip Mirror 🪞",
+            "Fold-in-Half Fan 🪭"
+          ],
+          "equipped": "Copy-and-Flip Mirror 🪞",
+          "events": [
+            {
+              "kind": "hit",
+              "amount": 25,
+              "caption": "Duke Doublecount: \"This is most irregular. Kindly stop folding my rectangle.\" −25 HP",
+              "unlocked": [
+                "Copy-and-Flip Mirror 🪞",
+                "Fold-in-Half Fan 🪭"
+              ],
+              "level": 2
+            }
+          ],
+          "pip": "how big is the shape they make together?",
+          "saving": false,
+          "toast": [
+            "Weapons unlocked: Copy-and-Flip Mirror 🪞, Fold-in-Half Fan 🪭"
+          ],
+          "fightVisible": {
+            "hpVisible": 1,
+            "arenaVisible": 1,
+            "arenaCanvas": false
+          },
+          "meColors": [
+            "rgb(241, 238, 255) / rgb(11, 11, 18)",
+            "rgb(241, 238, 255) / rgb(16, 33, 63)"
+          ]
+        }
+      },
+      {
+        "name": "message 3",
+        "pass": true,
+        "ms": 2053,
+        "detail": {
+          "pass": true,
+          "i": 3,
+          "turnMs": 93,
+          "renderMs": 13,
+          "optimistic": false,
+          "hp": [
+            75,
+            50
+          ],
+          "meters": {
+            "k1": 60,
+            "k2": 60,
+            "k3": 65
+          },
+          "weapons": [
+            "Copy-and-Flip Mirror 🪞",
+            "Fold-in-Half Fan 🪭",
+            "Row-by-Row Ruler 📏"
+          ],
+          "equipped": "Copy-and-Flip Mirror 🪞",
+          "events": [
+            {
+              "kind": "hit",
+              "amount": 25,
+              "caption": "Duke Doublecount: \"I did not authorize a second triangle.\" −25 HP",
+              "unlocked": [
+                "Row-by-Row Ruler 📏"
+              ],
+              "level": 2,
+              "weapon": "Copy-and-Flip Mirror 🪞"
+            }
+          ],
+          "pip": "ok I think I get it. quiz me?",
+          "saving": false,
+          "toast": [
+            "Weapon unlocked: Row-by-Row Ruler 📏"
+          ],
+          "fightVisible": {
+            "hpVisible": 1,
+            "arenaVisible": 1,
+            "arenaCanvas": false
+          },
+          "meColors": [
+            "rgb(241, 238, 255) / rgb(11, 11, 18)",
+            "rgb(241, 238, 255) / rgb(16, 33, 63)"
+          ]
+        }
+      },
+      {
+        "name": "message 4",
+        "pass": true,
+        "ms": 2991,
+        "detail": {
+          "pass": true,
+          "i": 4,
+          "turnMs": 534,
+          "renderMs": 30,
+          "optimistic": false,
+          "hp": [
+            50,
+            70
+          ],
+          "meters": {
+            "k1": 60,
+            "k2": 60,
+            "k3": 65
+          },
+          "weapons": [
+            "Copy-and-Flip Mirror 🪞",
+            "Fold-in-Half Fan 🪭",
+            "Row-by-Row Ruler 📏"
+          ],
+          "equipped": "Copy-and-Flip Mirror 🪞",
+          "events": [
+            {
+              "kind": "heal",
+              "amount": 20,
+              "caption": "Duke Doublecount: \"Excellent. Base times height. Write that on everything.\" +20 HP",
+              "unlocked": [],
+              "level": 0
+            }
+          ],
+          "pip": "Saving that: 'oh but for a right triangle you just times the two sides'. I think I'm good. Want to quiz me now?",
+          "saving": true,
+          "toast": [],
+          "meColors": [
+            "rgb(241, 238, 255) / rgb(11, 11, 18)",
+            "rgb(241, 238, 255) / rgb(16, 33, 63)"
+          ]
+        }
+      },
+      {
+        "name": "weapon unlocked (UI chip + toast/caption)",
+        "pass": true,
+        "ms": 11,
+        "detail": {
+          "pass": true,
+          "weapons": [
+            "Copy-and-Flip Mirror 🪞",
+            "Fold-in-Half Fan 🪭",
+            "Row-by-Row Ruler 📏"
+          ],
+          "equipped": "Copy-and-Flip Mirror 🪞",
+          "chips": [
+            "⚔Mirror 🪞",
+            "Fan 🪭",
+            "Ruler 📏"
+          ],
+          "captions": [
+            "🔓 Unlocked: Copy-and-Flip Mirror 🪞",
+            "🔓 Unlocked: Fold-in-Half Fan 🪭",
+            "🔓 Unlocked: Row-by-Row Ruler 📏"
+          ],
+          "toasts": [
+            "Weapons unlocked: Copy-and-Flip Mirror 🪞, Fold-in-Half Fan 🪭",
+            "Weapon unlocked: Row-by-Row Ruler 📏"
+          ]
+        }
+      },
+      {
+        "name": "caption visibility (hit/heal captions in chat)",
+        "pass": true,
+        "ms": 8,
+        "detail": {
+          "pass": true,
+          "hits": [
+            "💥  Duke Doublecount: \"This is most irregular. Kindly stop folding my rectangle.\" −25 HP",
+            "💥  Duke Doublecount: \"I did not authorize a second triangle.\" −25 HP"
+          ],
+          "heals": [
+            "🩹 Duke Doublecount: \"Excellent. Base times height. Write that on everything.\" +20 HP"
+          ],
+          "saving": [
+            "Saving that: oh but for a right triangle you just times the two sides. I think I'm good. Want to quiz me now?",
+            "Saving that: oh but for a right triangle you just times the two sides. I think I'm good. Want to quiz me now?"
+          ],
+          "herWords": [
+            "oh but for a right triangle you just times the two sides",
+            "oh but for a right triangle you just times the two sides"
+          ]
+        }
+      },
+      {
+        "name": "mission screen overflow after fight",
+        "pass": true,
+        "ms": 2,
+        "detail": {
+          "pass": true,
+          "scrollWidth": 390,
+          "clientWidth": 390,
+          "overflows": false,
+          "wide": [
+            "g.[object.SVGAnimatedString] right=1190",
+            "rect.[object.SVGAnimatedString] right=830",
+            "g.[object.SVGAnimatedString] right=604",
+            "g.[object.SVGAnimatedString] right=604",
+            "path.[object.SVGAnimatedString] right=604"
+          ]
+        }
+      },
+      {
+        "name": "quiz Pip: brain + k3 miss with 5/12",
+        "pass": true,
+        "ms": 3841,
+        "detail": {
+          "pass": true,
+          "notes": 3,
+          "wrongText": "Step 3: One triangle“oh but for a right triangle you just times the two sides”Pip believes this 😵",
+          "wrongShadow": "rgb(255, 118, 104) 0px 0px 0px 2.73828px, rgba(255, 138, 122, 0.863) 0px 0px 32.1876px -4px, rgba(0, 0, 0, 0.06) 0px 1px 0px 0px, rgba(0, 0, 0, 0.7) 0px 12px 24px -14px",
+          "k3": {
+            "id": "q_k3",
+            "concept_id": "k3",
+            "question": "A right triangle has a base of 10 and a height of 5. What is its area?",
+            "rule_id": "r_k3",
+            "pip_answer": "50",
+            "passed": false,
+            "line": "Your rule for right triangles: times the two sides. 10 × 5 = 50, which is the whole rectangle. Following your rule anyway. 😵"
+          },
+          "literalLineExact": true,
+          "missText": "③ A right triangle has a base of 10 and a height of 5. What is its area?50Your rule for right triangles: times the two sides.10 × 5 = 50, which is the whole rectangle.Following your rule anyway. 😵My brain has a bug 😵Used rule ③Re-teach Pip ③",
+          "redXOnPage": false,
+          "brainVersion": 1,
+          "quizMs": 139
+        }
+      },
+      {
+        "name": "tap a Brain note scrolls to its message",
+        "pass": true,
+        "ms": 2897,
+        "detail": {
+          "pass": true,
+          "id": "msg-7",
+          "text": "oh but for a right triangle you just times the two sides",
+          "inView": true,
+          "top": 483,
+          "msg_index": 7
+        }
+      },
+      {
+        "name": "Re-teach k3 -> message 8 -> Let Pip retry",
+        "pass": true,
+        "ms": 3462,
+        "detail": {
+          "pass": true,
+          "pipAsk": "My brain has a bug about this: \"oh but for a right triangle you just times the two sides\". Fix it?",
+          "reply": "Anything else, or should I try the quiz?",
+          "retryBeforeMsg8": 0,
+          "ko": true,
+          "brain_version": 2,
+          "k3rule": {
+            "id": "r_k3",
+            "concept_id": "k3",
+            "msg_index": 10,
+            "correct": true,
+            "quote": "no a right triangle is still half a rectangle so its 10×5÷2 = 25",
+            "fixed_after": 1
+          },
+          "quiz": [
+            [
+              "k1",
+              true
+            ],
+            [
+              "k2",
+              true
+            ],
+            [
+              "k3",
+              true
+            ]
+          ]
+        }
+      },
+      {
+        "name": "finisher -> K.O. card front/back + cliffhanger + Rivera",
+        "pass": true,
+        "ms": 6223,
+        "detail": {
+          "pass": true,
+          "finisherWeapon": "Copy-and-Flip Mirror 🪞",
+          "finisher": {
+            "weapon": "Copy-and-Flip Mirror 🪞",
+            "caption": "Duke Doublecount met the Copy-and-Flip Mirror 🪞 one last time and left Pip's brain."
+          },
+          "front": "No. 4877\n🦚🪧\nA = b × h\nMaya\nOct 24, 2026",
+          "back": "Duke Doublecount\nYOUR RULE\n“no a right triangle is still half a rectangle so its 10×5÷2 = 25”\nPIP SAID\nYour rule for right triangles: times the two sides. 10 × 5 = 50, which is the whole rectangle. Following your rule anyway. 😵",
+          "cliff": "Pip has a question for next time\n\nI heard a parallelogram is base × height too. Even the slanted ones? That can't be right… right?",
+          "rivera": "What Ms. Rivera sees\n\nThe same thing you see. Nothing else.\n\nYou explained two triangles make a rectangle in your own words.\nYou explained rectangle area in your own words.\nYou explained a triangle is half the rectangle in your own words and fixed it after 1 re-teach.",
+          "version": "Brain v1\n→\nBrain v2",
+          "exclamationsOnKO": 0
+        }
+      },
+      {
+        "name": "tutor roster: Maya since-last-session updated",
+        "pass": false,
+        "ms": 30066,
+        "error": "TimeoutError: locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator('.roster__row').nth(1) to be visible\n"
+      },
+      {
+        "name": "gap report: same quote + fixed after 1 re-teach",
+        "pass": false,
+        "ms": 30003,
+        "error": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator('.roster__row').filter({ hasText: 'Maya' }).first().getByRole('link', { name: 'Report' })\n"
+      },
+      {
+        "name": "parent preview -> send -> sent log",
+        "pass": false,
+        "ms": 30002,
+        "error": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for getByRole('button', { name: 'Send weekly update to parent' })\n"
+      },
+      {
+        "name": "owner insight 14 + boss chip + Plan a workshop",
+        "pass": true,
+        "ms": 2321,
+        "detail": {
+          "pass": true,
+          "count": "14",
+          "chip": "students call it Duke Doublecount",
+          "mis": "Area of a triangle is base times height, so a 6 by 4 triangle is 24",
+          "note": "WORKSHOP NOTE SAVED\n\nWorkshop: Area of a triangle is base times height, so a 6 by 4 triangle is 24\nStudents (14): Diego C., Ana L., Yara W., Ravi A., Kira T., Ezra L., Gus H., Ben V., Wren L., Gus Y., Tara W., Owen T., Omar D., Mila B.\nPlan (30 min): 1) Draw a 6 by 4 rectangle on graph paper, cut it"
+        }
+      },
+      {
+        "name": "pricing -> Start pilot -> success",
+        "pass": true,
+        "ms": 1017,
+        "detail": {
+          "pass": true,
+          "url": "http://localhost:5761/pilot/success",
+          "eyebrow": "Pilot · active",
+          "pilot": {
+            "status": "active"
+          }
+        }
+      },
+      {
+        "name": "tutor New Pip mission draft + save (different student)",
+        "pass": true,
+        "ms": 3554,
+        "detail": {
+          "pass": true,
+          "studentId": "s005",
+          "studentName": "Yara K.",
+          "draftMs": 631,
+          "concepts": [
+            "What Expanding (a + b)² means, in plain words",
+            "Why Expanding (a + b)² works, shown with an example",
+            "How to use Expanding (a + b)² on a brand-new problem"
+          ],
+          "boss": "Skip-Skip Stoat",
+          "mis": "Expanding (a + b)² is just memorizing the steps; you don't need to know why",
+          "savedId": "a_57499550"
+        }
+      }
+    ],
+    "console": [
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/owner"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/owner"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      }
+    ],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [
+      {
+        "url": "http://localhost:5761/api/tutors",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/tutors/t1/students",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/tutors",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/tutors/t1/students",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/students/s001/profile",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/students/s001/profile",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/center/overview",
+        "status": 404,
+        "page": "http://localhost:5761/owner"
+      },
+      {
+        "url": "http://localhost:5761/api/center/overview",
+        "status": 404,
+        "page": "http://localhost:5761/owner"
+      },
+      {
+        "url": "http://localhost:5761/api/tutors",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/tutors/t1/students",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/tutors",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/tutors/t1/students",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/students/s001/profile",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/students/s001/profile",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      }
+    ],
+    "overflow": {
+      "landing": {
+        "scrollWidth": 1280,
+        "clientWidth": 1280,
+        "overflows": false,
+        "wide": []
+      },
+      "studentHome": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "picker": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "missionOpening": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": [
+          "g.[object.SVGAnimatedString] right=1190",
+          "rect.[object.SVGAnimatedString] right=830",
+          "g.[object.SVGAnimatedString] right=610",
+          "g.[object.SVGAnimatedString] right=610",
+          "path.[object.SVGAnimatedString] right=610"
+        ]
+      },
+      "missionAfterFight": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": [
+          "g.[object.SVGAnimatedString] right=1190",
+          "rect.[object.SVGAnimatedString] right=830",
+          "g.[object.SVGAnimatedString] right=604",
+          "g.[object.SVGAnimatedString] right=604",
+          "path.[object.SVGAnimatedString] right=604"
+        ]
+      },
+      "quiz": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "ko": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "owner": {
+        "scrollWidth": 1280,
+        "clientWidth": 1280,
+        "overflows": false,
+        "wide": []
+      },
+      "pricing": {
+        "scrollWidth": 1280,
+        "clientWidth": 1280,
+        "overflows": false,
+        "wide": []
+      },
+      "newMission": {
+        "scrollWidth": 1280,
+        "clientWidth": 1280,
+        "overflows": false,
+        "wide": []
+      }
+    },
+    "smallTargets": [],
+    "timings": {
+      "landingVisibleMs": 99,
+      "studentHomeFirstPaintOfStageMs": 563,
+      "studentHomeStageMs": 20563,
+      "studentHomeStageDrawnMs": null,
+      "missionStageMs": 20165,
+      "quizMs": 139
+    },
+    "mascot": {
+      "studentHome": [
+        {
+          "canvas": false,
+          "fallback": false,
+          "h": 425
+        }
+      ],
+      "missionOpen": [
+        {
+          "canvas": false,
+          "fallback": false,
+          "h": 504
+        }
+      ]
+    },
+    "notes": {
+      "mayaBefore": {
+        "since": null,
+        "last": null
+      }
+    },
+    "tts": [
+      {
+        "status": 200,
+        "t": 1792887064967,
+        "fallback": false,
+        "audioB64": 23464,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.12,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792887064969,
+        "fallback": false,
+        "audioB64": 293188,
+        "mime": "audio/mpeg",
+        "alignChars": 145,
+        "alignEnd": 13.76,
+        "text": "Hi. I'm Pip. I'm learning area of a triangle. I already know one rule: Area of a"
+      },
+      {
+        "status": 200,
+        "t": 1792887086424,
+        "fallback": false,
+        "audioB64": 95352,
+        "mime": "audio/mpeg",
+        "alignChars": 53,
+        "alignEnd": 4.4,
+        "text": "I have counted the entire rectangle. You are welcome."
+      },
+      {
+        "status": 200,
+        "t": 1792887086590,
+        "fallback": false,
+        "audioB64": 126004,
+        "mime": "audio/mpeg",
+        "alignChars": 77,
+        "alignEnd": 5.92,
+        "text": "ok, I follow that part. why would a triangle get less than base times height?"
+      },
+      {
+        "status": 200,
+        "t": 1792887087761,
+        "fallback": false,
+        "audioB64": 59688,
+        "mime": "audio/mpeg",
+        "alignChars": 40,
+        "alignEnd": 2.8,
+        "text": "how big is the shape they make together?"
+      },
+      {
+        "status": 200,
+        "t": 1792887087763,
+        "fallback": false,
+        "audioB64": 103712,
+        "mime": "audio/mpeg",
+        "alignChars": 57,
+        "alignEnd": 4.88,
+        "text": "This is most irregular. Kindly stop folding my rectangle."
+      },
+      {
+        "status": 200,
+        "t": 1792887089869,
+        "fallback": false,
+        "audioB64": 71388,
+        "mime": "audio/mpeg",
+        "alignChars": 29,
+        "alignEnd": 3.36,
+        "text": "ok I think I get it. quiz me?"
+      },
+      {
+        "status": 200,
+        "t": 1792887089874,
+        "fallback": false,
+        "audioB64": 63032,
+        "mime": "audio/mpeg",
+        "alignChars": 38,
+        "alignEnd": 2.96,
+        "text": "I did not authorize a second triangle."
+      },
+      {
+        "status": 200,
+        "t": 1792887092381,
+        "fallback": false,
+        "audioB64": 173928,
+        "mime": "audio/mpeg",
+        "alignChars": 111,
+        "alignEnd": 8.16,
+        "text": "Saving that: 'oh but for a right triangle you just times the two sides'. I think"
+      },
+      {
+        "status": 200,
+        "t": 1792887092383,
+        "fallback": false,
+        "audioB64": 143280,
+        "mime": "audio/mpeg",
+        "alignChars": 62,
+        "alignEnd": 6.72,
+        "text": "Excellent. Base times height. Write that on everything. +20 HP"
+      },
+      {
+        "status": 200,
+        "t": 1792887094927,
+        "fallback": false,
+        "audioB64": 235228,
+        "mime": "audio/mpeg",
+        "alignChars": 122,
+        "alignEnd": 10.96,
+        "text": "Your rule for right triangles: times the two sides. 10 × 5 = 50, which is the wh"
+      },
+      {
+        "status": 200,
+        "t": 1792887101799,
+        "fallback": false,
+        "audioB64": 167240,
+        "mime": "audio/mpeg",
+        "alignChars": 98,
+        "alignEnd": 7.84,
+        "text": "My brain has a bug about this: \"oh but for a right triangle you just times the t"
+      },
+      {
+        "status": 200,
+        "t": 1792887103633,
+        "fallback": false,
+        "audioB64": 66376,
+        "mime": "audio/mpeg",
+        "alignChars": 40,
+        "alignEnd": 3.12,
+        "text": "Anything else, or should I try the quiz?"
+      },
+      {
+        "status": 200,
+        "t": 1792887103635,
+        "fallback": false,
+        "audioB64": 21792,
+        "mime": "audio/mpeg",
+        "alignChars": 8,
+        "alignEnd": 1.04,
+        "text": "CRITICAL"
+      },
+      {
+        "status": 200,
+        "t": 1792887105680,
+        "fallback": false,
+        "audioB64": 61360,
+        "mime": "audio/mpeg",
+        "alignChars": 33,
+        "alignEnd": 2.88,
+        "text": "I object to being divided by two."
+      },
+      {
+        "status": 200,
+        "t": 1792887108896,
+        "fallback": false,
+        "audioB64": 35724,
+        "mime": "audio/mpeg",
+        "alignChars": 14,
+        "alignEnd": 1.68,
+        "text": "BRAIN UPGRADED"
+      }
+    ],
+    "fit": {},
+    "instrument": {
+      "student /student/mission/sess_b7e14ad4": {
+        "moods": [
+          {
+            "t": 1792887036527,
+            "l": "Pip the capybara looks confused",
+            "path": "/student"
+          },
+          {
+            "t": 1792887064900,
+            "l": "Pip the cat looks confused",
+            "path": "/student"
+          },
+          {
+            "t": 1792887086557,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_b7e14ad4"
+          },
+          {
+            "t": 1792887086577,
+            "l": "Pip the cat looks confused",
+            "path": "/student/mission/sess_b7e14ad4"
+          },
+          {
+            "t": 1792887087747,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_b7e14ad4"
+          },
+          {
+            "t": 1792887087777,
+            "l": "Pip the cat looks aha",
+            "path": "/student/mission/sess_b7e14ad4"
+          },
+          {
+            "t": 1792887089851,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_b7e14ad4"
+          },
+          {
+            "t": 1792887089860,
+            "l": "Pip the cat looks aha",
+            "path": "/student/mission/sess_b7e14ad4"
+          },
+          {
+            "t": 1792887092365,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_b7e14ad4"
+          },
+          {
+            "t": 1792887092380,
+            "l": "Pip the cat looks possessed",
+            "path": "/student/mission/sess_b7e14ad4"
+          },
+          {
+            "t": 1792887094919,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_b7e14ad4"
+          },
+          {
+            "t": 1792887094953,
+            "l": "Pip the cat looks notes",
+            "path": "/student/mission/sess_b7e14ad4"
+          },
+          {
+            "t": 1792887098096,
+            "l": "Pip the cat looks overwhelmed",
+            "path": "/student/mission/sess_b7e14ad4"
+          },
+          {
+            "t": 1792887098752,
+            "l": "Pip the cat looks notes",
+            "path": "/student/mission/sess_b7e14ad4"
+          },
+          {
+            "t": 1792887101619,
+            "l": "Pip the cat looks overwhelmed",
+            "path": "/student/mission/sess_b7e14ad4"
+          },
+          {
+            "t": 1792887101797,
+            "l": "Pip the cat looks possessed",
+            "path": "/student/mission/sess_b7e14ad4"
+          },
+          {
+            "t": 1792887103624,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_b7e14ad4"
+          },
+          {
+            "t": 1792887103657,
+            "l": "Pip the cat looks aha",
+            "path": "/student/mission/sess_b7e14ad4"
+          },
+          {
+            "t": 1792887104375,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_b7e14ad4"
+          },
+          {
+            "t": 1792887104417,
+            "l": "Pip the cat looks proud",
+            "path": "/student/mission/sess_b7e14ad4"
+          },
+          {
+            "t": 1792887106706,
+            "l": "Pip the cat looks confused",
+            "path": "/student/mission/sess_b7e14ad4"
+          }
+        ],
+        "boss": [
+          {
+            "t": 1792887065017,
+            "l": "Duke Doublecount, smug",
+            "hp": "Duke Doublecount, 100 HP"
+          },
+          {
+            "t": 1792887103657,
+            "l": "Duke Doublecount, cracked",
+            "hp": "Duke Doublecount, 30 HP"
+          },
+          {
+            "t": 1792887105063,
+            "l": "Duke Doublecount, ko",
+            "hp": "Duke Doublecount, knocked out"
+          }
+        ],
+        "plays": [
+          {
+            "t": 1792887064980,
+            "mime": "audio/mpeg",
+            "len": 293211,
+            "playing": 1792887065303,
+            "ok": true,
+            "end": 1792887079225
+          },
+          {
+            "t": 1792887086424,
+            "mime": "audio/mpeg",
+            "len": 95375,
+            "playing": 1792887086434,
+            "ok": true,
+            "end": 1792887086567
+          },
+          {
+            "t": 1792887086583,
+            "mime": "audio/mpeg",
+            "len": 126027,
+            "playing": 1792887086585,
+            "ok": true,
+            "end": 1792887087756
+          },
+          {
+            "t": 1792887087758,
+            "mime": "audio/mpeg",
+            "len": 59711,
+            "playing": 1792887087762,
+            "ok": true,
+            "end": 1792887089858
+          },
+          {
+            "t": 1792887089868,
+            "mime": "audio/mpeg",
+            "len": 71411,
+            "playing": 1792887089874,
+            "ok": true,
+            "end": 1792887092377
+          },
+          {
+            "t": 1792887092383,
+            "mime": "audio/mpeg",
+            "len": 173951,
+            "playing": 1792887092392,
+            "ok": true,
+            "end": 1792887094918
+          },
+          {
+            "t": 1792887094927,
+            "mime": "audio/mpeg",
+            "len": 235251,
+            "playing": 1792887094930,
+            "ok": true,
+            "end": 1792887098082
+          },
+          {
+            "t": 1792887098082,
+            "mime": "audio/mpeg",
+            "len": 235251,
+            "playing": 1792887098097,
+            "ok": true,
+            "end": 1792887101618
+          },
+          {
+            "t": 1792887101618,
+            "mime": "audio/mpeg",
+            "len": 235251,
+            "playing": 1792887101630,
+            "ok": true,
+            "end": 1792887101791
+          },
+          {
+            "t": 1792887103637,
+            "mime": "audio/mpeg",
+            "len": 21815,
+            "playing": 1792887103639,
+            "ok": true,
+            "end": 1792887104375
+          },
+          {
+            "t": 1792887105678,
+            "mime": "audio/mpeg",
+            "len": 61383,
+            "playing": 1792887105680,
+            "ok": true,
+            "end": 1792887106701
+          },
+          {
+            "t": 1792887108896,
+            "mime": "audio/mpeg",
+            "len": 35747,
+            "playing": 1792887108898,
+            "ok": true,
+            "end": 1792887110725
+          }
+        ],
+        "synth": [],
+        "mouthPlaying": {
+          "g:153": 55,
+          "g:118": 317,
+          "g:98": 262,
+          "g:257": 103,
+          "g:133": 45,
+          "g:101": 1,
+          "g:256": 25
+        },
+        "mouthIdle": {
+          "g:157": 707,
+          "g:153": 261,
+          "g:118": 3,
+          "g:98": 3,
+          "g:101": 3,
+          "g:124": 44,
+          "g:256": 32
+        },
+        "qmarks": 0
+      }
+    },
+    "fightVis": {
+      "1": {
+        "hpVisible": 1,
+        "arenaVisible": 1,
+        "arenaCanvas": false
+      },
+      "2": {
+        "hpVisible": 1,
+        "arenaVisible": 1,
+        "arenaCanvas": false
+      }
+    },
+    "turns": [
+      {
+        "i": 1,
+        "turnMs": 164,
+        "renderMs": 34,
+        "optimistic": false,
+        "hp": [
+          100,
+          100
+        ],
+        "meters": {
+          "k1": 0,
+          "k2": 0,
+          "k3": 5
+        },
+        "weapons": [],
+        "equipped": null,
+        "events": [
+          {
+            "kind": "none",
+            "amount": 0,
+            "caption": "",
+            "unlocked": [],
+            "level": 1
+          }
+        ],
+        "pip": "ok, I follow that part. why would a triangle get less than base times height?",
+        "saving": false,
+        "toast": [],
+        "meColors": [
+          "rgb(241, 238, 255) / rgb(11, 11, 18)",
+          "rgb(241, 238, 255) / rgb(16, 33, 63)"
+        ]
+      },
+      {
+        "i": 2,
+        "turnMs": 494,
+        "renderMs": 21,
+        "optimistic": false,
+        "hp": [
+          100,
+          75
+        ],
+        "meters": {
+          "k1": 60,
+          "k2": 0,
+          "k3": 60
+        },
+        "weapons": [
+          "Copy-and-Flip Mirror 🪞",
+          "Fold-in-Half Fan 🪭"
+        ],
+        "equipped": "Copy-and-Flip Mirror 🪞",
+        "events": [
+          {
+            "kind": "hit",
+            "amount": 25,
+            "caption": "Duke Doublecount: \"This is most irregular. Kindly stop folding my rectangle.\" −25 HP",
+            "unlocked": [
+              "Copy-and-Flip Mirror 🪞",
+              "Fold-in-Half Fan 🪭"
+            ],
+            "level": 2
+          }
+        ],
+        "pip": "how big is the shape they make together?",
+        "saving": false,
+        "toast": [
+          "Weapons unlocked: Copy-and-Flip Mirror 🪞, Fold-in-Half Fan 🪭"
+        ],
+        "fightVisible": {
+          "hpVisible": 1,
+          "arenaVisible": 1,
+          "arenaCanvas": false
+        },
+        "meColors": [
+          "rgb(241, 238, 255) / rgb(11, 11, 18)",
+          "rgb(241, 238, 255) / rgb(16, 33, 63)"
+        ]
+      },
+      {
+        "i": 3,
+        "turnMs": 93,
+        "renderMs": 13,
+        "optimistic": false,
+        "hp": [
+          75,
+          50
+        ],
+        "meters": {
+          "k1": 60,
+          "k2": 60,
+          "k3": 65
+        },
+        "weapons": [
+          "Copy-and-Flip Mirror 🪞",
+          "Fold-in-Half Fan 🪭",
+          "Row-by-Row Ruler 📏"
+        ],
+        "equipped": "Copy-and-Flip Mirror 🪞",
+        "events": [
+          {
+            "kind": "hit",
+            "amount": 25,
+            "caption": "Duke Doublecount: \"I did not authorize a second triangle.\" −25 HP",
+            "unlocked": [
+              "Row-by-Row Ruler 📏"
+            ],
+            "level": 2,
+            "weapon": "Copy-and-Flip Mirror 🪞"
+          }
+        ],
+        "pip": "ok I think I get it. quiz me?",
+        "saving": false,
+        "toast": [
+          "Weapon unlocked: Row-by-Row Ruler 📏"
+        ],
+        "fightVisible": {
+          "hpVisible": 1,
+          "arenaVisible": 1,
+          "arenaCanvas": false
+        },
+        "meColors": [
+          "rgb(241, 238, 255) / rgb(11, 11, 18)",
+          "rgb(241, 238, 255) / rgb(16, 33, 63)"
+        ]
+      },
+      {
+        "i": 4,
+        "turnMs": 534,
+        "renderMs": 30,
+        "optimistic": false,
+        "hp": [
+          50,
+          70
+        ],
+        "meters": {
+          "k1": 60,
+          "k2": 60,
+          "k3": 65
+        },
+        "weapons": [
+          "Copy-and-Flip Mirror 🪞",
+          "Fold-in-Half Fan 🪭",
+          "Row-by-Row Ruler 📏"
+        ],
+        "equipped": "Copy-and-Flip Mirror 🪞",
+        "events": [
+          {
+            "kind": "heal",
+            "amount": 20,
+            "caption": "Duke Doublecount: \"Excellent. Base times height. Write that on everything.\" +20 HP",
+            "unlocked": [],
+            "level": 0
+          }
+        ],
+        "pip": "Saving that: 'oh but for a right triangle you just times the two sides'. I think I'm good. Want to quiz me now?",
+        "saving": true,
+        "toast": [],
+        "meColors": [
+          "rgb(241, 238, 255) / rgb(11, 11, 18)",
+          "rgb(241, 238, 255) / rgb(16, 33, 63)"
+        ]
+      }
+    ]
+  }
+]

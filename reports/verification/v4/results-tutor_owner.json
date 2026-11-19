@@ -8,765 +8,7 @@
       {
         "name": "reset + owner numbers before the K.O.",
         "status": "PASS",
-        "ms": 4406,
-        "detail": {
-          "pass": true,
-          "headline": "$7,040",
-          "api": 7040,
-          "mayaSignal": "quiet",
-          "mayaPrice": 660
-        }
-      },
-      {
-        "name": "Maya's K.O. (DEMO_SCRIPT through the API)",
-        "status": "PASS",
-        "ms": 43,
-        "detail": {
-          "pass": true,
-          "sid": "sess_64b5dc45"
-        }
-      },
-      {
-        "name": "Tutor Studio loads Ms. Rivera’s students (live data, no mock)",
-        "status": "PASS",
-        "ms": 10098,
-        "detail": {
-          "pass": true,
-          "rows": 25,
-          "apiRows": 25,
-          "overflow": []
-        }
-      },
-      {
-        "name": "tutor switcher: Mr. Chen and back",
-        "status": "PASS",
-        "ms": 2692,
-        "detail": {
-          "pass": true,
-          "tutors": 8,
-          "chenRows": 18,
-          "apiChen": 18,
-          "riveraRows": 25
-        }
-      },
-      {
-        "name": "subject filter",
-        "status": "PASS",
-        "ms": 1729,
-        "detail": {
-          "pass": true,
-          "out": {
-            "Math": {
-              "rows": 24,
-              "allMatch": true
-            },
-            "Writing": {
-              "rows": 14,
-              "allMatch": true
-            }
-          }
-        }
-      },
-      {
-        "name": "search \"Maya\"",
-        "status": "PASS",
-        "ms": 1074,
-        "detail": {
-          "pass": true,
-          "names": [
-            "Maya R."
-          ]
-        }
-      },
-      {
-        "name": "flag filters: at risk / needs update / no contact / new",
-        "status": "PASS",
-        "ms": 3315,
-        "detail": {
-          "pass": true,
-          "out": {
-            "at_risk": {
-              "ui": 3,
-              "apiN": 3,
-              "flagged": true,
-              "ok": true
-            },
-            "needs_update": {
-              "ui": 2,
-              "apiN": 2,
-              "flagged": true,
-              "ok": true
-            },
-            "no_contact": {
-              "ui": 2,
-              "apiN": 2,
-              "flagged": true,
-              "ok": true
-            },
-            "new": {
-              "apiN": 0,
-              "disabled": true,
-              "ok": true
-            }
-          },
-          "toggleRetries": []
-        }
-      },
-      {
-        "name": "multi-select -> bulk assign mission (distinct assignments)",
-        "status": "PASS",
-        "ms": 6460,
-        "detail": {
-          "pass": true,
-          "selected": [
-            "Select Gus Y.",
-            "Select Nico F."
-          ],
-          "assignments": [
-            [
-              "a_3f7a8246",
-              "s095",
-              "Solving two-step equations"
-            ],
-            [
-              "a_fb75ecc9",
-              "s087",
-              "Solving two-step equations"
-            ]
-          ],
-          "onHome": [
-            true,
-            true
-          ]
-        }
-      },
-      {
-        "name": "Maya profile: math + writing progress",
-        "status": "PASS",
-        "ms": 1581,
-        "detail": {
-          "pass": true,
-          "subjects": [
-            "Math",
-            "Writing"
-          ],
-          "masteryRows": 3
-        }
-      },
-      {
-        "name": "Maya profile: guardians Ana R. + Sam R.",
-        "status": "PASS",
-        "ms": 413,
-        "detail": {
-          "pass": true,
-          "text": "Guardians\n＋ Add guardian\n\nAna R. · Parent\n\n+1-415-555-0101\n·\nana.r@example.com\n\nPrefers Text message\nCadence Every finished lesson\nQuiet 21:00–07:00\n\nEdit\n\nSam R. · Parent\n\n+1-415-555-0102\n·\nsam.r@example.com\n\nPrefers Email\nCadence Weekly\nQ"
-        }
-      },
-      {
-        "name": "add a private note and a shared note",
-        "status": "PASS",
-        "ms": 1730,
-        "detail": {
-          "pass": true,
-          "private": true,
-          "shared": true
-        }
-      },
-      {
-        "name": "message a parent (test mode or queued for quiet hours)",
-        "status": "PASS",
-        "ms": 744,
-        "detail": {
-          "pass": true,
-          "status": "test-mode (not delivered)",
-          "tag": "Test mode · not sent"
-        }
-      },
-      {
-        "name": "parent update per guardian (Ana + Sam)",
-        "status": "PASS",
-        "ms": 2021,
-        "detail": {
-          "pass": true,
-          "flow": "v3.15 To send queue",
-          "draftsQueued": 2,
-          "anaPreview": "Bright Path Tutoring: This week Maya taught Pip why a triangle's area is half of base × height, and caught and fixed a mistake along the way. In Maya's own word",
-          "samPreview": "Bright Path Tutoring: This week Maya taught Pip why a triangle's area is half of base × height, and caught and fixed a mistake along the way. In Maya's own word",
-          "tags": [
-            "Test mode · not sent",
-            "Test mode · not sent"
-          ],
-          "sentItems": [
-            [
-              "g001",
-              "test-mode (not delivered)"
-            ],
-            [
-              "g002",
-              "test-mode (not delivered)"
-            ]
-          ]
-        }
-      },
-      {
-        "name": "parent updates are English with no game words (v3.16, B18/F18)",
-        "status": "PASS",
-        "ms": 20,
-        "detail": {
-          "pass": true,
-          "spanish": false,
-          "game": false,
-          "guardianLanguageField": false
-        }
-      },
-      {
-        "name": "owner: Maya flips to engaged; revenue at risk drops by her package",
-        "status": "PASS",
-        "ms": 1336,
-        "detail": {
-          "pass": true,
-          "before": 7040,
-          "after": 6380,
-          "headline": "$6,380",
-          "signal": "Engaged",
-          "renewalsDue": 15
-        }
-      },
-      {
-        "name": "owner: every metric explains itself; revenue headline = sum of listed packages",
-        "status": "PASS",
-        "ms": 1060,
-        "detail": {
-          "pass": true,
-          "metrics": [
-            {
-              "label": "Revenue at risk",
-              "explain": "Sum of package prices for students flagged at risk or quiet (no visit on their own or finished lesson this week) whose p"
-            },
-            {
-              "label": "Kept families · 30 days",
-              "explain": "Students with an active package 30 days ago who still have one today (renewed or still running)."
-            },
-            {
-              "label": "Parents reached · 7 days",
-              "explain": "Updates = parent updates sent this week (test mode in the demo). Replies = guardian messages back in the same threads. R"
-            },
-            {
-              "label": "Tutor time saved · this week",
-              "explain": "(parent updates 19 + gap reports written automatically 13) × 10 minutes. The 10 minutes is our assumption for one hand-w"
-            },
-            {
-              "label": "Came back on their own · 7 days",
-              "explain": "Students who opened Pip when no assignment was due. The strongest early sign a family will renew."
-            }
-          ],
-          "sumOfListed": 6380,
-          "headline": 6380,
-          "renewalRows": 15,
-          "apiRows": 15,
-          "missingInUI": []
-        }
-      },
-      {
-        "name": "owner: send a renewal note (preview first, K.O. quote as evidence)",
-        "status": "PASS",
-        "ms": 3210,
-        "detail": {
-          "pass": true,
-          "status": "test-mode (not delivered)",
-          "preview": "Hi Ana, Maya's Math package with Ms. Rivera has 2 hours left and renews on Nov 2. Recently Maya taught Pip why a triangle's area is half of base × height, in Maya's own words: \"no a right triangle is ",
-          "evidenceQuote": "no a right triangle is still half a rectangle so its 10×5÷2 = 25",
-          "englishOnly": true
-        }
-      },
-      {
-        "name": "old path: gap report (same quote, fixed after 1 re-teach, root cause)",
-        "status": "PASS",
-        "ms": 1844,
-        "detail": {
-          "pass": true,
-          "url": "/tutor/report/sess_64b5dc45",
-          "k3": "no a right triangle is still half a rectangle so its 10×5÷2 = 25"
-        }
-      },
-      {
-        "name": "old path: owner insight -> Plan a workshop",
-        "status": "PASS",
-        "ms": 1220,
-        "detail": {
-          "pass": true,
-          "count": "14"
-        }
-      },
-      {
-        "name": "old path: pricing -> Start pilot -> success",
-        "status": "PASS",
-        "ms": 1222,
-        "detail": {
-          "pass": true,
-          "pilot": {
-            "status": "active"
-          }
-        }
-      },
-      {
-        "name": "44px tap targets on staff screens",
-        "status": "FAIL",
-        "ms": 0,
-        "detail": {
-          "pass": false,
-          "count": 26,
-          "small": [
-            {
-              "el": "a.small",
-              "text": "See center view →",
-              "w": 117,
-              "h": 22,
-              "inline": false,
-              "screen": "tutor",
-              "min": 44
-            },
-            {
-              "el": "a.prog__rep",
-              "text": "Gap report →",
-              "w": 87,
-              "h": 22,
-              "inline": false,
-              "screen": "profile",
-              "min": 44
-            },
-            {
-              "el": "a.rn__name",
-              "text": "Leo T.",
-              "w": 227,
-              "h": 24,
-              "inline": false,
-              "screen": "owner",
-              "min": 44
-            },
-            {
-              "el": "a.rn__name",
-              "text": "Maya R.",
-              "w": 227,
-              "h": 24,
-              "inline": false,
-              "screen": "owner",
-              "min": 44
-            },
-            {
-              "el": "a.rn__name",
-              "text": "Owen T.",
-              "w": 247,
-              "h": 24,
-              "inline": false,
-              "screen": "owner",
-              "min": 44
-            },
-            {
-              "el": "a.rn__name",
-              "text": "Ivy Y.",
-              "w": 247,
-              "h": 24,
-              "inline": false,
-              "screen": "owner",
-              "min": 44
-            },
-            {
-              "el": "a.rn__name",
-              "text": "Ana Y.",
-              "w": 227,
-              "h": 24,
-              "inline": false,
-              "screen": "owner",
-              "min": 44
-            },
-            {
-              "el": "a.rn__name",
-              "text": "Nico D.",
-              "w": 247,
-              "h": 24,
-              "inline": false,
-              "screen": "owner",
-              "min": 44
-            },
-            {
-              "el": "a.rn__name",
-              "text": "Finn V.",
-              "w": 227,
-              "h": 24,
-              "inline": false,
-              "screen": "owner",
-              "min": 44
-            },
-            {
-              "el": "a.rn__name",
-              "text": "Gus Y.",
-              "w": 247,
-              "h": 24,
-              "inline": false,
-              "screen": "owner",
-              "min": 44
-            },
-            {
-              "el": "a.rn__name",
-              "text": "Yara W.",
-              "w": 247,
-              "h": 24,
-              "inline": false,
-              "screen": "owner",
-              "min": 44
-            },
-            {
-              "el": "a.rn__name",
-              "text": "Hana E.",
-              "w": 247,
-              "h": 24,
-              "inline": false,
-              "screen": "owner",
-              "min": 44
-            },
-            {
-              "el": "a.rn__name",
-              "text": "Wren T.",
-              "w": 247,
-              "h": 24,
-              "inline": false,
-              "screen": "owner",
-              "min": 44
-            },
-            {
-              "el": "a.rn__name",
-              "text": "Leo C.",
-              "w": 247,
-              "h": 24,
-              "inline": false,
-              "screen": "owner",
-              "min": 44
-            }
-          ]
-        }
-      },
-      {
-        "name": "AA contrast on staff screens",
-        "status": "PASS",
-        "ms": 0,
-        "detail": {
-          "pass": true,
-          "tool": "axe",
-          "bad": []
-        }
-      },
-      {
-        "name": "no console errors, failed requests or unexpected non-2xx",
-        "status": "PASS",
-        "ms": 0,
-        "detail": {
-          "pass": true,
-          "console": [],
-          "pageErrors": [],
-          "failedRequests": [],
-          "badResponses": [],
-          "expectedBad": []
-        }
-      }
-    ],
-    "console": [],
-    "pageErrors": [],
-    "failedRequests": [],
-    "badResponses": [],
-    "expectedBad": [],
-    "smallTargets": [
-      {
-        "el": "a.small",
-        "text": "See center view →",
-        "w": 117,
-        "h": 22,
-        "inline": false,
-        "screen": "tutor",
-        "min": 44
-      },
-      {
-        "el": "a.prog__rep",
-        "text": "Gap report →",
-        "w": 87,
-        "h": 22,
-        "inline": false,
-        "screen": "profile",
-        "min": 44
-      },
-      {
-        "el": "a.rn__name",
-        "text": "Leo T.",
-        "w": 227,
-        "h": 24,
-        "inline": false,
-        "screen": "owner",
-        "min": 44
-      },
-      {
-        "el": "a.rn__name",
-        "text": "Maya R.",
-        "w": 227,
-        "h": 24,
-        "inline": false,
-        "screen": "owner",
-        "min": 44
-      },
-      {
-        "el": "a.rn__name",
-        "text": "Owen T.",
-        "w": 247,
-        "h": 24,
-        "inline": false,
-        "screen": "owner",
-        "min": 44
-      },
-      {
-        "el": "a.rn__name",
-        "text": "Ivy Y.",
-        "w": 247,
-        "h": 24,
-        "inline": false,
-        "screen": "owner",
-        "min": 44
-      },
-      {
-        "el": "a.rn__name",
-        "text": "Ana Y.",
-        "w": 227,
-        "h": 24,
-        "inline": false,
-        "screen": "owner",
-        "min": 44
-      },
-      {
-        "el": "a.rn__name",
-        "text": "Nico D.",
-        "w": 247,
-        "h": 24,
-        "inline": false,
-        "screen": "owner",
-        "min": 44
-      },
-      {
-        "el": "a.rn__name",
-        "text": "Finn V.",
-        "w": 227,
-        "h": 24,
-        "inline": false,
-        "screen": "owner",
-        "min": 44
-      },
-      {
-        "el": "a.rn__name",
-        "text": "Gus Y.",
-        "w": 247,
-        "h": 24,
-        "inline": false,
-        "screen": "owner",
-        "min": 44
-      },
-      {
-        "el": "a.rn__name",
-        "text": "Yara W.",
-        "w": 247,
-        "h": 24,
-        "inline": false,
-        "screen": "owner",
-        "min": 44
-      },
-      {
-        "el": "a.rn__name",
-        "text": "Hana E.",
-        "w": 247,
-        "h": 24,
-        "inline": false,
-        "screen": "owner",
-        "min": 44
-      },
-      {
-        "el": "a.rn__name",
-        "text": "Wren T.",
-        "w": 247,
-        "h": 24,
-        "inline": false,
-        "screen": "owner",
-        "min": 44
-      },
-      {
-        "el": "a.rn__name",
-        "text": "Leo C.",
-        "w": 247,
-        "h": 24,
-        "inline": false,
-        "screen": "owner",
-        "min": 44
-      },
-      {
-        "el": "a.rn__name",
-        "text": "Wren S.",
-        "w": 247,
-        "h": 24,
-        "inline": false,
-        "screen": "owner",
-        "min": 44
-      },
-      {
-        "el": "a.rn__name",
-        "text": "Ruby J.",
-        "w": 247,
-        "h": 24,
-        "inline": false,
-        "screen": "owner",
-        "min": 44
-      },
-      {
-        "el": "a.rn__name",
-        "text": "Nora S.",
-        "w": 247,
-        "h": 24,
-        "inline": false,
-        "screen": "owner",
-        "min": 44
-      },
-      {
-        "el": "a.",
-        "text": "Ms. Rivera",
-        "w": 70,
-        "h": 21,
-        "inline": false,
-        "screen": "owner",
-        "min": 44
-      },
-      {
-        "el": "a.",
-        "text": "Mr. Chen",
-        "w": 61,
-        "h": 21,
-        "inline": false,
-        "screen": "owner",
-        "min": 44
-      },
-      {
-        "el": "a.",
-        "text": "Ms. Okafor",
-        "w": 73,
-        "h": 21,
-        "inline": false,
-        "screen": "owner",
-        "min": 44
-      },
-      {
-        "el": "a.",
-        "text": "Mr. Patel",
-        "w": 59,
-        "h": 21,
-        "inline": false,
-        "screen": "owner",
-        "min": 44
-      },
-      {
-        "el": "a.",
-        "text": "Ms. Nguyen",
-        "w": 80,
-        "h": 21,
-        "inline": false,
-        "screen": "owner",
-        "min": 44
-      },
-      {
-        "el": "a.",
-        "text": "Mr. Alvarez",
-        "w": 74,
-        "h": 21,
-        "inline": false,
-        "screen": "owner",
-        "min": 44
-      },
-      {
-        "el": "a.",
-        "text": "Ms. Kim",
-        "w": 52,
-        "h": 21,
-        "inline": false,
-        "screen": "owner",
-        "min": 44
-      },
-      {
-        "el": "a.",
-        "text": "Mr. Brooks",
-        "w": 71,
-        "h": 21,
-        "inline": false,
-        "screen": "owner",
-        "min": 44
-      },
-      {
-        "el": "input.range",
-        "text": "",
-        "w": 282,
-        "h": 32,
-        "inline": false,
-        "screen": "pricing",
-        "min": 44
-      }
-    ],
-    "contrast": {
-      "tutor": {
-        "tool": "axe",
-        "violations": 0,
-        "nodes": []
-      },
-      "profile": {
-        "tool": "axe",
-        "violations": 0,
-        "nodes": []
-      },
-      "owner": {
-        "tool": "axe",
-        "violations": 0,
-        "nodes": []
-      }
-    },
-    "overflow": {
-      "tutor": {
-        "scrollWidth": 390,
-        "clientWidth": 390,
-        "overflows": false,
-        "wide": []
-      },
-      "profile": {
-        "scrollWidth": 390,
-        "clientWidth": 390,
-        "overflows": false,
-        "wide": []
-      },
-      "owner": {
-        "scrollWidth": 390,
-        "clientWidth": 390,
-        "overflows": false,
-        "wide": []
-      }
-    },
-    "fit": {},
-    "notes": {
-      "draftsQueued": 2,
-      "update": {
-        "ana": "Bright Path Tutoring: This week Maya taught Pip why a triangle's area is half of base × height, and caught and fixed a mistake along the way. In Maya's own words: \"no a right triangle is still half a rectangle so its 10×5÷2 = 25\". Next session, Maya starts something new. - Ms. Rivera",
-        "sam": "Bright Path Tutoring: This week Maya taught Pip why a triangle's area is half of base × height, and caught and fixed a mistake along the way. In Maya's own words: \"no a right triangle is still half a rectangle so its 10×5÷2 = 25\". Next session, Maya starts something new. - Ms. Rivera"
-      }
-    }
-  },
-  {
-    "journey": "tutor_owner",
-    "width": 1280,
-    "height": 800,
-    "chrome": "156.0.8078.48",
-    "steps": [
-      {
-        "name": "reset + owner numbers before the K.O.",
-        "status": "PASS",
-        "ms": 4574,
+        "ms": 5334,
         "detail": {
           "pass": true,
           "headline": "$7,040",
@@ -781,13 +23,13 @@
         "ms": 44,
         "detail": {
           "pass": true,
-          "sid": "sess_4652de8d"
+          "sid": "sess_b2bf77c3"
         }
       },
       {
         "name": "Tutor Studio loads Ms. Rivera’s students (live data, no mock)",
         "status": "PASS",
-        "ms": 9365,
+        "ms": 9635,
         "detail": {
           "pass": true,
           "rows": 25,
@@ -798,7 +40,7 @@
       {
         "name": "tutor switcher: Mr. Chen and back",
         "status": "PASS",
-        "ms": 2817,
+        "ms": 31118,
         "detail": {
           "pass": true,
           "tutors": 8,
@@ -810,7 +52,7 @@
       {
         "name": "subject filter",
         "status": "PASS",
-        "ms": 1556,
+        "ms": 31088,
         "detail": {
           "pass": true,
           "out": {
@@ -828,7 +70,7 @@
       {
         "name": "search \"Maya\"",
         "status": "PASS",
-        "ms": 957,
+        "ms": 23587,
         "detail": {
           "pass": true,
           "names": [
@@ -839,7 +81,7 @@
       {
         "name": "flag filters: at risk / needs update / no contact / new",
         "status": "PASS",
-        "ms": 4123,
+        "ms": 3336,
         "detail": {
           "pass": true,
           "out": {
@@ -873,7 +115,7 @@
       {
         "name": "multi-select -> bulk assign mission (distinct assignments)",
         "status": "PASS",
-        "ms": 4069,
+        "ms": 7029,
         "detail": {
           "pass": true,
           "selected": [
@@ -882,12 +124,12 @@
           ],
           "assignments": [
             [
-              "a_0c15552a",
+              "a_656a7c09",
               "s095",
               "Solving two-step equations"
             ],
             [
-              "a_8b865209",
+              "a_7f9f29da",
               "s087",
               "Solving two-step equations"
             ]
@@ -901,7 +143,7 @@
       {
         "name": "Maya profile: math + writing progress",
         "status": "PASS",
-        "ms": 2972,
+        "ms": 1455,
         "detail": {
           "pass": true,
           "subjects": [
@@ -912,9 +154,25 @@
         }
       },
       {
+        "name": "F20: avatars, learning profile, learning map (fallback until B21)",
+        "status": "FAIL",
+        "ms": 30435,
+        "detail": {
+          "pass": false,
+          "avatarsInTable": 0,
+          "profile": null,
+          "mapNodes": 3,
+          "alreadyKnew": [
+            "A rectangle's area is base × height. Already knew."
+          ],
+          "fallbackMap": true,
+          "head": "The map Pip learned about Maya 3 of 3 concepts known · tap one for Maya’s own words · built from the current missions"
+        }
+      },
+      {
         "name": "Maya profile: guardians Ana R. + Sam R.",
         "status": "PASS",
-        "ms": 620,
+        "ms": 315,
         "detail": {
           "pass": true,
           "text": "Guardians\n＋ Add guardian\n\nAna R. · Parent\n\n+1-415-555-0101\n·\nana.r@example.com\n\nPrefers Text message\nCadence Every finished lesson\nQuiet 21:00–07:00\n\nEdit\n\nSam R. · Parent\n\n+1-415-555-0102\n·\nsam.r@example.com\n\nPrefers Email\nCadence Weekly\nQ"
@@ -923,7 +181,7 @@
       {
         "name": "add a private note and a shared note",
         "status": "PASS",
-        "ms": 1390,
+        "ms": 2740,
         "detail": {
           "pass": true,
           "private": true,
@@ -933,31 +191,31 @@
       {
         "name": "message a parent (test mode or queued for quiet hours)",
         "status": "PASS",
-        "ms": 1613,
+        "ms": 763,
         "detail": {
           "pass": true,
-          "status": "test-mode (not delivered)",
-          "tag": "Test mode · not sent"
+          "status": "queued (quiet hours)",
+          "tag": "Queued · quiet hours · sends 7:00 AM"
         }
       },
       {
         "name": "parent update per guardian (Ana + Sam)",
         "status": "PASS",
-        "ms": 2417,
+        "ms": 1917,
         "detail": {
           "pass": true,
           "flow": "v3.15 To send queue",
-          "draftsQueued": 2,
+          "draftsQueued": 1,
           "anaPreview": "Bright Path Tutoring: This week Maya taught Pip why a triangle's area is half of base × height, and caught and fixed a mistake along the way. In Maya's own word",
           "samPreview": "Bright Path Tutoring: This week Maya taught Pip why a triangle's area is half of base × height, and caught and fixed a mistake along the way. In Maya's own word",
           "tags": [
-            "Test mode · not sent",
+            "Queued · quiet hours · sends 7:00 AM",
             "Test mode · not sent"
           ],
           "sentItems": [
             [
               "g001",
-              "test-mode (not delivered)"
+              "queued (quiet hours)"
             ],
             [
               "g002",
@@ -967,9 +225,19 @@
         }
       },
       {
+        "name": "D-27: one K.O. queues exactly one draft (no draft from the saved session)",
+        "status": "PASS",
+        "ms": 7,
+        "detail": {
+          "pass": true,
+          "queuedBeforeSend": 1,
+          "openAfterSend": []
+        }
+      },
+      {
         "name": "parent updates are English with no game words (v3.16, B18/F18)",
         "status": "PASS",
-        "ms": 17,
+        "ms": 18,
         "detail": {
           "pass": true,
           "spanish": false,
@@ -980,7 +248,7 @@
       {
         "name": "owner: Maya flips to engaged; revenue at risk drops by her package",
         "status": "PASS",
-        "ms": 1376,
+        "ms": 1333,
         "detail": {
           "pass": true,
           "before": 7040,
@@ -993,7 +261,7 @@
       {
         "name": "owner: every metric explains itself; revenue headline = sum of listed packages",
         "status": "PASS",
-        "ms": 913,
+        "ms": 1425,
         "detail": {
           "pass": true,
           "metrics": [
@@ -1028,10 +296,10 @@
       {
         "name": "owner: send a renewal note (preview first, K.O. quote as evidence)",
         "status": "PASS",
-        "ms": 1433,
+        "ms": 4080,
         "detail": {
           "pass": true,
-          "status": "test-mode (not delivered)",
+          "status": "queued (quiet hours)",
           "preview": "Hi Ana, Maya's Math package with Ms. Rivera has 2 hours left and renews on Nov 2. Recently Maya taught Pip why a triangle's area is half of base × height, in Maya's own words: \"no a right triangle is ",
           "evidenceQuote": "no a right triangle is still half a rectangle so its 10×5÷2 = 25",
           "englishOnly": true
@@ -1040,17 +308,17 @@
       {
         "name": "old path: gap report (same quote, fixed after 1 re-teach, root cause)",
         "status": "PASS",
-        "ms": 1646,
+        "ms": 1853,
         "detail": {
           "pass": true,
-          "url": "/tutor/report/sess_4652de8d",
+          "url": "/tutor/report/sess_b2bf77c3",
           "k3": "no a right triangle is still half a rectangle so its 10×5÷2 = 25"
         }
       },
       {
         "name": "old path: owner insight -> Plan a workshop",
         "status": "PASS",
-        "ms": 964,
+        "ms": 939,
         "detail": {
           "pass": true,
           "count": "14"
@@ -1059,7 +327,7 @@
       {
         "name": "old path: pricing -> Start pilot -> success",
         "status": "PASS",
-        "ms": 1240,
+        "ms": 1187,
         "detail": {
           "pass": true,
           "pilot": {
@@ -1068,122 +336,13 @@
         }
       },
       {
-        "name": "24px tap targets on staff screens",
-        "status": "FAIL",
+        "name": "44px tap targets on staff screens",
+        "status": "PASS",
         "ms": 0,
         "detail": {
-          "pass": false,
-          "count": 12,
-          "small": [
-            {
-              "el": "a.prog__rep",
-              "text": "Gap report →",
-              "w": 87,
-              "h": 22,
-              "inline": false,
-              "screen": "tutor",
-              "min": 24
-            },
-            {
-              "el": "a.small",
-              "text": "See center view →",
-              "w": 117,
-              "h": 22,
-              "inline": false,
-              "screen": "tutor",
-              "min": 24
-            },
-            {
-              "el": "a.prog__rep",
-              "text": "Gap report →",
-              "w": 87,
-              "h": 22,
-              "inline": false,
-              "screen": "profile",
-              "min": 24
-            },
-            {
-              "el": "a.small",
-              "text": "See center view →",
-              "w": 117,
-              "h": 22,
-              "inline": false,
-              "screen": "profile",
-              "min": 24
-            },
-            {
-              "el": "a.",
-              "text": "Ms. Rivera",
-              "w": 70,
-              "h": 21,
-              "inline": false,
-              "screen": "owner",
-              "min": 24
-            },
-            {
-              "el": "a.",
-              "text": "Mr. Chen",
-              "w": 61,
-              "h": 21,
-              "inline": false,
-              "screen": "owner",
-              "min": 24
-            },
-            {
-              "el": "a.",
-              "text": "Ms. Okafor",
-              "w": 73,
-              "h": 21,
-              "inline": false,
-              "screen": "owner",
-              "min": 24
-            },
-            {
-              "el": "a.",
-              "text": "Mr. Patel",
-              "w": 59,
-              "h": 21,
-              "inline": false,
-              "screen": "owner",
-              "min": 24
-            },
-            {
-              "el": "a.",
-              "text": "Ms. Nguyen",
-              "w": 80,
-              "h": 21,
-              "inline": false,
-              "screen": "owner",
-              "min": 24
-            },
-            {
-              "el": "a.",
-              "text": "Mr. Alvarez",
-              "w": 74,
-              "h": 21,
-              "inline": false,
-              "screen": "owner",
-              "min": 24
-            },
-            {
-              "el": "a.",
-              "text": "Ms. Kim",
-              "w": 52,
-              "h": 21,
-              "inline": false,
-              "screen": "owner",
-              "min": 24
-            },
-            {
-              "el": "a.",
-              "text": "Mr. Brooks",
-              "w": 71,
-              "h": 21,
-              "inline": false,
-              "screen": "owner",
-              "min": 24
-            }
-          ]
+          "pass": true,
+          "count": 0,
+          "small": []
         }
       },
       {
@@ -1198,133 +357,88 @@
       },
       {
         "name": "no console errors, failed requests or unexpected non-2xx",
-        "status": "PASS",
+        "status": "FAIL",
         "ms": 0,
         "detail": {
-          "pass": true,
-          "console": [],
+          "pass": false,
+          "console": [
+            {
+              "step": "search \"Maya\"",
+              "text": "Failed to load resource: net::ERR_CONNECTION_TIMED_OUT",
+              "url": "http://localhost:5791/tutor?tutor=t1"
+            },
+            {
+              "step": "F20: avatars, learning profile, learning map (fallback until B21)",
+              "text": "Failed to load resource: net::ERR_ADDRESS_UNREACHABLE",
+              "url": "http://localhost:5791/tutor/students/s001"
+            },
+            {
+              "step": "owner: Maya flips to engaged; revenue at risk drops by her package",
+              "text": "Failed to load resource: net::ERR_ADDRESS_UNREACHABLE",
+              "url": "http://localhost:5791/owner"
+            }
+          ],
           "pageErrors": [],
-          "failedRequests": [],
+          "failedRequests": [
+            {
+              "step": "search \"Maya\"",
+              "url": "https://fonts.gstatic.com/s/unbounded/v12/Yq6W-LOTXCb04q32xlpwu8ZfvRIkSQ.woff2",
+              "err": "net::ERR_CONNECTION_TIMED_OUT"
+            },
+            {
+              "step": "F20: avatars, learning profile, learning map (fallback until B21)",
+              "url": "https://fonts.gstatic.com/s/unbounded/v12/Yq6W-LOTXCb04q32xlpwu8ZfvRIkSQ.woff2",
+              "err": "net::ERR_ADDRESS_UNREACHABLE"
+            },
+            {
+              "step": "owner: Maya flips to engaged; revenue at risk drops by her package",
+              "url": "https://fonts.gstatic.com/s/unbounded/v12/Yq6W-LOTXCb04q32xlpwu8ZfvRIkSQ.woff2",
+              "err": "net::ERR_ADDRESS_UNREACHABLE"
+            }
+          ],
           "badResponses": [],
           "expectedBad": []
         }
       }
     ],
-    "console": [],
-    "pageErrors": [],
-    "failedRequests": [],
-    "badResponses": [],
-    "expectedBad": [],
-    "smallTargets": [
+    "console": [
       {
-        "el": "a.prog__rep",
-        "text": "Gap report →",
-        "w": 87,
-        "h": 22,
-        "inline": false,
-        "screen": "tutor",
-        "min": 24
+        "step": "search \"Maya\"",
+        "text": "Failed to load resource: net::ERR_CONNECTION_TIMED_OUT",
+        "url": "http://localhost:5791/tutor?tutor=t1"
       },
       {
-        "el": "a.small",
-        "text": "See center view →",
-        "w": 117,
-        "h": 22,
-        "inline": false,
-        "screen": "tutor",
-        "min": 24
+        "step": "F20: avatars, learning profile, learning map (fallback until B21)",
+        "text": "Failed to load resource: net::ERR_ADDRESS_UNREACHABLE",
+        "url": "http://localhost:5791/tutor/students/s001"
       },
       {
-        "el": "a.prog__rep",
-        "text": "Gap report →",
-        "w": 87,
-        "h": 22,
-        "inline": false,
-        "screen": "profile",
-        "min": 24
-      },
-      {
-        "el": "a.small",
-        "text": "See center view →",
-        "w": 117,
-        "h": 22,
-        "inline": false,
-        "screen": "profile",
-        "min": 24
-      },
-      {
-        "el": "a.",
-        "text": "Ms. Rivera",
-        "w": 70,
-        "h": 21,
-        "inline": false,
-        "screen": "owner",
-        "min": 24
-      },
-      {
-        "el": "a.",
-        "text": "Mr. Chen",
-        "w": 61,
-        "h": 21,
-        "inline": false,
-        "screen": "owner",
-        "min": 24
-      },
-      {
-        "el": "a.",
-        "text": "Ms. Okafor",
-        "w": 73,
-        "h": 21,
-        "inline": false,
-        "screen": "owner",
-        "min": 24
-      },
-      {
-        "el": "a.",
-        "text": "Mr. Patel",
-        "w": 59,
-        "h": 21,
-        "inline": false,
-        "screen": "owner",
-        "min": 24
-      },
-      {
-        "el": "a.",
-        "text": "Ms. Nguyen",
-        "w": 80,
-        "h": 21,
-        "inline": false,
-        "screen": "owner",
-        "min": 24
-      },
-      {
-        "el": "a.",
-        "text": "Mr. Alvarez",
-        "w": 74,
-        "h": 21,
-        "inline": false,
-        "screen": "owner",
-        "min": 24
-      },
-      {
-        "el": "a.",
-        "text": "Ms. Kim",
-        "w": 52,
-        "h": 21,
-        "inline": false,
-        "screen": "owner",
-        "min": 24
-      },
-      {
-        "el": "a.",
-        "text": "Mr. Brooks",
-        "w": 71,
-        "h": 21,
-        "inline": false,
-        "screen": "owner",
-        "min": 24
+        "step": "owner: Maya flips to engaged; revenue at risk drops by her package",
+        "text": "Failed to load resource: net::ERR_ADDRESS_UNREACHABLE",
+        "url": "http://localhost:5791/owner"
       }
     ],
+    "pageErrors": [],
+    "failedRequests": [
+      {
+        "step": "search \"Maya\"",
+        "url": "https://fonts.gstatic.com/s/unbounded/v12/Yq6W-LOTXCb04q32xlpwu8ZfvRIkSQ.woff2",
+        "err": "net::ERR_CONNECTION_TIMED_OUT"
+      },
+      {
+        "step": "F20: avatars, learning profile, learning map (fallback until B21)",
+        "url": "https://fonts.gstatic.com/s/unbounded/v12/Yq6W-LOTXCb04q32xlpwu8ZfvRIkSQ.woff2",
+        "err": "net::ERR_ADDRESS_UNREACHABLE"
+      },
+      {
+        "step": "owner: Maya flips to engaged; revenue at risk drops by her package",
+        "url": "https://fonts.gstatic.com/s/unbounded/v12/Yq6W-LOTXCb04q32xlpwu8ZfvRIkSQ.woff2",
+        "err": "net::ERR_ADDRESS_UNREACHABLE"
+      }
+    ],
+    "badResponses": [],
+    "expectedBad": [],
+    "smallTargets": [],
     "contrast": {
       "tutor": {
         "tool": "axe",
@@ -1332,6 +446,648 @@
         "nodes": []
       },
       "profile": {
+        "tool": "axe",
+        "violations": 0,
+        "nodes": []
+      },
+      "learning-map": {
+        "tool": "axe",
+        "violations": 0,
+        "nodes": []
+      },
+      "owner": {
+        "tool": "axe",
+        "violations": 0,
+        "nodes": []
+      }
+    },
+    "overflow": {
+      "tutor": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "profile": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": [
+          "button.seg__b right=400",
+          "button.seg__b right=488"
+        ]
+      },
+      "learning-map": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": [
+          "button.seg__b right=400",
+          "button.seg__b right=488"
+        ]
+      },
+      "owner": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      }
+    },
+    "fit": {},
+    "notes": {
+      "draftsQueued": 1,
+      "update": {
+        "ana": "Bright Path Tutoring: This week Maya taught Pip why a triangle's area is half of base × height, and caught and fixed a mistake along the way. In Maya's own words: \"no a right triangle is still half a rectangle so its 10×5÷2 = 25\". Next session, Maya starts something new. - Ms. Rivera",
+        "sam": "Bright Path Tutoring: This week Maya taught Pip why a triangle's area is half of base × height, and caught and fixed a mistake along the way. In Maya's own words: \"no a right triangle is still half a rectangle so its 10×5÷2 = 25\". Next session, Maya starts something new. - Ms. Rivera"
+      }
+    }
+  },
+  {
+    "journey": "tutor_owner",
+    "width": 1280,
+    "height": 800,
+    "chrome": "156.0.8078.48",
+    "steps": [
+      {
+        "name": "reset + owner numbers before the K.O.",
+        "status": "FAIL",
+        "ms": 30076,
+        "error": "page.goto: Timeout 30000ms exceeded.\nCall log:\n  - navigating to \"http://localhost:5791/owner\", waiting until \"load\"\n"
+      },
+      {
+        "name": "Maya's K.O. (DEMO_SCRIPT through the API)",
+        "status": "PASS",
+        "ms": 53,
+        "detail": {
+          "pass": true,
+          "sid": "sess_3a1c73e5"
+        }
+      },
+      {
+        "name": "Tutor Studio loads Ms. Rivera’s students (live data, no mock)",
+        "status": "PASS",
+        "ms": 7888,
+        "detail": {
+          "pass": true,
+          "rows": 25,
+          "apiRows": 25,
+          "overflow": []
+        }
+      },
+      {
+        "name": "tutor switcher: Mr. Chen and back",
+        "status": "PASS",
+        "ms": 1778,
+        "detail": {
+          "pass": true,
+          "tutors": 8,
+          "chenRows": 18,
+          "apiChen": 18,
+          "riveraRows": 25
+        }
+      },
+      {
+        "name": "subject filter",
+        "status": "PASS",
+        "ms": 1483,
+        "detail": {
+          "pass": true,
+          "out": {
+            "Math": {
+              "rows": 24,
+              "allMatch": true
+            },
+            "Writing": {
+              "rows": 14,
+              "allMatch": true
+            }
+          }
+        }
+      },
+      {
+        "name": "search \"Maya\"",
+        "status": "PASS",
+        "ms": 1014,
+        "detail": {
+          "pass": true,
+          "names": [
+            "Maya R."
+          ]
+        }
+      },
+      {
+        "name": "flag filters: at risk / needs update / no contact / new",
+        "status": "PASS",
+        "ms": 4450,
+        "detail": {
+          "pass": true,
+          "out": {
+            "at_risk": {
+              "ui": 3,
+              "apiN": 3,
+              "flagged": true,
+              "ok": true
+            },
+            "needs_update": {
+              "ui": 2,
+              "apiN": 2,
+              "flagged": true,
+              "ok": true
+            },
+            "no_contact": {
+              "ui": 2,
+              "apiN": 2,
+              "flagged": true,
+              "ok": true
+            },
+            "new": {
+              "apiN": 0,
+              "disabled": true,
+              "ok": true
+            }
+          },
+          "toggleRetries": []
+        }
+      },
+      {
+        "name": "multi-select -> bulk assign mission (distinct assignments)",
+        "status": "PASS",
+        "ms": 2777,
+        "detail": {
+          "pass": true,
+          "selected": [
+            "Select Gus Y.",
+            "Select Nico F."
+          ],
+          "assignments": [
+            [
+              "a_2f810558",
+              "s095",
+              "Solving two-step equations"
+            ],
+            [
+              "a_9148094a",
+              "s087",
+              "Solving two-step equations"
+            ]
+          ],
+          "onHome": [
+            true,
+            true
+          ]
+        }
+      },
+      {
+        "name": "Maya profile: math + writing progress",
+        "status": "PASS",
+        "ms": 2695,
+        "detail": {
+          "pass": true,
+          "subjects": [
+            "Math",
+            "Writing"
+          ],
+          "masteryRows": 3
+        }
+      },
+      {
+        "name": "F20: avatars, learning profile, learning map (fallback until B21)",
+        "status": "FAIL",
+        "ms": 1935,
+        "detail": {
+          "pass": false,
+          "avatarsInTable": 50,
+          "profile": null,
+          "mapNodes": 3,
+          "alreadyKnew": [
+            "A rectangle's area is base × height. Already knew."
+          ],
+          "fallbackMap": true,
+          "head": "The map Pip learned about Maya 3 of 3 concepts known · tap one for Maya’s own words · built from the current missions"
+        }
+      },
+      {
+        "name": "Maya profile: guardians Ana R. + Sam R.",
+        "status": "PASS",
+        "ms": 561,
+        "detail": {
+          "pass": true,
+          "text": "Guardians\n＋ Add guardian\n\nAna R. · Parent\n\n+1-415-555-0101\n·\nana.r@example.com\n\nPrefers Text message\nCadence Every finished lesson\nQuiet 21:00–07:00\n\nEdit\n\nSam R. · Parent\n\n+1-415-555-0102\n·\nsam.r@example.com\n\nPrefers Email\nCadence Weekly\nQ"
+        }
+      },
+      {
+        "name": "add a private note and a shared note",
+        "status": "PASS",
+        "ms": 2239,
+        "detail": {
+          "pass": true,
+          "private": true,
+          "shared": true
+        }
+      },
+      {
+        "name": "message a parent (test mode or queued for quiet hours)",
+        "status": "PASS",
+        "ms": 986,
+        "detail": {
+          "pass": true,
+          "status": "queued (quiet hours)",
+          "tag": "Queued · quiet hours · sends 7:00 AM"
+        }
+      },
+      {
+        "name": "parent update per guardian (Ana + Sam)",
+        "status": "PASS",
+        "ms": 2185,
+        "detail": {
+          "pass": true,
+          "flow": "v3.15 To send queue",
+          "draftsQueued": 1,
+          "anaPreview": "Bright Path Tutoring: This week Maya taught Pip why a triangle's area is half of base × height, and caught and fixed a mistake along the way. In Maya's own word",
+          "samPreview": "Bright Path Tutoring: This week Maya taught Pip why a triangle's area is half of base × height, and caught and fixed a mistake along the way. In Maya's own word",
+          "tags": [
+            "Queued · quiet hours · sends 7:00 AM",
+            "Test mode · not sent"
+          ],
+          "sentItems": [
+            [
+              "g001",
+              "queued (quiet hours)"
+            ],
+            [
+              "g002",
+              "test-mode (not delivered)"
+            ]
+          ]
+        }
+      },
+      {
+        "name": "D-27: one K.O. queues exactly one draft (no draft from the saved session)",
+        "status": "PASS",
+        "ms": 8,
+        "detail": {
+          "pass": true,
+          "queuedBeforeSend": 1,
+          "openAfterSend": []
+        }
+      },
+      {
+        "name": "parent updates are English with no game words (v3.16, B18/F18)",
+        "status": "PASS",
+        "ms": 18,
+        "detail": {
+          "pass": true,
+          "spanish": false,
+          "game": false,
+          "guardianLanguageField": false
+        }
+      },
+      {
+        "name": "owner: Maya flips to engaged; revenue at risk drops by her package",
+        "status": "PASS",
+        "ms": 1100,
+        "detail": {
+          "pass": true,
+          "before": 7040,
+          "after": 6380,
+          "headline": "$6,380",
+          "signal": "Engaged",
+          "renewalsDue": 15
+        }
+      },
+      {
+        "name": "owner: every metric explains itself; revenue headline = sum of listed packages",
+        "status": "PASS",
+        "ms": 809,
+        "detail": {
+          "pass": true,
+          "metrics": [
+            {
+              "label": "Revenue at risk",
+              "explain": "Sum of package prices for students flagged at risk or quiet (no visit on their own or finished lesson this week) whose p"
+            },
+            {
+              "label": "Kept families · 30 days",
+              "explain": "Students with an active package 30 days ago who still have one today (renewed or still running)."
+            },
+            {
+              "label": "Parents reached · 7 days",
+              "explain": "Updates = parent updates sent this week (test mode in the demo). Replies = guardian messages back in the same threads. R"
+            },
+            {
+              "label": "Tutor time saved · this week",
+              "explain": "(parent updates 19 + gap reports written automatically 13) × 10 minutes. The 10 minutes is our assumption for one hand-w"
+            },
+            {
+              "label": "Came back on their own · 7 days",
+              "explain": "Students who opened Pip when no assignment was due. The strongest early sign a family will renew."
+            }
+          ],
+          "sumOfListed": 6380,
+          "headline": 6380,
+          "renewalRows": 15,
+          "apiRows": 15,
+          "missingInUI": []
+        }
+      },
+      {
+        "name": "owner: send a renewal note (preview first, K.O. quote as evidence)",
+        "status": "PASS",
+        "ms": 1409,
+        "detail": {
+          "pass": true,
+          "status": "queued (quiet hours)",
+          "preview": "Hi Ana, Maya's Math package with Ms. Rivera has 2 hours left and renews on Nov 2. Recently Maya taught Pip why a triangle's area is half of base × height, in Maya's own words: \"no a right triangle is ",
+          "evidenceQuote": "no a right triangle is still half a rectangle so its 10×5÷2 = 25",
+          "englishOnly": true
+        }
+      },
+      {
+        "name": "old path: gap report (same quote, fixed after 1 re-teach, root cause)",
+        "status": "PASS",
+        "ms": 1658,
+        "detail": {
+          "pass": true,
+          "url": "/tutor/report/sess_3a1c73e5",
+          "k3": "no a right triangle is still half a rectangle so its 10×5÷2 = 25"
+        }
+      },
+      {
+        "name": "old path: owner insight -> Plan a workshop",
+        "status": "PASS",
+        "ms": 1017,
+        "detail": {
+          "pass": true,
+          "count": "14"
+        }
+      },
+      {
+        "name": "old path: pricing -> Start pilot -> success",
+        "status": "PASS",
+        "ms": 871,
+        "detail": {
+          "pass": true,
+          "pilot": {
+            "status": "active"
+          }
+        }
+      },
+      {
+        "name": "24px tap targets on staff screens",
+        "status": "PASS",
+        "ms": 0,
+        "detail": {
+          "pass": true,
+          "count": 0,
+          "small": []
+        }
+      },
+      {
+        "name": "AA contrast on staff screens",
+        "status": "PASS",
+        "ms": 0,
+        "detail": {
+          "pass": true,
+          "tool": "axe",
+          "bad": []
+        }
+      },
+      {
+        "name": "no console errors, failed requests or unexpected non-2xx",
+        "status": "FAIL",
+        "ms": 0,
+        "detail": {
+          "pass": false,
+          "console": [
+            {
+              "step": "reset + owner numbers before the K.O.",
+              "text": "Failed to load resource: net::ERR_ADDRESS_UNREACHABLE",
+              "url": "http://localhost:5791/owner"
+            },
+            {
+              "step": "reset + owner numbers before the K.O.",
+              "text": "Failed to load resource: net::ERR_ADDRESS_UNREACHABLE",
+              "url": "http://localhost:5791/owner"
+            },
+            {
+              "step": "Tutor Studio loads Ms. Rivera’s students (live data, no mock)",
+              "text": "Failed to load resource: net::ERR_ADDRESS_UNREACHABLE",
+              "url": "http://localhost:5791/tutor"
+            },
+            {
+              "step": "Tutor Studio loads Ms. Rivera’s students (live data, no mock)",
+              "text": "Failed to load resource: net::ERR_ADDRESS_UNREACHABLE",
+              "url": "http://localhost:5791/tutor"
+            },
+            {
+              "step": "Maya profile: math + writing progress",
+              "text": "Failed to load resource: net::ERR_ADDRESS_UNREACHABLE",
+              "url": "http://localhost:5791/tutor"
+            },
+            {
+              "step": "Maya profile: math + writing progress",
+              "text": "Failed to load resource: net::ERR_ADDRESS_UNREACHABLE",
+              "url": "http://localhost:5791/tutor"
+            }
+          ],
+          "pageErrors": [],
+          "failedRequests": [
+            {
+              "step": "reset + owner numbers before the K.O.",
+              "url": "https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Fredoka:wdth,wght@75..125,400..700&family=Geist+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@400..900&family=Silkscreen:wght@400;700&family=VT323&family=Michroma&family=Inter+Tight:wght@400..800&family=Archivo:wdth,wght@62..125,500..900&family=JetBrains+Mono:wght@400..700&display=swap",
+              "err": "net::ERR_ADDRESS_UNREACHABLE"
+            },
+            {
+              "step": "reset + owner numbers before the K.O.",
+              "url": "https://fonts.googleapis.com/css2?family=Unbounded:wght@900&display=swap",
+              "err": "net::ERR_ADDRESS_UNREACHABLE"
+            },
+            {
+              "step": "Tutor Studio loads Ms. Rivera’s students (live data, no mock)",
+              "url": "https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Fredoka:wdth,wght@75..125,400..700&family=Geist+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@400..900&family=Silkscreen:wght@400;700&family=VT323&family=Michroma&family=Inter+Tight:wght@400..800&family=Archivo:wdth,wght@62..125,500..900&family=JetBrains+Mono:wght@400..700&display=swap",
+              "err": "net::ERR_ADDRESS_UNREACHABLE"
+            },
+            {
+              "step": "Tutor Studio loads Ms. Rivera’s students (live data, no mock)",
+              "url": "https://fonts.googleapis.com/css2?family=Unbounded:wght@900&display=swap",
+              "err": "net::ERR_ADDRESS_UNREACHABLE"
+            },
+            {
+              "step": "Maya profile: math + writing progress",
+              "url": "https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Fredoka:wdth,wght@75..125,400..700&family=Geist+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@400..900&family=Silkscreen:wght@400;700&family=VT323&family=Michroma&family=Inter+Tight:wght@400..800&family=Archivo:wdth,wght@62..125,500..900&family=JetBrains+Mono:wght@400..700&display=swap",
+              "err": "net::ERR_ADDRESS_UNREACHABLE"
+            },
+            {
+              "step": "Maya profile: math + writing progress",
+              "url": "https://fonts.googleapis.com/css2?family=Unbounded:wght@900&display=swap",
+              "err": "net::ERR_ADDRESS_UNREACHABLE"
+            }
+          ],
+          "badResponses": [],
+          "expectedBad": []
+        }
+      }
+    ],
+    "console": [
+      {
+        "step": "reset + owner numbers before the K.O.",
+        "text": "Failed to load resource: net::ERR_ADDRESS_UNREACHABLE",
+        "url": "http://localhost:5791/owner"
+      },
+      {
+        "step": "reset + owner numbers before the K.O.",
+        "text": "Failed to load resource: net::ERR_ADDRESS_UNREACHABLE",
+        "url": "http://localhost:5791/owner"
+      },
+      {
+        "step": "Tutor Studio loads Ms. Rivera’s students (live data, no mock)",
+        "text": "Failed to load resource: net::ERR_ADDRESS_UNREACHABLE",
+        "url": "http://localhost:5791/tutor"
+      },
+      {
+        "step": "Tutor Studio loads Ms. Rivera’s students (live data, no mock)",
+        "text": "Failed to load resource: net::ERR_ADDRESS_UNREACHABLE",
+        "url": "http://localhost:5791/tutor"
+      },
+      {
+        "step": "Maya profile: math + writing progress",
+        "text": "Failed to load resource: net::ERR_ADDRESS_UNREACHABLE",
+        "url": "http://localhost:5791/tutor"
+      },
+      {
+        "step": "Maya profile: math + writing progress",
+        "text": "Failed to load resource: net::ERR_ADDRESS_UNREACHABLE",
+        "url": "http://localhost:5791/tutor"
+      },
+      {
+        "step": "owner: Maya flips to engaged; revenue at risk drops by her package",
+        "text": "Failed to load resource: net::ERR_ADDRESS_UNREACHABLE",
+        "url": "http://localhost:5791/owner"
+      },
+      {
+        "step": "owner: Maya flips to engaged; revenue at risk drops by her package",
+        "text": "Failed to load resource: net::ERR_ADDRESS_UNREACHABLE",
+        "url": "http://localhost:5791/owner"
+      },
+      {
+        "step": "old path: gap report (same quote, fixed after 1 re-teach, root cause)",
+        "text": "Failed to load resource: net::ERR_ADDRESS_UNREACHABLE",
+        "url": "http://localhost:5791/tutor"
+      },
+      {
+        "step": "old path: gap report (same quote, fixed after 1 re-teach, root cause)",
+        "text": "Failed to load resource: net::ERR_ADDRESS_UNREACHABLE",
+        "url": "http://localhost:5791/tutor"
+      },
+      {
+        "step": "old path: owner insight -> Plan a workshop",
+        "text": "Failed to load resource: net::ERR_ADDRESS_UNREACHABLE",
+        "url": "http://localhost:5791/owner"
+      },
+      {
+        "step": "old path: owner insight -> Plan a workshop",
+        "text": "Failed to load resource: net::ERR_ADDRESS_UNREACHABLE",
+        "url": "http://localhost:5791/owner"
+      },
+      {
+        "step": "old path: pricing -> Start pilot -> success",
+        "text": "Failed to load resource: net::ERR_ADDRESS_UNREACHABLE",
+        "url": "http://localhost:5791/owner/pricing"
+      },
+      {
+        "step": "old path: pricing -> Start pilot -> success",
+        "text": "Failed to load resource: net::ERR_ADDRESS_UNREACHABLE",
+        "url": "http://localhost:5791/owner/pricing"
+      }
+    ],
+    "pageErrors": [],
+    "failedRequests": [
+      {
+        "step": "reset + owner numbers before the K.O.",
+        "url": "https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Fredoka:wdth,wght@75..125,400..700&family=Geist+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@400..900&family=Silkscreen:wght@400;700&family=VT323&family=Michroma&family=Inter+Tight:wght@400..800&family=Archivo:wdth,wght@62..125,500..900&family=JetBrains+Mono:wght@400..700&display=swap",
+        "err": "net::ERR_ADDRESS_UNREACHABLE"
+      },
+      {
+        "step": "reset + owner numbers before the K.O.",
+        "url": "https://fonts.googleapis.com/css2?family=Unbounded:wght@900&display=swap",
+        "err": "net::ERR_ADDRESS_UNREACHABLE"
+      },
+      {
+        "step": "Tutor Studio loads Ms. Rivera’s students (live data, no mock)",
+        "url": "https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Fredoka:wdth,wght@75..125,400..700&family=Geist+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@400..900&family=Silkscreen:wght@400;700&family=VT323&family=Michroma&family=Inter+Tight:wght@400..800&family=Archivo:wdth,wght@62..125,500..900&family=JetBrains+Mono:wght@400..700&display=swap",
+        "err": "net::ERR_ADDRESS_UNREACHABLE"
+      },
+      {
+        "step": "Tutor Studio loads Ms. Rivera’s students (live data, no mock)",
+        "url": "https://fonts.googleapis.com/css2?family=Unbounded:wght@900&display=swap",
+        "err": "net::ERR_ADDRESS_UNREACHABLE"
+      },
+      {
+        "step": "Maya profile: math + writing progress",
+        "url": "https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Fredoka:wdth,wght@75..125,400..700&family=Geist+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@400..900&family=Silkscreen:wght@400;700&family=VT323&family=Michroma&family=Inter+Tight:wght@400..800&family=Archivo:wdth,wght@62..125,500..900&family=JetBrains+Mono:wght@400..700&display=swap",
+        "err": "net::ERR_ADDRESS_UNREACHABLE"
+      },
+      {
+        "step": "Maya profile: math + writing progress",
+        "url": "https://fonts.googleapis.com/css2?family=Unbounded:wght@900&display=swap",
+        "err": "net::ERR_ADDRESS_UNREACHABLE"
+      },
+      {
+        "step": "owner: Maya flips to engaged; revenue at risk drops by her package",
+        "url": "https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Fredoka:wdth,wght@75..125,400..700&family=Geist+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@400..900&family=Silkscreen:wght@400;700&family=VT323&family=Michroma&family=Inter+Tight:wght@400..800&family=Archivo:wdth,wght@62..125,500..900&family=JetBrains+Mono:wght@400..700&display=swap",
+        "err": "net::ERR_ADDRESS_UNREACHABLE"
+      },
+      {
+        "step": "owner: Maya flips to engaged; revenue at risk drops by her package",
+        "url": "https://fonts.googleapis.com/css2?family=Unbounded:wght@900&display=swap",
+        "err": "net::ERR_ADDRESS_UNREACHABLE"
+      },
+      {
+        "step": "old path: gap report (same quote, fixed after 1 re-teach, root cause)",
+        "url": "https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Fredoka:wdth,wght@75..125,400..700&family=Geist+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@400..900&family=Silkscreen:wght@400;700&family=VT323&family=Michroma&family=Inter+Tight:wght@400..800&family=Archivo:wdth,wght@62..125,500..900&family=JetBrains+Mono:wght@400..700&display=swap",
+        "err": "net::ERR_ADDRESS_UNREACHABLE"
+      },
+      {
+        "step": "old path: gap report (same quote, fixed after 1 re-teach, root cause)",
+        "url": "https://fonts.googleapis.com/css2?family=Unbounded:wght@900&display=swap",
+        "err": "net::ERR_ADDRESS_UNREACHABLE"
+      },
+      {
+        "step": "old path: owner insight -> Plan a workshop",
+        "url": "https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Fredoka:wdth,wght@75..125,400..700&family=Geist+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@400..900&family=Silkscreen:wght@400;700&family=VT323&family=Michroma&family=Inter+Tight:wght@400..800&family=Archivo:wdth,wght@62..125,500..900&family=JetBrains+Mono:wght@400..700&display=swap",
+        "err": "net::ERR_ADDRESS_UNREACHABLE"
+      },
+      {
+        "step": "old path: owner insight -> Plan a workshop",
+        "url": "https://fonts.googleapis.com/css2?family=Unbounded:wght@900&display=swap",
+        "err": "net::ERR_ADDRESS_UNREACHABLE"
+      },
+      {
+        "step": "old path: pricing -> Start pilot -> success",
+        "url": "https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Fredoka:wdth,wght@75..125,400..700&family=Geist+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@400..900&family=Silkscreen:wght@400;700&family=VT323&family=Michroma&family=Inter+Tight:wght@400..800&family=Archivo:wdth,wght@62..125,500..900&family=JetBrains+Mono:wght@400..700&display=swap",
+        "err": "net::ERR_ADDRESS_UNREACHABLE"
+      },
+      {
+        "step": "old path: pricing -> Start pilot -> success",
+        "url": "https://fonts.googleapis.com/css2?family=Unbounded:wght@900&display=swap",
+        "err": "net::ERR_ADDRESS_UNREACHABLE"
+      }
+    ],
+    "badResponses": [],
+    "expectedBad": [],
+    "smallTargets": [],
+    "contrast": {
+      "tutor": {
+        "tool": "axe",
+        "violations": 0,
+        "nodes": []
+      },
+      "profile": {
+        "tool": "axe",
+        "violations": 0,
+        "nodes": []
+      },
+      "learning-map": {
         "tool": "axe",
         "violations": 0,
         "nodes": []
@@ -1355,6 +1111,12 @@
         "overflows": false,
         "wide": []
       },
+      "learning-map": {
+        "scrollWidth": 1280,
+        "clientWidth": 1280,
+        "overflows": false,
+        "wide": []
+      },
       "owner": {
         "scrollWidth": 1280,
         "clientWidth": 1280,
@@ -1364,7 +1126,7 @@
     },
     "fit": {},
     "notes": {
-      "draftsQueued": 2,
+      "draftsQueued": 1,
       "update": {
         "ana": "Bright Path Tutoring: This week Maya taught Pip why a triangle's area is half of base × height, and caught and fixed a mistake along the way. In Maya's own words: \"no a right triangle is still half a rectangle so its 10×5÷2 = 25\". Next session, Maya starts something new. - Ms. Rivera",
         "sam": "Bright Path Tutoring: This week Maya taught Pip why a triangle's area is half of base × height, and caught and fixed a mistake along the way. In Maya's own words: \"no a right triangle is still half a rectangle so its 10×5÷2 = 25\". Next session, Maya starts something new. - Ms. Rivera"

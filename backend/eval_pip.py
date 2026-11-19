@@ -327,7 +327,10 @@ def run_persona(client, name: str, spec: tuple, judge=None) -> dict:
 # ---------------------------------------------------------------- adaptive fixture personas (SCR-1)
 
 FIXTURE_DIR = HERE.parent / "tests" / "fixtures" / "students"
-ASSIGNMENT_STUDENT = {"a_tri": "s001", "a_sat_linear": "s009", "a_sat_commas": "s005", "a_frac": "s002"}
+ASSIGNMENT_STUDENT = {"a_tri": "s001", "a_sat_linear": "s009", "a_sat_commas": "s005", "a_frac": "s002", "a_trig": "s014",
+                      "a_trig_id": "s014", "a_sat_modifiers": "s043", "a_pyth": "s018", "a_newton2": "s028"}
+MAX_PATIENCE = 3  # TUNE-3: a kid tolerates 2-3 annoying moves, never more
+READY_CAP = {"competent": 3}  # other kinds: 5
 READY_RE = re.compile(r"quiz me|try the quiz|ready for the quiz|should we do the quiz|quiz time|want to quiz|"
                       r"i'?m full|i think i get it", re.I)
 WRONGPRED_RE = re.compile(r"i'?d guess|i'?ll guess|i bet|my guess|am i wrong|, right\?|right\?$|"
@@ -352,11 +355,13 @@ def classify_pip(reply: str, prior_questions: set[str], student_said: list[str])
         return "pip_wrong_prediction"
     if q and CHECK_RE.search(q) and re.search(r"\d|box|whole|fill|cover|same", q, re.I):
         return "asks_check_number"
+    if q and re.search(r"\b(which|who)\b|\bor\b.{0,40}\?$|^(what|who) (is|are)\b", q, re.I) and not WHY_ASK_RE.search(q):
+        return "asks_check_number"  # a pick-one or short-fact question
     if q and EXAMPLE_ASK_RE.search(q):
         return "asks_example"
     if q and WHY_ASK_RE.search(q):
         return "asks_why"
-    if NUDGE_RE.search(reply) or re.search(r"what if i (cut|fold|flip|draw|put|stick|slice|cover|take|remove|plug|swap|add)|^picture |"
+    if NUDGE_RE.search(reply) or re.search(r"^(ok|hm+|mm+|oh+)?\W*what if (i|we|you)\b|so (it|that)'?s like|^picture ", reply, re.I) or re.search(r"what if i (cut|fold|flip|draw|put|stick|slice|cover|take|remove|plug|swap|add)|^picture |"
                                            r"if i (cut|fold|flip|draw|put|slice)|\b(cut|fold|flip|slice|draw|sandwich)\b|"
                                            r"corner to corner|picture (my|the|your)", reply, re.I):
         return "nudge_hint"  # a hint, a friend's story or a concrete case
@@ -416,6 +421,16 @@ def run_card(client, aid: str, card: dict, max_texts: int = 12) -> dict:
     seen_q, said, pairs, notes = set(), [], [], []
     ready_at = None
     repeats = annoy = 0
+    why_misuse = asks_total = connects = friendly = 0
+    kinds: dict[str, int] = {}
+    patience = min(card["patience"], MAX_PATIENCE)
+    levels = {}
+    try:  # read the authored level from the lesson file so the same metric works on an older backend tree
+        raw = json.loads((HERE / "seed" / "lessons" / f"{aid}.json").read_text())
+        levels = {c["concept_id"]: c.get("explain_level") for c in raw.get("concepts", [])}
+    except (OSError, ValueError):
+        pass
+    doubled = "annoyed_obvious" in card["id"]
     checkout = early_quiz = ignore_ready = False
     post_checkout = 0
     filed = missed = 0
@@ -442,8 +457,19 @@ def run_card(client, aid: str, card: dict, max_texts: int = 12) -> dict:
             repeats += 1
         ctx["repeats"] = repeats
         bare_why = bool(q) and bool(BARE_WHY_RE.match(q)) and bool(BECAUSE_RE.search(text))
-        if key == "repeats_question" or bare_why:
-            annoy += 1
+        pc = s.get("pace") or {}
+        lk, tgt = pc.get("last_kind"), pc.get("target")
+        if q and lk and not READY_RE.search(reply):  # probing questions only; "quiz me?" is not one
+            asks_total += 1
+            connects += lk == "connect"
+            friendly += lk in ("connect", "concrete", "predict")
+            kinds[lk] = kinds.get(lk, 0) + 1
+        obvious = bool(q) and ((lk == "why" and levels.get(tgt) in ("given", "use")) or levels.get(tgt) == "given")
+        if obvious:
+            why_misuse += 1
+            notes.append(f"#{ctx['texts']} {'why' if lk == 'why' else 'ask'} on {levels.get(tgt)} concept {tgt}: {reply[:70]}")
+        if key == "repeats_question" or bare_why or obvious:
+            annoy += 2 if (doubled and obvious) else 1
             notes.append(f"#{ctx['texts']} annoying: {reply[:80]}")
         fl = lambda x: re.sub(r"\s+", "", x)  # noqa: E731
         groups = [[fl(x.lower()) for x in c.get("spoilers", [])] for c in (a.get("lesson") or {}).get("concepts", [])]
@@ -462,11 +488,11 @@ def run_card(client, aid: str, card: dict, max_texts: int = 12) -> dict:
             elif key == "pip_says_ready" or "quiz_when_ready" in todo or "quiz_early" in todo:
                 stop_reason = "ready"
                 break
-        if "leave" in todo and annoy > card["patience"]:
+        if "leave" in todo and annoy > patience:
             checkout, stop_reason = True, "left"
             break
         # next text
-        if annoy > card["patience"] and not checkout:
+        if annoy > patience and not checkout:
             checkout = True
             text = pick("repeats_question")
             stop_reason = "checked_out"
@@ -498,12 +524,15 @@ def run_card(client, aid: str, card: dict, max_texts: int = 12) -> dict:
                         break
                 q2 = client.post(f"/api/sessions/{s['id']}/quiz").json()
                 ko = bool(q2.get("ko"))
-    exp = card["expect"]["ready_within_texts"]
+    exp = min(card["expect"]["ready_within_texts"], READY_CAP.get(card["kind"], 5))
     ok = (ready_at is not None and ready_at <= exp and not checkout and not early_quiz and annoy == 0)
     leaks = sum(1 for n in notes if "leak" in n)
     repeats_total = sum(1 for n in notes if "annoying" in n)
     return {"persona": card["id"], "kind": card["kind"], "texts": ctx["texts"], "ready_at": ready_at,
-            "expect": exp, "circling": annoy, "leaks": leaks, "echo": sum(echoes(r, t) for t, r in pairs),
+            "expect": exp, "circling": annoy, "why_misuse": why_misuse, "connect_only": round(connects / max(1, asks_total), 2), "connect_rate": round(friendly / max(1, asks_total), 2),
+            "probe_qs": asks_total,
+            "ask_kinds": kinds,
+            "leaks": leaks, "echo": sum(echoes(r, t) for t, r in pairs),
             "one_q": round(sum(r.count("?") <= 1 for _, r in pairs) / max(1, len(pairs)), 2), "notes": notes,
             **style, "pairs": pairs, "checkout": checkout, "early_quiz": early_quiz, "stop": stop_reason,
             "ko": ko, "filed": f"{filed}/{missed}" if missed else "-", "ok": ok,
@@ -545,10 +574,10 @@ def write_report(path: str, title: str, sections: list[tuple[str, list[dict]]], 
         L.append(notes.strip() + "\n")
     for label, results in sections:
         L.append(f"## {label}\n")
-        L.append("| persona | kind | ready_at | circling | echo | leaks | one_q | tone | words avg | <=18w | reacts | curiosity | checkout |")
-        L.append("|---|---|---|---|---|---|---|---|---|---|---|---|---|")
+        L.append("| persona | kind | ready_at | circling | why_on_given_or_use | connection_rate | connect_only | echo | leaks | one_q | tone | words avg | <=18w | reacts | curiosity | checkout |")
+        L.append("|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|")
         for r in results:
-            L.append(f"| {r['persona']} | {r['kind']} | {r['ready_at']} | {r['circling']} | {r['echo']} | {r['leaks']} | "
+            L.append(f"| {r['persona']} | {r['kind']} | {r['ready_at']} | {r['circling']} | {r.get('why_misuse', '-')} | {int(r['connect_rate'] * 100) if 'connect_rate' in r else '-'}% | {int(r['connect_only'] * 100) if 'connect_only' in r else '-'}% | {r['echo']} | {r['leaks']} | "
                      f"{int(r['one_q'] * 100)}% | {r['teacher_tone']} | {r['words_avg']} | {int(r['short_rate'] * 100)}% | "
                      f"{r['reacts']} | {r['curiosity']} | {r.get('checkout', '-')} |")
         allm = []
@@ -610,6 +639,7 @@ def main() -> int:
     ap.add_argument("--holdout", action="store_true", help="with --cards: the holdout personas instead")
     ap.add_argument("--merge", help="comma-separated --json outputs to turn into one report section (no run)")
     ap.add_argument("--label", default="results")
+    ap.add_argument("--lessons", help="comma-separated assignment ids to run cards for")
     args = ap.parse_args()
     if args.merge:
         res = []
@@ -629,7 +659,8 @@ def main() -> int:
     judge = make_judge(server) if args.mode == "live" else None
     if args.cards or args.holdout:
         only = set(args.only.split(",")) if args.only else None
-        res = [run_card(client, aid, c) for aid, c in load_cards(args.holdout, only)]
+        lessons = set(args.lessons.split(",")) if args.lessons else None
+        res = [run_card(client, aid, c) for aid, c in load_cards(args.holdout, only) if not lessons or aid in lessons]
         names = [r["persona"] for r in res]
     else:
         names = args.only.split(",") if args.only else list(PERSONAS)

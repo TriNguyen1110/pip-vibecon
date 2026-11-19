@@ -96,7 +96,10 @@
         "(a|leg)\\s*(²|2|squared)\\s*(\\+|plus)\\s*(b|leg)\\s*(²|2|squared)",
         "squar\\w+.{0,40}(add|plus|sum).{0,40}squar\\w+",
         "pythag\\w+",
-        "\\bthe theorem\\b"
+        "\\bthe theorem\\b",
+        "\\ba\\s*(²|2|\\^2)\\s*\\+\\s*b\\s*(²|2|\\^2)\\s*=\\s*c\\s*(²|2|\\^2)",
+        "\\bsquar\\w+\\b.{0,30}\\b(add|plus|sum|\\+)",
+        "\\b(36|9)\\s*\\+\\s*(64|16)\\b"
       ]
     },
     {
@@ -133,7 +136,9 @@
         "\\b25\\b",
         "c\\s*(=|is)\\s*5\\b|long side is 5|hypotenuse is 5|\\b5\\b.{0,20}(long|c|shortcut)",
         "\\b3\\s*,?\\s*4\\s*,?\\s*(and )?5\\b",
-        "\\b36\\s*(\\+|plus)\\s*64\\b|\\b100\\b"
+        "\\b36\\s*(\\+|plus)\\s*64\\b|\\b100\\b",
+        "\\b3\\b\\D{1,14}\\b4\\b\\D{1,24}\\b5\\b",
+        "\\b6\\b\\D{1,14}\\b8\\b\\D{1,24}\\b10\\b"
       ]
     }
   ],

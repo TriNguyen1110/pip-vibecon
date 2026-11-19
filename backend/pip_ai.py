@@ -236,7 +236,7 @@ def lesson_block(les: dict, a: dict) -> str:
         spec = L.lc(les, c["id"])
         if not spec:
             continue
-        out.append(f"\nConcept {i} ({c['text']}; explain_level: {L.level_of(les, c['concept_id'])}):\n- look_fors (what a level 2 explanation contains): "
+        out.append(f"\nConcept {i} ({c['text']}; explain_level: {L.level_of(les, c['id'])}):\n- look_fors (what a level 2 explanation contains): "
                    + "; ".join(spec["look_fors"]) + "\n- probe_ladder (question bank, see pacing rules): "
                    + " | ".join(f"{n + 1}. {r}" for n, r in enumerate(spec["probe_ladder"]))
                    + "\n- spoilers (never say these): " + "; ".join(spec["spoilers"])

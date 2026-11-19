@@ -1,0 +1,43 @@
+[390-day-Maya-a_tri] PASS assignment exists with its lesson fields {"pass":true,"boss":"Duke Doublecount","scene":"skatepark","labels":{"k1":"Two triangles","k2":"Rectangles","k3":"One triangle"}}
+[390-day-Maya-a_tri] PASS home pins the newest showcase mission {"pass":true,"topic":"AREA OF A TRIANGLE","pinned":"a_tri","desc":"Pip thinks area of a triangle is base times height. Duke Doublecount is living in that rule."}
+[390-day-Maya-a_tri] PASS open a_tri (home or the Missions sheet) {"pass":true,"via":"home"}
+[390-day-Maya-a_tri] PASS mission shows its own boss, scene and step labels {"pass":true,"boss":"Duke Doublecount, 100 HP","scene":"skatepark","steps":["Step 1: Two triangles. Understanding 0 percent.","Step 2: Rectangles. Pip already knows.","Step 3: One triangle. Understanding 0 percent."],"want":["Two triangles","Rectangles","One triangle"]}
+[390-day-Maya-a_tri] PASS no page errors {"pass":true,"errors":[]}
+[390-day-Theo-a_trig] PASS assignment exists with its lesson fields {"pass":true,"boss":"Sir Cosine Overreach","scene":"skatepark","labels":{"k1":"Same angles","k2":"Same ratio","k3":"Use it"}}
+[390-day-Theo-a_trig] PASS home pins the newest showcase mission {"pass":true,"topic":"SINE AND COSINE ADDED UP","pinned":"a_trig_id","desc":"Turbo thinks sin x + cos x = 1. Baroness Plus-Plus-One is living in that rule."}
+[390-day-Theo-a_trig] PASS open a_trig (home or the Missions sheet) {"pass":true,"via":"missions sheet"}
+[390-day-Theo-a_trig] PASS mission shows its own boss, scene and step labels {"pass":true,"boss":"Sir Cosine Overreach, 100 HP","scene":"skatepark","steps":["Step 1: Same angles. Understanding 0 percent.","Step 2: Same ratio. Understanding 0 percent.","Step 3: Use it. Understanding 0 percent."],"want":["Same angles","Same ratio","Use it"]}
+[390-day-Theo-a_trig] PASS no page errors {"pass":true,"errors":[]}
+[390-day-Theo-a_trig_id] PASS assignment exists with its lesson fields {"pass":true,"boss":"Baroness Plus-Plus-One","scene":"arcade","labels":{"k1":"Definitions","k2":"Pythagoras","k3":"Squares add to 1"}}
+[390-day-Theo-a_trig_id] PASS home pins the newest showcase mission {"pass":true,"topic":"SINE AND COSINE ADDED UP","pinned":"a_trig_id","desc":"Turbo thinks sin x + cos x = 1. Baroness Plus-Plus-One is living in that rule."}
+[390-day-Theo-a_trig_id] PASS open a_trig_id (home or the Missions sheet) {"pass":true,"via":"home"}
+[390-day-Theo-a_trig_id] PASS mission shows its own boss, scene and step labels {"pass":true,"boss":"Baroness Plus-Plus-One, 100 HP","scene":"arcade","steps":["Step 1: Definitions. Pip already knows.","Step 2: Pythagoras. Pip already knows.","Step 3: Squares add to 1. Understanding 0 percent."],"want":["Definitions","Pythagoras","Squares add to 1"]}
+[390-day-Theo-a_trig_id] PASS given concepts show as "Pip already knows" and do not animate {"pass":true,"given":[{"label":"Step 1: Definitions. Pip already knows.","anim":"none","trans":"0s"},{"label":"Step 2: Pythagoras. Pip already knows.","anim":"none","trans":"0s"}]}
+[390-day-Theo-a_trig_id] PASS no page errors {"pass":true,"errors":[]}
+[390-day-Luna-a_sat_modifiers] PASS assignment exists with its lesson fields {"pass":true,"boss":"Dame Dangle-Dangle","scene":"studio","labels":{"k1":"Next noun","k2":"Doer first","k3":"Who's doing it"}}
+[390-day-Luna-a_sat_modifiers] PASS home pins the newest showcase mission {"pass":true,"topic":"SAT WRITING: DANGLING MODIFIERS","pinned":"a_sat_modifiers","desc":"Pip thinks an opening phrase can describe anything in the sentence. Dame Dangle-Dangle is living in that rule."}
+[390-day-Luna-a_sat_modifiers] PASS open a_sat_modifiers (home or the Missions sheet) {"pass":true,"via":"home"}
+[390-day-Luna-a_sat_modifiers] PASS mission shows its own boss, scene and step labels {"pass":true,"boss":"Dame Dangle-Dangle, 100 HP","scene":"studio","steps":["Step 1: Next noun. Understanding 0 percent.","Step 2: Doer first. Understanding 0 percent.","Step 3: Who's doing it. Understanding 0 percent."],"want":["Next noun","Doer first","Who's doing it"]}
+[390-day-Luna-a_sat_modifiers] PASS no page errors {"pass":true,"errors":[]}
+[1280-day-Maya-a_tri] PASS assignment exists with its lesson fields {"pass":true,"boss":"Duke Doublecount","scene":"skatepark","labels":{"k1":"Two triangles","k2":"Rectangles","k3":"One triangle"}}
+[1280-day-Maya-a_tri] PASS home pins the newest showcase mission {"pass":true,"topic":"AREA OF A TRIANGLE","pinned":"a_tri","desc":"Pip thinks area of a triangle is base times height. Duke Doublecount is living in that rule."}
+[1280-day-Maya-a_tri] PASS open a_tri (home or the Missions sheet) {"pass":true,"via":"home"}
+[1280-day-Maya-a_tri] PASS mission shows its own boss, scene and step labels {"pass":true,"boss":"Duke Doublecount, 100 HP","scene":"skatepark","steps":["Step 1: Two triangles. Understanding 0 percent.","Step 2: Rectangles. Pip already knows.","Step 3: One triangle. Understanding 0 percent."],"want":["Two triangles","Rectangles","One triangle"]}
+[1280-day-Maya-a_tri] PASS no page errors {"pass":true,"errors":[]}
+[1280-day-Theo-a_trig] PASS assignment exists with its lesson fields {"pass":true,"boss":"Sir Cosine Overreach","scene":"skatepark","labels":{"k1":"Same angles","k2":"Same ratio","k3":"Use it"}}
+[1280-day-Theo-a_trig] PASS home pins the newest showcase mission {"pass":true,"topic":"SINE AND COSINE ADDED UP","pinned":"a_trig_id","desc":"Turbo thinks sin x + cos x = 1. Baroness Plus-Plus-One is living in that rule."}
+[1280-day-Theo-a_trig] PASS open a_trig (home or the Missions sheet) {"pass":true,"via":"missions sheet"}
+[1280-day-Theo-a_trig] PASS mission shows its own boss, scene and step labels {"pass":true,"boss":"Sir Cosine Overreach, 100 HP","scene":"skatepark","steps":["Step 1: Same angles. Understanding 0 percent.","Step 2: Same ratio. Understanding 0 percent.","Step 3: Use it. Understanding 0 percent."],"want":["Same angles","Same ratio","Use it"]}
+[1280-day-Theo-a_trig] PASS no page errors {"pass":true,"errors":[]}
+[1280-day-Theo-a_trig_id] PASS assignment exists with its lesson fields {"pass":true,"boss":"Baroness Plus-Plus-One","scene":"arcade","labels":{"k1":"Definitions","k2":"Pythagoras","k3":"Squares add to 1"}}
+[1280-day-Theo-a_trig_id] PASS home pins the newest showcase mission {"pass":true,"topic":"SINE AND COSINE ADDED UP","pinned":"a_trig_id","desc":"Turbo thinks sin x + cos x = 1. Baroness Plus-Plus-One is living in that rule."}
+[1280-day-Theo-a_trig_id] PASS open a_trig_id (home or the Missions sheet) {"pass":true,"via":"home"}
+[1280-day-Theo-a_trig_id] PASS mission shows its own boss, scene and step labels {"pass":true,"boss":"Baroness Plus-Plus-One, 100 HP","scene":"arcade","steps":["Step 1: Definitions. Pip already knows.","Step 2: Pythagoras. Pip already knows.","Step 3: Squares add to 1. Understanding 0 percent."],"want":["Definitions","Pythagoras","Squares add to 1"]}
+[1280-day-Theo-a_trig_id] PASS given concepts show as "Pip already knows" and do not animate {"pass":true,"given":[{"label":"Step 1: Definitions. Pip already knows.","anim":"none","trans":"0s"},{"label":"Step 2: Pythagoras. Pip already knows.","anim":"none","trans":"0s"}]}
+[1280-day-Theo-a_trig_id] PASS no page errors {"pass":true,"errors":[]}
+[1280-day-Luna-a_sat_modifiers] PASS assignment exists with its lesson fields {"pass":true,"boss":"Dame Dangle-Dangle","scene":"studio","labels":{"k1":"Next noun","k2":"Doer first","k3":"Who's doing it"}}
+[1280-day-Luna-a_sat_modifiers] PASS home pins the newest showcase mission {"pass":true,"topic":"SAT WRITING: DANGLING MODIFIERS","pinned":"a_sat_modifiers","desc":"Pip thinks an opening phrase can describe anything in the sentence. Dame Dangle-Dangle is living in that rule."}
+[1280-day-Luna-a_sat_modifiers] PASS open a_sat_modifiers (home or the Missions sheet) {"pass":true,"via":"home"}
+[1280-day-Luna-a_sat_modifiers] PASS mission shows its own boss, scene and step labels {"pass":true,"boss":"Dame Dangle-Dangle, 100 HP","scene":"studio","steps":["Step 1: Next noun. Understanding 0 percent.","Step 2: Doer first. Understanding 0 percent.","Step 3: Who's doing it. Understanding 0 percent."],"want":["Next noun","Doer first","Who's doing it"]}
+[1280-day-Luna-a_sat_modifiers] PASS no page errors {"pass":true,"errors":[]}
+Done. 0 failing step(s).

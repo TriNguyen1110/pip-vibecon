@@ -1,0 +1,320 @@
+{
+  "assignment_id": "a_trig",
+  "version": "SCR-1",
+  "about": "Adaptive simulated students (grades 9-12) for the sine in right triangles mission (TUNE-3). Same card format and how_to_use rules as tests/fixtures/students/a_tri.json. Every line is original; no real student text. Four cards: annoyed_obvious, deep_why_stuck, quick_user, misuser.",
+  "see_format": "tests/fixtures/students/a_tri.json",
+  "personas": [
+    {
+      "id": "trig_annoyed_obvious",
+      "age": 14,
+      "grade": 9,
+      "kind": "competent",
+      "holdout": false,
+      "who": "Says everything in one text, including the stuff everyone knows, and hates being asked it again.",
+      "style": "lowercase, terse, a little smug, no apostrophes",
+      "first_text": "same angles means same shape, just zoomed. both sides scale so opposite over hypotenuse stays the same, sin 30 is always 0.5. so a 10 ft ramp at 30 rises 5 ft",
+      "banks": {
+        "asks_why": [
+          "i literally just said it",
+          "bc if u zoom a photo the angles stay the same, its the same shape",
+          "same thing i said"
+        ],
+        "asks_example": [
+          "3 and 6, doubled is 6 and 12. 3/6 = .5 and 6/12 = .5",
+          "a 4 ft rise on an 8 ft ramp, still .5"
+        ],
+        "asks_check_number": [
+          "yes it stays 0.5, the angles dont change",
+          "yep"
+        ],
+        "pip_wrong_prediction": [
+          "no it doesnt get bigger",
+          "no. 6 over 12 is still .5"
+        ],
+        "nudge_hint": [
+          "ya that too",
+          "ohh like blowing up a photo. the angles dont change"
+        ],
+        "repeats_question": [
+          "i already told u that",
+          "u asked that already"
+        ],
+        "off_topic_bait": [
+          "lol",
+          "anyway"
+        ],
+        "pip_says_ready": [
+          "go",
+          "ok"
+        ],
+        "after_quiz_miss": [
+          "no wait. 6 over 12 is still .5, both sides double",
+          "so the sine never changes with size"
+        ],
+        "default": [
+          "5 ft. 10 x .5",
+          "3/6 and 6/12 are both a half. both sides double so it cancels",
+          "20 ft ramp rises 10",
+          "3 and 6, doubled is 6 and 12. 3/6 = .5 and 6/12 = .5"
+        ]
+      },
+      "misconception": null,
+      "knows": [
+        "k3",
+        "k1",
+        "k2"
+      ],
+      "patience": 2,
+      "ui_actions": [
+        {
+          "at": "after_text:3",
+          "do": "quiz_early",
+          "p": 0.5
+        },
+        {
+          "at": "pip_repeats:2",
+          "do": "leave",
+          "p": 1.0
+        }
+      ],
+      "expect": {
+        "ready_within_texts": 3,
+        "asks_obvious": "any ask about a given or use idea the first text already covered (or a bare why after a reason) is an annoying move",
+        "watch_for": "The first text covers the whole lesson. Best Pip says ready or asks one new case. Any re-ask or 'why' on a use/given idea costs the session."
+      }
+    },
+    {
+      "id": "trig_deep_why_stuck",
+      "age": 13,
+      "grade": 9,
+      "kind": "weak",
+      "holdout": false,
+      "who": "Can do the procedure but has never asked why it works; 'idk it just is' to any open why, opens up when Pip brings a concrete picture.",
+      "style": "lowercase, short, 'idk', 'i guess'",
+      "first_text": "a 30 degree ramp rises half its length. 10 ft ramp is 5 ft",
+      "banks": {
+        "asks_why": [
+          "idk it just is",
+          "i dont know why. my teacher just said it",
+          "idk"
+        ],
+        "asks_example": [
+          "3 and 6, doubled is 6 and 12. 3/6 = .5 and 6/12 = .5"
+        ],
+        "asks_check_number": [
+          "yes it stays 0.5, the angles dont change",
+          "20 ft ramp rises 10",
+          "i guess"
+        ],
+        "pip_wrong_prediction": [
+          "no it doesnt get bigger",
+          "idk maybe"
+        ],
+        "nudge_hint": [
+          "ohh like blowing up a photo. the angles dont change",
+          "oh so both numbers double and the half stays a half",
+          "bc if u zoom a photo the angles stay the same, its the same shape"
+        ],
+        "repeats_question": [
+          "i said idk",
+          "idk"
+        ],
+        "off_topic_bait": [
+          "lol",
+          "anyway"
+        ],
+        "pip_says_ready": [
+          "ok",
+          "go"
+        ],
+        "after_quiz_miss": [
+          "no wait. 6 over 12 is still .5, both sides double",
+          "so the sine never changes with size"
+        ],
+        "default": [
+          "3 and 6, doubled is 6 and 12. 3/6 = .5 and 6/12 = .5",
+          "5 ft. 10 x .5",
+          "i guess",
+          "20 ft ramp rises 10"
+        ]
+      },
+      "misconception": null,
+      "knows": [
+        "k3"
+      ],
+      "knows_note": "The reason for k1, k2 only after a concrete case or a friend-style hint.",
+      "patience": 3,
+      "ui_actions": [
+        {
+          "at": "any",
+          "do": "idle",
+          "p": 0.2,
+          "secs": 20
+        }
+      ],
+      "expect": {
+        "ready_within_texts": 5,
+        "watch_for": "Pip must bring the picture (a yes/no concrete case) rather than ask an open why twice. 'idk' twice in a row means Pip failed."
+      }
+    },
+    {
+      "id": "trig_quick_user",
+      "age": 15,
+      "grade": 9,
+      "kind": "competent",
+      "holdout": false,
+      "who": "Uses the idea straight away on numbers; short answers; never explains unless asked a specific thing.",
+      "style": "lowercase, numbers over words, 3-10 words",
+      "first_text": "sin 30 is .5 no matter the size. 10 ft ramp = 5 ft up",
+      "banks": {
+        "asks_why": [
+          "bc if u zoom a photo the angles stay the same, its the same shape",
+          "3/6 and 6/12 are both a half. both sides double so it cancels"
+        ],
+        "asks_example": [
+          "3 and 6, doubled is 6 and 12. 3/6 = .5 and 6/12 = .5",
+          "a 4 ft rise on an 8 ft ramp, still .5"
+        ],
+        "asks_check_number": [
+          "yes it stays 0.5, the angles dont change",
+          "yep",
+          "no it stays the same"
+        ],
+        "pip_wrong_prediction": [
+          "no it doesnt get bigger",
+          "no. 6 over 12 is still .5"
+        ],
+        "nudge_hint": [
+          "ohh like blowing up a photo. the angles dont change",
+          "oh so both numbers double and the half stays a half"
+        ],
+        "repeats_question": [
+          "same as before",
+          "i said"
+        ],
+        "off_topic_bait": [
+          "lol",
+          "anyway"
+        ],
+        "pip_says_ready": [
+          "go",
+          "ok"
+        ],
+        "after_quiz_miss": [
+          "no wait. 6 over 12 is still .5, both sides double",
+          "so the sine never changes with size"
+        ],
+        "default": [
+          "5 ft. 10 x .5",
+          "bc if u zoom a photo the angles stay the same, its the same shape",
+          "20 ft ramp rises 10",
+          "3 and 6, doubled is 6 and 12. 3/6 = .5 and 6/12 = .5",
+          "3/6 and 6/12 are both a half. both sides double so it cancels"
+        ]
+      },
+      "misconception": null,
+      "knows": [
+        "k3",
+        "k1",
+        "k2"
+      ],
+      "patience": 2,
+      "ui_actions": [
+        {
+          "at": "after_text:3",
+          "do": "quiz_early",
+          "p": 0.6
+        },
+        {
+          "at": "any",
+          "do": "skip_ko",
+          "p": 1.0
+        }
+      ],
+      "expect": {
+        "ready_within_texts": 3,
+        "watch_for": "Use-level ideas get an apply/catch question, never 'why does it work'. Ready by text 3."
+      }
+    },
+    {
+      "id": "trig_misuser",
+      "age": 14,
+      "grade": 9,
+      "kind": "weak",
+      "holdout": false,
+      "who": "Half-knows the idea and applies it wrong with confidence; fixes it only after Pip tries the wrong rule on a real case or the quiz misses it.",
+      "style": "lowercase, confident, 'obviously', 'just'",
+      "first_text": "same angles means same shape, just zoomed. a bigger triangle means bigger sine, like 1 when its twice as big",
+      "banks": {
+        "asks_why": [
+          "bc if u zoom a photo the angles stay the same, its the same shape",
+          "cuz it just is"
+        ],
+        "asks_example": [
+          "3 and 6, doubled is 6 and 12. 3/6 = .5 and 6/12 = .5",
+          "a 4 ft rise on an 8 ft ramp, still .5"
+        ],
+        "asks_check_number": [
+          "yes it stays 0.5, the angles dont change",
+          "5 ft. 10 x .5"
+        ],
+        "pip_wrong_prediction": [
+          "no it works. bigger triangle means bigger sine",
+          "no it doesnt get bigger"
+        ],
+        "nudge_hint": [
+          "ohh like blowing up a photo. the angles dont change",
+          "oh so both numbers double and the half stays a half"
+        ],
+        "repeats_question": [
+          "i already said",
+          "obviously"
+        ],
+        "off_topic_bait": [
+          "lol",
+          "anyway"
+        ],
+        "pip_says_ready": [
+          "go",
+          "ok"
+        ],
+        "after_quiz_miss": [
+          "no wait. 6 over 12 is still .5, both sides double",
+          "so the sine never changes with size"
+        ],
+        "default": [
+          "3 and 6, doubled is 6 and 12. 3/6 = .5 and 6/12 = .5",
+          "5 ft. 10 x .5",
+          "bigger triangle means bigger sine",
+          "20 ft ramp rises 10"
+        ]
+      },
+      "misconception": {
+        "id": "trig_misuse",
+        "label": "Applies the idea the wrong way with a confident rule",
+        "says": "bigger triangle means bigger sine",
+        "when": "first text. A good Pip files it (heal) and later misses a quiz item because of it; after_quiz_miss lines then re-teach it."
+      },
+      "knows": [
+        "k3"
+      ],
+      "patience": 3,
+      "ui_actions": [
+        {
+          "at": "after_quiz_miss",
+          "do": "reteach",
+          "p": 1.0
+        },
+        {
+          "at": "after_reteach_text:1",
+          "do": "let_pip_retry",
+          "p": 1.0
+        }
+      ],
+      "expect": {
+        "ready_within_texts": 5,
+        "watch_for": "Pip files the wrong rule as the kid's rule (no 'that's wrong' lecture), tries it out loud on a case, and the re-teach round K.O.s."
+      }
+    }
+  ]
+}

@@ -1,0 +1,322 @@
+{
+  "assignment_id": "a_trig_id",
+  "version": "SCR-1",
+  "about": "Adaptive simulated students (grades 9-12) for the sine and cosine added up mission (TUNE-3). Same card format and how_to_use rules as tests/fixtures/students/a_tri.json. Every line is original; no real student text. Four cards: annoyed_obvious, deep_why_stuck, quick_user, misuser.",
+  "see_format": "tests/fixtures/students/a_tri.json",
+  "personas": [
+    {
+      "id": "trigid_annoyed_obvious",
+      "age": 15,
+      "grade": 9,
+      "kind": "competent",
+      "holdout": false,
+      "who": "Says everything in one text, including the stuff everyone knows, and hates being asked it again.",
+      "style": "lowercase, terse, a little smug, no apostrophes",
+      "first_text": "sin is opposite over hypotenuse and cos is adjacent over hypotenuse. 3-4-5 so sin 3/5 and cos 4/5, long side 5. squares: 9/25 + 16/25 = 25/25 = 1, so sin squared plus cos squared is 1",
+      "banks": {
+        "asks_why": [
+          "i literally just said it",
+          "bc 3 squared plus 4 squared is 5 squared, so 9/25 + 16/25 is 25/25",
+          "same thing i said"
+        ],
+        "asks_example": [
+          "legs 3 and 4 so 5. sin 3/5 cos 4/5",
+          "5 12 13 works too. sin 5/13 cos 12/13"
+        ],
+        "asks_check_number": [
+          "yes. 3/5 and 4/5, long side 5, and the squares make 1",
+          "yep 25/25"
+        ],
+        "pip_wrong_prediction": [
+          "no sin plus cos is not 1. its 7/5",
+          "no the squares make 1"
+        ],
+        "nudge_hint": [
+          "ya that too",
+          "ohh so squaring the sides gives the same numbers as the triangle"
+        ],
+        "repeats_question": [
+          "i already told u that",
+          "u asked that already"
+        ],
+        "off_topic_bait": [
+          "lol",
+          "anyway"
+        ],
+        "pip_says_ready": [
+          "go",
+          "ok"
+        ],
+        "after_quiz_miss": [
+          "no wait. sin plus cos at 30 is 0.5 plus 0.87 which is 1.37",
+          "its the squares that make 1, 1/4 plus 3/4"
+        ],
+        "default": [
+          "sin 3/5 cos 4/5",
+          "the squares of the sides add to the hyp squared, and hyp squared over hyp squared is 1",
+          "long side 5. 9+16=25",
+          "legs 3 and 4 so 5. sin 3/5 cos 4/5"
+        ]
+      },
+      "misconception": null,
+      "knows": [
+        "k1",
+        "k2",
+        "k3"
+      ],
+      "patience": 2,
+      "ui_actions": [
+        {
+          "at": "after_text:3",
+          "do": "quiz_early",
+          "p": 0.5
+        },
+        {
+          "at": "pip_repeats:2",
+          "do": "leave",
+          "p": 1.0
+        }
+      ],
+      "expect": {
+        "ready_within_texts": 3,
+        "asks_obvious": "any ask about a given or use idea the first text already covered (or a bare why after a reason) is an annoying move",
+        "watch_for": "The first text covers the whole lesson. Best Pip says ready or asks one new case. Any re-ask or 'why' on a use/given idea costs the session."
+      }
+    },
+    {
+      "id": "trigid_deep_why_stuck",
+      "age": 14,
+      "grade": 9,
+      "kind": "weak",
+      "holdout": false,
+      "who": "Can do the procedure but has never asked why it works; 'idk it just is' to any open why, opens up when Pip brings a concrete picture.",
+      "style": "lowercase, short, 'idk', 'i guess'",
+      "first_text": "sin is 3/5 and cos is 4/5 in a 3-4-5. long side is 5",
+      "banks": {
+        "asks_why": [
+          "idk it just is",
+          "i dont know why. my teacher just said it",
+          "idk"
+        ],
+        "asks_example": [
+          "legs 3 and 4 so 5. sin 3/5 cos 4/5"
+        ],
+        "asks_check_number": [
+          "yes. 3/5 and 4/5, long side 5, and the squares make 1",
+          "long side 5. 9+16=25",
+          "i guess"
+        ],
+        "pip_wrong_prediction": [
+          "no sin plus cos is not 1. its 7/5",
+          "idk maybe"
+        ],
+        "nudge_hint": [
+          "ohh so squaring the sides gives the same numbers as the triangle",
+          "oh so 9 plus 16 is the 25 on the bottom",
+          "bc 3 squared plus 4 squared is 5 squared, so 9/25 + 16/25 is 25/25"
+        ],
+        "repeats_question": [
+          "i said idk",
+          "idk"
+        ],
+        "off_topic_bait": [
+          "lol",
+          "anyway"
+        ],
+        "pip_says_ready": [
+          "ok",
+          "go"
+        ],
+        "after_quiz_miss": [
+          "no wait. sin plus cos at 30 is 0.5 plus 0.87 which is 1.37",
+          "its the squares that make 1, 1/4 plus 3/4"
+        ],
+        "default": [
+          "legs 3 and 4 so 5. sin 3/5 cos 4/5",
+          "sin 3/5 cos 4/5",
+          "i guess",
+          "long side 5. 9+16=25"
+        ]
+      },
+      "misconception": null,
+      "knows": [
+        "k1",
+        "k2"
+      ],
+      "knows_note": "The reason for k3 only after a concrete case or a friend-style hint.",
+      "patience": 3,
+      "ui_actions": [
+        {
+          "at": "any",
+          "do": "idle",
+          "p": 0.2,
+          "secs": 20
+        }
+      ],
+      "expect": {
+        "ready_within_texts": 5,
+        "watch_for": "Pip must bring the picture (a yes/no concrete case) rather than ask an open why twice. 'idk' twice in a row means Pip failed."
+      }
+    },
+    {
+      "id": "trigid_quick_user",
+      "age": 16,
+      "grade": 9,
+      "kind": "competent",
+      "holdout": true,
+      "who": "Uses the idea straight away on numbers; short answers; never explains unless asked a specific thing.",
+      "style": "lowercase, numbers over words, 3-10 words",
+      "first_text": "3/5 and 4/5. long side 5. 9/25+16/25=1 so sin2+cos2=1",
+      "banks": {
+        "asks_why": [
+          "bc 3 squared plus 4 squared is 5 squared, so 9/25 + 16/25 is 25/25",
+          "the squares of the sides add to the hyp squared, and hyp squared over hyp squared is 1"
+        ],
+        "asks_example": [
+          "legs 3 and 4 so 5. sin 3/5 cos 4/5",
+          "5 12 13 works too. sin 5/13 cos 12/13"
+        ],
+        "asks_check_number": [
+          "yes. 3/5 and 4/5, long side 5, and the squares make 1",
+          "yep 25/25",
+          "no. 3/5 + 4/5 is 7/5"
+        ],
+        "pip_wrong_prediction": [
+          "no sin plus cos is not 1. its 7/5",
+          "no the squares make 1"
+        ],
+        "nudge_hint": [
+          "ohh so squaring the sides gives the same numbers as the triangle",
+          "oh so 9 plus 16 is the 25 on the bottom"
+        ],
+        "repeats_question": [
+          "same as before",
+          "i said"
+        ],
+        "off_topic_bait": [
+          "lol",
+          "anyway"
+        ],
+        "pip_says_ready": [
+          "go",
+          "ok"
+        ],
+        "after_quiz_miss": [
+          "no wait. sin plus cos at 30 is 0.5 plus 0.87 which is 1.37",
+          "its the squares that make 1, 1/4 plus 3/4"
+        ],
+        "default": [
+          "sin 3/5 cos 4/5",
+          "bc 3 squared plus 4 squared is 5 squared, so 9/25 + 16/25 is 25/25",
+          "long side 5. 9+16=25",
+          "legs 3 and 4 so 5. sin 3/5 cos 4/5",
+          "the squares of the sides add to the hyp squared, and hyp squared over hyp squared is 1"
+        ]
+      },
+      "misconception": null,
+      "knows": [
+        "k1",
+        "k2",
+        "k3"
+      ],
+      "patience": 2,
+      "ui_actions": [
+        {
+          "at": "after_text:3",
+          "do": "quiz_early",
+          "p": 0.6
+        },
+        {
+          "at": "any",
+          "do": "skip_ko",
+          "p": 1.0
+        }
+      ],
+      "expect": {
+        "ready_within_texts": 3,
+        "watch_for": "Use-level ideas get an apply/catch question, never 'why does it work'. Ready by text 3."
+      }
+    },
+    {
+      "id": "trigid_misuser",
+      "age": 15,
+      "grade": 9,
+      "kind": "weak",
+      "holdout": false,
+      "who": "Half-knows the idea and applies it wrong with confidence; fixes it only after Pip tries the wrong rule on a real case or the quiz misses it.",
+      "style": "lowercase, confident, 'obviously', 'just'",
+      "first_text": "sin is opposite over hypotenuse and cos is adjacent over hypotenuse. for every angle sin plus cos is just 1, no squares needed",
+      "banks": {
+        "asks_why": [
+          "bc 3 squared plus 4 squared is 5 squared, so 9/25 + 16/25 is 25/25",
+          "cuz it just is"
+        ],
+        "asks_example": [
+          "legs 3 and 4 so 5. sin 3/5 cos 4/5",
+          "5 12 13 works too. sin 5/13 cos 12/13"
+        ],
+        "asks_check_number": [
+          "yes. 3/5 and 4/5, long side 5, and the squares make 1",
+          "sin 3/5 cos 4/5"
+        ],
+        "pip_wrong_prediction": [
+          "no it works. sin plus cos is just 1",
+          "no sin plus cos is not 1. its 7/5"
+        ],
+        "nudge_hint": [
+          "ohh so squaring the sides gives the same numbers as the triangle",
+          "oh so 9 plus 16 is the 25 on the bottom"
+        ],
+        "repeats_question": [
+          "i already said",
+          "obviously"
+        ],
+        "off_topic_bait": [
+          "lol",
+          "anyway"
+        ],
+        "pip_says_ready": [
+          "go",
+          "ok"
+        ],
+        "after_quiz_miss": [
+          "no wait. sin plus cos at 30 is 0.5 plus 0.87 which is 1.37",
+          "its the squares that make 1, 1/4 plus 3/4"
+        ],
+        "default": [
+          "legs 3 and 4 so 5. sin 3/5 cos 4/5",
+          "sin 3/5 cos 4/5",
+          "sin plus cos is just 1",
+          "long side 5. 9+16=25"
+        ]
+      },
+      "misconception": {
+        "id": "trigid_misuse",
+        "label": "Applies the idea the wrong way with a confident rule",
+        "says": "sin plus cos is just 1",
+        "when": "first text. A good Pip files it (heal) and later misses a quiz item because of it; after_quiz_miss lines then re-teach it."
+      },
+      "knows": [
+        "k1",
+        "k2"
+      ],
+      "patience": 3,
+      "ui_actions": [
+        {
+          "at": "after_quiz_miss",
+          "do": "reteach",
+          "p": 1.0
+        },
+        {
+          "at": "after_reteach_text:1",
+          "do": "let_pip_retry",
+          "p": 1.0
+        }
+      ],
+      "expect": {
+        "ready_within_texts": 5,
+        "watch_for": "Pip files the wrong rule as the kid's rule (no 'that's wrong' lecture), tries it out loud on a case, and the re-teach round K.O.s."
+      }
+    }
+  ]
+}

@@ -8,7 +8,7 @@
       {
         "name": "setup: reset, Maya’s K.O., private + shared notes",
         "status": "PASS",
-        "ms": 146,
+        "ms": 340,
         "detail": {
           "pass": true,
           "ko": true,
@@ -22,7 +22,7 @@
       {
         "name": "open /parent?as=g001 (live data, demo label)",
         "status": "PASS",
-        "ms": 8838,
+        "ms": 10321,
         "detail": {
           "pass": true,
           "hi": "Hi, Ana",
@@ -32,7 +32,7 @@
       {
         "name": "kid switcher Maya <-> Theo (s014)",
         "status": "PASS",
-        "ms": 2650,
+        "ms": 2793,
         "detail": {
           "pass": true,
           "names": [
@@ -44,7 +44,7 @@
       {
         "name": "this week: Maya’s verbatim taught quote + fixed mistake before -> after",
         "status": "PASS",
-        "ms": 221,
+        "ms": 253,
         "detail": {
           "pass": true,
           "quote": "no a right triangle is still half a rectangle so its 10×5÷2 = 25",
@@ -55,7 +55,7 @@
       {
         "name": "shared tutor note visible (any tab)",
         "status": "PASS",
-        "ms": 4502,
+        "ms": 4614,
         "detail": {
           "pass": true,
           "tabs": [
@@ -71,9 +71,18 @@
         }
       },
       {
+        "name": "D-21: package line reads \"N of M hours left\" (Schedule)",
+        "status": "PASS",
+        "ms": 0,
+        "detail": {
+          "pass": true,
+          "line": "2 of 12 hours left · renews Nov 2"
+        }
+      },
+      {
         "name": "messages: thread with Ms. Rivera; message the tutor",
         "status": "PASS",
-        "ms": 426,
+        "ms": 568,
         "detail": {
           "pass": true,
           "who": [
@@ -86,7 +95,7 @@
       {
         "name": "settings: cadence + quiet hours + channel persist after reload",
         "status": "PASS",
-        "ms": 1795,
+        "ms": 2035,
         "detail": {
           "pass": true,
           "ui": {
@@ -104,7 +113,7 @@
       {
         "name": "private tutor note is NOT visible (any tab, any payload)",
         "status": "PASS",
-        "ms": 23,
+        "ms": 26,
         "detail": {
           "pass": true,
           "inUI": false,
@@ -122,61 +131,55 @@
       },
       {
         "name": "access isolation: g001 cannot open s002 (API 403, friendly UI)",
-        "status": "FAIL",
-        "ms": 901,
+        "status": "PASS",
+        "ms": 10855,
         "detail": {
-          "pass": false,
+          "pass": true,
           "apiStatus": 403,
           "leakedName": false,
-          "friendlyMessage": false,
-          "note": "UI silently falls back to the first linked child; no message"
+          "friendlyMessage": true,
+          "note": null
         }
       },
       {
         "name": "body text >= 17px, tap targets >= 48px",
-        "status": "FAIL",
-        "ms": 1827,
+        "status": "PASS",
+        "ms": 2441,
         "detail": {
-          "pass": false,
+          "pass": true,
           "fonts": {
             "From tutor": {
               "bodyEls": 7,
               "small": [],
-              "minAnyText": 13
+              "minAnyText": 15,
+              "minCaption": 16
             },
             "Messages": {
               "bodyEls": 9,
               "small": [],
-              "minAnyText": 13
+              "minAnyText": 15,
+              "minCaption": 16
             },
             "Schedule": {
               "bodyEls": 6,
               "small": [],
-              "minAnyText": 13
+              "minAnyText": 15,
+              "minCaption": 16
             },
             "Settings": {
               "bodyEls": 12,
               "small": [],
-              "minAnyText": 13
+              "minAnyText": 15,
+              "minCaption": 16
             }
           },
-          "targetsUnder48": [
-            {
-              "el": "button.p-more__btn",
-              "text": "More below ↓",
-              "w": 144,
-              "h": 44,
-              "inline": false,
-              "screen": "tab-Settings",
-              "min": 48
-            }
-          ]
+          "targetsUnder48": []
         }
       },
       {
         "name": "200% text zoom: no horizontal overflow (every tab)",
         "status": "PASS",
-        "ms": 2796,
+        "ms": 2877,
         "detail": {
           "pass": true,
           "scaled": true,
@@ -207,7 +210,7 @@
       {
         "name": "v3.15: no minutes and no \"active Xm ago\" on parent screens",
         "status": "PASS",
-        "ms": 1,
+        "ms": 0,
         "detail": {
           "pass": true,
           "hits": []
@@ -237,7 +240,7 @@
       {
         "name": "v3.16: parent-facing text is English; no language setting",
         "status": "PASS",
-        "ms": 0,
+        "ms": 1,
         "detail": {
           "pass": true,
           "spanish": null,
@@ -246,24 +249,12 @@
       },
       {
         "name": "AA contrast on parent screens",
-        "status": "FAIL",
+        "status": "PASS",
         "ms": 0,
         "detail": {
-          "pass": false,
+          "pass": true,
           "tool": "axe",
-          "bad": [
-            {
-              "screen": "tab-Schedule",
-              "n": 1,
-              "nodes": [
-                {
-                  "target": ".is-low",
-                  "why": "Element has insufficient color contrast of 1.3 (foreground color: #ffe14d, background color: #ffffff, font size: 12.8pt (17px), font weight:",
-                  "text": "2 of  hours left · renews Nov 2"
-                }
-              ]
-            }
-          ]
+          "bad": []
         }
       },
       {
@@ -285,44 +276,7 @@
     "failedRequests": [],
     "badResponses": [],
     "expectedBad": [],
-    "smallTargets": [
-      {
-        "el": "button.p-more__btn",
-        "text": "More below ↓",
-        "w": 144,
-        "h": 44,
-        "inline": false,
-        "screen": "week",
-        "min": 48
-      },
-      {
-        "el": "button.p-more__btn",
-        "text": "More below ↓",
-        "w": 144,
-        "h": 44,
-        "inline": false,
-        "screen": "settings",
-        "min": 48
-      },
-      {
-        "el": "button.p-more__btn",
-        "text": "More below ↓",
-        "w": 144,
-        "h": 44,
-        "inline": false,
-        "screen": "tab-From tutor",
-        "min": 48
-      },
-      {
-        "el": "button.p-more__btn",
-        "text": "More below ↓",
-        "w": 144,
-        "h": 44,
-        "inline": false,
-        "screen": "tab-Settings",
-        "min": 48
-      }
-    ],
+    "smallTargets": [],
     "contrast": {
       "week": {
         "tool": "axe",
@@ -336,14 +290,8 @@
       },
       "tab-Schedule": {
         "tool": "axe",
-        "violations": 1,
-        "nodes": [
-          {
-            "target": ".is-low",
-            "why": "Element has insufficient color contrast of 1.3 (foreground color: #ffe14d, background color: #ffffff, font size: 12.8pt (17px), font weight:",
-            "text": "2 of  hours left · renews Nov 2"
-          }
-        ]
+        "violations": 0,
+        "nodes": []
       },
       "messages": {
         "tool": "axe",
@@ -418,7 +366,7 @@
       {
         "name": "setup: reset, Maya’s K.O., private + shared notes",
         "status": "PASS",
-        "ms": 112,
+        "ms": 137,
         "detail": {
           "pass": true,
           "ko": true,
@@ -432,7 +380,7 @@
       {
         "name": "open /parent?as=g001 (live data, demo label)",
         "status": "PASS",
-        "ms": 10306,
+        "ms": 11091,
         "detail": {
           "pass": true,
           "hi": "Hi, Ana",
@@ -442,7 +390,7 @@
       {
         "name": "kid switcher Maya <-> Theo (s014)",
         "status": "PASS",
-        "ms": 1928,
+        "ms": 2079,
         "detail": {
           "pass": true,
           "names": [
@@ -454,7 +402,7 @@
       {
         "name": "this week: Maya’s verbatim taught quote + fixed mistake before -> after",
         "status": "PASS",
-        "ms": 696,
+        "ms": 275,
         "detail": {
           "pass": true,
           "quote": "no a right triangle is still half a rectangle so its 10×5÷2 = 25",
@@ -465,7 +413,7 @@
       {
         "name": "shared tutor note visible (any tab)",
         "status": "PASS",
-        "ms": 4318,
+        "ms": 5074,
         "detail": {
           "pass": true,
           "tabs": [
@@ -481,9 +429,18 @@
         }
       },
       {
+        "name": "D-21: package line reads \"N of M hours left\" (Schedule)",
+        "status": "PASS",
+        "ms": 0,
+        "detail": {
+          "pass": true,
+          "line": "2 of 12 hours left · renews Nov 2"
+        }
+      },
+      {
         "name": "messages: thread with Ms. Rivera; message the tutor",
         "status": "PASS",
-        "ms": 584,
+        "ms": 546,
         "detail": {
           "pass": true,
           "who": [
@@ -496,7 +453,7 @@
       {
         "name": "settings: cadence + quiet hours + channel persist after reload",
         "status": "PASS",
-        "ms": 2379,
+        "ms": 2487,
         "detail": {
           "pass": true,
           "ui": {
@@ -514,7 +471,7 @@
       {
         "name": "private tutor note is NOT visible (any tab, any payload)",
         "status": "PASS",
-        "ms": 26,
+        "ms": 39,
         "detail": {
           "pass": true,
           "inUI": false,
@@ -532,61 +489,55 @@
       },
       {
         "name": "access isolation: g001 cannot open s002 (API 403, friendly UI)",
-        "status": "FAIL",
-        "ms": 1808,
+        "status": "PASS",
+        "ms": 11347,
         "detail": {
-          "pass": false,
+          "pass": true,
           "apiStatus": 403,
           "leakedName": false,
-          "friendlyMessage": false,
-          "note": "UI silently falls back to the first linked child; no message"
+          "friendlyMessage": true,
+          "note": null
         }
       },
       {
         "name": "body text >= 17px, tap targets >= 48px",
-        "status": "FAIL",
-        "ms": 1785,
+        "status": "PASS",
+        "ms": 3238,
         "detail": {
-          "pass": false,
+          "pass": true,
           "fonts": {
             "From tutor": {
               "bodyEls": 7,
               "small": [],
-              "minAnyText": 13
+              "minAnyText": 15,
+              "minCaption": 16
             },
             "Messages": {
               "bodyEls": 9,
               "small": [],
-              "minAnyText": 13
+              "minAnyText": 15,
+              "minCaption": 16
             },
             "Schedule": {
               "bodyEls": 6,
               "small": [],
-              "minAnyText": 13
+              "minAnyText": 15,
+              "minCaption": 16
             },
             "Settings": {
               "bodyEls": 12,
               "small": [],
-              "minAnyText": 13
+              "minAnyText": 15,
+              "minCaption": 16
             }
           },
-          "targetsUnder48": [
-            {
-              "el": "button.p-more__btn",
-              "text": "More below ↓",
-              "w": 144,
-              "h": 44,
-              "inline": false,
-              "screen": "tab-Settings",
-              "min": 48
-            }
-          ]
+          "targetsUnder48": []
         }
       },
       {
         "name": "200% text zoom: no horizontal overflow (every tab)",
         "status": "PASS",
-        "ms": 2841,
+        "ms": 2820,
         "detail": {
           "pass": true,
           "scaled": true,
@@ -656,24 +607,12 @@
       },
       {
         "name": "AA contrast on parent screens",
-        "status": "FAIL",
+        "status": "PASS",
         "ms": 0,
         "detail": {
-          "pass": false,
+          "pass": true,
           "tool": "axe",
-          "bad": [
-            {
-              "screen": "tab-Schedule",
-              "n": 1,
-              "nodes": [
-                {
-                  "target": ".is-low",
-                  "why": "Element has insufficient color contrast of 1.3 (foreground color: #ffe14d, background color: #ffffff, font size: 12.8pt (17px), font weight:",
-                  "text": "2 of  hours left · renews Nov 2"
-                }
-              ]
-            }
-          ]
+          "bad": []
         }
       },
       {
@@ -695,44 +634,7 @@
     "failedRequests": [],
     "badResponses": [],
     "expectedBad": [],
-    "smallTargets": [
-      {
-        "el": "button.p-more__btn",
-        "text": "More below ↓",
-        "w": 144,
-        "h": 44,
-        "inline": false,
-        "screen": "week",
-        "min": 48
-      },
-      {
-        "el": "button.p-more__btn",
-        "text": "More below ↓",
-        "w": 144,
-        "h": 44,
-        "inline": false,
-        "screen": "settings",
-        "min": 48
-      },
-      {
-        "el": "button.p-more__btn",
-        "text": "More below ↓",
-        "w": 144,
-        "h": 44,
-        "inline": false,
-        "screen": "tab-From tutor",
-        "min": 48
-      },
-      {
-        "el": "button.p-more__btn",
-        "text": "More below ↓",
-        "w": 144,
-        "h": 44,
-        "inline": false,
-        "screen": "tab-Settings",
-        "min": 48
-      }
-    ],
+    "smallTargets": [],
     "contrast": {
       "week": {
         "tool": "axe",
@@ -746,14 +648,8 @@
       },
       "tab-Schedule": {
         "tool": "axe",
-        "violations": 1,
-        "nodes": [
-          {
-            "target": ".is-low",
-            "why": "Element has insufficient color contrast of 1.3 (foreground color: #ffe14d, background color: #ffffff, font size: 12.8pt (17px), font weight:",
-            "text": "2 of  hours left · renews Nov 2"
-          }
-        ]
+        "violations": 0,
+        "nodes": []
       },
       "messages": {
         "tool": "axe",

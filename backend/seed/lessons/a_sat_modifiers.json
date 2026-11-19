@@ -60,7 +60,10 @@
         "\\b(noun|word|thing)\\b.{0,30}\\b(after|next to|following)\\b.{0,15}\\bcomma\\b",
         "(phrase|part)\\b.{0,25}\\b(before|opening|start)\\b.{0,50}\\b(describes?|goes with|attached|stuck|about)\\b",
         "(sentence|reader|it) (thinks|says|reads like).{0,40}(backpack|noun|doing|running)",
-        "backpack.{0,30}(running|has legs)"
+        "backpack.{0,30}(running|has legs)",
+        "\\b(grabs?|hooks?|latch\\w*|attach\\w*|sticks?|glues?)\\b.{0,25}\\b(first )?(noun|word|thing)\\b",
+        "\\bfirst noun\\b",
+        "\\b(backpack|bus|noun)\\b.{0,30}\\b(is|are)\\b.{0,12}\\b(running|the one running)\\b"
       ]
     },
     {

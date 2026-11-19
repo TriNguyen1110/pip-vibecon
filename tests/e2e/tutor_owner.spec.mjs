@@ -162,6 +162,8 @@ async function run(vp) {
 
     await H.step('Maya profile: math + writing progress', async () => {
       await openMaya()
+      await tab('Progress').click() // F20: the profile opens on the Learning map
+      await page.locator('.prog__title').first().waitFor({ timeout: 8000 })
       const subj = await page.locator('.prog__title').allTextContents()
       const mastery = await page.locator('.mastery__row').count()
       await H.shot('profile-progress')
@@ -169,6 +171,28 @@ async function run(vp) {
       await H.targets('profile', MIN, page)
       await H.contrast('profile', page)
       return { pass: subj.some((s) => /Math/.test(s)) && subj.some((s) => /Writing/.test(s)) && mastery >= 3, subjects: subj, masteryRows: mastery }
+    })
+
+    await H.step('F20: avatars, learning profile, learning map (fallback until B21)', async () => {
+      const avatars = await page.locator('.st__row:not(.st__row--th) .avatar, .st__row:not(.st__row--th) [class*="avatar"]').count().catch(() => 0)
+      const prof = page.getByRole('region', { name: 'Learning profile' })
+      const profShown = (await prof.count()) > 0
+      const profText = profShown ? (await prof.first().innerText()).replace(/\s+/g, ' ').slice(0, 200) : null
+      const profEmpty = profShown && (await page.locator('.lprof--empty').count()) > 0
+      await tab('Learning map').click()
+      const map = page.locator('section.lmap')
+      await map.waitFor({ timeout: 8000 })
+      await sleep(500)
+      const nodes = await map.locator('.lmap__node').evaluateAll((els) => els.map((e) => e.getAttribute('aria-label')))
+      const head = (await map.locator('.lmap__head').innerText().catch(() => '')).replace(/\s+/g, ' ')
+      const fallback = /built from the current missions/.test(head)
+      const knew = nodes.filter((n) => /already kn|knew|given/i.test(n ?? ''))
+      await H.shot('profile-learning-map')
+      await H.overflow('learning-map', page)
+      await H.targets('learning-map', MIN, page)
+      await H.contrast('learning-map', page)
+      await tab('Progress').click()
+      return { pass: profShown && nodes.length >= 3 && knew.length >= 1, avatarsInTable: avatars, profile: profEmpty ? 'empty state (pre-B21)' : profText, mapNodes: nodes.length, alreadyKnew: knew, fallbackMap: fallback, head: head.slice(0, 160) }
     })
 
     await H.step('Maya profile: guardians Ana R. + Sam R.', async () => {

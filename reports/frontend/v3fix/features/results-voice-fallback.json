@@ -1,0 +1,277 @@
+{
+  "voice": {
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [
+      {
+        "status": 200,
+        "t": 1792883523931,
+        "fallback": false,
+        "audioB64": 23464,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.12,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792883525544,
+        "fallback": false,
+        "audioB64": 293188,
+        "mime": "audio/mpeg",
+        "alignChars": 145,
+        "alignEnd": 13.76,
+        "text": "Hi. I'm Pip. I'm learning area of a triangle. I already know one rule:"
+      },
+      {
+        "status": 200,
+        "t": 1792883526594,
+        "fallback": false,
+        "audioB64": 66376,
+        "mime": "audio/mpeg",
+        "alignChars": 38,
+        "alignEnd": 3.12,
+        "text": "I did not authorize a second triangle."
+      },
+      {
+        "status": 200,
+        "t": 1792883527563,
+        "fallback": false,
+        "audioB64": 188976,
+        "mime": "audio/mpeg",
+        "alignChars": 91,
+        "alignEnd": 8.88,
+        "text": "ok, that's the why. if my 6 by 4 triangle sits in a 6 by 4 box, does i"
+      }
+    ],
+    "checks": [
+      {
+        "label": "/api/tts returns live audio + alignment",
+        "pass": true,
+        "detail": [
+          {
+            "status": 200,
+            "t": 1792883523931,
+            "fallback": false,
+            "audioB64": 23464,
+            "mime": "audio/mpeg",
+            "alignChars": 10,
+            "alignEnd": 1.12,
+            "text": "BOSS FIGHT"
+          },
+          {
+            "status": 200,
+            "t": 1792883525544,
+            "fallback": false,
+            "audioB64": 293188,
+            "mime": "audio/mpeg",
+            "alignChars": 145,
+            "alignEnd": 13.76,
+            "text": "Hi. I'm Pip. I'm learning area of a triangle. I already know one rule:"
+          },
+          {
+            "status": 200,
+            "t": 1792883526594,
+            "fallback": false,
+            "audioB64": 66376,
+            "mime": "audio/mpeg",
+            "alignChars": 38,
+            "alignEnd": 3.12,
+            "text": "I did not authorize a second triangle."
+          },
+          {
+            "status": 200,
+            "t": 1792883527563,
+            "fallback": false,
+            "audioB64": 188976,
+            "mime": "audio/mpeg",
+            "alignChars": 91,
+            "alignEnd": 8.88,
+            "text": "ok, that's the why. if my 6 by 4 triangle sits in a 6 by 4 box, does i"
+          }
+        ]
+      },
+      {
+        "label": "audio element played (ok, playing fired)",
+        "pass": true,
+        "detail": [
+          {
+            "t": 1792883525545,
+            "mime": "audio/mpeg",
+            "len": 293211,
+            "playing": 1792883525859,
+            "ok": true,
+            "end": 1792883525959
+          }
+        ]
+      },
+      {
+        "label": "mouth changes while audio plays (>= 3 shapes) ",
+        "pass": false,
+        "detail": {
+          "playing": {
+            "g:133": 2
+          },
+          "idle": {
+            "g:157": 85,
+            "g:133": 1
+          }
+        }
+      },
+      {
+        "label": "no browser speech while ElevenLabs works",
+        "pass": true,
+        "detail": []
+      },
+      {
+        "label": "mute: no new /api/tts, no audio, no speech",
+        "pass": false,
+        "detail": {
+          "before": {
+            "tts": 2,
+            "plays": 1,
+            "synth": 0
+          },
+          "after": {
+            "plays": 1,
+            "synth": 0,
+            "muted": "1",
+            "playLog": [
+              {
+                "t": 1792883525545,
+                "mime": "audio/mpeg",
+                "len": 293211,
+                "playing": 1792883525859,
+                "ok": true,
+                "end": 1792883525959
+              }
+            ]
+          },
+          "tts": 4
+        }
+      }
+    ],
+    "muteAt": 1792883526193,
+    "ttsBefore": 2
+  },
+  "fallback-abort": {
+    "console": [
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_FAILED"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_FAILED"
+      }
+    ],
+    "pageErrors": [],
+    "failedRequests": [
+      {
+        "url": "http://localhost:5761/api/tts",
+        "err": "net::ERR_FAILED"
+      },
+      {
+        "url": "http://localhost:5761/api/tts",
+        "err": "net::ERR_FAILED"
+      }
+    ],
+    "badResponses": [],
+    "tts": [],
+    "checks": [
+      {
+        "label": "abort: browser speechSynthesis used",
+        "pass": true,
+        "detail": [
+          {
+            "t": 1792883532443,
+            "text": "Hi. I'm Pip. I'm learning area of a triangle. I already know one rule: Area of a"
+          },
+          {
+            "t": 1792883534078,
+            "text": "if my 6 by 4 triangle sits in a 6 by 4 box, does it fill the whole box?"
+          }
+        ]
+      },
+      {
+        "label": "abort: no audio element played",
+        "pass": true,
+        "detail": []
+      },
+      {
+        "label": "abort: no console/page errors",
+        "pass": false,
+        "detail": {
+          "errs": [
+            {
+              "type": "error",
+              "text": "Failed to load resource: net::ERR_FAILED"
+            },
+            {
+              "type": "error",
+              "text": "Failed to load resource: net::ERR_FAILED"
+            }
+          ],
+          "pageErrors": []
+        }
+      }
+    ]
+  },
+  "fallback-fallback": {
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "tts": [
+      {
+        "status": 200,
+        "t": 1792883540497,
+        "fallback": true,
+        "audioB64": 0,
+        "alignChars": 0,
+        "alignEnd": null,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792883540498,
+        "fallback": true,
+        "audioB64": 0,
+        "alignChars": 0,
+        "alignEnd": null,
+        "text": "Hi. I'm Pip. I'm learning area of a triangle. I already know one rule:"
+      }
+    ],
+    "checks": [
+      {
+        "label": "fallback: browser speechSynthesis used",
+        "pass": true,
+        "detail": [
+          {
+            "t": 1792883540497,
+            "text": "Hi. I'm Pip. I'm learning area of a triangle. I already know one rule: Area of a"
+          },
+          {
+            "t": 1792883542118,
+            "text": "if my 6 by 4 triangle sits in a 6 by 4 box, does it fill the whole box?"
+          }
+        ]
+      },
+      {
+        "label": "fallback: no audio element played",
+        "pass": true,
+        "detail": []
+      },
+      {
+        "label": "fallback: no console/page errors",
+        "pass": true,
+        "detail": {
+          "errs": [],
+          "pageErrors": []
+        }
+      }
+    ]
+  }
+}

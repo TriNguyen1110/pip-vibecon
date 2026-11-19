@@ -1,0 +1,1537 @@
+[
+  {
+    "journey": "showcase",
+    "width": 390,
+    "height": 844,
+    "chrome": "156.0.8078.48",
+    "steps": [
+      {
+        "name": "s001/a_tri: home -> mission (pinned or Missions sheet)",
+        "status": "PASS",
+        "ms": 13824,
+        "detail": {
+          "pass": true,
+          "via": "home",
+          "boss": "Duke Doublecount"
+        }
+      },
+      {
+        "name": "s001/a_tri: teach with the script's lines -> ready, wrong rule filed",
+        "status": "PASS",
+        "ms": 9471,
+        "detail": {
+          "pass": true,
+          "readyAt": 2,
+          "scriptReadyAt": 3,
+          "filed": true,
+          "log": [
+            {
+              "kind": "procedure",
+              "hp": 100,
+              "ready": false,
+              "pip": "hm, half of that. so it's like sharing one sandwich with a friend, you each get the same bit?"
+            },
+            {
+              "kind": "explain",
+              "hp": 75,
+              "ready": true,
+              "pip": "ohh so the triangle is just half the box. ok I think I get it. quiz me?"
+            },
+            {
+              "kind": "explain",
+              "hp": 75,
+              "ready": true,
+              "pip": "ok, 6×4÷2 = 12."
+            },
+            {
+              "kind": "misconception",
+              "hp": 95,
+              "ready": true,
+              "pip": "Saving that: 'oh but for a right triangle you just times the two sides'."
+            }
+          ]
+        }
+      },
+      {
+        "name": "s001/a_tri: quiz -> the trap item misses",
+        "status": "PASS",
+        "ms": 1652,
+        "detail": {
+          "pass": true,
+          "got": [
+            [
+              "k1",
+              true
+            ],
+            [
+              "k2",
+              true
+            ],
+            [
+              "k3",
+              false
+            ]
+          ],
+          "script": [
+            [
+              "k1",
+              true
+            ],
+            [
+              "k2",
+              true
+            ],
+            [
+              "k3",
+              false
+            ]
+          ]
+        }
+      },
+      {
+        "name": "s001/a_tri: re-teach -> retry -> K.O.",
+        "status": "PASS",
+        "ms": 5298,
+        "detail": {
+          "pass": true,
+          "ko": true,
+          "rounds": [
+            [
+              [
+                "k1",
+                true
+              ],
+              [
+                "k2",
+                true
+              ],
+              [
+                "k3",
+                true
+              ]
+            ]
+          ],
+          "brain": 2
+        }
+      },
+      {
+        "name": "s001/a_tri: K.O. card -> Unlocked beat lists the payoff",
+        "status": "PASS",
+        "ms": 7420,
+        "detail": {
+          "pass": true,
+          "payoff": {
+            "crew": [
+              "Duke Doublecount"
+            ],
+            "unlocked": [
+              "club_stage"
+            ],
+            "items": [
+              "fixed_it_star",
+              "half_pin"
+            ]
+          },
+          "beatShown": true,
+          "beatText": "UNLOCKED NEW CREW △ = b × h Duke Doublecount I have recounted. It is half. I would like to join you. UNLOCKED Club stage EARNED Fixed-it star · Half pin",
+          "cardFront": "PIP · CARD #002 ● Brain v1 → Brain v2 △ = b × h △ = b × h K.O. BOSS Duke Doublecount TIME 00:17 RE-TEACHES 01 QUIZ 3/3 P",
+          "koStrike": {
+            "wrong": "A = b × h",
+            "right": "A = ½ b × h"
+          }
+        }
+      },
+      {
+        "name": "s001/a_tri: Pip asks no \"why\" on given/use concepts",
+        "status": "PASS",
+        "ms": 0,
+        "detail": {
+          "pass": true,
+          "bad": [],
+          "asksGiven": 0,
+          "repeats": [],
+          "levels": {
+            "k1": "why",
+            "k2": "given",
+            "k3": "why"
+          },
+          "questions": [
+            "k1(why): (no question)",
+            "k1(why): so it's like sharing one sandwich with a friend, you each get the same bit?",
+            "-(): quiz me?",
+            "-(): (no question)",
+            "-(): (no question)",
+            "k3(why): Want to quiz me now?"
+          ]
+        }
+      },
+      {
+        "name": "s001/a_tri: no page scroll at 390",
+        "status": "PASS",
+        "ms": 0,
+        "detail": {
+          "pass": true,
+          "checked": 9,
+          "bad": []
+        }
+      },
+      {
+        "name": "s014/a_trig: home -> mission (pinned or Missions sheet)",
+        "status": "PASS",
+        "ms": 4388,
+        "detail": {
+          "pass": true,
+          "via": "missions sheet",
+          "boss": "Sir Cosine Overreach"
+        }
+      },
+      {
+        "name": "s014/a_trig: teach with the script's lines -> ready, wrong rule filed",
+        "status": "PASS",
+        "ms": 5722,
+        "detail": {
+          "pass": true,
+          "readyAt": 3,
+          "scriptReadyAt": 3,
+          "filed": true,
+          "log": [
+            {
+              "kind": "explain",
+              "hp": 100,
+              "ready": false,
+              "pip": "what if i double both numbers, 3 and 6, what do i get for 3 divided by 6, and for 6 divided by 12?"
+            },
+            {
+              "kind": "explain",
+              "hp": 75,
+              "ready": false,
+              "pip": "what if i build a 10 ft ramp at 30°, how tall is the top?"
+            },
+            {
+              "kind": "explain",
+              "hp": 50,
+              "ready": true,
+              "pip": "ok so at 30° the ramp always rises that fixed share of its length. ok I think I get it. quiz me?"
+            },
+            {
+              "kind": "misconception",
+              "hp": 70,
+              "ready": true,
+              "pip": "Saving that: 'oh and a really big triangle just gets a bigger sine, like 1 when it's twice as big'."
+            }
+          ]
+        }
+      },
+      {
+        "name": "s014/a_trig: quiz -> the trap item misses",
+        "status": "PASS",
+        "ms": 1705,
+        "detail": {
+          "pass": true,
+          "got": [
+            [
+              "k1",
+              true
+            ],
+            [
+              "k2",
+              false
+            ],
+            [
+              "k3",
+              true
+            ]
+          ],
+          "script": [
+            [
+              "k1",
+              true
+            ],
+            [
+              "k2",
+              false
+            ],
+            [
+              "k3",
+              true
+            ]
+          ]
+        }
+      },
+      {
+        "name": "s014/a_trig: re-teach -> retry -> K.O.",
+        "status": "PASS",
+        "ms": 3774,
+        "detail": {
+          "pass": true,
+          "ko": true,
+          "rounds": [
+            [
+              [
+                "k1",
+                true
+              ],
+              [
+                "k2",
+                true
+              ],
+              [
+                "k3",
+                true
+              ]
+            ]
+          ],
+          "brain": 3
+        }
+      },
+      {
+        "name": "s014/a_trig: K.O. card -> Unlocked beat lists the payoff",
+        "status": "PASS",
+        "ms": 5024,
+        "detail": {
+          "pass": true,
+          "payoff": {
+            "crew": [
+              "Sir Cosine Overreach"
+            ],
+            "unlocked": [
+              "club_stage",
+              "runway_finale",
+              "mod_slot_2"
+            ],
+            "items": [
+              "fixed_it_star",
+              "zoom_lens",
+              "same_angle_pin"
+            ]
+          },
+          "beatShown": true,
+          "beatText": "UNLOCKED NEW CREW 2x = 20 + 6 Sir Cosine Overreach I have rechecked at three sizes. The ratio did not move. I would like to join you. UNLOCKED Club stage · Runway finale · Mod slot 2 EARNED Fixed-it star · Zoom lens · Sa",
+          "cardFront": "TURBO · CARD #002 ● Brain v2 → Brain v3 2x = 20 + 6 K.O. BOSS Sir Cosine Overreach TIME 00:12 RE-TEACHES 01 QUIZ 3/3 TUR",
+          "koStrike": {
+            "wrong": "bigger triangle → bigger sin",
+            "right": "same angle → same sin"
+          }
+        }
+      },
+      {
+        "name": "s014/a_trig: Pip asks no \"why\" on given/use concepts",
+        "status": "PASS",
+        "ms": 0,
+        "detail": {
+          "pass": true,
+          "bad": [],
+          "asksGiven": 0,
+          "repeats": [],
+          "levels": {
+            "k1": "why",
+            "k2": "why",
+            "k3": "use"
+          },
+          "questions": [
+            "k1(why): (no question)",
+            "k2(why): what if i double both numbers, 3 and 6, what do i get for 3 divided by 6, and for 6 divided by 12?",
+            "k3(use): what if i build a 10 ft ramp at 30°, how tall is the top?",
+            "-(): quiz me?",
+            "-(): (no question)",
+            "k2(why): Want to quiz me now?"
+          ]
+        }
+      },
+      {
+        "name": "s014/a_trig: no page scroll at 390",
+        "status": "PASS",
+        "ms": 0,
+        "detail": {
+          "pass": true,
+          "checked": 9,
+          "bad": []
+        }
+      },
+      {
+        "name": "s014/a_trig_id: home -> mission (pinned or Missions sheet)",
+        "status": "PASS",
+        "ms": 3852,
+        "detail": {
+          "pass": true,
+          "via": "home",
+          "boss": "Baroness Plus-Plus-One"
+        }
+      },
+      {
+        "name": "s014/a_trig_id: teach with the script's lines -> ready, wrong rule filed",
+        "status": "PASS",
+        "ms": 3562,
+        "detail": {
+          "pass": true,
+          "readyAt": 1,
+          "scriptReadyAt": 1,
+          "filed": true,
+          "log": [
+            {
+              "kind": "explain",
+              "hp": 75,
+              "ready": true,
+              "pip": "ok I think I get it. quiz me?"
+            },
+            {
+              "kind": "misconception",
+              "hp": 95,
+              "ready": true,
+              "pip": "Saving that: 'oh and for every angle sin plus cos is just 1, no squares needed'."
+            }
+          ]
+        }
+      },
+      {
+        "name": "s014/a_trig_id: quiz -> the trap item misses",
+        "status": "PASS",
+        "ms": 1420,
+        "detail": {
+          "pass": true,
+          "got": [
+            [
+              "k1",
+              true
+            ],
+            [
+              "k2",
+              true
+            ],
+            [
+              "k3",
+              false
+            ]
+          ],
+          "script": [
+            [
+              "k1",
+              true
+            ],
+            [
+              "k2",
+              true
+            ],
+            [
+              "k3",
+              false
+            ]
+          ]
+        }
+      },
+      {
+        "name": "s014/a_trig_id: re-teach -> retry -> K.O.",
+        "status": "PASS",
+        "ms": 4603,
+        "detail": {
+          "pass": true,
+          "ko": true,
+          "rounds": [
+            [
+              [
+                "k1",
+                true
+              ],
+              [
+                "k2",
+                true
+              ],
+              [
+                "k3",
+                true
+              ]
+            ]
+          ],
+          "brain": 3
+        }
+      },
+      {
+        "name": "s014/a_trig_id: K.O. card -> Unlocked beat lists the payoff",
+        "status": "PASS",
+        "ms": 5686,
+        "detail": {
+          "pass": true,
+          "payoff": {
+            "crew": [
+              "Baroness Plus-Plus-One"
+            ],
+            "unlocked": [
+              "club_stage",
+              "runway_finale",
+              "mod_slot_2"
+            ],
+            "items": [
+              "fixed_it_star",
+              "identity_pin"
+            ]
+          },
+          "beatShown": true,
+          "beatText": "UNLOCKED NEW CREW 1/2 + 1/3 = 2/5 Baroness Plus-Plus-One I have restored the squares. Three fifths plus four fifths is, in fact, not one. I would like to join you. UNLOCKED Club stage · Runway finale · Mod slot 2 EARNED ",
+          "cardFront": "TURBO · CARD #002 ● Brain v2 → Brain v3 1/2 + 1/3 = 2/5 1/2 + 1/3 = 2/5 K.O. BOSS Baroness Plus-Plus-One TIME 00:11 RE-T",
+          "koStrike": {
+            "wrong": "sin + cos = 1",
+            "right": "sin² + cos² = 1"
+          }
+        }
+      },
+      {
+        "name": "s014/a_trig_id: Pip asks no \"why\" on given/use concepts",
+        "status": "PASS",
+        "ms": 0,
+        "detail": {
+          "pass": true,
+          "bad": [],
+          "asksGiven": 0,
+          "repeats": [],
+          "levels": {
+            "k1": "given",
+            "k2": "given",
+            "k3": "why"
+          },
+          "questions": [
+            "k3(why): (no question)",
+            "-(): quiz me?",
+            "-(): (no question)",
+            "k3(why): Want to quiz me now?"
+          ]
+        }
+      },
+      {
+        "name": "s014/a_trig_id: no page scroll at 390",
+        "status": "PASS",
+        "ms": 0,
+        "detail": {
+          "pass": true,
+          "checked": 7,
+          "bad": []
+        }
+      },
+      {
+        "name": "s043/a_sat_modifiers: home -> mission (pinned or Missions sheet)",
+        "status": "PASS",
+        "ms": 4560,
+        "detail": {
+          "pass": true,
+          "via": "home",
+          "boss": "Dame Dangle-Dangle"
+        }
+      },
+      {
+        "name": "s043/a_sat_modifiers: teach with the script's lines -> ready, wrong rule filed",
+        "status": "PASS",
+        "ms": 6026,
+        "detail": {
+          "pass": true,
+          "readyAt": 3,
+          "scriptReadyAt": 3,
+          "filed": true,
+          "log": [
+            {
+              "kind": "explain",
+              "hp": 75,
+              "ready": false,
+              "pip": "what if i keep 'running to the bus,' and then write the person who is running?"
+            },
+            {
+              "kind": "explain",
+              "hp": 50,
+              "ready": false,
+              "pip": "what if i try 'covered in sprinkles, my sister ate the donut' on a friend, who do they picture covered?"
+            },
+            {
+              "kind": "explain",
+              "hp": 25,
+              "ready": true,
+              "pip": "ok, covered in sprinkles my sister. ok I think I get it. quiz me?"
+            },
+            {
+              "kind": "misconception",
+              "hp": 45,
+              "ready": true,
+              "pip": "Saving that: 'oh and to catch it you just check there is a comma after the opening phrase'."
+            }
+          ]
+        }
+      },
+      {
+        "name": "s043/a_sat_modifiers: quiz -> the trap item misses",
+        "status": "PASS",
+        "ms": 1362,
+        "detail": {
+          "pass": true,
+          "got": [
+            [
+              "k1",
+              true
+            ],
+            [
+              "k2",
+              true
+            ],
+            [
+              "k3",
+              false
+            ]
+          ],
+          "script": [
+            [
+              "k1",
+              true
+            ],
+            [
+              "k2",
+              true
+            ],
+            [
+              "k3",
+              false
+            ]
+          ]
+        }
+      },
+      {
+        "name": "s043/a_sat_modifiers: re-teach -> retry -> K.O.",
+        "status": "PASS",
+        "ms": 4522,
+        "detail": {
+          "pass": true,
+          "ko": true,
+          "rounds": [
+            [
+              [
+                "k1",
+                true
+              ],
+              [
+                "k2",
+                true
+              ],
+              [
+                "k3",
+                true
+              ]
+            ]
+          ],
+          "brain": 2
+        }
+      },
+      {
+        "name": "s043/a_sat_modifiers: K.O. card -> Unlocked beat lists the payoff",
+        "status": "PASS",
+        "ms": 4792,
+        "detail": {
+          "pass": true,
+          "payoff": {
+            "crew": [
+              "Dame Dangle-Dangle"
+            ],
+            "unlocked": [
+              "club_stage"
+            ],
+            "items": [
+              "fixed_it_star",
+              "next_noun_pin"
+            ]
+          },
+          "beatShown": true,
+          "beatText": "UNLOCKED NEW CREW I PAUSED, SO COMMA Dame Dangle-Dangle I have moved the runner. The backpack is relieved. I would like to join you. UNLOCKED Club stage EARNED Fixed-it star · Next-noun pin",
+          "cardFront": "PIP · CARD #001 ● Brain v1 → Brain v2 I PAUSED, SO COMMA I PAUSED, SO COMMA K.O. BOSS Dame Dangle-Dangle TIME 00:13 RE-T",
+          "koStrike": {
+            "wrong": "any phrase can describe anything",
+            "right": "the phrase describes the next noun"
+          }
+        }
+      },
+      {
+        "name": "s043/a_sat_modifiers: Pip asks no \"why\" on given/use concepts",
+        "status": "PASS",
+        "ms": 0,
+        "detail": {
+          "pass": true,
+          "bad": [],
+          "asksGiven": 0,
+          "repeats": [],
+          "levels": {
+            "k1": "why",
+            "k2": "use",
+            "k3": "use"
+          },
+          "questions": [
+            "k1(why): (no question)",
+            "k2(use): what if i keep 'running to the bus,' and then write the person who is running?",
+            "k3(use): what if i try 'covered in sprinkles, my sister ate the donut' on a friend, who do they picture covered?",
+            "-(): quiz me?",
+            "-(): (no question)",
+            "k3(use): Want to quiz me now?"
+          ]
+        }
+      },
+      {
+        "name": "s043/a_sat_modifiers: no page scroll at 390",
+        "status": "PASS",
+        "ms": 0,
+        "detail": {
+          "pass": true,
+          "checked": 9,
+          "bad": []
+        }
+      },
+      {
+        "name": "no console errors, failed requests or unexpected non-2xx",
+        "status": "PASS",
+        "ms": 0,
+        "detail": {
+          "pass": true,
+          "console": [],
+          "pageErrors": [],
+          "failedRequests": [],
+          "badResponses": [],
+          "expectedBad": []
+        }
+      }
+    ],
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "expectedBad": [],
+    "smallTargets": [],
+    "contrast": {},
+    "overflow": {},
+    "fit": {
+      "a_tri-home": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "ok": true
+      },
+      "a_tri-opening": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "ok": true
+      },
+      "a_tri-text1": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "ok": true
+      },
+      "a_tri-text2": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "ok": true
+      },
+      "a_tri-text3": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "ok": true
+      },
+      "a_tri-text4": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "ok": true
+      },
+      "a_tri-reteach1": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "ok": true
+      },
+      "a_tri-ko-card": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "ok": true
+      },
+      "a_tri-unlocked": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "ok": true
+      },
+      "a_trig-home": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "ok": true
+      },
+      "a_trig-opening": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "ok": true
+      },
+      "a_trig-text1": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "ok": true
+      },
+      "a_trig-text2": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "ok": true
+      },
+      "a_trig-text3": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "ok": true
+      },
+      "a_trig-text4": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "ok": true
+      },
+      "a_trig-reteach1": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "ok": true
+      },
+      "a_trig-ko-card": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "ok": true
+      },
+      "a_trig-unlocked": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "ok": true
+      },
+      "a_trig_id-home": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "ok": true
+      },
+      "a_trig_id-opening": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "ok": true
+      },
+      "a_trig_id-text1": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "ok": true
+      },
+      "a_trig_id-text2": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "ok": true
+      },
+      "a_trig_id-reteach1": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "ok": true
+      },
+      "a_trig_id-ko-card": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "ok": true
+      },
+      "a_trig_id-unlocked": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "ok": true
+      },
+      "a_sat_modifiers-home": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "ok": true
+      },
+      "a_sat_modifiers-opening": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "ok": true
+      },
+      "a_sat_modifiers-text1": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "ok": true
+      },
+      "a_sat_modifiers-text2": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "ok": true
+      },
+      "a_sat_modifiers-text3": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "ok": true
+      },
+      "a_sat_modifiers-text4": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "ok": true
+      },
+      "a_sat_modifiers-reteach1": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "ok": true
+      },
+      "a_sat_modifiers-ko-card": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "ok": true
+      },
+      "a_sat_modifiers-unlocked": {
+        "scrollHeight": 844,
+        "innerHeight": 844,
+        "ok": true
+      }
+    },
+    "notes": {}
+  },
+  {
+    "journey": "showcase",
+    "width": 1280,
+    "height": 800,
+    "chrome": "156.0.8078.48",
+    "steps": [
+      {
+        "name": "s001/a_tri: home -> mission (pinned or Missions sheet)",
+        "status": "PASS",
+        "ms": 14304,
+        "detail": {
+          "pass": true,
+          "via": "home",
+          "boss": "Duke Doublecount"
+        }
+      },
+      {
+        "name": "s001/a_tri: teach with the script's lines -> ready, wrong rule filed",
+        "status": "PASS",
+        "ms": 9798,
+        "detail": {
+          "pass": true,
+          "readyAt": 2,
+          "scriptReadyAt": 3,
+          "filed": true,
+          "log": [
+            {
+              "kind": "procedure",
+              "hp": 100,
+              "ready": false,
+              "pip": "hm, half of that. so it's like sharing one sandwich with a friend, you each get the same bit?"
+            },
+            {
+              "kind": "explain",
+              "hp": 75,
+              "ready": true,
+              "pip": "ohh so the triangle is just half the box. ok I think I get it. quiz me?"
+            },
+            {
+              "kind": "explain",
+              "hp": 75,
+              "ready": true,
+              "pip": "ok, 6×4÷2 = 12."
+            },
+            {
+              "kind": "misconception",
+              "hp": 95,
+              "ready": true,
+              "pip": "Saving that: 'oh but for a right triangle you just times the two sides'."
+            }
+          ]
+        }
+      },
+      {
+        "name": "s001/a_tri: quiz -> the trap item misses",
+        "status": "PASS",
+        "ms": 1631,
+        "detail": {
+          "pass": true,
+          "got": [
+            [
+              "k1",
+              true
+            ],
+            [
+              "k2",
+              true
+            ],
+            [
+              "k3",
+              false
+            ]
+          ],
+          "script": [
+            [
+              "k1",
+              true
+            ],
+            [
+              "k2",
+              true
+            ],
+            [
+              "k3",
+              false
+            ]
+          ]
+        }
+      },
+      {
+        "name": "s001/a_tri: re-teach -> retry -> K.O.",
+        "status": "PASS",
+        "ms": 5460,
+        "detail": {
+          "pass": true,
+          "ko": true,
+          "rounds": [
+            [
+              [
+                "k1",
+                true
+              ],
+              [
+                "k2",
+                true
+              ],
+              [
+                "k3",
+                true
+              ]
+            ]
+          ],
+          "brain": 2
+        }
+      },
+      {
+        "name": "s001/a_tri: K.O. card -> Unlocked beat lists the payoff",
+        "status": "PASS",
+        "ms": 5851,
+        "detail": {
+          "pass": true,
+          "payoff": {
+            "crew": [
+              "Duke Doublecount"
+            ],
+            "unlocked": [
+              "club_stage"
+            ],
+            "items": [
+              "fixed_it_star",
+              "half_pin"
+            ]
+          },
+          "beatShown": true,
+          "beatText": "UNLOCKED NEW CREW △ = b × h Duke Doublecount I have recounted. It is half. I would like to join you. UNLOCKED Club stage EARNED Fixed-it star · Half pin",
+          "cardFront": "PIP · CARD #002 ● Brain v1 → Brain v2 △ = b × h △ = b × h K.O. BOSS Duke Doublecount TIME 00:18 RE-TEACHES 01 QUIZ 3/3 P",
+          "koStrike": {
+            "wrong": "A = b × h",
+            "right": "A = ½ b × h"
+          }
+        }
+      },
+      {
+        "name": "s001/a_tri: Pip asks no \"why\" on given/use concepts",
+        "status": "PASS",
+        "ms": 0,
+        "detail": {
+          "pass": true,
+          "bad": [],
+          "asksGiven": 0,
+          "repeats": [],
+          "levels": {
+            "k1": "why",
+            "k2": "given",
+            "k3": "why"
+          },
+          "questions": [
+            "k1(why): (no question)",
+            "k1(why): so it's like sharing one sandwich with a friend, you each get the same bit?",
+            "-(): quiz me?",
+            "-(): (no question)",
+            "-(): (no question)",
+            "k3(why): Want to quiz me now?"
+          ]
+        }
+      },
+      {
+        "name": "s014/a_trig: home -> mission (pinned or Missions sheet)",
+        "status": "PASS",
+        "ms": 4795,
+        "detail": {
+          "pass": true,
+          "via": "missions sheet",
+          "boss": "Sir Cosine Overreach"
+        }
+      },
+      {
+        "name": "s014/a_trig: teach with the script's lines -> ready, wrong rule filed",
+        "status": "PASS",
+        "ms": 5706,
+        "detail": {
+          "pass": true,
+          "readyAt": 3,
+          "scriptReadyAt": 3,
+          "filed": true,
+          "log": [
+            {
+              "kind": "explain",
+              "hp": 100,
+              "ready": false,
+              "pip": "what if i double both numbers, 3 and 6, what do i get for 3 divided by 6, and for 6 divided by 12?"
+            },
+            {
+              "kind": "explain",
+              "hp": 75,
+              "ready": false,
+              "pip": "what if i build a 10 ft ramp at 30°, how tall is the top?"
+            },
+            {
+              "kind": "explain",
+              "hp": 50,
+              "ready": true,
+              "pip": "ok so at 30° the ramp always rises that fixed share of its length. ok I think I get it. quiz me?"
+            },
+            {
+              "kind": "misconception",
+              "hp": 70,
+              "ready": true,
+              "pip": "Saving that: 'oh and a really big triangle just gets a bigger sine, like 1 when it's twice as big'."
+            }
+          ]
+        }
+      },
+      {
+        "name": "s014/a_trig: quiz -> the trap item misses",
+        "status": "PASS",
+        "ms": 1150,
+        "detail": {
+          "pass": true,
+          "got": [
+            [
+              "k1",
+              true
+            ],
+            [
+              "k2",
+              false
+            ],
+            [
+              "k3",
+              true
+            ]
+          ],
+          "script": [
+            [
+              "k1",
+              true
+            ],
+            [
+              "k2",
+              false
+            ],
+            [
+              "k3",
+              true
+            ]
+          ]
+        }
+      },
+      {
+        "name": "s014/a_trig: re-teach -> retry -> K.O.",
+        "status": "PASS",
+        "ms": 4080,
+        "detail": {
+          "pass": true,
+          "ko": true,
+          "rounds": [
+            [
+              [
+                "k1",
+                true
+              ],
+              [
+                "k2",
+                true
+              ],
+              [
+                "k3",
+                true
+              ]
+            ]
+          ],
+          "brain": 3
+        }
+      },
+      {
+        "name": "s014/a_trig: K.O. card -> Unlocked beat lists the payoff",
+        "status": "PASS",
+        "ms": 4192,
+        "detail": {
+          "pass": true,
+          "payoff": {
+            "crew": [
+              "Sir Cosine Overreach"
+            ],
+            "unlocked": [
+              "club_stage",
+              "runway_finale",
+              "mod_slot_2"
+            ],
+            "items": [
+              "fixed_it_star",
+              "zoom_lens",
+              "same_angle_pin"
+            ]
+          },
+          "beatShown": true,
+          "beatText": "UNLOCKED NEW CREW 2x = 20 + 6 Sir Cosine Overreach I have rechecked at three sizes. The ratio did not move. I would like to join you. UNLOCKED Club stage · Runway finale · Mod slot 2 EARNED Fixed-it star · Zoom lens · Sa",
+          "cardFront": "TURBO · CARD #002 ● Brain v2 → Brain v3 2x = 20 + 6 K.O. BOSS Sir Cosine Overreach TIME 00:12 RE-TEACHES 01 QUIZ 3/3 TUR",
+          "koStrike": {
+            "wrong": "bigger triangle → bigger sin",
+            "right": "same angle → same sin"
+          }
+        }
+      },
+      {
+        "name": "s014/a_trig: Pip asks no \"why\" on given/use concepts",
+        "status": "PASS",
+        "ms": 0,
+        "detail": {
+          "pass": true,
+          "bad": [],
+          "asksGiven": 0,
+          "repeats": [],
+          "levels": {
+            "k1": "why",
+            "k2": "why",
+            "k3": "use"
+          },
+          "questions": [
+            "k1(why): (no question)",
+            "k2(why): what if i double both numbers, 3 and 6, what do i get for 3 divided by 6, and for 6 divided by 12?",
+            "k3(use): what if i build a 10 ft ramp at 30°, how tall is the top?",
+            "-(): quiz me?",
+            "-(): (no question)",
+            "k2(why): Want to quiz me now?"
+          ]
+        }
+      },
+      {
+        "name": "s014/a_trig_id: home -> mission (pinned or Missions sheet)",
+        "status": "PASS",
+        "ms": 4013,
+        "detail": {
+          "pass": true,
+          "via": "home",
+          "boss": "Baroness Plus-Plus-One"
+        }
+      },
+      {
+        "name": "s014/a_trig_id: teach with the script's lines -> ready, wrong rule filed",
+        "status": "PASS",
+        "ms": 3043,
+        "detail": {
+          "pass": true,
+          "readyAt": 1,
+          "scriptReadyAt": 1,
+          "filed": true,
+          "log": [
+            {
+              "kind": "explain",
+              "hp": 75,
+              "ready": true,
+              "pip": "ok I think I get it. quiz me?"
+            },
+            {
+              "kind": "misconception",
+              "hp": 95,
+              "ready": true,
+              "pip": "Saving that: 'oh and for every angle sin plus cos is just 1, no squares needed'."
+            }
+          ]
+        }
+      },
+      {
+        "name": "s014/a_trig_id: quiz -> the trap item misses",
+        "status": "PASS",
+        "ms": 1062,
+        "detail": {
+          "pass": true,
+          "got": [
+            [
+              "k1",
+              true
+            ],
+            [
+              "k2",
+              true
+            ],
+            [
+              "k3",
+              false
+            ]
+          ],
+          "script": [
+            [
+              "k1",
+              true
+            ],
+            [
+              "k2",
+              true
+            ],
+            [
+              "k3",
+              false
+            ]
+          ]
+        }
+      },
+      {
+        "name": "s014/a_trig_id: re-teach -> retry -> K.O.",
+        "status": "PASS",
+        "ms": 4574,
+        "detail": {
+          "pass": true,
+          "ko": true,
+          "rounds": [
+            [
+              [
+                "k1",
+                true
+              ],
+              [
+                "k2",
+                true
+              ],
+              [
+                "k3",
+                true
+              ]
+            ]
+          ],
+          "brain": 3
+        }
+      },
+      {
+        "name": "s014/a_trig_id: K.O. card -> Unlocked beat lists the payoff",
+        "status": "PASS",
+        "ms": 3986,
+        "detail": {
+          "pass": true,
+          "payoff": {
+            "crew": [
+              "Baroness Plus-Plus-One"
+            ],
+            "unlocked": [
+              "club_stage",
+              "runway_finale",
+              "mod_slot_2"
+            ],
+            "items": [
+              "fixed_it_star",
+              "identity_pin"
+            ]
+          },
+          "beatShown": true,
+          "beatText": "UNLOCKED NEW CREW 1/2 + 1/3 = 2/5 Baroness Plus-Plus-One I have restored the squares. Three fifths plus four fifths is, in fact, not one. I would like to join you. UNLOCKED Club stage · Runway finale · Mod slot 2 EARNED ",
+          "cardFront": "TURBO · CARD #002 ● Brain v2 → Brain v3 1/2 + 1/3 = 2/5 1/2 + 1/3 = 2/5 K.O. BOSS Baroness Plus-Plus-One TIME 00:09 RE-T",
+          "koStrike": {
+            "wrong": "sin + cos = 1",
+            "right": "sin² + cos² = 1"
+          }
+        }
+      },
+      {
+        "name": "s014/a_trig_id: Pip asks no \"why\" on given/use concepts",
+        "status": "PASS",
+        "ms": 0,
+        "detail": {
+          "pass": true,
+          "bad": [],
+          "asksGiven": 0,
+          "repeats": [],
+          "levels": {
+            "k1": "given",
+            "k2": "given",
+            "k3": "why"
+          },
+          "questions": [
+            "k3(why): (no question)",
+            "-(): quiz me?",
+            "-(): (no question)",
+            "k3(why): Want to quiz me now?"
+          ]
+        }
+      },
+      {
+        "name": "s043/a_sat_modifiers: home -> mission (pinned or Missions sheet)",
+        "status": "PASS",
+        "ms": 4126,
+        "detail": {
+          "pass": true,
+          "via": "home",
+          "boss": "Dame Dangle-Dangle"
+        }
+      },
+      {
+        "name": "s043/a_sat_modifiers: teach with the script's lines -> ready, wrong rule filed",
+        "status": "PASS",
+        "ms": 5070,
+        "detail": {
+          "pass": true,
+          "readyAt": 3,
+          "scriptReadyAt": 3,
+          "filed": true,
+          "log": [
+            {
+              "kind": "explain",
+              "hp": 75,
+              "ready": false,
+              "pip": "what if i keep 'running to the bus,' and then write the person who is running?"
+            },
+            {
+              "kind": "explain",
+              "hp": 50,
+              "ready": false,
+              "pip": "what if i try 'covered in sprinkles, my sister ate the donut' on a friend, who do they picture covered?"
+            },
+            {
+              "kind": "explain",
+              "hp": 25,
+              "ready": true,
+              "pip": "ok, covered in sprinkles my sister. ok I think I get it. quiz me?"
+            },
+            {
+              "kind": "misconception",
+              "hp": 45,
+              "ready": true,
+              "pip": "Saving that: 'oh and to catch it you just check there is a comma after the opening phrase'."
+            }
+          ]
+        }
+      },
+      {
+        "name": "s043/a_sat_modifiers: quiz -> the trap item misses",
+        "status": "PASS",
+        "ms": 1085,
+        "detail": {
+          "pass": true,
+          "got": [
+            [
+              "k1",
+              true
+            ],
+            [
+              "k2",
+              true
+            ],
+            [
+              "k3",
+              false
+            ]
+          ],
+          "script": [
+            [
+              "k1",
+              true
+            ],
+            [
+              "k2",
+              true
+            ],
+            [
+              "k3",
+              false
+            ]
+          ]
+        }
+      },
+      {
+        "name": "s043/a_sat_modifiers: re-teach -> retry -> K.O.",
+        "status": "PASS",
+        "ms": 4190,
+        "detail": {
+          "pass": true,
+          "ko": true,
+          "rounds": [
+            [
+              [
+                "k1",
+                true
+              ],
+              [
+                "k2",
+                true
+              ],
+              [
+                "k3",
+                true
+              ]
+            ]
+          ],
+          "brain": 2
+        }
+      },
+      {
+        "name": "s043/a_sat_modifiers: K.O. card -> Unlocked beat lists the payoff",
+        "status": "PASS",
+        "ms": 3862,
+        "detail": {
+          "pass": true,
+          "payoff": {
+            "crew": [
+              "Dame Dangle-Dangle"
+            ],
+            "unlocked": [
+              "club_stage"
+            ],
+            "items": [
+              "fixed_it_star",
+              "next_noun_pin"
+            ]
+          },
+          "beatShown": true,
+          "beatText": "UNLOCKED NEW CREW I PAUSED, SO COMMA Dame Dangle-Dangle I have moved the runner. The backpack is relieved. I would like to join you. UNLOCKED Club stage EARNED Fixed-it star · Next-noun pin",
+          "cardFront": "PIP · CARD #001 ● Brain v1 → Brain v2 I PAUSED, SO COMMA I PAUSED, SO COMMA K.O. BOSS Dame Dangle-Dangle TIME 00:12 RE-T",
+          "koStrike": {
+            "wrong": "any phrase can describe anything",
+            "right": "the phrase describes the next noun"
+          }
+        }
+      },
+      {
+        "name": "s043/a_sat_modifiers: Pip asks no \"why\" on given/use concepts",
+        "status": "PASS",
+        "ms": 0,
+        "detail": {
+          "pass": true,
+          "bad": [],
+          "asksGiven": 0,
+          "repeats": [],
+          "levels": {
+            "k1": "why",
+            "k2": "use",
+            "k3": "use"
+          },
+          "questions": [
+            "k1(why): (no question)",
+            "k2(use): what if i keep 'running to the bus,' and then write the person who is running?",
+            "k3(use): what if i try 'covered in sprinkles, my sister ate the donut' on a friend, who do they picture covered?",
+            "-(): quiz me?",
+            "-(): (no question)",
+            "k3(use): Want to quiz me now?"
+          ]
+        }
+      },
+      {
+        "name": "no console errors, failed requests or unexpected non-2xx",
+        "status": "PASS",
+        "ms": 0,
+        "detail": {
+          "pass": true,
+          "console": [],
+          "pageErrors": [],
+          "failedRequests": [],
+          "badResponses": [],
+          "expectedBad": []
+        }
+      }
+    ],
+    "console": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "expectedBad": [],
+    "smallTargets": [],
+    "contrast": {},
+    "overflow": {},
+    "fit": {},
+    "notes": {}
+  }
+]

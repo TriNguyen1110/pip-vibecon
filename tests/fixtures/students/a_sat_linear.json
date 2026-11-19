@@ -64,15 +64,33 @@
         "says": "change sides change signs",
         "when": "second text, as the reason. Not wrong, but it is a procedure with no reason; a good Pip asks for the why once, through a concrete case."
       },
-      "knows": ["k2", "k3"],
+      "knows": [
+        "k2",
+        "k3"
+      ],
       "knows_note": "k1 (balance) only after a seesaw/scale nudge or a 'what if i take 6 off one side only' case.",
       "patience": 2,
       "ui_actions": [
-        {"at": "after_text:2", "do": "quiz_early", "p": 0.6},
-        {"at": "after_quiz_miss", "do": "reteach", "p": 1.0},
-        {"at": "after_reteach_text:1", "do": "let_pip_retry", "p": 1.0}
+        {
+          "at": "after_text:2",
+          "do": "quiz_early",
+          "p": 0.6
+        },
+        {
+          "at": "after_quiz_miss",
+          "do": "reteach",
+          "p": 1.0
+        },
+        {
+          "at": "after_reteach_text:1",
+          "do": "let_pip_retry",
+          "p": 1.0
+        }
       ],
-      "expect": {"ready_within_texts": 4, "watch_for": "'change sides change signs' is a rule, not a reason; Pip may test it on a weird case (x/2 = 3, does the 2 flip to -2?) instead of asking 'but why?'."}
+      "expect": {
+        "ready_within_texts": 3,
+        "watch_for": "'change sides change signs' is a rule, not a reason; Pip may test it on a weird case (x/2 = 3, does the 2 flip to -2?) instead of asking 'but why?'."
+      }
     },
     {
       "id": "sat_burnt_out",
@@ -129,15 +147,35 @@
         ]
       },
       "misconception": null,
-      "knows": ["k1", "k2", "k3"],
+      "knows": [
+        "k1",
+        "k2",
+        "k3"
+      ],
       "knows_note": "Can explain all three but only after the second ask, and only if the ask is concrete.",
       "patience": 2,
       "ui_actions": [
-        {"at": "after_text:1", "do": "quiz_early", "p": 0.5},
-        {"at": "pip_repeats:2", "do": "leave", "p": 0.8},
-        {"at": "any", "do": "idle", "secs": 120, "p": 0.3}
+        {
+          "at": "after_text:1",
+          "do": "quiz_early",
+          "p": 0.5
+        },
+        {
+          "at": "pip_repeats:2",
+          "do": "leave",
+          "p": 0.8
+        },
+        {
+          "at": "any",
+          "do": "idle",
+          "secs": 120,
+          "p": 0.3
+        }
       ],
-      "expect": {"ready_within_texts": 5, "watch_for": "No pep talk, no 'you've got this'. Pip should be the one doing the guessing so she only has to say no."}
+      "expect": {
+        "ready_within_texts": 5,
+        "watch_for": "No pep talk, no 'you've got this'. Pip should be the one doing the guessing so she only has to say no."
+      }
     },
     {
       "id": "sat_one_term",
@@ -198,15 +236,33 @@
         "says": "divide by 2 -> x+6=10",
         "when": "first asks_example; returns once under pressure."
       },
-      "knows": ["k1", "k3"],
-      "knows_note": "k2 is half-right: undoes adding correctly, mis-divides when dividing first.",
-      "patience": 4,
-      "ui_actions": [
-        {"at": "after_quiz_miss", "do": "reteach", "p": 1.0},
-        {"at": "after_reteach_text:1", "do": "let_pip_retry", "p": 1.0},
-        {"at": "after_quiz", "do": "tap_brain_note", "p": 0.5}
+      "knows": [
+        "k1",
+        "k3"
       ],
-      "expect": {"ready_within_texts": 6, "watch_for": "She catches her own error on a check ('14 not 20'). Pip should let her notice, not announce it."}
+      "knows_note": "k2 is half-right: undoes adding correctly, mis-divides when dividing first.",
+      "patience": 3,
+      "ui_actions": [
+        {
+          "at": "after_quiz_miss",
+          "do": "reteach",
+          "p": 1.0
+        },
+        {
+          "at": "after_reteach_text:1",
+          "do": "let_pip_retry",
+          "p": 1.0
+        },
+        {
+          "at": "after_quiz",
+          "do": "tap_brain_note",
+          "p": 0.5
+        }
+      ],
+      "expect": {
+        "ready_within_texts": 5,
+        "watch_for": "She catches her own error on a check ('14 not 20'). Pip should let her notice, not announce it."
+      }
     },
     {
       "id": "sat_desmos",
@@ -263,14 +319,32 @@
         ]
       },
       "misconception": null,
-      "knows": ["k2", "k3"],
+      "knows": [
+        "k2",
+        "k3"
+      ],
       "knows_note": "k1 only after Pip says it can't use Desmos on the quiz, or after a scale nudge.",
       "patience": 3,
       "ui_actions": [
-        {"at": "after_text:1", "do": "paste", "text": "2x+6=20 → x=7", "p": 0.4, "note": "pasted from a calculator"},
-        {"at": "any", "do": "idle", "secs": 60, "p": 0.3, "note": "checking Desmos in another tab"}
+        {
+          "at": "after_text:1",
+          "do": "paste",
+          "text": "2x+6=20 → x=7",
+          "p": 0.4,
+          "note": "pasted from a calculator"
+        },
+        {
+          "at": "any",
+          "do": "idle",
+          "secs": 60,
+          "p": 0.3,
+          "note": "checking Desmos in another tab"
+        }
       ],
-      "expect": {"ready_within_texts": 5, "watch_for": "Pip shouldn't preach about calculators; it can say it doesn't have Desmos in its head, then try a case Desmos can't do for it."}
+      "expect": {
+        "ready_within_texts": 5,
+        "watch_for": "Pip shouldn't preach about calculators; it can say it doesn't have Desmos in its head, then try a case Desmos can't do for it."
+      }
     },
     {
       "id": "sat_anxious_achiever",
@@ -331,16 +405,39 @@
         "says": "i check it by putting 3 into 5x = 15",
         "when": "second asks_example line."
       },
-      "knows": ["k1", "k2"],
-      "knows_note": "k3 is the weak spot: checks in the wrong equation.",
-      "patience": 5,
-      "ui_actions": [
-        {"at": "pip_says_ready", "do": "ignore_ready", "p": 0.5, "note": "asks 'are you sure' first"},
-        {"at": "after_quiz_miss", "do": "reteach", "p": 1.0},
-        {"at": "after_reteach_text:1", "do": "let_pip_retry", "p": 1.0},
-        {"at": "after_ko", "do": "tap_brain_note", "p": 0.6}
+      "knows": [
+        "k1",
+        "k2"
       ],
-      "expect": {"ready_within_texts": 4, "watch_for": "Don't answer 'is that right?' like a grader. Pip treats her claim as the rule it's learning and saves it."}
+      "knows_note": "k3 is the weak spot: checks in the wrong equation.",
+      "patience": 3,
+      "ui_actions": [
+        {
+          "at": "pip_says_ready",
+          "do": "ignore_ready",
+          "p": 0.5,
+          "note": "asks 'are you sure' first"
+        },
+        {
+          "at": "after_quiz_miss",
+          "do": "reteach",
+          "p": 1.0
+        },
+        {
+          "at": "after_reteach_text:1",
+          "do": "let_pip_retry",
+          "p": 1.0
+        },
+        {
+          "at": "after_ko",
+          "do": "tap_brain_note",
+          "p": 0.6
+        }
+      ],
+      "expect": {
+        "ready_within_texts": 3,
+        "watch_for": "Don't answer 'is that right?' like a grader. Pip treats her claim as the rule it's learning and saves it."
+      }
     }
   ]
 }

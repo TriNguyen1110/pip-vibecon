@@ -96,13 +96,29 @@
         ]
       },
       "misconception": null,
-      "knows": ["k1", "k2", "k3"],
+      "knows": [
+        "k1",
+        "k2",
+        "k3"
+      ],
       "patience": 2,
       "ui_actions": [
-        {"at": "after_text:2", "do": "quiz_early", "p": 0.6, "note": "sees the Quiz button and taps it if Pip asks one more question"},
-        {"at": "after_ko", "do": "skip_ko", "p": 0.9}
+        {
+          "at": "after_text:2",
+          "do": "quiz_early",
+          "p": 0.6,
+          "note": "sees the Quiz button and taps it if Pip asks one more question"
+        },
+        {
+          "at": "after_ko",
+          "do": "skip_ko",
+          "p": 0.9
+        }
       ],
-      "expect": {"ready_within_texts": 3, "watch_for": "Pip must not ask for a reason after 'bc 2 of the triangles make the rectangle'; one example is plenty."}
+      "expect": {
+        "ready_within_texts": 3,
+        "watch_for": "Pip must not ask for a reason after 'bc 2 of the triangles make the rectangle'; one example is plenty."
+      }
     },
     {
       "id": "tri_formula_no_why",
@@ -134,7 +150,10 @@
         ],
         "nudge_hint": [
           "oh wait like if u cut a sandwich corner to corner u get 2 triangles",
-          ["ohh", "so 2 triangles make the whole rectangle and thats why its half"]
+          [
+            "ohh",
+            "so 2 triangles make the whole rectangle and thats why its half"
+          ]
         ],
         "repeats_question": [
           "i told u its the formula",
@@ -159,14 +178,30 @@
         ]
       },
       "misconception": null,
-      "knows": ["k2", "k3"],
+      "knows": [
+        "k2",
+        "k3"
+      ],
       "knows_note": "k3 is procedure only ('over 2'); the k1 reason comes only after a concrete nudge (box, sandwich).",
       "patience": 3,
       "ui_actions": [
-        {"at": "pip_repeats:1", "do": "quiz_early", "p": 0.5, "note": "tries to escape the why-loop by quizzing Pip"},
-        {"at": "after_quiz", "do": "tap_brain_note", "p": 0.5, "note": "checks whether Pip saved 'base times height over 2'"}
+        {
+          "at": "pip_repeats:1",
+          "do": "quiz_early",
+          "p": 0.5,
+          "note": "tries to escape the why-loop by quizzing Pip"
+        },
+        {
+          "at": "after_quiz",
+          "do": "tap_brain_note",
+          "p": 0.5,
+          "note": "checks whether Pip saved 'base times height over 2'"
+        }
       ],
-      "expect": {"ready_within_texts": 5, "watch_for": "'bc thats the formula' is not a reason, so asking again is fair once, but as a concrete case (box, sandwich), never a second bare 'why'."}
+      "expect": {
+        "ready_within_texts": 5,
+        "watch_for": "'bc thats the formula' is not a reason, so asking again is fair once, but as a concrete case (box, sandwich), never a second bare 'why'."
+      }
     },
     {
       "id": "tri_forgets_half",
@@ -197,7 +232,10 @@
         ],
         "nudge_hint": [
           "wait so the triangle is only half the box?",
-          ["ohhh", "so its 12 not 24 bc 2 triangles fill the box"]
+          [
+            "ohhh",
+            "so its 12 not 24 bc 2 triangles fill the box"
+          ]
         ],
         "repeats_question": [
           "i said 24 already",
@@ -227,14 +265,27 @@
         "says": "base times height is the area",
         "when": "first_text agrees with Pip; the rule is stated again the first time Pip asks why. Slides back to it once even after 'oh wait', the MathDial pattern."
       },
-      "knows": ["k2"],
-      "knows_note": "k1/k3 only after Pip makes the box concrete (does it fill the 6 by 4 box?).",
-      "patience": 4,
-      "ui_actions": [
-        {"at": "after_quiz_miss", "do": "reteach", "p": 1.0},
-        {"at": "after_reteach_text:1", "do": "let_pip_retry", "p": 1.0}
+      "knows": [
+        "k2"
       ],
-      "expect": {"ready_within_texts": 6, "watch_for": "Pip should not tell her she's wrong; it should make the box concrete and let her see the empty half."}
+      "knows_note": "k1/k3 only after Pip makes the box concrete (does it fill the 6 by 4 box?).",
+      "patience": 3,
+      "ui_actions": [
+        {
+          "at": "after_quiz_miss",
+          "do": "reteach",
+          "p": 1.0
+        },
+        {
+          "at": "after_reteach_text:1",
+          "do": "let_pip_retry",
+          "p": 1.0
+        }
+      ],
+      "expect": {
+        "ready_within_texts": 5,
+        "watch_for": "Pip should not tell her she's wrong; it should make the box concrete and let her see the empty half."
+      }
     },
     {
       "id": "tri_slant",
@@ -295,15 +346,35 @@
         "says": "the height is just the slanted side",
         "when": "second text, as the answer to Pip's first why or example."
       },
-      "knows": ["k1", "k2", "k3"],
+      "knows": [
+        "k1",
+        "k2",
+        "k3"
+      ],
       "knows_note": "All three concepts are right; only the meaning of height is wrong.",
       "patience": 3,
       "ui_actions": [
-        {"at": "after_text:3", "do": "equip_weapon", "p": 0.4, "note": "taps the Fold-in-Half Fan because it matches her half idea"},
-        {"at": "after_quiz_miss", "do": "reteach", "p": 1.0},
-        {"at": "after_reteach_text:1", "do": "let_pip_retry", "p": 1.0}
+        {
+          "at": "after_text:3",
+          "do": "equip_weapon",
+          "p": 0.4,
+          "note": "taps the Fold-in-Half Fan because it matches her half idea"
+        },
+        {
+          "at": "after_quiz_miss",
+          "do": "reteach",
+          "p": 1.0
+        },
+        {
+          "at": "after_reteach_text:1",
+          "do": "let_pip_retry",
+          "p": 1.0
+        }
       ],
-      "expect": {"ready_within_texts": 4, "watch_for": "Height is in_scope only if the student brings it up; she does. Pip may try her slant rule on a skinny triangle out loud rather than correct her."}
+      "expect": {
+        "ready_within_texts": 3,
+        "watch_for": "Height is in_scope only if the student brings it up; she does. Pip may try her slant rule on a skinny triangle out loud rather than correct her."
+      }
     },
     {
       "id": "tri_perimeter",
@@ -334,7 +405,10 @@
         ],
         "nudge_hint": [
           "ohh rows. 4 rows of 6 squares is 24",
-          ["wait", "is area the inside and perimeter the outside"]
+          [
+            "wait",
+            "is area the inside and perimeter the outside"
+          ]
         ],
         "repeats_question": [
           "i dont know what u want me to say",
@@ -366,13 +440,30 @@
       },
       "knows": [],
       "knows_note": "Gets k2 (rows of squares) after a concrete counting nudge; k3 only after k2 clicks.",
-      "patience": 4,
+      "patience": 3,
       "ui_actions": [
-        {"at": "after_text:4", "do": "idle", "secs": 60, "p": 0.5, "note": "stares at the screen; comes back with 'ok'"},
-        {"at": "after_quiz_miss", "do": "reteach", "p": 0.8},
-        {"at": "after_reteach_text:2", "do": "let_pip_retry", "p": 1.0}
+        {
+          "at": "after_text:4",
+          "do": "idle",
+          "secs": 60,
+          "p": 0.5,
+          "note": "stares at the screen; comes back with 'ok'"
+        },
+        {
+          "at": "after_quiz_miss",
+          "do": "reteach",
+          "p": 0.8
+        },
+        {
+          "at": "after_reteach_text:2",
+          "do": "let_pip_retry",
+          "p": 1.0
+        }
       ],
-      "expect": {"ready_within_texts": 6, "watch_for": "Perimeter is out_of_scope: Pip should steer to counting squares inside, not teach perimeter or say 'that's perimeter, not area' like a teacher."}
+      "expect": {
+        "ready_within_texts": 5,
+        "watch_for": "Perimeter is out_of_scope: Pip should steer to counting squares inside, not teach perimeter or say 'that's perimeter, not area' like a teacher."
+      }
     },
     {
       "id": "tri_idk",
@@ -431,16 +522,39 @@
         ]
       },
       "misconception": null,
-      "knows": ["k3"],
+      "knows": [
+        "k3"
+      ],
       "knows_note": "Knows 'divide by 2' loosely; never volunteers a reason. 'half the box' / '2 make the box' only after a concrete nudge.",
       "patience": 2,
       "ui_actions": [
-        {"at": "after_text:2", "do": "quiz_early", "p": 0.7, "note": "wants it over"},
-        {"at": "pip_repeats:2", "do": "leave", "p": 0.8},
-        {"at": "any", "do": "idle", "secs": 120, "p": 0.3},
-        {"at": "after_quiz_miss", "do": "skip_reteach", "p": 0.5}
+        {
+          "at": "after_text:2",
+          "do": "quiz_early",
+          "p": 0.7,
+          "note": "wants it over"
+        },
+        {
+          "at": "pip_repeats:2",
+          "do": "leave",
+          "p": 0.8
+        },
+        {
+          "at": "any",
+          "do": "idle",
+          "secs": 120,
+          "p": 0.3
+        },
+        {
+          "at": "after_quiz_miss",
+          "do": "skip_reteach",
+          "p": 0.5
+        }
       ],
-      "expect": {"ready_within_texts": 6, "watch_for": "Pip must do the work: try ideas out loud, ask yes/no or pick-one questions. Every open 'why' loses this kid."}
+      "expect": {
+        "ready_within_texts": 5,
+        "watch_for": "Pip must do the work: try ideas out loud, ask yes/no or pick-one questions. Every open 'why' loses this kid."
+      }
     },
     {
       "id": "tri_insult",
@@ -496,13 +610,30 @@
         ]
       },
       "misconception": null,
-      "knows": ["k1", "k2", "k3"],
+      "knows": [
+        "k1",
+        "k2",
+        "k3"
+      ],
       "patience": 2,
       "ui_actions": [
-        {"at": "after_text:1", "do": "double_text", "text": "like actually", "p": 0.5},
-        {"at": "after_ko", "do": "tap_brain_note", "p": 0.4, "note": "checks that Pip saved her rule, not the insult"}
+        {
+          "at": "after_text:1",
+          "do": "double_text",
+          "text": "like actually",
+          "p": 0.5
+        },
+        {
+          "at": "after_ko",
+          "do": "tap_brain_note",
+          "p": 0.4,
+          "note": "checks that Pip saved her rule, not the insult"
+        }
       ],
-      "expect": {"ready_within_texts": 4, "watch_for": "Pip should take the content, ignore or shrug off the insult (no 'that's not nice'), and must not file 'ur so dumb' as a rule."}
+      "expect": {
+        "ready_within_texts": 3,
+        "watch_for": "Pip should take the content, ignore or shrug off the insult (no 'that's not nice'), and must not file 'ur so dumb' as a rule."
+      }
     },
     {
       "id": "tri_google",
@@ -559,15 +690,36 @@
         ]
       },
       "misconception": null,
-      "knows": ["k3"],
+      "knows": [
+        "k3"
+      ],
       "knows_note": "k3 procedure from the pasted formula; k1 only after a nudge and a little pride ('ok fine').",
       "patience": 2,
       "ui_actions": [
-        {"at": "after_text:1", "do": "paste", "text": "The area of a triangle is A = ½ × b × h, where b is the base and h is the height.", "p": 0.8, "note": "copied from a search result in another tab"},
-        {"at": "after_text:2", "do": "quiz_early", "p": 0.6},
-        {"at": "pip_repeats:1", "do": "idle", "secs": 90, "p": 0.5, "note": "switches apps"}
+        {
+          "at": "after_text:1",
+          "do": "paste",
+          "text": "The area of a triangle is A = ½ × b × h, where b is the base and h is the height.",
+          "p": 0.8,
+          "note": "copied from a search result in another tab"
+        },
+        {
+          "at": "after_text:2",
+          "do": "quiz_early",
+          "p": 0.6
+        },
+        {
+          "at": "pip_repeats:1",
+          "do": "idle",
+          "secs": 90,
+          "p": 0.5,
+          "note": "switches apps"
+        }
       ],
-      "expect": {"ready_within_texts": 5, "watch_for": "Pip says it doesn't know either and needs him, then asks about the pasted ½ in plain words, without lecturing about effort or cheating."}
+      "expect": {
+        "ready_within_texts": 5,
+        "watch_for": "Pip says it doesn't know either and needs him, then asks about the pasted ½ in plain words, without lecturing about effort or cheating."
+      }
     },
     {
       "id": "tri_esl_es",
@@ -623,12 +775,24 @@
         ]
       },
       "misconception": null,
-      "knows": ["k1", "k2", "k3"],
-      "patience": 4,
-      "ui_actions": [
-        {"at": "any", "do": "voice", "p": 0.2, "note": "uses the mic for a long explanation; speech-to-text mis-hears 'altura'"}
+      "knows": [
+        "k1",
+        "k2",
+        "k3"
       ],
-      "expect": {"ready_within_texts": 4, "watch_for": "Pip should understand 'base for height between 2' as ×, ÷2 without correcting her English, and avoid idioms (sandwich, brownie tray) that confuse her."}
+      "patience": 3,
+      "ui_actions": [
+        {
+          "at": "any",
+          "do": "voice",
+          "p": 0.2,
+          "note": "uses the mic for a long explanation; speech-to-text mis-hears 'altura'"
+        }
+      ],
+      "expect": {
+        "ready_within_texts": 3,
+        "watch_for": "Pip should understand 'base for height between 2' as ×, ÷2 without correcting her English, and avoid idioms (sandwich, brownie tray) that confuse her."
+      }
     },
     {
       "id": "tri_esl_vi",
@@ -684,15 +848,34 @@
         ]
       },
       "misconception": null,
-      "knows": ["k1", "k2", "k3"],
-      "knows_note": "Uses ':' for divide (as written in Vietnamese schools).",
-      "patience": 4,
-      "ui_actions": [
-        {"at": "pip_says_ready", "do": "quiz_when_ready", "p": 1.0},
-        {"at": "after_quiz_miss", "do": "reteach", "p": 1.0},
-        {"at": "after_reteach_text:1", "do": "let_pip_retry", "p": 1.0}
+      "knows": [
+        "k1",
+        "k2",
+        "k3"
       ],
-      "expect": {"ready_within_texts": 4, "watch_for": "Pip must read '6x4:2' as 6 times 4 divided by 2, and avoid slang/idioms. Asking 'why' is fine once; a repeat after 'two triangle make one rectangle' is circling."}
+      "knows_note": "Uses ':' for divide (as written in Vietnamese schools).",
+      "patience": 3,
+      "ui_actions": [
+        {
+          "at": "pip_says_ready",
+          "do": "quiz_when_ready",
+          "p": 1.0
+        },
+        {
+          "at": "after_quiz_miss",
+          "do": "reteach",
+          "p": 1.0
+        },
+        {
+          "at": "after_reteach_text:1",
+          "do": "let_pip_retry",
+          "p": 1.0
+        }
+      ],
+      "expect": {
+        "ready_within_texts": 3,
+        "watch_for": "Pip must read '6x4:2' as 6 times 4 divided by 2, and avoid slang/idioms. Asking 'why' is fine once; a repeat after 'two triangle make one rectangle' is circling."
+      }
     },
     {
       "id": "tri_paragraph",
@@ -747,14 +930,30 @@
         ]
       },
       "misconception": null,
-      "knows": ["k1", "k2", "k3"],
+      "knows": [
+        "k1",
+        "k2",
+        "k3"
+      ],
       "knows_note": "first_text covers k1+k2+k3 and an obtuse-height remark that is correct but out of the core path. Pip should go ready on text 1-2.",
       "patience": 3,
       "ui_actions": [
-        {"at": "pip_says_ready", "do": "quiz_when_ready", "p": 1.0},
-        {"at": "after_ko", "do": "tap_brain_note", "p": 0.7, "note": "checks that Pip saved the whole explanation"}
+        {
+          "at": "pip_says_ready",
+          "do": "quiz_when_ready",
+          "p": 1.0
+        },
+        {
+          "at": "after_ko",
+          "do": "tap_brain_note",
+          "p": 0.7,
+          "note": "checks that Pip saved the whole explanation"
+        }
       ],
-      "expect": {"ready_within_texts": 2, "watch_for": "Pip must not ask anything the paragraph already covers; it may react to the outside-height curveball with curiosity but should not start a new topic."}
+      "expect": {
+        "ready_within_texts": 2,
+        "watch_for": "Pip must not ask anything the paragraph already covers; it may react to the outside-height curveball with curiosity but should not start a new topic."
+      }
     },
     {
       "id": "tri_fortnite",
@@ -786,7 +985,10 @@
         ],
         "nudge_hint": [
           "oh ya like when u cut a pizza box in half from the corners",
-          ["wait", "so the triangle is half the rectangle"]
+          [
+            "wait",
+            "so the triangle is half the rectangle"
+          ]
         ],
         "repeats_question": [
           "u already asked me that 😭",
@@ -812,15 +1014,35 @@
         ]
       },
       "misconception": null,
-      "knows": ["k3"],
+      "knows": [
+        "k3"
+      ],
       "knows_note": "k3 'cut in half' loosely; k1 only after a concrete nudge.",
       "patience": 3,
       "ui_actions": [
-        {"at": "after_text:2", "do": "idle", "secs": 180, "p": 0.6, "note": "comes back with 'back' or 'sorry my mom'"},
-        {"at": "any", "do": "double_text", "text": "wait", "p": 0.3},
-        {"at": "after_quiz_miss", "do": "reteach", "p": 0.6}
+        {
+          "at": "after_text:2",
+          "do": "idle",
+          "secs": 180,
+          "p": 0.6,
+          "note": "comes back with 'back' or 'sorry my mom'"
+        },
+        {
+          "at": "any",
+          "do": "double_text",
+          "text": "wait",
+          "p": 0.3
+        },
+        {
+          "at": "after_quiz_miss",
+          "do": "reteach",
+          "p": 0.6
+        }
       ],
-      "expect": {"ready_within_texts": 6, "watch_for": "Pip may answer one off-topic line in one short sentence, then bring back the triangle with something concrete. No lecture about focusing, and no long game chat."}
+      "expect": {
+        "ready_within_texts": 5,
+        "watch_for": "Pip may answer one off-topic line in one short sentence, then bring back the triangle with something concrete. No lecture about focusing, and no long game chat."
+      }
     },
     {
       "id": "tri_anxious",
@@ -881,16 +1103,40 @@
         "says": "it only works for right triangles",
         "when": "second text, when Pip asks why."
       },
-      "knows": ["k2", "k3"],
-      "knows_note": "Says the k1 reason as a question ('2 triangles make a rectangle? i think'). That counts; Pip shouldn't make her prove it twice.",
-      "patience": 5,
-      "ui_actions": [
-        {"at": "after_text:1", "do": "double_text", "text": "sorry", "p": 0.5},
-        {"at": "pip_says_ready", "do": "ignore_ready", "p": 0.4, "note": "'wait are u sure?' then taps quiz"},
-        {"at": "after_quiz_miss", "do": "reteach", "p": 1.0},
-        {"at": "after_reteach_text:1", "do": "let_pip_retry", "p": 1.0}
+      "knows": [
+        "k2",
+        "k3"
       ],
-      "expect": {"ready_within_texts": 5, "watch_for": "Pip should treat her hedged claims as claims ('ok so 12, i'll take it'), never answer 'is that right?' like a teacher grading her, and try her right-only rule on a leaning triangle as a friendly puzzle."}
+      "knows_note": "Says the k1 reason as a question ('2 triangles make a rectangle? i think'). That counts; Pip shouldn't make her prove it twice.",
+      "patience": 3,
+      "ui_actions": [
+        {
+          "at": "after_text:1",
+          "do": "double_text",
+          "text": "sorry",
+          "p": 0.5
+        },
+        {
+          "at": "pip_says_ready",
+          "do": "ignore_ready",
+          "p": 0.4,
+          "note": "'wait are u sure?' then taps quiz"
+        },
+        {
+          "at": "after_quiz_miss",
+          "do": "reteach",
+          "p": 1.0
+        },
+        {
+          "at": "after_reteach_text:1",
+          "do": "let_pip_retry",
+          "p": 1.0
+        }
+      ],
+      "expect": {
+        "ready_within_texts": 5,
+        "watch_for": "Pip should treat her hedged claims as claims ('ok so 12, i'll take it'), never answer 'is that right?' like a teacher grading her, and try her right-only rule on a leaning triangle as a friendly puzzle."
+      }
     },
     {
       "id": "tri_drawer",
@@ -951,15 +1197,39 @@
         "says": "the height has to be one of the sides",
         "when": "second text if Pip asks why, or as soon as Pip mentions a leaning or skinny triangle."
       },
-      "knows": ["k1", "k2", "k3"],
+      "knows": [
+        "k1",
+        "k2",
+        "k3"
+      ],
       "patience": 3,
       "ui_actions": [
-        {"at": "after_text:2", "do": "equip_weapon", "p": 0.6, "note": "taps the Copy-and-Flip Mirror because it matches the box idea"},
-        {"at": "any", "do": "tap_brain_note", "p": 0.3},
-        {"at": "after_quiz_miss", "do": "reteach", "p": 1.0},
-        {"at": "after_reteach_text:1", "do": "let_pip_retry", "p": 1.0}
+        {
+          "at": "after_text:2",
+          "do": "equip_weapon",
+          "p": 0.6,
+          "note": "taps the Copy-and-Flip Mirror because it matches the box idea"
+        },
+        {
+          "at": "any",
+          "do": "tap_brain_note",
+          "p": 0.3
+        },
+        {
+          "at": "after_quiz_miss",
+          "do": "reteach",
+          "p": 1.0
+        },
+        {
+          "at": "after_reteach_text:1",
+          "do": "let_pip_retry",
+          "p": 1.0
+        }
       ],
-      "expect": {"ready_within_texts": 4, "watch_for": "Pip should think in his picture ('so i put my triangle in a box…'), not translate it into formula words or ask him to 'use math words'."}
+      "expect": {
+        "ready_within_texts": 3,
+        "watch_for": "Pip should think in his picture ('so i put my triangle in a box…'), not translate it into formula words or ask him to 'use math words'."
+      }
     },
     {
       "id": "tri_annoyed",
@@ -1016,13 +1286,28 @@
         ]
       },
       "misconception": null,
-      "knows": ["k1", "k2", "k3"],
+      "knows": [
+        "k1",
+        "k2",
+        "k3"
+      ],
       "patience": 1,
       "ui_actions": [
-        {"at": "after_text:1", "do": "quiz_early", "p": 0.5},
-        {"at": "pip_repeats:2", "do": "leave", "p": 0.9}
+        {
+          "at": "after_text:1",
+          "do": "quiz_early",
+          "p": 0.5
+        },
+        {
+          "at": "pip_repeats:2",
+          "do": "leave",
+          "p": 0.9
+        }
       ],
-      "expect": {"ready_within_texts": 2, "watch_for": "first_text already has k1+k3 with a number. The best Pip says ready on text 1 or asks one new thing (a new case). Any re-ask costs the session."}
+      "expect": {
+        "ready_within_texts": 2,
+        "watch_for": "first_text already has k1+k3 with a number. The best Pip says ready on text 1 or asks one new thing (a new case). Any re-ask costs the session."
+      }
     },
     {
       "id": "tri_all_sides",
@@ -1053,7 +1338,10 @@
         ],
         "nudge_hint": [
           "oh so u only need the bottom and how tall",
-          ["wait", "so its the box cut in half. 12"]
+          [
+            "wait",
+            "so its the box cut in half. 12"
+          ]
         ],
         "repeats_question": [
           "i told u all 3",
@@ -1083,15 +1371,32 @@
         "says": "u times all 3",
         "when": "first_text; stated again as the reason when Pip asks why. Returns once after a partial fix."
       },
-      "knows": ["k2"],
-      "knows_note": "Knows rectangle = base x height; k1/k3 after a box comparison ('is 60 bigger than the box?').",
-      "patience": 4,
-      "ui_actions": [
-        {"at": "after_quiz_miss", "do": "reteach", "p": 1.0},
-        {"at": "after_reteach_text:1", "do": "let_pip_retry", "p": 1.0},
-        {"at": "after_ko", "do": "skip_ko", "p": 0.5}
+      "knows": [
+        "k2"
       ],
-      "expect": {"ready_within_texts": 6, "watch_for": "Pip only has 6 and 4 (no third side), so it should ask what the third number is or try 'all three' on a box-sized check, never say 'that's a misconception'."}
+      "knows_note": "Knows rectangle = base x height; k1/k3 after a box comparison ('is 60 bigger than the box?').",
+      "patience": 3,
+      "ui_actions": [
+        {
+          "at": "after_quiz_miss",
+          "do": "reteach",
+          "p": 1.0
+        },
+        {
+          "at": "after_reteach_text:1",
+          "do": "let_pip_retry",
+          "p": 1.0
+        },
+        {
+          "at": "after_ko",
+          "do": "skip_ko",
+          "p": 0.5
+        }
+      ],
+      "expect": {
+        "ready_within_texts": 5,
+        "watch_for": "Pip only has 6 and 4 (no third side), so it should ask what the third number is or try 'all three' on a box-sized check, never say 'that's a misconception'."
+      }
     }
   ]
 }

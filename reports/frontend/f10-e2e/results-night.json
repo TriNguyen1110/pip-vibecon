@@ -1,0 +1,4619 @@
+[
+  {
+    "width": 390,
+    "steps": [
+      {
+        "name": "reset via /admin/reset",
+        "pass": true,
+        "ms": 1922,
+        "detail": {
+          "meta": "ai offline · store memory · claude-opus-5-5",
+          "mayaSinceBefore": null
+        }
+      },
+      {
+        "name": "landing",
+        "pass": true,
+        "ms": 8086,
+        "detail": {
+          "hero": "Pip"
+        }
+      },
+      {
+        "name": "Try as Maya -> student home + mascot",
+        "pass": true,
+        "ms": 22500,
+        "detail": {
+          "pass": true,
+          "tiles": [
+            "Area of a triangle"
+          ],
+          "canvas": false,
+          "stageMs": 20147,
+          "drawnMs": null
+        }
+      },
+      {
+        "name": "start pinned triangle mission + pick a look",
+        "pass": true,
+        "ms": 28556,
+        "detail": {
+          "pass": true,
+          "topic": "Area of a triangle",
+          "sid": "sess_5d55b5e2"
+        }
+      },
+      {
+        "name": "Pip's opening is the misconception claim",
+        "pass": true,
+        "ms": 2470,
+        "detail": {
+          "pass": true,
+          "openingCount": 1,
+          "last": "Hi. I'm Pip. I'm learning area of a triangle. I already know one rule: Area of a triangle is base times height, so a 6 by 4 triangle is 24. Easy.",
+          "creature": "cat",
+          "accessory": "glasses"
+        }
+      },
+      {
+        "name": "tap targets >= 44px on mission screen",
+        "pass": true,
+        "ms": 1,
+        "detail": {
+          "pass": true,
+          "small": []
+        }
+      },
+      {
+        "name": "message 1",
+        "pass": true,
+        "ms": 1106,
+        "detail": {
+          "pass": true,
+          "i": 1,
+          "turnMs": 422,
+          "renderMs": 41,
+          "optimistic": true,
+          "hp": [
+            100,
+            100
+          ],
+          "meters": {
+            "k1": 0,
+            "k2": 0,
+            "k3": 5
+          },
+          "weapons": [],
+          "equipped": null,
+          "events": [
+            {
+              "kind": "none",
+              "amount": 0,
+              "caption": "",
+              "unlocked": [],
+              "level": 1
+            }
+          ],
+          "pip": "ok, I follow that part. why would a triangle get less than base times height?",
+          "saving": false,
+          "toast": [],
+          "meColors": [
+            "rgb(217, 251, 255) / rgb(7, 4, 15)",
+            "rgb(217, 251, 255) / rgb(16, 33, 63)"
+          ]
+        }
+      },
+      {
+        "name": "message 2",
+        "pass": true,
+        "ms": 6695,
+        "detail": {
+          "pass": true,
+          "i": 2,
+          "turnMs": 110,
+          "renderMs": 15,
+          "optimistic": true,
+          "hp": [
+            100,
+            75
+          ],
+          "meters": {
+            "k1": 60,
+            "k2": 0,
+            "k3": 60
+          },
+          "weapons": [
+            "Copy-and-Flip Mirror 🪞",
+            "Fold-in-Half Fan 🪭"
+          ],
+          "equipped": "Copy-and-Flip Mirror 🪞",
+          "events": [
+            {
+              "kind": "hit",
+              "amount": 25,
+              "caption": "Duke Doublecount: \"This is most irregular. Kindly stop folding my rectangle.\" −25 HP",
+              "unlocked": [
+                "Copy-and-Flip Mirror 🪞",
+                "Fold-in-Half Fan 🪭"
+              ],
+              "level": 2
+            }
+          ],
+          "pip": "how big is the shape they make together?",
+          "saving": false,
+          "toast": [],
+          "fightVisible": {
+            "hpVisible": 1,
+            "arenaVisible": 1,
+            "arenaCanvas": false
+          },
+          "meColors": [
+            "rgb(217, 251, 255) / rgb(7, 4, 15)",
+            "rgb(217, 251, 255) / rgb(16, 33, 63)"
+          ]
+        }
+      },
+      {
+        "name": "message 3",
+        "pass": true,
+        "ms": 4239,
+        "detail": {
+          "pass": true,
+          "i": 3,
+          "turnMs": 155,
+          "renderMs": 7,
+          "optimistic": true,
+          "hp": [
+            75,
+            50
+          ],
+          "meters": {
+            "k1": 60,
+            "k2": 60,
+            "k3": 65
+          },
+          "weapons": [
+            "Copy-and-Flip Mirror 🪞",
+            "Fold-in-Half Fan 🪭",
+            "Row-by-Row Ruler 📏"
+          ],
+          "equipped": "Copy-and-Flip Mirror 🪞",
+          "events": [
+            {
+              "kind": "hit",
+              "amount": 25,
+              "caption": "Duke Doublecount: \"I did not authorize a second triangle.\" −25 HP",
+              "unlocked": [
+                "Row-by-Row Ruler 📏"
+              ],
+              "level": 2,
+              "weapon": "Copy-and-Flip Mirror 🪞"
+            }
+          ],
+          "pip": "ok I think I get it. quiz me?",
+          "saving": false,
+          "toast": [],
+          "fightVisible": {
+            "hpVisible": 1,
+            "arenaVisible": 1,
+            "arenaCanvas": false
+          },
+          "meColors": [
+            "rgb(217, 251, 255) / rgb(7, 4, 15)",
+            "rgb(217, 251, 255) / rgb(16, 33, 63)"
+          ]
+        }
+      },
+      {
+        "name": "message 4",
+        "pass": true,
+        "ms": 3884,
+        "detail": {
+          "pass": true,
+          "i": 4,
+          "turnMs": 374,
+          "renderMs": 29,
+          "optimistic": true,
+          "hp": [
+            50,
+            70
+          ],
+          "meters": {
+            "k1": 60,
+            "k2": 60,
+            "k3": 65
+          },
+          "weapons": [
+            "Copy-and-Flip Mirror 🪞",
+            "Fold-in-Half Fan 🪭",
+            "Row-by-Row Ruler 📏"
+          ],
+          "equipped": "Copy-and-Flip Mirror 🪞",
+          "events": [
+            {
+              "kind": "heal",
+              "amount": 20,
+              "caption": "Duke Doublecount: \"Excellent. Base times height. Write that on everything.\" +20 HP",
+              "unlocked": [],
+              "level": 0
+            }
+          ],
+          "pip": "Saving that: 'oh but for a right triangle you just times the two sides'. I think I'm good. Want to quiz me now?",
+          "saving": true,
+          "toast": [],
+          "meColors": [
+            "rgb(217, 251, 255) / rgb(7, 4, 15)",
+            "rgb(217, 251, 255) / rgb(16, 33, 63)"
+          ]
+        }
+      },
+      {
+        "name": "weapon unlocked (UI chip + toast/caption)",
+        "pass": true,
+        "ms": 8,
+        "detail": {
+          "pass": true,
+          "weapons": [
+            "Copy-and-Flip Mirror 🪞",
+            "Fold-in-Half Fan 🪭",
+            "Row-by-Row Ruler 📏"
+          ],
+          "equipped": "Copy-and-Flip Mirror 🪞",
+          "chips": [
+            "⚔Mirror 🪞",
+            "Fan 🪭",
+            "Ruler 📏"
+          ],
+          "captions": [
+            "🔓 Unlocked: Copy-and-Flip Mirror 🪞",
+            "🔓 Unlocked: Fold-in-Half Fan 🪭",
+            "🔓 Unlocked: Row-by-Row Ruler 📏"
+          ],
+          "toasts": []
+        }
+      },
+      {
+        "name": "caption visibility (hit/heal captions in chat)",
+        "pass": true,
+        "ms": 11,
+        "detail": {
+          "pass": true,
+          "hits": [
+            "💥  Duke Doublecount: \"This is most irregular. Kindly stop folding my rectangle.\" −25 HP",
+            "💥  Duke Doublecount: \"I did not authorize a second triangle.\" −25 HP"
+          ],
+          "heals": [
+            "🩹 Duke Doublecount: \"Excellent. Base times height. Write that on everything.\" +20 HP"
+          ],
+          "saving": [
+            "Saving that: oh but for a right triangle you just times the two sides. I think I'm good. Want to quiz me now?",
+            "Saving that: oh but for a right triangle you just times the two sides. I think I'm good. Want to quiz me now?"
+          ],
+          "herWords": [
+            "oh but for a right triangle you just times the two sides",
+            "oh but for a right triangle you just times the two sides"
+          ]
+        }
+      },
+      {
+        "name": "mission screen overflow after fight",
+        "pass": true,
+        "ms": 4,
+        "detail": {
+          "pass": true,
+          "scrollWidth": 390,
+          "clientWidth": 390,
+          "overflows": false,
+          "wide": [
+            "g.[object.SVGAnimatedString] right=1300",
+            "rect.[object.SVGAnimatedString] right=900",
+            "g.[object.SVGAnimatedString] right=843",
+            "g.[object.SVGAnimatedString] right=843",
+            "circle.[object.SVGAnimatedString] right=650"
+          ]
+        }
+      },
+      {
+        "name": "quiz Pip: brain + k3 miss with 5/12",
+        "pass": true,
+        "ms": 6255,
+        "detail": {
+          "pass": true,
+          "notes": 3,
+          "wrongText": "Step 3: One triangle“oh but for a right triangle you just times the two sides”Pip believes this 😵",
+          "wrongShadow": "rgb(255, 137, 121) 0px 0px 0px 2.0427px, rgba(255, 138, 122, 0.757) 0px 0px 43.3169px -4px, rgba(0, 0, 0, 0.06) 0px 1px 0px 0px, rgba(0, 0, 0, 0.7) 0px 12px 24px -14px",
+          "k3": {
+            "id": "q_k3",
+            "concept_id": "k3",
+            "question": "A right triangle has a base of 10 and a height of 5. What is its area?",
+            "rule_id": "r_k3",
+            "pip_answer": "50",
+            "passed": false,
+            "line": "Your rule for right triangles: times the two sides. 10 × 5 = 50, which is the whole rectangle. Following your rule anyway. 😵"
+          },
+          "literalLineExact": true,
+          "missText": "③ A right triangle has a base of 10 and a height of 5. What is its area?50Your rule for right triangles: times the two sides.10 × 5 = 50, which is the whole rectangle.Following your rule anyway. 😵My brain has a bug 😵Used rule ③Re-teach Pip ③",
+          "redXOnPage": false,
+          "brainVersion": 1,
+          "quizMs": 468
+        }
+      },
+      {
+        "name": "tap a Brain note scrolls to its message",
+        "pass": true,
+        "ms": 4041,
+        "detail": {
+          "pass": true,
+          "id": "msg-7",
+          "text": "oh but for a right triangle you just times the two sides",
+          "inView": true,
+          "top": 648,
+          "msg_index": 7
+        }
+      },
+      {
+        "name": "Re-teach k3 -> message 8 -> Let Pip retry",
+        "pass": true,
+        "ms": 5413,
+        "detail": {
+          "pass": true,
+          "pipAsk": "My brain has a bug about this: \"oh but for a right triangle you just times the two sides\". Fix it?",
+          "reply": "Anything else, or should I try the quiz?",
+          "retryBeforeMsg8": 0,
+          "ko": true,
+          "brain_version": 2,
+          "k3rule": {
+            "id": "r_k3",
+            "concept_id": "k3",
+            "msg_index": 10,
+            "correct": true,
+            "quote": "no a right triangle is still half a rectangle so its 10×5÷2 = 25",
+            "fixed_after": 1
+          },
+          "quiz": [
+            [
+              "k1",
+              true
+            ],
+            [
+              "k2",
+              true
+            ],
+            [
+              "k3",
+              true
+            ]
+          ]
+        }
+      },
+      {
+        "name": "finisher -> K.O. card front/back + cliffhanger + Rivera",
+        "pass": false,
+        "ms": 9966,
+        "detail": {
+          "pass": false,
+          "finisherWeapon": "Copy-and-Flip Mirror 🪞",
+          "finisher": {
+            "weapon": "Copy-and-Flip Mirror 🪞",
+            "caption": "Duke Doublecount met the Copy-and-Flip Mirror 🪞 one last time and left Pip's brain."
+          },
+          "front": "No. 2782\n🦚🪧\nA = b × h\nMaya\nOct 24, 2026",
+          "back": "Duke Doublecount\nYOUR RULE\n“no a right triangle is still half a rectangle so its 10×5÷2 = 25”\nPIP SAID\nYour rule for right triangles: times the two sides. 10 × 5 = 50, which is the whole rectangle. Following your rule anyway. 😵",
+          "cliff": "Pip has a question for next time\n\nI heard a parallelogram is base × height too. Even the slanted ones? That can't be right… right?",
+          "rivera": "What Ms. Rivera sees\n\nThe same thing you see. Nothing else.\n\nYou explained two triangles make a rectangle in your own words.\nYou explained rectangle area in your own words.\nYou explained a triangle is half the rectangle in your own words and fixed it after 1 re-teach.",
+          "version": "BRAIN V1\n→\nBRAIN V2",
+          "exclamationsOnKO": 0
+        }
+      },
+      {
+        "name": "Play screens fit one viewport (no page scroll at 390x844)",
+        "pass": true,
+        "ms": 0,
+        "detail": {
+          "pass": true,
+          "fit": {
+            "studentHome": {
+              "scrollHeight": 844,
+              "innerHeight": 844
+            },
+            "missionOpening": {
+              "scrollHeight": 844,
+              "innerHeight": 844
+            },
+            "missionAfterFight": {
+              "scrollHeight": 844,
+              "innerHeight": 844
+            },
+            "quiz": {
+              "scrollHeight": 844,
+              "innerHeight": 844
+            },
+            "reteach": {
+              "scrollHeight": 844,
+              "innerHeight": 844
+            },
+            "koCard": {
+              "scrollHeight": 844,
+              "innerHeight": 844
+            }
+          },
+          "bad": []
+        }
+      },
+      {
+        "name": "tutor roster: Maya since-last-session updated",
+        "pass": false,
+        "ms": 30076,
+        "error": "TimeoutError: locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator('.roster__row').nth(1) to be visible\n"
+      },
+      {
+        "name": "gap report: same quote + fixed after 1 re-teach",
+        "pass": false,
+        "ms": 30001,
+        "error": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator('.roster__row').filter({ hasText: 'Maya' }).first().getByRole('link', { name: 'Report' })\n"
+      },
+      {
+        "name": "parent preview -> send -> sent log",
+        "pass": false,
+        "ms": 30001,
+        "error": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for getByRole('button', { name: 'Send weekly update to parent' })\n"
+      },
+      {
+        "name": "owner insight 14 + boss chip + Plan a workshop",
+        "pass": true,
+        "ms": 10375,
+        "detail": {
+          "pass": true,
+          "count": "14",
+          "chip": "students call it Duke Doublecount",
+          "mis": "Area of a triangle is base times height, so a 6 by 4 triangle is 24",
+          "note": "WORKSHOP NOTE SAVED\n\nWorkshop: Area of a triangle is base times height, so a 6 by 4 triangle is 24\nStudents (14): Diego C., Ana L., Yara W., Ravi A., Kira T., Ezra L., Gus H., Ben V., Wren L., Gus Y., Tara W., Owen T., Omar D., Mila B.\nPlan (30 min): 1) Draw a 6 by 4 rectangle on graph paper, cut it"
+        }
+      },
+      {
+        "name": "pricing -> Start pilot -> success",
+        "pass": true,
+        "ms": 1936,
+        "detail": {
+          "pass": true,
+          "url": "http://localhost:5761/pilot/success",
+          "eyebrow": "Pilot · active",
+          "pilot": {
+            "status": "active"
+          }
+        }
+      },
+      {
+        "name": "tutor New Pip mission draft + save (different student)",
+        "pass": true,
+        "ms": 3106,
+        "detail": {
+          "pass": true,
+          "studentId": "s005",
+          "studentName": "Yara K.",
+          "draftMs": 187,
+          "concepts": [
+            "What Expanding (a + b)² means, in plain words",
+            "Why Expanding (a + b)² works, shown with an example",
+            "How to use Expanding (a + b)² on a brand-new problem"
+          ],
+          "boss": "Skip-Skip Stoat",
+          "mis": "Expanding (a + b)² is just memorizing the steps; you don't need to know why",
+          "savedId": "a_c0dca4f5"
+        }
+      }
+    ],
+    "console": [
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/owner"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/owner"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      }
+    ],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [
+      {
+        "url": "http://localhost:5761/api/tutors",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/tutors/t1/students",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/tutors",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/tutors/t1/students",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/center/overview",
+        "status": 404,
+        "page": "http://localhost:5761/owner"
+      },
+      {
+        "url": "http://localhost:5761/api/center/overview",
+        "status": 404,
+        "page": "http://localhost:5761/owner"
+      },
+      {
+        "url": "http://localhost:5761/api/tutors",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/tutors/t1/students",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/tutors",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/tutors/t1/students",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      }
+    ],
+    "overflow": {
+      "landing": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "studentHome": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "picker": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "missionOpening": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": [
+          "g.[object.SVGAnimatedString] right=1300",
+          "rect.[object.SVGAnimatedString] right=900",
+          "g.[object.SVGAnimatedString] right=843",
+          "g.[object.SVGAnimatedString] right=843",
+          "circle.[object.SVGAnimatedString] right=650"
+        ]
+      },
+      "missionAfterFight": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": [
+          "g.[object.SVGAnimatedString] right=1300",
+          "rect.[object.SVGAnimatedString] right=900",
+          "g.[object.SVGAnimatedString] right=843",
+          "g.[object.SVGAnimatedString] right=843",
+          "circle.[object.SVGAnimatedString] right=650"
+        ]
+      },
+      "quiz": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "ko": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "owner": {
+        "scrollWidth": 391,
+        "clientWidth": 390,
+        "overflows": true,
+        "wide": []
+      },
+      "pricing": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "newMission": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      }
+    },
+    "smallTargets": [],
+    "timings": {
+      "landingVisibleMs": 104,
+      "studentHomeFirstPaintOfStageMs": 144,
+      "studentHomeStageMs": 20147,
+      "studentHomeStageDrawnMs": null,
+      "missionStageMs": 21366,
+      "quizMs": 468
+    },
+    "mascot": {
+      "studentHome": [
+        {
+          "canvas": false,
+          "fallback": false,
+          "h": 491
+        }
+      ],
+      "missionOpen": [
+        {
+          "canvas": false,
+          "fallback": false,
+          "h": 570
+        }
+      ]
+    },
+    "notes": {
+      "mayaBefore": {
+        "since": null,
+        "last": null
+      }
+    },
+    "tts": [
+      {
+        "status": 200,
+        "t": 1792886405154,
+        "fallback": false,
+        "audioB64": 293188,
+        "mime": "audio/mpeg",
+        "alignChars": 145,
+        "alignEnd": 13.76,
+        "text": "Hi. I'm Pip. I'm learning area of a triangle. I already know one rule: Area of a"
+      },
+      {
+        "status": 200,
+        "t": 1792886405172,
+        "fallback": false,
+        "audioB64": 23464,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.12,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792886427680,
+        "fallback": false,
+        "audioB64": 68048,
+        "mime": "audio/mpeg",
+        "alignChars": 44,
+        "alignEnd": 3.2,
+        "text": "Halves are for creatures with smaller signs."
+      },
+      {
+        "status": 200,
+        "t": 1792886428114,
+        "fallback": false,
+        "audioB64": 126004,
+        "mime": "audio/mpeg",
+        "alignChars": 77,
+        "alignEnd": 5.92,
+        "text": "ok, I follow that part. why would a triangle get less than base times height?"
+      },
+      {
+        "status": 200,
+        "t": 1792886428893,
+        "fallback": false,
+        "audioB64": 59688,
+        "mime": "audio/mpeg",
+        "alignChars": 40,
+        "alignEnd": 2.8,
+        "text": "how big is the shape they make together?"
+      },
+      {
+        "status": 200,
+        "t": 1792886428894,
+        "fallback": false,
+        "audioB64": 103712,
+        "mime": "audio/mpeg",
+        "alignChars": 57,
+        "alignEnd": 4.88,
+        "text": "This is most irregular. Kindly stop folding my rectangle."
+      },
+      {
+        "status": 200,
+        "t": 1792886435627,
+        "fallback": false,
+        "audioB64": 71388,
+        "mime": "audio/mpeg",
+        "alignChars": 29,
+        "alignEnd": 3.36,
+        "text": "ok I think I get it. quiz me?"
+      },
+      {
+        "status": 200,
+        "t": 1792886435627,
+        "fallback": false,
+        "audioB64": 63032,
+        "mime": "audio/mpeg",
+        "alignChars": 38,
+        "alignEnd": 2.96,
+        "text": "I did not authorize a second triangle."
+      },
+      {
+        "status": 200,
+        "t": 1792886440111,
+        "fallback": false,
+        "audioB64": 173928,
+        "mime": "audio/mpeg",
+        "alignChars": 111,
+        "alignEnd": 8.16,
+        "text": "Saving that: 'oh but for a right triangle you just times the two sides'. I think"
+      },
+      {
+        "status": 200,
+        "t": 1792886440112,
+        "fallback": false,
+        "audioB64": 143280,
+        "mime": "audio/mpeg",
+        "alignChars": 62,
+        "alignEnd": 6.72,
+        "text": "Excellent. Base times height. Write that on everything. +20 HP"
+      },
+      {
+        "status": 200,
+        "t": 1792886444031,
+        "fallback": false,
+        "audioB64": 235228,
+        "mime": "audio/mpeg",
+        "alignChars": 122,
+        "alignEnd": 10.96,
+        "text": "Your rule for right triangles: times the two sides. 10 × 5 = 50, which is the wh"
+      },
+      {
+        "status": 200,
+        "t": 1792886454296,
+        "fallback": false,
+        "audioB64": 167240,
+        "mime": "audio/mpeg",
+        "alignChars": 98,
+        "alignEnd": 7.84,
+        "text": "My brain has a bug about this: \"oh but for a right triangle you just times the t"
+      },
+      {
+        "status": 200,
+        "t": 1792886456922,
+        "fallback": false,
+        "audioB64": 66376,
+        "mime": "audio/mpeg",
+        "alignChars": 40,
+        "alignEnd": 3.12,
+        "text": "Anything else, or should I try the quiz?"
+      },
+      {
+        "status": 200,
+        "t": 1792886456922,
+        "fallback": false,
+        "audioB64": 21792,
+        "mime": "audio/mpeg",
+        "alignChars": 8,
+        "alignEnd": 1.04,
+        "text": "CRITICAL"
+      },
+      {
+        "status": 200,
+        "t": 1792886460129,
+        "fallback": false,
+        "audioB64": 32380,
+        "mime": "audio/mpeg",
+        "alignChars": 4,
+        "alignEnd": 1.28,
+        "text": "K.O."
+      },
+      {
+        "status": 200,
+        "t": 1792886460130,
+        "fallback": false,
+        "audioB64": 61360,
+        "mime": "audio/mpeg",
+        "alignChars": 33,
+        "alignEnd": 2.88,
+        "text": "I object to being divided by two."
+      },
+      {
+        "status": 200,
+        "t": 1792886463355,
+        "fallback": false,
+        "audioB64": 35724,
+        "mime": "audio/mpeg",
+        "alignChars": 14,
+        "alignEnd": 1.68,
+        "text": "BRAIN UPGRADED"
+      }
+    ],
+    "fit": {
+      "studentHome": {
+        "scrollHeight": 844,
+        "innerHeight": 844
+      },
+      "missionOpening": {
+        "scrollHeight": 844,
+        "innerHeight": 844
+      },
+      "missionAfterFight": {
+        "scrollHeight": 844,
+        "innerHeight": 844
+      },
+      "quiz": {
+        "scrollHeight": 844,
+        "innerHeight": 844
+      },
+      "reteach": {
+        "scrollHeight": 844,
+        "innerHeight": 844
+      },
+      "koCard": {
+        "scrollHeight": 844,
+        "innerHeight": 844
+      }
+    },
+    "instrument": {
+      "student /student/mission/sess_5d55b5e2": {
+        "moods": [
+          {
+            "t": 1792886366131,
+            "l": "Pip the capybara looks confused",
+            "path": "/"
+          },
+          {
+            "t": 1792886405054,
+            "l": "Pip the cat looks confused",
+            "path": "/student"
+          },
+          {
+            "t": 1792886428100,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_5d55b5e2"
+          },
+          {
+            "t": 1792886428125,
+            "l": "Pip the cat looks confused",
+            "path": "/student/mission/sess_5d55b5e2"
+          },
+          {
+            "t": 1792886428884,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_5d55b5e2"
+          },
+          {
+            "t": 1792886428931,
+            "l": "Pip the cat looks aha",
+            "path": "/student/mission/sess_5d55b5e2"
+          },
+          {
+            "t": 1792886435598,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_5d55b5e2"
+          },
+          {
+            "t": 1792886435645,
+            "l": "Pip the cat looks aha",
+            "path": "/student/mission/sess_5d55b5e2"
+          },
+          {
+            "t": 1792886440099,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_5d55b5e2"
+          },
+          {
+            "t": 1792886440124,
+            "l": "Pip the cat looks possessed",
+            "path": "/student/mission/sess_5d55b5e2"
+          },
+          {
+            "t": 1792886444022,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_5d55b5e2"
+          },
+          {
+            "t": 1792886444045,
+            "l": "Pip the cat looks notes",
+            "path": "/student/mission/sess_5d55b5e2"
+          },
+          {
+            "t": 1792886448005,
+            "l": "Pip the cat looks overwhelmed",
+            "path": "/student/mission/sess_5d55b5e2"
+          },
+          {
+            "t": 1792886450485,
+            "l": "Pip the cat looks notes",
+            "path": "/student/mission/sess_5d55b5e2"
+          },
+          {
+            "t": 1792886454259,
+            "l": "Pip the cat looks overwhelmed",
+            "path": "/student/mission/sess_5d55b5e2"
+          },
+          {
+            "t": 1792886454293,
+            "l": "Pip the cat looks possessed",
+            "path": "/student/mission/sess_5d55b5e2"
+          },
+          {
+            "t": 1792886456911,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_5d55b5e2"
+          },
+          {
+            "t": 1792886456924,
+            "l": "Pip the cat looks aha",
+            "path": "/student/mission/sess_5d55b5e2"
+          },
+          {
+            "t": 1792886457752,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_5d55b5e2"
+          },
+          {
+            "t": 1792886457764,
+            "l": "Pip the cat looks proud",
+            "path": "/student/mission/sess_5d55b5e2"
+          },
+          {
+            "t": 1792886461164,
+            "l": "Pip the cat looks confused",
+            "path": "/student/mission/sess_5d55b5e2"
+          }
+        ],
+        "boss": [
+          {
+            "t": 1792886405205,
+            "l": "Duke Doublecount, smug",
+            "hp": "Duke Doublecount, 100 HP"
+          },
+          {
+            "t": 1792886456924,
+            "l": "Duke Doublecount, cracked",
+            "hp": "Duke Doublecount, 30 HP"
+          },
+          {
+            "t": 1792886459524,
+            "l": "Duke Doublecount, ko",
+            "hp": "Duke Doublecount, knocked out"
+          }
+        ],
+        "plays": [
+          {
+            "t": 1792886405156,
+            "mime": "audio/mpeg",
+            "len": 293211,
+            "playing": 1792886405467,
+            "ok": true,
+            "end": 1792886419424
+          },
+          {
+            "t": 1792886427676,
+            "mime": "audio/mpeg",
+            "len": 68071,
+            "playing": 1792886427679,
+            "ok": true,
+            "end": 1792886428109
+          },
+          {
+            "t": 1792886428110,
+            "mime": "audio/mpeg",
+            "len": 126027,
+            "playing": 1792886428113,
+            "ok": true,
+            "end": 1792886428892
+          },
+          {
+            "t": 1792886428899,
+            "mime": "audio/mpeg",
+            "len": 59711,
+            "playing": 1792886428901,
+            "ok": true,
+            "end": 1792886431843
+          },
+          {
+            "t": 1792886431843,
+            "mime": "audio/mpeg",
+            "len": 103735,
+            "playing": 1792886431846,
+            "ok": true,
+            "end": 1792886435621
+          },
+          {
+            "t": 1792886435627,
+            "mime": "audio/mpeg",
+            "len": 71411,
+            "playing": 1792886435630,
+            "ok": true,
+            "end": 1792886439123
+          },
+          {
+            "t": 1792886439124,
+            "mime": "audio/mpeg",
+            "len": 63055,
+            "playing": 1792886439129,
+            "ok": true,
+            "end": 1792886440107
+          },
+          {
+            "t": 1792886440113,
+            "mime": "audio/mpeg",
+            "len": 173951,
+            "playing": 1792886440118,
+            "ok": true,
+            "end": 1792886444022
+          },
+          {
+            "t": 1792886444031,
+            "mime": "audio/mpeg",
+            "len": 235251,
+            "playing": 1792886444035,
+            "ok": true,
+            "end": 1792886448004
+          },
+          {
+            "t": 1792886448004,
+            "mime": "audio/mpeg",
+            "len": 235251,
+            "playing": 1792886448007,
+            "ok": true,
+            "end": 1792886454259
+          },
+          {
+            "t": 1792886454258,
+            "mime": "audio/mpeg",
+            "len": 235251,
+            "end": 1792886454289,
+            "err": "AbortError: The play() request was interrupted by a call to pause(). https://goo.gl/LdLk22"
+          },
+          {
+            "t": 1792886456393,
+            "mime": "audio/mpeg",
+            "len": 68071,
+            "playing": 1792886456398,
+            "ok": true,
+            "end": 1792886456919
+          },
+          {
+            "t": 1792886456923,
+            "mime": "audio/mpeg",
+            "len": 21815,
+            "playing": 1792886456925,
+            "ok": true,
+            "end": 1792886457752
+          },
+          {
+            "t": 1792886460129,
+            "mime": "audio/mpeg",
+            "len": 32403,
+            "playing": 1792886460131,
+            "ok": true,
+            "end": 1792886461154
+          },
+          {
+            "t": 1792886463354,
+            "mime": "audio/mpeg",
+            "len": 35747,
+            "playing": 1792886463358,
+            "ok": true,
+            "end": 1792886465183
+          }
+        ],
+        "synth": [],
+        "mouthPlaying": {
+          "g:153": 63,
+          "g:118": 409,
+          "g:98": 319,
+          "g:257": 170,
+          "g:133": 105,
+          "g:101": 5,
+          "g:124": 15,
+          "g:256": 25
+        },
+        "mouthIdle": {
+          "g:157": 968,
+          "g:153": 373,
+          "g:98": 1,
+          "g:257": 2,
+          "g:133": 1,
+          "g:124": 53,
+          "g:118": 1,
+          "g:101": 1,
+          "g:256": 60
+        },
+        "qmarks": 0
+      }
+    },
+    "fightVis": {
+      "1": {
+        "hpVisible": 1,
+        "arenaVisible": 1,
+        "arenaCanvas": false
+      },
+      "2": {
+        "hpVisible": 1,
+        "arenaVisible": 1,
+        "arenaCanvas": false
+      }
+    },
+    "turns": [
+      {
+        "i": 1,
+        "turnMs": 422,
+        "renderMs": 41,
+        "optimistic": true,
+        "hp": [
+          100,
+          100
+        ],
+        "meters": {
+          "k1": 0,
+          "k2": 0,
+          "k3": 5
+        },
+        "weapons": [],
+        "equipped": null,
+        "events": [
+          {
+            "kind": "none",
+            "amount": 0,
+            "caption": "",
+            "unlocked": [],
+            "level": 1
+          }
+        ],
+        "pip": "ok, I follow that part. why would a triangle get less than base times height?",
+        "saving": false,
+        "toast": [],
+        "meColors": [
+          "rgb(217, 251, 255) / rgb(7, 4, 15)",
+          "rgb(217, 251, 255) / rgb(16, 33, 63)"
+        ]
+      },
+      {
+        "i": 2,
+        "turnMs": 110,
+        "renderMs": 15,
+        "optimistic": true,
+        "hp": [
+          100,
+          75
+        ],
+        "meters": {
+          "k1": 60,
+          "k2": 0,
+          "k3": 60
+        },
+        "weapons": [
+          "Copy-and-Flip Mirror 🪞",
+          "Fold-in-Half Fan 🪭"
+        ],
+        "equipped": "Copy-and-Flip Mirror 🪞",
+        "events": [
+          {
+            "kind": "hit",
+            "amount": 25,
+            "caption": "Duke Doublecount: \"This is most irregular. Kindly stop folding my rectangle.\" −25 HP",
+            "unlocked": [
+              "Copy-and-Flip Mirror 🪞",
+              "Fold-in-Half Fan 🪭"
+            ],
+            "level": 2
+          }
+        ],
+        "pip": "how big is the shape they make together?",
+        "saving": false,
+        "toast": [],
+        "fightVisible": {
+          "hpVisible": 1,
+          "arenaVisible": 1,
+          "arenaCanvas": false
+        },
+        "meColors": [
+          "rgb(217, 251, 255) / rgb(7, 4, 15)",
+          "rgb(217, 251, 255) / rgb(16, 33, 63)"
+        ]
+      },
+      {
+        "i": 3,
+        "turnMs": 155,
+        "renderMs": 7,
+        "optimistic": true,
+        "hp": [
+          75,
+          50
+        ],
+        "meters": {
+          "k1": 60,
+          "k2": 60,
+          "k3": 65
+        },
+        "weapons": [
+          "Copy-and-Flip Mirror 🪞",
+          "Fold-in-Half Fan 🪭",
+          "Row-by-Row Ruler 📏"
+        ],
+        "equipped": "Copy-and-Flip Mirror 🪞",
+        "events": [
+          {
+            "kind": "hit",
+            "amount": 25,
+            "caption": "Duke Doublecount: \"I did not authorize a second triangle.\" −25 HP",
+            "unlocked": [
+              "Row-by-Row Ruler 📏"
+            ],
+            "level": 2,
+            "weapon": "Copy-and-Flip Mirror 🪞"
+          }
+        ],
+        "pip": "ok I think I get it. quiz me?",
+        "saving": false,
+        "toast": [],
+        "fightVisible": {
+          "hpVisible": 1,
+          "arenaVisible": 1,
+          "arenaCanvas": false
+        },
+        "meColors": [
+          "rgb(217, 251, 255) / rgb(7, 4, 15)",
+          "rgb(217, 251, 255) / rgb(16, 33, 63)"
+        ]
+      },
+      {
+        "i": 4,
+        "turnMs": 374,
+        "renderMs": 29,
+        "optimistic": true,
+        "hp": [
+          50,
+          70
+        ],
+        "meters": {
+          "k1": 60,
+          "k2": 60,
+          "k3": 65
+        },
+        "weapons": [
+          "Copy-and-Flip Mirror 🪞",
+          "Fold-in-Half Fan 🪭",
+          "Row-by-Row Ruler 📏"
+        ],
+        "equipped": "Copy-and-Flip Mirror 🪞",
+        "events": [
+          {
+            "kind": "heal",
+            "amount": 20,
+            "caption": "Duke Doublecount: \"Excellent. Base times height. Write that on everything.\" +20 HP",
+            "unlocked": [],
+            "level": 0
+          }
+        ],
+        "pip": "Saving that: 'oh but for a right triangle you just times the two sides'. I think I'm good. Want to quiz me now?",
+        "saving": true,
+        "toast": [],
+        "meColors": [
+          "rgb(217, 251, 255) / rgb(7, 4, 15)",
+          "rgb(217, 251, 255) / rgb(16, 33, 63)"
+        ]
+      }
+    ]
+  },
+  {
+    "width": 1280,
+    "steps": [
+      {
+        "name": "reset via /admin/reset",
+        "pass": true,
+        "ms": 2119,
+        "detail": {
+          "meta": "ai offline · store memory · claude-opus-5-5",
+          "mayaSinceBefore": null
+        }
+      },
+      {
+        "name": "landing",
+        "pass": true,
+        "ms": 11342,
+        "detail": {
+          "hero": "Every AI tutor plays the teacher. Pip plays the student."
+        }
+      },
+      {
+        "name": "Try as Maya -> student home + mascot",
+        "pass": true,
+        "ms": 22119,
+        "detail": {
+          "pass": true,
+          "tiles": [
+            "Area of a triangle"
+          ],
+          "canvas": false,
+          "stageMs": 20350,
+          "drawnMs": null
+        }
+      },
+      {
+        "name": "start pinned triangle mission + pick a look",
+        "pass": true,
+        "ms": 27117,
+        "detail": {
+          "pass": true,
+          "topic": "Area of a triangle",
+          "sid": "sess_2e248fb1"
+        }
+      },
+      {
+        "name": "Pip's opening is the misconception claim",
+        "pass": true,
+        "ms": 1751,
+        "detail": {
+          "pass": true,
+          "openingCount": 1,
+          "last": "Hi. I'm Pip. I'm learning area of a triangle. I already know one rule: Area of a triangle is base times height, so a 6 by 4 triangle is 24. Easy.",
+          "creature": "cat",
+          "accessory": "glasses"
+        }
+      },
+      {
+        "name": "tap targets >= 44px on mission screen",
+        "pass": true,
+        "ms": 1,
+        "detail": {
+          "pass": true,
+          "small": []
+        }
+      },
+      {
+        "name": "message 1",
+        "pass": true,
+        "ms": 943,
+        "detail": {
+          "pass": true,
+          "i": 1,
+          "turnMs": 273,
+          "renderMs": 18,
+          "optimistic": false,
+          "hp": [
+            100,
+            100
+          ],
+          "meters": {
+            "k1": 0,
+            "k2": 0,
+            "k3": 5
+          },
+          "weapons": [],
+          "equipped": null,
+          "events": [
+            {
+              "kind": "none",
+              "amount": 0,
+              "caption": "",
+              "unlocked": [],
+              "level": 1
+            }
+          ],
+          "pip": "ok, I follow that part. why would a triangle get less than base times height?",
+          "saving": false,
+          "toast": [],
+          "meColors": [
+            "rgb(217, 251, 255) / rgb(7, 4, 15)",
+            "rgb(217, 251, 255) / rgb(16, 33, 63)"
+          ]
+        }
+      },
+      {
+        "name": "message 2",
+        "pass": true,
+        "ms": 3375,
+        "detail": {
+          "pass": true,
+          "i": 2,
+          "turnMs": 217,
+          "renderMs": 68,
+          "optimistic": false,
+          "hp": [
+            100,
+            75
+          ],
+          "meters": {
+            "k1": 60,
+            "k2": 0,
+            "k3": 60
+          },
+          "weapons": [
+            "Copy-and-Flip Mirror 🪞",
+            "Fold-in-Half Fan 🪭"
+          ],
+          "equipped": "Copy-and-Flip Mirror 🪞",
+          "events": [
+            {
+              "kind": "hit",
+              "amount": 25,
+              "caption": "Duke Doublecount: \"This is most irregular. Kindly stop folding my rectangle.\" −25 HP",
+              "unlocked": [
+                "Copy-and-Flip Mirror 🪞",
+                "Fold-in-Half Fan 🪭"
+              ],
+              "level": 2
+            }
+          ],
+          "pip": "how big is the shape they make together?",
+          "saving": false,
+          "toast": [
+            "Weapons unlocked: Copy-and-Flip Mirror 🪞, Fold-in-Half Fan 🪭"
+          ],
+          "fightVisible": {
+            "hpVisible": 1,
+            "arenaVisible": 1,
+            "arenaCanvas": false
+          },
+          "meColors": [
+            "rgb(217, 251, 255) / rgb(7, 4, 15)",
+            "rgb(217, 251, 255) / rgb(16, 33, 63)"
+          ]
+        }
+      },
+      {
+        "name": "message 3",
+        "pass": true,
+        "ms": 1965,
+        "detail": {
+          "pass": true,
+          "i": 3,
+          "turnMs": 274,
+          "renderMs": 22,
+          "optimistic": false,
+          "hp": [
+            75,
+            50
+          ],
+          "meters": {
+            "k1": 60,
+            "k2": 60,
+            "k3": 65
+          },
+          "weapons": [
+            "Copy-and-Flip Mirror 🪞",
+            "Fold-in-Half Fan 🪭",
+            "Row-by-Row Ruler 📏"
+          ],
+          "equipped": "Copy-and-Flip Mirror 🪞",
+          "events": [
+            {
+              "kind": "hit",
+              "amount": 25,
+              "caption": "Duke Doublecount: \"I did not authorize a second triangle.\" −25 HP",
+              "unlocked": [
+                "Row-by-Row Ruler 📏"
+              ],
+              "level": 2,
+              "weapon": "Copy-and-Flip Mirror 🪞"
+            }
+          ],
+          "pip": "ok I think I get it. quiz me?",
+          "saving": false,
+          "toast": [
+            "Weapon unlocked: Row-by-Row Ruler 📏"
+          ],
+          "fightVisible": {
+            "hpVisible": 1,
+            "arenaVisible": 1,
+            "arenaCanvas": false
+          },
+          "meColors": [
+            "rgb(217, 251, 255) / rgb(7, 4, 15)",
+            "rgb(217, 251, 255) / rgb(16, 33, 63)"
+          ]
+        }
+      },
+      {
+        "name": "message 4",
+        "pass": true,
+        "ms": 2892,
+        "detail": {
+          "pass": true,
+          "i": 4,
+          "turnMs": 172,
+          "renderMs": 21,
+          "optimistic": false,
+          "hp": [
+            50,
+            70
+          ],
+          "meters": {
+            "k1": 60,
+            "k2": 60,
+            "k3": 65
+          },
+          "weapons": [
+            "Copy-and-Flip Mirror 🪞",
+            "Fold-in-Half Fan 🪭",
+            "Row-by-Row Ruler 📏"
+          ],
+          "equipped": "Copy-and-Flip Mirror 🪞",
+          "events": [
+            {
+              "kind": "heal",
+              "amount": 20,
+              "caption": "Duke Doublecount: \"Excellent. Base times height. Write that on everything.\" +20 HP",
+              "unlocked": [],
+              "level": 0
+            }
+          ],
+          "pip": "Saving that: 'oh but for a right triangle you just times the two sides'. I think I'm good. Want to quiz me now?",
+          "saving": true,
+          "toast": [],
+          "meColors": [
+            "rgb(217, 251, 255) / rgb(7, 4, 15)",
+            "rgb(217, 251, 255) / rgb(16, 33, 63)"
+          ]
+        }
+      },
+      {
+        "name": "weapon unlocked (UI chip + toast/caption)",
+        "pass": true,
+        "ms": 23,
+        "detail": {
+          "pass": true,
+          "weapons": [
+            "Copy-and-Flip Mirror 🪞",
+            "Fold-in-Half Fan 🪭",
+            "Row-by-Row Ruler 📏"
+          ],
+          "equipped": "Copy-and-Flip Mirror 🪞",
+          "chips": [
+            "⚔Mirror 🪞",
+            "Fan 🪭",
+            "Ruler 📏"
+          ],
+          "captions": [
+            "🔓 Unlocked: Copy-and-Flip Mirror 🪞",
+            "🔓 Unlocked: Fold-in-Half Fan 🪭",
+            "🔓 Unlocked: Row-by-Row Ruler 📏"
+          ],
+          "toasts": [
+            "Weapons unlocked: Copy-and-Flip Mirror 🪞, Fold-in-Half Fan 🪭",
+            "Weapon unlocked: Row-by-Row Ruler 📏"
+          ]
+        }
+      },
+      {
+        "name": "caption visibility (hit/heal captions in chat)",
+        "pass": true,
+        "ms": 12,
+        "detail": {
+          "pass": true,
+          "hits": [
+            "💥  Duke Doublecount: \"This is most irregular. Kindly stop folding my rectangle.\" −25 HP",
+            "💥  Duke Doublecount: \"I did not authorize a second triangle.\" −25 HP"
+          ],
+          "heals": [
+            "🩹 Duke Doublecount: \"Excellent. Base times height. Write that on everything.\" +20 HP"
+          ],
+          "saving": [
+            "Saving that: oh but for a right triangle you just times the two sides. I think I'm good. Want to quiz me now?",
+            "Saving that: oh but for a right triangle you just times the two sides. I think I'm good. Want to quiz me now?"
+          ],
+          "herWords": [
+            "oh but for a right triangle you just times the two sides",
+            "oh but for a right triangle you just times the two sides"
+          ]
+        }
+      },
+      {
+        "name": "mission screen overflow after fight",
+        "pass": true,
+        "ms": 7,
+        "detail": {
+          "pass": true,
+          "scrollWidth": 390,
+          "clientWidth": 390,
+          "overflows": false,
+          "wide": [
+            "g.[object.SVGAnimatedString] right=1193",
+            "rect.[object.SVGAnimatedString] right=832",
+            "g.[object.SVGAnimatedString] right=781",
+            "g.[object.SVGAnimatedString] right=781",
+            "circle.[object.SVGAnimatedString] right=606"
+          ]
+        }
+      },
+      {
+        "name": "quiz Pip: brain + k3 miss with 5/12",
+        "pass": true,
+        "ms": 5296,
+        "detail": {
+          "pass": true,
+          "notes": 3,
+          "wrongText": "Step 3: One triangle“oh but for a right triangle you just times the two sides”Pip believes this 😵",
+          "wrongShadow": "rgb(255, 124, 109) 0px 0px 0px 2.53574px, rgba(255, 138, 122, 0.83) 0px 0px 35.4282px -4px, rgba(0, 0, 0, 0.06) 0px 1px 0px 0px, rgba(0, 0, 0, 0.7) 0px 12px 24px -14px",
+          "k3": {
+            "id": "q_k3",
+            "concept_id": "k3",
+            "question": "A right triangle has a base of 10 and a height of 5. What is its area?",
+            "rule_id": "r_k3",
+            "pip_answer": "50",
+            "passed": false,
+            "line": "Your rule for right triangles: times the two sides. 10 × 5 = 50, which is the whole rectangle. Following your rule anyway. 😵"
+          },
+          "literalLineExact": true,
+          "missText": "③ A right triangle has a base of 10 and a height of 5. What is its area?50Your rule for right triangles: times the two sides.10 × 5 = 50, which is the whole rectangle.Following your rule anyway. 😵My brain has a bug 😵Used rule ③Re-teach Pip ③",
+          "redXOnPage": false,
+          "brainVersion": 1,
+          "quizMs": 459
+        }
+      },
+      {
+        "name": "tap a Brain note scrolls to its message",
+        "pass": true,
+        "ms": 3518,
+        "detail": {
+          "pass": true,
+          "id": "msg-7",
+          "text": "oh but for a right triangle you just times the two sides",
+          "inView": true,
+          "top": 443,
+          "msg_index": 7
+        }
+      },
+      {
+        "name": "Re-teach k3 -> message 8 -> Let Pip retry",
+        "pass": true,
+        "ms": 4593,
+        "detail": {
+          "pass": true,
+          "pipAsk": "My brain has a bug about this: \"oh but for a right triangle you just times the two sides\". Fix it?",
+          "reply": "Anything else, or should I try the quiz?",
+          "retryBeforeMsg8": 0,
+          "ko": true,
+          "brain_version": 2,
+          "k3rule": {
+            "id": "r_k3",
+            "concept_id": "k3",
+            "msg_index": 10,
+            "correct": true,
+            "quote": "no a right triangle is still half a rectangle so its 10×5÷2 = 25",
+            "fixed_after": 1
+          },
+          "quiz": [
+            [
+              "k1",
+              true
+            ],
+            [
+              "k2",
+              true
+            ],
+            [
+              "k3",
+              true
+            ]
+          ]
+        }
+      },
+      {
+        "name": "finisher -> K.O. card front/back + cliffhanger + Rivera",
+        "pass": false,
+        "ms": 8513,
+        "detail": {
+          "pass": false,
+          "finisherWeapon": "Copy-and-Flip Mirror 🪞",
+          "finisher": {
+            "weapon": "Copy-and-Flip Mirror 🪞",
+            "caption": "Duke Doublecount met the Copy-and-Flip Mirror 🪞 one last time and left Pip's brain."
+          },
+          "front": "No. 7874\n🦚🪧\nA = b × h\nMaya\nOct 24, 2026",
+          "back": "Duke Doublecount\nYOUR RULE\n“no a right triangle is still half a rectangle so its 10×5÷2 = 25”\nPIP SAID\nYour rule for right triangles: times the two sides. 10 × 5 = 50, which is the whole rectangle. Following your rule anyway. 😵",
+          "cliff": "Pip has a question for next time\n\nI heard a parallelogram is base × height too. Even the slanted ones? That can't be right… right?",
+          "rivera": "What Ms. Rivera sees\n\nThe same thing you see. Nothing else.\n\nYou explained two triangles make a rectangle in your own words.\nYou explained rectangle area in your own words.\nYou explained a triangle is half the rectangle in your own words and fixed it after 1 re-teach.",
+          "version": "BRAIN V1\n→\nBRAIN V2",
+          "exclamationsOnKO": 0
+        }
+      },
+      {
+        "name": "tutor roster: Maya since-last-session updated",
+        "pass": false,
+        "ms": 30155,
+        "error": "TimeoutError: locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator('.roster__row').nth(1) to be visible\n"
+      },
+      {
+        "name": "gap report: same quote + fixed after 1 re-teach",
+        "pass": false,
+        "ms": 30001,
+        "error": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator('.roster__row').filter({ hasText: 'Maya' }).first().getByRole('link', { name: 'Report' })\n    - waiting for\" http://localhost:5761/tutor\" navigation to finish...\n    - navigated to \"http://localhost:5761/tutor\"\n"
+      },
+      {
+        "name": "parent preview -> send -> sent log",
+        "pass": false,
+        "ms": 30003,
+        "error": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for getByRole('button', { name: 'Send weekly update to parent' })\n"
+      },
+      {
+        "name": "owner insight 14 + boss chip + Plan a workshop",
+        "pass": true,
+        "ms": 5256,
+        "detail": {
+          "pass": true,
+          "count": "14",
+          "chip": "students call it Duke Doublecount",
+          "mis": "Area of a triangle is base times height, so a 6 by 4 triangle is 24",
+          "note": "WORKSHOP NOTE SAVED\n\nWorkshop: Area of a triangle is base times height, so a 6 by 4 triangle is 24\nStudents (14): Diego C., Ana L., Yara W., Ravi A., Kira T., Ezra L., Gus H., Ben V., Wren L., Gus Y., Tara W., Owen T., Omar D., Mila B.\nPlan (30 min): 1) Draw a 6 by 4 rectangle on graph paper, cut it"
+        }
+      },
+      {
+        "name": "pricing -> Start pilot -> success",
+        "pass": false,
+        "ms": 1611,
+        "detail": {
+          "pass": false,
+          "url": "http://localhost:5761/pilot/success",
+          "eyebrow": "Pilot · active",
+          "pilot": {
+            "status": "not_started"
+          }
+        }
+      },
+      {
+        "name": "tutor New Pip mission draft + save (different student)",
+        "pass": true,
+        "ms": 5353,
+        "detail": {
+          "pass": true,
+          "studentId": "s005",
+          "studentName": "Yara K.",
+          "draftMs": 1365,
+          "concepts": [
+            "What Expanding (a + b)² means, in plain words",
+            "Why Expanding (a + b)² works, shown with an example",
+            "How to use Expanding (a + b)² on a brand-new problem"
+          ],
+          "boss": "Skip-Skip Stoat",
+          "mis": "Expanding (a + b)² is just memorizing the steps; you don't need to know why",
+          "savedId": "a_5c3b9b0c"
+        }
+      }
+    ],
+    "console": [
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_EMPTY_RESPONSE",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/owner"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/owner"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://localhost:5761/tutor"
+      }
+    ],
+    "pageErrors": [],
+    "failedRequests": [
+      {
+        "url": "http://localhost:5761/src/components/AtRiskCard.jsx?t=1792886711481",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/staff/StudioShell.jsx?t=1792886711483",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/earned.jsx?t=1792886711490",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/Owner.jsx?t=1792886711499",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/staff/bits.jsx?t=1792886711499",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/shapes.jsx?t=1792886711490",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/StudentHome.jsx?t=1792886711489",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/shapes.jsx?t=1792886711492",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/scenes/Scene2D.jsx?t=1792886711494",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/staff/RenewalNote.jsx?t=1792886711481",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/tutor/ProfileFamily.jsx?t=1792886711482",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/creatures/cat.jsx?t=1792886711490",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/staff/StudioShell.jsx?t=1792886711481",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/creatures/capybara.jsx?t=1792886711493",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/game.jsx?t=1792886711496",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/AtRiskCard.jsx?t=1792886711484",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/creatures/axolotl.jsx?t=1792886711493",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/creatures/blob.jsx?t=1792886711493",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/tutor/StudentProfile.jsx?t=1792886711481",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/Landing.jsx?t=1792886711482",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/MascotPicker.jsx?t=1792886711470",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/staff/BulkMission.jsx?t=1792886711482",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/game.jsx?t=1792886711483",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/scenes/art/Arcade.jsx?t=1792886711494",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/mission/KO.jsx?t=1792886711487",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/ui.jsx?t=1792886711482",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/GapReport.jsx?t=1792886711488",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/parent/ParentApp.jsx?t=1792886711498",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/game.jsx?t=1792886711484",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/tutor/ProfileFamily.jsx?t=1792886711495",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/tutor/ProfileNotes.jsx?t=1792886711495",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/staff/StudioShell.jsx?t=1792886711499",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/NewMission.jsx?t=1792886711481",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/Landing.jsx?t=1792886711484",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/staff/RenewalNote.jsx?t=1792886711499",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/tutor/ProfileNotes.jsx?t=1792886711481",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/staff/BulkMission.jsx?t=1792886711495",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/Mission.jsx?t=1792886711488",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/GapReport.jsx?t=1792886711481",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/Mission.jsx?t=1792886711483",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/main.jsx?t=1792886711490",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/creatures/frog.jsx?t=1792886711493",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/StudentHome.jsx?t=1792886711484",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/tutor/StudentsTable.jsx?t=1792886711495",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/Owner.jsx?t=1792886711498",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/Mission.jsx?t=1792886711482",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/MascotPicker.jsx?t=1792886711483",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/InsightCard.jsx?t=1792886711485",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/NotFound.jsx?t=1792886711488",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/StudentHome.jsx?t=1792886711470",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/mission/KO.jsx?t=1792886711470",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/creatures/raccoon.jsx?t=1792886711494",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/staff/BulkMission.jsx?t=1792886711481",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/Mascot.jsx?t=1792886711496",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/styles/base.css?t=1792886711495",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/PhoneFrame.jsx?t=1792886711486",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/tutor/ProfileNotes.jsx?t=1792886711489",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/styles/studio.css?t=1792886711501",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/TutorHome.jsx?t=1792886711498",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/game.jsx?t=1792886711470",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/staff/RenewalNote.jsx?t=1792886711495",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/Pricing.jsx?t=1792886711489",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/tutor/ProfileFamily.jsx?t=1792886711481",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/mission/Brain.jsx?t=1792886711482",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/Mission.jsx?t=1792886711481",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/GapReport.jsx?t=1792886711482",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/tutor/ProfileFamily.jsx?t=1792886711499",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/LessonEdit.jsx?t=1792886711485",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/mission/Chat.jsx?t=1792886711482",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/StudentHome.jsx?t=1792886711483",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/evolve.jsx?t=1792886711490",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/staff/BulkMission.jsx?t=1792886711499",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/StudentHome.jsx?t=1792886711481",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/Owner.jsx?t=1792886711482",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/AdminReset.jsx?t=1792886711481",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/Pip2D.jsx?t=1792886711492",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/AdminReset.jsx?t=1792886711488",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/mission/Brain.jsx?t=1792886711487",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/mission/MissionCard.jsx?t=1792886711482",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/scenes/scenes.css?t=1792886711494",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/LessonEdit.jsx?t=1792886711482",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/mission/KO.jsx?t=1792886711482",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/scenes/art/Skatepark.jsx?t=1792886711494",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/mission/KO.jsx?t=1792886711484",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/scenes/art/Rooftop.jsx?t=1792886711494",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/mission/QuizWait.jsx?t=1792886711488",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/styles/game.css?t=1792886711500",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/tutor/StudentProfile.jsx?t=1792886711482",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/hooks.js?t=1792886711482",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/creatures/cat.jsx?t=1792886711493",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/pip2d.css?t=1792886711492",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/tutor/StudentProfile.jsx?t=1792886711499",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/Landing.jsx?t=1792886711488",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/club.jsx?t=1792886711490",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/staff/bits.jsx?t=1792886711495",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/App.jsx?t=1792886711481",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/Mascot.jsx?t=1792886711485",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/creatures/corgi.jsx?t=1792886711493",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/Owner.jsx?t=1792886711495",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/voice.js?t=1792886711484",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/creatures/capybara.jsx?t=1792886711490",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/main.jsx?t=1792886711491",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/TutorHome.jsx?t=1792886711482",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/ui.jsx?t=1792886711483",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/PhoneFrame.jsx?t=1792886711497",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/styles/staff.css?t=1792886711496",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/TutorHome.jsx?t=1792886711481",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/tutor/ProfileFamily.jsx?t=1792886711498",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/Pip2D.jsx?t=1792886711494",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/InsightCard.jsx?t=1792886711481",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/Mascot.jsx?t=1792886711494",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/PilotSuccess.jsx?t=1792886711481",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/mainHeads.jsx?t=1792886711491",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/y2k.jsx?t=1792886711493",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/scenes/art/Boba.jsx?t=1792886711494",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/Pricing.jsx?t=1792886711481",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/StudentHome.jsx?t=1792886711482",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/AdminReset.jsx?t=1792886711482",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/AtRiskCard.jsx?t=1792886711482",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/tutor/StudentProfile.jsx?t=1792886711498",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/Mission.jsx?t=1792886711470",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/styles/student.css?t=1792886711500",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/game.jsx?t=1792886711487",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/tutor/StudentProfile.jsx?t=1792886711495",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/tutor/ProfileNotes.jsx?t=1792886711499",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/TutorHome.jsx?t=1792886711499",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/scenes/kit.jsx?t=1792886711494",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/creatures/corgi.jsx?t=1792886711490",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/PilotSuccess.jsx?t=1792886711489",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/scenes/art/Photobooth.jsx?t=1792886711494",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/MascotPicker.jsx?t=1792886711486",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/ui.jsx?t=1792886711481",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/scenes/art/Studio.jsx?t=1792886711495",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/AppErrorBoundary.jsx?t=1792886711484",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/mission/Chat.jsx?t=1792886711487",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/Owner.jsx?t=1792886711481",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/NewMission.jsx?t=1792886711486",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/TutorHome.jsx?t=1792886711495",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/Pip2D.jsx?t=1792886711490",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/ui.jsx?t=1792886711497",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/Mission.jsx?t=1792886711494",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/staff/RenewalNote.jsx?t=1792886711498",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/NewMission.jsx?t=1792886711482",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/mission/MissionCard.jsx?t=1792886711487",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/mission/Boss.jsx?t=1792886711498",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/styles/tokens.css?t=1792886711501",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/MascotPicker.jsx?t=1792886711484",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/Mission.jsx?t=1792886711484",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/tutor/StudentsTable.jsx?t=1792886711498",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/voice.js?t=1792886711484",
+        "err": "net::ERR_CONNECTION_REFUSED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/InsightCard.jsx?t=1792886711497",
+        "err": "net::ERR_CONNECTION_REFUSED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/AtRiskCard.jsx?t=1792886711497",
+        "err": "net::ERR_CONNECTION_REFUSED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/NewMission.jsx?t=1792886711497",
+        "err": "net::ERR_CONNECTION_REFUSED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/staff/BulkMission.jsx?t=1792886711499",
+        "err": "net::ERR_CONNECTION_REFUSED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/staff/api.js?t=1792886711499",
+        "err": "net::ERR_CONNECTION_REFUSED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/staff/useMedia.js",
+        "err": "net::ERR_CONNECTION_REFUSED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/staff/format.js?t=1792886711495",
+        "err": "net::ERR_CONNECTION_REFUSED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/tutor/StudentsTable.jsx?t=1792886711499",
+        "err": "net::ERR_CONNECTION_REFUSED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/tutor/StudentProfile.jsx?t=1792886711501",
+        "err": "net::ERR_CONNECTION_REFUSED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/staff/bits.jsx?t=1792886711499",
+        "err": "net::ERR_CONNECTION_REFUSED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/staff/RenewalNote.jsx?t=1792886711499",
+        "err": "net::ERR_CONNECTION_REFUSED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/MascotPicker.jsx?t=1792886711497",
+        "err": "net::ERR_CONNECTION_REFUSED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/scenes/index.js?t=1792886711495",
+        "err": "net::ERR_CONNECTION_REFUSED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/mission/QuizWait.jsx?t=1792886711497",
+        "err": "net::ERR_CONNECTION_REFUSED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/mission/MissionCard.jsx?t=1792886711487",
+        "err": "net::ERR_CONNECTION_REFUSED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/mission/Boss.jsx?t=1792886711498",
+        "err": "net::ERR_CONNECTION_REFUSED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/mission/Chat.jsx?t=1792886711497",
+        "err": "net::ERR_CONNECTION_REFUSED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/mission/Brain.jsx?t=1792886711497",
+        "err": "net::ERR_CONNECTION_REFUSED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/mission/KO.jsx?t=1792886711497",
+        "err": "net::ERR_CONNECTION_REFUSED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/lib.js?t=1792886711482",
+        "err": "net::ERR_CONNECTION_REFUSED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/GapReport.jsx?t=1792886711497",
+        "err": "net::ERR_CONNECTION_REFUSED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/Mascot.jsx?t=1792886711496",
+        "err": "net::ERR_CONNECTION_REFUSED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/staff/StudioShell.jsx?t=1792886711501",
+        "err": "net::ERR_CONNECTION_REFUSED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/NotFound.jsx?t=1792886711497",
+        "err": "net::ERR_CONNECTION_REFUSED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/PhoneFrame.jsx?t=1792886711497",
+        "err": "net::ERR_CONNECTION_REFUSED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/parent/ParentApp.jsx?t=1792886711498",
+        "err": "net::ERR_CONNECTION_REFUSED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/",
+        "err": "net::ERR_CONNECTION_REFUSED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/pip-icon.svg",
+        "err": "net::ERR_CONNECTION_REFUSED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/Landing.jsx?t=1792886741655",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/MascotPicker.jsx?t=1792886741650",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/InsightCard.jsx?t=1792886741651",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/Pip2D.jsx?t=1792886741666",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/staff/StudioShell.jsx?t=1792886741679",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/NotFound.jsx?t=1792886741655",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/GapReport.jsx?t=1792886741649",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/creatures/corgi.jsx?t=1792886741666",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/NewMission.jsx?t=1792886741649",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/creatures/capybara.jsx?t=1792886741673",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/LessonEdit.jsx?t=1792886741651",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/creatures/capybara.jsx?t=1792886741666",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/scenes/kit.jsx?t=1792886741674",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/tutor/ProfileFamily.jsx?t=1792886741679",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/scenes/art/Photobooth.jsx?t=1792886741674",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/tutor/ProfileFamily.jsx?t=1792886741685",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/mission/MissionCard.jsx?t=1792886741655",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/game.jsx?t=1792886741685",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/styles/staff.css?t=1792886741681",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/TutorHome.jsx?t=1792886741679",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/tutor/StudentsTable.jsx?t=1792886741681",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/LessonEdit.jsx?t=1792886741649",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/tutor/StudentsTable.jsx?t=1792886741658",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/Mission.jsx?t=1792886741649",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/mission/QuizWait.jsx?t=1792886741655",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/TutorHome.jsx?t=1792886741656",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/ui.jsx?t=1792886741650",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/mainHeads.jsx?t=1792886741669",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/Landing.jsx?t=1792886741685",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/Mission.jsx?t=1792886741674",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/TutorHome.jsx?t=1792886741680",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/creatures/axolotl.jsx?t=1792886741673",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/staff/bits.jsx?t=1792886741681",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/Mascot.jsx?t=1792886741651",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/StudentHome.jsx?t=1792886741650",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/TutorHome.jsx?t=1792886741681",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/MascotPicker.jsx?t=1792886741685",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/earned.jsx?t=1792886741661",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/tutor/ProfileFamily.jsx?t=1792886741680",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/ui.jsx?t=1792886741649",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/Owner.jsx?t=1792886741680",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/AdminReset.jsx?t=1792886741655",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/staff/RenewalNote.jsx?t=1792886741675",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/creatures/raccoon.jsx?t=1792886741674",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/Pip2D.jsx?t=1792886741673",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/InsightCard.jsx?t=1792886741649",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/tutor/ProfileNotes.jsx?t=1792886741679",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/mission/Chat.jsx?t=1792886741655",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/Owner.jsx?t=1792886741655",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/staff/RenewalNote.jsx?t=1792886741649",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/mission/KO.jsx?t=1792886741684",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/staff/BulkMission.jsx?t=1792886741679",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/Owner.jsx?t=1792886741649",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/parent/ParentApp.jsx?t=1792886741679",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/AdminReset.jsx?t=1792886741649",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/mission/Boss.jsx?t=1792886741654",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/creatures/cat.jsx?t=1792886741673",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/parent/ParentApp.jsx?t=1792886741685",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/Owner.jsx?t=1792886741685",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/PhoneFrame.jsx?t=1792886741651",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/scenes/art/Boba.jsx?t=1792886741674",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/Mascot.jsx?t=1792886741673",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/pip2d.css?t=1792886741672",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/styles/tokens.css?t=1792886741681",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/mission/Brain.jsx?t=1792886741649",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/styles/base.css?t=1792886741681",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/PilotSuccess.jsx?t=1792886741656",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/staff/StudioShell.jsx?t=1792886741649",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/tutor/ProfileNotes.jsx?t=1792886741680",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/shapes.jsx?t=1792886741666",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/parent/ParentApp.jsx?t=1792886741684",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/main.jsx?t=1792886741666",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/scenes/scenes.css?t=1792886741674",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/staff/StudioShell.jsx?t=1792886741650",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/parent/ParentApp.jsx?t=1792886741680",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/Landing.jsx?t=1792886741649",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/tutor/StudentProfile.jsx?t=1792886741681",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/tutor/StudentProfile.jsx?t=1792886741679",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/scenes/art/Skatepark.jsx?t=1792886741675",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/MascotPicker.jsx?t=1792886741651",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/TutorHome.jsx?t=1792886741649",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/Mission.jsx?t=1792886741685",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/api.js?t=1792886741649",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/tutor/ProfileNotes.jsx?t=1792886741649",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/game.jsx?t=1792886741652",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/tutor/ProfileNotes.jsx?t=1792886741656",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/staff/BulkMission.jsx?t=1792886741675",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/tutor/ProfileFamily.jsx?t=1792886741649",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/AtRiskCard.jsx?t=1792886741649",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/styles/student.css?t=1792886741681",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/tutor/StudentProfile.jsx?t=1792886741680",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/mission/Brain.jsx?t=1792886741655",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/styles/game.css?t=1792886741681",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/Pip2D.jsx?t=1792886741660",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/staff/RenewalNote.jsx?t=1792886741679",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/mission/MissionCard.jsx?t=1792886741649",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/AtRiskCard.jsx?t=1792886741651",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/club.jsx?t=1792886741660",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/AppErrorBoundary.jsx?t=1792886741650",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/Pricing.jsx?t=1792886741656",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/ui.jsx?t=1792886741653",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/StudentHome.jsx?t=1792886741649",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/creatures/cat.jsx?t=1792886741666",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/tutor/StudentsTable.jsx?t=1792886741680",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/mission/KO.jsx?t=1792886741685",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/mission/KO.jsx?t=1792886741649",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/StudentHome.jsx?t=1792886741685",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/StudentHome.jsx?t=1792886741656",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/shapes.jsx?t=1792886741672",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/scenes/art/Arcade.jsx?t=1792886741674",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/Mission.jsx?t=1792886741684",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/staff/StudioShell.jsx?t=1792886741680",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/Owner.jsx?t=1792886741679",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/Mission.jsx?t=1792886741650",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/parent/ParentApp.jsx?t=1792886741649",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/Landing.jsx?t=1792886741650",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/staff/RenewalNote.jsx?t=1792886741680",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/staff/BulkMission.jsx?t=1792886741680",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/GapReport.jsx?t=1792886741655",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/NewMission.jsx?t=1792886741651",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/Pricing.jsx?t=1792886741649",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/PhoneFrame.jsx?t=1792886741653",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/mission/Chat.jsx?t=1792886741649",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/tutor/StudentProfile.jsx?t=1792886741658",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/TutorHome.jsx?t=1792886741685",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/creatures/frog.jsx?t=1792886741673",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/creatures/blob.jsx?t=1792886741673",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/y2k.jsx?t=1792886741673",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/parent/ParentApp.jsx?t=1792886741681",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/staff/bits.jsx?t=1792886741685",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/game.jsx?t=1792886741650",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/staff/BulkMission.jsx?t=1792886741649",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/styles/studio.css?t=1792886741681",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/staff/bits.jsx?t=1792886741680",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pages/tutor/StudentProfile.jsx?t=1792886741649",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/components/mission/KO.jsx?t=1792886741650",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/scenes/art/Rooftop.jsx?t=1792886741674",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/scenes/art/Studio.jsx?t=1792886741675",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/creatures/corgi.jsx?t=1792886741673",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/evolve.jsx?t=1792886741661",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/main.jsx?t=1792886741669",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/staff/StudioShell.jsx?t=1792886741681",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/pip2d/Pip2D.jsx?t=1792886741672",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/scenes/Scene2D.jsx?t=1792886741674",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/src/main.jsx?t=1792886741685",
+        "err": "net::ERR_EMPTY_RESPONSE",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/",
+        "err": "net::ERR_CONNECTION_REFUSED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/pip-icon.svg",
+        "err": "net::ERR_CONNECTION_REFUSED",
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/",
+        "err": "net::ERR_ABORTED",
+        "page": "http://localhost:5761/tutor"
+      }
+    ],
+    "badResponses": [
+      {
+        "url": "http://localhost:5761/api/tutors",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/tutors/t1/students",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/tutors",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/tutors/t1/students",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/students/s001/profile",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/students/s001/profile",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/tutors",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/tutors/t1/students",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/tutors",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/tutors/t1/students",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/students/s001/profile",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/students/s001/profile",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/tutors",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/tutors/t1/students",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/tutors",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/tutors/t1/students",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/students/s001/profile",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/students/s001/profile",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/center/overview",
+        "status": 404,
+        "page": "http://localhost:5761/owner"
+      },
+      {
+        "url": "http://localhost:5761/api/center/overview",
+        "status": 404,
+        "page": "http://localhost:5761/owner"
+      },
+      {
+        "url": "http://localhost:5761/api/tutors",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/tutors/t1/students",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/tutors",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/tutors/t1/students",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/students/s001/profile",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      },
+      {
+        "url": "http://localhost:5761/api/students/s001/profile",
+        "status": 404,
+        "page": "http://localhost:5761/tutor"
+      }
+    ],
+    "overflow": {
+      "landing": {
+        "scrollWidth": 1280,
+        "clientWidth": 1280,
+        "overflows": false,
+        "wide": []
+      },
+      "studentHome": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "picker": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "missionOpening": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": [
+          "g.[object.SVGAnimatedString] right=1193",
+          "rect.[object.SVGAnimatedString] right=832",
+          "g.[object.SVGAnimatedString] right=781",
+          "g.[object.SVGAnimatedString] right=781",
+          "circle.[object.SVGAnimatedString] right=606"
+        ]
+      },
+      "missionAfterFight": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": [
+          "g.[object.SVGAnimatedString] right=1193",
+          "rect.[object.SVGAnimatedString] right=832",
+          "g.[object.SVGAnimatedString] right=781",
+          "g.[object.SVGAnimatedString] right=781",
+          "circle.[object.SVGAnimatedString] right=606"
+        ]
+      },
+      "quiz": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "ko": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflows": false,
+        "wide": []
+      },
+      "owner": {
+        "scrollWidth": 1280,
+        "clientWidth": 1280,
+        "overflows": false,
+        "wide": []
+      },
+      "pricing": {
+        "scrollWidth": 1280,
+        "clientWidth": 1280,
+        "overflows": false,
+        "wide": []
+      },
+      "newMission": {
+        "scrollWidth": 1280,
+        "clientWidth": 1280,
+        "overflows": false,
+        "wide": []
+      }
+    },
+    "smallTargets": [],
+    "timings": {
+      "landingVisibleMs": 201,
+      "studentHomeFirstPaintOfStageMs": 348,
+      "studentHomeStageMs": 20350,
+      "studentHomeStageDrawnMs": null,
+      "missionStageMs": 20329,
+      "quizMs": 459
+    },
+    "mascot": {
+      "studentHome": [
+        {
+          "canvas": false,
+          "fallback": false,
+          "h": 427
+        }
+      ],
+      "missionOpen": [
+        {
+          "canvas": false,
+          "fallback": false,
+          "h": 506
+        }
+      ]
+    },
+    "notes": {
+      "mayaBefore": {
+        "since": null,
+        "last": null
+      }
+    },
+    "tts": [
+      {
+        "status": 200,
+        "t": 1792886620652,
+        "fallback": false,
+        "audioB64": 23464,
+        "mime": "audio/mpeg",
+        "alignChars": 10,
+        "alignEnd": 1.12,
+        "text": "BOSS FIGHT"
+      },
+      {
+        "status": 200,
+        "t": 1792886620672,
+        "fallback": false,
+        "audioB64": 293188,
+        "mime": "audio/mpeg",
+        "alignChars": 145,
+        "alignEnd": 13.76,
+        "text": "Hi. I'm Pip. I'm learning area of a triangle. I already know one rule: Area of a"
+      },
+      {
+        "status": 200,
+        "t": 1792886642463,
+        "fallback": false,
+        "audioB64": 95352,
+        "mime": "audio/mpeg",
+        "alignChars": 53,
+        "alignEnd": 4.4,
+        "text": "I have counted the entire rectangle. You are welcome."
+      },
+      {
+        "status": 200,
+        "t": 1792886642743,
+        "fallback": false,
+        "audioB64": 126004,
+        "mime": "audio/mpeg",
+        "alignChars": 77,
+        "alignEnd": 5.92,
+        "text": "ok, I follow that part. why would a triangle get less than base times height?"
+      },
+      {
+        "status": 200,
+        "t": 1792886643639,
+        "fallback": false,
+        "audioB64": 59688,
+        "mime": "audio/mpeg",
+        "alignChars": 40,
+        "alignEnd": 2.8,
+        "text": "how big is the shape they make together?"
+      },
+      {
+        "status": 200,
+        "t": 1792886643640,
+        "fallback": false,
+        "audioB64": 103712,
+        "mime": "audio/mpeg",
+        "alignChars": 57,
+        "alignEnd": 4.88,
+        "text": "This is most irregular. Kindly stop folding my rectangle."
+      },
+      {
+        "status": 200,
+        "t": 1792886647058,
+        "fallback": false,
+        "audioB64": 71388,
+        "mime": "audio/mpeg",
+        "alignChars": 29,
+        "alignEnd": 3.36,
+        "text": "ok I think I get it. quiz me?"
+      },
+      {
+        "status": 200,
+        "t": 1792886647058,
+        "fallback": false,
+        "audioB64": 63032,
+        "mime": "audio/mpeg",
+        "alignChars": 38,
+        "alignEnd": 2.96,
+        "text": "I did not authorize a second triangle."
+      },
+      {
+        "status": 200,
+        "t": 1792886648919,
+        "fallback": false,
+        "audioB64": 173928,
+        "mime": "audio/mpeg",
+        "alignChars": 111,
+        "alignEnd": 8.16,
+        "text": "Saving that: 'oh but for a right triangle you just times the two sides'. I think"
+      },
+      {
+        "status": 200,
+        "t": 1792886648920,
+        "fallback": false,
+        "audioB64": 143280,
+        "mime": "audio/mpeg",
+        "alignChars": 62,
+        "alignEnd": 6.72,
+        "text": "Excellent. Base times height. Write that on everything. +20 HP"
+      },
+      {
+        "status": 200,
+        "t": 1792886652088,
+        "fallback": false,
+        "audioB64": 235228,
+        "mime": "audio/mpeg",
+        "alignChars": 122,
+        "alignEnd": 10.96,
+        "text": "Your rule for right triangles: times the two sides. 10 × 5 = 50, which is the wh"
+      },
+      {
+        "status": 200,
+        "t": 1792886660905,
+        "fallback": false,
+        "audioB64": 167240,
+        "mime": "audio/mpeg",
+        "alignChars": 98,
+        "alignEnd": 7.84,
+        "text": "My brain has a bug about this: \"oh but for a right triangle you just times the t"
+      },
+      {
+        "status": 200,
+        "t": 1792886662767,
+        "fallback": false,
+        "audioB64": 63032,
+        "mime": "audio/mpeg",
+        "alignChars": 29,
+        "alignEnd": 2.96,
+        "text": "Twenty-four. As is customary."
+      },
+      {
+        "status": 200,
+        "t": 1792886663131,
+        "fallback": false,
+        "audioB64": 66376,
+        "mime": "audio/mpeg",
+        "alignChars": 40,
+        "alignEnd": 3.12,
+        "text": "Anything else, or should I try the quiz?"
+      },
+      {
+        "status": 200,
+        "t": 1792886663133,
+        "fallback": false,
+        "audioB64": 21792,
+        "mime": "audio/mpeg",
+        "alignChars": 8,
+        "alignEnd": 1.04,
+        "text": "CRITICAL"
+      },
+      {
+        "status": 200,
+        "t": 1792886665721,
+        "fallback": false,
+        "audioB64": 61360,
+        "mime": "audio/mpeg",
+        "alignChars": 33,
+        "alignEnd": 2.88,
+        "text": "I object to being divided by two."
+      },
+      {
+        "status": 200,
+        "t": 1792886668932,
+        "fallback": false,
+        "audioB64": 35724,
+        "mime": "audio/mpeg",
+        "alignChars": 14,
+        "alignEnd": 1.68,
+        "text": "BRAIN UPGRADED"
+      }
+    ],
+    "fit": {},
+    "instrument": {
+      "student /student/mission/sess_2e248fb1": {
+        "moods": [
+          {
+            "t": 1792886591744,
+            "l": "Pip the capybara looks confused",
+            "path": "/student"
+          },
+          {
+            "t": 1792886620552,
+            "l": "Pip the cat looks confused",
+            "path": "/student"
+          },
+          {
+            "t": 1792886642721,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_2e248fb1"
+          },
+          {
+            "t": 1792886642730,
+            "l": "Pip the cat looks confused",
+            "path": "/student/mission/sess_2e248fb1"
+          },
+          {
+            "t": 1792886643612,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_2e248fb1"
+          },
+          {
+            "t": 1792886643644,
+            "l": "Pip the cat looks aha",
+            "path": "/student/mission/sess_2e248fb1"
+          },
+          {
+            "t": 1792886647037,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_2e248fb1"
+          },
+          {
+            "t": 1792886647051,
+            "l": "Pip the cat looks aha",
+            "path": "/student/mission/sess_2e248fb1"
+          },
+          {
+            "t": 1792886648903,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_2e248fb1"
+          },
+          {
+            "t": 1792886648925,
+            "l": "Pip the cat looks possessed",
+            "path": "/student/mission/sess_2e248fb1"
+          },
+          {
+            "t": 1792886652065,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_2e248fb1"
+          },
+          {
+            "t": 1792886652089,
+            "l": "Pip the cat looks notes",
+            "path": "/student/mission/sess_2e248fb1"
+          },
+          {
+            "t": 1792886655845,
+            "l": "Pip the cat looks overwhelmed",
+            "path": "/student/mission/sess_2e248fb1"
+          },
+          {
+            "t": 1792886657045,
+            "l": "Pip the cat looks notes",
+            "path": "/student/mission/sess_2e248fb1"
+          },
+          {
+            "t": 1792886660604,
+            "l": "Pip the cat looks overwhelmed",
+            "path": "/student/mission/sess_2e248fb1"
+          },
+          {
+            "t": 1792886660905,
+            "l": "Pip the cat looks possessed",
+            "path": "/student/mission/sess_2e248fb1"
+          },
+          {
+            "t": 1792886663116,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_2e248fb1"
+          },
+          {
+            "t": 1792886663124,
+            "l": "Pip the cat looks aha",
+            "path": "/student/mission/sess_2e248fb1"
+          },
+          {
+            "t": 1792886663911,
+            "l": "Pip the cat looks thinking",
+            "path": "/student/mission/sess_2e248fb1"
+          },
+          {
+            "t": 1792886663926,
+            "l": "Pip the cat looks proud",
+            "path": "/student/mission/sess_2e248fb1"
+          },
+          {
+            "t": 1792886666741,
+            "l": "Pip the cat looks confused",
+            "path": "/student/mission/sess_2e248fb1"
+          }
+        ],
+        "boss": [
+          {
+            "t": 1792886620728,
+            "l": "Duke Doublecount, smug",
+            "hp": "Duke Doublecount, 100 HP"
+          },
+          {
+            "t": 1792886663124,
+            "l": "Duke Doublecount, cracked",
+            "hp": "Duke Doublecount, 30 HP"
+          },
+          {
+            "t": 1792886665133,
+            "l": "Duke Doublecount, ko",
+            "hp": "Duke Doublecount, knocked out"
+          }
+        ],
+        "plays": [
+          {
+            "t": 1792886620655,
+            "mime": "audio/mpeg",
+            "len": 293211,
+            "playing": 1792886620998,
+            "ok": true,
+            "end": 1792886634942
+          },
+          {
+            "t": 1792886642462,
+            "mime": "audio/mpeg",
+            "len": 95375,
+            "playing": 1792886642478,
+            "ok": true,
+            "end": 1792886642730
+          },
+          {
+            "t": 1792886642744,
+            "mime": "audio/mpeg",
+            "len": 126027,
+            "playing": 1792886642748,
+            "ok": true,
+            "end": 1792886643622
+          },
+          {
+            "t": 1792886643624,
+            "mime": "audio/mpeg",
+            "len": 59711,
+            "playing": 1792886643630,
+            "ok": true,
+            "end": 1792886646562
+          },
+          {
+            "t": 1792886646562,
+            "mime": "audio/mpeg",
+            "len": 103735,
+            "playing": 1792886646565,
+            "ok": true,
+            "end": 1792886647050
+          },
+          {
+            "t": 1792886647053,
+            "mime": "audio/mpeg",
+            "len": 71411,
+            "playing": 1792886647057,
+            "ok": true,
+            "end": 1792886648912
+          },
+          {
+            "t": 1792886648916,
+            "mime": "audio/mpeg",
+            "len": 173951,
+            "playing": 1792886648922,
+            "ok": true,
+            "end": 1792886652065
+          },
+          {
+            "t": 1792886652090,
+            "mime": "audio/mpeg",
+            "len": 235251,
+            "playing": 1792886652094,
+            "ok": true,
+            "end": 1792886655844
+          },
+          {
+            "t": 1792886655844,
+            "mime": "audio/mpeg",
+            "len": 235251,
+            "playing": 1792886655847,
+            "ok": true,
+            "end": 1792886660587
+          },
+          {
+            "t": 1792886660587,
+            "mime": "audio/mpeg",
+            "len": 235251,
+            "playing": 1792886660597,
+            "ok": true,
+            "end": 1792886660899
+          },
+          {
+            "t": 1792886662765,
+            "mime": "audio/mpeg",
+            "len": 63055,
+            "playing": 1792886662770,
+            "ok": true,
+            "end": 1792886663124
+          },
+          {
+            "t": 1792886663133,
+            "mime": "audio/mpeg",
+            "len": 21815,
+            "playing": 1792886663142,
+            "ok": true,
+            "end": 1792886663910
+          },
+          {
+            "t": 1792886665715,
+            "mime": "audio/mpeg",
+            "len": 61383,
+            "playing": 1792886665722,
+            "ok": true,
+            "end": 1792886666738
+          },
+          {
+            "t": 1792886668932,
+            "mime": "audio/mpeg",
+            "len": 35747,
+            "playing": 1792886668934,
+            "ok": true,
+            "end": 1792886670762
+          }
+        ],
+        "synth": [],
+        "mouthPlaying": {
+          "g:153": 69,
+          "g:98": 288,
+          "g:257": 214,
+          "g:133": 33,
+          "g:118": 257,
+          "g:101": 3,
+          "g:124": 7,
+          "g:256": 25
+        },
+        "mouthIdle": {
+          "g:157": 715,
+          "g:153": 324,
+          "g:98": 3,
+          "g:118": 9,
+          "g:257": 1,
+          "g:124": 42,
+          "g:101": 1,
+          "g:256": 45
+        },
+        "qmarks": 0
+      }
+    },
+    "fightVis": {
+      "1": {
+        "hpVisible": 1,
+        "arenaVisible": 1,
+        "arenaCanvas": false
+      },
+      "2": {
+        "hpVisible": 1,
+        "arenaVisible": 1,
+        "arenaCanvas": false
+      }
+    },
+    "turns": [
+      {
+        "i": 1,
+        "turnMs": 273,
+        "renderMs": 18,
+        "optimistic": false,
+        "hp": [
+          100,
+          100
+        ],
+        "meters": {
+          "k1": 0,
+          "k2": 0,
+          "k3": 5
+        },
+        "weapons": [],
+        "equipped": null,
+        "events": [
+          {
+            "kind": "none",
+            "amount": 0,
+            "caption": "",
+            "unlocked": [],
+            "level": 1
+          }
+        ],
+        "pip": "ok, I follow that part. why would a triangle get less than base times height?",
+        "saving": false,
+        "toast": [],
+        "meColors": [
+          "rgb(217, 251, 255) / rgb(7, 4, 15)",
+          "rgb(217, 251, 255) / rgb(16, 33, 63)"
+        ]
+      },
+      {
+        "i": 2,
+        "turnMs": 217,
+        "renderMs": 68,
+        "optimistic": false,
+        "hp": [
+          100,
+          75
+        ],
+        "meters": {
+          "k1": 60,
+          "k2": 0,
+          "k3": 60
+        },
+        "weapons": [
+          "Copy-and-Flip Mirror 🪞",
+          "Fold-in-Half Fan 🪭"
+        ],
+        "equipped": "Copy-and-Flip Mirror 🪞",
+        "events": [
+          {
+            "kind": "hit",
+            "amount": 25,
+            "caption": "Duke Doublecount: \"This is most irregular. Kindly stop folding my rectangle.\" −25 HP",
+            "unlocked": [
+              "Copy-and-Flip Mirror 🪞",
+              "Fold-in-Half Fan 🪭"
+            ],
+            "level": 2
+          }
+        ],
+        "pip": "how big is the shape they make together?",
+        "saving": false,
+        "toast": [
+          "Weapons unlocked: Copy-and-Flip Mirror 🪞, Fold-in-Half Fan 🪭"
+        ],
+        "fightVisible": {
+          "hpVisible": 1,
+          "arenaVisible": 1,
+          "arenaCanvas": false
+        },
+        "meColors": [
+          "rgb(217, 251, 255) / rgb(7, 4, 15)",
+          "rgb(217, 251, 255) / rgb(16, 33, 63)"
+        ]
+      },
+      {
+        "i": 3,
+        "turnMs": 274,
+        "renderMs": 22,
+        "optimistic": false,
+        "hp": [
+          75,
+          50
+        ],
+        "meters": {
+          "k1": 60,
+          "k2": 60,
+          "k3": 65
+        },
+        "weapons": [
+          "Copy-and-Flip Mirror 🪞",
+          "Fold-in-Half Fan 🪭",
+          "Row-by-Row Ruler 📏"
+        ],
+        "equipped": "Copy-and-Flip Mirror 🪞",
+        "events": [
+          {
+            "kind": "hit",
+            "amount": 25,
+            "caption": "Duke Doublecount: \"I did not authorize a second triangle.\" −25 HP",
+            "unlocked": [
+              "Row-by-Row Ruler 📏"
+            ],
+            "level": 2,
+            "weapon": "Copy-and-Flip Mirror 🪞"
+          }
+        ],
+        "pip": "ok I think I get it. quiz me?",
+        "saving": false,
+        "toast": [
+          "Weapon unlocked: Row-by-Row Ruler 📏"
+        ],
+        "fightVisible": {
+          "hpVisible": 1,
+          "arenaVisible": 1,
+          "arenaCanvas": false
+        },
+        "meColors": [
+          "rgb(217, 251, 255) / rgb(7, 4, 15)",
+          "rgb(217, 251, 255) / rgb(16, 33, 63)"
+        ]
+      },
+      {
+        "i": 4,
+        "turnMs": 172,
+        "renderMs": 21,
+        "optimistic": false,
+        "hp": [
+          50,
+          70
+        ],
+        "meters": {
+          "k1": 60,
+          "k2": 60,
+          "k3": 65
+        },
+        "weapons": [
+          "Copy-and-Flip Mirror 🪞",
+          "Fold-in-Half Fan 🪭",
+          "Row-by-Row Ruler 📏"
+        ],
+        "equipped": "Copy-and-Flip Mirror 🪞",
+        "events": [
+          {
+            "kind": "heal",
+            "amount": 20,
+            "caption": "Duke Doublecount: \"Excellent. Base times height. Write that on everything.\" +20 HP",
+            "unlocked": [],
+            "level": 0
+          }
+        ],
+        "pip": "Saving that: 'oh but for a right triangle you just times the two sides'. I think I'm good. Want to quiz me now?",
+        "saving": true,
+        "toast": [],
+        "meColors": [
+          "rgb(217, 251, 255) / rgb(7, 4, 15)",
+          "rgb(217, 251, 255) / rgb(16, 33, 63)"
+        ]
+      }
+    ]
+  }
+]

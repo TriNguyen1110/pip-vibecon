@@ -58,5 +58,17 @@ for aid, (sid, ready_by, miss) in MISSIONS.items():
     check(f"{aid}: no why-question while teaching a use/given concept (if any use: {sorted(use)})",
           not any(WHY.search(t) for t in pip) or not use, asked)
 
+# the live system prompt must build for every seeded lesson (it once crashed on a key name and silently fell back offline)
+import glob
+import pip_ai  # noqa: E402
+for f in sorted(glob.glob(str(B / "seed/lessons/*.assignment.json"))):
+    asg = json.loads(Path(f).read_text())
+    a = next((x for x in client.get(f"/api/students/{asg['student_id']}").json()["assignments"] if x["id"] == asg["id"]), None)
+    try:
+        sysm = pip_ai.persona_system(a)
+        check(f"{asg['id']}: live prompt builds with explain_level per concept", sysm.count("explain_level:") >= len(asg["concepts"]))
+    except Exception as e:  # noqa: BLE001
+        check(f"{asg['id']}: live prompt builds", False, repr(e))
+
 print(f"\n{len(fails)} failing")
 sys.exit(1 if fails else 0)

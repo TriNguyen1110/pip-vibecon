@@ -1,3 +1,4 @@
+import fs from 'node:fs'
 // V4 student journey (replaces the legacy fractions journey in demo.spec.mjs).
 // 1. Maya's triangle-area demo (DEMO_SCRIPT.md, CONTRACT v3.6): reset -> landing "Try as Maya" -> home -> pinned
 //    triangle mission -> opening claim -> her 3 one-sentence texts (+ the deliberate wrong rule) -> ready_for_quiz ->
@@ -22,7 +23,8 @@ const OWNER_RUN = [
   "yes that's why we divide it in half to get the triangle area",
   '2 triangles with the same base and height creates an area of a rectangle with that base and height',
 ]
-const FIX = readFixture('students/a_tri.json')
+// FIXTURE_PATH pins the persona cards to a given file (e.g. HEAD's copy while the tree has uncommitted edits).
+const FIX = process.env.FIXTURE_PATH ? JSON.parse(fs.readFileSync(process.env.FIXTURE_PATH, 'utf8')) : readFixture('students/a_tri.json')
 const PERSONAS = (process.env.PERSONAS || 'tri_quick:cool,tri_idk:play,tri_insult:focus').split(',').map((x) => {
   const [id, register] = x.split(':')
   return { card: FIX.personas.find((p) => p.id === id), register }

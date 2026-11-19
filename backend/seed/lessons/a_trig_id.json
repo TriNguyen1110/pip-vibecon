@@ -52,7 +52,9 @@
       "idea_patterns": [
         "opposite.{0,15}(over|divided by|/|÷).{0,15}hypotenuse",
         "adjacent.{0,15}(over|divided by|/|÷).{0,15}hypotenuse",
-        "soh|cah"
+        "soh|cah",
+        "\\b3\\s*/\\s*5\\b.{0,30}\\b4\\s*/\\s*5\\b",
+        "\\b(sin|cos)\\w*\\s*(is|=)\\s*(opp|adj)\\w*\\s*(over|/|÷)\\s*hyp"
       ]
     },
     {
@@ -79,7 +81,10 @@
       "idea_patterns": [
         "\\bsquar\\w+\\b.{0,30}\\b(add|plus|sum)\\b.{0,30}\\bsquar\\w+\\b",
         "a\\s*(²|2|squared)\\s*\\+\\s*b\\s*(²|2|squared)",
-        "pythag\\w+"
+        "pythag\\w+",
+        "(long|longest|hyp\\w*)\\s*(side\\s*)?(is|=)\\s*5\\b",
+        "\\b9\\s*\\+\\s*16\\b",
+        "\\ba\\s*(²|2|\\^2)\\s*\\+\\s*b\\s*(²|2|\\^2)"
       ]
     },
     {
@@ -123,7 +128,8 @@
         "pythag\\w+.{0,40}(divid\\w+|over)",
         "same thing over itself|something over itself",
         "\\bhyp\\w*\\s*(squared|²)\\s*(/|over|divided by)\\s*hyp\\w*\\s*(squared|²)",
-        "\\bsin\\s*(²|2|squared)\\b"
+        "\\bsin\\s*(²|2|squared)\\b",
+        "sin\\s*(²|2|\\^2|squared)\\s*\\+\\s*cos\\s*(²|2|\\^2|squared)\\s*=\\s*1"
       ]
     }
   ],

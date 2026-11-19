@@ -1,0 +1,13 @@
+{
+  "browser": "156.0.8078.48",
+  "base": "http://localhost:5742",
+  "scrollToReturns": "[object Promise]",
+  "crashedAfterNav": true,
+  "body": "😵\n\nPip lost the thread.\n\nYour work is saved. Reload to pick up where you left off.\n\nReload\nStart page",
+  "consoleErrors": [
+    "TypeError: n is not a function\n    at zi (http://localhost:5742/assets/index-DLZovq52.js:40:22325)\n    at or (http://localhost:5742/assets/index-DLZovq52.js:40:24021)\n    at Tn (http://localhost:5742/",
+    "[Pip] render error: TypeError: n is not a function\n    at zi (http://localhost:5742/assets/index-DLZovq52.js:40:22325)\n    at or (http://localhost:5742/assets/index-DLZovq52.js:40:24021)\n    at Tn (ht",
+    "TypeError: n is not a function\n    at zi (http://localhost:5742/assets/index-DLZovq52.js:40:22325)\n    at or (http://localhost:5742/assets/index-DLZovq52.js:40:24021)\n    at Tn (http://localhost:5742/",
+    "[Pip] render error: TypeError: n is not a function\n    at zi (http://localhost:5742/assets/index-DLZovq52.js:40:22325)\n    at or (http://localhost:5742/assets/index-DLZovq52.js:40:24021)\n    at Tn (ht"
+  ]
+}
